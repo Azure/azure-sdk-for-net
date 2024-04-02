@@ -19,22 +19,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CatalogServerEndpoint != null)
+            if (Optional.IsDefined(CatalogServerEndpoint))
             {
                 writer.WritePropertyName("catalogServerEndpoint"u8);
                 writer.WriteStringValue(CatalogServerEndpoint);
             }
-            if (CatalogAdminUserName != null)
+            if (Optional.IsDefined(CatalogAdminUserName))
             {
                 writer.WritePropertyName("catalogAdminUserName"u8);
                 writer.WriteStringValue(CatalogAdminUserName);
             }
-            if (CatalogAdminPassword != null)
+            if (Optional.IsDefined(CatalogAdminPassword))
             {
                 writer.WritePropertyName("catalogAdminPassword"u8);
-                writer.WriteObjectValue(CatalogAdminPassword);
+                writer.WriteObjectValue<SecureString>(CatalogAdminPassword);
             }
-            if (CatalogPricingTier.HasValue)
+            if (Optional.IsDefined(CatalogPricingTier))
             {
                 writer.WritePropertyName("catalogPricingTier"u8);
                 writer.WriteStringValue(CatalogPricingTier.Value.ToString());
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeSsisCatalogInfo model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<IntegrationRuntimeSsisCatalogInfo>(model);
             }
             public override IntegrationRuntimeSsisCatalogInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

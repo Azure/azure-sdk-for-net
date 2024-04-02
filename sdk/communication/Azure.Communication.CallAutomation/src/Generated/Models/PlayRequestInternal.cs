@@ -8,8 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -21,10 +19,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="playSources"/> is null. </exception>
         public PlayRequestInternal(IEnumerable<PlaySourceInternal> playSources)
         {
-            if (playSources == null)
-            {
-                throw new ArgumentNullException(nameof(playSources));
-            }
+            Argument.AssertNotNull(playSources, nameof(playSources));
 
             PlaySources = playSources.ToList();
             PlayTo = new ChangeTrackingList<CommunicationIdentifierModel>();

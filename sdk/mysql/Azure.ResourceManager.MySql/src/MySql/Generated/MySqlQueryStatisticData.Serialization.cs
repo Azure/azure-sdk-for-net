@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlQueryStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.MySql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (QueryId != null)
+            if (Optional.IsDefined(QueryId))
             {
                 writer.WritePropertyName("queryId"u8);
                 writer.WriteStringValue(QueryId);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (AggregationFunction != null)
+            if (Optional.IsDefined(AggregationFunction))
             {
                 writer.WritePropertyName("aggregationFunction"u8);
                 writer.WriteStringValue(AggregationFunction);
             }
-            if (!(DatabaseNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DatabaseNames))
             {
                 writer.WritePropertyName("databaseNames"u8);
                 writer.WriteStartArray();
@@ -79,27 +79,27 @@ namespace Azure.ResourceManager.MySql
                 }
                 writer.WriteEndArray();
             }
-            if (QueryExecutionCount.HasValue)
+            if (Optional.IsDefined(QueryExecutionCount))
             {
                 writer.WritePropertyName("queryExecutionCount"u8);
                 writer.WriteNumberValue(QueryExecutionCount.Value);
             }
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
             }
-            if (MetricDisplayName != null)
+            if (Optional.IsDefined(MetricDisplayName))
             {
                 writer.WritePropertyName("metricDisplayName"u8);
                 writer.WriteStringValue(MetricDisplayName);
             }
-            if (MetricValue.HasValue)
+            if (Optional.IsDefined(MetricValue))
             {
                 writer.WritePropertyName("metricValue"u8);
                 writer.WriteNumberValue(MetricValue.Value);
             }
-            if (MetricValueUnit != null)
+            if (Optional.IsDefined(MetricValueUnit))
             {
                 writer.WritePropertyName("metricValueUnit"u8);
                 writer.WriteStringValue(MetricValueUnit);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MySql
             var format = options.Format == "W" ? ((IPersistableModel<MySqlQueryStatisticData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.MySql
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.MySql
                         return DeserializeMySqlQueryStatisticData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlQueryStatisticData)} does not support reading '{options.Format}' format.");
             }
         }
 

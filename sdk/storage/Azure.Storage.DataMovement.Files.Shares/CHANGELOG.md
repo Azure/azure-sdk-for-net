@@ -3,6 +3,7 @@
 ## 12.0.0-beta.2 (Unreleased)
 
 ### Features Added
+- Improved upload and copying chunking strategy for large Share Files to improve speed
 
 ### Breaking Changes
 

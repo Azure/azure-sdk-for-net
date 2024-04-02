@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
-            if (HourOfDay.HasValue)
+            if (Optional.IsDefined(HourOfDay))
             {
                 writer.WritePropertyName("hourOfDay"u8);
                 writer.WriteNumberValue(HourOfDay.Value);
             }
-            if (!(DaysOfWeek is ChangeTrackingList<ScheduledActionDaysOfWeek> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DaysOfWeek))
             {
                 writer.WritePropertyName("daysOfWeek"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(WeeksOfMonth is ChangeTrackingList<ScheduledActionWeeksOfMonth> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WeeksOfMonth))
             {
                 writer.WritePropertyName("weeksOfMonth"u8);
                 writer.WriteStartArray();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DayOfMonth.HasValue)
+            if (Optional.IsDefined(DayOfMonth))
             {
                 writer.WritePropertyName("dayOfMonth"u8);
                 writer.WriteNumberValue(DayOfMonth.Value);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeScheduleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

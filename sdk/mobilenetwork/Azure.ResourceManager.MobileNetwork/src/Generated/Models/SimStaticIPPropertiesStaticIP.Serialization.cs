@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPPropertiesStaticIP>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPv4Address != null)
+            if (Optional.IsDefined(IPv4Address))
             {
                 writer.WritePropertyName("ipv4Address"u8);
                 writer.WriteStringValue(IPv4Address);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPPropertiesStaticIP>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeSimStaticIPPropertiesStaticIP(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SimStaticIPPropertiesStaticIP)} does not support reading '{options.Format}' format.");
             }
         }
 

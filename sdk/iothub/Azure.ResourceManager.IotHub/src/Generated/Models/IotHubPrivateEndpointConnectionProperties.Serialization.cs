@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
             writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-            writer.WriteObjectValue(ConnectionState);
+            writer.WriteObjectValue<IotHubPrivateLinkServiceConnectionState>(ConnectionState, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

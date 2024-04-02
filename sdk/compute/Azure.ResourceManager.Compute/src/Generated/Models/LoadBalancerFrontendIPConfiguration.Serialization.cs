@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PublicIPAddress != null)
+            if (Optional.IsDefined(PublicIPAddress))
             {
                 writer.WritePropertyName("publicIPAddress"u8);
                 JsonSerializer.Serialize(writer, PublicIPAddress);
             }
-            if (Subnet != null)
+            if (Optional.IsDefined(Subnet))
             {
                 writer.WritePropertyName("subnet"u8);
                 JsonSerializer.Serialize(writer, Subnet);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerFrontendIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLoadBalancerFrontendIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerFrontendIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomWindow != null)
+            if (Optional.IsDefined(CustomWindow))
             {
                 writer.WritePropertyName("customWindow"u8);
                 writer.WriteStringValue(CustomWindow);
             }
-            if (StartHour.HasValue)
+            if (Optional.IsDefined(StartHour))
             {
                 writer.WritePropertyName("startHour"u8);
                 writer.WriteNumberValue(StartHour.Value);
             }
-            if (StartMinute.HasValue)
+            if (Optional.IsDefined(StartMinute))
             {
                 writer.WritePropertyName("startMinute"u8);
                 writer.WriteNumberValue(StartMinute.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteNumberValue(DayOfWeek.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                         return DeserializeCosmosDBForPostgreSqlMaintenanceWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlMaintenanceWindow)} does not support reading '{options.Format}' format.");
             }
         }
 

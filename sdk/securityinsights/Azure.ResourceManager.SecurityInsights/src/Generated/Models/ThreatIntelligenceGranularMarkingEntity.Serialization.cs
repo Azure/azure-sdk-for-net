@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (MarkingRef.HasValue)
+            if (Optional.IsDefined(MarkingRef))
             {
                 writer.WritePropertyName("markingRef"u8);
                 writer.WriteNumberValue(MarkingRef.Value);
             }
-            if (!(Selectors is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Selectors))
             {
                 writer.WritePropertyName("selectors"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceGranularMarkingEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceGranularMarkingEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceGranularMarkingEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

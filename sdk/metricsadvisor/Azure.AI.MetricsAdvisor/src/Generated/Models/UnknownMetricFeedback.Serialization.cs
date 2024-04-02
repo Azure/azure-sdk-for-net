@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -22,7 +21,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 

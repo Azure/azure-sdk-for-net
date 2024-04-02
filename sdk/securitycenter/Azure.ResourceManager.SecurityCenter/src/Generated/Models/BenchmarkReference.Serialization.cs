@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenchmarkReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenchmarkReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenchmarkReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Benchmark != null)
+            if (Optional.IsDefined(Benchmark))
             {
                 writer.WritePropertyName("benchmark"u8);
                 writer.WriteStringValue(Benchmark);
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
                 writer.WriteStringValue(Reference);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenchmarkReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenchmarkReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenchmarkReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenchmarkReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenchmarkReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeBenchmarkReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenchmarkReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenchmarkReference)} does not support reading '{options.Format}' format.");
             }
         }
 

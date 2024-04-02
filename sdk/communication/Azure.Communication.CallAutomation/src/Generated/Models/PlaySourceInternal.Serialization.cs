@@ -17,25 +17,25 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (PlaySourceCacheId != null)
+            if (Optional.IsDefined(PlaySourceCacheId))
             {
                 writer.WritePropertyName("playSourceCacheId"u8);
                 writer.WriteStringValue(PlaySourceCacheId);
             }
-            if (File != null)
+            if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File);
+                writer.WriteObjectValue<FileSourceInternal>(File);
             }
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<TextSourceInternal>(Text);
             }
-            if (Ssml != null)
+            if (Optional.IsDefined(Ssml))
             {
                 writer.WritePropertyName("ssml"u8);
-                writer.WriteObjectValue(Ssml);
+                writer.WriteObjectValue<SsmlSourceInternal>(Ssml);
             }
             writer.WriteEndObject();
         }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<WaitStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WaitStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WaitType != null)
+            if (Optional.IsDefined(WaitType))
             {
                 writer.WritePropertyName("waitType"u8);
                 writer.WriteStringValue(WaitType);
             }
-            if (WaitTimeMs.HasValue)
+            if (Optional.IsDefined(WaitTimeMs))
             {
                 writer.WritePropertyName("waitTimeMs"u8);
                 writer.WriteNumberValue(WaitTimeMs.Value);
             }
-            if (WaitCount.HasValue)
+            if (Optional.IsDefined(WaitCount))
             {
                 writer.WritePropertyName("waitCount"u8);
                 writer.WriteNumberValue(WaitCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<WaitStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WaitStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeWaitStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WaitStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

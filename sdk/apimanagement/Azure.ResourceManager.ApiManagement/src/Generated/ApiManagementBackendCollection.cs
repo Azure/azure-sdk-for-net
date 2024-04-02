@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<ApiManagementBackendResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<ApiManagementBackendResource> CreateOrUpdate(WaitUntil waitUntil, string backendId, ApiManagementBackendData data, ETag? ifMatch = null, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.CreateOrUpdate");
             scope.Start();
@@ -200,14 +178,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual async Task<Response<ApiManagementBackendResource>> GetAsync(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Get");
             scope.Start();
@@ -252,14 +223,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual Response<ApiManagementBackendResource> Get(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Get");
             scope.Start();
@@ -370,14 +334,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Exists");
             scope.Start();
@@ -420,14 +377,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual Response<bool> Exists(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.Exists");
             scope.Start();
@@ -470,14 +420,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementBackendResource>> GetIfExistsAsync(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.GetIfExists");
             scope.Start();
@@ -522,14 +465,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="backendId"/> is null. </exception>
         public virtual NullableResponse<ApiManagementBackendResource> GetIfExists(string backendId, CancellationToken cancellationToken = default)
         {
-            if (backendId == null)
-            {
-                throw new ArgumentNullException(nameof(backendId));
-            }
-            if (backendId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(backendId));
-            }
+            Argument.AssertNotNullOrEmpty(backendId, nameof(backendId));
 
             using var scope = _apiManagementBackendBackendClientDiagnostics.CreateScope("ApiManagementBackendCollection.GetIfExists");
             scope.Start();

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Periods.HasValue)
+            if (Optional.IsDefined(Periods))
             {
                 writer.WritePropertyName("periods"u8);
                 writer.WriteNumberValue(Periods.Value);
             }
-            if (ThrottledPeriods.HasValue)
+            if (Optional.IsDefined(ThrottledPeriods))
             {
                 writer.WritePropertyName("throttledPeriods"u8);
                 writer.WriteNumberValue(ThrottledPeriods.Value);
             }
-            if (ThrottledTime.HasValue)
+            if (Optional.IsDefined(ThrottledTime))
             {
                 writer.WritePropertyName("throttledTime"u8);
                 writer.WriteNumberValue(ThrottledTime.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,6 +123,63 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerThrottlingInfo(periods, throttledPeriods, throttledTime, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Periods), out propertyOverride);
+            if (Optional.IsDefined(Periods) || hasPropertyOverride)
+            {
+                builder.Append("  periods: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Periods.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledPeriods), out propertyOverride);
+            if (Optional.IsDefined(ThrottledPeriods) || hasPropertyOverride)
+            {
+                builder.Append("  throttledPeriods: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ThrottledPeriods.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThrottledTime), out propertyOverride);
+            if (Optional.IsDefined(ThrottledTime) || hasPropertyOverride)
+            {
+                builder.Append("  throttledTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ThrottledTime.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ContainerThrottlingInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ContainerThrottlingInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,8 +188,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +207,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerThrottlingInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerThrottlingInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

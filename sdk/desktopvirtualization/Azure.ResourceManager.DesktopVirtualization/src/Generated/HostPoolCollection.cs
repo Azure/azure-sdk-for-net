@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DesktopVirtualization
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HostPoolResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HostPoolResource> CreateOrUpdate(WaitUntil waitUntil, string hostPoolName, HostPoolData data, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual async Task<Response<HostPoolResource>> GetAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual Response<HostPoolResource> Get(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.Get");
             scope.Start();
@@ -369,14 +333,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.Exists");
             scope.Start();
@@ -419,14 +376,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual Response<bool> Exists(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.Exists");
             scope.Start();
@@ -469,14 +419,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual async Task<NullableResponse<HostPoolResource>> GetIfExistsAsync(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
             scope.Start();
@@ -521,14 +464,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
         /// <exception cref="ArgumentNullException"> <paramref name="hostPoolName"/> is null. </exception>
         public virtual NullableResponse<HostPoolResource> GetIfExists(string hostPoolName, CancellationToken cancellationToken = default)
         {
-            if (hostPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(hostPoolName));
-            }
-            if (hostPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(hostPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(hostPoolName, nameof(hostPoolName));
 
             using var scope = _hostPoolClientDiagnostics.CreateScope("HostPoolCollection.GetIfExists");
             scope.Start();

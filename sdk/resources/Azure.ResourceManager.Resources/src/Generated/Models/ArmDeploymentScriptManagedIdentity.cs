@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Resources.Models
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Type of the managed identity. </summary>
+        [WirePath("type")]
         public ArmDeploymentScriptManagedIdentityType? IdentityType { get; set; }
         /// <summary> ID of the Azure Active Directory. </summary>
+        [WirePath("tenantId")]
         public Guid? TenantId { get; }
         /// <summary> The list of user-assigned managed identities associated with the resource. Key is the Azure resource Id of the managed identity. </summary>
+        [WirePath("userAssignedIdentities")]
         public IDictionary<string, UserAssignedIdentity> UserAssignedIdentities { get; }
     }
 }

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringCachePerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && CacheHitBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CacheHitBytes))
             {
                 writer.WritePropertyName("cacheHitBytes"u8);
                 writer.WriteNumberValue(CacheHitBytes.Value);
             }
-            if (options.Format != "W" && CacheMissBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CacheMissBytes))
             {
                 writer.WritePropertyName("cacheMissBytes"u8);
                 writer.WriteNumberValue(CacheMissBytes.Value);
             }
-            if (options.Format != "W" && CacheHitBytesPercent.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CacheHitBytesPercent))
             {
                 writer.WritePropertyName("cacheHitBytesPercent"u8);
                 writer.WriteNumberValue(CacheHitBytesPercent.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringCachePerformance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringCachePerformance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringCachePerformance)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,32 +19,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BucketName != null)
+            if (Optional.IsDefined(BucketName))
             {
                 writer.WritePropertyName("bucketName"u8);
-                writer.WriteObjectValue(BucketName);
+                writer.WriteObjectValue<object>(BucketName);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                writer.WriteObjectValue<object>(Version);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
-                writer.WriteObjectValue(FileName);
+                writer.WriteObjectValue<object>(FileName);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -121,7 +121,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, GoogleCloudStorageLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<GoogleCloudStorageLocation>(model);
             }
             public override GoogleCloudStorageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

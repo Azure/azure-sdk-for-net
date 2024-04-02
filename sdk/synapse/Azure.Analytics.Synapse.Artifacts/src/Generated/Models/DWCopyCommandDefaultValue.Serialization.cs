@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 writer.WritePropertyName("columnName"u8);
-                writer.WriteObjectValue(ColumnName);
+                writer.WriteObjectValue<object>(ColumnName);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
-                writer.WriteObjectValue(DefaultValue);
+                writer.WriteObjectValue<object>(DefaultValue);
             }
             writer.WriteEndObject();
         }
@@ -67,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DWCopyCommandDefaultValue model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DWCopyCommandDefaultValue>(model);
             }
             public override DWCopyCommandDefaultValue Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

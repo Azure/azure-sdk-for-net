@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInputValue);
+            writer.WriteObjectValue<MultiLanguageBatchInput>(AnalysisInputProperty);
             writer.WriteEndObject();
         }
     }

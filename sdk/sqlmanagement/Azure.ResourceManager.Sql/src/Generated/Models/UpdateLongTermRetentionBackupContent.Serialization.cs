@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (RequestedBackupStorageRedundancy.HasValue)
+            if (Optional.IsDefined(RequestedBackupStorageRedundancy))
             {
                 writer.WritePropertyName("requestedBackupStorageRedundancy"u8);
                 writer.WriteStringValue(RequestedBackupStorageRedundancy.Value.ToString());
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateLongTermRetentionBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeUpdateLongTermRetentionBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateLongTermRetentionBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

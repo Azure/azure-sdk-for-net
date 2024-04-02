@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkCertificateProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkCertificateProvisioning>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkCertificateProvisioning(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkCertificateProvisioning)} does not support reading '{options.Format}' format.");
             }
         }
 

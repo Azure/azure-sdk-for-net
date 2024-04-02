@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsComputePolicyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +32,12 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStringValue(ObjectId);
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType.ToString());
-            if (MaxDegreeOfParallelismPerJob.HasValue)
+            if (Optional.IsDefined(MaxDegreeOfParallelismPerJob))
             {
                 writer.WritePropertyName("maxDegreeOfParallelismPerJob"u8);
                 writer.WriteNumberValue(MaxDegreeOfParallelismPerJob.Value);
             }
-            if (MinPriorityPerJob.HasValue)
+            if (Optional.IsDefined(MinPriorityPerJob))
             {
                 writer.WritePropertyName("minPriorityPerJob"u8);
                 writer.WriteNumberValue(MinPriorityPerJob.Value);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsComputePolicyCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsComputePolicyCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsComputePolicyCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertsSuppressionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,47 +43,47 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AlertType != null)
+            if (Optional.IsDefined(AlertType))
             {
                 writer.WritePropertyName("alertType"u8);
                 writer.WriteStringValue(AlertType);
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDateUtc"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Reason != null)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (Comment != null)
+            if (Optional.IsDefined(Comment))
             {
                 writer.WritePropertyName("comment"u8);
                 writer.WriteStringValue(Comment);
             }
-            if (SuppressionAlertsScope != null)
+            if (Optional.IsDefined(SuppressionAlertsScope))
             {
                 writer.WritePropertyName("suppressionAlertsScope"u8);
-                writer.WriteObjectValue(SuppressionAlertsScope);
+                writer.WriteObjectValue<SuppressionAlertsScope>(SuppressionAlertsScope, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertsSuppressionRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityAlertsSuppressionRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertsSuppressionRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

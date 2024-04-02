@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<MessageServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MsPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MsPort))
             {
                 if (MsPort != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("msPort");
                 }
             }
-            if (options.Format != "W" && InternalMsPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InternalMsPort))
             {
                 if (InternalMsPort != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("internalMsPort");
                 }
             }
-            if (options.Format != "W" && HttpPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HttpPort))
             {
                 if (HttpPort != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("httpPort");
                 }
             }
-            if (options.Format != "W" && HttpsPort.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HttpsPort))
             {
                 if (HttpsPort != null)
                 {
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("httpsPort");
                 }
             }
-            if (options.Format != "W" && Hostname != null)
+            if (options.Format != "W" && Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
                 writer.WriteStringValue(Hostname);
             }
-            if (options.Format != "W" && IPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<MessageServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeMessageServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         internal ServerSku(string name, PostgreSqlFlexibleServerSkuTier tier)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             Tier = tier;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier Tier { get; }
     }
 }

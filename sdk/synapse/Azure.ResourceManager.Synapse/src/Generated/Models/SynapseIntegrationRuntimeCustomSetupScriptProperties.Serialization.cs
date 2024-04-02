@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeCustomSetupScriptProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BlobContainerUri != null)
+            if (Optional.IsDefined(BlobContainerUri))
             {
                 writer.WritePropertyName("blobContainerUri"u8);
                 writer.WriteStringValue(BlobContainerUri.AbsoluteUri);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                writer.WriteObjectValue<SynapseSecureString>(SasToken, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIntegrationRuntimeCustomSetupScriptProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIntegrationRuntimeCustomSetupScriptProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIntegrationRuntimeCustomSetupScriptProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RadiusServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RadiusServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RadiusServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("radiusServerAddress"u8);
             writer.WriteStringValue(RadiusServerAddress);
-            if (RadiusServerScore.HasValue)
+            if (Optional.IsDefined(RadiusServerScore))
             {
                 writer.WritePropertyName("radiusServerScore"u8);
                 writer.WriteNumberValue(RadiusServerScore.Value);
             }
-            if (RadiusServerSecret != null)
+            if (Optional.IsDefined(RadiusServerSecret))
             {
                 writer.WritePropertyName("radiusServerSecret"u8);
                 writer.WriteStringValue(RadiusServerSecret);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RadiusServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RadiusServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RadiusServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RadiusServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RadiusServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRadiusServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RadiusServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RadiusServer)} does not support reading '{options.Format}' format.");
             }
         }
 

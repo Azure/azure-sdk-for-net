@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -53,7 +52,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequest);
+            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(playRequest);
             request.Content = content;
             return message;
         }
@@ -127,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<StartTranscriptionRequestInternal>(startTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -201,7 +200,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<StopTranscriptionRequestInternal>(stopTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -335,7 +334,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequest);
+            content.JsonWriter.WriteObjectValue<RecognizeRequestInternal>(recognizeRequest);
             request.Content = content;
             return message;
         }
@@ -409,7 +408,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
+            content.JsonWriter.WriteObjectValue<ContinuousDtmfRecognitionRequestInternal>(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
@@ -483,7 +482,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(continuousDtmfRecognitionRequest);
+            content.JsonWriter.WriteObjectValue<ContinuousDtmfRecognitionRequestInternal>(continuousDtmfRecognitionRequest);
             request.Content = content;
             return message;
         }
@@ -559,7 +558,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sendDtmfTonesRequest);
+            content.JsonWriter.WriteObjectValue<SendDtmfTonesRequestInternal>(sendDtmfTonesRequest);
             request.Content = content;
             return message;
         }
@@ -643,7 +642,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(updateTranscriptionRequest);
+            content.JsonWriter.WriteObjectValue<UpdateTranscriptionRequestInternal>(updateTranscriptionRequest);
             request.Content = content;
             return message;
         }
@@ -704,6 +703,154 @@ namespace Azure.Communication.CallAutomation
             }
         }
 
+        internal HttpMessage CreateHoldRequest(string callConnectionId, HoldRequestInternal holdRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":hold", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HoldRequestInternal>(holdRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Hold participant from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="holdRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
+        public async Task<Response> HoldAsync(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (holdRequest == null)
+            {
+                throw new ArgumentNullException(nameof(holdRequest));
+            }
+
+            using var message = CreateHoldRequest(callConnectionId, holdRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Hold participant from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="holdRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="holdRequest"/> is null. </exception>
+        public Response Hold(string callConnectionId, HoldRequestInternal holdRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (holdRequest == null)
+            {
+                throw new ArgumentNullException(nameof(holdRequest));
+            }
+
+            using var message = CreateHoldRequest(callConnectionId, holdRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateUnholdRequest(string callConnectionId, UnholdRequestInternal unholdRequest)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":unhold", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UnholdRequestInternal>(unholdRequest);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Unhold participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unholdRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
+        public async Task<Response> UnholdAsync(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unholdRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unholdRequest));
+            }
+
+            using var message = CreateUnholdRequest(callConnectionId, unholdRequest);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Unhold participants from the call using identifier. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="unholdRequest"> The participants to be hold from the call. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="unholdRequest"/> is null. </exception>
+        public Response Unhold(string callConnectionId, UnholdRequestInternal unholdRequest, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (unholdRequest == null)
+            {
+                throw new ArgumentNullException(nameof(unholdRequest));
+            }
+
+            using var message = CreateUnholdRequest(callConnectionId, unholdRequest);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateStartHoldMusicRequest(string callConnectionId, StartHoldMusicRequestInternal startHoldMusicRequest)
         {
             var message = _pipeline.CreateMessage();
@@ -719,7 +866,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startHoldMusicRequest);
+            content.JsonWriter.WriteObjectValue<StartHoldMusicRequestInternal>(startHoldMusicRequest);
             request.Content = content;
             return message;
         }
@@ -793,7 +940,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(stopHoldMusicRequest);
+            content.JsonWriter.WriteObjectValue<StopHoldMusicRequestInternal>(stopHoldMusicRequest);
             request.Content = content;
             return message;
         }

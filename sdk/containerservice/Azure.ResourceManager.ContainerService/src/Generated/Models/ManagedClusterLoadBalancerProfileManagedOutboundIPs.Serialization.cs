@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Count.HasValue)
+            if (Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
             }
-            if (CountIPv6.HasValue)
+            if (Optional.IsDefined(CountIPv6))
             {
                 writer.WritePropertyName("countIPv6"u8);
                 writer.WriteNumberValue(CountIPv6.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterLoadBalancerProfileManagedOutboundIPs>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterLoadBalancerProfileManagedOutboundIPs(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterLoadBalancerProfileManagedOutboundIPs)} does not support reading '{options.Format}' format.");
             }
         }
 

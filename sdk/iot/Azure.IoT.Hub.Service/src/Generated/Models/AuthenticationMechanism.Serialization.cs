@@ -15,17 +15,17 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SymmetricKey != null)
+            if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                writer.WriteObjectValue<SymmetricKey>(SymmetricKey);
             }
-            if (X509Thumbprint != null)
+            if (Optional.IsDefined(X509Thumbprint))
             {
                 writer.WritePropertyName("x509Thumbprint"u8);
-                writer.WriteObjectValue(X509Thumbprint);
+                writer.WriteObjectValue<X509Thumbprint>(X509Thumbprint);
             }
-            if (Type.HasValue)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());

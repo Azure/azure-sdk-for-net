@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxInstances.HasValue)
+            if (Optional.IsDefined(MaxInstances))
             {
                 writer.WritePropertyName("maxInstances"u8);
                 writer.WriteNumberValue(MaxInstances.Value);
             }
-            if (MinInstances.HasValue)
+            if (Optional.IsDefined(MinInstances))
             {
                 writer.WritePropertyName("minInstances"u8);
                 writer.WriteNumberValue(MinInstances.Value);
             }
-            if (PollingInterval.HasValue)
+            if (Optional.IsDefined(PollingInterval))
             {
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteStringValue(PollingInterval.Value, "P");
             }
-            if (TargetUtilizationPercentage.HasValue)
+            if (Optional.IsDefined(TargetUtilizationPercentage))
             {
                 writer.WritePropertyName("targetUtilizationPercentage"u8);
                 writer.WriteNumberValue(TargetUtilizationPercentage.Value);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTargetUtilizationScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningTargetUtilizationScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningTargetUtilizationScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

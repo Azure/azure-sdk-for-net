@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (!(Hashes is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hashes))
             {
                 writer.WritePropertyName("hashes"u8);
                 writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceExternalReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceExternalReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceExternalReference)} does not support reading '{options.Format}' format.");
             }
         }
 

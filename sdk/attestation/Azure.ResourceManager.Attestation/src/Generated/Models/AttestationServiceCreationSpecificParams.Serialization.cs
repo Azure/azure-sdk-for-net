@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttestationServiceCreationSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (PolicySigningCertificates != null)
+            if (Optional.IsDefined(PolicySigningCertificates))
             {
                 writer.WritePropertyName("policySigningCertificates"u8);
-                writer.WriteObjectValue(PolicySigningCertificates);
+                writer.WriteObjectValue<JsonWebKeySet>(PolicySigningCertificates, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttestationServiceCreationSpecificParams>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Attestation.Models
                         return DeserializeAttestationServiceCreationSpecificParams(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationServiceCreationSpecificParams)} does not support reading '{options.Format}' format.");
             }
         }
 

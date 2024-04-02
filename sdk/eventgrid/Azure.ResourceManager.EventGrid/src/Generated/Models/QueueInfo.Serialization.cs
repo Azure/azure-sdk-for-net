@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReceiveLockDurationInSeconds.HasValue)
+            if (Optional.IsDefined(ReceiveLockDurationInSeconds))
             {
                 writer.WritePropertyName("receiveLockDurationInSeconds"u8);
                 writer.WriteNumberValue(ReceiveLockDurationInSeconds.Value);
             }
-            if (MaxDeliveryCount.HasValue)
+            if (Optional.IsDefined(MaxDeliveryCount))
             {
                 writer.WritePropertyName("maxDeliveryCount"u8);
                 writer.WriteNumberValue(MaxDeliveryCount.Value);
             }
-            if (DeadLetterDestinationWithResourceIdentity != null)
+            if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
+                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterDestinationWithResourceIdentity, options);
             }
-            if (EventTimeToLive.HasValue)
+            if (Optional.IsDefined(EventTimeToLive))
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive.Value, "P");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueueInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueueInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeQueueInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueueInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

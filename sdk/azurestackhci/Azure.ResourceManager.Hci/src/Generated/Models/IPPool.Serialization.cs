@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IPPoolType.HasValue)
+            if (Optional.IsDefined(IPPoolType))
             {
                 writer.WritePropertyName("ipPoolType"u8);
                 writer.WriteStringValue(IPPoolType.Value.ToSerialString());
             }
-            if (Start != null)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteStringValue(Start);
             }
-            if (End != null)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteStringValue(End);
             }
-            if (Info != null)
+            if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                writer.WriteObjectValue<IPPoolInfo>(Info, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeIPPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPPool)} does not support reading '{options.Format}' format.");
             }
         }
 

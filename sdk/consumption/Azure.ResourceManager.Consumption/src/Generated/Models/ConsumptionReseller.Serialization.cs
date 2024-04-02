@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReseller>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResellerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResellerId))
             {
                 writer.WritePropertyName("resellerId"u8);
                 writer.WriteStringValue(ResellerId);
             }
-            if (options.Format != "W" && ResellerDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ResellerDescription))
             {
                 writer.WritePropertyName("resellerDescription"u8);
                 writer.WriteStringValue(ResellerDescription);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReseller>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionReseller(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReseller)} does not support reading '{options.Format}' format.");
             }
         }
 

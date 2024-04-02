@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Media.Models;
 
 namespace Azure.ResourceManager.Media
@@ -284,10 +282,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StreamingEndpointResource>> UpdateAsync(WaitUntil waitUntil, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Update");
             scope.Start();
@@ -333,10 +328,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StreamingEndpointResource> Update(WaitUntil waitUntil, StreamingEndpointData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Update");
             scope.Start();
@@ -608,10 +600,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEntityScaleUnit"/> is null. </exception>
         public virtual async Task<ArmOperation> ScaleAsync(WaitUntil waitUntil, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
-            if (streamingEntityScaleUnit == null)
-            {
-                throw new ArgumentNullException(nameof(streamingEntityScaleUnit));
-            }
+            Argument.AssertNotNull(streamingEntityScaleUnit, nameof(streamingEntityScaleUnit));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Scale");
             scope.Start();
@@ -657,10 +646,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="streamingEntityScaleUnit"/> is null. </exception>
         public virtual ArmOperation Scale(WaitUntil waitUntil, StreamingEntityScaleUnit streamingEntityScaleUnit, CancellationToken cancellationToken = default)
         {
-            if (streamingEntityScaleUnit == null)
-            {
-                throw new ArgumentNullException(nameof(streamingEntityScaleUnit));
-            }
+            Argument.AssertNotNull(streamingEntityScaleUnit, nameof(streamingEntityScaleUnit));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.Scale");
             scope.Start();
@@ -706,14 +692,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<StreamingEndpointResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.AddTag");
             scope.Start();
@@ -774,14 +754,8 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<StreamingEndpointResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.AddTag");
             scope.Start();
@@ -841,10 +815,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<StreamingEndpointResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.SetTags");
             scope.Start();
@@ -901,10 +872,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<StreamingEndpointResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.SetTags");
             scope.Start();
@@ -961,10 +929,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<StreamingEndpointResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.RemoveTag");
             scope.Start();
@@ -1024,10 +989,7 @@ namespace Azure.ResourceManager.Media
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<StreamingEndpointResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _streamingEndpointClientDiagnostics.CreateScope("StreamingEndpointResource.RemoveTag");
             scope.Start();

@@ -56,22 +56,10 @@ namespace Azure.ResourceManager.MobileNetwork.Models
         /// <exception cref="ArgumentNullException"> <paramref name="vendorKeyFingerprint"/>, <paramref name="encryptedTransportKey"/>, <paramref name="signedTransportKey"/> or <paramref name="sims"/> is null. </exception>
         public EncryptedSimUploadList(int version, int azureKeyIdentifier, string vendorKeyFingerprint, string encryptedTransportKey, string signedTransportKey, IEnumerable<SimNameAndEncryptedProperties> sims)
         {
-            if (vendorKeyFingerprint == null)
-            {
-                throw new ArgumentNullException(nameof(vendorKeyFingerprint));
-            }
-            if (encryptedTransportKey == null)
-            {
-                throw new ArgumentNullException(nameof(encryptedTransportKey));
-            }
-            if (signedTransportKey == null)
-            {
-                throw new ArgumentNullException(nameof(signedTransportKey));
-            }
-            if (sims == null)
-            {
-                throw new ArgumentNullException(nameof(sims));
-            }
+            Argument.AssertNotNull(vendorKeyFingerprint, nameof(vendorKeyFingerprint));
+            Argument.AssertNotNull(encryptedTransportKey, nameof(encryptedTransportKey));
+            Argument.AssertNotNull(signedTransportKey, nameof(signedTransportKey));
+            Argument.AssertNotNull(sims, nameof(sims));
 
             Version = version;
             AzureKeyIdentifier = azureKeyIdentifier;

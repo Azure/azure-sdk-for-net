@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ObjectId.HasValue)
+            if (Optional.IsDefined(ObjectId))
             {
                 writer.WritePropertyName("oid"u8);
                 writer.WriteStringValue(ObjectId.Value);
             }
-            if (Puid != null)
+            if (Optional.IsDefined(Puid))
             {
                 writer.WritePropertyName("puid"u8);
                 writer.WriteStringValue(Puid);
             }
-            if (ApplicationId.HasValue)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId.Value);
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,6 +119,71 @@ namespace Azure.ResourceManager.Resources.Models
             return new ArmApplicationDetails(oid, puid, applicationId, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ObjectId), out propertyOverride);
+            if (Optional.IsDefined(ObjectId) || hasPropertyOverride)
+            {
+                builder.Append("  oid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ObjectId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Puid), out propertyOverride);
+            if (Optional.IsDefined(Puid) || hasPropertyOverride)
+            {
+                builder.Append("  puid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Puid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Puid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Puid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationId), out propertyOverride);
+            if (Optional.IsDefined(ApplicationId) || hasPropertyOverride)
+            {
+                builder.Append("  applicationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ApplicationId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ArmApplicationDetails>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
@@ -126,8 +192,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +211,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmApplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmApplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

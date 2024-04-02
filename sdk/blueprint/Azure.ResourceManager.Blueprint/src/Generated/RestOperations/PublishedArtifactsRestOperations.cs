@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Blueprint.Models;
@@ -69,34 +68,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/>, <paramref name="versionId"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArtifactData>> GetAsync(string resourceScope, string blueprintName, string versionId, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
-            if (artifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
 
             using var message = CreateGetRequest(resourceScope, blueprintName, versionId, artifactName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -126,34 +101,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/>, <paramref name="versionId"/> or <paramref name="artifactName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArtifactData> Get(string resourceScope, string blueprintName, string versionId, string artifactName, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
-            if (artifactName == null)
-            {
-                throw new ArgumentNullException(nameof(artifactName));
-            }
-            if (artifactName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(artifactName));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
+            Argument.AssertNotNullOrEmpty(artifactName, nameof(artifactName));
 
             using var message = CreateGetRequest(resourceScope, blueprintName, versionId, artifactName);
             _pipeline.Send(message, cancellationToken);
@@ -203,26 +154,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> or <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArtifactList>> ListAsync(string resourceScope, string blueprintName, string versionId, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var message = CreateListRequest(resourceScope, blueprintName, versionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -249,26 +183,9 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> or <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArtifactList> List(string resourceScope, string blueprintName, string versionId, CancellationToken cancellationToken = default)
         {
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var message = CreateListRequest(resourceScope, blueprintName, versionId);
             _pipeline.Send(message, cancellationToken);
@@ -310,30 +227,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> or <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ArtifactList>> ListNextPageAsync(string nextLink, string resourceScope, string blueprintName, string versionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, blueprintName, versionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -361,30 +258,10 @@ namespace Azure.ResourceManager.Blueprint
         /// <exception cref="ArgumentException"> <paramref name="blueprintName"/> or <paramref name="versionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ArtifactList> ListNextPage(string nextLink, string resourceScope, string blueprintName, string versionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (resourceScope == null)
-            {
-                throw new ArgumentNullException(nameof(resourceScope));
-            }
-            if (blueprintName == null)
-            {
-                throw new ArgumentNullException(nameof(blueprintName));
-            }
-            if (blueprintName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(blueprintName));
-            }
-            if (versionId == null)
-            {
-                throw new ArgumentNullException(nameof(versionId));
-            }
-            if (versionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(versionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(resourceScope, nameof(resourceScope));
+            Argument.AssertNotNullOrEmpty(blueprintName, nameof(blueprintName));
+            Argument.AssertNotNullOrEmpty(versionId, nameof(versionId));
 
             using var message = CreateListNextPageRequest(nextLink, resourceScope, blueprintName, versionId);
             _pipeline.Send(message, cancellationToken);

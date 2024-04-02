@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryDiskEncryptionKeyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SecretIdentifier != null)
+            if (Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (KeyVaultResourceArmId != null)
+            if (Optional.IsDefined(KeyVaultResourceArmId))
             {
                 writer.WritePropertyName("keyVaultResourceArmId"u8);
                 writer.WriteStringValue(KeyVaultResourceArmId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryDiskEncryptionKeyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryDiskEncryptionKeyInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryDiskEncryptionKeyInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

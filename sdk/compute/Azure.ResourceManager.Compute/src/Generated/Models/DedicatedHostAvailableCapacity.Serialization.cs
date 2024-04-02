@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAvailableCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AllocatableVms is ChangeTrackingList<DedicatedHostAllocatableVm> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllocatableVms))
             {
                 writer.WritePropertyName("allocatableVMs"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllocatableVms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DedicatedHostAllocatableVm>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DedicatedHostAvailableCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDedicatedHostAvailableCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DedicatedHostAvailableCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

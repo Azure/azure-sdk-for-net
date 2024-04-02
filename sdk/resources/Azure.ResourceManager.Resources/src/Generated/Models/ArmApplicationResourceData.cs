@@ -76,8 +76,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> ID of the resource that manages this resource. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
         /// <summary> The SKU of the resource. </summary>
+        [WirePath("sku")]
         public ArmApplicationSku Sku { get; set; }
     }
 }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (OwnersCount.HasValue)
+            if (Optional.IsDefined(OwnersCount))
             {
                 writer.WritePropertyName("ownersCount"u8);
                 writer.WriteNumberValue(OwnersCount.Value);
             }
-            if (ReposCount.HasValue)
+            if (Optional.IsDefined(ReposCount))
             {
                 writer.WritePropertyName("reposCount"u8);
                 writer.WriteNumberValue(ReposCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorStatsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeGitHubConnectorStatsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorStatsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AuthType.HasValue)
+            if (Optional.IsDefined(AuthType))
             {
                 writer.WritePropertyName("authType"u8);
                 writer.WriteStringValue(AuthType.Value.ToString());
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && AadAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(AadAuthority))
             {
                 writer.WritePropertyName("aadAuthority"u8);
                 writer.WriteStringValue(AadAuthority);
             }
-            if (options.Format != "W" && AadTenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (options.Format != "W" && ServicePrincipalClientId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalClientId))
             {
                 writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId.Value);
             }
-            if (options.Format != "W" && ServicePrincipalObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServicePrincipalObjectId))
             {
                 writer.WritePropertyName("servicePrincipalObjectId"u8);
                 writer.WriteStringValue(ServicePrincipalObjectId.Value);
             }
-            if (options.Format != "W" && AzureManagementEndpointAudience != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureManagementEndpointAudience))
             {
                 writer.WritePropertyName("azureManagementEndpointAudience"u8);
                 writer.WriteStringValue(AzureManagementEndpointAudience);
             }
-            if (options.Format != "W" && AadAudience != null)
+            if (options.Format != "W" && Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeUploadCertificateResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

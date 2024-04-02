@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSupportedSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSupportedSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSupportedSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmSku != null)
+            if (Optional.IsDefined(VmSku))
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
             }
-            if (IsAppServerCertified.HasValue)
+            if (Optional.IsDefined(IsAppServerCertified))
             {
                 writer.WritePropertyName("isAppServerCertified"u8);
                 writer.WriteBooleanValue(IsAppServerCertified.Value);
             }
-            if (IsDatabaseCertified.HasValue)
+            if (Optional.IsDefined(IsDatabaseCertified))
             {
                 writer.WritePropertyName("isDatabaseCertified"u8);
                 writer.WriteBooleanValue(IsDatabaseCertified.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSupportedSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSupportedSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSupportedSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapSupportedSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSupportedSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapSupportedSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapSupportedSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSupportedSku)} does not support reading '{options.Format}' format.");
             }
         }
 

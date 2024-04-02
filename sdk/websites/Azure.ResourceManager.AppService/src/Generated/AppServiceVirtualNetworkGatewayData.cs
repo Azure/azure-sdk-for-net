@@ -73,10 +73,13 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> The Virtual Network name. </summary>
+        [WirePath("properties.vnetName")]
         public string VnetName { get; set; }
         /// <summary> The URI where the VPN package can be downloaded. </summary>
+        [WirePath("properties.vpnPackageUri")]
         public Uri VpnPackageUri { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

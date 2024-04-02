@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("tableName"u8);
                 writer.WriteStringValue(TableName);
             }
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleStorageTableDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleStorageTableDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleStorageTableDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

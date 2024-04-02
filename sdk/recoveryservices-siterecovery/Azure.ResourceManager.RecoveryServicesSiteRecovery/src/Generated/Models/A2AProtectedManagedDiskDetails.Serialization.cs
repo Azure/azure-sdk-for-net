@@ -22,106 +22,106 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (RecoveryResourceGroupId != null)
+            if (Optional.IsDefined(RecoveryResourceGroupId))
             {
                 writer.WritePropertyName("recoveryResourceGroupId"u8);
                 writer.WriteStringValue(RecoveryResourceGroupId);
             }
-            if (RecoveryTargetDiskId != null)
+            if (Optional.IsDefined(RecoveryTargetDiskId))
             {
                 writer.WritePropertyName("recoveryTargetDiskId"u8);
                 writer.WriteStringValue(RecoveryTargetDiskId);
             }
-            if (RecoveryReplicaDiskId != null)
+            if (Optional.IsDefined(RecoveryReplicaDiskId))
             {
                 writer.WritePropertyName("recoveryReplicaDiskId"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskId);
             }
-            if (RecoveryOrignalTargetDiskId != null)
+            if (Optional.IsDefined(RecoveryOrignalTargetDiskId))
             {
                 writer.WritePropertyName("recoveryOrignalTargetDiskId"u8);
                 writer.WriteStringValue(RecoveryOrignalTargetDiskId);
             }
-            if (RecoveryReplicaDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (RecoveryTargetDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (RecoveryDiskEncryptionSetId != null)
+            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (PrimaryDiskEncryptionSetId != null)
+            if (Optional.IsDefined(PrimaryDiskEncryptionSetId))
             {
                 writer.WritePropertyName("primaryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(PrimaryDiskEncryptionSetId);
             }
-            if (DiskName != null)
+            if (Optional.IsDefined(DiskName))
             {
                 writer.WritePropertyName("diskName"u8);
                 writer.WriteStringValue(DiskName);
             }
-            if (DiskCapacityInBytes.HasValue)
+            if (Optional.IsDefined(DiskCapacityInBytes))
             {
                 writer.WritePropertyName("diskCapacityInBytes"u8);
                 writer.WriteNumberValue(DiskCapacityInBytes.Value);
             }
-            if (PrimaryStagingAzureStorageAccountId != null)
+            if (Optional.IsDefined(PrimaryStagingAzureStorageAccountId))
             {
                 writer.WritePropertyName("primaryStagingAzureStorageAccountId"u8);
                 writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
             }
-            if (DiskType != null)
+            if (Optional.IsDefined(DiskType))
             {
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType);
             }
-            if (IsResyncRequired.HasValue)
+            if (Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (MonitoringPercentageCompletion.HasValue)
+            if (Optional.IsDefined(MonitoringPercentageCompletion))
             {
                 writer.WritePropertyName("monitoringPercentageCompletion"u8);
                 writer.WriteNumberValue(MonitoringPercentageCompletion.Value);
             }
-            if (MonitoringJobType != null)
+            if (Optional.IsDefined(MonitoringJobType))
             {
                 writer.WritePropertyName("monitoringJobType"u8);
                 writer.WriteStringValue(MonitoringJobType);
             }
-            if (DataPendingInStagingStorageAccountInMB.HasValue)
+            if (Optional.IsDefined(DataPendingInStagingStorageAccountInMB))
             {
                 writer.WritePropertyName("dataPendingInStagingStorageAccountInMB"u8);
                 writer.WriteNumberValue(DataPendingInStagingStorageAccountInMB.Value);
             }
-            if (DataPendingAtSourceAgentInMB.HasValue)
+            if (Optional.IsDefined(DataPendingAtSourceAgentInMB))
             {
                 writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
                 writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
             }
-            if (DiskState != null)
+            if (Optional.IsDefined(DiskState))
             {
                 writer.WritePropertyName("diskState"u8);
                 writer.WriteStringValue(DiskState);
             }
-            if (!(AllowedDiskLevelOperation is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedDiskLevelOperation))
             {
                 writer.WritePropertyName("allowedDiskLevelOperation"u8);
                 writer.WriteStartArray();
@@ -131,42 +131,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsDiskEncrypted.HasValue)
+            if (Optional.IsDefined(IsDiskEncrypted))
             {
                 writer.WritePropertyName("isDiskEncrypted"u8);
                 writer.WriteBooleanValue(IsDiskEncrypted.Value);
             }
-            if (SecretIdentifier != null)
+            if (Optional.IsDefined(SecretIdentifier))
             {
                 writer.WritePropertyName("secretIdentifier"u8);
                 writer.WriteStringValue(SecretIdentifier);
             }
-            if (DekKeyVaultArmId != null)
+            if (Optional.IsDefined(DekKeyVaultArmId))
             {
                 writer.WritePropertyName("dekKeyVaultArmId"u8);
                 writer.WriteStringValue(DekKeyVaultArmId);
             }
-            if (IsDiskKeyEncrypted.HasValue)
+            if (Optional.IsDefined(IsDiskKeyEncrypted))
             {
                 writer.WritePropertyName("isDiskKeyEncrypted"u8);
                 writer.WriteBooleanValue(IsDiskKeyEncrypted.Value);
             }
-            if (KeyIdentifier != null)
+            if (Optional.IsDefined(KeyIdentifier))
             {
                 writer.WritePropertyName("keyIdentifier"u8);
                 writer.WriteStringValue(KeyIdentifier);
             }
-            if (KekKeyVaultArmId != null)
+            if (Optional.IsDefined(KekKeyVaultArmId))
             {
                 writer.WritePropertyName("kekKeyVaultArmId"u8);
                 writer.WriteStringValue(KekKeyVaultArmId);
             }
-            if (FailoverDiskName != null)
+            if (Optional.IsDefined(FailoverDiskName))
             {
                 writer.WritePropertyName("failoverDiskName"u8);
                 writer.WriteStringValue(FailoverDiskName);
             }
-            if (TfoDiskName != null)
+            if (Optional.IsDefined(TfoDiskName))
             {
                 writer.WritePropertyName("tfoDiskName"u8);
                 writer.WriteStringValue(TfoDiskName);
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectedManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AProtectedManagedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectedManagedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

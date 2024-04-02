@@ -18,25 +18,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceDatabase != null)
+            if (Optional.IsDefined(SourceDatabase))
             {
                 writer.WritePropertyName("sourceDatabase"u8);
-                writer.WriteObjectValue(SourceDatabase);
+                writer.WriteObjectValue<LinkConnectionSourceDatabase>(SourceDatabase);
             }
-            if (TargetDatabase != null)
+            if (Optional.IsDefined(TargetDatabase))
             {
                 writer.WritePropertyName("targetDatabase"u8);
-                writer.WriteObjectValue(TargetDatabase);
+                writer.WriteObjectValue<LinkConnectionTargetDatabase>(TargetDatabase);
             }
-            if (LandingZone != null)
+            if (Optional.IsDefined(LandingZone))
             {
                 writer.WritePropertyName("landingZone"u8);
-                writer.WriteObjectValue(LandingZone);
+                writer.WriteObjectValue<LinkConnectionLandingZone>(LandingZone);
             }
-            if (Compute != null)
+            if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                writer.WriteObjectValue<LinkConnectionCompute>(Compute);
             }
             writer.WriteEndObject();
         }
@@ -97,7 +97,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LinkConnection model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkConnection>(model);
             }
             public override LinkConnection Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

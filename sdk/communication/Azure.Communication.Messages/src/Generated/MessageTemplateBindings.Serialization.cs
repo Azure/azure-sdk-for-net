@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Communication.Messages.Models.Channels;
 using Azure.Core;
 
@@ -24,12 +23,12 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +52,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateBindings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +86,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +102,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMessageTemplateBindings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateBindings)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -121,7 +120,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplateBindings>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

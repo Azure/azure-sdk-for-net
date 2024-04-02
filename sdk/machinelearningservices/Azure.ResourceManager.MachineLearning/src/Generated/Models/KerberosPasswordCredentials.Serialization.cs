@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("secrets"u8);
-            writer.WriteObjectValue(Secrets);
+            writer.WriteObjectValue<KerberosPasswordSecrets>(Secrets, options);
             writer.WritePropertyName("kerberosKdcAddress"u8);
             writer.WriteStringValue(KerberosKdcAddress);
             writer.WritePropertyName("kerberosPrincipal"u8);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeKerberosPasswordCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KerberosPasswordCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

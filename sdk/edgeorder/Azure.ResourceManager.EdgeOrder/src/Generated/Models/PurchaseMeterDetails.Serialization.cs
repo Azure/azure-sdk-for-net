@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurchaseMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProductId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductId))
             {
                 writer.WritePropertyName("productId"u8);
                 writer.WriteStringValue(ProductId);
             }
-            if (options.Format != "W" && SkuId != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && TermId != null)
+            if (options.Format != "W" && Optional.IsDefined(TermId))
             {
                 writer.WritePropertyName("termId"u8);
                 writer.WriteStringValue(TermId);
             }
             writer.WritePropertyName("billingType"u8);
             writer.WriteStringValue(BillingType.ToString());
-            if (options.Format != "W" && Multiplier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
             }
-            if (options.Format != "W" && ChargingType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChargingType))
             {
                 writer.WritePropertyName("chargingType"u8);
                 writer.WriteStringValue(ChargingType.Value.ToString());
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurchaseMeterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializePurchaseMeterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurchaseMeterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

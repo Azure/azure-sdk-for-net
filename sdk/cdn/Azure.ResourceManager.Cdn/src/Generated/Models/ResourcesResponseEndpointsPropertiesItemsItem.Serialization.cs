@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponseEndpointsPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (EndpointId != null)
+            if (Optional.IsDefined(EndpointId))
             {
                 writer.WritePropertyName("endpointId"u8);
                 writer.WriteStringValue(EndpointId);
             }
-            if (History.HasValue)
+            if (Optional.IsDefined(History))
             {
                 writer.WritePropertyName("history"u8);
                 writer.WriteBooleanValue(History.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponseEndpointsPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeResourcesResponseEndpointsPropertiesItemsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsPropertiesItemsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

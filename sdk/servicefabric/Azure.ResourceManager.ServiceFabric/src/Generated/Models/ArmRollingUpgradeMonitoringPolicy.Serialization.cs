@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FailureAction.HasValue)
+            if (Optional.IsDefined(FailureAction))
             {
                 writer.WritePropertyName("failureAction"u8);
                 writer.WriteStringValue(FailureAction.Value.ToString());
             }
-            if (HealthCheckWaitDuration.HasValue)
+            if (Optional.IsDefined(HealthCheckWaitDuration))
             {
                 writer.WritePropertyName("healthCheckWaitDuration"u8);
                 writer.WriteStringValue(HealthCheckWaitDuration.Value, "c");
             }
-            if (HealthCheckStableDuration.HasValue)
+            if (Optional.IsDefined(HealthCheckStableDuration))
             {
                 writer.WritePropertyName("healthCheckStableDuration"u8);
                 writer.WriteStringValue(HealthCheckStableDuration.Value, "c");
             }
-            if (HealthCheckRetryTimeout.HasValue)
+            if (Optional.IsDefined(HealthCheckRetryTimeout))
             {
                 writer.WritePropertyName("healthCheckRetryTimeout"u8);
                 writer.WriteStringValue(HealthCheckRetryTimeout.Value, "c");
             }
-            if (UpgradeTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeTimeout))
             {
                 writer.WritePropertyName("upgradeTimeout"u8);
                 writer.WriteStringValue(UpgradeTimeout.Value, "c");
             }
-            if (UpgradeDomainTimeout.HasValue)
+            if (Optional.IsDefined(UpgradeDomainTimeout))
             {
                 writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeArmRollingUpgradeMonitoringPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

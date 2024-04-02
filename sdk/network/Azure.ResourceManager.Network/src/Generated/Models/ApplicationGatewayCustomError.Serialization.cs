@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayCustomError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StatusCode.HasValue)
+            if (Optional.IsDefined(StatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
                 writer.WriteStringValue(StatusCode.Value.ToString());
             }
-            if (CustomErrorPageUri != null)
+            if (Optional.IsDefined(CustomErrorPageUri))
             {
                 writer.WritePropertyName("customErrorPageUrl"u8);
                 writer.WriteStringValue(CustomErrorPageUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayCustomError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayCustomError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support reading '{options.Format}' format.");
             }
         }
 

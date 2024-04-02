@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<MatchConfigurationIPGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IPAddressType.HasValue)
+            if (Optional.IsDefined(IPAddressType))
             {
                 writer.WritePropertyName("ipAddressType"u8);
                 writer.WriteStringValue(IPAddressType.Value.ToString());
             }
-            if (!(IPPrefixes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPrefixes))
             {
                 writer.WritePropertyName("ipPrefixes"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<MatchConfigurationIPGroupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeMatchConfigurationIPGroupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MatchConfigurationIPGroupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

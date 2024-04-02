@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingMetricsStatus.HasValue)
+            if (Optional.IsDefined(SendingMetricsStatus))
             {
                 writer.WritePropertyName("sendingMetrics"u8);
                 writer.WriteStringValue(SendingMetricsStatus.Value.ToString());
             }
-            if (ReasonForMetricsStatus != null)
+            if (Optional.IsDefined(ReasonForMetricsStatus))
             {
                 writer.WritePropertyName("reasonForMetricsStatus"u8);
                 writer.WriteStringValue(ReasonForMetricsStatus);
             }
-            if (SendingLogsStatus.HasValue)
+            if (Optional.IsDefined(SendingLogsStatus))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogsStatus.Value.ToString());
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitoredResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceMonitoredResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitoredResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

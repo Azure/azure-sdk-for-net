@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceCreationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceCreationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceCreationData)} does not support reading '{options.Format}' format.");
             }
         }
 

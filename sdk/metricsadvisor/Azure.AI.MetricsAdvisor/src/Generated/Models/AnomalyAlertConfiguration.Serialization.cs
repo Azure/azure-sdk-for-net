@@ -18,17 +18,17 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (CrossMetricsOperator.HasValue)
+            if (Optional.IsDefined(CrossMetricsOperator))
             {
                 writer.WritePropertyName("crossMetricsOperator"u8);
                 writer.WriteStringValue(CrossMetricsOperator.Value.ToString());
             }
-            if (!(DimensionsToSplitAlert is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionsToSplitAlert))
             {
                 writer.WritePropertyName("splitAlertByDimensions"u8);
                 writer.WriteStartArray();
@@ -49,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in MetricAlertConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MetricAlertConfiguration>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

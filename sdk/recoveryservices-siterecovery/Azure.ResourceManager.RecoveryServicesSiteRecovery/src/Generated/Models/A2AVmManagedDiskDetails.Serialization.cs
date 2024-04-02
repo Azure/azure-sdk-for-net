@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,25 +32,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(PrimaryStagingAzureStorageAccountId);
             writer.WritePropertyName("recoveryResourceGroupId"u8);
             writer.WriteStringValue(RecoveryResourceGroupId);
-            if (RecoveryReplicaDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
                 writer.WritePropertyName("recoveryReplicaDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryReplicaDiskAccountType);
             }
-            if (RecoveryTargetDiskAccountType != null)
+            if (Optional.IsDefined(RecoveryTargetDiskAccountType))
             {
                 writer.WritePropertyName("recoveryTargetDiskAccountType"u8);
                 writer.WriteStringValue(RecoveryTargetDiskAccountType);
             }
-            if (RecoveryDiskEncryptionSetId != null)
+            if (Optional.IsDefined(RecoveryDiskEncryptionSetId))
             {
                 writer.WritePropertyName("recoveryDiskEncryptionSetId"u8);
                 writer.WriteStringValue(RecoveryDiskEncryptionSetId);
             }
-            if (DiskEncryptionInfo != null)
+            if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AVmManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AVmManagedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AVmManagedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

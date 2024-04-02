@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SendToSubscriptionAdministrator.HasValue)
+            if (Optional.IsDefined(SendToSubscriptionAdministrator))
             {
                 writer.WritePropertyName("sendToSubscriptionAdministrator"u8);
                 writer.WriteBooleanValue(SendToSubscriptionAdministrator.Value);
             }
-            if (SendToSubscriptionCoAdministrators.HasValue)
+            if (Optional.IsDefined(SendToSubscriptionCoAdministrators))
             {
                 writer.WritePropertyName("sendToSubscriptionCoAdministrators"u8);
                 writer.WriteBooleanValue(SendToSubscriptionCoAdministrators.Value);
             }
-            if (!(CustomEmails is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomEmails))
             {
                 writer.WritePropertyName("customEmails"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmailNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeEmailNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmailNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

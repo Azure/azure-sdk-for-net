@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BandwidthInMbps.HasValue)
+            if (Optional.IsDefined(BandwidthInMbps))
             {
                 writer.WritePropertyName("bandwidthInMbps"u8);
                 writer.WriteNumberValue(BandwidthInMbps.Value);
             }
-            if (options.Format != "W" && ProvisionedBandwidthInMbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisionedBandwidthInMbps))
             {
                 writer.WritePropertyName("provisionedBandwidthInMbps"u8);
                 writer.WriteNumberValue(ProvisionedBandwidthInMbps.Value);
             }
-            if (SessionAddressProvider.HasValue)
+            if (Optional.IsDefined(SessionAddressProvider))
             {
                 writer.WritePropertyName("sessionAddressProvider"u8);
                 writer.WriteStringValue(SessionAddressProvider.Value.ToString());
             }
-            if (UseForPeeringService.HasValue)
+            if (Optional.IsDefined(UseForPeeringService))
             {
                 writer.WritePropertyName("useForPeeringService"u8);
                 writer.WriteBooleanValue(UseForPeeringService.Value);
             }
-            if (options.Format != "W" && MicrosoftTrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(MicrosoftTrackingId))
             {
                 writer.WritePropertyName("microsoftTrackingId"u8);
                 writer.WriteStringValue(MicrosoftTrackingId);
             }
-            if (PeeringDBFacilityId.HasValue)
+            if (Optional.IsDefined(PeeringDBFacilityId))
             {
                 writer.WritePropertyName("peeringDBFacilityId"u8);
                 writer.WriteNumberValue(PeeringDBFacilityId.Value);
             }
-            if (options.Format != "W" && ConnectionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
                 writer.WriteStringValue(ConnectionState.Value.ToString());
             }
-            if (BgpSession != null)
+            if (Optional.IsDefined(BgpSession))
             {
                 writer.WritePropertyName("bgpSession"u8);
-                writer.WriteObjectValue(BgpSession);
+                writer.WriteObjectValue<PeeringBgpSession>(BgpSession, options);
             }
-            if (ConnectionIdentifier != null)
+            if (Optional.IsDefined(ConnectionIdentifier))
             {
                 writer.WritePropertyName("connectionIdentifier"u8);
                 writer.WriteStringValue(ConnectionIdentifier);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringDirectConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringDirectConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringDirectConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

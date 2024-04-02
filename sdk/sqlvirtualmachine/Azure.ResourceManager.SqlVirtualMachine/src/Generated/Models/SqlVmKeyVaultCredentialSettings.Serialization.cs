@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmKeyVaultCredentialSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CredentialName != null)
+            if (Optional.IsDefined(CredentialName))
             {
                 writer.WritePropertyName("credentialName"u8);
                 writer.WriteStringValue(CredentialName);
             }
-            if (AzureKeyVaultUri != null)
+            if (Optional.IsDefined(AzureKeyVaultUri))
             {
                 writer.WritePropertyName("azureKeyVaultUrl"u8);
                 writer.WriteStringValue(AzureKeyVaultUri.AbsoluteUri);
             }
-            if (ServicePrincipalName != null)
+            if (Optional.IsDefined(ServicePrincipalName))
             {
                 writer.WritePropertyName("servicePrincipalName"u8);
                 writer.WriteStringValue(ServicePrincipalName);
             }
-            if (ServicePrincipalSecret != null)
+            if (Optional.IsDefined(ServicePrincipalSecret))
             {
                 writer.WritePropertyName("servicePrincipalSecret"u8);
                 writer.WriteStringValue(ServicePrincipalSecret);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmKeyVaultCredentialSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmKeyVaultCredentialSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmKeyVaultCredentialSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,31 +23,31 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAttributes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled.HasValue)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(Enabled.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("nbf"u8);
                 writer.WriteNumberValue(NotBefore.Value, "U");
             }
-            if (Expires.HasValue)
+            if (Optional.IsDefined(Expires))
             {
                 writer.WritePropertyName("exp"u8);
                 writer.WriteNumberValue(Expires.Value, "U");
             }
-            if (options.Format != "W" && Created.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Created))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(Created.Value, "U");
             }
-            if (options.Format != "W" && Updated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Updated))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(Updated.Value, "U");
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecretAttributes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,6 +159,96 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotBefore), out propertyOverride);
+            if (Optional.IsDefined(NotBefore) || hasPropertyOverride)
+            {
+                builder.Append("  nbf: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(NotBefore.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expires), out propertyOverride);
+            if (Optional.IsDefined(Expires) || hasPropertyOverride)
+            {
+                builder.Append("  exp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(Expires.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Created), out propertyOverride);
+            if (Optional.IsDefined(Created) || hasPropertyOverride)
+            {
+                builder.Append("  created: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(Created.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Updated), out propertyOverride);
+            if (Optional.IsDefined(Updated) || hasPropertyOverride)
+            {
+                builder.Append("  updated: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(Updated.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecretAttributes>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecretAttributes>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,8 +257,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +276,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeSecretAttributes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecretAttributes)} does not support reading '{options.Format}' format.");
             }
         }
 

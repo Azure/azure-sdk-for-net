@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinitionDistributionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ScoreThreshold.HasValue)
+            if (Optional.IsDefined(ScoreThreshold))
             {
                 writer.WritePropertyName("scoreThreshold"u8);
                 writer.WriteNumberValue(ScoreThreshold.Value);
             }
-            if (Positives.HasValue)
+            if (Optional.IsDefined(Positives))
             {
                 writer.WritePropertyName("positives"u8);
                 writer.WriteNumberValue(Positives.Value);
             }
-            if (Negatives.HasValue)
+            if (Optional.IsDefined(Negatives))
             {
                 writer.WritePropertyName("negatives"u8);
                 writer.WriteNumberValue(Negatives.Value);
             }
-            if (PositivesAboveThreshold.HasValue)
+            if (Optional.IsDefined(PositivesAboveThreshold))
             {
                 writer.WritePropertyName("positivesAboveThreshold"u8);
                 writer.WriteNumberValue(PositivesAboveThreshold.Value);
             }
-            if (NegativesAboveThreshold.HasValue)
+            if (Optional.IsDefined(NegativesAboveThreshold))
             {
                 writer.WritePropertyName("negativesAboveThreshold"u8);
                 writer.WriteNumberValue(NegativesAboveThreshold.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinitionDistributionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionDistributionDefinitionDistributionsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

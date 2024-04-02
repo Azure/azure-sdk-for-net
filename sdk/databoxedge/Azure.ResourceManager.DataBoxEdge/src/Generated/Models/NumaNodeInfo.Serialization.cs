@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NumaNodeIndex.HasValue)
+            if (Optional.IsDefined(NumaNodeIndex))
             {
                 writer.WritePropertyName("numaNodeIndex"u8);
                 writer.WriteNumberValue(NumaNodeIndex.Value);
             }
-            if (TotalMemoryInMB.HasValue)
+            if (Optional.IsDefined(TotalMemoryInMB))
             {
                 writer.WritePropertyName("totalMemoryInMb"u8);
                 writer.WriteNumberValue(TotalMemoryInMB.Value);
             }
-            if (LogicalCoreCountPerCore.HasValue)
+            if (Optional.IsDefined(LogicalCoreCountPerCore))
             {
                 writer.WritePropertyName("logicalCoreCountPerCore"u8);
                 writer.WriteNumberValue(LogicalCoreCountPerCore.Value);
             }
-            if (EffectiveAvailableMemoryInMB.HasValue)
+            if (Optional.IsDefined(EffectiveAvailableMemoryInMB))
             {
                 writer.WritePropertyName("effectiveAvailableMemoryInMb"u8);
                 writer.WriteNumberValue(EffectiveAvailableMemoryInMB.Value);
             }
-            if (!(FreeVCpuIndexesForHpn is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FreeVCpuIndexesForHpn))
             {
                 writer.WritePropertyName("freeVCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VCpuIndexesForHpn is ChangeTrackingList<int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VCpuIndexesForHpn))
             {
                 writer.WritePropertyName("vCpuIndexesForHpn"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VCpuIndexesForRoot is ChangeTrackingList<int> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VCpuIndexesForRoot))
             {
                 writer.WritePropertyName("vCpuIndexesForRoot"u8);
                 writer.WriteStartArray();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<NumaNodeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeNumaNodeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NumaNodeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

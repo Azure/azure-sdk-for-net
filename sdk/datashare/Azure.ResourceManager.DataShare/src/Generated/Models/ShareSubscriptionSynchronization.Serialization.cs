@@ -22,38 +22,38 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DurationInMilliSeconds.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DurationInMilliSeconds))
             {
                 writer.WritePropertyName("durationMs"u8);
                 writer.WriteNumberValue(DurationInMilliSeconds.Value);
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
             writer.WritePropertyName("synchronizationId"u8);
             writer.WriteStringValue(SynchronizationId);
-            if (options.Format != "W" && SynchronizationMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SynchronizationMode))
             {
                 writer.WritePropertyName("synchronizationMode"u8);
                 writer.WriteStringValue(SynchronizationMode.Value.ToString());
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareSubscriptionSynchronization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeShareSubscriptionSynchronization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareSubscriptionSynchronization)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BillingFrequency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (options.Format != "W" && ProductTypeId != null)
+            if (options.Format != "W" && Optional.IsDefined(ProductTypeId))
             {
                 writer.WritePropertyName("productTypeId"u8);
                 writer.WriteStringValue(ProductTypeId);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && SkuId != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && TermDuration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionRenewalTermDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeSubscriptionRenewalTermDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionRenewalTermDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

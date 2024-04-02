@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PowerBIDedicated;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Mocking
@@ -192,10 +189,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<CheckCapacityNameAvailabilityResult>> CheckNameAvailabilityCapacityAsync(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
             scope.Start();
@@ -238,10 +232,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<CheckCapacityNameAvailabilityResult> CheckNameAvailabilityCapacity(AzureLocation location, CheckCapacityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = DedicatedCapacityCapacitiesClientDiagnostics.CreateScope("MockablePowerBIDedicatedSubscriptionResource.CheckNameAvailabilityCapacity");
             scope.Start();

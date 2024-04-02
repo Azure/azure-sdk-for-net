@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmSize.HasValue)
+            if (Optional.IsDefined(VmSize))
             {
                 writer.WritePropertyName("vmSize"u8);
                 writer.WriteStringValue(VmSize.Value.ToString());
             }
-            if (Processors.HasValue)
+            if (Optional.IsDefined(Processors))
             {
                 writer.WritePropertyName("processors"u8);
                 writer.WriteNumberValue(Processors.Value);
             }
-            if (MemoryMB.HasValue)
+            if (Optional.IsDefined(MemoryMB))
             {
                 writer.WritePropertyName("memoryMB"u8);
                 writer.WriteNumberValue(MemoryMB.Value);
             }
-            if (DynamicMemoryConfig != null)
+            if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesHardwareProfileDynamicMemoryConfig>(DynamicMemoryConfig, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstancePropertiesHardwareProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesHardwareProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

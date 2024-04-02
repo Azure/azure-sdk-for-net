@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastOutputEventTimestamp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LastOutputEventOn.HasValue)
+            if (Optional.IsDefined(LastOutputEventOn))
             {
                 writer.WritePropertyName("lastOutputEventTime"u8);
                 writer.WriteStringValue(LastOutputEventOn.Value, "O");
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastOutputEventTimestamp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeLastOutputEventTimestamp(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastOutputEventTimestamp)} does not support reading '{options.Format}' format.");
             }
         }
 

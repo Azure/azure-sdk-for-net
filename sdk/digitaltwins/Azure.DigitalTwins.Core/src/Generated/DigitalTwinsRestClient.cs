@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -167,7 +166,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -211,7 +210,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(relationship);
+            content.JsonWriter.WriteObjectValue<object>(relationship);
             request.Content = content;
             return message;
         }
@@ -343,7 +342,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -478,7 +477,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(telemetry);
+            content.JsonWriter.WriteObjectValue<object>(telemetry);
             request.Content = content;
             return message;
         }
@@ -505,7 +504,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(telemetry);
+            content.JsonWriter.WriteObjectValue<object>(telemetry);
             request.Content = content;
             return message;
         }
@@ -555,7 +554,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;

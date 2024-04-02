@@ -50,20 +50,19 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         internal SshConnectivityEndpoint(string endpoint)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
 
             Endpoint = endpoint;
         }
 
         /// <summary> Initializes a new instance of <see cref="SshConnectivityEndpoint"/>. </summary>
         /// <param name="endpoint"> SSH connectivity endpoint. </param>
+        /// <param name="privateSshEndpoint"> Private SSH connectivity endpoint. This property will only be returned when enableInternalIngress is true. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SshConnectivityEndpoint(string endpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SshConnectivityEndpoint(string endpoint, string privateSshEndpoint, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Endpoint = endpoint;
+            PrivateSshEndpoint = privateSshEndpoint;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -74,5 +73,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
 
         /// <summary> SSH connectivity endpoint. </summary>
         public string Endpoint { get; }
+        /// <summary> Private SSH connectivity endpoint. This property will only be returned when enableInternalIngress is true. </summary>
+        public string PrivateSshEndpoint { get; }
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -15,30 +16,30 @@ namespace Azure.Communication
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Kind.HasValue)
+            if (Chat.Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (RawId != null)
+            if (Chat.Optional.IsDefined(RawId))
             {
                 writer.WritePropertyName("rawId"u8);
                 writer.WriteStringValue(RawId);
             }
-            if (CommunicationUser != null)
+            if (Chat.Optional.IsDefined(CommunicationUser))
             {
                 writer.WritePropertyName("communicationUser"u8);
-                writer.WriteObjectValue(CommunicationUser);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(CommunicationUser);
             }
-            if (PhoneNumber != null)
+            if (Chat.Optional.IsDefined(PhoneNumber))
             {
                 writer.WritePropertyName("phoneNumber"u8);
-                writer.WriteObjectValue(PhoneNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(PhoneNumber);
             }
-            if (MicrosoftTeamsUser != null)
+            if (Chat.Optional.IsDefined(MicrosoftTeamsUser))
             {
                 writer.WritePropertyName("microsoftTeamsUser"u8);
-                writer.WriteObjectValue(MicrosoftTeamsUser);
+                writer.WriteObjectValue<MicrosoftTeamsUserIdentifierModel>(MicrosoftTeamsUser);
             }
             writer.WriteEndObject();
         }

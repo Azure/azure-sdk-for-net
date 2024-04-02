@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CanonicalProfileId.HasValue)
+            if (Optional.IsDefined(CanonicalProfileId))
             {
                 writer.WritePropertyName("canonicalProfileId"u8);
                 writer.WriteNumberValue(CanonicalProfileId.Value);
             }
-            if (!(Properties is ChangeTrackingList<CanonicalProfileDefinitionPropertiesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CanonicalProfileDefinitionPropertiesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<CanonicalProfileDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeCanonicalProfileDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CanonicalProfileDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveRPAcrossTiersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (SourceTierType.HasValue)
+            if (Optional.IsDefined(SourceTierType))
             {
                 writer.WritePropertyName("sourceTierType"u8);
                 writer.WriteStringValue(SourceTierType.Value.ToSerialString());
             }
-            if (TargetTierType.HasValue)
+            if (Optional.IsDefined(TargetTierType))
             {
                 writer.WritePropertyName("targetTierType"u8);
                 writer.WriteStringValue(TargetTierType.Value.ToSerialString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoveRPAcrossTiersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeMoveRPAcrossTiersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoveRPAcrossTiersContent)} does not support reading '{options.Format}' format.");
             }
         }
 

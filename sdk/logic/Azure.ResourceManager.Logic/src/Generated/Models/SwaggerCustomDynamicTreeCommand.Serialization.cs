@@ -22,53 +22,53 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (ItemsPath != null)
+            if (Optional.IsDefined(ItemsPath))
             {
                 writer.WritePropertyName("itemsPath"u8);
                 writer.WriteStringValue(ItemsPath);
             }
-            if (ItemValuePath != null)
+            if (Optional.IsDefined(ItemValuePath))
             {
                 writer.WritePropertyName("itemValuePath"u8);
                 writer.WriteStringValue(ItemValuePath);
             }
-            if (ItemTitlePath != null)
+            if (Optional.IsDefined(ItemTitlePath))
             {
                 writer.WritePropertyName("itemTitlePath"u8);
                 writer.WriteStringValue(ItemTitlePath);
             }
-            if (ItemFullTitlePath != null)
+            if (Optional.IsDefined(ItemFullTitlePath))
             {
                 writer.WritePropertyName("itemFullTitlePath"u8);
                 writer.WriteStringValue(ItemFullTitlePath);
             }
-            if (ItemIsParent != null)
+            if (Optional.IsDefined(ItemIsParent))
             {
                 writer.WritePropertyName("itemIsParent"u8);
                 writer.WriteStringValue(ItemIsParent);
             }
-            if (SelectableFilter != null)
+            if (Optional.IsDefined(SelectableFilter))
             {
                 writer.WritePropertyName("selectableFilter"u8);
                 writer.WriteStringValue(SelectableFilter);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, SwaggerCustomDynamicTreeParameterInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SwaggerCustomDynamicTreeParameterInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicTreeCommand>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerCustomDynamicTreeCommand(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicTreeCommand)} does not support reading '{options.Format}' format.");
             }
         }
 

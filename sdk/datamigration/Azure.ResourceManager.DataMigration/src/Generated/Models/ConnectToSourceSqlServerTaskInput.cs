@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionInfo"/> is null. </exception>
         public ConnectToSourceSqlServerTaskInput(SqlConnectionInfo sourceConnectionInfo)
         {
-            if (sourceConnectionInfo == null)
-            {
-                throw new ArgumentNullException(nameof(sourceConnectionInfo));
-            }
+            Argument.AssertNotNull(sourceConnectionInfo, nameof(sourceConnectionInfo));
 
             SourceConnectionInfo = sourceConnectionInfo;
         }

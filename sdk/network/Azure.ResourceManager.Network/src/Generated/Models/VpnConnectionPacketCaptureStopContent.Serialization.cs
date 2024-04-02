@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStopContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SasUri != null)
+            if (Optional.IsDefined(SasUri))
             {
                 writer.WritePropertyName("sasUrl"u8);
                 writer.WriteStringValue(SasUri.AbsoluteUri);
             }
-            if (!(LinkConnectionNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LinkConnectionNames))
             {
                 writer.WritePropertyName("linkConnectionNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStopContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnConnectionPacketCaptureStopContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support reading '{options.Format}' format.");
             }
         }
 

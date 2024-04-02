@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserDN != null)
+            if (Optional.IsDefined(UserDN))
             {
                 writer.WritePropertyName("userDN"u8);
                 writer.WriteStringValue(UserDN);
             }
-            if (GroupDN != null)
+            if (Optional.IsDefined(GroupDN))
             {
                 writer.WritePropertyName("groupDN"u8);
                 writer.WriteStringValue(GroupDN);
             }
-            if (GroupMembershipFilter != null)
+            if (Optional.IsDefined(GroupMembershipFilter))
             {
                 writer.WritePropertyName("groupMembershipFilter"u8);
                 writer.WriteStringValue(GroupMembershipFilter);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppLdapSearchScopeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppLdapSearchScopeConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppLdapSearchScopeConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleResetConter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Priority != null)
+            if (options.Format != "W" && Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteStringValue(Priority);
             }
-            if (RuleStackName != null)
+            if (Optional.IsDefined(RuleStackName))
             {
                 writer.WritePropertyName("ruleStackName"u8);
                 writer.WriteStringValue(RuleStackName);
             }
-            if (RuleListName != null)
+            if (Optional.IsDefined(RuleListName))
             {
                 writer.WritePropertyName("ruleListName"u8);
                 writer.WriteStringValue(RuleListName);
             }
-            if (FirewallName != null)
+            if (Optional.IsDefined(FirewallName))
             {
                 writer.WritePropertyName("firewallName"u8);
                 writer.WriteStringValue(FirewallName);
             }
-            if (RuleName != null)
+            if (Optional.IsDefined(RuleName))
             {
                 writer.WritePropertyName("ruleName"u8);
                 writer.WriteStringValue(RuleName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleResetConter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallRuleResetConter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleResetConter)} does not support reading '{options.Format}' format.");
             }
         }
 

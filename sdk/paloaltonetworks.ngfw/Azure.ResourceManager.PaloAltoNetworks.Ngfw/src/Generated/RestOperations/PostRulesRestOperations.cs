@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -61,14 +61,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostRulesResourceListResult>> ListAsync(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var message = CreateListRequest(globalRulestackName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -93,14 +86,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostRulesResourceListResult> List(string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var message = CreateListRequest(globalRulestackName);
             _pipeline.Send(message, cancellationToken);
@@ -144,22 +130,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostRulestackRuleData>> GetAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetRequest(globalRulestackName, priority);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -187,22 +159,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostRulestackRuleData> Get(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetRequest(globalRulestackName, priority);
             _pipeline.Send(message, cancellationToken);
@@ -238,7 +196,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<PostRulestackRuleData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -253,26 +211,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string globalRulestackName, string priority, PostRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(globalRulestackName, priority, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -295,26 +236,9 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string globalRulestackName, string priority, PostRulestackRuleData data, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(globalRulestackName, priority, data);
             _pipeline.Send(message, cancellationToken);
@@ -354,22 +278,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateDeleteRequest(globalRulestackName, priority);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -392,22 +302,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string globalRulestackName, string priority, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateDeleteRequest(globalRulestackName, priority);
             _pipeline.Send(message, cancellationToken);
@@ -454,22 +350,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleCounter>> GetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetCountersRequest(globalRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -496,22 +378,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleCounter> GetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateGetCountersRequest(globalRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -561,22 +429,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RefreshCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateRefreshCountersRequest(globalRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -598,22 +452,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RefreshCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateRefreshCountersRequest(globalRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -658,22 +498,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<FirewallRuleResetConter>> ResetCountersAsync(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateResetCountersRequest(globalRulestackName, priority, firewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -700,22 +526,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> or <paramref name="priority"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<FirewallRuleResetConter> ResetCounters(string globalRulestackName, string priority, string firewallName = null, CancellationToken cancellationToken = default)
         {
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
-            if (priority == null)
-            {
-                throw new ArgumentNullException(nameof(priority));
-            }
-            if (priority.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(priority));
-            }
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
+            Argument.AssertNotNullOrEmpty(priority, nameof(priority));
 
             using var message = CreateResetCountersRequest(globalRulestackName, priority, firewallName);
             _pipeline.Send(message, cancellationToken);
@@ -755,18 +567,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostRulesResourceListResult>> ListNextPageAsync(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var message = CreateListNextPageRequest(nextLink, globalRulestackName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -792,18 +594,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <exception cref="ArgumentException"> <paramref name="globalRulestackName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostRulesResourceListResult> ListNextPage(string nextLink, string globalRulestackName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (globalRulestackName == null)
-            {
-                throw new ArgumentNullException(nameof(globalRulestackName));
-            }
-            if (globalRulestackName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(globalRulestackName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(globalRulestackName, nameof(globalRulestackName));
 
             using var message = CreateListNextPageRequest(nextLink, globalRulestackName);
             _pipeline.Send(message, cancellationToken);

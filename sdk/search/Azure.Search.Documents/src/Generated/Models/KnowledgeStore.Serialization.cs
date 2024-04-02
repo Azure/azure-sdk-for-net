@@ -22,25 +22,25 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<KnowledgeStoreProjection>(item);
             }
             writer.WriteEndArray();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<SearchIndexerKnowledgeStoreParameters>(Parameters);
             }
             writer.WriteEndObject();
         }

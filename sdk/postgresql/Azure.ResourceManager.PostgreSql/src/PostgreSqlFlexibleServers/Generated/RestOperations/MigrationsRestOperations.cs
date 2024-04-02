@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.PostgreSql.FlexibleServers.Models;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<PostgreSqlMigrationData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -74,42 +74,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlMigrationData>> CreateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -139,42 +108,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlMigrationData> Create(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -225,38 +163,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlMigrationData>> GetAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -286,38 +196,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlMigrationData> Get(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
             _pipeline.Send(message, cancellationToken);
@@ -357,7 +239,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<PostgreSqlMigrationPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -374,42 +256,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlMigrationData>> UpdateAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -438,42 +289,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlMigrationData> Update(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, PostgreSqlMigrationPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -523,38 +343,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -578,38 +370,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="targetDbServerName"/> or <paramref name="migrationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string targetDbServerName, string migrationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
-            if (migrationName == null)
-            {
-                throw new ArgumentNullException(nameof(migrationName));
-            }
-            if (migrationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(migrationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
+            Argument.AssertNotNullOrEmpty(migrationName, nameof(migrationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationName);
             _pipeline.Send(message, cancellationToken);
@@ -658,30 +422,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerAsync(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
 
             using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -709,30 +452,9 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlMigrationResourceListResult> ListByTargetServer(string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
 
             using var message = CreateListByTargetServerRequest(subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
             _pipeline.Send(message, cancellationToken);
@@ -775,34 +497,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<PostgreSqlMigrationResourceListResult>> ListByTargetServerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
 
             using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -831,34 +529,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="targetDbServerName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<PostgreSqlMigrationResourceListResult> ListByTargetServerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string targetDbServerName, PostgreSqlMigrationListFilter? migrationListFilter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (targetDbServerName == null)
-            {
-                throw new ArgumentNullException(nameof(targetDbServerName));
-            }
-            if (targetDbServerName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetDbServerName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(targetDbServerName, nameof(targetDbServerName));
 
             using var message = CreateListByTargetServerNextPageRequest(nextLink, subscriptionId, resourceGroupName, targetDbServerName, migrationListFilter);
             _pipeline.Send(message, cancellationToken);

@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataCollectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataCollectionFrequency != null)
+            if (Optional.IsDefined(DataCollectionFrequency))
             {
                 writer.WritePropertyName("dataCollectionFrequency"u8);
                 writer.WriteStringValue(DataCollectionFrequency);
             }
-            if (DataReportingFrequency != null)
+            if (Optional.IsDefined(DataReportingFrequency))
             {
                 writer.WritePropertyName("dataReportingFrequency"u8);
                 writer.WriteStringValue(DataReportingFrequency);
             }
-            if (MaxAllowedUnreportedUsageDuration.HasValue)
+            if (Optional.IsDefined(MaxAllowedUnreportedUsageDuration))
             {
                 writer.WritePropertyName("maxAllowedUnreportedUsageDuration"u8);
                 writer.WriteStringValue(MaxAllowedUnreportedUsageDuration.Value, "P");
             }
-            if (EventHubDetails != null)
+            if (Optional.IsDefined(EventHubDetails))
             {
                 writer.WritePropertyName("eventHubDetails"u8);
-                writer.WriteObjectValue(EventHubDetails);
+                writer.WriteObjectValue<EdgeUsageDataEventHub>(EventHubDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataCollectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEdgeUsageDataCollectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataCollectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerPropertiesNetworkManagerScopes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ManagementGroups is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subscriptions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(CrossTenantScopes is ChangeTrackingList<CrossTenantScopes> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CrossTenantScopes))
             {
                 writer.WritePropertyName("crossTenantScopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in CrossTenantScopes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CrossTenantScopes>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerPropertiesNetworkManagerScopes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerPropertiesNetworkManagerScopes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerPropertiesNetworkManagerScopes)} does not support reading '{options.Format}' format.");
             }
         }
 

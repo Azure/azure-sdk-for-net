@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityManagement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityManagement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityManagement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ManagementType.HasValue)
+            if (Optional.IsDefined(ManagementType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagementType.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityManagement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityManagement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityManagement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityManagement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityManagement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeIdentityManagement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityManagement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityManagement)} does not support reading '{options.Format}' format.");
             }
         }
 

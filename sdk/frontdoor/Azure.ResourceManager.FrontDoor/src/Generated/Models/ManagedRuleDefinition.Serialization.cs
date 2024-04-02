@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RuleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RuleId))
             {
                 writer.WritePropertyName("ruleId"u8);
                 writer.WriteStringValue(RuleId);
             }
-            if (options.Format != "W" && DefaultState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultState))
             {
                 writer.WritePropertyName("defaultState"u8);
                 writer.WriteStringValue(DefaultState.Value.ToString());
             }
-            if (options.Format != "W" && DefaultAction.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeManagedRuleDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRuleDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

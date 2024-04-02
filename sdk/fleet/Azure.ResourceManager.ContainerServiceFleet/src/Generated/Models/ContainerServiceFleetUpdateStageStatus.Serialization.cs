@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateStageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && !(Groups is ChangeTrackingList<ContainerServiceFleetUpdateGroupStatus> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Groups))
             {
                 writer.WritePropertyName("groups"u8);
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceFleetUpdateGroupStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && AfterStageWaitStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(AfterStageWaitStatus))
             {
                 writer.WritePropertyName("afterStageWaitStatus"u8);
-                writer.WriteObjectValue(AfterStageWaitStatus);
+                writer.WriteObjectValue<ContainerServiceFleetWaitStatus>(AfterStageWaitStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateStageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         return DeserializeContainerServiceFleetUpdateStageStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStageStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

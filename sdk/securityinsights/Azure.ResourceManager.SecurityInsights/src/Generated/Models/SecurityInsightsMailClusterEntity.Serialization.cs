@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (options.Format != "W" && !(NetworkMessageIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkMessageIds))
             {
                 writer.WritePropertyName("networkMessageIds"u8);
                 writer.WriteStartArray();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CountByDeliveryStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CountByDeliveryStatus))
             {
                 writer.WritePropertyName("countByDeliveryStatus"u8);
 #if NET6_0_OR_GREATER
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && CountByThreatType != null)
+            if (options.Format != "W" && Optional.IsDefined(CountByThreatType))
             {
                 writer.WritePropertyName("countByThreatType"u8);
 #if NET6_0_OR_GREATER
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && CountByProtectionStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(CountByProtectionStatus))
             {
                 writer.WritePropertyName("countByProtectionStatus"u8);
 #if NET6_0_OR_GREATER
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
 #endif
             }
-            if (options.Format != "W" && !(Threats is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Threats))
             {
                 writer.WritePropertyName("threats"u8);
                 writer.WriteStartArray();
@@ -135,52 +135,52 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Query != null)
+            if (options.Format != "W" && Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (options.Format != "W" && QueryOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QueryOn))
             {
                 writer.WritePropertyName("queryTime"u8);
                 writer.WriteStringValue(QueryOn.Value, "O");
             }
-            if (options.Format != "W" && MailCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MailCount))
             {
                 writer.WritePropertyName("mailCount"u8);
                 writer.WriteNumberValue(MailCount.Value);
             }
-            if (options.Format != "W" && IsVolumeAnomaly.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsVolumeAnomaly))
             {
                 writer.WritePropertyName("isVolumeAnomaly"u8);
                 writer.WriteBooleanValue(IsVolumeAnomaly.Value);
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (options.Format != "W" && ClusterSourceIdentifier != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterSourceIdentifier))
             {
                 writer.WritePropertyName("clusterSourceIdentifier"u8);
                 writer.WriteStringValue(ClusterSourceIdentifier);
             }
-            if (options.Format != "W" && ClusterSourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterSourceType))
             {
                 writer.WritePropertyName("clusterSourceType"u8);
                 writer.WriteStringValue(ClusterSourceType);
             }
-            if (options.Format != "W" && ClusterQueryStartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterQueryStartOn))
             {
                 writer.WritePropertyName("clusterQueryStartTime"u8);
                 writer.WriteStringValue(ClusterQueryStartOn.Value, "O");
             }
-            if (options.Format != "W" && ClusterQueryEndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterQueryEndOn))
             {
                 writer.WritePropertyName("clusterQueryEndTime"u8);
                 writer.WriteStringValue(ClusterQueryEndOn.Value, "O");
             }
-            if (options.Format != "W" && ClusterGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterGroup))
             {
                 writer.WritePropertyName("clusterGroup"u8);
                 writer.WriteStringValue(ClusterGroup);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsMailClusterEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsMailClusterEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsMailClusterEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

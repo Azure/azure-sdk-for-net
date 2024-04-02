@@ -22,35 +22,35 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(IntegrationRuntimeType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("managedVirtualNetwork"u8);
             writer.WriteStartObject();
-            if (ReferenceName != null)
+            if (Optional.IsDefined(ReferenceName))
             {
                 writer.WritePropertyName("referenceName"u8);
                 writer.WriteStringValue(ReferenceName);
             }
-            if (TypeManagedVirtualNetworkType != null)
+            if (Optional.IsDefined(TypeManagedVirtualNetworkType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypeManagedVirtualNetworkType);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -58,15 +58,15 @@ namespace Azure.ResourceManager.Synapse.Models
             writer.WriteEndObject();
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (ComputeProperties != null)
+            if (Optional.IsDefined(ComputeProperties))
             {
                 writer.WritePropertyName("computeProperties"u8);
-                writer.WriteObjectValue(ComputeProperties);
+                writer.WriteObjectValue<SynapseIntegrationRuntimeComputeProperties>(ComputeProperties, options);
             }
-            if (SsisProperties != null)
+            if (Optional.IsDefined(SsisProperties))
             {
                 writer.WritePropertyName("ssisProperties"u8);
-                writer.WriteObjectValue(SsisProperties);
+                writer.WriteObjectValue<SynapseIntegrationRuntimeSsisProperties>(SsisProperties, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseManagedIntegrationRuntime>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseManagedIntegrationRuntime(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseManagedIntegrationRuntime)} does not support reading '{options.Format}' format.");
             }
         }
 

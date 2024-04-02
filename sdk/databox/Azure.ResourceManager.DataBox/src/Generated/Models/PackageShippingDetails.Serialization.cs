@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TrackingUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);
             }
-            if (options.Format != "W" && CarrierName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (options.Format != "W" && TrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePackageShippingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageShippingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AppConfigurationSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -50,22 +50,22 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AppConfigurationStoreEncryptionProperties>(Encryption, options);
             }
-            if (DisableLocalAuth.HasValue)
+            if (Optional.IsDefined(DisableLocalAuth))
             {
                 writer.WritePropertyName("disableLocalAuth"u8);
                 writer.WriteBooleanValue(DisableLocalAuth.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (EnablePurgeProtection.HasValue)
+            if (Optional.IsDefined(EnablePurgeProtection))
             {
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         return DeserializeAppConfigurationStorePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStorePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,7 @@
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
-    /// <summary> The UnknownSpatialAnalysisOperationBase. </summary>
+    /// <summary> Unknown version of SpatialAnalysisOperationBase. </summary>
     internal partial class UnknownSpatialAnalysisOperationBase : SpatialAnalysisOperationBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownSpatialAnalysisOperationBase"/>. </summary>

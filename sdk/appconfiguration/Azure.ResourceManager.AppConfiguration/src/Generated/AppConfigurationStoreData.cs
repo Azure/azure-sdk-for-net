@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public AppConfigurationStoreData(AzureLocation location, AppConfigurationSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Sku = sku;
             PrivateEndpointConnections = new ChangeTrackingList<AppConfigurationPrivateEndpointConnectionReference>();
@@ -109,10 +106,12 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The managed identity information, if configured. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku of the configuration store. </summary>
         internal AppConfigurationSku Sku { get; set; }
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -120,14 +119,18 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The provisioning state of the configuration store. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> The creation date of configuration store. </summary>
+        [WirePath("properties.creationDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The DNS endpoint where the configuration store API will be available. </summary>
+        [WirePath("properties.endpoint")]
         public string Endpoint { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
         internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
         /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
@@ -140,16 +143,22 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The list of private endpoint connections that are set up for this resource. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> PrivateEndpointConnections { get; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
         /// <summary> The amount of time in days that the configuration store will be retained when it is soft deleted. </summary>
+        [WirePath("properties.softDeleteRetentionInDays")]
         public int? SoftDeleteRetentionInDays { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
+        [WirePath("properties.createMode")]
         public AppConfigurationCreateMode? CreateMode { get; set; }
     }
 }

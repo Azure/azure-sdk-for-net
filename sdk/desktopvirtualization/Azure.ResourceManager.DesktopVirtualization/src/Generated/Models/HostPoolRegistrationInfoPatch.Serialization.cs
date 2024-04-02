@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (RegistrationTokenOperation.HasValue)
+            if (Optional.IsDefined(RegistrationTokenOperation))
             {
                 writer.WritePropertyName("registrationTokenOperation"u8);
                 writer.WriteStringValue(RegistrationTokenOperation.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolRegistrationInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeHostPoolRegistrationInfoPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolRegistrationInfoPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

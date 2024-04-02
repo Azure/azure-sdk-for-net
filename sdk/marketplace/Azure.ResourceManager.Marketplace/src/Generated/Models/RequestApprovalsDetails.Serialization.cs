@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestApprovalsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OfferId != null)
+            if (Optional.IsDefined(OfferId))
             {
                 writer.WritePropertyName("offerId"u8);
                 writer.WriteStringValue(OfferId);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
             }
-            if (IconUri != null)
+            if (Optional.IsDefined(IconUri))
             {
                 writer.WritePropertyName("icon"u8);
                 writer.WriteStringValue(IconUri.AbsoluteUri);
             }
-            if (!(Plans is ChangeTrackingList<PlanNotificationDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Plans))
             {
                 writer.WritePropertyName("plans"u8);
                 writer.WriteStartArray();
                 foreach (var item in Plans)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PlanNotificationDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestApprovalsDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeRequestApprovalsDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestApprovalsDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

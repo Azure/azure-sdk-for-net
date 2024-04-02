@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AadTenant != null)
+            if (Optional.IsDefined(AadTenant))
             {
                 writer.WritePropertyName("aadTenant"u8);
                 writer.WriteStringValue(AadTenant);
             }
-            if (AadAudience != null)
+            if (Optional.IsDefined(AadAudience))
             {
                 writer.WritePropertyName("aadAudience"u8);
                 writer.WriteStringValue(AadAudience);
             }
-            if (AadIssuer != null)
+            if (Optional.IsDefined(AadIssuer))
             {
                 writer.WritePropertyName("aadIssuer"u8);
                 writer.WriteStringValue(AadIssuer);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AadAuthenticationParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAadAuthenticationParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AadAuthenticationParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

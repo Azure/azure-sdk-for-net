@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
 
 namespace Azure.ResourceManager.BillingBenefits.Mocking
@@ -347,10 +344,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> An async collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SavingsPlanValidateResult> ValidatePurchaseAsync(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
@@ -380,10 +374,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <returns> A collection of <see cref="SavingsPlanValidateResult"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SavingsPlanValidateResult> ValidatePurchase(SavingsPlanPurchaseValidateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);

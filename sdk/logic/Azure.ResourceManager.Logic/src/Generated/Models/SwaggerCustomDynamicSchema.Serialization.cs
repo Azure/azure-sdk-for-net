@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (ValuePath != null)
+            if (Optional.IsDefined(ValuePath))
             {
                 writer.WritePropertyName("valuePath"u8);
                 writer.WriteStringValue(ValuePath);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwaggerCustomDynamicSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeSwaggerCustomDynamicSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwaggerCustomDynamicSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

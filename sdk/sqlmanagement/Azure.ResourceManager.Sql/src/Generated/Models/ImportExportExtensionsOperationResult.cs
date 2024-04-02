@@ -78,18 +78,25 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Request Id. </summary>
+        [WirePath("properties.requestId")]
         public Guid? RequestId { get; }
         /// <summary> Request type. </summary>
+        [WirePath("properties.requestType")]
         public string RequestType { get; }
         /// <summary> Last modified time. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public string LastModifiedTime { get; }
         /// <summary> Server name. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> Database name. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> Operation status. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> Error message. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
     }
 }

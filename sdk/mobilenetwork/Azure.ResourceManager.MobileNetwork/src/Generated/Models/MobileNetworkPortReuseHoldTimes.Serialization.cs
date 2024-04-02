@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPortReuseHoldTimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Tcp.HasValue)
+            if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Udp.HasValue)
+            if (Optional.IsDefined(Udp))
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPortReuseHoldTimes>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkPortReuseHoldTimes(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPortReuseHoldTimes)} does not support reading '{options.Format}' format.");
             }
         }
 

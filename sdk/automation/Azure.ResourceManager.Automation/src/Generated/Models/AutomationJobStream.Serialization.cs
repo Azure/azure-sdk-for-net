@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobStream>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobStream)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobStream)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (JobStreamId != null)
+            if (Optional.IsDefined(JobStreamId))
             {
                 writer.WritePropertyName("jobStreamId"u8);
                 writer.WriteStringValue(JobStreamId);
             }
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
             }
-            if (StreamType.HasValue)
+            if (Optional.IsDefined(StreamType))
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());
             }
-            if (StreamText != null)
+            if (Optional.IsDefined(StreamText))
             {
                 writer.WritePropertyName("streamText"u8);
                 writer.WriteStringValue(StreamText);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (!(Value is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobStream>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobStream)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobStream)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobStream)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobStream)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationJobStream(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobStream)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobStream)} does not support reading '{options.Format}' format.");
             }
         }
 

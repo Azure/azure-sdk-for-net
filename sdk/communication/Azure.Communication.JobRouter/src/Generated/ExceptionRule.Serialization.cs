@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,19 +22,19 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ExceptionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExceptionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExceptionRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
             writer.WritePropertyName("trigger"u8);
-            writer.WriteObjectValue(Trigger);
+            writer.WriteObjectValue<ExceptionTrigger>(Trigger, options);
             writer.WritePropertyName("actions"u8);
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ExceptionAction>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -61,7 +60,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<ExceptionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExceptionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExceptionRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +120,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExceptionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExceptionRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeExceptionRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExceptionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExceptionRule)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -155,7 +154,7 @@ namespace Azure.Communication.JobRouter
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ExceptionRule>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

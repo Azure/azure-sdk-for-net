@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -25,13 +24,13 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
@@ -52,29 +51,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PanETag.HasValue)
+            if (Optional.IsDefined(PanETag))
             {
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
-            if (PanLocation.HasValue)
+            if (Optional.IsDefined(PanLocation))
             {
                 writer.WritePropertyName("panLocation"u8);
                 writer.WriteStringValue(PanLocation.Value);
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope.Value.ToString());
             }
-            if (!(AssociatedSubscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AssociatedSubscriptions))
             {
                 writer.WritePropertyName("associatedSubscriptions"u8);
                 writer.WriteStartArray();
@@ -84,30 +83,30 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 writer.WriteEndArray();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (DefaultMode.HasValue)
+            if (Optional.IsDefined(DefaultMode))
             {
                 writer.WritePropertyName("defaultMode"u8);
                 writer.WriteStringValue(DefaultMode.Value.ToString());
             }
-            if (MinAppIdVersion != null)
+            if (Optional.IsDefined(MinAppIdVersion))
             {
                 writer.WritePropertyName("minAppIdVersion"u8);
                 writer.WriteStringValue(MinAppIdVersion);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SecurityServices != null)
+            if (Optional.IsDefined(SecurityServices))
             {
                 writer.WritePropertyName("securityServices"u8);
-                writer.WriteObjectValue(SecurityServices);
+                writer.WriteObjectValue<RulestackSecurityServices>(SecurityServices, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<GlobalRulestackData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -330,7 +329,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -346,7 +345,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         return DeserializeGlobalRulestackData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalRulestackData)} does not support reading '{options.Format}' format.");
             }
         }
 

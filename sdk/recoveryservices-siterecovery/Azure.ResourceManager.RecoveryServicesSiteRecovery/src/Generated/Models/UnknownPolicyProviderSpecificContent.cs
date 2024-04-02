@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownPolicyProviderSpecificContent. </summary>
+    /// <summary> Unknown version of PolicyProviderSpecificInput. </summary>
     internal partial class UnknownPolicyProviderSpecificContent : PolicyProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPolicyProviderSpecificContent"/>. </summary>

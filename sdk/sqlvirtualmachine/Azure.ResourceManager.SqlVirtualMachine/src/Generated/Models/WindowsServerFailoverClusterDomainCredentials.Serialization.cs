@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClusterBootstrapAccountPassword != null)
+            if (Optional.IsDefined(ClusterBootstrapAccountPassword))
             {
                 writer.WritePropertyName("clusterBootstrapAccountPassword"u8);
                 writer.WriteStringValue(ClusterBootstrapAccountPassword);
             }
-            if (ClusterOperatorAccountPassword != null)
+            if (Optional.IsDefined(ClusterOperatorAccountPassword))
             {
                 writer.WritePropertyName("clusterOperatorAccountPassword"u8);
                 writer.WriteStringValue(ClusterOperatorAccountPassword);
             }
-            if (SqlServiceAccountPassword != null)
+            if (Optional.IsDefined(SqlServiceAccountPassword))
             {
                 writer.WritePropertyName("sqlServiceAccountPassword"u8);
                 writer.WriteStringValue(SqlServiceAccountPassword);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeWindowsServerFailoverClusterDomainCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

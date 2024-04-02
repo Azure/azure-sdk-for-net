@@ -22,73 +22,73 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Input != null)
+            if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue<MigrateSqlServerSqlMITaskInput>(Input, options);
             }
-            if (options.Format != "W" && !(Output is ChangeTrackingList<MigrateSqlServerSqlMITaskOutput> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
                 foreach (var item in Output)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MigrateSqlServerSqlMITaskOutput>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (TaskId != null)
+            if (Optional.IsDefined(TaskId))
             {
                 writer.WritePropertyName("taskId"u8);
                 writer.WriteStringValue(TaskId);
             }
-            if (CreatedOn != null)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn);
             }
-            if (ParentTaskId != null)
+            if (Optional.IsDefined(ParentTaskId))
             {
                 writer.WritePropertyName("parentTaskId"u8);
                 writer.WriteStringValue(ParentTaskId);
             }
-            if (IsCloneable.HasValue)
+            if (Optional.IsDefined(IsCloneable))
             {
                 writer.WritePropertyName("isCloneable"u8);
                 writer.WriteBooleanValue(IsCloneable.Value);
             }
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<ODataError> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ODataError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && !(Commands is ChangeTrackingList<CommandProperties> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Commands))
             {
                 writer.WritePropertyName("commands"u8);
                 writer.WriteStartArray();
                 foreach (var item in Commands)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommandProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ClientData is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientData))
             {
                 writer.WritePropertyName("clientData"u8);
                 writer.WriteStartObject();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

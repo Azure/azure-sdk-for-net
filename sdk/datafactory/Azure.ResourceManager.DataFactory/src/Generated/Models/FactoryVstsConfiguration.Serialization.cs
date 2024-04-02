@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryVstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("projectName"u8);
             writer.WriteStringValue(ProjectName);
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -43,12 +43,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(CollaborationBranch);
             writer.WritePropertyName("rootFolder"u8);
             writer.WriteStringValue(RootFolder);
-            if (LastCommitId != null)
+            if (Optional.IsDefined(LastCommitId))
             {
                 writer.WritePropertyName("lastCommitId"u8);
                 writer.WriteStringValue(LastCommitId);
             }
-            if (DisablePublish.HasValue)
+            if (Optional.IsDefined(DisablePublish))
             {
                 writer.WritePropertyName("disablePublish"u8);
                 writer.WriteBooleanValue(DisablePublish.Value);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FactoryVstsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFactoryVstsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FactoryVstsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> The provisioning state of the shared private link resource. Can be Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
+    /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
     public enum SharedSearchServicePrivateLinkResourceProvisioningState
     {
         /// <summary> Updating. </summary>

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DatabasePrincipalId != null)
+            if (Optional.IsDefined(DatabasePrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(DatabasePrincipalId);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (PrincipalType.HasValue)
+            if (Optional.IsDefined(PrincipalType))
             {
                 writer.WritePropertyName("principalType"u8);
                 writer.WriteStringValue(PrincipalType.Value.ToString());
             }
-            if (options.Format != "W" && TenantName != null)
+            if (options.Format != "W" && Optional.IsDefined(TenantName))
             {
                 writer.WritePropertyName("tenantName"u8);
                 writer.WriteStringValue(TenantName);
             }
-            if (options.Format != "W" && PrincipalName != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
             {
                 writer.WritePropertyName("principalName"u8);
                 writer.WriteStringValue(PrincipalName);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && AadObjectId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AadObjectId))
             {
                 writer.WritePropertyName("aadObjectId"u8);
                 writer.WriteStringValue(AadObjectId.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoDatabasePrincipalAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeKustoDatabasePrincipalAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoDatabasePrincipalAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

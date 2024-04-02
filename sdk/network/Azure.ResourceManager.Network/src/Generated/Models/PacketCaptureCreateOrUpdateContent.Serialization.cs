@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,40 +30,40 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartObject();
             writer.WritePropertyName("target"u8);
             writer.WriteStringValue(Target);
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<PacketCaptureMachineScope>(Scope, options);
             }
-            if (TargetType.HasValue)
+            if (Optional.IsDefined(TargetType))
             {
                 writer.WritePropertyName("targetType"u8);
                 writer.WriteStringValue(TargetType.Value.ToSerialString());
             }
-            if (BytesToCapturePerPacket.HasValue)
+            if (Optional.IsDefined(BytesToCapturePerPacket))
             {
                 writer.WritePropertyName("bytesToCapturePerPacket"u8);
                 writer.WriteNumberValue(BytesToCapturePerPacket.Value);
             }
-            if (TotalBytesPerSession.HasValue)
+            if (Optional.IsDefined(TotalBytesPerSession))
             {
                 writer.WritePropertyName("totalBytesPerSession"u8);
                 writer.WriteNumberValue(TotalBytesPerSession.Value);
             }
-            if (TimeLimitInSeconds.HasValue)
+            if (Optional.IsDefined(TimeLimitInSeconds))
             {
                 writer.WritePropertyName("timeLimitInSeconds"u8);
                 writer.WriteNumberValue(TimeLimitInSeconds.Value);
             }
             writer.WritePropertyName("storageLocation"u8);
-            writer.WriteObjectValue(StorageLocation);
-            if (!(Filters is ChangeTrackingList<PacketCaptureFilter> collection && collection.IsUndefined))
+            writer.WriteObjectValue<PacketCaptureStorageLocation>(StorageLocation, options);
+            if (Optional.IsCollectionDefined(Filters))
             {
                 writer.WritePropertyName("filters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PacketCaptureFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PacketCaptureCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePacketCaptureCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PacketCaptureCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

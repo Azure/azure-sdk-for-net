@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HasPersistedState.HasValue)
+            if (Optional.IsDefined(HasPersistedState))
             {
                 writer.WritePropertyName("hasPersistedState"u8);
                 writer.WriteBooleanValue(HasPersistedState.Value);
             }
-            if (TargetReplicaSetSize.HasValue)
+            if (Optional.IsDefined(TargetReplicaSetSize))
             {
                 writer.WritePropertyName("targetReplicaSetSize"u8);
                 writer.WriteNumberValue(TargetReplicaSetSize.Value);
             }
-            if (MinReplicaSetSize.HasValue)
+            if (Optional.IsDefined(MinReplicaSetSize))
             {
                 writer.WritePropertyName("minReplicaSetSize"u8);
                 writer.WriteNumberValue(MinReplicaSetSize.Value);
             }
-            if (ReplicaRestartWaitDuration.HasValue)
+            if (Optional.IsDefined(ReplicaRestartWaitDuration))
             {
                 writer.WritePropertyName("replicaRestartWaitDuration"u8);
                 writer.WriteStringValue(ReplicaRestartWaitDuration.Value, "c");
             }
-            if (QuorumLossWaitDuration.HasValue)
+            if (Optional.IsDefined(QuorumLossWaitDuration))
             {
                 writer.WritePropertyName("quorumLossWaitDuration"u8);
                 writer.WriteStringValue(QuorumLossWaitDuration.Value, "c");
             }
-            if (StandByReplicaKeepDuration.HasValue)
+            if (Optional.IsDefined(StandByReplicaKeepDuration))
             {
                 writer.WritePropertyName("standByReplicaKeepDuration"u8);
                 writer.WriteStringValue(StandByReplicaKeepDuration.Value, "c");
             }
-            if (ServicePlacementTimeLimit.HasValue)
+            if (Optional.IsDefined(ServicePlacementTimeLimit))
             {
                 writer.WritePropertyName("servicePlacementTimeLimit"u8);
                 writer.WriteStringValue(ServicePlacementTimeLimit.Value, "c");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -71,64 +71,64 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WritePropertyName("serviceTypeName"u8);
             writer.WriteStringValue(ServiceTypeName);
             writer.WritePropertyName("partitionDescription"u8);
-            writer.WriteObjectValue(PartitionDescription);
-            if (ServicePackageActivationMode.HasValue)
+            writer.WriteObjectValue<ManagedServicePartitionScheme>(PartitionDescription, options);
+            if (Optional.IsDefined(ServicePackageActivationMode))
             {
                 writer.WritePropertyName("servicePackageActivationMode"u8);
                 writer.WriteStringValue(ServicePackageActivationMode.Value.ToString());
             }
-            if (ServiceDnsName != null)
+            if (Optional.IsDefined(ServiceDnsName))
             {
                 writer.WritePropertyName("serviceDnsName"u8);
                 writer.WriteStringValue(ServiceDnsName);
             }
-            if (PlacementConstraints != null)
+            if (Optional.IsDefined(PlacementConstraints))
             {
                 writer.WritePropertyName("placementConstraints"u8);
                 writer.WriteStringValue(PlacementConstraints);
             }
-            if (!(CorrelationScheme is ChangeTrackingList<ManagedServiceCorrelation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorrelationScheme))
             {
                 writer.WritePropertyName("correlationScheme"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorrelationScheme)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceCorrelation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceLoadMetrics is ChangeTrackingList<ManagedServiceLoadMetric> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceLoadMetrics))
             {
                 writer.WritePropertyName("serviceLoadMetrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceLoadMetrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceLoadMetric>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServicePlacementPolicies is ChangeTrackingList<ManagedServicePlacementPolicy> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ServicePlacementPolicies))
             {
                 writer.WritePropertyName("servicePlacementPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServicePlacementPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServicePlacementPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultMoveCost.HasValue)
+            if (Optional.IsDefined(DefaultMoveCost))
             {
                 writer.WritePropertyName("defaultMoveCost"u8);
                 writer.WriteStringValue(DefaultMoveCost.Value.ToString());
             }
-            if (!(ScalingPolicies is ChangeTrackingList<ManagedServiceScalingPolicy> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(ScalingPolicies))
             {
                 writer.WritePropertyName("scalingPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScalingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedServiceScalingPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatefulServiceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeStatefulServiceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatefulServiceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

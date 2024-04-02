@@ -22,47 +22,47 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VMwareSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(VMwareSiteId))
             {
                 writer.WritePropertyName("vmwareSiteId"u8);
                 writer.WriteStringValue(VMwareSiteId);
             }
-            if (options.Format != "W" && PhysicalSiteId != null)
+            if (options.Format != "W" && Optional.IsDefined(PhysicalSiteId))
             {
                 writer.WritePropertyName("physicalSiteId"u8);
                 writer.WriteStringValue(PhysicalSiteId);
             }
-            if (options.Format != "W" && MigrationSolutionId != null)
+            if (options.Format != "W" && Optional.IsDefined(MigrationSolutionId))
             {
                 writer.WritePropertyName("migrationSolutionId"u8);
                 writer.WriteStringValue(MigrationSolutionId);
             }
-            if (options.Format != "W" && ServiceEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceEndpoint))
             {
                 writer.WritePropertyName("serviceEndpoint"u8);
                 writer.WriteStringValue(ServiceEndpoint);
             }
-            if (options.Format != "W" && ServiceResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceResourceId))
             {
                 writer.WritePropertyName("serviceResourceId"u8);
                 writer.WriteStringValue(ServiceResourceId);
             }
-            if (options.Format != "W" && ServiceContainerId != null)
+            if (options.Format != "W" && Optional.IsDefined(ServiceContainerId))
             {
                 writer.WritePropertyName("serviceContainerId"u8);
                 writer.WriteStringValue(ServiceContainerId);
             }
-            if (options.Format != "W" && !(ProcessServers is ChangeTrackingList<SiteRecoveryProcessServerDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProcessServers))
             {
                 writer.WritePropertyName("processServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProcessServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryProcessServerDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareV2FabricSpecificDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareV2FabricSpecificDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareV2FabricSpecificDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

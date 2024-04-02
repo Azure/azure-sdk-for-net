@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,45 +43,45 @@ namespace Azure.ResourceManager.Blueprint
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BlueprintVersion != null)
+            if (Optional.IsDefined(BlueprintVersion))
             {
                 writer.WritePropertyName("blueprintVersion"u8);
                 writer.WriteStringValue(BlueprintVersion);
             }
-            if (AssignmentState != null)
+            if (Optional.IsDefined(AssignmentState))
             {
                 writer.WritePropertyName("assignmentState"u8);
                 writer.WriteStringValue(AssignmentState);
             }
-            if (TimeCreated != null)
+            if (Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated);
             }
-            if (TimeStarted != null)
+            if (Optional.IsDefined(TimeStarted))
             {
                 writer.WritePropertyName("timeStarted"u8);
                 writer.WriteStringValue(TimeStarted);
             }
-            if (TimeFinished != null)
+            if (Optional.IsDefined(TimeFinished))
             {
                 writer.WritePropertyName("timeFinished"u8);
                 writer.WriteStringValue(TimeFinished);
             }
-            if (!(Deployments is ChangeTrackingList<AssignmentDeploymentJob> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Deployments))
             {
                 writer.WritePropertyName("deployments"u8);
                 writer.WriteStartArray();
                 foreach (var item in Deployments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentDeploymentJob>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentOperationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Blueprint
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Blueprint
                         return DeserializeAssignmentOperationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentOperationData)} does not support reading '{options.Format}' format.");
             }
         }
 

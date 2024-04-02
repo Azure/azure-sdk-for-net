@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="headerName"/> is null. </exception>
         public HeaderActionProperties(HeaderActionType actionType, HeaderAction headerAction, string headerName)
         {
-            if (headerName == null)
-            {
-                throw new ArgumentNullException(nameof(headerName));
-            }
+            Argument.AssertNotNull(headerName, nameof(headerName));
 
             ActionType = actionType;
             HeaderAction = headerAction;

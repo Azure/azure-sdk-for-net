@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SkuId != null)
+            if (options.Format != "W" && Optional.IsDefined(SkuId))
             {
                 writer.WritePropertyName("skuId"u8);
                 writer.WriteStringValue(SkuId);
             }
-            if (options.Format != "W" && PlanId != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && PlanDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(PlanDisplayName))
             {
                 writer.WritePropertyName("planDisplayName"u8);
                 writer.WriteStringValue(PlanDisplayName);
             }
-            if (Accessibility.HasValue)
+            if (Optional.IsDefined(Accessibility))
             {
                 writer.WritePropertyName("accessibility"u8);
                 writer.WriteStringValue(Accessibility.Value.ToString());
             }
-            if (options.Format != "W" && AltStackReference != null)
+            if (options.Format != "W" && Optional.IsDefined(AltStackReference))
             {
                 writer.WritePropertyName("altStackReference"u8);
                 writer.WriteStringValue(AltStackReference);
             }
-            if (options.Format != "W" && StackType != null)
+            if (options.Format != "W" && Optional.IsDefined(StackType))
             {
                 writer.WritePropertyName("stackType"u8);
                 writer.WriteStringValue(StackType);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStorePlan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlan)} does not support reading '{options.Format}' format.");
             }
         }
 

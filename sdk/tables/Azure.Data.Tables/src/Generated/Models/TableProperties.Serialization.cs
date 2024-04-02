@@ -15,7 +15,7 @@ namespace Azure.Data.Tables.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (TableName != null)
+            if (Optional.IsDefined(TableName))
             {
                 writer.WritePropertyName("TableName"u8);
                 writer.WriteStringValue(TableName);

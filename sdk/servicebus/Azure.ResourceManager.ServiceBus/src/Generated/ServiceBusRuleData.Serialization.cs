@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,11 +25,11 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -48,32 +49,32 @@ namespace Azure.ResourceManager.ServiceBus
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<ServiceBusFilterAction>(Action, options);
             }
-            if (FilterType.HasValue)
+            if (Optional.IsDefined(FilterType))
             {
                 writer.WritePropertyName("filterType"u8);
                 writer.WriteStringValue(FilterType.Value.ToSerialString());
             }
-            if (SqlFilter != null)
+            if (Optional.IsDefined(SqlFilter))
             {
                 writer.WritePropertyName("sqlFilter"u8);
-                writer.WriteObjectValue(SqlFilter);
+                writer.WriteObjectValue<ServiceBusSqlFilter>(SqlFilter, options);
             }
-            if (CorrelationFilter != null)
+            if (Optional.IsDefined(CorrelationFilter))
             {
                 writer.WritePropertyName("correlationFilter"u8);
-                writer.WriteObjectValue(CorrelationFilter);
+                writer.WriteObjectValue<ServiceBusCorrelationFilter>(CorrelationFilter, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ServiceBus
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,6 +228,144 @@ namespace Azure.ResourceManager.ServiceBus
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Action), out propertyOverride);
+            if (Optional.IsDefined(Action) || hasPropertyOverride)
+            {
+                builder.Append("    action: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Action, options, 4, false, "    action: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FilterType), out propertyOverride);
+            if (Optional.IsDefined(FilterType) || hasPropertyOverride)
+            {
+                builder.Append("    filterType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{FilterType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SqlFilter), out propertyOverride);
+            if (Optional.IsDefined(SqlFilter) || hasPropertyOverride)
+            {
+                builder.Append("    sqlFilter: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SqlFilter, options, 4, false, "    sqlFilter: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationFilter), out propertyOverride);
+            if (Optional.IsDefined(CorrelationFilter) || hasPropertyOverride)
+            {
+                builder.Append("    correlationFilter: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CorrelationFilter, options, 4, false, "    correlationFilter: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceBusRuleData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusRuleData>)this).GetFormatFromOptions(options) : options.Format;
@@ -235,8 +374,10 @@ namespace Azure.ResourceManager.ServiceBus
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +393,7 @@ namespace Azure.ResourceManager.ServiceBus
                         return DeserializeServiceBusRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

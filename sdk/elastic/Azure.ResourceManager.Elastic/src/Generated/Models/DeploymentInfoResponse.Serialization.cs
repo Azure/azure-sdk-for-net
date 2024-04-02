@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentInfoResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && MemoryCapacity != null)
+            if (options.Format != "W" && Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
                 writer.WriteStringValue(MemoryCapacity);
             }
-            if (options.Format != "W" && DiskCapacity != null)
+            if (options.Format != "W" && Optional.IsDefined(DiskCapacity))
             {
                 writer.WritePropertyName("diskCapacity"u8);
                 writer.WriteStringValue(DiskCapacity);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentInfoResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeDeploymentInfoResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentInfoResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

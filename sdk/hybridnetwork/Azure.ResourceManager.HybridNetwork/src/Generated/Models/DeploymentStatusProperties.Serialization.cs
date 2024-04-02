@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue<ComponentKubernetesResources>(Resources, options);
             }
-            if (NextExpectedUpdateOn.HasValue)
+            if (Optional.IsDefined(NextExpectedUpdateOn))
             {
                 writer.WritePropertyName("nextExpectedUpdateAt"u8);
                 writer.WriteStringValue(NextExpectedUpdateOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentStatusProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeDeploymentStatusProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentStatusProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

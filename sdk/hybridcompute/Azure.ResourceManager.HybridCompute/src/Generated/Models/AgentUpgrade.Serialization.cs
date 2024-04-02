@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DesiredVersion != null)
+            if (Optional.IsDefined(DesiredVersion))
             {
                 writer.WritePropertyName("desiredVersion"u8);
                 writer.WriteStringValue(DesiredVersion);
             }
-            if (CorrelationId.HasValue)
+            if (Optional.IsDefined(CorrelationId))
             {
                 writer.WritePropertyName("correlationId"u8);
                 writer.WriteStringValue(CorrelationId.Value);
             }
-            if (IsAutomaticUpgradeEnabled.HasValue)
+            if (Optional.IsDefined(IsAutomaticUpgradeEnabled))
             {
                 writer.WritePropertyName("enableAutomaticUpgrade"u8);
                 writer.WriteBooleanValue(IsAutomaticUpgradeEnabled.Value);
             }
-            if (options.Format != "W" && LastAttemptDesiredVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptDesiredVersion))
             {
                 writer.WritePropertyName("lastAttemptDesiredVersion"u8);
                 writer.WriteStringValue(LastAttemptDesiredVersion);
             }
-            if (options.Format != "W" && LastAttemptedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptedOn))
             {
                 writer.WritePropertyName("lastAttemptTimestamp"u8);
                 writer.WriteStringValue(LastAttemptedOn.Value, "O");
             }
-            if (options.Format != "W" && LastAttemptStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptStatus))
             {
                 writer.WritePropertyName("lastAttemptStatus"u8);
                 writer.WriteStringValue(LastAttemptStatus.Value.ToString());
             }
-            if (options.Format != "W" && LastAttemptMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(LastAttemptMessage))
             {
                 writer.WritePropertyName("lastAttemptMessage"u8);
                 writer.WriteStringValue(LastAttemptMessage);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentUpgrade>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentUpgrade)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeAgentUpgrade(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentUpgrade)} does not support reading '{options.Format}' format.");
             }
         }
 

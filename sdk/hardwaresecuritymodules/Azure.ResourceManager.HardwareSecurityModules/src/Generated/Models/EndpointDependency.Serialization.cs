@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DomainName != null)
+            if (Optional.IsDefined(DomainName))
             {
                 writer.WritePropertyName("domainName"u8);
                 writer.WriteStringValue(DomainName);
             }
-            if (!(EndpointDetails is ChangeTrackingList<EndpointDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EndpointDetails))
             {
                 writer.WritePropertyName("endpointDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeEndpointDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

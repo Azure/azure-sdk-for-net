@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,24 +42,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (OrganizationName != null)
+            if (Optional.IsDefined(OrganizationName))
             {
                 writer.WritePropertyName("organizationName"u8);
                 writer.WriteStringValue(OrganizationName);
             }
-            if (BillingSource.HasValue)
+            if (Optional.IsDefined(BillingSource))
             {
                 writer.WritePropertyName("billingSource"u8);
                 writer.WriteStringValue(BillingSource.Value.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicOrganizationResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicOrganizationResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicOrganizationResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

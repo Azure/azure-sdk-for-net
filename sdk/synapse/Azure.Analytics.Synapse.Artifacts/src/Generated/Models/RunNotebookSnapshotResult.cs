@@ -19,18 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="snapshot"/>, <paramref name="runId"/> or <paramref name="runStatus"/> is null. </exception>
         internal RunNotebookSnapshotResult(RunNotebookSnapshot snapshot, string runId, string runStatus)
         {
-            if (snapshot == null)
-            {
-                throw new ArgumentNullException(nameof(snapshot));
-            }
-            if (runId == null)
-            {
-                throw new ArgumentNullException(nameof(runId));
-            }
-            if (runStatus == null)
-            {
-                throw new ArgumentNullException(nameof(runStatus));
-            }
+            Argument.AssertNotNull(snapshot, nameof(snapshot));
+            Argument.AssertNotNull(runId, nameof(runId));
+            Argument.AssertNotNull(runStatus, nameof(runStatus));
 
             Snapshot = snapshot;
             RunId = runId;

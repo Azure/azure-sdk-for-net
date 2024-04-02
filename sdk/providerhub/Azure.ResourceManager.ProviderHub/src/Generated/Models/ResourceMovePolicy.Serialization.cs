@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMovePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsValidationRequired.HasValue)
+            if (Optional.IsDefined(IsValidationRequired))
             {
                 writer.WritePropertyName("validationRequired"u8);
                 writer.WriteBooleanValue(IsValidationRequired.Value);
             }
-            if (IsCrossResourceGroupMoveEnabled.HasValue)
+            if (Optional.IsDefined(IsCrossResourceGroupMoveEnabled))
             {
                 writer.WritePropertyName("crossResourceGroupMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossResourceGroupMoveEnabled.Value);
             }
-            if (IsCrossSubscriptionMoveEnabled.HasValue)
+            if (Optional.IsDefined(IsCrossSubscriptionMoveEnabled))
             {
                 writer.WritePropertyName("crossSubscriptionMoveEnabled"u8);
                 writer.WriteBooleanValue(IsCrossSubscriptionMoveEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMovePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceMovePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMovePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("protectionIntentItemType"u8);
             writer.WriteStringValue(ProtectionIntentItemType.ToString());
-            if (BackupManagementType.HasValue)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType.Value.ToString());
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (ItemId != null)
+            if (Optional.IsDefined(ItemId))
             {
                 writer.WritePropertyName("itemId"u8);
                 writer.WriteStringValue(ItemId);
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (ProtectionState.HasValue)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupGenericProtectionIntent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupGenericProtectionIntent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupGenericProtectionIntent)} does not support reading '{options.Format}' format.");
             }
         }
 

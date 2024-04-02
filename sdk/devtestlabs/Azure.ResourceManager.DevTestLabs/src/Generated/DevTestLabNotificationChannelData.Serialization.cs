@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,54 +56,54 @@ namespace Azure.ResourceManager.DevTestLabs
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WebHookUri != null)
+            if (Optional.IsDefined(WebHookUri))
             {
                 writer.WritePropertyName("webHookUrl"u8);
                 writer.WriteStringValue(WebHookUri.AbsoluteUri);
             }
-            if (EmailRecipient != null)
+            if (Optional.IsDefined(EmailRecipient))
             {
                 writer.WritePropertyName("emailRecipient"u8);
                 writer.WriteStringValue(EmailRecipient);
             }
-            if (NotificationLocale != null)
+            if (Optional.IsDefined(NotificationLocale))
             {
                 writer.WritePropertyName("notificationLocale"u8);
                 writer.WriteStringValue(NotificationLocale);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Events is ChangeTrackingList<DevTestLabNotificationChannelEvent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DevTestLabNotificationChannelEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && UniqueIdentifier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UniqueIdentifier))
             {
                 writer.WritePropertyName("uniqueIdentifier"u8);
                 writer.WriteStringValue(UniqueIdentifier.Value);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabNotificationChannelData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabNotificationChannelData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabNotificationChannelData)} does not support reading '{options.Format}' format.");
             }
         }
 

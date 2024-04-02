@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBox;
 using Azure.ResourceManager.DataBox.Models;
 
 namespace Azure.ResourceManager.DataBox.Mocking
@@ -140,10 +137,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <returns> An async collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<DataBoxSkuInformation> GetAvailableSkusAsync(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
@@ -174,10 +168,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <returns> A collection of <see cref="DataBoxSkuInformation"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<DataBoxSkuInformation> GetAvailableSkus(AzureLocation location, AvailableSkusContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => ServiceRestClient.CreateListAvailableSkusByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName, location, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ServiceRestClient.CreateListAvailableSkusByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, location, content);
@@ -207,10 +198,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<DataBoxValidationResult>> ValidateInputsAsync(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
             scope.Start();
@@ -249,10 +237,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<DataBoxValidationResult> ValidateInputs(AzureLocation location, DataBoxValidationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.ValidateInputs");
             scope.Start();
@@ -291,10 +276,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RegionConfigurationResult>> GetRegionConfigurationAsync(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
             scope.Start();
@@ -333,10 +315,7 @@ namespace Azure.ResourceManager.DataBox.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RegionConfigurationResult> GetRegionConfiguration(AzureLocation location, RegionConfigurationContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ServiceClientDiagnostics.CreateScope("MockableDataBoxResourceGroupResource.GetRegionConfiguration");
             scope.Start();

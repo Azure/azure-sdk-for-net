@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (ScheduleWindowStartOn.HasValue)
+            if (Optional.IsDefined(ScheduleWindowStartOn))
             {
                 writer.WritePropertyName("scheduleWindowStartTime"u8);
                 writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
             }
-            if (ScheduleWindowDuration.HasValue)
+            if (Optional.IsDefined(ScheduleWindowDuration))
             {
                 writer.WritePropertyName("scheduleWindowDuration"u8);
                 writer.WriteNumberValue(ScheduleWindowDuration.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupHourlySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupHourlySchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupHourlySchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

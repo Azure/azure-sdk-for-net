@@ -18,13 +18,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
-            if (!(Contexts is ChangeTrackingList<SummaryContextInternal> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Contexts))
             {
                 writer.WritePropertyName("contexts"u8);
                 writer.WriteStartArray();
                 foreach (var item in Contexts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SummaryContextInternal>(item);
                 }
                 writer.WriteEndArray();
             }

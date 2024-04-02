@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.HealthcareApis
 {
@@ -66,7 +64,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DicomServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dicomServiceName, DicomServiceData data, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -125,7 +113,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DicomServiceResource> CreateOrUpdate(WaitUntil waitUntil, string dicomServiceName, DicomServiceData data, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -184,7 +162,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual async Task<Response<DicomServiceResource>> GetAsync(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.Get");
             scope.Start();
@@ -236,7 +207,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual Response<DicomServiceResource> Get(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.Get");
             scope.Start();
@@ -288,7 +252,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +282,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -348,7 +312,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.Exists");
             scope.Start();
@@ -398,7 +355,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.Exists");
             scope.Start();
@@ -448,7 +398,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<DicomServiceResource>> GetIfExistsAsync(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.GetIfExists");
             scope.Start();
@@ -500,7 +443,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-11-01</description>
+        /// <description>2024-03-31</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <exception cref="ArgumentNullException"> <paramref name="dicomServiceName"/> is null. </exception>
         public virtual NullableResponse<DicomServiceResource> GetIfExists(string dicomServiceName, CancellationToken cancellationToken = default)
         {
-            if (dicomServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(dicomServiceName));
-            }
-            if (dicomServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dicomServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(dicomServiceName, nameof(dicomServiceName));
 
             using var scope = _dicomServiceClientDiagnostics.CreateScope("DicomServiceCollection.GetIfExists");
             scope.Start();

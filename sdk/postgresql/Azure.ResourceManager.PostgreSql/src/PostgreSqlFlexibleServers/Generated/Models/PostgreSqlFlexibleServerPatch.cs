@@ -90,34 +90,49 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlFlexibleServerSku Sku { get; set; }
         /// <summary> Describes the identity of the application. </summary>
+        [WirePath("identity")]
         public PostgreSqlFlexibleServerUserAssignedIdentity Identity { get; set; }
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The location the resource resides in. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> PostgreSQL Server version. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlFlexibleServerVersion? Version { get; set; }
         /// <summary> Storage properties of a server. </summary>
+        [WirePath("properties.storage")]
         public PostgreSqlFlexibleServerStorage Storage { get; set; }
         /// <summary> Backup properties of a server. </summary>
+        [WirePath("properties.backup")]
         public PostgreSqlFlexibleServerBackupProperties Backup { get; set; }
         /// <summary> High availability properties of a server. </summary>
+        [WirePath("properties.highAvailability")]
         public PostgreSqlFlexibleServerHighAvailability HighAvailability { get; set; }
         /// <summary> Maintenance window properties of a server. </summary>
+        [WirePath("properties.maintenanceWindow")]
         public PostgreSqlFlexibleServerMaintenanceWindow MaintenanceWindow { get; set; }
         /// <summary> AuthConfig properties of a server. </summary>
+        [WirePath("properties.authConfig")]
         public PostgreSqlFlexibleServerAuthConfig AuthConfig { get; set; }
         /// <summary> Data encryption properties of a server. </summary>
+        [WirePath("properties.dataEncryption")]
         public PostgreSqlFlexibleServerDataEncryption DataEncryption { get; set; }
         /// <summary> The mode to update a new PostgreSQL server. </summary>
+        [WirePath("properties.createMode")]
         public PostgreSqlFlexibleServerCreateModeForUpdate? CreateMode { get; set; }
         /// <summary> Replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public PostgreSqlFlexibleServerReplicationRole? ReplicationRole { get; set; }
         /// <summary> Network properties of a server. These are required to be passed only in case if server is a private access server. </summary>
+        [WirePath("properties.network")]
         public PostgreSqlFlexibleServerNetwork Network { get; set; }
     }
 }

@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SelfHelp.Models;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.SelfHelp
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue<SelfHelpNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -68,10 +68,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<SelfHelpNameAvailabilityResult>> PostAsync(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreatePostRequest(scope, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -96,10 +93,7 @@ namespace Azure.ResourceManager.SelfHelp
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<SelfHelpNameAvailabilityResult> Post(string scope, SelfHelpNameAvailabilityContent content = null, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreatePostRequest(scope, content);
             _pipeline.Send(message, cancellationToken);

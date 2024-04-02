@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DeliveryMode.HasValue)
+            if (Optional.IsDefined(DeliveryMode))
             {
                 writer.WritePropertyName("deliveryMode"u8);
                 writer.WriteStringValue(DeliveryMode.Value.ToString());
             }
-            if (Queue != null)
+            if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue);
+                writer.WriteObjectValue<QueueInfo>(Queue, options);
             }
-            if (Push != null)
+            if (Optional.IsDefined(Push))
             {
                 writer.WritePropertyName("push"u8);
-                writer.WriteObjectValue(Push);
+                writer.WriteObjectValue<PushInfo>(Push, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeDeliveryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityBasedRestoreDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (TargetStorageAccountId != null)
+            if (Optional.IsDefined(TargetStorageAccountId))
             {
                 writer.WritePropertyName("targetStorageAccountId"u8);
                 writer.WriteStringValue(TargetStorageAccountId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityBasedRestoreDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIdentityBasedRestoreDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityBasedRestoreDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

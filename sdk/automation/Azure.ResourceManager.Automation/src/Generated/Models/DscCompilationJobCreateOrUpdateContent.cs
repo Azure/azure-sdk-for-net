@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public DscCompilationJobCreateOrUpdateContent(DscConfigurationAssociationProperty configuration)
         {
-            if (configuration == null)
-            {
-                throw new ArgumentNullException(nameof(configuration));
-            }
+            Argument.AssertNotNull(configuration, nameof(configuration));
 
             Tags = new ChangeTrackingDictionary<string, string>();
             Configuration = configuration;

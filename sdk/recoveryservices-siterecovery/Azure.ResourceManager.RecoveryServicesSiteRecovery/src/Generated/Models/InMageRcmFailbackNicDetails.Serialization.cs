@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            if (options.Format != "W" && AdapterType != null)
+            if (options.Format != "W" && Optional.IsDefined(AdapterType))
             {
                 writer.WritePropertyName("adapterType"u8);
                 writer.WriteStringValue(AdapterType);
             }
-            if (options.Format != "W" && SourceIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(SourceIPAddress))
             {
                 writer.WritePropertyName("sourceIpAddress"u8);
                 writer.WriteStringValue(SourceIPAddress.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackNicDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackNicDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackNicDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

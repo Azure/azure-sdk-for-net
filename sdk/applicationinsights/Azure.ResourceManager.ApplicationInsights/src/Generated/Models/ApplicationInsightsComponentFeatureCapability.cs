@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The name of the capability. </summary>
+        [WirePath("Name")]
         public string Name { get; }
         /// <summary> The description of the capability. </summary>
+        [WirePath("Description")]
         public string Description { get; }
         /// <summary> The value of the capability. </summary>
+        [WirePath("Value")]
         public string Value { get; }
         /// <summary> The unit of the capability. </summary>
+        [WirePath("Unit")]
         public string Unit { get; }
         /// <summary> The meter used for the capability. </summary>
+        [WirePath("MeterId")]
         public string MeterId { get; }
         /// <summary> The meter rate of the meter. </summary>
+        [WirePath("MeterRateFrequency")]
         public string MeterRateFrequency { get; }
     }
 }

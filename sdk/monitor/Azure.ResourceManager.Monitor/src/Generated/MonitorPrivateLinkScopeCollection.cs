@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<MonitorPrivateLinkScopeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string scopeName, MonitorPrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<MonitorPrivateLinkScopeResource> CreateOrUpdate(WaitUntil waitUntil, string scopeName, MonitorPrivateLinkScopeData data, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<Response<MonitorPrivateLinkScopeResource>> GetAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual Response<MonitorPrivateLinkScopeResource> Get(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual Response<bool> Exists(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual async Task<NullableResponse<MonitorPrivateLinkScopeResource>> GetIfExistsAsync(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="scopeName"/> is null. </exception>
         public virtual NullableResponse<MonitorPrivateLinkScopeResource> GetIfExists(string scopeName, CancellationToken cancellationToken = default)
         {
-            if (scopeName == null)
-            {
-                throw new ArgumentNullException(nameof(scopeName));
-            }
-            if (scopeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(scopeName));
-            }
+            Argument.AssertNotNullOrEmpty(scopeName, nameof(scopeName));
 
             using var scope = _monitorPrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MonitorPrivateLinkScopeCollection.GetIfExists");
             scope.Start();

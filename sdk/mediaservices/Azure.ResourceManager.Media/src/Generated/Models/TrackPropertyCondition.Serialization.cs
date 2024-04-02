@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteStringValue(Property.ToString());
             writer.WritePropertyName("operation"u8);
             writer.WriteStringValue(Operation.ToString());
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrackPropertyCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeTrackPropertyCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackPropertyCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

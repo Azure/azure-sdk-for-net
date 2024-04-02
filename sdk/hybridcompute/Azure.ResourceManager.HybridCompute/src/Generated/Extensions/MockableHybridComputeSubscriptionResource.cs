@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.HybridCompute;
 using Azure.ResourceManager.HybridCompute.Models;
 
 namespace Azure.ResourceManager.HybridCompute.Mocking
@@ -277,14 +274,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public virtual async Task<Response<PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            if (privateLinkScopeId == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkScopeId));
-            }
-            if (privateLinkScopeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkScopeId));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
 
             using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope");
             scope.Start();
@@ -328,14 +318,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkScopeId"/> is null. </exception>
         public virtual Response<PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(AzureLocation location, string privateLinkScopeId, CancellationToken cancellationToken = default)
         {
-            if (privateLinkScopeId == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkScopeId));
-            }
-            if (privateLinkScopeId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkScopeId));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkScopeId, nameof(privateLinkScopeId));
 
             using var scope = HybridComputePrivateLinkScopePrivateLinkScopesClientDiagnostics.CreateScope("MockableHybridComputeSubscriptionResource.GetValidationDetailsPrivateLinkScope");
             scope.Start();

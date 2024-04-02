@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (First != null)
+            if (Optional.IsDefined(First))
             {
                 writer.WritePropertyName("first"u8);
                 writer.WriteStringValue(First.ToString());
             }
-            if (Last != null)
+            if (Optional.IsDefined(Last))
             {
                 writer.WritePropertyName("last"u8);
                 writer.WriteStringValue(Last.ToString());
             }
-            if (Scope.HasValue)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteNumberValue(Scope.Value);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficManagerEndpointSubnetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                         return DeserializeTrafficManagerEndpointSubnetInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficManagerEndpointSubnetInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

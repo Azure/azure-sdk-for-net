@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BillingFrequency != null)
+            if (Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (TargetProductTypeId != null)
+            if (Optional.IsDefined(TargetProductTypeId))
             {
                 writer.WritePropertyName("targetProductTypeId"u8);
                 writer.WriteStringValue(TargetProductTypeId);
             }
-            if (TargetSkuId != null)
+            if (Optional.IsDefined(TargetSkuId))
             {
                 writer.WritePropertyName("targetSkuId"u8);
                 writer.WriteStringValue(TargetSkuId);
             }
-            if (TermDuration.HasValue)
+            if (Optional.IsDefined(TermDuration))
             {
                 writer.WritePropertyName("termDuration"u8);
                 writer.WriteStringValue(TermDuration.Value, "P");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionSplitContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeBillingSubscriptionSplitContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionSplitContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(Title);
             writer.WritePropertyName("content"u8);
             writer.WriteStringValue(Content);
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,6 +117,101 @@ namespace Azure.ResourceManager.AppService.Models
             return new TldLegalAgreement(agreementKey, title, content, url, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKey), out propertyOverride);
+            if (Optional.IsDefined(AgreementKey) || hasPropertyOverride)
+            {
+                builder.Append("  agreementKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AgreementKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgreementKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgreementKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Title), out propertyOverride);
+            if (Optional.IsDefined(Title) || hasPropertyOverride)
+            {
+                builder.Append("  title: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Title.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Title}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Title}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Content), out propertyOverride);
+            if (Optional.IsDefined(Content) || hasPropertyOverride)
+            {
+                builder.Append("  content: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Content.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Content}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Content}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Uri), out propertyOverride);
+            if (Optional.IsDefined(Uri) || hasPropertyOverride)
+            {
+                builder.Append("  url: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Uri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TldLegalAgreement>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TldLegalAgreement>)this).GetFormatFromOptions(options) : options.Format;
@@ -124,8 +220,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +239,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeTldLegalAgreement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TldLegalAgreement)} does not support reading '{options.Format}' format.");
             }
         }
 

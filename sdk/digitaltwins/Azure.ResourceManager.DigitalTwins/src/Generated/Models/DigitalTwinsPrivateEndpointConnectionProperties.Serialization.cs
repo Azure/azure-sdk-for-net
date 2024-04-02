@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 if (ProvisioningState != null)
                 {
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("provisioningState");
                 }
             }
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (!(GroupIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(GroupIds))
             {
                 writer.WritePropertyName("groupIds"u8);
                 writer.WriteStartArray();
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PrivateLinkServiceConnectionState != null)
+            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<DigitalTwinsPrivateLinkServiceConnectionState>(PrivateLinkServiceConnectionState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsPrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsPrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsPrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

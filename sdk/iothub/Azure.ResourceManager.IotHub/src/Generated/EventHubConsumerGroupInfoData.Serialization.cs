@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,11 +23,11 @@ namespace Azure.ResourceManager.IotHub
             var format = options.Format == "W" ? ((IPersistableModel<EventHubConsumerGroupInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.IotHub
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.IotHub
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.IotHub
             var format = options.Format == "W" ? ((IPersistableModel<EventHubConsumerGroupInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.IotHub
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.IotHub
                         return DeserializeEventHubConsumerGroupInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubConsumerGroupInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

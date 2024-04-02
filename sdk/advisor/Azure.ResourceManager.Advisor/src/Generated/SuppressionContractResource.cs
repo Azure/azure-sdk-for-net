@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Advisor
 {
@@ -280,10 +278,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SuppressionContractResource>> UpdateAsync(WaitUntil waitUntil, SuppressionContractData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractResource.Update");
             scope.Start();
@@ -329,10 +324,7 @@ namespace Azure.ResourceManager.Advisor
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SuppressionContractResource> Update(WaitUntil waitUntil, SuppressionContractData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _suppressionContractSuppressionsClientDiagnostics.CreateScope("SuppressionContractResource.Update");
             scope.Start();

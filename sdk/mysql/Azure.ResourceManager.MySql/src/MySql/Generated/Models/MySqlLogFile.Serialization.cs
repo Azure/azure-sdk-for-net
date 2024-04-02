@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlLogFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlLogFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlLogFile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,34 +42,34 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SizeInKB.HasValue)
+            if (Optional.IsDefined(SizeInKB))
             {
                 writer.WritePropertyName("sizeInKB"u8);
                 writer.WriteNumberValue(SizeInKB.Value);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (LogFileType != null)
+            if (Optional.IsDefined(LogFileType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(LogFileType);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MySql.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlLogFile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlLogFile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlLogFile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.MySql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlLogFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlLogFile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.MySql.Models
                         return DeserializeMySqlLogFile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlLogFile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlLogFile)} does not support reading '{options.Format}' format.");
             }
         }
 

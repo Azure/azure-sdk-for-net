@@ -6,11 +6,11 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ApplicationInsights.Models;
@@ -68,30 +68,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,30 +102,9 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<IReadOnlyList<ApplicationInsightsComponentProactiveDetectionConfiguration>> List(string subscriptionId, string resourceGroupName, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName);
             _pipeline.Send(message, cancellationToken);
@@ -201,38 +159,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (configurationId == null)
-            {
-                throw new ArgumentNullException(nameof(configurationId));
-            }
-            if (configurationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, configurationId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -260,38 +190,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentProactiveDetectionConfiguration> Get(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (configurationId == null)
-            {
-                throw new ArgumentNullException(nameof(configurationId));
-            }
-            if (configurationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, configurationId);
             _pipeline.Send(message, cancellationToken);
@@ -329,7 +231,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(proactiveDetectionProperties);
+            content.JsonWriter.WriteObjectValue<ApplicationInsightsComponentProactiveDetectionConfiguration>(proactiveDetectionProperties, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -346,42 +248,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ApplicationInsightsComponentProactiveDetectionConfiguration>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (configurationId == null)
-            {
-                throw new ArgumentNullException(nameof(configurationId));
-            }
-            if (configurationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
-            }
-            if (proactiveDetectionProperties == null)
-            {
-                throw new ArgumentNullException(nameof(proactiveDetectionProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
+            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, configurationId, proactiveDetectionProperties);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -410,42 +281,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="configurationId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ApplicationInsightsComponentProactiveDetectionConfiguration> Update(string subscriptionId, string resourceGroupName, string resourceName, string configurationId, ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
-            if (resourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceName));
-            }
-            if (configurationId == null)
-            {
-                throw new ArgumentNullException(nameof(configurationId));
-            }
-            if (configurationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationId));
-            }
-            if (proactiveDetectionProperties == null)
-            {
-                throw new ArgumentNullException(nameof(proactiveDetectionProperties));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
+            Argument.AssertNotNullOrEmpty(configurationId, nameof(configurationId));
+            Argument.AssertNotNull(proactiveDetectionProperties, nameof(proactiveDetectionProperties));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, configurationId, proactiveDetectionProperties);
             _pipeline.Send(message, cancellationToken);

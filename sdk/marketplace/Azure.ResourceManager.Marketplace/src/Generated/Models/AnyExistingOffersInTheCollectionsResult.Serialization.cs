@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnyExistingOffersInTheCollectionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBooleanValue(Value.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnyExistingOffersInTheCollectionsResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeAnyExistingOffersInTheCollectionsResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnyExistingOffersInTheCollectionsResult)} does not support reading '{options.Format}' format.");
             }
         }
 

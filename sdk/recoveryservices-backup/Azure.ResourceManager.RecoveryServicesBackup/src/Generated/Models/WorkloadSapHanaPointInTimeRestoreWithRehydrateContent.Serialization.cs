@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaPointInTimeRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointRehydrationInfo != null)
+            if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue(RecoveryPointRehydrationInfo);
+                writer.WriteObjectValue<RecoveryPointRehydrationInfo>(RecoveryPointRehydrationInfo, options);
             }
-            if (PointInTime.HasValue)
+            if (Optional.IsDefined(PointInTime))
             {
                 writer.WritePropertyName("pointInTime"u8);
                 writer.WriteStringValue(PointInTime.Value, "O");
             }
-            if (RecoveryType.HasValue)
+            if (Optional.IsDefined(RecoveryType))
             {
                 writer.WritePropertyName("recoveryType"u8);
                 writer.WriteStringValue(RecoveryType.Value.ToString());
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
             }
-            if (!(PropertyBag is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyBag))
             {
                 writer.WritePropertyName("propertyBag"u8);
                 writer.WriteStartObject();
@@ -57,32 +57,32 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndObject();
             }
-            if (TargetInfo != null)
+            if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
+                writer.WriteObjectValue<TargetRestoreInfo>(TargetInfo, options);
             }
-            if (RecoveryMode.HasValue)
+            if (Optional.IsDefined(RecoveryMode))
             {
                 writer.WritePropertyName("recoveryMode"u8);
                 writer.WriteStringValue(RecoveryMode.Value.ToString());
             }
-            if (TargetResourceGroupName != null)
+            if (Optional.IsDefined(TargetResourceGroupName))
             {
                 writer.WritePropertyName("targetResourceGroupName"u8);
                 writer.WriteStringValue(TargetResourceGroupName);
             }
-            if (UserAssignedManagedIdentityDetails != null)
+            if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+                writer.WriteObjectValue<UserAssignedManagedIdentityDetails>(UserAssignedManagedIdentityDetails, options);
             }
-            if (SnapshotRestoreParameters != null)
+            if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters);
+                writer.WriteObjectValue<SnapshotRestoreContent>(SnapshotRestoreParameters, options);
             }
-            if (TargetVirtualMachineId != null)
+            if (Optional.IsDefined(TargetVirtualMachineId))
             {
                 writer.WritePropertyName("targetVirtualMachineId"u8);
                 writer.WriteStringValue(TargetVirtualMachineId);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSapHanaPointInTimeRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadSapHanaPointInTimeRestoreWithRehydrateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSapHanaPointInTimeRestoreWithRehydrateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentLabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("labelName"u8);
             writer.WriteStringValue(LabelName);
-            if (options.Format != "W" && LabelType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LabelType))
             {
                 writer.WritePropertyName("labelType"u8);
                 writer.WriteStringValue(LabelType.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentLabel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIncidentLabel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentLabel)} does not support reading '{options.Format}' format.");
             }
         }
 

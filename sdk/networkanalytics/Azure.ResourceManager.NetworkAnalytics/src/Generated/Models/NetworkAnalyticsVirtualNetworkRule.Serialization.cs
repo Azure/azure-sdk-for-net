@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAnalyticsVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkAnalyticsVirtualNetworkRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                         return DeserializeNetworkAnalyticsVirtualNetworkRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkAnalyticsVirtualNetworkRule)} does not support reading '{options.Format}' format.");
             }
         }
 

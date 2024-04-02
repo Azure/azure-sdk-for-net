@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (SourceInfo != null)
+            if (Optional.IsDefined(SourceInfo))
             {
                 writer.WritePropertyName("sourceInfo"u8);
                 writer.WriteStringValue(SourceInfo);
             }
-            if (!(DependsOn is ChangeTrackingList<DscReportResourceNavigation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscReportResourceNavigation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ModuleName != null)
+            if (Optional.IsDefined(ModuleName))
             {
                 writer.WritePropertyName("moduleName"u8);
                 writer.WriteStringValue(ModuleName);
             }
-            if (ModuleVersion != null)
+            if (Optional.IsDefined(ModuleVersion))
             {
                 writer.WritePropertyName("moduleVersion"u8);
                 writer.WriteStringValue(ModuleVersion);
             }
-            if (ResourceName != null)
+            if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("resourceName"u8);
                 writer.WriteStringValue(ResourceName);
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (DurationInSeconds.HasValue)
+            if (Optional.IsDefined(DurationInSeconds))
             {
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscReportResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscReportResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportResource)} does not support reading '{options.Format}' format.");
             }
         }
 

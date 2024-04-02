@@ -7,7 +7,6 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -67,10 +66,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherDataAsync(RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> GetWeatherDataAsync(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WeatherData.GetWeatherData");
             scope.Start();
@@ -104,10 +100,7 @@ namespace Azure.Verticals.AgriFood.Farming
         /// <include file="Docs/WeatherData.xml" path="doc/members/member[@name='GetWeatherData(RequestContent,RequestContext)']/*" />
         public virtual Response GetWeatherData(RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("WeatherData.GetWeatherData");
             scope.Start();

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedByInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedByInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeManagedByInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedByInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

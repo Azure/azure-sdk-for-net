@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegressionTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AllowedTrainingAlgorithms is ChangeTrackingList<AutoMLVerticalRegressionModel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedTrainingAlgorithms))
             {
                 if (AllowedTrainingAlgorithms != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("allowedTrainingAlgorithms");
                 }
             }
-            if (!(BlockedTrainingAlgorithms is ChangeTrackingList<AutoMLVerticalRegressionModel> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlockedTrainingAlgorithms))
             {
                 if (BlockedTrainingAlgorithms != null)
                 {
@@ -60,49 +60,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("blockedTrainingAlgorithms");
                 }
             }
-            if (IsDnnTrainingEnabled.HasValue)
+            if (Optional.IsDefined(IsDnnTrainingEnabled))
             {
                 writer.WritePropertyName("enableDnnTraining"u8);
                 writer.WriteBooleanValue(IsDnnTrainingEnabled.Value);
             }
-            if (IsModelExplainabilityEnabled.HasValue)
+            if (Optional.IsDefined(IsModelExplainabilityEnabled))
             {
                 writer.WritePropertyName("enableModelExplainability"u8);
                 writer.WriteBooleanValue(IsModelExplainabilityEnabled.Value);
             }
-            if (IsOnnxCompatibleModelsEnabled.HasValue)
+            if (Optional.IsDefined(IsOnnxCompatibleModelsEnabled))
             {
                 writer.WritePropertyName("enableOnnxCompatibleModels"u8);
                 writer.WriteBooleanValue(IsOnnxCompatibleModelsEnabled.Value);
             }
-            if (IsStackEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsStackEnsembleEnabled))
             {
                 writer.WritePropertyName("enableStackEnsemble"u8);
                 writer.WriteBooleanValue(IsStackEnsembleEnabled.Value);
             }
-            if (IsVoteEnsembleEnabled.HasValue)
+            if (Optional.IsDefined(IsVoteEnsembleEnabled))
             {
                 writer.WritePropertyName("enableVoteEnsemble"u8);
                 writer.WriteBooleanValue(IsVoteEnsembleEnabled.Value);
             }
-            if (EnsembleModelDownloadTimeout.HasValue)
+            if (Optional.IsDefined(EnsembleModelDownloadTimeout))
             {
                 writer.WritePropertyName("ensembleModelDownloadTimeout"u8);
                 writer.WriteStringValue(EnsembleModelDownloadTimeout.Value, "P");
             }
-            if (StackEnsembleSettings != null)
+            if (Optional.IsDefined(StackEnsembleSettings))
             {
                 if (StackEnsembleSettings != null)
                 {
                     writer.WritePropertyName("stackEnsembleSettings"u8);
-                    writer.WriteObjectValue(StackEnsembleSettings);
+                    writer.WriteObjectValue<MachineLearningStackEnsembleSettings>(StackEnsembleSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("stackEnsembleSettings");
                 }
             }
-            if (TrainingMode.HasValue)
+            if (Optional.IsDefined(TrainingMode))
             {
                 writer.WritePropertyName("trainingMode"u8);
                 writer.WriteStringValue(TrainingMode.Value.ToString());
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegressionTrainingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeRegressionTrainingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegressionTrainingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

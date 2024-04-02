@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Spark.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -143,7 +142,7 @@ namespace Azure.Analytics.Synapse.Spark
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sparkSessionOptions);
+            content.JsonWriter.WriteObjectValue<SparkSessionOptions>(sparkSessionOptions);
             request.Content = content;
             return message;
         }
@@ -448,7 +447,7 @@ namespace Azure.Analytics.Synapse.Spark
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(sparkStatementOptions);
+            content.JsonWriter.WriteObjectValue<SparkStatementOptions>(sparkStatementOptions);
             request.Content = content;
             return message;
         }

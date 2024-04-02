@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ApiName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiName))
             {
                 writer.WritePropertyName("apiName"u8);
                 writer.WriteStringValue(ApiName);
             }
-            if (options.Format != "W" && ApiRevision != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiRevision))
             {
                 writer.WritePropertyName("apiRevision"u8);
                 writer.WriteStringValue(ApiRevision);
             }
-            if (options.Format != "W" && ApiVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Method != null)
+            if (options.Format != "W" && Optional.IsDefined(Method))
             {
                 writer.WritePropertyName("method"u8);
                 writer.WriteStringValue(Method);
             }
-            if (options.Format != "W" && UriTemplate != null)
+            if (options.Format != "W" && Optional.IsDefined(UriTemplate))
             {
                 writer.WritePropertyName("urlTemplate"u8);
                 writer.WriteStringValue(UriTemplate);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAssociatedOperationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedOperationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

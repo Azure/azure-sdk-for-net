@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Reason != null)
+            if (options.Format != "W" && Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason);
             }
-            if (options.Format != "W" && ReasonType != null)
+            if (options.Format != "W" && Optional.IsDefined(ReasonType))
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsAlertConfidenceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsAlertConfidenceReason(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsAlertConfidenceReason)} does not support reading '{options.Format}' format.");
             }
         }
 

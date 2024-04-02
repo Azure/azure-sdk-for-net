@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Chaos.Models;
@@ -81,54 +81,12 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapabilityListResult>> ListAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, continuationToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -159,54 +117,12 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapabilityListResult> List(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, continuationToken);
             _pipeline.Send(message, cancellationToken);
@@ -265,62 +181,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChaosCapabilityData>> GetAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -353,62 +220,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChaosCapabilityData> Get(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName);
             _pipeline.Send(message, cancellationToken);
@@ -469,62 +287,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -551,62 +320,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName);
             _pipeline.Send(message, cancellationToken);
@@ -646,7 +366,7 @@ namespace Azure.ResourceManager.Chaos
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ChaosCapabilityData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -666,66 +386,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ChaosCapabilityData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -757,66 +425,14 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/>, <paramref name="targetName"/> or <paramref name="capabilityName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ChaosCapabilityData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string capabilityName, ChaosCapabilityData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
-            if (capabilityName == null)
-            {
-                throw new ArgumentNullException(nameof(capabilityName));
-            }
-            if (capabilityName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capabilityName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
+            Argument.AssertNotNullOrEmpty(capabilityName, nameof(capabilityName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, capabilityName, data);
             _pipeline.Send(message, cancellationToken);
@@ -862,58 +478,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CapabilityListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, continuationToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -945,58 +516,13 @@ namespace Azure.ResourceManager.Chaos
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="parentProviderNamespace"/>, <paramref name="parentResourceType"/>, <paramref name="parentResourceName"/> or <paramref name="targetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CapabilityListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string parentProviderNamespace, string parentResourceType, string parentResourceName, string targetName, string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (parentProviderNamespace == null)
-            {
-                throw new ArgumentNullException(nameof(parentProviderNamespace));
-            }
-            if (parentProviderNamespace.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentProviderNamespace));
-            }
-            if (parentResourceType == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceType));
-            }
-            if (parentResourceType.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceType));
-            }
-            if (parentResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(parentResourceName));
-            }
-            if (parentResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(parentResourceName));
-            }
-            if (targetName == null)
-            {
-                throw new ArgumentNullException(nameof(targetName));
-            }
-            if (targetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(targetName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(parentProviderNamespace, nameof(parentProviderNamespace));
+            Argument.AssertNotNullOrEmpty(parentResourceType, nameof(parentResourceType));
+            Argument.AssertNotNullOrEmpty(parentResourceName, nameof(parentResourceName));
+            Argument.AssertNotNullOrEmpty(targetName, nameof(targetName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, parentProviderNamespace, parentResourceType, parentResourceName, targetName, continuationToken);
             _pipeline.Send(message, cancellationToken);

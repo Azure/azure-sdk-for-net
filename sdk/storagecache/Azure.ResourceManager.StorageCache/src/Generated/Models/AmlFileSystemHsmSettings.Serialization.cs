@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemHsmSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             writer.WriteStringValue(Container);
             writer.WritePropertyName("loggingContainer"u8);
             writer.WriteStringValue(LoggingContainer);
-            if (ImportPrefix != null)
+            if (Optional.IsDefined(ImportPrefix))
             {
                 writer.WritePropertyName("importPrefix"u8);
                 writer.WriteStringValue(ImportPrefix);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemHsmSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemHsmSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemHsmSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

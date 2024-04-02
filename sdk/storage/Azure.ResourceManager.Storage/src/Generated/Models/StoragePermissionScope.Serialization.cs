@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePermissionScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StoragePermissionScope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,6 +102,87 @@ namespace Azure.ResourceManager.Storage.Models
             return new StoragePermissionScope(permissions, service, resourceName, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Permissions), out propertyOverride);
+            if (Optional.IsDefined(Permissions) || hasPropertyOverride)
+            {
+                builder.Append("  permissions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Permissions.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Permissions}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Permissions}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Service), out propertyOverride);
+            if (Optional.IsDefined(Service) || hasPropertyOverride)
+            {
+                builder.Append("  service: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Service.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Service}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Service}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceName), out propertyOverride);
+            if (Optional.IsDefined(ResourceName) || hasPropertyOverride)
+            {
+                builder.Append("  resourceName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StoragePermissionScope>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StoragePermissionScope>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,8 +191,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +210,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStoragePermissionScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StoragePermissionScope)} does not support reading '{options.Format}' format.");
             }
         }
 

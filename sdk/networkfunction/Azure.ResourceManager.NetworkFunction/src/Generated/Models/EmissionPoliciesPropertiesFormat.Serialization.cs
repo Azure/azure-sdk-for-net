@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmissionPoliciesPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EmissionType.HasValue)
+            if (Optional.IsDefined(EmissionType))
             {
                 writer.WritePropertyName("emissionType"u8);
                 writer.WriteStringValue(EmissionType.Value.ToString());
             }
-            if (!(EmissionDestinations is ChangeTrackingList<EmissionPolicyDestination> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EmissionDestinations))
             {
                 writer.WritePropertyName("emissionDestinations"u8);
                 writer.WriteStartArray();
                 foreach (var item in EmissionDestinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmissionPolicyDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmissionPoliciesPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                         return DeserializeEmissionPoliciesPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmissionPoliciesPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

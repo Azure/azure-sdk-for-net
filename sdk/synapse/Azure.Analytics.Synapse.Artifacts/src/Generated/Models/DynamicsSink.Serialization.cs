@@ -21,47 +21,47 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             writer.WritePropertyName("writeBehavior"u8);
             writer.WriteStringValue(WriteBehavior.ToString());
-            if (IgnoreNullValues != null)
+            if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                writer.WriteObjectValue(IgnoreNullValues);
+                writer.WriteObjectValue<object>(IgnoreNullValues);
             }
-            if (AlternateKeyName != null)
+            if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
-                writer.WriteObjectValue(AlternateKeyName);
+                writer.WriteObjectValue<object>(AlternateKeyName);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (WriteBatchSize != null)
+            if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
-            if (WriteBatchTimeout != null)
+            if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
-            if (SinkRetryCount != null)
+            if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
-            if (SinkRetryWait != null)
+            if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -178,7 +178,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DynamicsSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DynamicsSink>(model);
             }
             public override DynamicsSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -20,10 +20,7 @@ namespace Azure.Communication.CallAutomation
         /// <exception cref="ArgumentNullException"> <paramref name="transportUrl"/> is null. </exception>
         public MediaStreamingOptionsInternal(string transportUrl, MediaStreamingTransport transportType, MediaStreamingContent contentType, MediaStreamingAudioChannel audioChannelType)
         {
-            if (transportUrl == null)
-            {
-                throw new ArgumentNullException(nameof(transportUrl));
-            }
+            Argument.AssertNotNull(transportUrl, nameof(transportUrl));
 
             TransportUrl = transportUrl;
             TransportType = transportType;

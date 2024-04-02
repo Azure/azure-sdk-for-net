@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareProvisionIlrContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointId"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (SourceResourceId != null)
+            if (Optional.IsDefined(SourceResourceId))
             {
                 writer.WritePropertyName("sourceResourceId"u8);
                 writer.WriteStringValue(SourceResourceId);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<FileShareProvisionIlrContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeFileShareProvisionIlrContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FileShareProvisionIlrContent)} does not support reading '{options.Format}' format.");
             }
         }
 

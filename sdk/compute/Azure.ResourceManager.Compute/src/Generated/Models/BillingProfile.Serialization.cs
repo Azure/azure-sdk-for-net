@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxPrice.HasValue)
+            if (Optional.IsDefined(MaxPrice))
             {
                 writer.WritePropertyName("maxPrice"u8);
                 writer.WriteNumberValue(MaxPrice.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeBillingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

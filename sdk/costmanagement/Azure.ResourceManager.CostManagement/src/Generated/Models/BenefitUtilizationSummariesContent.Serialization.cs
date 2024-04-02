@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BillingAccountId != null)
+            if (Optional.IsDefined(BillingAccountId))
             {
                 writer.WritePropertyName("billingAccountId"u8);
                 writer.WriteStringValue(BillingAccountId);
             }
-            if (BillingProfileId != null)
+            if (Optional.IsDefined(BillingProfileId))
             {
                 writer.WritePropertyName("billingProfileId"u8);
                 writer.WriteStringValue(BillingProfileId);
             }
-            if (BenefitOrderId != null)
+            if (Optional.IsDefined(BenefitOrderId))
             {
                 writer.WritePropertyName("benefitOrderId"u8);
                 writer.WriteStringValue(BenefitOrderId);
             }
-            if (BenefitId != null)
+            if (Optional.IsDefined(BenefitId))
             {
                 writer.WritePropertyName("benefitId"u8);
                 writer.WriteStringValue(BenefitId);
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endDate"u8);
             writer.WriteStringValue(EndOn, "O");
-            if (Kind.HasValue)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitUtilizationSummariesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -57,14 +57,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="startIPAddress"/> or <paramref name="endIPAddress"/> is null. </exception>
         public CosmosDBFirewallRuleData(string startIPAddress, string endIPAddress)
         {
-            if (startIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(startIPAddress));
-            }
-            if (endIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(endIPAddress));
-            }
+            Argument.AssertNotNull(startIPAddress, nameof(startIPAddress));
+            Argument.AssertNotNull(endIPAddress, nameof(endIPAddress));
 
             StartIPAddress = startIPAddress;
             EndIPAddress = endIPAddress;
@@ -93,10 +87,13 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> The provisioning state of the firewall rule. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.startIpAddress")]
         public string StartIPAddress { get; set; }
         /// <summary> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </summary>
+        [WirePath("properties.endIpAddress")]
         public string EndIPAddress { get; set; }
     }
 }

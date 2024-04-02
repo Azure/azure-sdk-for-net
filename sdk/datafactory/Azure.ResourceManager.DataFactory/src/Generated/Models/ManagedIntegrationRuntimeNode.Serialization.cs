@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NodeId != null)
+            if (options.Format != "W" && Optional.IsDefined(NodeId))
             {
                 writer.WritePropertyName("nodeId"u8);
                 writer.WriteStringValue(NodeId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Errors is ChangeTrackingList<ManagedIntegrationRuntimeError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedIntegrationRuntimeError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntimeNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeManagedIntegrationRuntimeNode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeNode)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Rows.HasValue)
+            if (Optional.IsDefined(Rows))
             {
                 writer.WritePropertyName("rows"u8);
                 writer.WriteNumberValue(Rows.Value);
             }
-            if (Cols.HasValue)
+            if (Optional.IsDefined(Cols))
             {
                 writer.WritePropertyName("cols"u8);
                 writer.WriteNumberValue(Cols.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecRequestTerminalSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerExecRequestTerminalSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecRequestTerminalSize)} does not support reading '{options.Format}' format.");
             }
         }
 

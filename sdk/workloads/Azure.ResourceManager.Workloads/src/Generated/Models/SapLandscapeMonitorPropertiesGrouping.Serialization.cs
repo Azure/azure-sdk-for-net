@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Landscape is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Landscape))
             {
                 writer.WritePropertyName("landscape"u8);
                 writer.WriteStartArray();
                 foreach (var item in Landscape)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SapApplication is ChangeTrackingList<SapLandscapeMonitorSidMapping> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SapApplication))
             {
                 writer.WritePropertyName("sapApplication"u8);
                 writer.WriteStartArray();
                 foreach (var item in SapApplication)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapLandscapeMonitorPropertiesGrouping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support reading '{options.Format}' format.");
             }
         }
 

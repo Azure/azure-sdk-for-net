@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<BenefitUtilizationSummariesContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -68,26 +68,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GenerateBenefitUtilizationSummariesReportAsync(string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -110,26 +93,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="billingAccountId"/> or <paramref name="billingProfileId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GenerateBenefitUtilizationSummariesReport(string billingAccountId, string billingProfileId, BenefitUtilizationSummariesContent content, CancellationToken cancellationToken = default)
         {
-            if (billingAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(billingAccountId));
-            }
-            if (billingAccountId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingAccountId));
-            }
-            if (billingProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(billingProfileId));
-            }
-            if (billingProfileId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(billingProfileId));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(billingAccountId, nameof(billingAccountId));
+            Argument.AssertNotNullOrEmpty(billingProfileId, nameof(billingProfileId));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateGenerateBenefitUtilizationSummariesReportRequest(billingAccountId, billingProfileId, content);
             _pipeline.Send(message, cancellationToken);

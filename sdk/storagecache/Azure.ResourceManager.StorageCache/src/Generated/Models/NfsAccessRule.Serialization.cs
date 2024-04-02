@@ -22,40 +22,40 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("scope"u8);
             writer.WriteStringValue(Scope.ToString());
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
             writer.WritePropertyName("access"u8);
             writer.WriteStringValue(Access.ToString());
-            if (AllowSuid.HasValue)
+            if (Optional.IsDefined(AllowSuid))
             {
                 writer.WritePropertyName("suid"u8);
                 writer.WriteBooleanValue(AllowSuid.Value);
             }
-            if (AllowSubmountAccess.HasValue)
+            if (Optional.IsDefined(AllowSubmountAccess))
             {
                 writer.WritePropertyName("submountAccess"u8);
                 writer.WriteBooleanValue(AllowSubmountAccess.Value);
             }
-            if (EnableRootSquash.HasValue)
+            if (Optional.IsDefined(EnableRootSquash))
             {
                 writer.WritePropertyName("rootSquash"u8);
                 writer.WriteBooleanValue(EnableRootSquash.Value);
             }
-            if (AnonymousUID != null)
+            if (Optional.IsDefined(AnonymousUID))
             {
                 writer.WritePropertyName("anonymousUID"u8);
                 writer.WriteStringValue(AnonymousUID);
             }
-            if (AnonymousGID != null)
+            if (Optional.IsDefined(AnonymousGID))
             {
                 writer.WritePropertyName("anonymousGID"u8);
                 writer.WriteStringValue(AnonymousGID);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsAccessRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsAccessRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeNfsAccessRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsAccessRule)} does not support reading '{options.Format}' format.");
             }
         }
 

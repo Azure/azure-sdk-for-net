@@ -19,14 +19,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataflow"/> is null. </exception>
         public ExecuteDataFlowActivity(string name, DataFlowReference dataflow) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (dataflow == null)
-            {
-                throw new ArgumentNullException(nameof(dataflow));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(dataflow, nameof(dataflow));
 
             Dataflow = dataflow;
             Type = "ExecuteDataFlow";

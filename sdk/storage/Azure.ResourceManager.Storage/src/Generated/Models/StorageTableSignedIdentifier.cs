@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public StorageTableSignedIdentifier(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> unique-64-character-value of the stored access policy. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> Access policy. </summary>
+        [WirePath("accessPolicy")]
         public StorageTableAccessPolicy AccessPolicy { get; set; }
     }
 }

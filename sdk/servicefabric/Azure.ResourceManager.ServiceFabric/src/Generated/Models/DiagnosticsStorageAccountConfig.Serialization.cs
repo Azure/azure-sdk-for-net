@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WriteStringValue(StorageAccountName);
             writer.WritePropertyName("protectedAccountKeyName"u8);
             writer.WriteStringValue(ProtectedAccountKeyName);
-            if (ProtectedAccountKeyName2 != null)
+            if (Optional.IsDefined(ProtectedAccountKeyName2))
             {
                 writer.WritePropertyName("protectedAccountKeyName2"u8);
                 writer.WriteStringValue(ProtectedAccountKeyName2);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticsStorageAccountConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeDiagnosticsStorageAccountConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticsStorageAccountConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

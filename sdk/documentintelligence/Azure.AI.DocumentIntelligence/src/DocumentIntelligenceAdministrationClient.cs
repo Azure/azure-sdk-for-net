@@ -8,112 +8,8 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    [CodeGenSuppress("GetOperationAsync", typeof(Guid), typeof(CancellationToken))]
-    [CodeGenSuppress("GetOperation", typeof(Guid), typeof(CancellationToken))]
-    [CodeGenSuppress("GetOperationAsync", typeof(Guid), typeof(RequestContext))]
-    [CodeGenSuppress("GetOperation", typeof(Guid), typeof(RequestContext))]
     public partial class DocumentIntelligenceAdministrationClient
     {
-        // CUSTOM CODE NOTE: the spec incorrectly defines the operationId parameter as a GUID
-        // in the GetOperation APIs, but it should be a string. This makes it impossible to
-        // use the API since IDs will never be a GUID. Because of this we're manually adding
-        // overloads that take a string and forcing the generated ones to be suppressed. Ideally
-        // we'll get the spec fixed and this piece of custom code will be removed.
-
-        /// <summary> Gets operation info. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,CancellationToken)']/*" />
-        public virtual async Task<Response<OperationDetails>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetOperationAsync(operationId, context).ConfigureAwait(false);
-            return Response.FromValue(OperationDetails.FromResponse(response), response);
-        }
-
-        /// <summary> Gets operation info. </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,CancellationToken)']/*" />
-        public virtual Response<OperationDetails> GetOperation(string operationId, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetOperation(operationId, context);
-            return Response.FromValue(OperationDetails.FromResponse(response), response);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets operation info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetOperationAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperationAsync(Guid,RequestContext)']/*" />
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Gets operation info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// <item>
-        /// <description>
-        /// Please try the simpler <see cref="GetOperation(string,CancellationToken)"/> convenience overload with strongly typed models first.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="operationId"> Operation ID. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='GetOperation(Guid,RequestContext)']/*" />
-        public virtual Response GetOperation(string operationId, RequestContext context)
-        {
-            using var scope = ClientDiagnostics.CreateScope("DocumentIntelligenceAdministrationClient.GetOperation");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetOperationRequest(operationId, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
         // CUSTOM CODE NOTE: we're overwriting the behavior of the BuildDocumentModel, ComposeModel,
         // CopyModelTo, and BuildClassifier APIs to return an instance of TrainingOperation. This is
         // a workaround since Operation.Id is not supported by our generator yet (it throws a
@@ -451,22 +347,6 @@ namespace Azure.AI.DocumentIntelligence
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        internal HttpMessage CreateGetOperationRequest(string operationId, RequestContext context)
-        {
-            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRaw("/documentintelligence", false);
-            uri.AppendPath("/operations/", false);
-            uri.AppendPath(operationId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            return message;
         }
     }
 }

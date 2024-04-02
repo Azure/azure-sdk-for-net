@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

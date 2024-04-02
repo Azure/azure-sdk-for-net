@@ -15,7 +15,7 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (IsIotEdgeDevice.HasValue)
+            if (Optional.IsDefined(IsIotEdgeDevice))
             {
                 writer.WritePropertyName("iotEdge"u8);
                 writer.WriteBooleanValue(IsIotEdgeDevice.Value);

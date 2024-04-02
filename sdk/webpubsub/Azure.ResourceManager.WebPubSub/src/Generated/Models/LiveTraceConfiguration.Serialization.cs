@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveTraceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Enabled != null)
+            if (Optional.IsDefined(Enabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteStringValue(Enabled);
             }
-            if (!(Categories is ChangeTrackingList<LiveTraceCategory> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LiveTraceCategory>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<LiveTraceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeLiveTraceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LiveTraceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

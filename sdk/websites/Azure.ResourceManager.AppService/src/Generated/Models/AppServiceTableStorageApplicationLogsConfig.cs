@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sasUriString"/> is null. </exception>
         public AppServiceTableStorageApplicationLogsConfig(string sasUriString)
         {
-            if (sasUriString == null)
-            {
-                throw new ArgumentNullException(nameof(sasUriString));
-            }
+            Argument.AssertNotNull(sasUriString, nameof(sasUriString));
 
             SasUriString = sasUriString;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Log level. </summary>
+        [WirePath("level")]
         public WebAppLogLevel? Level { get; set; }
         /// <summary> SAS URL to an Azure table with add/query/delete permissions. </summary>
+        [WirePath("sasUrl")]
         public string SasUriString { get; set; }
     }
 }

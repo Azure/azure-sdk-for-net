@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverBulkRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ValidateOnly.HasValue)
+            if (Optional.IsDefined(ValidateOnly))
             {
                 writer.WritePropertyName("validateOnly"u8);
                 writer.WriteBooleanValue(ValidateOnly.Value);
             }
-            if (!(MoverResources is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MoverResources))
             {
                 writer.WritePropertyName("moveResources"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 }
                 writer.WriteEndArray();
             }
-            if (MoverResourceInputType.HasValue)
+            if (Optional.IsDefined(MoverResourceInputType))
             {
                 writer.WritePropertyName("moveResourceInputType"u8);
                 writer.WriteStringValue(MoverResourceInputType.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverBulkRemoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverBulkRemoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverBulkRemoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Communication
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SenderUsernameResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SenderUsernameResource> CreateOrUpdate(WaitUntil waitUntil, string senderUsername, SenderUsernameResourceData data, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual async Task<Response<SenderUsernameResource>> GetAsync(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual Response<SenderUsernameResource> Get(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual Response<bool> Exists(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual async Task<NullableResponse<SenderUsernameResource>> GetIfExistsAsync(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Communication
         /// <exception cref="ArgumentNullException"> <paramref name="senderUsername"/> is null. </exception>
         public virtual NullableResponse<SenderUsernameResource> GetIfExists(string senderUsername, CancellationToken cancellationToken = default)
         {
-            if (senderUsername == null)
-            {
-                throw new ArgumentNullException(nameof(senderUsername));
-            }
-            if (senderUsername.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(senderUsername));
-            }
+            Argument.AssertNotNullOrEmpty(senderUsername, nameof(senderUsername));
 
             using var scope = _senderUsernameResourceSenderUsernamesClientDiagnostics.CreateScope("SenderUsernameResourceCollection.GetIfExists");
             scope.Start();

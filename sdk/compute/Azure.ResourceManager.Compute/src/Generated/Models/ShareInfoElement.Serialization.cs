@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareInfoElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(VmUri))
             {
                 writer.WritePropertyName("vmUri"u8);
                 writer.WriteStringValue(VmUri.AbsoluteUri);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareInfoElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareInfoElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeShareInfoElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareInfoElement)} does not support reading '{options.Format}' format.");
             }
         }
 

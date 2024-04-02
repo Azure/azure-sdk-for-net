@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,12 +22,12 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(Function);
+            writer.WriteObjectValue<ChatCompletionsFunctionToolSelection>(Function, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -54,7 +53,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedFunctionToolSelection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +102,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatCompletionsNamedFunctionToolSelection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsNamedFunctionToolSelection)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatCompletionsNamedFunctionToolSelection>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<IndexColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IndexColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IndexColumn)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ColumnName != null)
+            if (Optional.IsDefined(ColumnName))
             {
                 if (ColumnName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("columnName");
                 }
             }
-            if (DataType.HasValue)
+            if (Optional.IsDefined(DataType))
             {
                 writer.WritePropertyName("dataType"u8);
                 writer.WriteStringValue(DataType.Value.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<IndexColumn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IndexColumn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IndexColumn)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IndexColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IndexColumn)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeIndexColumn(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IndexColumn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IndexColumn)} does not support reading '{options.Format}' format.");
             }
         }
 

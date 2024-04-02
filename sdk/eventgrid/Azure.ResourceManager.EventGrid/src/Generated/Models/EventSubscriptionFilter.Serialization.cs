@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubjectBeginsWith != null)
+            if (Optional.IsDefined(SubjectBeginsWith))
             {
                 writer.WritePropertyName("subjectBeginsWith"u8);
                 writer.WriteStringValue(SubjectBeginsWith);
             }
-            if (SubjectEndsWith != null)
+            if (Optional.IsDefined(SubjectEndsWith))
             {
                 writer.WritePropertyName("subjectEndsWith"u8);
                 writer.WriteStringValue(SubjectEndsWith);
             }
-            if (!(IncludedEventTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedEventTypes))
             {
                 writer.WritePropertyName("includedEventTypes"u8);
                 writer.WriteStartArray();
@@ -46,23 +46,23 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsSubjectCaseSensitive.HasValue)
+            if (Optional.IsDefined(IsSubjectCaseSensitive))
             {
                 writer.WritePropertyName("isSubjectCaseSensitive"u8);
                 writer.WriteBooleanValue(IsSubjectCaseSensitive.Value);
             }
-            if (IsAdvancedFilteringOnArraysEnabled.HasValue)
+            if (Optional.IsDefined(IsAdvancedFilteringOnArraysEnabled))
             {
                 writer.WritePropertyName("enableAdvancedFilteringOnArrays"u8);
                 writer.WriteBooleanValue(IsAdvancedFilteringOnArraysEnabled.Value);
             }
-            if (!(AdvancedFilters is ChangeTrackingList<AdvancedFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdvancedFilters))
             {
                 writer.WritePropertyName("advancedFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdvancedFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdvancedFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventSubscriptionFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

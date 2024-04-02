@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            writer.WriteObjectValue<ComputeSku>(Sku, options);
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -69,24 +69,24 @@ namespace Azure.ResourceManager.Compute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ReservationId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (options.Format != "W" && PlatformFaultDomainCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PlatformFaultDomainCount))
             {
                 writer.WritePropertyName("platformFaultDomainCount"u8);
                 writer.WriteNumberValue(PlatformFaultDomainCount.Value);
             }
-            if (options.Format != "W" && !(VirtualMachinesAssociated is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAssociated))
             {
                 writer.WritePropertyName("virtualMachinesAssociated"u8);
                 writer.WriteStartArray();
@@ -96,22 +96,22 @@ namespace Azure.ResourceManager.Compute
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningOn))
             {
                 writer.WritePropertyName("provisioningTime"u8);
                 writer.WriteStringValue(ProvisioningOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<CapacityReservationInstanceView>(InstanceView, options);
             }
-            if (options.Format != "W" && TimeCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
                 writer.WritePropertyName("timeCreated"u8);
                 writer.WriteStringValue(TimeCreated.Value, "O");
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeCapacityReservationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationData)} does not support reading '{options.Format}' format.");
             }
         }
 

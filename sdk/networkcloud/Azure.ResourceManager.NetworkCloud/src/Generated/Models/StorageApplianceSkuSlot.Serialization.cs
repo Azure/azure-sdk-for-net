@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RackSlot.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RackSlot))
             {
                 writer.WritePropertyName("rackSlot"u8);
                 writer.WriteNumberValue(RackSlot.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && CapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityGB))
             {
                 writer.WritePropertyName("capacityGB"u8);
                 writer.WriteNumberValue(CapacityGB.Value);
             }
-            if (options.Format != "W" && Model != null)
+            if (options.Format != "W" && Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageApplianceSkuSlot>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeStorageApplianceSkuSlot(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageApplianceSkuSlot)} does not support reading '{options.Format}' format.");
             }
         }
 

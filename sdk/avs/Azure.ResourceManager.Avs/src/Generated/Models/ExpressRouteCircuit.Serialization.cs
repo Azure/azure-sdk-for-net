@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimarySubnet != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimarySubnet))
             {
                 writer.WritePropertyName("primarySubnet"u8);
                 writer.WriteStringValue(PrimarySubnet);
             }
-            if (options.Format != "W" && SecondarySubnet != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondarySubnet))
             {
                 writer.WritePropertyName("secondarySubnet"u8);
                 writer.WriteStringValue(SecondarySubnet);
             }
-            if (options.Format != "W" && ExpressRouteId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressRouteId))
             {
                 writer.WritePropertyName("expressRouteID"u8);
                 writer.WriteStringValue(ExpressRouteId);
             }
-            if (options.Format != "W" && ExpressRoutePrivatePeeringId != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpressRoutePrivatePeeringId))
             {
                 writer.WritePropertyName("expressRoutePrivatePeeringID"u8);
                 writer.WriteStringValue(ExpressRoutePrivatePeeringId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeExpressRouteCircuit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support reading '{options.Format}' format.");
             }
         }
 

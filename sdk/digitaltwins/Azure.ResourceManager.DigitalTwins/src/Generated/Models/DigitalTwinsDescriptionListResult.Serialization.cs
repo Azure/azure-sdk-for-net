@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DigitalTwins;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
@@ -23,11 +22,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 if (NextLink != null)
                 {
@@ -39,13 +38,13 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                     writer.WriteNull("nextLink");
                 }
             }
-            if (!(Value is ChangeTrackingList<DigitalTwinsDescriptionData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DigitalTwinsDescriptionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsDescriptionListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

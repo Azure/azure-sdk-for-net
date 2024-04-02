@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultFeatureSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CrossSubscriptionRestoreSettings != null)
+            if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
+                writer.WriteObjectValue<CrossSubscriptionRestoreSettings>(CrossSubscriptionRestoreSettings, options);
             }
-            if (CrossRegionRestoreSettings != null)
+            if (Optional.IsDefined(CrossRegionRestoreSettings))
             {
                 writer.WritePropertyName("crossRegionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossRegionRestoreSettings);
+                writer.WriteObjectValue<CrossRegionRestoreSettings>(CrossRegionRestoreSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultFeatureSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultFeatureSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultFeatureSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

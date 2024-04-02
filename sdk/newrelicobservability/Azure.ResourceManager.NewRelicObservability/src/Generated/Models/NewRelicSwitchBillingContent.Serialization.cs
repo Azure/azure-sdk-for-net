@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicSwitchBillingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureResourceId != null)
+            if (Optional.IsDefined(AzureResourceId))
             {
                 writer.WritePropertyName("azureResourceId"u8);
                 writer.WriteStringValue(AzureResourceId);
             }
-            if (OrganizationId != null)
+            if (Optional.IsDefined(OrganizationId))
             {
                 writer.WritePropertyName("organizationId"u8);
                 writer.WriteStringValue(OrganizationId);
             }
-            if (PlanData != null)
+            if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<NewRelicPlanDetails>(PlanData, options);
             }
             writer.WritePropertyName("userEmail"u8);
             writer.WriteStringValue(UserEmail);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicSwitchBillingContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicSwitchBillingContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicSwitchBillingContent)} does not support reading '{options.Format}' format.");
             }
         }
 

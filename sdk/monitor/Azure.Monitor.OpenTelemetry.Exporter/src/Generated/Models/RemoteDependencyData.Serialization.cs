@@ -15,41 +15,41 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (ResultCode != null)
+            if (Optional.IsDefined(ResultCode))
             {
                 writer.WritePropertyName("resultCode"u8);
                 writer.WriteStringValue(ResultCode);
             }
-            if (Data != null)
+            if (Optional.IsDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStringValue(Data);
             }
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Target != null)
+            if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
                 writer.WriteStringValue(Target);
             }
             writer.WritePropertyName("duration"u8);
             writer.WriteStringValue(Duration);
-            if (Success.HasValue)
+            if (Optional.IsDefined(Success))
             {
                 writer.WritePropertyName("success"u8);
                 writer.WriteBooleanValue(Success.Value);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Measurements is ChangeTrackingDictionary<string, double> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Measurements))
             {
                 writer.WritePropertyName("measurements"u8);
                 writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ValidationToken != null)
+            if (options.Format != "W" && Optional.IsDefined(ValidationToken))
             {
                 writer.WritePropertyName("validationToken"u8);
                 writer.WriteStringValue(ValidationToken);
             }
-            if (options.Format != "W" && ExpiresOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainValidationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDomainValidationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainValidationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

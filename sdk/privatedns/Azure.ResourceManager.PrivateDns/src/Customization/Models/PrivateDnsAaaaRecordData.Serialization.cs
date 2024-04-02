@@ -32,6 +32,26 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Metadata))
@@ -49,6 +69,16 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(TtlInSeconds.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAutoRegistered))
+            {
+                writer.WritePropertyName("isAutoRegistered"u8);
+                writer.WriteBooleanValue(IsAutoRegistered.Value);
             }
             if (Optional.IsCollectionDefined(PrivateDnsAaaaRecords))
             {
@@ -99,16 +129,16 @@ namespace Azure.ResourceManager.PrivateDns
             {
                 return null;
             }
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<long> ttl = default;
-            Optional<string> fqdn = default;
-            Optional<bool> isAutoRegistered = default;
-            Optional<IList<PrivateDnsAaaaRecordInfo>> aaaaRecords = default;
+            SystemData systemData = default;
+            IDictionary<string, string> metadata = default;
+            long? ttl = default;
+            string fqdn = default;
+            bool? isAutoRegistered = default;
+            IList<PrivateDnsAaaaRecordInfo> aaaaRecords = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +147,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     etag = new ETag(property.Value.GetString());
@@ -142,7 +171,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.ToString());
@@ -152,7 +180,6 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
@@ -161,7 +188,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             Dictionary<string, string> dictionary = new Dictionary<string, string>();
@@ -176,7 +202,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             ttl = property0.Value.GetInt64();
@@ -191,7 +216,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             isAutoRegistered = property0.Value.GetBoolean();
@@ -201,7 +225,6 @@ namespace Azure.ResourceManager.PrivateDns
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
-                                property0.ThrowNonNullablePropertyIsNull();
                                 continue;
                             }
                             List<PrivateDnsAaaaRecordInfo> array = new List<PrivateDnsAaaaRecordInfo>();
@@ -221,7 +244,18 @@ namespace Azure.ResourceManager.PrivateDns
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateDnsAaaaRecordData(id, name, type, systemData.Value, Optional.ToNullable(etag), Optional.ToDictionary(metadata), Optional.ToNullable(ttl), fqdn.Value, Optional.ToNullable(isAutoRegistered), Optional.ToList(aaaaRecords), serializedAdditionalRawData);
+            return new PrivateDnsAaaaRecordData(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                ttl,
+                fqdn,
+                isAutoRegistered,
+                aaaaRecords ?? new ChangeTrackingList<PrivateDnsAaaaRecordInfo>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateDnsAaaaRecordData>.Write(ModelReaderWriterOptions options)

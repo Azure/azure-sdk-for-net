@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,11 +22,11 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(EpochIds is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EpochIds))
             {
                 writer.WritePropertyName("epochIds"u8);
                 writer.WriteStartArray();
@@ -37,7 +36,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrainLosses is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TrainLosses))
             {
                 writer.WritePropertyName("trainLosses"u8);
                 writer.WriteStartArray();
@@ -47,7 +46,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationLosses is ChangeTrackingList<float> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationLosses))
             {
                 writer.WritePropertyName("validationLosses"u8);
                 writer.WriteStartArray();
@@ -57,7 +56,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(LatenciesInSeconds is ChangeTrackingList<float> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(LatenciesInSeconds))
             {
                 writer.WritePropertyName("latenciesInSeconds"u8);
                 writer.WriteStartArray();
@@ -90,7 +89,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<ModelState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +186,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +202,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeModelState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelState)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -221,7 +220,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ModelState>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

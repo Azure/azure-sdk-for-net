@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="serviceUri"> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </param>
         /// <param name="forcePathStyle"> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accessKeyId, DataFactorySecretBaseDefinition secretAccessKey, DataFactoryElement<string> serviceUri, DataFactoryElement<bool> forcePathStyle, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AmazonS3CompatibleLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> accessKeyId, DataFactorySecret secretAccessKey, DataFactoryElement<string> serviceUri, DataFactoryElement<bool> forcePathStyle, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             AccessKeyId = accessKeyId;
             SecretAccessKey = secretAccessKey;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> The access key identifier of the Amazon S3 Compatible Identity and Access Management (IAM) user. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> AccessKeyId { get; set; }
         /// <summary> The secret access key of the Amazon S3 Compatible Identity and Access Management (IAM) user. </summary>
-        public DataFactorySecretBaseDefinition SecretAccessKey { get; set; }
+        public DataFactorySecret SecretAccessKey { get; set; }
         /// <summary> This value specifies the endpoint to access with the Amazon S3 Compatible Connector. This is an optional property; change it only if you want to try a different service endpoint or want to switch between https and http. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServiceUri { get; set; }
         /// <summary> If true, use S3 path-style access instead of virtual hosted-style access. Default value is false. Type: boolean (or Expression with resultType boolean). </summary>

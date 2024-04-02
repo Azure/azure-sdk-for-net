@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDiskImageSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryDiskImageSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryDiskImageSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryDiskImageSource)} does not support reading '{options.Format}' format.");
             }
         }
 
