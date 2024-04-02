@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Analysis.Models
             string rangeStart = default;
             string rangeEnd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firewallRuleName"u8))
@@ -103,10 +103,10 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AnalysisIPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd, serializedAdditionalRawData);
         }
 
