@@ -17,9 +17,7 @@ namespace Azure.Identity
         protected override bool ShouldRetry(HttpMessage message, Exception exception)
         {
             // For IMDS requests, do not retry until we have observed the first response cycle
-            var doRetry = !ImdsManagedIdentitySource.IsProbRequest(message) ? base.ShouldRetry(message, exception) : false;
-            Console.WriteLine($"{doRetry}");
-            return doRetry;
+            return !ImdsManagedIdentitySource.IsProbRequest(message) ? base.ShouldRetry(message, exception) : false;
         }
 
         protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)

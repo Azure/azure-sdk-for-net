@@ -62,7 +62,7 @@ namespace Azure.Identity
 
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            // dont add the Metadata endpoint for the probe request
+            // Don't add the Metadata endpoint for the probe request
             if (!_isFirstRequest || !_isChainedCredential)
             {
                 SetNonProbeRequest(request);
