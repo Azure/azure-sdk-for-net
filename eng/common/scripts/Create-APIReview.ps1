@@ -125,10 +125,10 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     return $StatusCode
 }
 
-function Get-APITokenFileName($packageName)
+function Get-APITokenFileName($artifactName)
 {
-    $reviewTokenFileName = "${packageName}_${LanguageShort}.json"
-    $tokenFilePath = Join-Path $ArtifactPath $packageName $reviewTokenFileName
+    $reviewTokenFileName = "${artifactName}_${LanguageShort}.json"
+    $tokenFilePath = Join-Path $ArtifactPath $artifactName $reviewTokenFileName
     if (Test-Path $tokenFilePath) {
         Write-Host "Review token file is present at $tokenFilePath"
         return $reviewTokenFileName
@@ -139,14 +139,14 @@ function Get-APITokenFileName($packageName)
     }
 }
 
-function Submit-APIReview($packageInfo, $packagePath)
+function Submit-APIReview($packageInfo, $packagePath, $artifactName)
 {
     $packageName = $packageInfo.Name    
     $apiLabel = "Source Branch:${SourceBranch}"
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
-    $reviewTokenFileName =  Get-APITokenFileName $packageName
+    $reviewTokenFileName =  Get-APITokenFileName $artifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
         return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
@@ -209,7 +209,7 @@ function ProcessPackage($packageName)
             if ( ($SourceBranch -eq $DefaultBranch) -or (-not $version.IsPrerelease) -or $MarkPackageAsShipped)
             {
                 Write-Host "Submitting API Review request for package $($pkg), File path: $($pkgPath)"
-                $respCode = Submit-APIReview $pkgInfo $pkgPath
+                $respCode = Submit-APIReview $pkgInfo $pkgPath $packageName
                 Write-Host "HTTP Response code: $($respCode)"
 
                 # no need to check API review status when marking a package as shipped
