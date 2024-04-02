@@ -17,7 +17,7 @@ namespace Azure.Core.Emitted;
 #if !NET6_0_OR_GREATER
 internal class PrototypeMultipartContent : RequestContent
 {
-    private static Random _random = new();
+    private static readonly Random _random = new();
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     private const string CRLF = "\r\n";

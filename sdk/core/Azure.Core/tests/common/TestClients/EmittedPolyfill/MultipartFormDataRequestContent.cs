@@ -20,7 +20,7 @@ public class MultipartFormDataRequestContent : RequestContent
 {
     private readonly MultipartFormDataContent _multipartContent;
 
-    private static Random _random = new();
+    private static readonly Random _random = new();
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     public MultipartFormDataRequestContent()
