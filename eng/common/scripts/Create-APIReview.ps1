@@ -89,9 +89,13 @@ function Upload-SourceArtifact($filePath, $apiLabel, $releaseStatus, $packageVer
     return $StatusCode
 }
 
-function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion)
+function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $reviewFileName, $packageVersion, $filePath)
 {
-    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${packageName}&reviewFilePath=${reviewFileName}"    
+    Write-Host "Original File path: $filePath"
+    $fileName = Split-Path -Leaf $filePath
+    Write-Host "OriginalFile name: $fileName"
+
+    $params = "buildId=${BuildId}&artifactName=${ArtifactName}&originalFilePath=${fileName}&reviewFilePath=${reviewFileName}"    
     $params += "&label=${apiLabel}&repoName=${RepoName}&packageName=${packageName}&project=internal&packageVersion=${packageVersion}"
     if($MarkPackageAsShipped) {
         $params += "&setReleaseTag=true"
@@ -145,7 +149,7 @@ function Submit-APIReview($packageInfo, $packagePath)
     $reviewTokenFileName =  Get-APITokenFileName $packageName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
-        return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version
+        return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
