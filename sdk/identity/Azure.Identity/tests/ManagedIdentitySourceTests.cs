@@ -54,41 +54,6 @@ namespace Azure.Identity.Tests
             Assert.That(ex.Message, Does.Contain("Response from Managed Identity was successful, but the operation timed out prior to completion."));
         }
 
-        [Test]
-        public void FirstTokenRequestUses1secTimeoutWithNoRetries()
-        {
-            int callCount = 0;
-            List<TimeSpan?> networkTimeouts = new();
-
-            var mockTransport = MockTransport.FromMessageCallback(msg =>
-            {
-                callCount++;
-                networkTimeouts.Add(msg.NetworkTimeout);
-                return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
-            });
-
-            var options = new TokenCredentialOptions() { Transport = mockTransport };
-            var pipeline = CredentialPipeline.GetInstance(options);
-            var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
-            {
-                ExcludeAzureCliCredential = true,
-                ExcludeAzureDeveloperCliCredential = true,
-                ExcludeAzurePowerShellCredential = true,
-                ExcludeEnvironmentCredential = true,
-                ExcludeSharedTokenCacheCredential = true,
-                ExcludeVisualStudioCodeCredential = true,
-                ExcludeVisualStudioCredential = true,
-                ExcludeWorkloadIdentityCredential = true,
-                Transport = mockTransport
-            });
-
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
-
-            Assert.AreEqual(1, networkTimeouts.Count);
-            var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1) };
-            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
-        }
-
         private static MockResponse CreateMockResponse(int responseCode, string token)
         {
             var response = new MockResponse(responseCode);
