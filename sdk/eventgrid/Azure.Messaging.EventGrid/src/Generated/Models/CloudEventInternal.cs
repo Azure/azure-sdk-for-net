@@ -31,7 +31,7 @@ namespace Azure.Messaging.EventGrid.Models
             Source = source;
             Type = type;
             Specversion = specversion;
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CloudEventInternal"/>. </summary>
@@ -46,7 +46,7 @@ namespace Azure.Messaging.EventGrid.Models
         /// <param name="datacontenttype"> Content type of data value. </param>
         /// <param name="subject"> This describes the subject of the event in the context of the event producer (identified by source). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal CloudEventInternal(string id, string source, JsonElement data, byte[] dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, object> additionalProperties)
+        internal CloudEventInternal(string id, string source, JsonElement data, byte[] dataBase64, string type, DateTimeOffset? time, string specversion, string dataschema, string datacontenttype, string subject, IDictionary<string, BinaryData> additionalProperties)
         {
             Id = id;
             Source = source;
@@ -79,7 +79,36 @@ namespace Azure.Messaging.EventGrid.Models
         public string Datacontenttype { get; set; }
         /// <summary> This describes the subject of the event in the context of the event producer (identified by source). </summary>
         public string Subject { get; set; }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }
