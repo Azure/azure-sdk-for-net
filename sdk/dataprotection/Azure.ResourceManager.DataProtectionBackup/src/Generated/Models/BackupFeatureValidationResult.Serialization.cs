@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IReadOnlyList<BackupSupportedFeature> features = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("featureType"u8))
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new BackupFeatureValidationResult(objectType, serializedAdditionalRawData, featureType, features ?? new ChangeTrackingList<BackupSupportedFeature>());
         }
 

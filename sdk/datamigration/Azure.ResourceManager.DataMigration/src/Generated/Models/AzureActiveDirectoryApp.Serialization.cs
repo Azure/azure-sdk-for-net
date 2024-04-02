@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             Guid? tenantId = default;
             bool? ignoreAzurePermissions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new AzureActiveDirectoryApp(applicationId, appKey, tenantId, ignoreAzurePermissions, serializedAdditionalRawData);
         }
 
