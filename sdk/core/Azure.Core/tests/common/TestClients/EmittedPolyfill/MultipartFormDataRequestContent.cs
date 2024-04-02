@@ -10,19 +10,19 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
-namespace Azure.Analytics.Purview.DataMap;
+namespace Azure.Core.Emitted;
 
 #if NET6_0_OR_GREATER
-internal class MultipartFormDataBinaryContent : RequestContent
+/*TODO internal*/
+public class MultipartFormDataRequestContent : RequestContent
 {
     private readonly MultipartFormDataContent _multipartContent;
 
     private static Random _random = new();
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
-    public MultipartFormDataBinaryContent()
+    public MultipartFormDataRequestContent()
     {
         _multipartContent = new MultipartFormDataContent(CreateBoundary());
     }
@@ -39,16 +39,24 @@ internal class MultipartFormDataBinaryContent : RequestContent
 
     public void Add(Stream stream, string name, string fileName = default)
     {
+        Argument.AssertNotNull(stream, nameof(stream));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         Add(new StreamContent(stream), name, fileName);
     }
 
     public void Add(string content, string name, string fileName = default)
     {
+        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         Add(new StringContent(content), name, fileName);
     }
 
     public void Add(int content, string name, string fileName = default)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         // https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#GFormatString
         string value = content.ToString("G", CultureInfo.InvariantCulture);
         Add(new StringContent(value), name, fileName);
@@ -56,6 +64,8 @@ internal class MultipartFormDataBinaryContent : RequestContent
 
     public void Add(double content, string name, string fileName = default)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         // https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-numeric-format-strings#GFormatString
         string value = content.ToString("G", CultureInfo.InvariantCulture);
         Add(new StringContent(value), name, fileName);
@@ -63,11 +73,17 @@ internal class MultipartFormDataBinaryContent : RequestContent
 
     public void Add(byte[] content, string name, string fileName = default)
     {
+        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         Add(new ByteArrayContent(content), name, fileName);
     }
 
     public void Add(BinaryData content, string name, string fileName = default)
     {
+        Argument.AssertNotNull(content, nameof(content));
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         Add(new ByteArrayContent(content.ToArray()), name, fileName);
     }
 
@@ -75,6 +91,8 @@ internal class MultipartFormDataBinaryContent : RequestContent
     {
         if (fileName is not null)
         {
+            Argument.AssertNotNullOrEmpty(fileName, nameof(fileName));
+
             AddFileNameHeader(content, name, fileName);
         }
 
@@ -135,22 +153,22 @@ internal class MultipartFormDataBinaryContent : RequestContent
         // TODO: polyfill sync-over-async for netstandard2.0 for Azure clients.
         // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/42674
 
-//#if NET6_0_OR_GREATER
+        //#if NET6_0_OR_GREATER
         _multipartContent.CopyTo(stream, default, cancellationToken);
-//#else
-//#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-//        _multipartContent.CopyToAsync(stream).EnsureCompleted();
-//#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-//#endif
+        //#else
+        //#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+        //        _multipartContent.CopyToAsync(stream).EnsureCompleted();
+        //#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+        //#endif
     }
 
     public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
     {
-//#if NET6_0_OR_GREATER
+        //#if NET6_0_OR_GREATER
         await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
-//#else
-//    await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
-//#endif
+        //#else
+        //    await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
+        //#endif
     }
 
     public override void Dispose()
