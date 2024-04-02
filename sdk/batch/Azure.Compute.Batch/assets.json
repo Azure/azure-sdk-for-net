@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/batch/Azure.Compute.Batch",
-  "Tag": ""
+  "Tag": "net/batch/Azure.Compute.Batch_e3f319753f"
 }
