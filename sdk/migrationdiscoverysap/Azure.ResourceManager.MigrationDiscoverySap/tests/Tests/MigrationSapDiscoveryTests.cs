@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.ResourceManager.MigrationDiscoverySap.Models;
 using Azure.ResourceManager.MigrationDiscoverySap.Tests.Tests.Enums;
 using Azure.ResourceManager.Models;
@@ -24,6 +25,7 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 {
     public MigrationSapDiscoveryTests(bool isAsync) : base(isAsync)
     {
+        BodyKeySanitizers.Add(new BodyKeySanitizer(SanitizeValue) { JsonPath = "properties.discoveryExcelSasUri" });
     }
 
     [TestCase]
@@ -141,12 +143,14 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
                 client, importEntitiesOp)), 300),
             "SAS Uri generation failed");
 
-        Response opStatus = await importEntitiesOp.UpdateStatusAsync();
-        var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
-        var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
-
+        // Skipping Upload while TestMode as playback, as
+        // Blob client is a data-plane client which can't simply interact with HttpMockServer.
         if (SessionEnvironment.Mode != RecordedTestMode.Playback)
         {
+            Response opStatus = await importEntitiesOp.UpdateStatusAsync();
+            var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
+            var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
+
             //Upload here
             using (FileStream stream = File.OpenRead(excelPathToImport))
             {
