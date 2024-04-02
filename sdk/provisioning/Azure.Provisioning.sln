@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.AppConfi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ApplicationInsights", "Azure.Provisioning.ApplicationInsights\src\Azure.Provisioning.ApplicationInsights.csproj", "{DC9BB057-C5BF-4718-A858-5F05B891EE41}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Authorization", "Azure.Provisioning.Authorization\src\Azure.Provisioning.Authorization.csproj", "{3702DBD5-428E-47C8-880C-0ACA0BE01990}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CognitiveServices", "Azure.Provisioning.CognitiveServices\src\Azure.Provisioning.CognitiveServices.csproj", "{765BA4A0-5873-4163-9BC0-B049BC4378D9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CosmosDB", "Azure.Provisioning.CosmosDB\src\Azure.Provisioning.CosmosDB.csproj", "{5D3E3ECE-7A31-43B6-8656-865ED0863600}"
@@ -18,8 +16,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs", "Azure.Provisioning.EventHubs\src\Azure.Provisioning.EventHubs.csproj", "{D9890E64-46E5-4A93-BDBC-189456573498}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault", "Azure.Provisioning.KeyVault\src\Azure.Provisioning.KeyVault.csproj", "{17D846F2-C0FE-4F9D-AB59-AC2229EB6B8C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ManagedIdentities", "Azure.Provisioning.ManagedIdentities\src\Azure.Provisioning.ManagedIdentities.csproj", "{6558145E-15FB-4FFE-95B9-030AF2E80A42}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights", "Azure.Provisioning.OperationalInsights\src\Azure.Provisioning.OperationalInsights.csproj", "{EB8DF0CF-21C8-45D9-8916-D74B81896E07}"
 EndProject
@@ -45,8 +41,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Applicat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Tests", "Azure.Provisioning\tests\Azure.Provisioning.Tests.csproj", "{38BEA83D-435F-4A71-ADCC-2F05321BC5B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.Authorization.Tests", "Azure.Provisioning.Authorization\tests\Azure.Provisioning.Authorization.Tests.csproj", "{04375BAB-6ACD-4D50-A3BD-B3C07202DF06}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CognitiveServices.Tests", "Azure.Provisioning.CognitiveServices\tests\Azure.Provisioning.CognitiveServices.Tests.csproj", "{35F33B4F-04DF-43E3-9983-08C781865508}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.CosmosDB.Tests", "Azure.Provisioning.CosmosDB\tests\Azure.Provisioning.CosmosDB.Tests.csproj", "{50A583E5-7BBB-44C6-944F-52F6468A9ACE}"
@@ -54,8 +48,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.EventHubs.Tests", "Azure.Provisioning.EventHubs\tests\Azure.Provisioning.EventHubs.Tests.csproj", "{BFA2ADDC-B9B0-4387-B6D3-166A72D1BC68}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.KeyVault.Tests", "Azure.Provisioning.KeyVault\tests\Azure.Provisioning.KeyVault.Tests.csproj", "{C8323082-D02B-4847-8D71-0F3033392359}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.ManagedIdentities.Tests", "Azure.Provisioning.ManagedIdentities\tests\Azure.Provisioning.ManagedIdentities.Tests.csproj", "{93DEBEC7-0AFA-4319-9F09-1E7C4AF42074}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Provisioning.OperationalInsights.Tests", "Azure.Provisioning.OperationalInsights\tests\Azure.Provisioning.OperationalInsights.Tests.csproj", "{549264B4-16BD-4DC2-B187-1F8D4C305ED1}"
 EndProject
@@ -95,10 +87,6 @@ Global
 		{DC9BB057-C5BF-4718-A858-5F05B891EE41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DC9BB057-C5BF-4718-A858-5F05B891EE41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DC9BB057-C5BF-4718-A858-5F05B891EE41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3702DBD5-428E-47C8-880C-0ACA0BE01990}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3702DBD5-428E-47C8-880C-0ACA0BE01990}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3702DBD5-428E-47C8-880C-0ACA0BE01990}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3702DBD5-428E-47C8-880C-0ACA0BE01990}.Release|Any CPU.Build.0 = Release|Any CPU
 		{765BA4A0-5873-4163-9BC0-B049BC4378D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{765BA4A0-5873-4163-9BC0-B049BC4378D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{765BA4A0-5873-4163-9BC0-B049BC4378D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -115,10 +103,6 @@ Global
 		{17D846F2-C0FE-4F9D-AB59-AC2229EB6B8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17D846F2-C0FE-4F9D-AB59-AC2229EB6B8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17D846F2-C0FE-4F9D-AB59-AC2229EB6B8C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6558145E-15FB-4FFE-95B9-030AF2E80A42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6558145E-15FB-4FFE-95B9-030AF2E80A42}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6558145E-15FB-4FFE-95B9-030AF2E80A42}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6558145E-15FB-4FFE-95B9-030AF2E80A42}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EB8DF0CF-21C8-45D9-8916-D74B81896E07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EB8DF0CF-21C8-45D9-8916-D74B81896E07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB8DF0CF-21C8-45D9-8916-D74B81896E07}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -167,10 +151,6 @@ Global
 		{38BEA83D-435F-4A71-ADCC-2F05321BC5B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{38BEA83D-435F-4A71-ADCC-2F05321BC5B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38BEA83D-435F-4A71-ADCC-2F05321BC5B5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{04375BAB-6ACD-4D50-A3BD-B3C07202DF06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{04375BAB-6ACD-4D50-A3BD-B3C07202DF06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{04375BAB-6ACD-4D50-A3BD-B3C07202DF06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{04375BAB-6ACD-4D50-A3BD-B3C07202DF06}.Release|Any CPU.Build.0 = Release|Any CPU
 		{35F33B4F-04DF-43E3-9983-08C781865508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{35F33B4F-04DF-43E3-9983-08C781865508}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35F33B4F-04DF-43E3-9983-08C781865508}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -187,10 +167,6 @@ Global
 		{C8323082-D02B-4847-8D71-0F3033392359}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C8323082-D02B-4847-8D71-0F3033392359}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C8323082-D02B-4847-8D71-0F3033392359}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93DEBEC7-0AFA-4319-9F09-1E7C4AF42074}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93DEBEC7-0AFA-4319-9F09-1E7C4AF42074}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93DEBEC7-0AFA-4319-9F09-1E7C4AF42074}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93DEBEC7-0AFA-4319-9F09-1E7C4AF42074}.Release|Any CPU.Build.0 = Release|Any CPU
 		{549264B4-16BD-4DC2-B187-1F8D4C305ED1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{549264B4-16BD-4DC2-B187-1F8D4C305ED1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{549264B4-16BD-4DC2-B187-1F8D4C305ED1}.Release|Any CPU.ActiveCfg = Release|Any CPU

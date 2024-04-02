@@ -1,6 +1,0 @@
-{
-  "AssetsRepo": "Azure/azure-sdk-assets",
-  "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/provisioning/Azure.Provisioning.ManagedIdentities",
-  "Tag": "net/provisioning/Azure.Provisioning.ManagedIdentities_c73d5050e2"
-}

@@ -7,7 +7,7 @@ using Azure.Provisioning.ResourceManager;
 using Azure.ResourceManager.ManagedServiceIdentities;
 using Azure.ResourceManager.ManagedServiceIdentities.Models;
 
-namespace Azure.Provisioning.ManagedServiceIdentities
+namespace Azure.Provisioning
 {
     /// <summary>
     /// Represents a user assigned identity.

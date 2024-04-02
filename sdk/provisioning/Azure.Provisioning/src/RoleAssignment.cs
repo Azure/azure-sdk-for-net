@@ -6,7 +6,7 @@ using Azure.Core;
 using Azure.ResourceManager.Authorization;
 using Azure.ResourceManager.Authorization.Models;
 
-namespace Azure.Provisioning.Authorization
+namespace Azure.Provisioning
 {
     /// <summary>
     /// Role assignment resource.

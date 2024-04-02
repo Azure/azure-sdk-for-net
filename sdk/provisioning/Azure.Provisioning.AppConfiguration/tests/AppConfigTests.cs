@@ -4,10 +4,8 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Tests;
-using NUnit.Framework;
 
 namespace Azure.Provisioning.AppConfiguration.Tests
 {

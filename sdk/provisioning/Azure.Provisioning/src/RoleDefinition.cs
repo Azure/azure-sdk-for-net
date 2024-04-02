@@ -4,7 +4,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Provisioning.Authorization
+namespace Azure.Provisioning
 {
     /// <summary> Role definition. </summary>
     public readonly partial struct RoleDefinition : IEquatable<RoleDefinition>
