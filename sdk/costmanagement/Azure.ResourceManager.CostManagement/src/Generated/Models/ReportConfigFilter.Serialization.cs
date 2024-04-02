@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             ReportConfigComparisonExpression dimensions = default;
             ReportConfigComparisonExpression tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ReportConfigFilter(and ?? new ChangeTrackingList<ReportConfigFilter>(), or ?? new ChangeTrackingList<ReportConfigFilter>(), dimensions, tags, serializedAdditionalRawData);
         }
 
