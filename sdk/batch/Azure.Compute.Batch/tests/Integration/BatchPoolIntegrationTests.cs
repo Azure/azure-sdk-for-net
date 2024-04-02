@@ -30,11 +30,10 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
         }
 
-        [Ignore("Work in progress")]
         [RecordedTest]
         public async Task CreatePool_WithBlobFuseMountConfiguration()
         {
-            var client = CreateBatchClient();
+            var client = CreateBatchClient(false);
             string poolId = TestUtilities.GenerateResourceId();
 
             await client.GetJobAsync("test");

@@ -35,6 +35,8 @@ namespace Azure.Compute.Batch
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _namedKeyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BatchNamedKeyCredentialPolicy(credential) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
         }
     }
 }
