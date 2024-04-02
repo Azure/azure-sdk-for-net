@@ -26,6 +26,10 @@ namespace Azure.Identity
             MockTransport mockTransport = CreateMockTransport(req =>
             {
                 tryCount++;
+                if (!req.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _))
+                {
+                    return new MockResponse(400).WithJson("""{"error":"invalid_request","error_description":"Required query variable 'resource' is missing"}""");
+                }
                 return new MockResponse(500);
             });
             Uri imdsUri = new Uri(ImdsManagedIdentitySource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
@@ -34,16 +38,26 @@ namespace Azure.Identity
             var response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
             Assert.AreEqual(1, tryCount);
             Assert.Greater(options.Retry.MaxRetries, 1);
-            Assert.AreEqual(500, response.Status);
+            Assert.AreEqual(400, response.Status);
 
             tryCount = 0;
             // Subsequent requests should default to the retry options behavior
-            response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
+            response = await SendRequestAsync(mockTransport, req =>
+            {
+                req.Method = RequestMethod.Get;
+                req.Uri.Reset(imdsUri);
+                req.Headers.Add(ImdsManagedIdentitySource.metadataHeaderName, "true");
+            }, policy);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
 
             tryCount = 0;
-            response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
+            response = await SendRequestAsync(mockTransport, req =>
+            {
+                req.Method = RequestMethod.Get;
+                req.Uri.Reset(imdsUri);
+                req.Headers.Add(ImdsManagedIdentitySource.metadataHeaderName, "true");
+            }, policy);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
         }
@@ -60,6 +74,7 @@ namespace Azure.Identity
                 tryCount++;
                 return new MockResponse(500);
             });
+            Uri imdsUri = new Uri(ImdsManagedIdentitySource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
 
             // non-IMDS requests should default to the retry options behavior
             var response = await SendGetRequest(mockTransport, policy);

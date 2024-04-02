@@ -34,7 +34,7 @@ namespace Azure.Identity.Tests
                 networkTimeouts.Add(msg.NetworkTimeout);
                 return callCount > 1 ?
                  CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json") :
-                 CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
+                 CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
             });
 
             var cred = new DefaultAzureCredential(new DefaultAzureCredentialOptions
@@ -51,9 +51,9 @@ namespace Azure.Identity.Tests
             });
 
             //First request uses a 1 second timeout and no retries
-            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
+            await cred.GetTokenAsync(new(new[] { "test" }));
 
-            var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1) };
+            var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
             networkTimeouts.Clear();
 
@@ -75,6 +75,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
+                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _));
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 

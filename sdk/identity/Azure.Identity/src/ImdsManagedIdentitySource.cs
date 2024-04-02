@@ -63,10 +63,10 @@ namespace Azure.Identity
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             // dont add the Metadata endpoint for the probe request
-            // if (_isFirstRequest && _isChainedCredential)
-            // {
-                request.Headers.Add(metadataHeaderName, "true");
-            // }
+            if (!_isFirstRequest || !_isChainedCredential)
+            {
+                SetNonProbeRequest(request);
+            }
             request.Uri.Reset(_imdsEndpoint);
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
@@ -126,39 +126,55 @@ namespace Azure.Identity
             {
                 throw;
             }
+            catch (ProbeRequestResponseException)
+            {
+                // This was an expected response from the IMDS endpoint without the Metadata header set.
+                // Re-issue the request (CreateRequest will add the appropriate header).
+                return await base.AuthenticateAsync(async, context, cancellationToken).ConfigureAwait(false);
+            }
         }
 
-        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, Response response, CancellationToken cancellationToken)
+        protected override async ValueTask<AccessToken> HandleResponseAsync(bool async, TokenRequestContext context, HttpMessage message, CancellationToken cancellationToken)
         {
+            Response response = message.Response;
             // if we got a response from IMDS we can stop limiting the network timeout
             _imdsNetworkTimeout = null;
 
             // handle error status codes indicating managed identity is not available
-            var baseMessage = response.Status switch
+            string baseMessage = response.Status switch
             {
+                400 when IsProbRequest(message) => throw new ProbeRequestResponseException(),
                 400 => IdentityUnavailableError,
                 502 => GatewayError,
                 504 => GatewayError,
-                _ => default(string)
+                _ => default
             };
 
             if (baseMessage != null)
             {
-                string message = new RequestFailedException(response, null, new ImdsRequestFailedDetailsParser(baseMessage)).Message;
+                string content = new RequestFailedException(response, null, new ImdsRequestFailedDetailsParser(baseMessage)).Message;
 
                 var errorContentMessage = await GetMessageFromResponse(response, async, cancellationToken).ConfigureAwait(false);
 
                 if (errorContentMessage != null)
                 {
-                    message = message + Environment.NewLine + errorContentMessage;
+                    content = content + Environment.NewLine + errorContentMessage;
                 }
 
-                throw new CredentialUnavailableException(message);
+                throw new CredentialUnavailableException(content);
             }
 
-            var token = await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            var token = await base.HandleResponseAsync(async, context, message, cancellationToken).ConfigureAwait(false);
             return token;
         }
+
+        public static bool IsProbRequest(HttpMessage message)
+            => message.Request.Uri.Host == s_imdsEndpoint.Host &&
+                message.Request.Uri.Path == s_imdsEndpoint.AbsolutePath &&
+                !message.Request.Headers.TryGetValue(metadataHeaderName, out _);
+
+        public static void SetNonProbeRequest(Request request)
+            => request.Headers.Add(metadataHeaderName, "true");
 
         private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
         {
@@ -176,5 +192,8 @@ namespace Azure.Identity
                 return true;
             }
         }
+
+        internal class ProbeRequestResponseException : Exception
+        { }
     }
 }
