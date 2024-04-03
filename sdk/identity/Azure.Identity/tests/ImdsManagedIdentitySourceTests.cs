@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
@@ -60,6 +61,45 @@ namespace Azure.Identity.Tests
             await cred.GetTokenAsync(new(new[] { "test" }));
 
             expectedTimeouts = new TimeSpan?[] { null };
+            CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
+        }
+
+        [Test]
+        public void DefaultAzureCredentialRetryBehaviorIsOverriddenWithOptions()
+        {
+            int callCount = 0;
+            List<TimeSpan?> networkTimeouts = new();
+
+            // the mock transport succeeds on the 2nd request to avoid long exponential back-offs,
+            // but is sufficient to validate the initial timeout and retry behavior
+            var mockTransport = MockTransport.FromMessageCallback(msg =>
+            {
+                callCount++;
+                networkTimeouts.Add(msg.NetworkTimeout);
+                return callCount > 1 ?
+                 CreateMockResponse(500, "token").WithHeader("Content-Type", "application/json") :
+                 CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
+            });
+            var credOptions = new DefaultAzureCredentialOptions
+            {
+                ExcludeAzureCliCredential = true,
+                ExcludeAzureDeveloperCliCredential = true,
+                ExcludeAzurePowerShellCredential = true,
+                ExcludeEnvironmentCredential = true,
+                ExcludeSharedTokenCacheCredential = true,
+                ExcludeVisualStudioCodeCredential = true,
+                ExcludeVisualStudioCredential = true,
+                ExcludeWorkloadIdentityCredential = true,
+                Transport = mockTransport,
+                RetryPolicy = new RetryPolicy(7, DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero))
+            };
+            // credOptions.Retry.MaxDelay = TimeSpan.Zero;
+
+            var cred = new DefaultAzureCredential(credOptions);
+
+            Assert.ThrowsAsync<AuthenticationFailedException>(async () => await cred.GetTokenAsync(new(new[] { "test" })));
+
+            var expectedTimeouts = new TimeSpan?[] { TimeSpan.FromSeconds(1), null, null, null, null, null, null, null, null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
         }
 
