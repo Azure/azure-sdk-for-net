@@ -98,6 +98,11 @@ namespace Azure.Data.AppConfiguration
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
     }
+    public static partial class ConfigurationSettingPageableExtensions
+    {
+        public static System.Collections.Generic.IAsyncEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.AsyncPageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IList<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+        public static System.Collections.Generic.IEnumerable<Azure.Page<Azure.Data.AppConfiguration.ConfigurationSetting>> AsPages(this Azure.Pageable<Azure.Data.AppConfiguration.ConfigurationSetting> pageable, System.Collections.Generic.IList<Azure.MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = default(int?)) { throw null; }
+    }
     public partial class ConfigurationSettingsFilter
     {
         public ConfigurationSettingsFilter(string key) { }
@@ -197,7 +202,6 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.SettingFields Fields { get { throw null; } set { } }
         public string KeyFilter { get { throw null; } set { } }
         public string LabelFilter { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.MatchConditions> MatchConditions { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override bool Equals(object obj) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
