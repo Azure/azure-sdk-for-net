@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class ImportSourceProperties : IUtf8JsonSerializable
+    public partial class ImportSourceProperties : IUtf8JsonSerializable, IJsonModel<ImportSourceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportSourceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImportSourceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageType))
             {
@@ -36,19 +46,50 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("dataDirPath"u8);
                 writer.WriteStringValue(DataDirPath);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImportSourceProperties DeserializeImportSourceProperties(JsonElement element)
+        ImportSourceProperties IJsonModel<ImportSourceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImportSourceProperties(document.RootElement, options);
+        }
+
+        internal static ImportSourceProperties DeserializeImportSourceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ImportSourceStorageType> storageType = default;
-            Optional<Uri> storageUrl = default;
-            Optional<string> sasToken = default;
-            Optional<string> dataDirPath = default;
+            ImportSourceStorageType? storageType = default;
+            Uri storageUrl = default;
+            string sasToken = default;
+            string dataDirPath = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageType"u8))
@@ -79,8 +120,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     dataDirPath = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImportSourceProperties(Optional.ToNullable(storageType), storageUrl.Value, sasToken.Value, dataDirPath.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ImportSourceProperties(storageType, storageUrl, sasToken, dataDirPath, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImportSourceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ImportSourceProperties IPersistableModel<ImportSourceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImportSourceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImportSourceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImportSourceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImportSourceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

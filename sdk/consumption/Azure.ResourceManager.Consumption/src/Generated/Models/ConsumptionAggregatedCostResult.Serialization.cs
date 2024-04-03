@@ -6,38 +6,187 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionAggregatedCostResult
+    public partial class ConsumptionAggregatedCostResult : IUtf8JsonSerializable, IJsonModel<ConsumptionAggregatedCostResult>
     {
-        internal static ConsumptionAggregatedCostResult DeserializeConsumptionAggregatedCostResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionAggregatedCostResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionAggregatedCostResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BillingPeriodId))
+            {
+                writer.WritePropertyName("billingPeriodId"u8);
+                writer.WriteStringValue(BillingPeriodId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageStartOn))
+            {
+                writer.WritePropertyName("usageStart"u8);
+                writer.WriteStringValue(UsageStartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UsageEndOn))
+            {
+                writer.WritePropertyName("usageEnd"u8);
+                writer.WriteStringValue(UsageEndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(AzureCharges))
+            {
+                writer.WritePropertyName("azureCharges"u8);
+                writer.WriteNumberValue(AzureCharges.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
+            {
+                writer.WritePropertyName("marketplaceCharges"u8);
+                writer.WriteNumberValue(MarketplaceCharges.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
+            {
+                writer.WritePropertyName("chargesBilledSeparately"u8);
+                writer.WriteNumberValue(ChargesBilledSeparately.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Currency))
+            {
+                writer.WritePropertyName("currency"u8);
+                writer.WriteStringValue(Currency);
+            }
+            if (Optional.IsCollectionDefined(Children))
+            {
+                writer.WritePropertyName("children"u8);
+                writer.WriteStartArray();
+                foreach (var item in Children)
+                {
+                    writer.WriteObjectValue<ConsumptionAggregatedCostResult>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IncludedSubscriptions))
+            {
+                writer.WritePropertyName("includedSubscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in IncludedSubscriptions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ExcludedSubscriptions))
+            {
+                writer.WritePropertyName("excludedSubscriptions"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExcludedSubscriptions)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionAggregatedCostResult IJsonModel<ConsumptionAggregatedCostResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionAggregatedCostResult(document.RootElement, options);
+        }
+
+        internal static ConsumptionAggregatedCostResult DeserializeConsumptionAggregatedCostResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> azureCharges = default;
-            Optional<decimal> marketplaceCharges = default;
-            Optional<decimal> chargesBilledSeparately = default;
-            Optional<string> currency = default;
-            Optional<IReadOnlyList<ConsumptionAggregatedCostResult>> children = default;
-            Optional<IReadOnlyList<string>> includedSubscriptions = default;
-            Optional<IReadOnlyList<string>> excludedSubscriptions = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            decimal? azureCharges = default;
+            decimal? marketplaceCharges = default;
+            decimal? chargesBilledSeparately = default;
+            string currency = default;
+            IReadOnlyList<ConsumptionAggregatedCostResult> children = default;
+            IReadOnlyList<string> includedSubscriptions = default;
+            IReadOnlyList<string> excludedSubscriptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -160,7 +309,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             List<ConsumptionAggregatedCostResult> array = new List<ConsumptionAggregatedCostResult>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializeConsumptionAggregatedCostResult(item));
+                                array.Add(DeserializeConsumptionAggregatedCostResult(item, options));
                             }
                             children = array;
                             continue;
@@ -196,8 +345,61 @@ namespace Azure.ResourceManager.Consumption.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionAggregatedCostResult(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(azureCharges), Optional.ToNullable(marketplaceCharges), Optional.ToNullable(chargesBilledSeparately), currency.Value, Optional.ToList(children), Optional.ToList(includedSubscriptions), Optional.ToList(excludedSubscriptions), Optional.ToNullable(etag), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionAggregatedCostResult(
+                id,
+                name,
+                type,
+                systemData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                marketplaceCharges,
+                chargesBilledSeparately,
+                currency,
+                children ?? new ChangeTrackingList<ConsumptionAggregatedCostResult>(),
+                includedSubscriptions ?? new ChangeTrackingList<string>(),
+                excludedSubscriptions ?? new ChangeTrackingList<string>(),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionAggregatedCostResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionAggregatedCostResult IPersistableModel<ConsumptionAggregatedCostResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAggregatedCostResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionAggregatedCostResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionAggregatedCostResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionAggregatedCostResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VmInstanceHardwareProfile : IUtf8JsonSerializable
+    public partial class VmInstanceHardwareProfile : IUtf8JsonSerializable, IJsonModel<VmInstanceHardwareProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmInstanceHardwareProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VmInstanceHardwareProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmInstanceHardwareProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MemorySizeMB))
             {
@@ -30,21 +41,67 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("numCoresPerSocket"u8);
                 writer.WriteNumberValue(NumCoresPerSocket.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(CpuHotAddEnabled))
+            {
+                writer.WritePropertyName("cpuHotAddEnabled"u8);
+                writer.WriteBooleanValue(CpuHotAddEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CpuHotRemoveEnabled))
+            {
+                writer.WritePropertyName("cpuHotRemoveEnabled"u8);
+                writer.WriteBooleanValue(CpuHotRemoveEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MemoryHotAddEnabled))
+            {
+                writer.WritePropertyName("memoryHotAddEnabled"u8);
+                writer.WriteBooleanValue(MemoryHotAddEnabled.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmInstanceHardwareProfile DeserializeVmInstanceHardwareProfile(JsonElement element)
+        VmInstanceHardwareProfile IJsonModel<VmInstanceHardwareProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmInstanceHardwareProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmInstanceHardwareProfile(document.RootElement, options);
+        }
+
+        internal static VmInstanceHardwareProfile DeserializeVmInstanceHardwareProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> memorySizeMB = default;
-            Optional<int> numCpus = default;
-            Optional<int> numCoresPerSocket = default;
-            Optional<bool> cpuHotAddEnabled = default;
-            Optional<bool> cpuHotRemoveEnabled = default;
-            Optional<bool> memoryHotAddEnabled = default;
+            int? memorySizeMB = default;
+            int? numCpus = default;
+            int? numCoresPerSocket = default;
+            bool? cpuHotAddEnabled = default;
+            bool? cpuHotRemoveEnabled = default;
+            bool? memoryHotAddEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("memorySizeMB"u8))
@@ -101,8 +158,51 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     memoryHotAddEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmInstanceHardwareProfile(Optional.ToNullable(memorySizeMB), Optional.ToNullable(numCpus), Optional.ToNullable(numCoresPerSocket), Optional.ToNullable(cpuHotAddEnabled), Optional.ToNullable(cpuHotRemoveEnabled), Optional.ToNullable(memoryHotAddEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmInstanceHardwareProfile(
+                memorySizeMB,
+                numCpus,
+                numCoresPerSocket,
+                cpuHotAddEnabled,
+                cpuHotRemoveEnabled,
+                memoryHotAddEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VmInstanceHardwareProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmInstanceHardwareProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VmInstanceHardwareProfile IPersistableModel<VmInstanceHardwareProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmInstanceHardwareProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmInstanceHardwareProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmInstanceHardwareProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmInstanceHardwareProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

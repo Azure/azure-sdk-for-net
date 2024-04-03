@@ -5,12 +5,13 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownNetworkFunctionPropertiesFormat. </summary>
+    /// <summary> Unknown version of NetworkFunctionPropertiesFormat. </summary>
     internal partial class UnknownNetworkFunctionPropertiesFormat : NetworkFunctionPropertiesFormat
     {
         /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/>. </summary>
@@ -30,9 +31,15 @@ namespace Azure.ResourceManager.HybridNetwork.Models
         /// <param name="allowSoftwareUpdate"> Indicates if software updates are allowed during deployment. </param>
         /// <param name="configurationType"> The value which indicates if NF  values are secrets. </param>
         /// <param name="roleOverrideValues"> The role configuration override values from the user. </param>
-        internal UnknownNetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownNetworkFunctionPropertiesFormat(ProvisioningState? provisioningState, string publisherName, PublisherScope? publisherScope, string networkFunctionDefinitionGroupName, string networkFunctionDefinitionVersion, string networkFunctionDefinitionOfferingLocation, DeploymentResourceIdReference networkFunctionDefinitionVersionResourceReference, NfviType? nfviType, ResourceIdentifier nfviId, bool? allowSoftwareUpdate, NetworkFunctionConfigurationType configurationType, IList<string> roleOverrideValues, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisioningState, publisherName, publisherScope, networkFunctionDefinitionGroupName, networkFunctionDefinitionVersion, networkFunctionDefinitionOfferingLocation, networkFunctionDefinitionVersionResourceReference, nfviType, nfviId, allowSoftwareUpdate, configurationType, roleOverrideValues, serializedAdditionalRawData)
         {
             ConfigurationType = configurationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownNetworkFunctionPropertiesFormat"/> for deserialization. </summary>
+        internal UnknownNetworkFunctionPropertiesFormat()
+        {
         }
     }
 }

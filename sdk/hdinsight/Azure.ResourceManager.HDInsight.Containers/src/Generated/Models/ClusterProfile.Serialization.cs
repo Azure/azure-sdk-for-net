@@ -6,29 +6,51 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterProfile : IUtf8JsonSerializable
+    public partial class ClusterProfile : IUtf8JsonSerializable, IJsonModel<ClusterProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClusterProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("clusterVersion"u8);
             writer.WriteStringValue(ClusterVersion);
             writer.WritePropertyName("ossVersion"u8);
             writer.WriteStringValue(OssVersion);
-            writer.WritePropertyName("identityProfile"u8);
-            writer.WriteObjectValue(IdentityProfile);
+            if (options.Format != "W" && Optional.IsCollectionDefined(Components))
+            {
+                writer.WritePropertyName("components"u8);
+                writer.WriteStartArray();
+                foreach (var item in Components)
+                {
+                    writer.WriteObjectValue<ClusterComponentItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(IdentityProfile))
+            {
+                writer.WritePropertyName("identityProfile"u8);
+                writer.WriteObjectValue<HDInsightIdentityProfile>(IdentityProfile, options);
+            }
             writer.WritePropertyName("authorizationProfile"u8);
-            writer.WriteObjectValue(AuthorizationProfile);
+            writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
             if (Optional.IsDefined(SecretsProfile))
             {
                 writer.WritePropertyName("secretsProfile"u8);
-                writer.WriteObjectValue(SecretsProfile);
+                writer.WriteObjectValue<ClusterSecretsProfile>(SecretsProfile, options);
             }
             if (Optional.IsCollectionDefined(ServiceConfigsProfiles))
             {
@@ -36,57 +58,54 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityProfile))
+            {
+                writer.WritePropertyName("connectivityProfile"u8);
+                writer.WriteObjectValue<ClusterConnectivityProfile>(ConnectivityProfile, options);
+            }
+            if (Optional.IsDefined(ClusterAccessProfile))
+            {
+                writer.WritePropertyName("clusterAccessProfile"u8);
+                writer.WriteObjectValue<ClusterAccessProfile>(ClusterAccessProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue(PrometheusProfile);
+                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue(AutoscaleProfile);
+                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
             }
-            if (Optional.IsCollectionDefined(KafkaProfile))
+            if (Optional.IsDefined(RangerPluginProfile))
+            {
+                writer.WritePropertyName("rangerPluginProfile"u8);
+                writer.WriteObjectValue<ClusterRangerPluginProfile>(RangerPluginProfile, options);
+            }
+            if (Optional.IsDefined(KafkaProfile))
             {
                 writer.WritePropertyName("kafkaProfile"u8);
-                writer.WriteStartObject();
-                foreach (var item in KafkaProfile)
-                {
-                    writer.WritePropertyName(item.Key);
-                    if (item.Value == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-                writer.WriteEndObject();
+                writer.WriteObjectValue<KafkaProfile>(KafkaProfile, options);
             }
             if (Optional.IsDefined(TrinoProfile))
             {
                 writer.WritePropertyName("trinoProfile"u8);
-                writer.WriteObjectValue(TrinoProfile);
+                writer.WriteObjectValue<TrinoProfile>(TrinoProfile, options);
             }
             if (Optional.IsCollectionDefined(LlapProfile))
             {
@@ -114,12 +133,17 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             if (Optional.IsDefined(FlinkProfile))
             {
                 writer.WritePropertyName("flinkProfile"u8);
-                writer.WriteObjectValue(FlinkProfile);
+                writer.WriteObjectValue<FlinkProfile>(FlinkProfile, options);
             }
             if (Optional.IsDefined(SparkProfile))
             {
                 writer.WritePropertyName("sparkProfile"u8);
-                writer.WriteObjectValue(SparkProfile);
+                writer.WriteObjectValue<SparkProfile>(SparkProfile, options);
+            }
+            if (Optional.IsDefined(RangerProfile))
+            {
+                writer.WritePropertyName("rangerProfile"u8);
+                writer.WriteObjectValue<RangerProfile>(RangerProfile, options);
             }
             if (Optional.IsCollectionDefined(StubProfile))
             {
@@ -150,38 +174,72 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ClusterProfile DeserializeClusterProfile(JsonElement element)
+        ClusterProfile IJsonModel<ClusterProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterProfile(document.RootElement, options);
+        }
+
+        internal static ClusterProfile DeserializeClusterProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string clusterVersion = default;
             string ossVersion = default;
-            Optional<IReadOnlyList<ClusterComponentItem>> components = default;
+            IReadOnlyList<ClusterComponentItem> components = default;
             HDInsightIdentityProfile identityProfile = default;
             AuthorizationProfile authorizationProfile = default;
-            Optional<ClusterSecretsProfile> secretsProfile = default;
-            Optional<IList<ClusterServiceConfigsProfile>> serviceConfigsProfiles = default;
-            Optional<ClusterConnectivityProfile> connectivityProfile = default;
-            Optional<ClusterLogAnalyticsProfile> logAnalyticsProfile = default;
-            Optional<ClusterPrometheusProfile> prometheusProfile = default;
-            Optional<ClusterSshProfile> sshProfile = default;
-            Optional<ClusterAutoscaleProfile> autoscaleProfile = default;
-            Optional<IDictionary<string, BinaryData>> kafkaProfile = default;
-            Optional<TrinoProfile> trinoProfile = default;
-            Optional<IDictionary<string, BinaryData>> llapProfile = default;
-            Optional<FlinkProfile> flinkProfile = default;
-            Optional<SparkProfile> sparkProfile = default;
-            Optional<IDictionary<string, BinaryData>> stubProfile = default;
-            Optional<IList<ScriptActionProfile>> scriptActionProfiles = default;
+            ClusterSecretsProfile secretsProfile = default;
+            IList<ClusterServiceConfigsProfile> serviceConfigsProfiles = default;
+            ClusterConnectivityProfile connectivityProfile = default;
+            ClusterAccessProfile clusterAccessProfile = default;
+            ClusterLogAnalyticsProfile logAnalyticsProfile = default;
+            ClusterPrometheusProfile prometheusProfile = default;
+            ClusterSshProfile sshProfile = default;
+            ClusterAutoscaleProfile autoscaleProfile = default;
+            ClusterRangerPluginProfile rangerPluginProfile = default;
+            KafkaProfile kafkaProfile = default;
+            TrinoProfile trinoProfile = default;
+            IDictionary<string, BinaryData> llapProfile = default;
+            FlinkProfile flinkProfile = default;
+            SparkProfile sparkProfile = default;
+            RangerProfile rangerProfile = default;
+            IDictionary<string, BinaryData> stubProfile = default;
+            IList<ScriptActionProfile> scriptActionProfiles = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clusterVersion"u8))
@@ -203,19 +261,23 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterComponentItem> array = new List<ClusterComponentItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item));
+                        array.Add(ClusterComponentItem.DeserializeClusterComponentItem(item, options));
                     }
                     components = array;
                     continue;
                 }
                 if (property.NameEquals("identityProfile"u8))
                 {
-                    identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityProfile = HDInsightIdentityProfile.DeserializeHDInsightIdentityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authorizationProfile"u8))
                 {
-                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value);
+                    authorizationProfile = AuthorizationProfile.DeserializeAuthorizationProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretsProfile"u8))
@@ -224,7 +286,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    secretsProfile = ClusterSecretsProfile.DeserializeClusterSecretsProfile(property.Value);
+                    secretsProfile = ClusterSecretsProfile.DeserializeClusterSecretsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("serviceConfigsProfiles"u8))
@@ -236,7 +298,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterServiceConfigsProfile> array = new List<ClusterServiceConfigsProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item));
+                        array.Add(ClusterServiceConfigsProfile.DeserializeClusterServiceConfigsProfile(item, options));
                     }
                     serviceConfigsProfiles = array;
                     continue;
@@ -247,7 +309,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value);
+                    connectivityProfile = ClusterConnectivityProfile.DeserializeClusterConnectivityProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("clusterAccessProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    clusterAccessProfile = ClusterAccessProfile.DeserializeClusterAccessProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logAnalyticsProfile"u8))
@@ -256,7 +327,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value);
+                    logAnalyticsProfile = ClusterLogAnalyticsProfile.DeserializeClusterLogAnalyticsProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("prometheusProfile"u8))
@@ -265,7 +336,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value);
+                    prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sshProfile"u8))
@@ -274,7 +345,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value);
+                    sshProfile = ClusterSshProfile.DeserializeClusterSshProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoscaleProfile"u8))
@@ -283,7 +354,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value);
+                    autoscaleProfile = ClusterAutoscaleProfile.DeserializeClusterAutoscaleProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("rangerPluginProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kafkaProfile"u8))
@@ -292,19 +372,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.Value.ValueKind == JsonValueKind.Null)
-                        {
-                            dictionary.Add(property0.Name, null);
-                        }
-                        else
-                        {
-                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
-                        }
-                    }
-                    kafkaProfile = dictionary;
+                    kafkaProfile = KafkaProfile.DeserializeKafkaProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("trinoProfile"u8))
@@ -313,7 +381,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    trinoProfile = TrinoProfile.DeserializeTrinoProfile(property.Value);
+                    trinoProfile = TrinoProfile.DeserializeTrinoProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("llapProfile"u8))
@@ -343,7 +411,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    flinkProfile = FlinkProfile.DeserializeFlinkProfile(property.Value);
+                    flinkProfile = FlinkProfile.DeserializeFlinkProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sparkProfile"u8))
@@ -352,7 +420,16 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     {
                         continue;
                     }
-                    sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value);
+                    sparkProfile = SparkProfile.DeserializeSparkProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("rangerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stubProfile"u8))
@@ -385,13 +462,72 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ScriptActionProfile> array = new List<ScriptActionProfile>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item));
+                        array.Add(ScriptActionProfile.DeserializeScriptActionProfile(item, options));
                     }
                     scriptActionProfiles = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterProfile(clusterVersion, ossVersion, Optional.ToList(components), identityProfile, authorizationProfile, secretsProfile.Value, Optional.ToList(serviceConfigsProfiles), connectivityProfile.Value, logAnalyticsProfile.Value, prometheusProfile.Value, sshProfile.Value, autoscaleProfile.Value, Optional.ToDictionary(kafkaProfile), trinoProfile.Value, Optional.ToDictionary(llapProfile), flinkProfile.Value, sparkProfile.Value, Optional.ToDictionary(stubProfile), Optional.ToList(scriptActionProfiles));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClusterProfile(
+                clusterVersion,
+                ossVersion,
+                components ?? new ChangeTrackingList<ClusterComponentItem>(),
+                identityProfile,
+                authorizationProfile,
+                secretsProfile,
+                serviceConfigsProfiles ?? new ChangeTrackingList<ClusterServiceConfigsProfile>(),
+                connectivityProfile,
+                clusterAccessProfile,
+                logAnalyticsProfile,
+                prometheusProfile,
+                sshProfile,
+                autoscaleProfile,
+                rangerPluginProfile,
+                kafkaProfile,
+                trinoProfile,
+                llapProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                flinkProfile,
+                sparkProfile,
+                rangerProfile,
+                stubProfile ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterProfile IPersistableModel<ClusterProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClusterProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

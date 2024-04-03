@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -45,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             ConnectionString = connectionString;
             Database = database;
             LinkedServiceType = linkedServiceType ?? "CosmosDbMongoDbApi";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBMongoDBApiLinkedService"/> for deserialization. </summary>
+        internal CosmosDBMongoDBApiLinkedService()
+        {
         }
 
         /// <summary> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </summary>

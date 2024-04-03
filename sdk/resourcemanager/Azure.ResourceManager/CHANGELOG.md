@@ -1,6 +1,6 @@
 # Release History
 
-## 1.10.0-beta.1 (Unreleased)
+## 1.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -10,15 +10,61 @@
 
 ### Other Changes
 
+## 1.12.0-beta.1 (2024-03-22)
+
+### Features Added
+
+- Enable long-running operation rehydration.
+
+## 1.11.0 (2024-03-22)
+
+### Features Added
+
+- Added `BicepModelReaderWriterOptions`.
+
+### Other Changes
+
+- Removed long-running operation rehydration support for the GA. These will be added back in a subsequent release.
+
+## 1.10.2 (2024-03-01)
+
+### Features Added
+
+- Added `ManagementGroupSubscriptions` operations.
+
+### Bugs Fixed
+
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/38154) that sdk caches wrong subscription provider.
+
+## 1.10.1 (2024-01-26)
+
+### Bugs Fixed
+
+- Changed the private ctor `OperationStatusResult` to protected.
+
+## 1.11.0-beta.1 (2024-01-12)
+
+### Features Added
+
+- Enable long-running operation rehydration.
+
+## 1.10.0 (2024-01-12)
+
+### Features Added
+
+- Added `GetEntities` operation.
+- Added `CheckResourceName` operation.
+- Enabled the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ## 1.9.0 (2023-11-14)
 
 ### Features Added
 
-- Bump api-version of `Lock` to `2020-05-01`.
+- Bumped api-version of `Lock` to `2020-05-01`.
 
 ### Bugs Fixed
 
-- Add the `Default` enum value back to `EnforcementMode`.
+- Added the `Default` enum value back to `EnforcementMode`.
 
 ### Other Changes
 
@@ -28,26 +74,26 @@
 
 ### Features Added
 
-- Add a new method `GetCachedClient` in `ArmClient` class to unify the mocking experience.
+- Added a new method `GetCachedClient` in `ArmClient` class to unify the mocking experience.
 
 ## 1.8.0-beta.1 (2023-08-09)
 
 ### Features Added
 
-- Add a method `GetCachedClient` in `ArmClient` to enable mocking for extension methods.
+- Added a method `GetCachedClient` in `ArmClient` to enable mocking for extension methods.
 
 ## 1.7.0 (2023-07-13)
 
 ### Other Changes
 
-- Bump api-version of `Subscription` to `2022-12-01`.
-- Bump api-version of `Tenant` to `2022-12-01`.
+- Bumped api-version of `Subscription` to `2022-12-01`.
+- Bumped api-version of `Tenant` to `2022-12-01`.
 
 ## 1.6.0 (2023-05-16)
 
 ### Features Added
 
-- Add more model factory entries in class `Azure.ResourceManager.Models.ResourceManagerModelFactory` to support more generated models.
+- Added more model factory entries in class `Azure.ResourceManager.Models.ResourceManagerModelFactory` to support more generated models.
 
 ### Bugs Fixed
 
@@ -61,8 +107,8 @@
 
 ### Other Changes
 
-- Bump api-version of `PolicyAssignments` to `2022-06-01`.
-- Bump api-version of `PolicyDefinitions` and `PolicySetDefinitions` to `2021-06-01`.
+- Bumped api-version of `PolicyAssignments` to `2022-06-01`.
+- Bumped api-version of `PolicyDefinitions` and `PolicySetDefinitions` to `2021-06-01`.
 - Introduced new property `TargetResourceGroupId` on `Azure.ResourceManager.Resources.Models.ResourcesMoveContent` to supersede `TargetResourceGroup` to emphasize this is accepting a `ResourceIdentifier` of the target resource group.
 
 ## 1.4.0 (2023-02-10)
@@ -126,13 +172,13 @@
 
 ### Features Added
 
-- Add `ExtendedLocation` to common type.
+- Added `ExtendedLocation` to common type.
 
 ## 1.1.1 (2022-06-22)
 
 ### Features Added
 
-- Add OperationStatusResult to common type.
+- Added OperationStatusResult to common type.
 
 ### Bugs Fixed
 
@@ -146,7 +192,7 @@
 
 ### Features Added
 
-- Add Update methods in resource classes.
+- Added Update methods in resource classes.
 
 ## 1.0.0 (2022-04-07)
 This package is the first stable release of the Azure Resources management core library.
@@ -155,7 +201,7 @@ This package is the first stable release of the Azure Resources management core 
 
 Minor changes since the public beta release:
 - All `Tag` methods have been removed from `SubscriptionResource` as the service doesn't support these operations.
-- Simplify `type` property names.
+- Simplified `type` property names.
 - Normalized the body parameter type names for PUT / POST / PATCH operations if it's only used as input.
 - Tweaked some properties to right type.
 
@@ -163,7 +209,7 @@ Minor changes since the public beta release:
 
 ### Features Added
 
-- New struct `ArmEnvironment`.
+- Added new struct `ArmEnvironment`.
 
 ### Breaking Changes
 
@@ -184,7 +230,7 @@ Minor changes since the public beta release:
 
 - ManagementGroup: Added GetAvailableLocations methods.
 - GenericResourceData: Added a new property ExtendedLocation.
-- Support using different api versions for a service.
+- Supported using different api versions for a service.
 
 ### Breaking Changes
 

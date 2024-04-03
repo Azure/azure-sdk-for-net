@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class WindowsConfiguration : IUtf8JsonSerializable
+    public partial class WindowsConfiguration : IUtf8JsonSerializable, IJsonModel<WindowsConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WindowsConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisionVmAgent))
             {
@@ -37,41 +47,72 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalUnattendContent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalUnattendContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PatchSettings))
             {
                 writer.WritePropertyName("patchSettings"u8);
-                writer.WriteObjectValue(PatchSettings);
+                writer.WriteObjectValue<PatchSettings>(PatchSettings, options);
             }
             if (Optional.IsDefined(WinRM))
             {
                 writer.WritePropertyName("winRM"u8);
-                writer.WriteObjectValue(WinRM);
+                writer.WriteObjectValue<WinRMConfiguration>(WinRM, options);
             }
             if (Optional.IsDefined(IsVmAgentPlatformUpdatesEnabled))
             {
                 writer.WritePropertyName("enableVMAgentPlatformUpdates"u8);
                 writer.WriteBooleanValue(IsVmAgentPlatformUpdatesEnabled.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element)
+        WindowsConfiguration IJsonModel<WindowsConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsConfiguration(document.RootElement, options);
+        }
+
+        internal static WindowsConfiguration DeserializeWindowsConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> provisionVmAgent = default;
-            Optional<bool> enableAutomaticUpdates = default;
-            Optional<string> timeZone = default;
-            Optional<IList<AdditionalUnattendContent>> additionalUnattendContent = default;
-            Optional<PatchSettings> patchSettings = default;
-            Optional<WinRMConfiguration> winRM = default;
-            Optional<bool> enableVmAgentPlatformUpdates = default;
+            bool? provisionVmAgent = default;
+            bool? enableAutomaticUpdates = default;
+            string timeZone = default;
+            IList<AdditionalUnattendContent> additionalUnattendContent = default;
+            PatchSettings patchSettings = default;
+            WinRMConfiguration winRM = default;
+            bool? enableVmAgentPlatformUpdates = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -106,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<AdditionalUnattendContent> array = new List<AdditionalUnattendContent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item));
+                        array.Add(Models.AdditionalUnattendContent.DeserializeAdditionalUnattendContent(item, options));
                     }
                     additionalUnattendContent = array;
                     continue;
@@ -117,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    patchSettings = PatchSettings.DeserializePatchSettings(property.Value);
+                    patchSettings = PatchSettings.DeserializePatchSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("winRM"u8))
@@ -126,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value);
+                    winRM = WinRMConfiguration.DeserializeWinRMConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableVMAgentPlatformUpdates"u8))
@@ -138,8 +179,52 @@ namespace Azure.ResourceManager.Compute.Models
                     enableVmAgentPlatformUpdates = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsConfiguration(Optional.ToNullable(provisionVmAgent), Optional.ToNullable(enableAutomaticUpdates), timeZone.Value, Optional.ToList(additionalUnattendContent), patchSettings.Value, winRM.Value, Optional.ToNullable(enableVmAgentPlatformUpdates));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WindowsConfiguration(
+                provisionVmAgent,
+                enableAutomaticUpdates,
+                timeZone,
+                additionalUnattendContent ?? new ChangeTrackingList<AdditionalUnattendContent>(),
+                patchSettings,
+                winRM,
+                enableVmAgentPlatformUpdates,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WindowsConfiguration IPersistableModel<WindowsConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WindowsConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

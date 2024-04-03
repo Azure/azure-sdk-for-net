@@ -5,22 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeKubernetesRoleStorageClassInfo
+    public partial class EdgeKubernetesRoleStorageClassInfo : IUtf8JsonSerializable, IJsonModel<EdgeKubernetesRoleStorageClassInfo>
     {
-        internal static EdgeKubernetesRoleStorageClassInfo DeserializeEdgeKubernetesRoleStorageClassInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeKubernetesRoleStorageClassInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeKubernetesRoleStorageClassInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorageClassInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorageClassInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(KubernetesRoleStorageClassInfoType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(KubernetesRoleStorageClassInfoType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PosixCompliant))
+            {
+                writer.WritePropertyName("posixCompliant"u8);
+                writer.WriteStringValue(PosixCompliant.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeKubernetesRoleStorageClassInfo IJsonModel<EdgeKubernetesRoleStorageClassInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorageClassInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorageClassInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeKubernetesRoleStorageClassInfo(document.RootElement, options);
+        }
+
+        internal static EdgeKubernetesRoleStorageClassInfo DeserializeEdgeKubernetesRoleStorageClassInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<PosixComplianceStatus> posixCompliant = default;
+            string name = default;
+            string type = default;
+            PosixComplianceStatus? posixCompliant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -42,8 +105,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     posixCompliant = new PosixComplianceStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeKubernetesRoleStorageClassInfo(name.Value, type.Value, Optional.ToNullable(posixCompliant));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeKubernetesRoleStorageClassInfo(name, type, posixCompliant, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeKubernetesRoleStorageClassInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorageClassInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorageClassInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeKubernetesRoleStorageClassInfo IPersistableModel<EdgeKubernetesRoleStorageClassInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesRoleStorageClassInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeKubernetesRoleStorageClassInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeKubernetesRoleStorageClassInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeKubernetesRoleStorageClassInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

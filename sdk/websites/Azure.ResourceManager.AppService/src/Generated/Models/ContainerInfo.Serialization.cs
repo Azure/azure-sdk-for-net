@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class ContainerInfo : IUtf8JsonSerializable
+    public partial class ContainerInfo : IUtf8JsonSerializable, IJsonModel<ContainerInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CurrentTimeStamp))
             {
@@ -29,17 +40,17 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CurrentCpuStats))
             {
                 writer.WritePropertyName("currentCpuStats"u8);
-                writer.WriteObjectValue(CurrentCpuStats);
+                writer.WriteObjectValue<ContainerCpuStatistics>(CurrentCpuStats, options);
             }
             if (Optional.IsDefined(PreviousCpuStats))
             {
                 writer.WritePropertyName("previousCpuStats"u8);
-                writer.WriteObjectValue(PreviousCpuStats);
+                writer.WriteObjectValue<ContainerCpuStatistics>(PreviousCpuStats, options);
             }
             if (Optional.IsDefined(MemoryStats))
             {
                 writer.WritePropertyName("memoryStats"u8);
-                writer.WriteObjectValue(MemoryStats);
+                writer.WriteObjectValue<ContainerMemoryStatistics>(MemoryStats, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -54,25 +65,56 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Eth0))
             {
                 writer.WritePropertyName("eth0"u8);
-                writer.WriteObjectValue(Eth0);
+                writer.WriteObjectValue<ContainerNetworkInterfaceStatistics>(Eth0, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerInfo DeserializeContainerInfo(JsonElement element)
+        ContainerInfo IJsonModel<ContainerInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerInfo(document.RootElement, options);
+        }
+
+        internal static ContainerInfo DeserializeContainerInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> currentTimeStamp = default;
-            Optional<DateTimeOffset> previousTimeStamp = default;
-            Optional<ContainerCpuStatistics> currentCpuStats = default;
-            Optional<ContainerCpuStatistics> previousCpuStats = default;
-            Optional<ContainerMemoryStatistics> memoryStats = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<ContainerNetworkInterfaceStatistics> eth0 = default;
+            DateTimeOffset? currentTimeStamp = default;
+            DateTimeOffset? previousTimeStamp = default;
+            ContainerCpuStatistics currentCpuStats = default;
+            ContainerCpuStatistics previousCpuStats = default;
+            ContainerMemoryStatistics memoryStats = default;
+            string name = default;
+            string id = default;
+            ContainerNetworkInterfaceStatistics eth0 = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("currentTimeStamp"u8))
@@ -99,7 +141,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    currentCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previousCpuStats"u8))
@@ -108,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value);
+                    previousCpuStats = ContainerCpuStatistics.DeserializeContainerCpuStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryStats"u8))
@@ -117,7 +159,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value);
+                    memoryStats = ContainerMemoryStatistics.DeserializeContainerMemoryStatistics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -136,11 +178,203 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value);
+                    eth0 = ContainerNetworkInterfaceStatistics.DeserializeContainerNetworkInterfaceStatistics(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerInfo(Optional.ToNullable(currentTimeStamp), Optional.ToNullable(previousTimeStamp), currentCpuStats.Value, previousCpuStats.Value, memoryStats.Value, name.Value, id.Value, eth0.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerInfo(
+                currentTimeStamp,
+                previousTimeStamp,
+                currentCpuStats,
+                previousCpuStats,
+                memoryStats,
+                name,
+                id,
+                eth0,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentTimeStamp), out propertyOverride);
+            if (Optional.IsDefined(CurrentTimeStamp) || hasPropertyOverride)
+            {
+                builder.Append("  currentTimeStamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CurrentTimeStamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousTimeStamp), out propertyOverride);
+            if (Optional.IsDefined(PreviousTimeStamp) || hasPropertyOverride)
+            {
+                builder.Append("  previousTimeStamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(PreviousTimeStamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentCpuStats), out propertyOverride);
+            if (Optional.IsDefined(CurrentCpuStats) || hasPropertyOverride)
+            {
+                builder.Append("  currentCpuStats: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CurrentCpuStats, options, 2, false, "  currentCpuStats: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PreviousCpuStats), out propertyOverride);
+            if (Optional.IsDefined(PreviousCpuStats) || hasPropertyOverride)
+            {
+                builder.Append("  previousCpuStats: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, PreviousCpuStats, options, 2, false, "  previousCpuStats: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MemoryStats), out propertyOverride);
+            if (Optional.IsDefined(MemoryStats) || hasPropertyOverride)
+            {
+                builder.Append("  memoryStats: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, MemoryStats, options, 2, false, "  memoryStats: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Eth0), out propertyOverride);
+            if (Optional.IsDefined(Eth0) || hasPropertyOverride)
+            {
+                builder.Append("  eth0: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Eth0, options, 2, false, "  eth0: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ContainerInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerInfo IPersistableModel<ContainerInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountPoolScaleSettings : IUtf8JsonSerializable
+    public partial class BatchAccountPoolScaleSettings : IUtf8JsonSerializable, IJsonModel<BatchAccountPoolScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountPoolScaleSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchAccountPoolScaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue(FixedScale);
+                writer.WriteObjectValue<BatchAccountFixedScaleSettings>(FixedScale, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<BatchAccountAutoScaleSettings>(AutoScale, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchAccountPoolScaleSettings DeserializeBatchAccountPoolScaleSettings(JsonElement element)
+        BatchAccountPoolScaleSettings IJsonModel<BatchAccountPoolScaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountPoolScaleSettings(document.RootElement, options);
+        }
+
+        internal static BatchAccountPoolScaleSettings DeserializeBatchAccountPoolScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BatchAccountFixedScaleSettings> fixedScale = default;
-            Optional<BatchAccountAutoScaleSettings> autoScale = default;
+            BatchAccountFixedScaleSettings fixedScale = default;
+            BatchAccountAutoScaleSettings autoScale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fixedScale"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value);
+                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value);
+                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchAccountPoolScaleSettings(fixedScale.Value, autoScale.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchAccountPoolScaleSettings(fixedScale, autoScale, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchAccountPoolScaleSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchAccountPoolScaleSettings IPersistableModel<BatchAccountPoolScaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchAccountPoolScaleSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchAccountPoolScaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

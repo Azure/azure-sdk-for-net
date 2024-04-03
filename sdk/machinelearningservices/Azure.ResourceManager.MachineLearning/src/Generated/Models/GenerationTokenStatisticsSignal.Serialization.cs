@@ -5,22 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class GenerationTokenStatisticsSignal : IUtf8JsonSerializable
+    public partial class GenerationTokenStatisticsSignal : IUtf8JsonSerializable, IJsonModel<GenerationTokenStatisticsSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GenerationTokenStatisticsSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GenerationTokenStatisticsSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GenerationTokenStatisticsMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(ProductionData))
@@ -28,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ProductionData != null)
                 {
                     writer.WritePropertyName("productionData"u8);
-                    writer.WriteObjectValue(ProductionData);
+                    writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
                 }
                 else
                 {
@@ -62,21 +72,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static GenerationTokenStatisticsSignal DeserializeGenerationTokenStatisticsSignal(JsonElement element)
+        GenerationTokenStatisticsSignal IJsonModel<GenerationTokenStatisticsSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGenerationTokenStatisticsSignal(document.RootElement, options);
+        }
+
+        internal static GenerationTokenStatisticsSignal DeserializeGenerationTokenStatisticsSignal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<GenerationTokenStatisticsMetricThreshold> metricThresholds = default;
-            Optional<MonitoringInputDataBase> productionData = default;
+            MonitoringInputDataBase productionData = default;
             double samplingRate = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricThresholds"u8))
@@ -84,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<GenerationTokenStatisticsMetricThreshold> array = new List<GenerationTokenStatisticsMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item));
+                        array.Add(GenerationTokenStatisticsMetricThreshold.DeserializeGenerationTokenStatisticsMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -96,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         productionData = null;
                         continue;
                     }
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("samplingRate"u8))
@@ -133,8 +174,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GenerationTokenStatisticsSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, metricThresholds, productionData.Value, samplingRate);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GenerationTokenStatisticsSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                productionData,
+                samplingRate);
         }
+
+        BinaryData IPersistableModel<GenerationTokenStatisticsSignal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GenerationTokenStatisticsSignal IPersistableModel<GenerationTokenStatisticsSignal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GenerationTokenStatisticsSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGenerationTokenStatisticsSignal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GenerationTokenStatisticsSignal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GenerationTokenStatisticsSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

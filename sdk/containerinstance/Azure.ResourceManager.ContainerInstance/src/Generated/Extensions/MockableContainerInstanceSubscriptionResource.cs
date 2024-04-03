@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerInstance;
 using Azure.ResourceManager.ContainerInstance.Models;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
@@ -58,6 +55,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -79,6 +84,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,6 +115,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -110,7 +127,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         public virtual AsyncPageable<ContainerInstanceUsage> GetUsagesWithLocationAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ContainerInstanceUsage.DeserializeContainerInstanceUsage, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ContainerInstanceUsage.DeserializeContainerInstanceUsage(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -124,6 +141,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -132,7 +153,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         public virtual Pageable<ContainerInstanceUsage> GetUsagesWithLocation(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListUsageRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ContainerInstanceUsage.DeserializeContainerInstanceUsage, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ContainerInstanceUsage.DeserializeContainerInstanceUsage(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetUsagesWithLocation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -145,6 +166,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +180,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListCachedImagesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListCachedImagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CachedImages.DeserializeCachedImages, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CachedImages.DeserializeCachedImages(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -169,6 +194,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -178,7 +207,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListCachedImagesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListCachedImagesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CachedImages.DeserializeCachedImages, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CachedImages.DeserializeCachedImages(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCachedImagesWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,6 +220,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,7 +234,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListCapabilitiesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListCapabilitiesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ContainerCapabilities.DeserializeContainerCapabilities, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ContainerCapabilities.DeserializeContainerCapabilities(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -215,6 +248,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The identifier for the physical azure location. </param>
@@ -224,7 +261,7 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => LocationRestClient.CreateListCapabilitiesRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => LocationRestClient.CreateListCapabilitiesNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ContainerCapabilities.DeserializeContainerCapabilities, LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ContainerCapabilities.DeserializeContainerCapabilities(e), LocationClientDiagnostics, Pipeline, "MockableContainerInstanceSubscriptionResource.GetCapabilitiesWithLocation", "value", "nextLink", cancellationToken);
         }
     }
 }

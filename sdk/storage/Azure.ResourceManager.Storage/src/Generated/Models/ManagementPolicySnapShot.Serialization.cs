@@ -5,55 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class ManagementPolicySnapShot : IUtf8JsonSerializable
+    public partial class ManagementPolicySnapShot : IUtf8JsonSerializable, IJsonModel<ManagementPolicySnapShot>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagementPolicySnapShot>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagementPolicySnapShot>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicySnapShot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TierToCool))
             {
                 writer.WritePropertyName("tierToCool"u8);
-                writer.WriteObjectValue(TierToCool);
+                writer.WriteObjectValue<DateAfterCreation>(TierToCool, options);
             }
             if (Optional.IsDefined(TierToArchive))
             {
                 writer.WritePropertyName("tierToArchive"u8);
-                writer.WriteObjectValue(TierToArchive);
+                writer.WriteObjectValue<DateAfterCreation>(TierToArchive, options);
             }
             if (Optional.IsDefined(TierToCold))
             {
                 writer.WritePropertyName("tierToCold"u8);
-                writer.WriteObjectValue(TierToCold);
+                writer.WriteObjectValue<DateAfterCreation>(TierToCold, options);
             }
             if (Optional.IsDefined(TierToHot))
             {
                 writer.WritePropertyName("tierToHot"u8);
-                writer.WriteObjectValue(TierToHot);
+                writer.WriteObjectValue<DateAfterCreation>(TierToHot, options);
             }
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<DateAfterCreation>(Delete, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element)
+        ManagementPolicySnapShot IJsonModel<ManagementPolicySnapShot>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicySnapShot>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagementPolicySnapShot(document.RootElement, options);
+        }
+
+        internal static ManagementPolicySnapShot DeserializeManagementPolicySnapShot(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateAfterCreation> tierToCool = default;
-            Optional<DateAfterCreation> tierToArchive = default;
-            Optional<DateAfterCreation> tierToCold = default;
-            Optional<DateAfterCreation> tierToHot = default;
-            Optional<DateAfterCreation> delete = default;
+            DateAfterCreation tierToCool = default;
+            DateAfterCreation tierToArchive = default;
+            DateAfterCreation tierToCold = default;
+            DateAfterCreation tierToHot = default;
+            DateAfterCreation delete = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tierToCool"u8))
@@ -62,7 +105,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCool = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToArchive"u8))
@@ -71,7 +114,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToArchive = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToCold"u8))
@@ -80,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToCold = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tierToHot"u8))
@@ -89,7 +132,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    tierToHot = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("delete"u8))
@@ -98,11 +141,140 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value);
+                    delete = DateAfterCreation.DeserializeDateAfterCreation(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagementPolicySnapShot(tierToCool.Value, tierToArchive.Value, tierToCold.Value, tierToHot.Value, delete.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagementPolicySnapShot(
+                tierToCool,
+                tierToArchive,
+                tierToCold,
+                tierToHot,
+                delete,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCool), out propertyOverride);
+            if (Optional.IsDefined(TierToCool) || hasPropertyOverride)
+            {
+                builder.Append("  tierToCool: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToCool, options, 2, false, "  tierToCool: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToArchive), out propertyOverride);
+            if (Optional.IsDefined(TierToArchive) || hasPropertyOverride)
+            {
+                builder.Append("  tierToArchive: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToArchive, options, 2, false, "  tierToArchive: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToCold), out propertyOverride);
+            if (Optional.IsDefined(TierToCold) || hasPropertyOverride)
+            {
+                builder.Append("  tierToCold: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToCold, options, 2, false, "  tierToCold: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TierToHot), out propertyOverride);
+            if (Optional.IsDefined(TierToHot) || hasPropertyOverride)
+            {
+                builder.Append("  tierToHot: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TierToHot, options, 2, false, "  tierToHot: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Delete), out propertyOverride);
+            if (Optional.IsDefined(Delete) || hasPropertyOverride)
+            {
+                builder.Append("  delete: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Delete, options, 2, false, "  delete: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagementPolicySnapShot>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicySnapShot>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagementPolicySnapShot IPersistableModel<ManagementPolicySnapShot>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicySnapShot>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagementPolicySnapShot(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagementPolicySnapShot)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagementPolicySnapShot>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

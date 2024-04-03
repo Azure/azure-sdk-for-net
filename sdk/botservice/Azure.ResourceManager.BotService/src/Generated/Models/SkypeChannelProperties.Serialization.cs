@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class SkypeChannelProperties : IUtf8JsonSerializable
+    public partial class SkypeChannelProperties : IUtf8JsonSerializable, IJsonModel<SkypeChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SkypeChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SkypeChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsMessagingEnabled))
             {
@@ -62,25 +73,56 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element)
+        SkypeChannelProperties IJsonModel<SkypeChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSkypeChannelProperties(document.RootElement, options);
+        }
+
+        internal static SkypeChannelProperties DeserializeSkypeChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enableMessaging = default;
-            Optional<bool> enableMediaCards = default;
-            Optional<bool> enableVideo = default;
-            Optional<bool> enableCalling = default;
-            Optional<bool> enableScreenSharing = default;
-            Optional<bool> enableGroups = default;
-            Optional<string> groupsMode = default;
-            Optional<string> callingWebHook = default;
-            Optional<string> incomingCallRoute = default;
+            bool? enableMessaging = default;
+            bool? enableMediaCards = default;
+            bool? enableVideo = default;
+            bool? enableCalling = default;
+            bool? enableScreenSharing = default;
+            bool? enableGroups = default;
+            string groupsMode = default;
+            string callingWebHook = default;
+            string incomingCallRoute = default;
             bool isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enableMessaging"u8))
@@ -157,8 +199,55 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SkypeChannelProperties(Optional.ToNullable(enableMessaging), Optional.ToNullable(enableMediaCards), Optional.ToNullable(enableVideo), Optional.ToNullable(enableCalling), Optional.ToNullable(enableScreenSharing), Optional.ToNullable(enableGroups), groupsMode.Value, callingWebHook.Value, incomingCallRoute.Value, isEnabled);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SkypeChannelProperties(
+                enableMessaging,
+                enableMediaCards,
+                enableVideo,
+                enableCalling,
+                enableScreenSharing,
+                enableGroups,
+                groupsMode,
+                callingWebHook,
+                incomingCallRoute,
+                isEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SkypeChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SkypeChannelProperties IPersistableModel<SkypeChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SkypeChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSkypeChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SkypeChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SkypeChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Storage.Models
 {
     /// <summary> Object to define snapshot and version action conditions. </summary>
     public partial class DateAfterCreation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DateAfterCreation"/>. </summary>
         /// <param name="daysAfterCreationGreaterThan"> Value indicating the age in days after creation. </param>
         public DateAfterCreation(float daysAfterCreationGreaterThan)
@@ -20,15 +55,24 @@ namespace Azure.ResourceManager.Storage.Models
         /// <summary> Initializes a new instance of <see cref="DateAfterCreation"/>. </summary>
         /// <param name="daysAfterCreationGreaterThan"> Value indicating the age in days after creation. </param>
         /// <param name="daysAfterLastTierChangeGreaterThan"> Value indicating the age in days after last blob tier change time. This property is only applicable for tierToArchive actions and requires daysAfterCreationGreaterThan to be set for snapshots and blob version based actions. The blob will be archived if both the conditions are satisfied. </param>
-        internal DateAfterCreation(float daysAfterCreationGreaterThan, float? daysAfterLastTierChangeGreaterThan)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DateAfterCreation(float daysAfterCreationGreaterThan, float? daysAfterLastTierChangeGreaterThan, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DaysAfterCreationGreaterThan = daysAfterCreationGreaterThan;
             DaysAfterLastTierChangeGreaterThan = daysAfterLastTierChangeGreaterThan;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DateAfterCreation"/> for deserialization. </summary>
+        internal DateAfterCreation()
+        {
         }
 
         /// <summary> Value indicating the age in days after creation. </summary>
+        [WirePath("daysAfterCreationGreaterThan")]
         public float DaysAfterCreationGreaterThan { get; set; }
         /// <summary> Value indicating the age in days after last blob tier change time. This property is only applicable for tierToArchive actions and requires daysAfterCreationGreaterThan to be set for snapshots and blob version based actions. The blob will be archived if both the conditions are satisfied. </summary>
+        [WirePath("daysAfterLastTierChangeGreaterThan")]
         public float? DaysAfterLastTierChangeGreaterThan { get; set; }
     }
 }

@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelegramChannel : IUtf8JsonSerializable
+    public partial class TelegramChannel : IUtf8JsonSerializable, IJsonModel<TelegramChannel>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelegramChannel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TelegramChannel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelegramChannel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelegramChannel)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<TelegramChannelProperties>(Properties, options);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
@@ -35,25 +45,61 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TelegramChannel DeserializeTelegramChannel(JsonElement element)
+        TelegramChannel IJsonModel<TelegramChannel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelegramChannel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelegramChannel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelegramChannel(document.RootElement, options);
+        }
+
+        internal static TelegramChannel DeserializeTelegramChannel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TelegramChannelProperties> properties = default;
+            TelegramChannelProperties properties = default;
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -62,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = TelegramChannelProperties.DeserializeTelegramChannelProperties(property.Value);
+                    properties = TelegramChannelProperties.DeserializeTelegramChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))
@@ -94,8 +140,50 @@ namespace Azure.ResourceManager.BotService.Models
                     location = new AzureLocation(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TelegramChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TelegramChannel(
+                channelName,
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
+
+        BinaryData IPersistableModel<TelegramChannel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelegramChannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TelegramChannel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TelegramChannel IPersistableModel<TelegramChannel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelegramChannel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTelegramChannel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelegramChannel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TelegramChannel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

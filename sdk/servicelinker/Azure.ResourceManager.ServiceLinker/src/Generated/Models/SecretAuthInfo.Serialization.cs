@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
-    public partial class SecretAuthInfo : IUtf8JsonSerializable
+    public partial class SecretAuthInfo : IUtf8JsonSerializable, IJsonModel<SecretAuthInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretAuthInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecretAuthInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -32,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 if (SecretInfo != null)
                 {
                     writer.WritePropertyName("secretInfo"u8);
-                    writer.WriteObjectValue(SecretInfo);
+                    writer.WriteObjectValue<SecretBaseInfo>(SecretInfo, options);
                 }
                 else
                 {
@@ -41,18 +52,49 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
             writer.WritePropertyName("authType"u8);
             writer.WriteStringValue(AuthType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretAuthInfo DeserializeSecretAuthInfo(JsonElement element)
+        SecretAuthInfo IJsonModel<SecretAuthInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretAuthInfo(document.RootElement, options);
+        }
+
+        internal static SecretAuthInfo DeserializeSecretAuthInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<SecretBaseInfo> secretInfo = default;
+            string name = default;
+            SecretBaseInfo secretInfo = default;
             LinkerAuthType authType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -72,7 +114,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         secretInfo = null;
                         continue;
                     }
-                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value);
+                    secretInfo = SecretBaseInfo.DeserializeSecretBaseInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("authType"u8))
@@ -80,8 +122,44 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     authType = new LinkerAuthType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecretAuthInfo(authType, name.Value, secretInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecretAuthInfo(authType, serializedAdditionalRawData, name, secretInfo);
         }
+
+        BinaryData IPersistableModel<SecretAuthInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecretAuthInfo IPersistableModel<SecretAuthInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretAuthInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecretAuthInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretAuthInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecretAuthInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

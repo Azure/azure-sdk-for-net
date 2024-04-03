@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,20 +14,28 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ParquetSource : IUtf8JsonSerializable
+    public partial class ParquetSource : IUtf8JsonSerializable, IJsonModel<ParquetSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ParquetSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                writer.WriteObjectValue<StoreReadSettings>(StoreSettings, options);
             }
             if (Optional.IsDefined(FormatSettings))
             {
                 writer.WritePropertyName("formatSettings"u8);
-                writer.WriteObjectValue(FormatSettings);
+                writer.WriteObjectValue<ParquetReadSettings>(FormatSettings, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -77,20 +86,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ParquetSource DeserializeParquetSource(JsonElement element)
+        ParquetSource IJsonModel<ParquetSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParquetSource(document.RootElement, options);
+        }
+
+        internal static ParquetSource DeserializeParquetSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<StoreReadSettings> storeSettings = default;
-            Optional<ParquetReadSettings> formatSettings = default;
-            Optional<BinaryData> additionalColumns = default;
+            StoreReadSettings storeSettings = default;
+            ParquetReadSettings formatSettings = default;
+            BinaryData additionalColumns = default;
             string type = default;
-            Optional<DataFactoryElement<int>> sourceRetryCount = default;
-            Optional<DataFactoryElement<string>> sourceRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> sourceRetryCount = default;
+            DataFactoryElement<string> sourceRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +124,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value);
+                    storeSettings = StoreReadSettings.DeserializeStoreReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("formatSettings"u8))
@@ -110,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    formatSettings = ParquetReadSettings.DeserializeParquetReadSettings(property.Value);
+                    formatSettings = ParquetReadSettings.DeserializeParquetReadSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalColumns"u8))
@@ -166,7 +189,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, storeSettings.Value, formatSettings.Value, additionalColumns.Value);
+            return new ParquetSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                storeSettings,
+                formatSettings,
+                additionalColumns);
         }
+
+        BinaryData IPersistableModel<ParquetSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ParquetSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ParquetSource IPersistableModel<ParquetSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParquetSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ParquetSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ParquetSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

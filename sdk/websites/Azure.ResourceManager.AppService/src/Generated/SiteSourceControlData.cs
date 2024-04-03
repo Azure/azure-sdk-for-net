@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.AppService
     /// </summary>
     public partial class SiteSourceControlData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SiteSourceControlData"/>. </summary>
         public SiteSourceControlData()
         {
@@ -36,7 +69,8 @@ namespace Azure.ResourceManager.AppService
         /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
         /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SiteSourceControlData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Uri repoUri, string branch, bool? isManualIntegration, bool? isGitHubAction, bool? isDeploymentRollbackEnabled, bool? isMercurial, GitHubActionConfiguration gitHubActionConfiguration, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             RepoUri = repoUri;
             Branch = branch;
@@ -46,23 +80,32 @@ namespace Azure.ResourceManager.AppService
             IsMercurial = isMercurial;
             GitHubActionConfiguration = gitHubActionConfiguration;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Repository or source control URL. </summary>
+        [WirePath("properties.repoUrl")]
         public Uri RepoUri { get; set; }
         /// <summary> Name of branch to use for deployment. </summary>
+        [WirePath("properties.branch")]
         public string Branch { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </summary>
+        [WirePath("properties.isManualIntegration")]
         public bool? IsManualIntegration { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </summary>
+        [WirePath("properties.isGitHubAction")]
         public bool? IsGitHubAction { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.deploymentRollbackEnabled")]
         public bool? IsDeploymentRollbackEnabled { get; set; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </summary>
+        [WirePath("properties.isMercurial")]
         public bool? IsMercurial { get; set; }
         /// <summary> If GitHub Action is selected, than the associated configuration. </summary>
+        [WirePath("properties.gitHubActionConfiguration")]
         public GitHubActionConfiguration GitHubActionConfiguration { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

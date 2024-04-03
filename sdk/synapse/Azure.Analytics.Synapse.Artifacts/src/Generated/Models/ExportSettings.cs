@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,10 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="ExportSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureDatabricksDeltaLakeExportCommand"/> and <see cref="SnowflakeExportCopyCommand"/>.
     /// </summary>
-    public partial class ExportSettings
+    public abstract partial class ExportSettings
     {
         /// <summary> Initializes a new instance of <see cref="ExportSettings"/>. </summary>
-        public ExportSettings()
+        protected ExportSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }

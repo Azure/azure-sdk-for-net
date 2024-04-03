@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CostManagement;
 using Azure.ResourceManager.CostManagement.Models;
 
 namespace Azure.ResourceManager.CostManagement.Mocking
@@ -115,6 +112,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="viewName"> View name. </param>
@@ -137,6 +142,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Views_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantsCostManagementViewsResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -168,6 +181,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantScheduledActionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Scheduled action name. </param>
@@ -190,6 +211,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TenantScheduledActionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,6 +243,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing account ID. </param>
@@ -229,7 +262,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -242,6 +275,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingAccountId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -258,7 +295,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdRequest(billingAccountId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingAccountIdNextPageRequest(nextLink, billingAccountId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingAccountId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -271,6 +308,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -289,7 +330,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -302,6 +343,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListByBillingProfileId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +365,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdRequest(billingAccountId, billingProfileId, grainParameter, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListByBillingProfileIdNextPageRequest(nextLink, billingAccountId, billingProfileId, grainParameter, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesByBillingProfileId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -333,6 +378,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -349,7 +398,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -362,6 +411,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanOrder</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +431,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderRequest(savingsPlanOrderId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanOrderNextPageRequest(nextLink, savingsPlanOrderId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanOrder", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -391,6 +444,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,7 +466,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,6 +479,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BenefitUtilizationSummaries_ListBySavingsPlanId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -440,7 +501,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdRequest(savingsPlanOrderId, savingsPlanId, filter, grainParameter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => BenefitUtilizationSummariesRestClient.CreateListBySavingsPlanIdNextPageRequest(nextLink, savingsPlanOrderId, savingsPlanId, filter, grainParameter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary, BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BenefitUtilizationSummary.DeserializeBenefitUtilizationSummary(e), BenefitUtilizationSummariesClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.GetBenefitUtilizationSummariesBySavingsPlanId", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -453,6 +514,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -495,6 +560,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingAccountScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -535,6 +604,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -579,6 +652,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingProfileScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -622,6 +699,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -663,6 +744,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -703,6 +788,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -747,6 +836,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -790,6 +883,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -831,6 +928,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderScope_GenerateBenefitUtilizationSummariesReport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -871,6 +972,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -915,6 +1020,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanScope_GenerateBenefitUtilizationSummariesReportAsync</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -958,6 +1067,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -985,6 +1102,14 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_ListExternal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CostManagementAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1011,6 +1136,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Forecast_ExternalCloudProviderUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,6 +1180,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Forecast_ExternalCloudProviderUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1090,6 +1223,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Dimensions_ByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -1101,7 +1238,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1115,6 +1252,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Dimensions_ByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -1126,7 +1267,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             Argument.AssertNotNull(options, nameof(options));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DimensionsRestClient.CreateByExternalCloudProviderTypeRequest(options.ExternalCloudProviderType, options.ExternalCloudProviderId, options.Filter, options.Expand, options.Skiptoken, options.Top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, CostManagementDimension.DeserializeCostManagementDimension, DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => CostManagementDimension.DeserializeCostManagementDimension(e), DimensionsClientDiagnostics, Pipeline, "MockableCostManagementTenantResource.ByExternalCloudProviderTypeDimensions", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1139,6 +1280,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Query_UsageByExternalCloudProviderType</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1178,6 +1323,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Query_UsageByExternalCloudProviderType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="externalCloudProviderType"> The external cloud provider type associated with dimension/query operations. This includes 'externalSubscriptions' for linked account and 'externalBillingAccounts' for consolidated account. </param>
@@ -1215,6 +1364,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1259,6 +1412,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingAccountId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1301,6 +1458,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingProfileId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1347,6 +1508,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>GenerateReservationDetailsReport_ByBillingProfileId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1392,6 +1557,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Download</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1434,6 +1603,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PriceSheet_Download</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1478,6 +1651,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>PriceSheet_DownloadByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1518,6 +1695,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PriceSheet_DownloadByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1560,6 +1741,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Scheduled action to be created or updated. </param>
@@ -1593,6 +1778,10 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ScheduledActions_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>

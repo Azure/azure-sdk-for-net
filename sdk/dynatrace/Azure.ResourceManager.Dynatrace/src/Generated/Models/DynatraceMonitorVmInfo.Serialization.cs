@@ -5,28 +5,121 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
-    public partial class DynatraceMonitorVmInfo
+    public partial class DynatraceMonitorVmInfo : IUtf8JsonSerializable, IJsonModel<DynatraceMonitorVmInfo>
     {
-        internal static DynatraceMonitorVmInfo DeserializeDynatraceMonitorVmInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DynatraceMonitorVmInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DynatraceMonitorVmInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteStringValue(Version);
+            }
+            if (Optional.IsDefined(MonitoringType))
+            {
+                writer.WritePropertyName("monitoringType"u8);
+                writer.WriteStringValue(MonitoringType.Value.ToString());
+            }
+            if (Optional.IsDefined(AutoUpdateSetting))
+            {
+                writer.WritePropertyName("autoUpdateSetting"u8);
+                writer.WriteStringValue(AutoUpdateSetting.Value.ToString());
+            }
+            if (Optional.IsDefined(UpdateStatus))
+            {
+                writer.WritePropertyName("updateStatus"u8);
+                writer.WriteStringValue(UpdateStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(AvailabilityState))
+            {
+                writer.WritePropertyName("availabilityState"u8);
+                writer.WriteStringValue(AvailabilityState.Value.ToString());
+            }
+            if (Optional.IsDefined(LogModule))
+            {
+                writer.WritePropertyName("logModule"u8);
+                writer.WriteStringValue(LogModule.Value.ToString());
+            }
+            if (Optional.IsDefined(HostGroup))
+            {
+                writer.WritePropertyName("hostGroup"u8);
+                writer.WriteStringValue(HostGroup);
+            }
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DynatraceMonitorVmInfo IJsonModel<DynatraceMonitorVmInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDynatraceMonitorVmInfo(document.RootElement, options);
+        }
+
+        internal static DynatraceMonitorVmInfo DeserializeDynatraceMonitorVmInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> version = default;
-            Optional<DynatraceOneAgentMonitoringType> monitoringType = default;
-            Optional<DynatraceOneAgentAutoUpdateSetting> autoUpdateSetting = default;
-            Optional<DynatraceOneAgentUpdateStatus> updateStatus = default;
-            Optional<DynatraceOneAgentAvailabilityState> availabilityState = default;
-            Optional<DynatraceLogModuleState> logModule = default;
-            Optional<string> hostGroup = default;
-            Optional<string> hostName = default;
+            ResourceIdentifier resourceId = default;
+            string version = default;
+            DynatraceOneAgentMonitoringType? monitoringType = default;
+            DynatraceOneAgentAutoUpdateSetting? autoUpdateSetting = default;
+            DynatraceOneAgentUpdateStatus? updateStatus = default;
+            DynatraceOneAgentAvailabilityState? availabilityState = default;
+            DynatraceLogModuleState? logModule = default;
+            string hostGroup = default;
+            string hostName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceId"u8))
@@ -98,8 +191,54 @@ namespace Azure.ResourceManager.Dynatrace.Models
                     hostName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DynatraceMonitorVmInfo(resourceId.Value, version.Value, Optional.ToNullable(monitoringType), Optional.ToNullable(autoUpdateSetting), Optional.ToNullable(updateStatus), Optional.ToNullable(availabilityState), Optional.ToNullable(logModule), hostGroup.Value, hostName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DynatraceMonitorVmInfo(
+                resourceId,
+                version,
+                monitoringType,
+                autoUpdateSetting,
+                updateStatus,
+                availabilityState,
+                logModule,
+                hostGroup,
+                hostName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DynatraceMonitorVmInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DynatraceMonitorVmInfo IPersistableModel<DynatraceMonitorVmInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDynatraceMonitorVmInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DynatraceMonitorVmInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

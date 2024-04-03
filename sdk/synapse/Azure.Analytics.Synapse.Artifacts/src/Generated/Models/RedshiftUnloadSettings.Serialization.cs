@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("s3LinkedServiceName"u8);
-            writer.WriteObjectValue(S3LinkedServiceName);
+            writer.WriteObjectValue<LinkedServiceReference>(S3LinkedServiceName);
             writer.WritePropertyName("bucketName"u8);
-            writer.WriteObjectValue(BucketName);
+            writer.WriteObjectValue<object>(BucketName);
             writer.WriteEndObject();
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RedshiftUnloadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RedshiftUnloadSettings>(model);
             }
             public override RedshiftUnloadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

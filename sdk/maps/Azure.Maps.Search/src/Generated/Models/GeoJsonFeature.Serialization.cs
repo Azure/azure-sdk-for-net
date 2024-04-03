@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -16,18 +17,18 @@ namespace Azure.Maps.Search.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("geometry"u8);
-            writer.WriteObjectValue(Geometry);
-            if (Optional.IsDefined(Properties))
+            writer.WriteObjectValue<GeoJsonGeometry>(Geometry);
+            if (Common.Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<object>(Properties);
             }
-            if (Optional.IsDefined(Id))
+            if (Common.Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Optional.IsDefined(FeatureType))
+            if (Common.Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
@@ -44,9 +45,9 @@ namespace Azure.Maps.Search.Models
                 return null;
             }
             GeoJsonGeometry geometry = default;
-            Optional<object> properties = default;
-            Optional<string> id = default;
-            Optional<string> featureType = default;
+            object properties = default;
+            string id = default;
+            string featureType = default;
             GeoJsonObjectType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -80,7 +81,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new GeoJsonFeature(type, geometry, properties.Value, id.Value, featureType.Value);
+            return new GeoJsonFeature(type, geometry, properties, id, featureType);
         }
     }
 }

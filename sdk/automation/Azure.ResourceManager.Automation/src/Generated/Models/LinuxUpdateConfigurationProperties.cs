@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> Linux specific update configuration. </summary>
     public partial class LinuxUpdateConfigurationProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LinuxUpdateConfigurationProperties"/>. </summary>
         public LinuxUpdateConfigurationProperties()
         {
@@ -25,12 +57,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="excludedPackageNameMasks"> packages excluded from the software update configuration. </param>
         /// <param name="includedPackageNameMasks"> packages included from the software update configuration. </param>
         /// <param name="rebootSetting"> Reboot setting for the software update configuration. </param>
-        internal LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxUpdateConfigurationProperties(LinuxUpdateClassification? includedPackageClassifications, IList<string> excludedPackageNameMasks, IList<string> includedPackageNameMasks, string rebootSetting, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IncludedPackageClassifications = includedPackageClassifications;
             ExcludedPackageNameMasks = excludedPackageNameMasks;
             IncludedPackageNameMasks = includedPackageNameMasks;
             RebootSetting = rebootSetting;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Update classifications included in the software update configuration. </summary>

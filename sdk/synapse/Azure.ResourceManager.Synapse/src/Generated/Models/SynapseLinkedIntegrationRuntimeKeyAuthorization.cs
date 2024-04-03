@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Synapse.Models
 
         /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/>. </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The key used for authorization. </param>
-        internal SynapseLinkedIntegrationRuntimeKeyAuthorization(string authorizationType, SynapseSecureString key) : base(authorizationType)
+        internal SynapseLinkedIntegrationRuntimeKeyAuthorization(string authorizationType, IDictionary<string, BinaryData> serializedAdditionalRawData, SynapseSecureString key) : base(authorizationType, serializedAdditionalRawData)
         {
             Key = key;
             AuthorizationType = authorizationType ?? "Key";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseLinkedIntegrationRuntimeKeyAuthorization"/> for deserialization. </summary>
+        internal SynapseLinkedIntegrationRuntimeKeyAuthorization()
+        {
         }
 
         /// <summary> The key used for authorization. </summary>

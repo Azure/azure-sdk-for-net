@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class SoftwareUpdateConfigurationRunListResult
+    internal partial class SoftwareUpdateConfigurationRunListResult : IUtf8JsonSerializable, IJsonModel<SoftwareUpdateConfigurationRunListResult>
     {
-        internal static SoftwareUpdateConfigurationRunListResult DeserializeSoftwareUpdateConfigurationRunListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SoftwareUpdateConfigurationRunListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SoftwareUpdateConfigurationRunListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<SoftwareUpdateConfigurationRun>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SoftwareUpdateConfigurationRunListResult IJsonModel<SoftwareUpdateConfigurationRunListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSoftwareUpdateConfigurationRunListResult(document.RootElement, options);
+        }
+
+        internal static SoftwareUpdateConfigurationRunListResult DeserializeSoftwareUpdateConfigurationRunListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SoftwareUpdateConfigurationRun>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SoftwareUpdateConfigurationRun> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<SoftwareUpdateConfigurationRun> array = new List<SoftwareUpdateConfigurationRun>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item));
+                        array.Add(SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(item, options));
                     }
                     value = array;
                     continue;
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.Automation.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SoftwareUpdateConfigurationRunListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SoftwareUpdateConfigurationRunListResult(value ?? new ChangeTrackingList<SoftwareUpdateConfigurationRun>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SoftwareUpdateConfigurationRunListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SoftwareUpdateConfigurationRunListResult IPersistableModel<SoftwareUpdateConfigurationRunListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationRunListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSoftwareUpdateConfigurationRunListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationRunListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SoftwareUpdateConfigurationRunListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

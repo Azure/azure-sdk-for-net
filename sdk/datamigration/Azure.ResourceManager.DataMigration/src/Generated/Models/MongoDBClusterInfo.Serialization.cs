@@ -5,15 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBClusterInfo
+    public partial class MongoDBClusterInfo : IUtf8JsonSerializable, IJsonModel<MongoDBClusterInfo>
     {
-        internal static MongoDBClusterInfo DeserializeMongoDBClusterInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBClusterInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBClusterInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBClusterInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("databases"u8);
+            writer.WriteStartArray();
+            foreach (var item in Databases)
+            {
+                writer.WriteObjectValue<MongoDBDatabaseInfo>(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("supportsSharding"u8);
+            writer.WriteBooleanValue(SupportsSharding);
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(ClusterType.ToString());
+            writer.WritePropertyName("version"u8);
+            writer.WriteStringValue(Version);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MongoDBClusterInfo IJsonModel<MongoDBClusterInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBClusterInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBClusterInfo(document.RootElement, options);
+        }
+
+        internal static MongoDBClusterInfo DeserializeMongoDBClusterInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +81,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             bool supportsSharding = default;
             MongoDBClusterType type = default;
             string version = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("databases"u8))
@@ -29,7 +90,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MongoDBDatabaseInfo> array = new List<MongoDBDatabaseInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item));
+                        array.Add(MongoDBDatabaseInfo.DeserializeMongoDBDatabaseInfo(item, options));
                     }
                     databases = array;
                     continue;
@@ -49,8 +110,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     version = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBClusterInfo(databases, supportsSharding, type, version);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBClusterInfo(databases, supportsSharding, type, version, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoDBClusterInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBClusterInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBClusterInfo IPersistableModel<MongoDBClusterInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBClusterInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBClusterInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBClusterInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -22,8 +23,9 @@ namespace Azure.ResourceManager.Logic.Models
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
         /// <param name="description"> The description. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="error"> Gets the error. </param>
-        internal LogicWorkflowOutputParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, BinaryData error) : base(parameterType, value, metadata, description)
+        internal LogicWorkflowOutputParameterInfo(LogicWorkflowParameterType? parameterType, BinaryData value, BinaryData metadata, string description, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData error) : base(parameterType, value, metadata, description, serializedAdditionalRawData)
         {
             Error = error;
         }

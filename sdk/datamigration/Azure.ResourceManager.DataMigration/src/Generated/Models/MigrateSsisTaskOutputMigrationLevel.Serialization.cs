@@ -6,32 +6,140 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MigrateSsisTaskOutputMigrationLevel
+    public partial class MigrateSsisTaskOutputMigrationLevel : IUtf8JsonSerializable, IJsonModel<MigrateSsisTaskOutputMigrationLevel>
     {
-        internal static MigrateSsisTaskOutputMigrationLevel DeserializeMigrateSsisTaskOutputMigrationLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MigrateSsisTaskOutputMigrationLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MigrateSsisTaskOutputMigrationLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedOn"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndedOn))
+            {
+                writer.WritePropertyName("endedOn"u8);
+                writer.WriteStringValue(EndedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceServerVersion))
+            {
+                writer.WritePropertyName("sourceServerVersion"u8);
+                writer.WriteStringValue(SourceServerVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceServerBrandVersion))
+            {
+                writer.WritePropertyName("sourceServerBrandVersion"u8);
+                writer.WriteStringValue(SourceServerBrandVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetServerVersion))
+            {
+                writer.WritePropertyName("targetServerVersion"u8);
+                writer.WriteStringValue(TargetServerVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetServerBrandVersion))
+            {
+                writer.WritePropertyName("targetServerBrandVersion"u8);
+                writer.WriteStringValue(TargetServerBrandVersion);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExceptionsAndWarnings))
+            {
+                writer.WritePropertyName("exceptionsAndWarnings"u8);
+                writer.WriteStartArray();
+                foreach (var item in ExceptionsAndWarnings)
+                {
+                    writer.WriteObjectValue<ReportableException>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Stage))
+            {
+                writer.WritePropertyName("stage"u8);
+                writer.WriteStringValue(Stage.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MigrateSsisTaskOutputMigrationLevel IJsonModel<MigrateSsisTaskOutputMigrationLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMigrateSsisTaskOutputMigrationLevel(document.RootElement, options);
+        }
+
+        internal static MigrateSsisTaskOutputMigrationLevel DeserializeMigrateSsisTaskOutputMigrationLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<MigrationStatus> status = default;
-            Optional<string> message = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<SsisMigrationStage> stage = default;
-            Optional<string> id = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            MigrationStatus? status = default;
+            string message = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            SsisMigrationStage? stage = default;
+            string id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startedOn"u8))
@@ -95,7 +203,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -119,8 +227,57 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MigrateSsisTaskOutputMigrationLevel(id.Value, resultType, Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), Optional.ToNullable(status), message.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToList(exceptionsAndWarnings), Optional.ToNullable(stage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MigrateSsisTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                startedOn,
+                endedOn,
+                status,
+                message,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerVersion,
+                targetServerBrandVersion,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>(),
+                stage);
         }
+
+        BinaryData IPersistableModel<MigrateSsisTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MigrateSsisTaskOutputMigrationLevel IPersistableModel<MigrateSsisTaskOutputMigrationLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMigrateSsisTaskOutputMigrationLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputMigrationLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MigrateSsisTaskOutputMigrationLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

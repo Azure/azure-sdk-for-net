@@ -6,29 +6,91 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsClusterAssociatedWorkspace : IUtf8JsonSerializable
+    public partial class OperationalInsightsClusterAssociatedWorkspace : IUtf8JsonSerializable, IJsonModel<OperationalInsightsClusterAssociatedWorkspace>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsClusterAssociatedWorkspace>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsClusterAssociatedWorkspace>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
+            {
+                writer.WritePropertyName("workspaceId"u8);
+                writer.WriteStringValue(WorkspaceId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceName))
+            {
+                writer.WritePropertyName("workspaceName"u8);
+                writer.WriteStringValue(WorkspaceName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AssociatedOn))
+            {
+                writer.WritePropertyName("associateDate"u8);
+                writer.WriteStringValue(AssociatedOn.Value, "R");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsClusterAssociatedWorkspace DeserializeOperationalInsightsClusterAssociatedWorkspace(JsonElement element)
+        OperationalInsightsClusterAssociatedWorkspace IJsonModel<OperationalInsightsClusterAssociatedWorkspace>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsClusterAssociatedWorkspace(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsClusterAssociatedWorkspace DeserializeOperationalInsightsClusterAssociatedWorkspace(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> workspaceId = default;
-            Optional<string> workspaceName = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<DateTimeOffset> associateDate = default;
+            Guid? workspaceId = default;
+            string workspaceName = default;
+            ResourceIdentifier resourceId = default;
+            DateTimeOffset? associateDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("workspaceId"u8))
@@ -63,8 +125,126 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     associateDate = property.Value.GetDateTimeOffset("R");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsClusterAssociatedWorkspace(Optional.ToNullable(workspaceId), workspaceName.Value, resourceId.Value, Optional.ToNullable(associateDate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalInsightsClusterAssociatedWorkspace(workspaceId, workspaceName, resourceId, associateDate, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceId), out propertyOverride);
+            if (Optional.IsDefined(WorkspaceId) || hasPropertyOverride)
+            {
+                builder.Append("  workspaceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{WorkspaceId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceName), out propertyOverride);
+            if (Optional.IsDefined(WorkspaceName) || hasPropertyOverride)
+            {
+                builder.Append("  workspaceName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WorkspaceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkspaceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkspaceName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            {
+                builder.Append("  resourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AssociatedOn), out propertyOverride);
+            if (Optional.IsDefined(AssociatedOn) || hasPropertyOverride)
+            {
+                builder.Append("  associateDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(AssociatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsClusterAssociatedWorkspace IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsClusterAssociatedWorkspace(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsClusterAssociatedWorkspace)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsClusterAssociatedWorkspace>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

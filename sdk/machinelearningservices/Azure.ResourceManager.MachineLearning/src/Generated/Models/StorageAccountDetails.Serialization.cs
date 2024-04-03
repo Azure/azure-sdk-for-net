@@ -5,22 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class StorageAccountDetails : IUtf8JsonSerializable
+    public partial class StorageAccountDetails : IUtf8JsonSerializable, IJsonModel<StorageAccountDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
                 if (SystemCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedStorageAccount);
+                    writer.WriteObjectValue<SystemCreatedStorageAccount>(SystemCreatedStorageAccount, options);
                 }
                 else
                 {
@@ -32,24 +43,55 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (UserCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("userCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(UserCreatedStorageAccount);
+                    writer.WriteObjectValue<UserCreatedStorageAccount>(UserCreatedStorageAccount, options);
                 }
                 else
                 {
                     writer.WriteNull("userCreatedStorageAccount");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageAccountDetails DeserializeStorageAccountDetails(JsonElement element)
+        StorageAccountDetails IJsonModel<StorageAccountDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountDetails(document.RootElement, options);
+        }
+
+        internal static StorageAccountDetails DeserializeStorageAccountDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SystemCreatedStorageAccount> systemCreatedStorageAccount = default;
-            Optional<UserCreatedStorageAccount> userCreatedStorageAccount = default;
+            SystemCreatedStorageAccount systemCreatedStorageAccount = default;
+            UserCreatedStorageAccount userCreatedStorageAccount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("systemCreatedStorageAccount"u8))
@@ -59,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         systemCreatedStorageAccount = null;
                         continue;
                     }
-                    systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value);
+                    systemCreatedStorageAccount = SystemCreatedStorageAccount.DeserializeSystemCreatedStorageAccount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("userCreatedStorageAccount"u8))
@@ -69,11 +111,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         userCreatedStorageAccount = null;
                         continue;
                     }
-                    userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value);
+                    userCreatedStorageAccount = UserCreatedStorageAccount.DeserializeUserCreatedStorageAccount(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountDetails(systemCreatedStorageAccount.Value, userCreatedStorageAccount.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageAccountDetails(systemCreatedStorageAccount, userCreatedStorageAccount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StorageAccountDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountDetails IPersistableModel<StorageAccountDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

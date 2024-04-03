@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Information about backup files when existing backup mode is used. </summary>
     public partial class DatabaseBackupInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DatabaseBackupInfo"/>. </summary>
         internal DatabaseBackupInfo()
         {
@@ -29,7 +60,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="isCompressed"> Whether the backup set is compressed. </param>
         /// <param name="familyCount"> Number of files in the backup set. </param>
         /// <param name="backupFinishOn"> Date and time when the backup operation finished. </param>
-        internal DatabaseBackupInfo(string databaseName, BackupType? backupType, IReadOnlyList<string> backupFiles, int? position, bool? isDamaged, bool? isCompressed, int? familyCount, DateTimeOffset? backupFinishOn)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DatabaseBackupInfo(string databaseName, BackupType? backupType, IReadOnlyList<string> backupFiles, int? position, bool? isDamaged, bool? isCompressed, int? familyCount, DateTimeOffset? backupFinishOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DatabaseName = databaseName;
             BackupType = backupType;
@@ -39,6 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             IsCompressed = isCompressed;
             FamilyCount = familyCount;
             BackupFinishOn = backupFinishOn;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Database name. </summary>

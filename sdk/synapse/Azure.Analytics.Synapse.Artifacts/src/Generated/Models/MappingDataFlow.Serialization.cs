@@ -37,14 +37,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DataFlowFolder>(Folder);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSource>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Sinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSink>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Transformations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<Transformation>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -104,14 +104,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<object>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<DataFlowSource>> sources = default;
-            Optional<IList<DataFlowSink>> sinks = default;
-            Optional<IList<Transformation>> transformations = default;
-            Optional<string> script = default;
-            Optional<IList<string>> scriptLines = default;
+            string description = default;
+            IList<object> annotations = default;
+            DataFlowFolder folder = default;
+            IList<DataFlowSource> sources = default;
+            IList<DataFlowSink> sinks = default;
+            IList<Transformation> transformations = default;
+            string script = default;
+            IList<string> scriptLines = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -228,14 +228,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new MappingDataFlow(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), Optional.ToList(sinks), Optional.ToList(transformations), script.Value, Optional.ToList(scriptLines));
+            return new MappingDataFlow(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<object>(),
+                folder,
+                sources ?? new ChangeTrackingList<DataFlowSource>(),
+                sinks ?? new ChangeTrackingList<DataFlowSink>(),
+                transformations ?? new ChangeTrackingList<Transformation>(),
+                script,
+                scriptLines ?? new ChangeTrackingList<string>());
         }
 
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
         {
             public override void Write(Utf8JsonWriter writer, MappingDataFlow model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<MappingDataFlow>(model);
             }
             public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

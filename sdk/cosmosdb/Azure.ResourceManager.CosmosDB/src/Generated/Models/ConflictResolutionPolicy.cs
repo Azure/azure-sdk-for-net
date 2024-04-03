@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The conflict resolution policy for the container. </summary>
     public partial class ConflictResolutionPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConflictResolutionPolicy"/>. </summary>
         public ConflictResolutionPolicy()
         {
@@ -19,18 +54,23 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="mode"> Indicates the conflict resolution mode. </param>
         /// <param name="conflictResolutionPath"> The conflict resolution path in the case of LastWriterWins mode. </param>
         /// <param name="conflictResolutionProcedure"> The procedure to resolve conflicts in the case of custom mode. </param>
-        internal ConflictResolutionPolicy(ConflictResolutionMode? mode, string conflictResolutionPath, string conflictResolutionProcedure)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConflictResolutionPolicy(ConflictResolutionMode? mode, string conflictResolutionPath, string conflictResolutionProcedure, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             ConflictResolutionPath = conflictResolutionPath;
             ConflictResolutionProcedure = conflictResolutionProcedure;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Indicates the conflict resolution mode. </summary>
+        [WirePath("mode")]
         public ConflictResolutionMode? Mode { get; set; }
         /// <summary> The conflict resolution path in the case of LastWriterWins mode. </summary>
+        [WirePath("conflictResolutionPath")]
         public string ConflictResolutionPath { get; set; }
         /// <summary> The procedure to resolve conflicts in the case of custom mode. </summary>
+        [WirePath("conflictResolutionProcedure")]
         public string ConflictResolutionProcedure { get; set; }
     }
 }

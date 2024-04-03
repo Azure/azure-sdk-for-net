@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Authorization.Models
 {
     /// <summary> The role management policy authentication context rule. </summary>
@@ -20,9 +23,10 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="isEnabled"> The value indicating if rule is enabled. </param>
         /// <param name="claimValue"> The claim value. </param>
-        internal RoleManagementPolicyAuthenticationContextRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, bool? isEnabled, string claimValue) : base(id, ruleType, target)
+        internal RoleManagementPolicyAuthenticationContextRule(string id, RoleManagementPolicyRuleType ruleType, RoleManagementPolicyRuleTarget target, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? isEnabled, string claimValue) : base(id, ruleType, target, serializedAdditionalRawData)
         {
             IsEnabled = isEnabled;
             ClaimValue = claimValue;
@@ -30,8 +34,10 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> The value indicating if rule is enabled. </summary>
+        [WirePath("isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The claim value. </summary>
+        [WirePath("claimValue")]
         public string ClaimValue { get; set; }
     }
 }

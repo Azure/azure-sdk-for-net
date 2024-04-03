@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.ServiceBus
     /// </summary>
     public partial class ServiceBusNamespaceData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceData"/>. </summary>
         /// <param name="location"> The location. </param>
         public ServiceBusNamespaceData(AzureLocation location) : base(location)
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.ServiceBus
         /// <param name="alternateName"> Alternate name for namespace. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
         /// <param name="premiumMessagingPartitions"> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </param>
-        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ServiceBusNamespaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceBusSku sku, ManagedServiceIdentity identity, ServiceBusMinimumTlsVersion? minimumTlsVersion, string provisioningState, string status, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string serviceBusEndpoint, string metricId, bool? isZoneRedundant, ServiceBusEncryption encryption, IList<ServiceBusPrivateEndpointConnectionData> privateEndpointConnections, bool? disableLocalAuth, string alternateName, ServiceBusPublicNetworkAccess? publicNetworkAccess, int? premiumMessagingPartitions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Sku = sku;
             Identity = identity;
@@ -67,39 +100,61 @@ namespace Azure.ResourceManager.ServiceBus
             AlternateName = alternateName;
             PublicNetworkAccess = publicNetworkAccess;
             PremiumMessagingPartitions = premiumMessagingPartitions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServiceBusNamespaceData"/> for deserialization. </summary>
+        internal ServiceBusNamespaceData()
+        {
         }
 
         /// <summary> Properties of SKU. </summary>
+        [WirePath("sku")]
         public ServiceBusSku Sku { get; set; }
         /// <summary> Properties of BYOK Identity description. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The minimum TLS version for the cluster to support, e.g. '1.2'. </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public ServiceBusMinimumTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Provisioning state of the namespace. </summary>
+        [WirePath("properties.provisioningState")]
         public string ProvisioningState { get; }
         /// <summary> Status of the namespace. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> The time the namespace was created. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time the namespace was updated. </summary>
+        [WirePath("properties.updatedAt")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> Endpoint you can use to perform Service Bus operations. </summary>
+        [WirePath("properties.serviceBusEndpoint")]
         public string ServiceBusEndpoint { get; }
         /// <summary> Identifier for Azure Insights metrics. </summary>
+        [WirePath("properties.metricId")]
         public string MetricId { get; }
         /// <summary> Enabling this property creates a Premium Service Bus Namespace in regions supported availability zones. </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Properties of BYOK Encryption description. </summary>
+        [WirePath("properties.encryption")]
         public ServiceBusEncryption Encryption { get; set; }
         /// <summary> List of private endpoint connections. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IList<ServiceBusPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
         /// <summary> This property disables SAS authentication for the Service Bus namespace. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Alternate name for namespace. </summary>
+        [WirePath("properties.alternateName")]
         public string AlternateName { get; set; }
         /// <summary> This determines if traffic is allowed over public network. By default it is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public ServiceBusPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> The number of partitions of a Service Bus namespace. This property is only applicable to Premium SKU namespaces. The default value is 1 and possible values are 1, 2 and 4. </summary>
+        [WirePath("properties.premiumMessagingPartitions")]
         public int? PremiumMessagingPartitions { get; set; }
     }
 }

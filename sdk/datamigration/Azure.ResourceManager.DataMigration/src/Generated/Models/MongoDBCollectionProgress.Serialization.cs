@@ -6,16 +6,106 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBCollectionProgress
+    public partial class MongoDBCollectionProgress : IUtf8JsonSerializable, IJsonModel<MongoDBCollectionProgress>
     {
-        internal static MongoDBCollectionProgress DeserializeMongoDBCollectionProgress(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBCollectionProgress>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBCollectionProgress>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("bytesCopied"u8);
+            writer.WriteNumberValue(BytesCopied);
+            writer.WritePropertyName("documentsCopied"u8);
+            writer.WriteNumberValue(DocumentsCopied);
+            writer.WritePropertyName("elapsedTime"u8);
+            writer.WriteStringValue(ElapsedTime);
+            writer.WritePropertyName("errors"u8);
+            writer.WriteStartObject();
+            foreach (var item in Errors)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue<MongoDBError>(item.Value, options);
+            }
+            writer.WriteEndObject();
+            writer.WritePropertyName("eventsPending"u8);
+            writer.WriteNumberValue(EventsPending);
+            writer.WritePropertyName("eventsReplayed"u8);
+            writer.WriteNumberValue(EventsReplayed);
+            if (Optional.IsDefined(LastEventOn))
+            {
+                writer.WritePropertyName("lastEventTime"u8);
+                writer.WriteStringValue(LastEventOn.Value, "O");
+            }
+            if (Optional.IsDefined(LastReplayOn))
+            {
+                writer.WritePropertyName("lastReplayTime"u8);
+                writer.WriteStringValue(LastReplayOn.Value, "O");
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(QualifiedName))
+            {
+                writer.WritePropertyName("qualifiedName"u8);
+                writer.WriteStringValue(QualifiedName);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType.ToString());
+            writer.WritePropertyName("state"u8);
+            writer.WriteStringValue(State.ToString());
+            writer.WritePropertyName("totalBytes"u8);
+            writer.WriteNumberValue(TotalBytes);
+            writer.WritePropertyName("totalDocuments"u8);
+            writer.WriteNumberValue(TotalDocuments);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MongoDBCollectionProgress IJsonModel<MongoDBCollectionProgress>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBCollectionProgress(document.RootElement, options);
+        }
+
+        internal static MongoDBCollectionProgress DeserializeMongoDBCollectionProgress(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -26,14 +116,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             IReadOnlyDictionary<string, MongoDBError> errors = default;
             long eventsPending = default;
             long eventsReplayed = default;
-            Optional<DateTimeOffset> lastEventTime = default;
-            Optional<DateTimeOffset> lastReplayTime = default;
-            Optional<string> name = default;
-            Optional<string> qualifiedName = default;
+            DateTimeOffset? lastEventTime = default;
+            DateTimeOffset? lastReplayTime = default;
+            string name = default;
+            string qualifiedName = default;
             MongoDBProgressResultType resultType = default;
             MongoDBMigrationState state = default;
             long totalBytes = default;
             long totalDocuments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bytesCopied"u8))
@@ -56,7 +148,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MongoDBError> dictionary = new Dictionary<string, MongoDBError>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value));
+                        dictionary.Add(property0.Name, MongoDBError.DeserializeMongoDBError(property0.Value, options));
                     }
                     errors = dictionary;
                     continue;
@@ -119,8 +211,59 @@ namespace Azure.ResourceManager.DataMigration.Models
                     totalDocuments = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBCollectionProgress(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, Optional.ToNullable(lastEventTime), Optional.ToNullable(lastReplayTime), name.Value, qualifiedName.Value, resultType, state, totalBytes, totalDocuments);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBCollectionProgress(
+                bytesCopied,
+                documentsCopied,
+                elapsedTime,
+                errors,
+                eventsPending,
+                eventsReplayed,
+                lastEventTime,
+                lastReplayTime,
+                name,
+                qualifiedName,
+                resultType,
+                state,
+                totalBytes,
+                totalDocuments,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MongoDBCollectionProgress>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBCollectionProgress IPersistableModel<MongoDBCollectionProgress>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBCollectionProgress>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBCollectionProgress(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBCollectionProgress)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBCollectionProgress>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

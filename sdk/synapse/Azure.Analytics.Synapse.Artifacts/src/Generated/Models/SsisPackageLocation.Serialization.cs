@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
-                writer.WriteObjectValue(PackagePath);
+                writer.WriteObjectValue<object>(PackagePath);
             }
             if (Optional.IsDefined(Type))
             {
@@ -34,22 +34,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
-                writer.WriteObjectValue(PackagePassword);
+                writer.WriteObjectValue<SecretBase>(PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
-                writer.WriteObjectValue(ConfigurationPath);
+                writer.WriteObjectValue<object>(ConfigurationPath);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
-                writer.WriteObjectValue(PackageContent);
+                writer.WriteObjectValue<object>(PackageContent);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SsisChildPackage>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -86,16 +86,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> packagePath = default;
-            Optional<SsisPackageLocationType> type = default;
-            Optional<SecretBase> packagePassword = default;
-            Optional<SsisAccessCredential> accessCredential = default;
-            Optional<object> configurationPath = default;
-            Optional<SsisAccessCredential> configurationAccessCredential = default;
-            Optional<string> packageName = default;
-            Optional<object> packageContent = default;
-            Optional<string> packageLastModifiedDate = default;
-            Optional<IList<SsisChildPackage>> childPackages = default;
+            object packagePath = default;
+            SsisPackageLocationType? type = default;
+            SecretBase packagePassword = default;
+            SsisAccessCredential accessCredential = default;
+            object configurationPath = default;
+            SsisAccessCredential configurationAccessCredential = default;
+            string packageName = default;
+            object packageContent = default;
+            string packageLastModifiedDate = default;
+            IList<SsisChildPackage> childPackages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("packagePath"u8))
@@ -198,14 +198,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SsisPackageLocation(packagePath.Value, Optional.ToNullable(type), packagePassword.Value, accessCredential.Value, configurationPath.Value, configurationAccessCredential.Value, packageName.Value, packageContent.Value, packageLastModifiedDate.Value, Optional.ToList(childPackages));
+            return new SsisPackageLocation(
+                packagePath,
+                type,
+                packagePassword,
+                accessCredential,
+                configurationPath,
+                configurationAccessCredential,
+                packageName,
+                packageContent,
+                packageLastModifiedDate,
+                childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisPackageLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisPackageLocation>(model);
             }
             public override SsisPackageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

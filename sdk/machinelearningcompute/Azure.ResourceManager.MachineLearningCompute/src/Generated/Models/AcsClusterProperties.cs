@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
     /// <summary> Information about the container service backing the cluster. </summary>
     public partial class AcsClusterProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AcsClusterProperties"/>. </summary>
         /// <param name="orchestratorType"> Type of orchestrator. It cannot be changed once the cluster is created. </param>
         public AcsClusterProperties(OrchestratorType orchestratorType)
@@ -29,7 +61,8 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         /// <param name="masterCount"> The number of master nodes in the container service. </param>
         /// <param name="agentCount"> The number of agent nodes in the Container Service. This can be changed to scale the cluster. </param>
         /// <param name="agentVmSize"> The Azure VM size of the agent VM nodes. This cannot be changed once the cluster is created. This list is non exhaustive; refer to https://docs.microsoft.com/en-us/azure/virtual-machines/windows/sizes for the possible VM sizes. </param>
-        internal AcsClusterProperties(string clusterFqdn, OrchestratorType orchestratorType, KubernetesClusterProperties orchestratorProperties, IList<SystemService> systemServices, int? masterCount, int? agentCount, AgentVmSizeType? agentVmSize)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AcsClusterProperties(string clusterFqdn, OrchestratorType orchestratorType, KubernetesClusterProperties orchestratorProperties, IList<SystemService> systemServices, int? masterCount, int? agentCount, AgentVmSizeType? agentVmSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClusterFqdn = clusterFqdn;
             OrchestratorType = orchestratorType;
@@ -38,6 +71,12 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             MasterCount = masterCount;
             AgentCount = agentCount;
             AgentVmSize = agentVmSize;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AcsClusterProperties"/> for deserialization. </summary>
+        internal AcsClusterProperties()
+        {
         }
 
         /// <summary> The FQDN of the cluster. </summary>

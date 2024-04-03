@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -31,13 +30,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="endOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="actionsInfo"> Gets or sets the state/actions applicable on this job like cancel/retry. </param>
         /// <param name="containerName"> Container name of the entity on which the current job is executing. </param>
         /// <param name="duration"> Time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Error details on execution of this job. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the backup item is a Classic or an Azure Resource Manager VM. </param>
         /// <param name="extendedInfo"> Additional information for this job. </param>
-        internal IaasVmBackupJobV2(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IList<JobSupportedAction> actionsInfo, string containerName, TimeSpan? duration, IList<IaasVmErrorInfo> errorDetails, string virtualMachineVersion, IaasVmBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType)
+        internal IaasVmBackupJobV2(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<JobSupportedAction> actionsInfo, string containerName, TimeSpan? duration, IList<IaasVmErrorInfo> errorDetails, string virtualMachineVersion, IaasVmBackupJobExtendedInfo extendedInfo) : base(entityFriendlyName, backupManagementType, operation, status, startOn, endOn, activityId, jobType, serializedAdditionalRawData)
         {
             ActionsInfo = actionsInfo;
             ContainerName = containerName;

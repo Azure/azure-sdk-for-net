@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -27,11 +25,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionUsageDetail(id, name, resourceType, systemData, kind, etag, tags);
+            return new UnknownUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new UsageDetailsKind(kind),
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMarketplace"/>. </summary>
@@ -72,7 +78,40 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionMarketplace(id, name, resourceType, systemData, billingPeriodId, usageStartOn, usageEndOn, resourceRate, offerName, resourceGroup, additionalInfo, orderNumber, instanceName, instanceId, currency, consumedQuantity, unitOfMeasure, pretaxCost, isEstimated, meterId, subscriptionGuid, subscriptionName, accountName, departmentName, consumedService, costCenter, additionalProperties, publisherName, planName, isRecurringCharge, etag, tags);
+            return new ConsumptionMarketplace(
+                id,
+                name,
+                resourceType,
+                systemData,
+                billingPeriodId,
+                usageStartOn,
+                usageEndOn,
+                resourceRate,
+                offerName,
+                resourceGroup,
+                additionalInfo,
+                orderNumber,
+                instanceName,
+                instanceId,
+                currency,
+                consumedQuantity,
+                unitOfMeasure,
+                pretaxCost,
+                isEstimated,
+                meterId,
+                subscriptionGuid,
+                subscriptionName,
+                accountName,
+                departmentName,
+                consumedService,
+                costCenter,
+                additionalProperties,
+                publisherName,
+                planName,
+                isRecurringCharge,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Consumption.ConsumptionBudgetData"/>. </summary>
@@ -94,7 +133,21 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             notifications ??= new Dictionary<string, BudgetAssociatedNotification>();
 
-            return new ConsumptionBudgetData(id, name, resourceType, systemData, category, amount, timeGrain, timePeriod, filter, currentSpend, notifications, forecastSpend, etag);
+            return new ConsumptionBudgetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                category,
+                amount,
+                timeGrain,
+                timePeriod,
+                filter,
+                currentSpend,
+                notifications,
+                forecastSpend,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BudgetCurrentSpend"/>. </summary>
@@ -103,7 +156,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.BudgetCurrentSpend"/> instance for mocking. </returns>
         public static BudgetCurrentSpend BudgetCurrentSpend(decimal? amount = null, string unit = null)
         {
-            return new BudgetCurrentSpend(amount, unit);
+            return new BudgetCurrentSpend(amount, unit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BudgetForecastSpend"/>. </summary>
@@ -112,7 +165,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.BudgetForecastSpend"/> instance for mocking. </returns>
         public static BudgetForecastSpend BudgetForecastSpend(decimal? amount = null, string unit = null)
         {
-            return new BudgetForecastSpend(amount, unit);
+            return new BudgetForecastSpend(amount, unit, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionTagsResult"/>. </summary>
@@ -129,7 +182,16 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new List<ConsumptionTag>();
 
-            return new ConsumptionTagsResult(id, name, resourceType, systemData, tags?.ToList(), nextLink, previousLink, etag);
+            return new ConsumptionTagsResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags?.ToList(),
+                nextLink,
+                previousLink,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionChargeSummary"/>. </summary>
@@ -140,9 +202,16 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
-            return new ConsumptionChargeSummary(id, name, resourceType, systemData, kind, etag);
+            return new UnknownChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new ChargeSummaryKind(kind),
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceResult"/>. </summary>
@@ -174,7 +243,29 @@ namespace Azure.ResourceManager.Consumption.Models
             adjustmentDetails ??= new List<ConsumptionBalanceAdjustmentDetail>();
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionBalanceResult(id, name, resourceType, systemData, currency, beginningBalance, endingBalance, newPurchases, adjustments, utilized, serviceOverage, chargesBilledSeparately, totalOverage, totalUsage, azureMarketplaceServiceCharges, billingFrequency, isPriceHidden, newPurchasesDetails?.ToList(), adjustmentDetails?.ToList(), etag, tags);
+            return new ConsumptionBalanceResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                currency,
+                beginningBalance,
+                endingBalance,
+                newPurchases,
+                adjustments,
+                utilized,
+                serviceOverage,
+                chargesBilledSeparately,
+                totalOverage,
+                totalUsage,
+                azureMarketplaceServiceCharges,
+                billingFrequency,
+                isPriceHidden,
+                newPurchasesDetails?.ToList(),
+                adjustmentDetails?.ToList(),
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/>. </summary>
@@ -183,7 +274,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionBalanceNewPurchasesDetail"/> instance for mocking. </returns>
         public static ConsumptionBalanceNewPurchasesDetail ConsumptionBalanceNewPurchasesDetail(string name = null, decimal? value = null)
         {
-            return new ConsumptionBalanceNewPurchasesDetail(name, value);
+            return new ConsumptionBalanceNewPurchasesDetail(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionBalanceAdjustmentDetail"/>. </summary>
@@ -192,7 +283,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionBalanceAdjustmentDetail"/> instance for mocking. </returns>
         public static ConsumptionBalanceAdjustmentDetail ConsumptionBalanceAdjustmentDetail(string name = null, decimal? value = null)
         {
-            return new ConsumptionBalanceAdjustmentDetail(name, value);
+            return new ConsumptionBalanceAdjustmentDetail(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationSummary"/>. </summary>
@@ -222,7 +313,29 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationSummary(id, name, resourceType, systemData, reservationOrderId, reservationId, skuName, reservedHours, useOn, usedHours, minUtilizationPercentage, avgUtilizationPercentage, maxUtilizationPercentage, kind, purchasedQuantity, remainingQuantity, totalReservedQuantity, usedQuantity, utilizedPercentage, etag, tags);
+            return new ConsumptionReservationSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reservationOrderId,
+                reservationId,
+                skuName,
+                reservedHours,
+                useOn,
+                usedHours,
+                minUtilizationPercentage,
+                avgUtilizationPercentage,
+                maxUtilizationPercentage,
+                kind,
+                purchasedQuantity,
+                remainingQuantity,
+                totalReservedQuantity,
+                usedQuantity,
+                utilizedPercentage,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationDetail"/>. </summary>
@@ -248,7 +361,25 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationDetail(id, name, resourceType, systemData, reservationOrderId, instanceFlexibilityRatio, instanceFlexibilityGroup, reservationId, skuName, reservedHours, consumptionOccurredOn, usedHours, instanceId, totalReservedQuantity, kind, etag, tags);
+            return new ConsumptionReservationDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reservationOrderId,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                reservationId,
+                skuName,
+                reservedHours,
+                consumptionOccurredOn,
+                usedHours,
+                instanceId,
+                totalReservedQuantity,
+                kind,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendation"/>. </summary>
@@ -262,11 +393,21 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
+        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendation(id, name, resourceType, systemData, kind, etag, tags, location, sku);
+            return new UnknownReservationRecommendation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind == null ? default : new ReservationRecommendationKind(kind),
+                etag,
+                tags,
+                location,
+                sku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
@@ -289,7 +430,22 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionReservationRecommendationDetails(id, name, resourceType, systemData, location, sku, currency, properties, resourceGroup, savings, scope, usage, etag, tags);
+            return new ConsumptionReservationRecommendationDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                sku,
+                currency,
+                properties,
+                resourceGroup,
+                savings,
+                scope,
+                usage,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionResourceProperties"/>. </summary>
@@ -304,7 +460,14 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             appliedScopes ??= new List<string>();
 
-            return new ConsumptionResourceProperties(appliedScopes?.ToList(), onDemandRate, product, region, reservationRate, resourceType);
+            return new ConsumptionResourceProperties(
+                appliedScopes?.ToList(),
+                onDemandRate,
+                product,
+                region,
+                reservationRate,
+                resourceType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSavingsProperties"/>. </summary>
@@ -319,7 +482,14 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             calculatedSavings ??= new List<ConsumptionCalculatedSavingsProperties>();
 
-            return new ConsumptionSavingsProperties(calculatedSavings?.ToList(), lookBackPeriod, recommendedQuantity, reservationOrderTerm, savingsType, unitOfMeasure);
+            return new ConsumptionSavingsProperties(
+                calculatedSavings?.ToList(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCalculatedSavingsProperties"/>. </summary>
@@ -333,7 +503,15 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionCalculatedSavingsProperties"/> instance for mocking. </returns>
         public static ConsumptionCalculatedSavingsProperties ConsumptionCalculatedSavingsProperties(float? onDemandCost = null, float? overageCost = null, float? quantity = null, float? reservationCost = null, float? totalReservationCost = null, float? reservedUnitCount = null, float? savings = null)
         {
-            return new ConsumptionCalculatedSavingsProperties(onDemandCost, overageCost, quantity, reservationCost, totalReservationCost, reservedUnitCount, savings);
+            return new ConsumptionCalculatedSavingsProperties(
+                onDemandCost,
+                overageCost,
+                quantity,
+                reservationCost,
+                totalReservationCost,
+                reservedUnitCount,
+                savings,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionUsageProperties"/>. </summary>
@@ -347,7 +525,13 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             usageData ??= new List<float>();
 
-            return new ConsumptionUsageProperties(firstConsumptionDate, lastConsumptionDate, lookBackUnitType, usageData?.ToList(), usageGrain);
+            return new ConsumptionUsageProperties(
+                firstConsumptionDate,
+                lastConsumptionDate,
+                lookBackUnitType,
+                usageData?.ToList(),
+                usageGrain,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationTransaction"/>. </summary>
@@ -384,7 +568,36 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new List<string>();
 
-            return new ConsumptionReservationTransaction(id, name, resourceType, systemData, transactOn, reservationOrderId, description, eventType, quantity, amount, currency, reservationOrderName, purchasingEnrollment, purchasingSubscriptionGuid, purchasingSubscriptionName, armSkuName, term, region, accountName, accountOwnerEmail, departmentName, costCenter, currentEnrollment, billingFrequency, billingMonth, monetaryCommitment, overage, tags?.ToList());
+            return new ConsumptionReservationTransaction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                transactOn,
+                reservationOrderId,
+                description,
+                eventType,
+                quantity,
+                amount,
+                currency,
+                reservationOrderName,
+                purchasingEnrollment,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                armSkuName,
+                term,
+                region,
+                accountName,
+                accountOwnerEmail,
+                departmentName,
+                costCenter,
+                currentEnrollment,
+                billingFrequency,
+                billingMonth,
+                monetaryCommitment,
+                overage,
+                tags?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationTransaction"/>. </summary>
@@ -418,7 +631,33 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new List<string>();
 
-            return new ConsumptionModernReservationTransaction(id, name, resourceType, systemData, amount, armSkuName, billingFrequency, billingProfileId, billingProfileName, currency, description, transactOn, eventType, invoice, invoiceId, invoiceSectionId, invoiceSectionName, purchasingSubscriptionGuid, purchasingSubscriptionName, quantity, region, reservationOrderId, reservationOrderName, term, tags?.ToList());
+            return new ConsumptionModernReservationTransaction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                amount,
+                armSkuName,
+                billingFrequency,
+                billingProfileId,
+                billingProfileName,
+                currency,
+                description,
+                transactOn,
+                eventType,
+                invoice,
+                invoiceId,
+                invoiceSectionId,
+                invoiceSectionName,
+                purchasingSubscriptionGuid,
+                purchasingSubscriptionName,
+                quantity,
+                region,
+                reservationOrderId,
+                reservationOrderName,
+                term,
+                tags?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PriceSheetResult"/>. </summary>
@@ -437,7 +676,17 @@ namespace Azure.ResourceManager.Consumption.Models
             pricesheets ??= new List<PriceSheetProperties>();
             tags ??= new Dictionary<string, string>();
 
-            return new PriceSheetResult(id, name, resourceType, systemData, pricesheets?.ToList(), nextLink, download, etag, tags);
+            return new PriceSheetResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                pricesheets?.ToList(),
+                nextLink,
+                download,
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PriceSheetProperties"/>. </summary>
@@ -453,7 +702,17 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.PriceSheetProperties"/> instance for mocking. </returns>
         public static PriceSheetProperties PriceSheetProperties(ResourceIdentifier billingPeriodId = null, Guid? meterId = null, ConsumptionMeterDetails meterDetails = null, string unitOfMeasure = null, decimal? includedQuantity = null, string partNumber = null, decimal? unitPrice = null, string currencyCode = null, string offerId = null)
         {
-            return new PriceSheetProperties(billingPeriodId, meterId, meterDetails, unitOfMeasure, includedQuantity, partNumber, unitPrice, currencyCode, offerId);
+            return new PriceSheetProperties(
+                billingPeriodId,
+                meterId,
+                meterDetails,
+                unitOfMeasure,
+                includedQuantity,
+                partNumber,
+                unitPrice,
+                currencyCode,
+                offerId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetails"/>. </summary>
@@ -469,7 +728,17 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionMeterDetails"/> instance for mocking. </returns>
         public static ConsumptionMeterDetails ConsumptionMeterDetails(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unit = null, string meterLocation = null, decimal? totalIncludedQuantity = null, decimal? pretaxStandardRate = null, string serviceName = null, string serviceTier = null)
         {
-            return new ConsumptionMeterDetails(meterName, meterCategory, meterSubCategory, unit, meterLocation, totalIncludedQuantity, pretaxStandardRate, serviceName, serviceTier);
+            return new ConsumptionMeterDetails(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unit,
+                meterLocation,
+                totalIncludedQuantity,
+                pretaxStandardRate,
+                serviceName,
+                serviceTier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAggregatedCostResult"/>. </summary>
@@ -497,7 +766,24 @@ namespace Azure.ResourceManager.Consumption.Models
             excludedSubscriptions ??= new List<string>();
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionAggregatedCostResult(id, name, resourceType, systemData, billingPeriodId, usageStartOn, usageEndOn, azureCharges, marketplaceCharges, chargesBilledSeparately, currency, children?.ToList(), includedSubscriptions?.ToList(), excludedSubscriptions?.ToList(), etag, tags);
+            return new ConsumptionAggregatedCostResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                billingPeriodId,
+                usageStartOn,
+                usageEndOn,
+                azureCharges,
+                marketplaceCharges,
+                chargesBilledSeparately,
+                currency,
+                children?.ToList(),
+                includedSubscriptions?.ToList(),
+                excludedSubscriptions?.ToList(),
+                etag,
+                tags,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionEventSummary"/>. </summary>
@@ -531,7 +817,35 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionEventSummary"/> instance for mocking. </returns>
         public static ConsumptionEventSummary ConsumptionEventSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? transactOn = null, string description = null, ConsumptionAmount newCredit = null, ConsumptionAmount adjustments = null, ConsumptionAmount creditExpired = null, ConsumptionAmount charges = null, ConsumptionAmount closedBalance = null, ConsumptionEventType? eventType = null, string invoiceNumber = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier lotId = null, string lotSource = null, ConsumptionAmount canceledCredit = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = null, ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = null, ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = null, ConsumptionAmountWithExchangeRate chargesInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ETag? etag = null)
         {
-            return new ConsumptionEventSummary(id, name, resourceType, systemData, transactOn, description, newCredit, adjustments, creditExpired, charges, closedBalance, eventType, invoiceNumber, billingProfileId, billingProfileDisplayName, lotId, lotSource, canceledCredit, creditCurrency, billingCurrency, reseller, creditExpiredInBillingCurrency, newCreditInBillingCurrency, adjustmentsInBillingCurrency, chargesInBillingCurrency, closedBalanceInBillingCurrency, etag);
+            return new ConsumptionEventSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                transactOn,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmount"/>. </summary>
@@ -540,7 +854,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionAmount"/> instance for mocking. </returns>
         public static ConsumptionAmount ConsumptionAmount(string currency = null, decimal? value = null)
         {
-            return new ConsumptionAmount(currency, value);
+            return new ConsumptionAmount(currency, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReseller"/>. </summary>
@@ -549,7 +863,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionReseller"/> instance for mocking. </returns>
         public static ConsumptionReseller ConsumptionReseller(ResourceIdentifier resellerId = null, string resellerDescription = null)
         {
-            return new ConsumptionReseller(resellerId, resellerDescription);
+            return new ConsumptionReseller(resellerId, resellerDescription, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionAmountWithExchangeRate"/>. </summary>
@@ -560,7 +874,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionAmountWithExchangeRate"/> instance for mocking. </returns>
         public static ConsumptionAmountWithExchangeRate ConsumptionAmountWithExchangeRate(string currency = null, decimal? value = null, decimal? exchangeRate = null, int? exchangeRateMonth = null)
         {
-            return new ConsumptionAmountWithExchangeRate(currency, value, exchangeRate, exchangeRateMonth);
+            return new ConsumptionAmountWithExchangeRate(currency, value, serializedAdditionalRawData: null, exchangeRate, exchangeRateMonth);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLotSummary"/>. </summary>
@@ -585,7 +899,26 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
         public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ConsumptionAmount originalAmount = null, ConsumptionAmount closedBalance = null, ConsumptionLotSource? source = null, DateTimeOffset? startOn = null, DateTimeOffset? expireOn = null, string poNumber = null, DateTimeOffset? purchasedOn = null, ConsumptionLotStatus? status = null, string creditCurrency = null, string billingCurrency = null, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = null, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = null, ConsumptionReseller reseller = null, ETag? etag = null)
         {
-            return new ConsumptionLotSummary(id, name, resourceType, systemData, originalAmount, closedBalance, source, startOn, expireOn, poNumber, purchasedOn, status, creditCurrency, billingCurrency, originalAmountInBillingCurrency, closedBalanceInBillingCurrency, reseller, etag);
+            return new ConsumptionLotSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                originalAmount,
+                closedBalance,
+                source,
+                startOn,
+                expireOn,
+                poNumber,
+                purchasedOn,
+                status,
+                creditCurrency,
+                billingCurrency,
+                originalAmountInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                reseller,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionCreditSummary"/>. </summary>
@@ -604,7 +937,20 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionCreditSummary"/> instance for mocking. </returns>
         public static ConsumptionCreditSummary ConsumptionCreditSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CreditBalanceSummary balanceSummary = null, ConsumptionAmount pendingCreditAdjustments = null, ConsumptionAmount expiredCredit = null, ConsumptionAmount pendingEligibleCharges = null, string creditCurrency = null, string billingCurrency = null, ConsumptionReseller reseller = null, ETag? etag = null)
         {
-            return new ConsumptionCreditSummary(id, name, resourceType, systemData, balanceSummary, pendingCreditAdjustments, expiredCredit, pendingEligibleCharges, creditCurrency, billingCurrency, reseller, etag);
+            return new ConsumptionCreditSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                balanceSummary,
+                pendingCreditAdjustments,
+                expiredCredit,
+                pendingEligibleCharges,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                etag,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreditBalanceSummary"/>. </summary>
@@ -614,7 +960,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.CreditBalanceSummary"/> instance for mocking. </returns>
         public static CreditBalanceSummary CreditBalanceSummary(ConsumptionAmount estimatedBalance = null, ConsumptionAmount currentBalance = null, ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = null)
         {
-            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency);
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyUsageDetail"/>. </summary>
@@ -675,7 +1021,61 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionLegacyUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Legacy, etag, tags, billingAccountId, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, accountOwnerId, accountName, subscriptionId, subscriptionName, @on, product, partNumber, meterId, meterDetails, quantity, effectivePrice, cost, unitPrice, billingCurrency, resourceLocation, consumedService, resourceId, resourceName, serviceInfo1, serviceInfo2, additionalInfo, invoiceSection, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, offerId, isAzureCreditEligible, term, publisherName, publisherType, planName, chargeType, frequency, payGPrice, benefitId, benefitName, pricingModel);
+            return new ConsumptionLegacyUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                UsageDetailsKind.Legacy,
+                etag,
+                tags,
+                serializedAdditionalRawData: null,
+                billingAccountId,
+                billingAccountName,
+                billingPeriodStartOn,
+                billingPeriodEndOn,
+                billingProfileId,
+                billingProfileName,
+                accountOwnerId,
+                accountName,
+                subscriptionId,
+                subscriptionName,
+                @on,
+                product,
+                partNumber,
+                meterId,
+                meterDetails,
+                quantity,
+                effectivePrice,
+                cost,
+                unitPrice,
+                billingCurrency,
+                resourceLocation,
+                consumedService,
+                resourceId,
+                resourceName,
+                serviceInfo1,
+                serviceInfo2,
+                additionalInfo,
+                invoiceSection,
+                costCenter,
+                resourceGroup,
+                reservationId,
+                reservationName,
+                productOrderId,
+                productOrderName,
+                offerId,
+                isAzureCreditEligible,
+                term,
+                publisherName,
+                publisherType,
+                planName,
+                chargeType,
+                frequency,
+                payGPrice,
+                benefitId,
+                benefitName,
+                pricingModel);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionMeterDetailsInfo"/>. </summary>
@@ -687,7 +1087,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionMeterDetailsInfo"/> instance for mocking. </returns>
         public static ConsumptionMeterDetailsInfo ConsumptionMeterDetailsInfo(string meterName = null, string meterCategory = null, string meterSubCategory = null, string unitOfMeasure = null, string serviceFamily = null)
         {
-            return new ConsumptionMeterDetailsInfo(meterName, meterCategory, meterSubCategory, unitOfMeasure, serviceFamily);
+            return new ConsumptionMeterDetailsInfo(
+                meterName,
+                meterCategory,
+                meterSubCategory,
+                unitOfMeasure,
+                serviceFamily,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernUsageDetail"/>. </summary>
@@ -774,7 +1180,87 @@ namespace Azure.ResourceManager.Consumption.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConsumptionModernUsageDetail(id, name, resourceType, systemData, UsageDetailsKind.Modern, etag, tags, billingAccountId, effectivePrice, pricingModel, billingAccountName, billingPeriodStartOn, billingPeriodEndOn, billingProfileId, billingProfileName, subscriptionGuid, subscriptionName, @on, product, meterId, meterName, meterRegion, meterCategory, meterSubCategory, serviceFamily, quantity, unitOfMeasure, instanceName, costInUSD, unitPrice, billingCurrencyCode, resourceLocation, consumedService, serviceInfo1, serviceInfo2, additionalInfo, invoiceSectionId, invoiceSectionName, costCenter, resourceGroup, reservationId, reservationName, productOrderId, productOrderName, isAzureCreditEligible, term, publisherName, publisherType, chargeType, frequency, costInBillingCurrency, costInPricingCurrency, exchangeRate, exchangeRateOn, invoiceId, previousInvoiceId, pricingCurrencyCode, productIdentifier, resourceLocationNormalized, servicePeriodStartOn, servicePeriodEndOn, customerTenantId, customerName, partnerTenantId, partnerName, resellerMpnId, resellerName, publisherId, marketPrice, exchangeRatePricingToBilling, paygCostInBillingCurrency, paygCostInUSD, partnerEarnedCreditRate, partnerEarnedCreditApplied, payGPrice, benefitId, benefitName, provider, costAllocationRuleName);
+            return new ConsumptionModernUsageDetail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                UsageDetailsKind.Modern,
+                etag,
+                tags,
+                serializedAdditionalRawData: null,
+                billingAccountId,
+                effectivePrice,
+                pricingModel,
+                billingAccountName,
+                billingPeriodStartOn,
+                billingPeriodEndOn,
+                billingProfileId,
+                billingProfileName,
+                subscriptionGuid,
+                subscriptionName,
+                @on,
+                product,
+                meterId,
+                meterName,
+                meterRegion,
+                meterCategory,
+                meterSubCategory,
+                serviceFamily,
+                quantity,
+                unitOfMeasure,
+                instanceName,
+                costInUSD,
+                unitPrice,
+                billingCurrencyCode,
+                resourceLocation,
+                consumedService,
+                serviceInfo1,
+                serviceInfo2,
+                additionalInfo,
+                invoiceSectionId,
+                invoiceSectionName,
+                costCenter,
+                resourceGroup,
+                reservationId,
+                reservationName,
+                productOrderId,
+                productOrderName,
+                isAzureCreditEligible,
+                term,
+                publisherName,
+                publisherType,
+                chargeType,
+                frequency,
+                costInBillingCurrency,
+                costInPricingCurrency,
+                exchangeRate,
+                exchangeRateOn,
+                invoiceId,
+                previousInvoiceId,
+                pricingCurrencyCode,
+                productIdentifier,
+                resourceLocationNormalized,
+                servicePeriodStartOn,
+                servicePeriodEndOn,
+                customerTenantId,
+                customerName,
+                partnerTenantId,
+                partnerName,
+                resellerMpnId,
+                resellerName,
+                publisherId,
+                marketPrice,
+                exchangeRatePricingToBilling,
+                paygCostInBillingCurrency,
+                paygCostInUSD,
+                partnerEarnedCreditRate,
+                partnerEarnedCreditApplied,
+                payGPrice,
+                benefitId,
+                benefitName,
+                provider,
+                costAllocationRuleName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionSkuProperty"/>. </summary>
@@ -783,7 +1269,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionSkuProperty"/> instance for mocking. </returns>
         public static ConsumptionSkuProperty ConsumptionSkuProperty(string name = null, string value = null)
         {
-            return new ConsumptionSkuProperty(name, value);
+            return new ConsumptionSkuProperty(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernReservationRecommendation"/>. </summary>
@@ -817,7 +1303,33 @@ namespace Azure.ResourceManager.Consumption.Models
             tags ??= new Dictionary<string, string>();
             skuProperties ??= new List<ConsumptionSkuProperty>();
 
-            return new ConsumptionModernReservationRecommendation(id, name, resourceType, systemData, ReservationRecommendationKind.Modern, etag, tags, location, sku, locationPropertiesLocation, lookBackPeriod, instanceFlexibilityRatio, instanceFlexibilityGroup, normalizedSize, recommendedQuantityNormalized, meterId, term, costWithNoReservedInstances, recommendedQuantity, totalCostWithReservedInstances, netSavings, firstUsageOn, scope, skuProperties?.ToList(), skuName);
+            return new ConsumptionModernReservationRecommendation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ReservationRecommendationKind.Modern,
+                etag,
+                tags,
+                location,
+                sku,
+                serializedAdditionalRawData: null,
+                locationPropertiesLocation,
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageOn,
+                scope,
+                skuProperties?.ToList(),
+                skuName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionLegacyChargeSummary"/>. </summary>
@@ -836,7 +1348,21 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionLegacyChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionLegacyChargeSummary ConsumptionLegacyChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, decimal? azureCharges = null, decimal? chargesBilledSeparately = null, decimal? marketplaceCharges = null, string currency = null)
         {
-            return new ConsumptionLegacyChargeSummary(id, name, resourceType, systemData, ChargeSummaryKind.Legacy, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, currency);
+            return new ConsumptionLegacyChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ChargeSummaryKind.Legacy,
+                etag,
+                serializedAdditionalRawData: null,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                currency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConsumptionModernChargeSummary"/>. </summary>
@@ -859,7 +1385,25 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <returns> A new <see cref="Models.ConsumptionModernChargeSummary"/> instance for mocking. </returns>
         public static ConsumptionModernChargeSummary ConsumptionModernChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ETag? etag = null, string billingPeriodId = null, string usageStart = null, string usageEnd = null, ConsumptionAmount azureCharges = null, ConsumptionAmount chargesBilledSeparately = null, ConsumptionAmount marketplaceCharges = null, string billingAccountId = null, string billingProfileId = null, string invoiceSectionId = null, string customerId = null, bool? isInvoiced = null)
         {
-            return new ConsumptionModernChargeSummary(id, name, resourceType, systemData, ChargeSummaryKind.Modern, etag, billingPeriodId, usageStart, usageEnd, azureCharges, chargesBilledSeparately, marketplaceCharges, billingAccountId, billingProfileId, invoiceSectionId, customerId, isInvoiced);
+            return new ConsumptionModernChargeSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ChargeSummaryKind.Modern,
+                etag,
+                serializedAdditionalRawData: null,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                azureCharges,
+                chargesBilledSeparately,
+                marketplaceCharges,
+                billingAccountId,
+                billingProfileId,
+                invoiceSectionId,
+                customerId,
+                isInvoiced);
         }
     }
 }

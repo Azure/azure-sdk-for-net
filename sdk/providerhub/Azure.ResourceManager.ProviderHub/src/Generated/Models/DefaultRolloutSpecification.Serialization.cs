@@ -5,52 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable
+    public partial class DefaultRolloutSpecification : IUtf8JsonSerializable, IJsonModel<DefaultRolloutSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefaultRolloutSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Canary))
             {
                 writer.WritePropertyName("canary"u8);
-                writer.WriteObjectValue(Canary);
+                writer.WriteObjectValue<CanaryTrafficRegionRolloutConfiguration>(Canary, options);
             }
             if (Optional.IsDefined(LowTraffic))
             {
                 writer.WritePropertyName("lowTraffic"u8);
-                writer.WriteObjectValue(LowTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(LowTraffic, options);
             }
             if (Optional.IsDefined(MediumTraffic))
             {
                 writer.WritePropertyName("mediumTraffic"u8);
-                writer.WriteObjectValue(MediumTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(MediumTraffic, options);
             }
             if (Optional.IsDefined(HighTraffic))
             {
                 writer.WritePropertyName("highTraffic"u8);
-                writer.WriteObjectValue(HighTraffic);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(HighTraffic, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupOne))
             {
                 writer.WritePropertyName("restOfTheWorldGroupOne"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupOne);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(RestOfTheWorldGroupOne, options);
             }
             if (Optional.IsDefined(RestOfTheWorldGroupTwo))
             {
                 writer.WritePropertyName("restOfTheWorldGroupTwo"u8);
-                writer.WriteObjectValue(RestOfTheWorldGroupTwo);
+                writer.WriteObjectValue<TrafficRegionRolloutConfiguration>(RestOfTheWorldGroupTwo, options);
             }
             if (Optional.IsDefined(ProviderRegistration))
             {
                 writer.WritePropertyName("providerRegistration"u8);
-                writer.WriteObjectValue(ProviderRegistration);
+                writer.WriteObjectValue<ProviderRegistrationData>(ProviderRegistration, options);
             }
             if (Optional.IsCollectionDefined(ResourceTypeRegistrations))
             {
@@ -58,27 +67,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypeRegistrations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceTypeRegistrationData>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element)
+        DefaultRolloutSpecification IJsonModel<DefaultRolloutSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefaultRolloutSpecification(document.RootElement, options);
+        }
+
+        internal static DefaultRolloutSpecification DeserializeDefaultRolloutSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CanaryTrafficRegionRolloutConfiguration> canary = default;
-            Optional<TrafficRegionRolloutConfiguration> lowTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> mediumTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> highTraffic = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupOne = default;
-            Optional<TrafficRegionRolloutConfiguration> restOfTheWorldGroupTwo = default;
-            Optional<ProviderRegistrationData> providerRegistration = default;
-            Optional<IList<ResourceTypeRegistrationData>> resourceTypeRegistrations = default;
+            CanaryTrafficRegionRolloutConfiguration canary = default;
+            TrafficRegionRolloutConfiguration lowTraffic = default;
+            TrafficRegionRolloutConfiguration mediumTraffic = default;
+            TrafficRegionRolloutConfiguration highTraffic = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupOne = default;
+            TrafficRegionRolloutConfiguration restOfTheWorldGroupTwo = default;
+            ProviderRegistrationData providerRegistration = default;
+            IList<ResourceTypeRegistrationData> resourceTypeRegistrations = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("canary"u8))
@@ -87,7 +127,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value);
+                    canary = CanaryTrafficRegionRolloutConfiguration.DeserializeCanaryTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lowTraffic"u8))
@@ -96,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    lowTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mediumTraffic"u8))
@@ -105,7 +145,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    mediumTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("highTraffic"u8))
@@ -114,7 +154,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    highTraffic = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupOne"u8))
@@ -123,7 +163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupOne = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("restOfTheWorldGroupTwo"u8))
@@ -132,7 +172,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value);
+                    restOfTheWorldGroupTwo = TrafficRegionRolloutConfiguration.DeserializeTrafficRegionRolloutConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerRegistration"u8))
@@ -141,7 +181,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value);
+                    providerRegistration = ProviderRegistrationData.DeserializeProviderRegistrationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceTypeRegistrations"u8))
@@ -153,13 +193,58 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceTypeRegistrationData> array = new List<ResourceTypeRegistrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item));
+                        array.Add(ResourceTypeRegistrationData.DeserializeResourceTypeRegistrationData(item, options));
                     }
                     resourceTypeRegistrations = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefaultRolloutSpecification(canary.Value, lowTraffic.Value, mediumTraffic.Value, highTraffic.Value, restOfTheWorldGroupOne.Value, restOfTheWorldGroupTwo.Value, providerRegistration.Value, Optional.ToList(resourceTypeRegistrations));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefaultRolloutSpecification(
+                canary,
+                lowTraffic,
+                mediumTraffic,
+                highTraffic,
+                restOfTheWorldGroupOne,
+                restOfTheWorldGroupTwo,
+                providerRegistration,
+                resourceTypeRegistrations ?? new ChangeTrackingList<ResourceTypeRegistrationData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefaultRolloutSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefaultRolloutSpecification IPersistableModel<DefaultRolloutSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefaultRolloutSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutSpecification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefaultRolloutSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

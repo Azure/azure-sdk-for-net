@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="frontendIPConfiguration"> Frontend IP configuration resource of an application gateway. </param>
         /// <param name="frontendPort"> Frontend port resource of an application gateway. </param>
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="sslProfile"> SSL profile resource of the application gateway. </param>
         /// <param name="provisioningState"> The provisioning state of the listener resource. </param>
         /// <param name="hostNames"> List of Server Name Indications(SNI) for TLS Multi-site Listener that allows special wildcard characters as well. </param>
-        internal ApplicationGatewayListener(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, WritableSubResource sslCertificate, WritableSubResource sslProfile, NetworkProvisioningState? provisioningState, IList<string> hostNames) : base(id, name, resourceType)
+        internal ApplicationGatewayListener(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource frontendIPConfiguration, WritableSubResource frontendPort, ApplicationGatewayProtocol? protocol, WritableSubResource sslCertificate, WritableSubResource sslProfile, NetworkProvisioningState? provisioningState, IList<string> hostNames) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             FrontendIPConfiguration = frontendIPConfiguration;

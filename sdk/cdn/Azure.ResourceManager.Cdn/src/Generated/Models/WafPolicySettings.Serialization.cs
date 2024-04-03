@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class WafPolicySettings : IUtf8JsonSerializable
+    public partial class WafPolicySettings : IUtf8JsonSerializable, IJsonModel<WafPolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WafPolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WafPolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EnabledState))
             {
@@ -62,20 +72,51 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("defaultCustomBlockResponseBody");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element)
+        WafPolicySettings IJsonModel<WafPolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WafPolicySettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWafPolicySettings(document.RootElement, options);
+        }
+
+        internal static WafPolicySettings DeserializeWafPolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PolicyEnabledState> enabledState = default;
-            Optional<PolicyMode> mode = default;
-            Optional<Uri> defaultRedirectUri = default;
-            Optional<PolicySettingsDefaultCustomBlockResponseStatusCode?> defaultCustomBlockResponseStatusCode = default;
-            Optional<BinaryData> defaultCustomBlockResponseBody = default;
+            PolicyEnabledState? enabledState = default;
+            PolicyMode? mode = default;
+            Uri defaultRedirectUri = default;
+            PolicySettingsDefaultCustomBlockResponseStatusCode? defaultCustomBlockResponseStatusCode = default;
+            BinaryData defaultCustomBlockResponseBody = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabledState"u8))
@@ -125,8 +166,50 @@ namespace Azure.ResourceManager.Cdn.Models
                     defaultCustomBlockResponseBody = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WafPolicySettings(Optional.ToNullable(enabledState), Optional.ToNullable(mode), defaultRedirectUri.Value, Optional.ToNullable(defaultCustomBlockResponseStatusCode), defaultCustomBlockResponseBody.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WafPolicySettings(
+                enabledState,
+                mode,
+                defaultRedirectUri,
+                defaultCustomBlockResponseStatusCode,
+                defaultCustomBlockResponseBody,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WafPolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WafPolicySettings IPersistableModel<WafPolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WafPolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWafPolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WafPolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WafPolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

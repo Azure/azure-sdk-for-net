@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ScalingRule : IUtf8JsonSerializable
+    public partial class ScalingRule : IUtf8JsonSerializable, IJsonModel<ScalingRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalingRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingRule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
@@ -22,12 +33,41 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("scalingMetric"u8);
             writer.WriteStringValue(ScalingMetric);
             writer.WritePropertyName("comparisonRule"u8);
-            writer.WriteObjectValue(ComparisonRule);
+            writer.WriteObjectValue<HDInsightComparisonRule>(ComparisonRule, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalingRule DeserializeScalingRule(JsonElement element)
+        ScalingRule IJsonModel<ScalingRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingRule(document.RootElement, options);
+        }
+
+        internal static ScalingRule DeserializeScalingRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -36,6 +76,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             int evaluationCount = default;
             string scalingMetric = default;
             HDInsightComparisonRule comparisonRule = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"u8))
@@ -55,11 +97,47 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 if (property.NameEquals("comparisonRule"u8))
                 {
-                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value);
+                    comparisonRule = HDInsightComparisonRule.DeserializeHDInsightComparisonRule(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingRule(actionType, evaluationCount, scalingMetric, comparisonRule);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScalingRule(actionType, evaluationCount, scalingMetric, comparisonRule, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalingRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScalingRule IPersistableModel<ScalingRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalingRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalingRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

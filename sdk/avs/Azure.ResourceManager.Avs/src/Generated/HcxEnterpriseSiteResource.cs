@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Avs
 {
@@ -91,7 +89,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +129,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Get an HCX Enterprise Site by name in a private cloud
+        /// Get an HCX on-premises key by name in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,7 +169,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an HCX Enterprise Site in a private cloud
+        /// Delete HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -164,6 +178,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -189,7 +211,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Delete an HCX Enterprise Site in a private cloud
+        /// Delete HCX on-premises key in a private cloud
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -198,6 +220,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +253,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -232,6 +262,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +299,7 @@ namespace Azure.ResourceManager.Avs
         }
 
         /// <summary>
-        /// Create or update an HCX Enterprise Site in a private cloud
+        /// Create or update an activation key for on-premises HCX site
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -270,6 +308,14 @@ namespace Azure.ResourceManager.Avs
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HcxEnterpriseSites_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HcxEnterpriseSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

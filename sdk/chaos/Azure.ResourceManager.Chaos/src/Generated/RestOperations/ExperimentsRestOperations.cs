@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Chaos.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Chaos
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-04-15-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -238,8 +238,7 @@ namespace Azure.ResourceManager.Chaos
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                case 204:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -263,8 +262,7 @@ namespace Azure.ResourceManager.Chaos
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                case 204:
+                case 202:
                     return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
@@ -298,7 +296,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentData>> GetAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ChaosExperimentData>> GetAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -310,13 +308,13 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentData value = default;
+                        ChaosExperimentData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
+                        value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -329,7 +327,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentData> Get(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response<ChaosExperimentData> Get(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -341,19 +339,19 @@ namespace Azure.ResourceManager.Chaos
             {
                 case 200:
                     {
-                        ExperimentData value = default;
+                        ChaosExperimentData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
+                        value = ChaosExperimentData.DeserializeChaosExperimentData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -371,7 +369,7 @@ namespace Azure.ResourceManager.Chaos
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ChaosExperimentData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -385,7 +383,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentData>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -397,12 +395,8 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ExperimentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 201:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -416,7 +410,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentData> CreateOrUpdate(string subscriptionId, string resourceGroupName, string experimentName, ExperimentData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -428,18 +422,14 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 200:
-                    {
-                        ExperimentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 201:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -457,7 +447,7 @@ namespace Azure.ResourceManager.Chaos
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<ChaosExperimentPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -471,7 +461,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentData>> UpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -482,13 +472,8 @@ namespace Azure.ResourceManager.Chaos
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        ExperimentData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -502,7 +487,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="patch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentData> Update(string subscriptionId, string resourceGroupName, string experimentName, ExperimentPatch patch, CancellationToken cancellationToken = default)
+        public Response Update(string subscriptionId, string resourceGroupName, string experimentName, ChaosExperimentPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -513,13 +498,8 @@ namespace Azure.ResourceManager.Chaos
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
-                case 200:
-                    {
-                        ExperimentData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentData.DeserializeExperimentData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                case 202:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -553,7 +533,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentCancelOperationResult>> CancelAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response> CancelAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -564,12 +544,7 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ExperimentCancelOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentCancelOperationResult.DeserializeExperimentCancelOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -582,7 +557,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentCancelOperationResult> Cancel(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response Cancel(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -593,12 +568,7 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ExperimentCancelOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentCancelOperationResult.DeserializeExperimentCancelOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -632,7 +602,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentStartOperationResult>> StartAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -643,12 +613,7 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ExperimentStartOperationResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentStartOperationResult.DeserializeExperimentStartOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -661,7 +626,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentStartOperationResult> Start(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response Start(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -672,18 +637,13 @@ namespace Azure.ResourceManager.Chaos
             switch (message.Response.Status)
             {
                 case 202:
-                    {
-                        ExperimentStartOperationResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentStartOperationResult.DeserializeExperimentStartOperationResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListAllStatusesRequest(string subscriptionId, string resourceGroupName, string experimentName)
+        internal HttpMessage CreateListAllExecutionsRequest(string subscriptionId, string resourceGroupName, string experimentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -696,7 +656,7 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendPath("/statuses", false);
+            uri.AppendPath("/executions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -704,28 +664,28 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        /// <summary> Get a list of statuses of a Experiment resource. </summary>
+        /// <summary> Get a list of executions of an Experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentStatusListResult>> ListAllStatusesAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExperimentExecutionListResult>> ListAllExecutionsAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var message = CreateListAllStatusesRequest(subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateListAllExecutionsRequest(subscriptionId, resourceGroupName, experimentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusListResult value = default;
+                        ExperimentExecutionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentStatusListResult.DeserializeExperimentStatusListResult(document.RootElement);
+                        value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -733,28 +693,28 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Get a list of statuses of a Experiment resource. </summary>
+        /// <summary> Get a list of executions of an Experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentStatusListResult> ListAllStatuses(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response<ExperimentExecutionListResult> ListAllExecutions(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var message = CreateListAllStatusesRequest(subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateListAllExecutionsRequest(subscriptionId, resourceGroupName, experimentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusListResult value = default;
+                        ExperimentExecutionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentStatusListResult.DeserializeExperimentStatusListResult(document.RootElement);
+                        value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -762,7 +722,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        internal HttpMessage CreateGetStatusRequest(string subscriptionId, string resourceGroupName, string experimentName, string statusId)
+        internal HttpMessage CreateGetExecutionRequest(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -775,8 +735,8 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendPath("/statuses/", false);
-            uri.AppendPath(statusId, true);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(executionId, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -784,77 +744,77 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        /// <summary> Get a status of a Experiment resource. </summary>
+        /// <summary> Get an execution of an Experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="statusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentStatusData>> GetStatusAsync(string subscriptionId, string resourceGroupName, string experimentName, string statusId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ChaosExperimentExecutionData>> GetExecutionAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNullOrEmpty(statusId, nameof(statusId));
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, experimentName, statusId);
+            using var message = CreateGetExecutionRequest(subscriptionId, resourceGroupName, experimentName, executionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusData value = default;
+                        ChaosExperimentExecutionData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentStatusData.DeserializeExperimentStatusData(document.RootElement);
+                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentStatusData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a status of a Experiment resource. </summary>
+        /// <summary> Get an execution of an Experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="statusId"> GUID that represents a Experiment status. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="statusId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="statusId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentStatusData> GetStatus(string subscriptionId, string resourceGroupName, string experimentName, string statusId, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ChaosExperimentExecutionData> GetExecution(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNullOrEmpty(statusId, nameof(statusId));
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var message = CreateGetStatusRequest(subscriptionId, resourceGroupName, experimentName, statusId);
+            using var message = CreateGetExecutionRequest(subscriptionId, resourceGroupName, experimentName, executionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusData value = default;
+                        ChaosExperimentExecutionData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentStatusData.DeserializeExperimentStatusData(document.RootElement);
+                        value = ChaosExperimentExecutionData.DeserializeChaosExperimentExecutionData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExperimentStatusData)null, message.Response);
+                    return Response.FromValue((ChaosExperimentExecutionData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListExecutionDetailsRequest(string subscriptionId, string resourceGroupName, string experimentName)
+        internal HttpMessage CreateExecutionDetailsRequest(string subscriptionId, string resourceGroupName, string experimentName, string executionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Method = RequestMethod.Get;
+            request.Method = RequestMethod.Post;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
@@ -863,7 +823,9 @@ namespace Azure.ResourceManager.Chaos
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
             uri.AppendPath(experimentName, true);
-            uri.AppendPath("/executionDetails", false);
+            uri.AppendPath("/executions/", false);
+            uri.AppendPath(executionId, true);
+            uri.AppendPath("/getExecutionDetails", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -871,28 +833,30 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        /// <summary> Get a list of execution details of a Experiment resource. </summary>
+        /// <summary> Execution details of an experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentExecutionDetailsListResult>> ListExecutionDetailsAsync(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<ExperimentExecutionDetails>> ExecutionDetailsAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var message = CreateListExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName, executionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentExecutionDetailsListResult value = default;
+                        ExperimentExecutionDetails value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentExecutionDetailsListResult.DeserializeExperimentExecutionDetailsListResult(document.RootElement);
+                        value = ExperimentExecutionDetails.DeserializeExperimentExecutionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -900,118 +864,32 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Get a list of execution details of a Experiment resource. </summary>
+        /// <summary> Execution details of an experiment resource. </summary>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
         /// <param name="experimentName"> String that represents a Experiment resource name. </param>
+        /// <param name="executionId"> GUID that represents a Experiment execution detail. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentExecutionDetailsListResult> ListExecutionDetails(string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionId"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<ExperimentExecutionDetails> ExecutionDetails(string subscriptionId, string resourceGroupName, string experimentName, string executionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
+            Argument.AssertNotNullOrEmpty(executionId, nameof(executionId));
 
-            using var message = CreateListExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName, executionId);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentExecutionDetailsListResult value = default;
+                        ExperimentExecutionDetails value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentExecutionDetailsListResult.DeserializeExperimentExecutionDetailsListResult(document.RootElement);
+                        value = ExperimentExecutionDetails.DeserializeExperimentExecutionDetails(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetExecutionDetailsRequest(string subscriptionId, string resourceGroupName, string experimentName, string executionDetailsId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Chaos/experiments/", false);
-            uri.AppendPath(experimentName, true);
-            uri.AppendPath("/executionDetails/", false);
-            uri.AppendPath(executionDetailsId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get an execution detail of a Experiment resource. </summary>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionDetailsId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentExecutionDetailData>> GetExecutionDetailsAsync(string subscriptionId, string resourceGroupName, string experimentName, string executionDetailsId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNullOrEmpty(executionDetailsId, nameof(executionDetailsId));
-
-            using var message = CreateGetExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName, executionDetailsId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExperimentExecutionDetailData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ExperimentExecutionDetailData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get an execution detail of a Experiment resource. </summary>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="executionDetailsId"> GUID that represents a Experiment execution detail. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionDetailsId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="experimentName"/> or <paramref name="executionDetailsId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentExecutionDetailData> GetExecutionDetails(string subscriptionId, string resourceGroupName, string experimentName, string executionDetailsId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-            Argument.AssertNotNullOrEmpty(executionDetailsId, nameof(executionDetailsId));
-
-            using var message = CreateGetExecutionDetailsRequest(subscriptionId, resourceGroupName, experimentName, executionDetailsId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExperimentExecutionDetailData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentExecutionDetailData.DeserializeExperimentExecutionDetailData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ExperimentExecutionDetailData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -1165,7 +1043,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        internal HttpMessage CreateListAllStatusesNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string experimentName)
+        internal HttpMessage CreateListAllExecutionsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string experimentName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1179,7 +1057,7 @@ namespace Azure.ResourceManager.Chaos
             return message;
         }
 
-        /// <summary> Get a list of statuses of a Experiment resource. </summary>
+        /// <summary> Get a list of executions of an Experiment resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
@@ -1187,22 +1065,22 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentStatusListResult>> ListAllStatusesNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public async Task<Response<ExperimentExecutionListResult>> ListAllExecutionsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var message = CreateListAllStatusesNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateListAllExecutionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusListResult value = default;
+                        ExperimentExecutionListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentStatusListResult.DeserializeExperimentStatusListResult(document.RootElement);
+                        value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1210,7 +1088,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        /// <summary> Get a list of statuses of a Experiment resource. </summary>
+        /// <summary> Get a list of executions of an Experiment resource. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
         /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
@@ -1218,98 +1096,22 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentStatusListResult> ListAllStatusesNextPage(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
+        public Response<ExperimentExecutionListResult> ListAllExecutionsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
 
-            using var message = CreateListAllStatusesNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
+            using var message = CreateListAllExecutionsNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        ExperimentStatusListResult value = default;
+                        ExperimentExecutionListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentStatusListResult.DeserializeExperimentStatusListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListExecutionDetailsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string experimentName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Get a list of execution details of a Experiment resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExperimentExecutionDetailsListResult>> ListExecutionDetailsNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateListExecutionDetailsNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExperimentExecutionDetailsListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExperimentExecutionDetailsListResult.DeserializeExperimentExecutionDetailsListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a list of execution details of a Experiment resource. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> GUID that represents an Azure subscription ID. </param>
-        /// <param name="resourceGroupName"> String that represents an Azure resource group. </param>
-        /// <param name="experimentName"> String that represents a Experiment resource name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="experimentName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExperimentExecutionDetailsListResult> ListExecutionDetailsNextPage(string nextLink, string subscriptionId, string resourceGroupName, string experimentName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(experimentName, nameof(experimentName));
-
-            using var message = CreateListExecutionDetailsNextPageRequest(nextLink, subscriptionId, resourceGroupName, experimentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ExperimentExecutionDetailsListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExperimentExecutionDetailsListResult.DeserializeExperimentExecutionDetailsListResult(document.RootElement);
+                        value = ExperimentExecutionListResult.DeserializeExperimentExecutionListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

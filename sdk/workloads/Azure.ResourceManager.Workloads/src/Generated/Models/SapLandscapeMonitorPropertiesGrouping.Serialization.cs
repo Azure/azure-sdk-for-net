@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class SapLandscapeMonitorPropertiesGrouping : IUtf8JsonSerializable
+    public partial class SapLandscapeMonitorPropertiesGrouping : IUtf8JsonSerializable, IJsonModel<SapLandscapeMonitorPropertiesGrouping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapLandscapeMonitorPropertiesGrouping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SapLandscapeMonitorPropertiesGrouping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Landscape))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in Landscape)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -32,21 +42,52 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in SapApplication)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorSidMapping>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SapLandscapeMonitorPropertiesGrouping DeserializeSapLandscapeMonitorPropertiesGrouping(JsonElement element)
+        SapLandscapeMonitorPropertiesGrouping IJsonModel<SapLandscapeMonitorPropertiesGrouping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSapLandscapeMonitorPropertiesGrouping(document.RootElement, options);
+        }
+
+        internal static SapLandscapeMonitorPropertiesGrouping DeserializeSapLandscapeMonitorPropertiesGrouping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<SapLandscapeMonitorSidMapping>> landscape = default;
-            Optional<IList<SapLandscapeMonitorSidMapping>> sapApplication = default;
+            IList<SapLandscapeMonitorSidMapping> landscape = default;
+            IList<SapLandscapeMonitorSidMapping> sapApplication = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("landscape"u8))
@@ -58,7 +99,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     landscape = array;
                     continue;
@@ -72,13 +113,49 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<SapLandscapeMonitorSidMapping> array = new List<SapLandscapeMonitorSidMapping>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item));
+                        array.Add(SapLandscapeMonitorSidMapping.DeserializeSapLandscapeMonitorSidMapping(item, options));
                     }
                     sapApplication = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SapLandscapeMonitorPropertiesGrouping(Optional.ToList(landscape), Optional.ToList(sapApplication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SapLandscapeMonitorPropertiesGrouping(landscape ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>(), sapApplication ?? new ChangeTrackingList<SapLandscapeMonitorSidMapping>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SapLandscapeMonitorPropertiesGrouping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SapLandscapeMonitorPropertiesGrouping IPersistableModel<SapLandscapeMonitorPropertiesGrouping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorPropertiesGrouping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSapLandscapeMonitorPropertiesGrouping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorPropertiesGrouping)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SapLandscapeMonitorPropertiesGrouping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

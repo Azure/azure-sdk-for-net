@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,38 +62,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
-                writer.WriteObjectValue(AuthenticationType);
+                writer.WriteObjectValue<object>(AuthenticationType);
             }
             if (Optional.IsDefined(AccessKeyId))
             {
                 writer.WritePropertyName("accessKeyId"u8);
-                writer.WriteObjectValue(AccessKeyId);
+                writer.WriteObjectValue<object>(AccessKeyId);
             }
             if (Optional.IsDefined(SecretAccessKey))
             {
                 writer.WritePropertyName("secretAccessKey"u8);
-                writer.WriteObjectValue(SecretAccessKey);
+                writer.WriteObjectValue<SecretBase>(SecretAccessKey);
             }
             if (Optional.IsDefined(ServiceUrl))
             {
                 writer.WritePropertyName("serviceUrl"u8);
-                writer.WriteObjectValue(ServiceUrl);
+                writer.WriteObjectValue<object>(ServiceUrl);
             }
             if (Optional.IsDefined(SessionToken))
             {
                 writer.WritePropertyName("sessionToken"u8);
-                writer.WriteObjectValue(SessionToken);
+                writer.WriteObjectValue<SecretBase>(SessionToken);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -105,16 +105,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
-            Optional<object> authenticationType = default;
-            Optional<object> accessKeyId = default;
-            Optional<SecretBase> secretAccessKey = default;
-            Optional<object> serviceUrl = default;
-            Optional<SecretBase> sessionToken = default;
-            Optional<object> encryptedCredential = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
+            object authenticationType = default;
+            object accessKeyId = default;
+            SecretBase secretAccessKey = default;
+            object serviceUrl = default;
+            SecretBase sessionToken = default;
+            object encryptedCredential = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -242,14 +242,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3LinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, authenticationType.Value, accessKeyId.Value, secretAccessKey.Value, serviceUrl.Value, sessionToken.Value, encryptedCredential.Value);
+            return new AmazonS3LinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                authenticationType,
+                accessKeyId,
+                secretAccessKey,
+                serviceUrl,
+                sessionToken,
+                encryptedCredential);
         }
 
         internal partial class AmazonS3LinkedServiceConverter : JsonConverter<AmazonS3LinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AmazonS3LinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AmazonS3LinkedService>(model);
             }
             public override AmazonS3LinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

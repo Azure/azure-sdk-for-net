@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using Azure.Core;
@@ -67,8 +65,8 @@ namespace Azure.AI.OpenAI.Tests
             {
                 return InstrumentClient(
                     new OpenAIClient(
-                        s_deploymentEntriesByScenario[scenario].AzureResourceUri,
-                        s_deploymentEntriesByScenario[scenario].AzureResourceKey,
+                        DeploymentEntriesByScenario[scenario].AzureResourceUri,
+                        DeploymentEntriesByScenario[scenario].AzureResourceKey,
                         GetInstrumentedClientOptions(azureServiceVersionOverride)));
             }
         }
@@ -84,7 +82,7 @@ namespace Azure.AI.OpenAI.Tests
             }
             return InstrumentClient(
                 new OpenAIClient(
-                    s_deploymentEntriesByScenario[scenario].AzureResourceUri,
+                    DeploymentEntriesByScenario[scenario].AzureResourceUri,
                     TestEnvironment.Credential,
                     GetInstrumentedClientOptions(azureServiceVersionOverride)));
         }
@@ -126,15 +124,17 @@ namespace Azure.AI.OpenAI.Tests
             if (Mode == RecordedTestMode.Playback)
             {
                 // For playback, setup details are populated directly from the test recordings
-                foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenario)
+                foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenarioForPlayback)
                 {
                     if (!string.IsNullOrEmpty(pair.Value.AzureDeploymentName))
                     {
                         string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
-                        string recordedRawUri = Recording.GetVariable(variableName, null)
-                            ?? throw new TestRecordingMismatchException($"Missing expected recording variable name: {variableName}");
-                        pair.Value.AzureResourceUri = new Uri(recordedRawUri);
-                        pair.Value.AzureResourceKey = new AzureKeyCredential("placeholder");
+                        string variableValue = Recording.GetVariable(variableName, null);
+                        if (!string.IsNullOrEmpty(variableValue))
+                        {
+                            pair.Value.AzureResourceUri = new Uri(variableValue);
+                            pair.Value.AzureResourceKey = new AzureKeyCredential("placeholder");
+                        }
                     }
                 }
             }
@@ -164,11 +164,11 @@ namespace Azure.AI.OpenAI.Tests
                         ResourceGroupResource resourceGroup = GetEnsureTestResourceGroup(subscription);
 
                         // Next, for each distinct resource name we care about, fetch the resource and store it in all deployment entries that need it
-                        IEnumerable<IGrouping<string, ModelDeploymentEntry>> deploymentEntriesByAzureResourceName = s_deploymentEntriesByScenario.Values
+                        IEnumerable<IGrouping<string, ModelDeploymentEntry>> deploymentEntriesByAzureResourceName = s_deploymentEntriesByScenarioForRecording.Values
                             .Where(entry => !string.IsNullOrEmpty(entry.AzureDeploymentName))
                             .GroupBy(entry => entry.AzureResourceName);
 
-                        var uniqueDeploymentEntries = s_deploymentEntriesByScenario.Values
+                        var uniqueDeploymentEntries = s_deploymentEntriesByScenarioForRecording.Values
                             .Where(entry => !string.IsNullOrEmpty(entry.AzureDeploymentName))
                             .Select(entry => new KeyValuePair<ModelDeploymentEntry, string>(entry, entry.AzureDeploymentName))
                             .Distinct()
@@ -214,19 +214,6 @@ namespace Azure.AI.OpenAI.Tests
                         }
 
                         s_deploymentComplete = true;
-                    }
-                }
-            }
-
-            if (Recording.Mode == RecordedTestMode.Record)
-            {
-                foreach (KeyValuePair<Scenario, ModelDeploymentEntry> pair in s_deploymentEntriesByScenario)
-                {
-                    Uri azureResourceUri = pair.Value.AzureResourceUri;
-                    if (azureResourceUri != null)
-                    {
-                        string variableName = GetAzureEndpointVariableNameForScenario(pair.Key);
-                        Recording.SetVariable(variableName, azureResourceUri.ToString());
                     }
                 }
             }
@@ -311,6 +298,7 @@ namespace Azure.AI.OpenAI.Tests
             OpenAIClientOptions uninstrumentedClientOptions = azureServiceVersionOverride.HasValue
                 ? new OpenAIClientOptions(azureServiceVersionOverride.Value)
                 : new OpenAIClientOptions();
+            uninstrumentedClientOptions.Diagnostics.IsLoggingContentEnabled = true;
             return InstrumentClientOptions(uninstrumentedClientOptions);
         }
 
@@ -327,96 +315,114 @@ namespace Azure.AI.OpenAI.Tests
             public bool IsLegacyAzureModel { get; set; } = false;
         }
 
-        private static readonly Dictionary<Scenario, ModelDeploymentEntry> s_deploymentEntriesByScenario = new()
+        private static readonly Dictionary<Scenario, ModelDeploymentEntry> s_deploymentEntriesByScenarioForPlayback = CreateDeploymentEntriesByScenario();
+        private static readonly Dictionary<Scenario, ModelDeploymentEntry> s_deploymentEntriesByScenarioForRecording = CreateDeploymentEntriesByScenario();
+
+        protected Dictionary<Scenario, ModelDeploymentEntry> DeploymentEntriesByScenario => Mode == RecordedTestMode.Playback
+            ? s_deploymentEntriesByScenarioForPlayback
+            : s_deploymentEntriesByScenarioForRecording;
+
+        protected static Dictionary<Scenario, ModelDeploymentEntry> CreateDeploymentEntriesByScenario()
         {
-            /// <summary>
-            /// Model/deployment information to use for /completions that include old features like echo
-            /// and logprobs. Azure OpenAI added new Completions support for gpt-35-turbo but did not carry
-            /// these forward.
-            /// </summary>
-            [Scenario.LegacyCompletions] = new()
+            return new()
             {
-                AzureResourceName = "openai-sdk-test-automation-account-eastus",
-                AzureResourceLocation = AzureLocation.EastUS,
-                AzureDeploymentName = "text-davinci-002",
-                AzureModelName = "text-davinci-002",
-                NonAzureModelName = "text-davinci-002",
-                EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
-                IsLegacyAzureModel = true,
-            },
+                /// <summary>
+                /// Model/deployment information to use for /completions that include old features like echo
+                /// and logprobs. Azure OpenAI added new Completions support for gpt-35-turbo but did not carry
+                /// these forward.
+                /// </summary>
+                [Scenario.LegacyCompletions] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                    AzureResourceLocation = AzureLocation.EastUS,
+                    AzureDeploymentName = "gpt-35-turbo-instruct",
+                    AzureModelName = "gpt-35-turbo-instruct",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
+                    EnvironmentVariableName = "COMPLETIONS_DEPLOYMENT_NAME",
+                    IsLegacyAzureModel = true,
+                },
 
-            /// <summary>
-            /// Model/deployment information to use for latest /completions features. Azure OpenAI has a different
-            /// capability set exposed via gpt-35-turbo than legacy models like text-davinci-002.
-            /// </summary>
-            [Scenario.Completions] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-eastus",
-                AzureResourceLocation = AzureLocation.EastUS,
-                AzureDeploymentName = "gpt-35-turbo",
-                AzureModelName = "gpt-35-turbo",
-                NonAzureModelName = "text-davinci-002",
-            },
+                /// <summary>
+                /// Model/deployment information to use for latest /completions features. Azure OpenAI has a different
+                /// capability set exposed via gpt-35-turbo than legacy models like text-davinci-002.
+                /// </summary>
+                [Scenario.Completions] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                    AzureResourceLocation = AzureLocation.EastUS,
+                    AzureDeploymentName = "gpt-35-turbo-instruct",
+                    AzureModelName = "gpt-35-turbo-instruct",
+                    NonAzureModelName = "gpt-3.5-turbo-instruct",
+                },
 
-            [Scenario.ChatCompletions] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-eastus",
-                AzureResourceLocation = AzureLocation.EastUS,
-                AzureDeploymentName = "gpt-4-0613",
-                AzureModelName = "gpt-35-turbo",
-                NonAzureModelName = "gpt-3.5-turbo",
-                EnvironmentVariableName = "CHAT_COMPLETIONS_DEPLOYMENT_NAME",
-            },
+                [Scenario.ChatCompletions] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                    AzureResourceLocation = AzureLocation.EastUS,
+                    AzureDeploymentName = "gpt-4-0613",
+                    AzureModelName = "gpt-35-turbo",
+                    NonAzureModelName = "gpt-3.5-turbo",
+                    EnvironmentVariableName = "CHAT_COMPLETIONS_DEPLOYMENT_NAME",
+                },
 
-            [Scenario.Embeddings] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-eastus",
-                AzureResourceLocation = AzureLocation.EastUS,
-                AzureDeploymentName = "text-embedding-ada-002",
-                AzureModelName = "text-embedding-ada-002",
-                NonAzureModelName = "text-embedding-ada-002",
-                EnvironmentVariableName = "EMBEDDINGS_DEPLOYMENT_NAME",
-            },
+                [Scenario.Embeddings] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                    AzureResourceLocation = AzureLocation.EastUS,
+                    AzureDeploymentName = "text-embedding-3-small",
+                    AzureModelName = "text-embedding-3-small",
+                    NonAzureModelName = "text-embedding-3-small",
+                    EnvironmentVariableName = "EMBEDDINGS_DEPLOYMENT_NAME",
+                },
 
-            [Scenario.AudioTranscription] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-northcentralus",
-                AzureResourceLocation = AzureLocation.NorthCentralUS,
-                AzureDeploymentName = "whisper",
-                NonAzureModelName = "whisper-1",
-            },
+                [Scenario.AudioTranscription] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-northcentralus",
+                    AzureResourceLocation = AzureLocation.NorthCentralUS,
+                    AzureDeploymentName = "whisper",
+                    NonAzureModelName = "whisper-1",
+                },
 
-            [Scenario.ImageGenerations] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
-                AzureResourceLocation = AzureLocation.SwedenCentral,
-                AzureDeploymentName = "dall-e-3",
-                NonAzureModelName = "dall-e-3",
-            },
+                [Scenario.SpeechGeneration] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
+                    AzureResourceLocation = AzureLocation.SwedenCentral,
+                    AzureDeploymentName = "tts",
+                    NonAzureModelName = "tts-1",
+                },
 
-            [Scenario.LegacyImageGenerations] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-eastus",
-                AzureDeploymentName = "None!",
-                AzureResourceLocation = AzureLocation.EastUS,
-            },
+                [Scenario.ImageGenerations] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
+                    AzureResourceLocation = AzureLocation.SwedenCentral,
+                    AzureDeploymentName = "dall-e-3",
+                    NonAzureModelName = "dall-e-3",
+                },
 
-            [Scenario.ChatTools] = new()
-            {
-                AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
-                AzureResourceLocation = AzureLocation.SwedenCentral,
-                AzureDeploymentName = "gpt-4-1106-preview",
-                NonAzureModelName = "gpt-3.5-turbo-1106",
-            },
+                [Scenario.LegacyImageGenerations] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-eastus",
+                    AzureDeploymentName = "None!",
+                    AzureResourceLocation = AzureLocation.EastUS,
+                },
 
-            [Scenario.VisionPreview] = new()
-            {
-                AzureResourceName = string.Empty,
-                AzureResourceLocation = AzureLocation.SwedenCentral,
-                AzureDeploymentName = string.Empty,
-                NonAzureModelName = "gpt-4-vision-preview",
-            }
-        };
+                [Scenario.ChatTools] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
+                    AzureResourceLocation = AzureLocation.SwedenCentral,
+                    AzureDeploymentName = "gpt-4-1106-preview",
+                    NonAzureModelName = "gpt-3.5-turbo-1106",
+                },
+
+                [Scenario.VisionPreview] = new()
+                {
+                    AzureResourceName = "openai-sdk-test-automation-account-sweden-central",
+                    AzureResourceLocation = AzureLocation.SwedenCentral,
+                    AzureDeploymentName = "gpt-4-vision-preview",
+                    NonAzureModelName = "gpt-4-vision-preview",
+                }
+            };
+        }
 
         public enum Service
         {
@@ -438,6 +444,7 @@ namespace Azure.AI.OpenAI.Tests
             TestAuthType authenticationType = TestAuthType.ApiKey,
             OpenAIClientOptions.ServiceVersion? azureServiceVersionOverride = null)
         {
+            RecordScenarioVariables(serviceTarget, scenario);
             return (serviceTarget, authenticationType) switch
             {
                 (Service.Azure, TestAuthType.ApiKey) => GetAzureClientWithKey(scenario, azureServiceVersionOverride),
@@ -494,15 +501,17 @@ namespace Azure.AI.OpenAI.Tests
             ChatCompletions,
             Embeddings,
             AudioTranscription,
+            SpeechGeneration,
             ImageGenerations,
             LegacyImageGenerations,
             ChatTools,
             VisionPreview,
         }
 
-        protected static string GetDeploymentOrModelName(Service serviceTarget, Scenario defaultScenario)
+        protected string GetDeploymentOrModelName(Service serviceTarget, Scenario scenario)
         {
-            ModelDeploymentEntry entry = s_deploymentEntriesByScenario[defaultScenario];
+            RecordScenarioVariables(serviceTarget, scenario);
+            ModelDeploymentEntry entry = DeploymentEntriesByScenario[scenario];
             return (serviceTarget == Service.Azure) ? entry.AzureDeploymentName : entry.NonAzureModelName;
         }
 
@@ -566,6 +575,15 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.That(contentFilterResults.Hate, Is.Not.Null);
                 Assert.That(contentFilterResults.Hate.Filtered, Is.False);
                 Assert.That(contentFilterResults.Hate.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
+            }
+        }
+
+        private void RecordScenarioVariables(Service service, Scenario scenario)
+        {
+            if (service == Service.Azure && Mode == RecordedTestMode.Record)
+            {
+                string variableName = GetAzureEndpointVariableNameForScenario(scenario);
+                Recording.SetVariable(variableName, DeploymentEntriesByScenario[scenario].AzureResourceUri.AbsoluteUri);
             }
         }
     }

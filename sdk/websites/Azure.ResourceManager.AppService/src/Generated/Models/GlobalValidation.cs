@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
     public partial class GlobalValidation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GlobalValidation"/>. </summary>
         public GlobalValidation()
         {
@@ -28,25 +60,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// action is set to "RedirectToLoginPage".
         /// </param>
         /// <param name="excludedPaths"> The paths for which unauthenticated flow would not be redirected to the login page. </param>
-        internal GlobalValidation(bool? isAuthenticationRequired, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GlobalValidation(bool? isAuthenticationRequired, UnauthenticatedClientActionV2? unauthenticatedClientAction, string redirectToProvider, IList<string> excludedPaths, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IsAuthenticationRequired = isAuthenticationRequired;
             UnauthenticatedClientAction = unauthenticatedClientAction;
             RedirectToProvider = redirectToProvider;
             ExcludedPaths = excludedPaths;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("requireAuthentication")]
         public bool? IsAuthenticationRequired { get; set; }
         /// <summary> The action to take when an unauthenticated client attempts to access the app. </summary>
+        [WirePath("unauthenticatedClientAction")]
         public UnauthenticatedClientActionV2? UnauthenticatedClientAction { get; set; }
         /// <summary>
         /// The default authentication provider to use when multiple providers are configured.
         /// This setting is only needed if multiple providers are configured and the unauthenticated client
         /// action is set to "RedirectToLoginPage".
         /// </summary>
+        [WirePath("redirectToProvider")]
         public string RedirectToProvider { get; set; }
         /// <summary> The paths for which unauthenticated flow would not be redirected to the login page. </summary>
+        [WirePath("excludedPaths")]
         public IList<string> ExcludedPaths { get; }
     }
 }

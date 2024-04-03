@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
     /// <summary> Image repository credential. </summary>
     public partial class ImageRepositoryCredential
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredential"/>. </summary>
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
@@ -30,11 +62,18 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="imageRepositoryUri"> Image repository url (e.g.: mcr.microsoft.com). </param>
         /// <param name="userName"> Repository user name. </param>
         /// <param name="password"> Repository user password. </param>
-        internal ImageRepositoryCredential(Uri imageRepositoryUri, string userName, AsymmetricEncryptedSecret password)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ImageRepositoryCredential(Uri imageRepositoryUri, string userName, AsymmetricEncryptedSecret password, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ImageRepositoryUri = imageRepositoryUri;
             UserName = userName;
             Password = password;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ImageRepositoryCredential"/> for deserialization. </summary>
+        internal ImageRepositoryCredential()
+        {
         }
 
         /// <summary> Image repository url (e.g.: mcr.microsoft.com). </summary>

@@ -30,7 +30,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -86,7 +86,13 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new FileSink(type, name, inputs, baseDirectoryPath, fileNamePattern, maximumSizeMiB);
+            return new FileSink(
+                type,
+                name,
+                inputs,
+                baseDirectoryPath,
+                fileNamePattern,
+                maximumSizeMiB);
         }
     }
 }

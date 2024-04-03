@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DnsResolver;
 
 namespace Azure.ResourceManager.DnsResolver.Mocking
 {
@@ -57,6 +54,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -79,6 +84,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResolvers_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsResolverResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -103,6 +116,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of results to return. If not specified, returns up to 100 results. </param>
@@ -125,6 +146,14 @@ namespace Azure.ResourceManager.DnsResolver.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsForwardingRulesets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsForwardingRulesetResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

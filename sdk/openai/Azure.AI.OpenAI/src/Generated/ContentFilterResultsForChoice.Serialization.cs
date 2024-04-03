@@ -5,30 +5,126 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ContentFilterResultsForChoice
+    public partial class ContentFilterResultsForChoice : IUtf8JsonSerializable, IJsonModel<ContentFilterResultsForChoice>
     {
-        internal static ContentFilterResultsForChoice DeserializeContentFilterResultsForChoice(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentFilterResultsForChoice>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContentFilterResultsForChoice>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Sexual))
+            {
+                writer.WritePropertyName("sexual"u8);
+                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
+            }
+            if (Optional.IsDefined(Violence))
+            {
+                writer.WritePropertyName("violence"u8);
+                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
+            }
+            if (Optional.IsDefined(Hate))
+            {
+                writer.WritePropertyName("hate"u8);
+                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
+            }
+            if (Optional.IsDefined(SelfHarm))
+            {
+                writer.WritePropertyName("self_harm"u8);
+                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
+            }
+            if (Optional.IsDefined(Profanity))
+            {
+                writer.WritePropertyName("profanity"u8);
+                writer.WriteObjectValue<ContentFilterDetectionResult>(Profanity, options);
+            }
+            if (Optional.IsCollectionDefined(CustomBlocklists))
+            {
+                writer.WritePropertyName("custom_blocklists"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomBlocklists)
+                {
+                    writer.WriteObjectValue<ContentFilterBlocklistIdResult>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                JsonSerializer.Serialize(writer, Error);
+            }
+            if (Optional.IsDefined(ProtectedMaterialText))
+            {
+                writer.WritePropertyName("protected_material_text"u8);
+                writer.WriteObjectValue<ContentFilterDetectionResult>(ProtectedMaterialText, options);
+            }
+            if (Optional.IsDefined(ProtectedMaterialCode))
+            {
+                writer.WritePropertyName("protected_material_code"u8);
+                writer.WriteObjectValue<ContentFilterCitedDetectionResult>(ProtectedMaterialCode, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContentFilterResultsForChoice IJsonModel<ContentFilterResultsForChoice>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentFilterResultsForChoice(document.RootElement, options);
+        }
+
+        internal static ContentFilterResultsForChoice DeserializeContentFilterResultsForChoice(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContentFilterResult> sexual = default;
-            Optional<ContentFilterResult> violence = default;
-            Optional<ContentFilterResult> hate = default;
-            Optional<ContentFilterResult> selfHarm = default;
-            Optional<ContentFilterDetectionResult> profanity = default;
-            Optional<IReadOnlyList<ContentFilterBlocklistIdResult>> customBlocklists = default;
-            Optional<ResponseError> error = default;
-            Optional<ContentFilterDetectionResult> protectedMaterialText = default;
-            Optional<ContentFilterCitedDetectionResult> protectedMaterialCode = default;
+            ContentFilterResult sexual = default;
+            ContentFilterResult violence = default;
+            ContentFilterResult hate = default;
+            ContentFilterResult selfHarm = default;
+            ContentFilterDetectionResult profanity = default;
+            IReadOnlyList<ContentFilterBlocklistIdResult> customBlocklists = default;
+            ResponseError error = default;
+            ContentFilterDetectionResult protectedMaterialText = default;
+            ContentFilterCitedDetectionResult protectedMaterialCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sexual"u8))
@@ -37,7 +133,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    sexual = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("violence"u8))
@@ -46,7 +142,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    violence = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hate"u8))
@@ -55,7 +151,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    hate = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("self_harm"u8))
@@ -64,7 +160,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value);
+                    selfHarm = ContentFilterResult.DeserializeContentFilterResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("profanity"u8))
@@ -73,7 +169,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    profanity = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("custom_blocklists"u8))
@@ -85,7 +181,7 @@ namespace Azure.AI.OpenAI
                     List<ContentFilterBlocklistIdResult> array = new List<ContentFilterBlocklistIdResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item));
+                        array.Add(ContentFilterBlocklistIdResult.DeserializeContentFilterBlocklistIdResult(item, options));
                     }
                     customBlocklists = array;
                     continue;
@@ -105,7 +201,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    protectedMaterialText = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value);
+                    protectedMaterialText = ContentFilterDetectionResult.DeserializeContentFilterDetectionResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protected_material_code"u8))
@@ -114,12 +210,58 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    protectedMaterialCode = ContentFilterCitedDetectionResult.DeserializeContentFilterCitedDetectionResult(property.Value);
+                    protectedMaterialCode = ContentFilterCitedDetectionResult.DeserializeContentFilterCitedDetectionResult(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentFilterResultsForChoice(sexual.Value, violence.Value, hate.Value, selfHarm.Value, profanity.Value, Optional.ToList(customBlocklists), error.Value, protectedMaterialText.Value, protectedMaterialCode.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentFilterResultsForChoice(
+                sexual,
+                violence,
+                hate,
+                selfHarm,
+                profanity,
+                customBlocklists ?? new ChangeTrackingList<ContentFilterBlocklistIdResult>(),
+                error,
+                protectedMaterialText,
+                protectedMaterialCode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContentFilterResultsForChoice>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentFilterResultsForChoice IPersistableModel<ContentFilterResultsForChoice>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentFilterResultsForChoice(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentFilterResultsForChoice>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -127,6 +269,14 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeContentFilterResultsForChoice(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ContentFilterResultsForChoice>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class JobQueueSettings : IUtf8JsonSerializable
+    public partial class JobQueueSettings : IUtf8JsonSerializable, IJsonModel<JobQueueSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JobQueueSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JobQueueSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobQueueSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobQueueSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(JobTier))
             {
@@ -32,17 +43,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("priority");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JobQueueSettings DeserializeJobQueueSettings(JsonElement element)
+        JobQueueSettings IJsonModel<JobQueueSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JobQueueSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JobQueueSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJobQueueSettings(document.RootElement, options);
+        }
+
+        internal static JobQueueSettings DeserializeJobQueueSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<JobTier> jobTier = default;
-            Optional<int?> priority = default;
+            JobTier? jobTier = default;
+            int? priority = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobTier"u8))
@@ -64,8 +106,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     priority = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JobQueueSettings(Optional.ToNullable(jobTier), Optional.ToNullable(priority));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JobQueueSettings(jobTier, priority, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JobQueueSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobQueueSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JobQueueSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JobQueueSettings IPersistableModel<JobQueueSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JobQueueSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJobQueueSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JobQueueSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JobQueueSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

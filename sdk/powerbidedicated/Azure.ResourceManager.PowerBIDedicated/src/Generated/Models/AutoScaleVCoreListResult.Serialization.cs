@@ -5,21 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.PowerBIDedicated;
+using Azure.Core;
 
 namespace Azure.ResourceManager.PowerBIDedicated.Models
 {
-    internal partial class AutoScaleVCoreListResult
+    internal partial class AutoScaleVCoreListResult : IUtf8JsonSerializable, IJsonModel<AutoScaleVCoreListResult>
     {
-        internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoScaleVCoreListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoScaleVCoreListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<AutoScaleVCoreData>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutoScaleVCoreListResult IJsonModel<AutoScaleVCoreListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoScaleVCoreListResult(document.RootElement, options);
+        }
+
+        internal static AutoScaleVCoreListResult DeserializeAutoScaleVCoreListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<AutoScaleVCoreData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -27,13 +81,49 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                     List<AutoScaleVCoreData> array = new List<AutoScaleVCoreData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoScaleVCoreData.DeserializeAutoScaleVCoreData(item));
+                        array.Add(AutoScaleVCoreData.DeserializeAutoScaleVCoreData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoScaleVCoreListResult(value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutoScaleVCoreListResult(value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutoScaleVCoreListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoScaleVCoreListResult IPersistableModel<AutoScaleVCoreListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoScaleVCoreListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoScaleVCoreListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

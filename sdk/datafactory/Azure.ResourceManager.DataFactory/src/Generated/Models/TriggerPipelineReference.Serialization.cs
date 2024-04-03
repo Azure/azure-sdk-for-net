@@ -6,21 +6,30 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TriggerPipelineReference : IUtf8JsonSerializable
+    public partial class TriggerPipelineReference : IUtf8JsonSerializable, IJsonModel<TriggerPipelineReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TriggerPipelineReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TriggerPipelineReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TriggerPipelineReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TriggerPipelineReference)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue(PipelineReference);
+                writer.WriteObjectValue<DataFactoryPipelineReference>(PipelineReference, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -45,17 +54,48 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TriggerPipelineReference DeserializeTriggerPipelineReference(JsonElement element)
+        TriggerPipelineReference IJsonModel<TriggerPipelineReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TriggerPipelineReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TriggerPipelineReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTriggerPipelineReference(document.RootElement, options);
+        }
+
+        internal static TriggerPipelineReference DeserializeTriggerPipelineReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryPipelineReference> pipelineReference = default;
-            Optional<IDictionary<string, BinaryData>> parameters = default;
+            DataFactoryPipelineReference pipelineReference = default;
+            IDictionary<string, BinaryData> parameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"u8))
@@ -64,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value);
+                    pipelineReference = DataFactoryPipelineReference.DeserializeDataFactoryPipelineReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("parameters"u8))
@@ -88,8 +128,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     parameters = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TriggerPipelineReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TriggerPipelineReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TriggerPipelineReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TriggerPipelineReference IPersistableModel<TriggerPipelineReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TriggerPipelineReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTriggerPipelineReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TriggerPipelineReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TriggerPipelineReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

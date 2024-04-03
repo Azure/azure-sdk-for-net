@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -22,7 +21,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WritePropertyName("sentiment"u8);
             writer.WriteStringValue(Sentiment);
             writer.WritePropertyName("confidenceScores"u8);
-            writer.WriteObjectValue(ConfidenceScores);
+            writer.WriteObjectValue<SentimentConfidenceScores>(ConfidenceScores);
             writer.WritePropertyName("offset"u8);
             writer.WriteNumberValue(Offset);
             writer.WritePropertyName("length"u8);
@@ -33,7 +32,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Targets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceTarget>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.AI.TextAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Assessments)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SentenceAssessment>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -57,8 +56,8 @@ namespace Azure.AI.TextAnalytics.Models
             SentimentConfidenceScores confidenceScores = default;
             int offset = default;
             int length = default;
-            Optional<IReadOnlyList<SentenceTarget>> targets = default;
-            Optional<IReadOnlyList<SentenceAssessment>> assessments = default;
+            IReadOnlyList<SentenceTarget> targets = default;
+            IReadOnlyList<SentenceAssessment> assessments = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -115,7 +114,14 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new SentenceSentimentInternal(text, sentiment, confidenceScores, offset, length, Optional.ToList(targets), Optional.ToList(assessments));
+            return new SentenceSentimentInternal(
+                text,
+                sentiment,
+                confidenceScores,
+                offset,
+                length,
+                targets ?? new ChangeTrackingList<SentenceTarget>(),
+                assessments ?? new ChangeTrackingList<SentenceAssessment>());
         }
     }
 }

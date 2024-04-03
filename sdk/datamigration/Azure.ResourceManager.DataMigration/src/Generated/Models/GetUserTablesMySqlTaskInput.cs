@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Input for the task that collects user tables for the given list of databases. </summary>
     public partial class GetUserTablesMySqlTaskInput
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
@@ -31,10 +62,17 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskInput"/>. </summary>
         /// <param name="connectionInfo"> Connection information for SQL Server. </param>
         /// <param name="selectedDatabases"> List of database names to collect tables for. </param>
-        internal GetUserTablesMySqlTaskInput(MySqlConnectionInfo connectionInfo, IList<string> selectedDatabases)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GetUserTablesMySqlTaskInput(MySqlConnectionInfo connectionInfo, IList<string> selectedDatabases, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ConnectionInfo = connectionInfo;
             SelectedDatabases = selectedDatabases;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="GetUserTablesMySqlTaskInput"/> for deserialization. </summary>
+        internal GetUserTablesMySqlTaskInput()
+        {
         }
 
         /// <summary> Connection information for SQL Server. </summary>

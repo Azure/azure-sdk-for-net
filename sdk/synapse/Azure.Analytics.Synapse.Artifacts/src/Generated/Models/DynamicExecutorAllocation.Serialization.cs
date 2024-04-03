@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
+            bool? enabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -45,14 +45,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DynamicExecutorAllocation(Optional.ToNullable(enabled));
+            return new DynamicExecutorAllocation(enabled);
         }
 
         internal partial class DynamicExecutorAllocationConverter : JsonConverter<DynamicExecutorAllocation>
         {
             public override void Write(Utf8JsonWriter writer, DynamicExecutorAllocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DynamicExecutorAllocation>(model);
             }
             public override DynamicExecutorAllocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -15,7 +15,7 @@ namespace Azure.ResourceManager.CostManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CostManagement.CostManagementAlertResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.CostManagementAlertResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CostManagementAlertData : Azure.ResourceManager.Models.ResourceData
+    public partial class CostManagementAlertData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>
     {
         public CostManagementAlertData() { }
         public System.DateTimeOffset? CloseOn { get { throw null; } set { } }
@@ -30,6 +30,11 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
         public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.CostManagementAlertData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.CostManagementAlertData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementAlertData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CostManagementAlertResource : Azure.ResourceManager.ArmResource
     {
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CostManagement.CostManagementExportResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.CostManagementExportResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class CostManagementExportData : Azure.ResourceManager.Models.ResourceData
+    public partial class CostManagementExportData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementExportData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementExportData>
     {
         public CostManagementExportData() { }
         public Azure.ResourceManager.CostManagement.Models.ExportDefinition Definition { get { throw null; } set { } }
@@ -71,6 +76,11 @@ namespace Azure.ResourceManager.CostManagement
         public bool? PartitionData { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ExportRun> RunHistoryValue { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ExportSchedule Schedule { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.CostManagementExportData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.CostManagementExportData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementExportData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CostManagementExportResource : Azure.ResourceManager.ArmResource
     {
@@ -165,7 +175,7 @@ namespace Azure.ResourceManager.CostManagement
         public static Azure.Response<Azure.ResourceManager.CostManagement.Models.QueryResult> UsageQuery(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.QueryDefinition queryDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.CostManagement.Models.QueryResult>> UsageQueryAsync(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier scope, Azure.ResourceManager.CostManagement.Models.QueryDefinition queryDefinition, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class CostManagementViewData : Azure.ResourceManager.Models.ResourceData
+    public partial class CostManagementViewData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementViewData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementViewData>
     {
         public CostManagementViewData() { }
         public Azure.ResourceManager.CostManagement.Models.AccumulatedType? Accumulated { get { throw null; } set { } }
@@ -185,6 +195,11 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.ResourceManager.CostManagement.Models.ReportTimeframeType? Timeframe { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod TimePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewReportType? TypePropertiesQueryType { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.CostManagementViewData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.CostManagementViewData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.CostManagementViewData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CostManagementViewsCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.CostManagement.CostManagementViewsResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.CostManagementViewsResource>, System.Collections.IEnumerable
     {
@@ -234,7 +249,7 @@ namespace Azure.ResourceManager.CostManagement
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.CostManagement.ScheduledActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.ScheduledActionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScheduledActionData : Azure.ResourceManager.Models.ResourceData
+    public partial class ScheduledActionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.ScheduledActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.ScheduledActionData>
     {
         public ScheduledActionData() { }
         public string DisplayName { get { throw null; } set { } }
@@ -247,6 +262,11 @@ namespace Azure.ResourceManager.CostManagement
         public Azure.Core.ResourceIdentifier Scope { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ScheduledActionStatus? Status { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier ViewId { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.ScheduledActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.ScheduledActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.ScheduledActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScheduledActionResource : Azure.ResourceManager.ArmResource
     {
@@ -452,14 +472,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.AlertCriterion left, Azure.ResourceManager.CostManagement.Models.AlertCriterion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AlertPropertiesDefinition
+    public partial class AlertPropertiesDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>
     {
         public AlertPropertiesDefinition() { }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertType? AlertType { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertCategory? Category { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.AlertCriterion? Criteria { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AlertPropertiesDetails
+    public partial class AlertPropertiesDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>
     {
         public AlertPropertiesDetails() { }
         public decimal? Amount { get { throw null; } set { } }
@@ -484,6 +509,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.AlertTimeGrainType? TimeGrainType { get { throw null; } set { } }
         public string TriggeredBy { get { throw null; } set { } }
         public string Unit { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AlertTimeGrainType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.AlertTimeGrainType>
@@ -508,7 +538,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.AlertTimeGrainType left, Azure.ResourceManager.CostManagement.Models.AlertTimeGrainType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AllSavingsBenefitDetails
+    public partial class AllSavingsBenefitDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>
     {
         public AllSavingsBenefitDetails() { }
         public decimal? AverageUtilizationPercentage { get { throw null; } }
@@ -520,12 +550,22 @@ namespace Azure.ResourceManager.CostManagement.Models
         public decimal? SavingsPercentage { get { throw null; } }
         public decimal? TotalCost { get { throw null; } }
         public decimal? WastageCost { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AllSavingsList
+    public partial class AllSavingsList : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>
     {
         internal AllSavingsList() { }
         public System.Uri NextLink { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails> Value { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.AllSavingsList System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.AllSavingsList System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AllSavingsList>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmCostManagementModelFactory
     {
@@ -533,9 +573,9 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.AllSavingsList AllSavingsList(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails> value = null, System.Uri nextLink = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties AsyncOperationStatusProperties(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? reportUri = default(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema?), Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? secondaryReportUri = default(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel BenefitRecommendationModel(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties properties = null, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? kind = default(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind?)) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties BenefitRecommendationProperties(System.DateTimeOffset? firstConsumptionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConsumptionOn = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.LookBackPeriod? lookBackPeriod = default(Azure.ResourceManager.CostManagement.Models.LookBackPeriod?), int? totalHours = default(int?), Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails usage = null, string armSkuName = null, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? term = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm?), Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? commitmentGranularity = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain?), string currencyCode = null, decimal? costWithoutBenefit = default(decimal?), Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails recommendationDetails = null, Azure.ResourceManager.CostManagement.Models.AllSavingsList allRecommendationDetails = null, string scope = "Unknown") { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties BenefitRecommendationProperties(System.DateTimeOffset? firstConsumptionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConsumptionOn = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.LookBackPeriod? lookBackPeriod = default(Azure.ResourceManager.CostManagement.Models.LookBackPeriod?), int? totalHours = default(int?), Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails usage = null, string armSkuName = null, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? term = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm?), Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? commitmentGranularity = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain?), string currencyCode = null, decimal? costWithoutBenefit = default(decimal?), Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails recommendationDetails = null, Azure.ResourceManager.CostManagement.Models.AllSavingsList allRecommendationDetails = null, string scope = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus BenefitUtilizationSummariesOperationStatus(Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent input = null, Azure.ResourceManager.CostManagement.Models.OperationStatusType? status = default(Azure.ResourceManager.CostManagement.Models.OperationStatusType?), Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary BenefitUtilizationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = "Unknown") { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary BenefitUtilizationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CommonExportProperties CommonExportProperties(Azure.ResourceManager.CostManagement.Models.ExportFormatType? format = default(Azure.ResourceManager.CostManagement.Models.ExportFormatType?), Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination deliveryInfoDestination = null, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ExportRun> runHistoryValue = null, bool? partitionData = default(bool?), System.DateTimeOffset? nextRunTimeEstimate = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.CostManagementAlertData CostManagementAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.AlertPropertiesDefinition definition = null, string description = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource? source = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource?), Azure.ResourceManager.CostManagement.Models.AlertPropertiesDetails details = null, string costEntityId = null, Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? status = default(Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? closeOn = default(System.DateTimeOffset?), System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string statusModificationUserName = null, System.DateTimeOffset? statusModifiedOn = default(System.DateTimeOffset?), Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.CostManagementDimension CostManagementDimension(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string description = null, bool? isFilterEnabled = default(bool?), bool? isGroupingEnabled = default(bool?), System.Collections.Generic.IEnumerable<string> data = null, int? total = default(int?), string category = null, System.DateTimeOffset? usageStart = default(System.DateTimeOffset?), System.DateTimeOffset? usageEnd = default(System.DateTimeOffset?), string nextLink = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
@@ -546,10 +586,12 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.ExportRun ExportRun(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType? executionType = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType?), Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? status = default(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus?), string submittedBy = null, System.DateTimeOffset? submittedOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? processingEndOn = default(System.DateTimeOffset?), string fileName = null, Azure.ResourceManager.CostManagement.Models.CommonExportProperties runSettings = null, Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails error = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails ExportRunErrorDetails(string code = null, string message = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastColumn ForecastColumn(string name = null, string forecastColumnType = null) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.ForecastDefinition ForecastDefinition(Azure.ResourceManager.CostManagement.Models.ForecastType forecastType = default(Azure.ResourceManager.CostManagement.Models.ForecastType), Azure.ResourceManager.CostManagement.Models.ForecastTimeframe timeframe = default(Azure.ResourceManager.CostManagement.Models.ForecastTimeframe), Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod timePeriod = null, Azure.ResourceManager.CostManagement.Models.ForecastDataset dataset = null, bool? includeActualCost = default(bool?), bool? includeFreshPartialCost = default(bool?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.ForecastResult ForecastResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.ForecastColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.BinaryData>> rows = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary IncludedQuantityUtilizationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? benefitType = default(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind?), System.DateTimeOffset? usageOn = default(System.DateTimeOffset?), decimal? utilizationPercentage = default(decimal?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.OperationStatus OperationStatus(Azure.ResourceManager.CostManagement.Models.OperationStatusType? status = default(Azure.ResourceManager.CostManagement.Models.OperationStatusType?), Azure.ResourceManager.CostManagement.Models.ReservationReportSchema? reportUri = default(Azure.ResourceManager.CostManagement.Models.ReservationReportSchema?), System.DateTimeOffset? validUntil = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.QueryColumn QueryColumn(string name = null, string queryColumnType = null) { throw null; }
+        public static Azure.ResourceManager.CostManagement.Models.QueryDefinition QueryDefinition(Azure.ResourceManager.CostManagement.Models.ExportType exportType = default(Azure.ResourceManager.CostManagement.Models.ExportType), Azure.ResourceManager.CostManagement.Models.TimeframeType timeframe = default(Azure.ResourceManager.CostManagement.Models.TimeframeType), Azure.ResourceManager.CostManagement.Models.QueryTimePeriod timePeriod = null, Azure.ResourceManager.CostManagement.Models.QueryDataset dataset = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.QueryResult QueryResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string nextLink = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CostManagement.Models.QueryColumn> columns = null, System.Collections.Generic.IEnumerable<System.Collections.Generic.IList<System.BinaryData>> rows = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string sku = null, Azure.ETag? eTag = default(Azure.ETag?), System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails RecommendationUsageDetails(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? usageGrain = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain?), System.Collections.Generic.IEnumerable<decimal> charges = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary SavingsPlanUtilizationSummary(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string armSkuName = null, string benefitId = null, string benefitOrderId = null, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? benefitType = default(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind?), System.DateTimeOffset? usageOn = default(System.DateTimeOffset?), decimal? avgUtilizationPercentage = default(decimal?), decimal? minUtilizationPercentage = default(decimal?), decimal? maxUtilizationPercentage = default(decimal?)) { throw null; }
@@ -557,18 +599,28 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties SharedScopeBenefitRecommendationProperties(System.DateTimeOffset? firstConsumptionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConsumptionOn = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.LookBackPeriod? lookBackPeriod = default(Azure.ResourceManager.CostManagement.Models.LookBackPeriod?), int? totalHours = default(int?), Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails usage = null, string armSkuName = null, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? term = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm?), Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? commitmentGranularity = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain?), string currencyCode = null, decimal? costWithoutBenefit = default(decimal?), Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails recommendationDetails = null, Azure.ResourceManager.CostManagement.Models.AllSavingsList allRecommendationDetails = null) { throw null; }
         public static Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties SingleScopeBenefitRecommendationProperties(System.DateTimeOffset? firstConsumptionOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastConsumptionOn = default(System.DateTimeOffset?), Azure.ResourceManager.CostManagement.Models.LookBackPeriod? lookBackPeriod = default(Azure.ResourceManager.CostManagement.Models.LookBackPeriod?), int? totalHours = default(int?), Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails usage = null, string armSkuName = null, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? term = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm?), Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? commitmentGranularity = default(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain?), string currencyCode = null, decimal? costWithoutBenefit = default(decimal?), Azure.ResourceManager.CostManagement.Models.AllSavingsBenefitDetails recommendationDetails = null, Azure.ResourceManager.CostManagement.Models.AllSavingsList allRecommendationDetails = null, string subscriptionId = null, string resourceGroup = null) { throw null; }
     }
-    public partial class AsyncOperationStatusProperties
+    public partial class AsyncOperationStatusProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>
     {
         internal AsyncOperationStatusProperties() { }
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? ReportUri { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema? SecondaryReportUri { get { throw null; } }
         public System.DateTimeOffset? ValidUntil { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BenefitRecommendationModel : Azure.ResourceManager.Models.ResourceData
+    public partial class BenefitRecommendationModel : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>
     {
         public BenefitRecommendationModel() { }
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BenefitRecommendationPeriodTerm : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm>
@@ -588,7 +640,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class BenefitRecommendationProperties
+    public abstract partial class BenefitRecommendationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>
     {
         protected BenefitRecommendationProperties() { }
         public Azure.ResourceManager.CostManagement.Models.AllSavingsList AllRecommendationDetails { get { throw null; } }
@@ -603,6 +655,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationPeriodTerm? Term { get { throw null; } set { } }
         public int? TotalHours { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails Usage { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BenefitRecommendationUsageGrain : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain>
@@ -623,7 +680,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain left, Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class BenefitUtilizationSummariesContent
+    public partial class BenefitUtilizationSummariesContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>
     {
         public BenefitUtilizationSummariesContent(Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain grain, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public string BenefitId { get { throw null; } set { } }
@@ -634,17 +691,32 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain Grain { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? Kind { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BenefitUtilizationSummariesOperationStatus
+    public partial class BenefitUtilizationSummariesOperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>
     {
         internal BenefitUtilizationSummariesOperationStatus() { }
         public Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesContent Input { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.AsyncOperationStatusProperties Properties { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.OperationStatusType? Status { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummariesOperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData
+    public partial class BenefitUtilizationSummary : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>
     {
         public BenefitUtilizationSummary() { }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct BenefitUtilizationSummaryReportSchema : System.IEquatable<Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummaryReportSchema>
@@ -690,7 +762,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind left, Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CommonExportProperties
+    public partial class CommonExportProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>
     {
         public CommonExportProperties(Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo deliveryInfo, Azure.ResourceManager.CostManagement.Models.ExportDefinition definition) { }
         public Azure.ResourceManager.CostManagement.Models.ExportDefinition Definition { get { throw null; } set { } }
@@ -699,6 +771,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.DateTimeOffset? NextRunTimeEstimate { get { throw null; } }
         public bool? PartitionData { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ExportRun> RunHistoryValue { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.CommonExportProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.CommonExportProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CommonExportProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ComparisonOperatorType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType>
@@ -760,7 +837,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostManagementAlertOperator left, Azure.ResourceManager.CostManagement.Models.CostManagementAlertOperator right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CostManagementAlertPatch
+    public partial class CostManagementAlertPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>
     {
         public CostManagementAlertPatch() { }
         public System.DateTimeOffset? CloseOn { get { throw null; } set { } }
@@ -774,6 +851,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.CostManagementAlertStatus? Status { get { throw null; } set { } }
         public string StatusModificationUserName { get { throw null; } set { } }
         public System.DateTimeOffset? StatusModifiedOn { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementAlertPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CostManagementAlertSource : System.IEquatable<Azure.ResourceManager.CostManagement.Models.CostManagementAlertSource>
@@ -837,7 +919,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostManagementAlertType left, Azure.ResourceManager.CostManagement.Models.CostManagementAlertType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class CostManagementDimension : Azure.ResourceManager.Models.ResourceData
+    public partial class CostManagementDimension : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>
     {
         internal CostManagementDimension() { }
         public string Category { get { throw null; } }
@@ -853,19 +935,34 @@ namespace Azure.ResourceManager.CostManagement.Models
         public int? Total { get { throw null; } }
         public System.DateTimeOffset? UsageEnd { get { throw null; } }
         public System.DateTimeOffset? UsageStart { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.CostManagementDimension System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.CostManagementDimension System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementDimension>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CostManagementNameAvailabilityContent
+    public partial class CostManagementNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>
     {
         public CostManagementNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CostManagementNameAvailabilityResult
+    public partial class CostManagementNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>
     {
         internal CostManagementNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason? Reason { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.CostManagementNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CostManagementUnavailabilityReason : System.IEquatable<Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason>
@@ -885,28 +982,43 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason left, Azure.ResourceManager.CostManagement.Models.CostManagementUnavailabilityReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DownloadURL
+    public partial class DownloadURL : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>
     {
         internal DownloadURL() { }
         public System.Uri DownloadUri { get { throw null; } }
         public System.DateTimeOffset? ExpiryOn { get { throw null; } }
         public System.DateTimeOffset? ValidTill { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.DownloadURL System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.DownloadURL System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.DownloadURL>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportDataset
+    public partial class ExportDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>
     {
         public ExportDataset() { }
         public System.Collections.Generic.IList<string> Columns { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportDefinition
+    public partial class ExportDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>
     {
         public ExportDefinition(Azure.ResourceManager.CostManagement.Models.ExportType exportType, Azure.ResourceManager.CostManagement.Models.TimeframeType timeframe) { }
         public Azure.ResourceManager.CostManagement.Models.ExportDataset DataSet { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportType ExportType { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.TimeframeType Timeframe { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportTimePeriod TimePeriod { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportDeliveryDestination
+    public partial class ExportDeliveryDestination : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>
     {
         public ExportDeliveryDestination(string container) { }
         public string Container { get { throw null; } set { } }
@@ -914,11 +1026,21 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string RootFolderPath { get { throw null; } set { } }
         public string SasToken { get { throw null; } set { } }
         public string StorageAccount { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportDeliveryInfo
+    public partial class ExportDeliveryInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>
     {
         public ExportDeliveryInfo(Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination destination) { }
         public Azure.ResourceManager.CostManagement.Models.ExportDeliveryDestination Destination { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportDeliveryInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportFormatType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportFormatType>
@@ -937,13 +1059,18 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExportFormatType left, Azure.ResourceManager.CostManagement.Models.ExportFormatType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExportRecurrencePeriod
+    public partial class ExportRecurrencePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>
     {
         public ExportRecurrencePeriod(System.DateTimeOffset from) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset? To { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportRun : Azure.ResourceManager.Models.ResourceData
+    public partial class ExportRun : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRun>
     {
         public ExportRun() { }
         public Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails Error { get { throw null; } set { } }
@@ -956,12 +1083,22 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus? Status { get { throw null; } set { } }
         public string SubmittedBy { get { throw null; } set { } }
         public System.DateTimeOffset? SubmittedOn { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportRun System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportRun System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRun>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ExportRunErrorDetails
+    public partial class ExportRunErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>
     {
         public ExportRunErrorDetails() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportRunErrorDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportRunExecutionStatus : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportRunExecutionStatus>
@@ -1004,12 +1141,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType left, Azure.ResourceManager.CostManagement.Models.ExportRunExecutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExportSchedule
+    public partial class ExportSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>
     {
         public ExportSchedule() { }
         public Azure.ResourceManager.CostManagement.Models.ExportScheduleRecurrenceType? Recurrence { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportRecurrencePeriod RecurrencePeriod { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ExportScheduleStatusType? Status { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportSchedule System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportSchedule>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportScheduleRecurrenceType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportScheduleRecurrenceType>
@@ -1049,11 +1191,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExportScheduleStatusType left, Azure.ResourceManager.CostManagement.Models.ExportScheduleStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ExportTimePeriod
+    public partial class ExportTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>
     {
         public ExportTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset To { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ExportTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ExportTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ExportTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ExportType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ExportType>
@@ -1092,34 +1239,54 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ExternalCloudProviderType left, Azure.ResourceManager.CostManagement.Models.ExternalCloudProviderType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ForecastAggregation
+    public partial class ForecastAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>
     {
         public ForecastAggregation(Azure.ResourceManager.CostManagement.Models.FunctionName name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.FunctionName Name { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ForecastAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForecastColumn
+    public partial class ForecastColumn : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>
     {
         internal ForecastColumn() { }
         public string ForecastColumnType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ForecastColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastColumn>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForecastComparisonExpression
+    public partial class ForecastComparisonExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>
     {
         public ForecastComparisonExpression(string name, Azure.ResourceManager.CostManagement.Models.ForecastOperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastOperatorType Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForecastDataset
+    public partial class ForecastDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>
     {
         public ForecastDataset(System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CostManagement.Models.ForecastAggregation> aggregation) { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CostManagement.Models.ForecastAggregation> Aggregation { get { throw null; } }
         public System.Collections.Generic.IList<string> Columns { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastFilter Filter { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ForecastDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForecastDefinition
+    public partial class ForecastDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>
     {
         public ForecastDefinition(Azure.ResourceManager.CostManagement.Models.ForecastType forecastType, Azure.ResourceManager.CostManagement.Models.ForecastTimeframe timeframe, Azure.ResourceManager.CostManagement.Models.ForecastDataset dataset) { }
         public Azure.ResourceManager.CostManagement.Models.ForecastDataset Dataset { get { throw null; } }
@@ -1128,14 +1295,24 @@ namespace Azure.ResourceManager.CostManagement.Models
         public bool? IncludeFreshPartialCost { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ForecastTimeframe Timeframe { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod TimePeriod { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ForecastDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ForecastFilter
+    public partial class ForecastFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>
     {
         public ForecastFilter() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ForecastFilter> And { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ForecastFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ForecastComparisonExpression Tags { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ForecastFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ForecastOperatorType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ForecastOperatorType>
@@ -1154,7 +1331,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ForecastOperatorType left, Azure.ResourceManager.CostManagement.Models.ForecastOperatorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ForecastResult : Azure.ResourceManager.Models.ResourceData
+    public partial class ForecastResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>
     {
         internal ForecastResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.ForecastColumn> Columns { get { throw null; } }
@@ -1164,6 +1341,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.BinaryData>> Rows { get { throw null; } }
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ForecastResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ForecastTimeframe : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ForecastTimeframe>
@@ -1182,11 +1364,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ForecastTimeframe left, Azure.ResourceManager.CostManagement.Models.ForecastTimeframe right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ForecastTimePeriod
+    public partial class ForecastTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>
     {
         public ForecastTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } }
         public System.DateTimeOffset To { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ForecastTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ForecastType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ForecastType>
@@ -1280,7 +1467,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.GranularityType left, Azure.ResourceManager.CostManagement.Models.GranularityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class IncludedQuantityUtilizationSummary : Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary
+    public partial class IncludedQuantityUtilizationSummary : Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>
     {
         public IncludedQuantityUtilizationSummary() { }
         public string ArmSkuName { get { throw null; } }
@@ -1289,6 +1476,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.BillingAccountBenefitKind? BenefitType { get { throw null; } set { } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
         public decimal? UtilizationPercentage { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.IncludedQuantityUtilizationSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LookBackPeriod : System.IEquatable<Azure.ResourceManager.CostManagement.Models.LookBackPeriod>
@@ -1309,7 +1501,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.LookBackPeriod left, Azure.ResourceManager.CostManagement.Models.LookBackPeriod right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class NotificationProperties
+    public partial class NotificationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>
     {
         public NotificationProperties(System.Collections.Generic.IEnumerable<string> to, string subject) { }
         public string Language { get { throw null; } set { } }
@@ -1317,13 +1509,23 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string RegionalFormat { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> To { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.NotificationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.NotificationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.NotificationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationStatus
+    public partial class OperationStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>
     {
         internal OperationStatus() { }
         public Azure.ResourceManager.CostManagement.Models.ReservationReportSchema? ReportUri { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.OperationStatusType? Status { get { throw null; } }
         public System.DateTimeOffset? ValidUntil { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.OperationStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.OperationStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.OperationStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationStatusType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.OperationStatusType>
@@ -1345,17 +1547,27 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.OperationStatusType left, Azure.ResourceManager.CostManagement.Models.OperationStatusType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueryAggregation
+    public partial class QueryAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>
     {
         public QueryAggregation(string name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryColumn
+    public partial class QueryColumn : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>
     {
         internal QueryColumn() { }
         public string Name { get { throw null; } }
         public string QueryColumnType { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryColumn System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryColumn System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryColumn>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryColumnType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.QueryColumnType>
@@ -1375,14 +1587,19 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.QueryColumnType left, Azure.ResourceManager.CostManagement.Models.QueryColumnType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueryComparisonExpression
+    public partial class QueryComparisonExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>
     {
         public QueryComparisonExpression(string name, Azure.ResourceManager.CostManagement.Models.QueryOperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryOperatorType Operator { get { throw null; } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryDataset
+    public partial class QueryDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>
     {
         public QueryDataset() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CostManagement.Models.QueryAggregation> Aggregation { get { throw null; } }
@@ -1390,28 +1607,48 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.QueryFilter Filter { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.GranularityType? Granularity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.QueryGrouping> Grouping { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryDefinition
+    public partial class QueryDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>
     {
         public QueryDefinition(Azure.ResourceManager.CostManagement.Models.ExportType exportType, Azure.ResourceManager.CostManagement.Models.TimeframeType timeframe, Azure.ResourceManager.CostManagement.Models.QueryDataset dataset) { }
         public Azure.ResourceManager.CostManagement.Models.QueryDataset Dataset { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ExportType ExportType { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.TimeframeType Timeframe { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryTimePeriod TimePeriod { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.QueryDefinition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryDefinition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryFilter
+    public partial class QueryFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>
     {
         public QueryFilter() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.QueryFilter> And { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.QueryFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.QueryComparisonExpression Tags { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.QueryFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryGrouping
+    public partial class QueryGrouping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>
     {
         public QueryGrouping(Azure.ResourceManager.CostManagement.Models.QueryColumnType columnType, string name) { }
         public Azure.ResourceManager.CostManagement.Models.QueryColumnType ColumnType { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryGrouping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryGrouping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryGrouping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct QueryOperatorType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.QueryOperatorType>
@@ -1430,7 +1667,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.QueryOperatorType left, Azure.ResourceManager.CostManagement.Models.QueryOperatorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class QueryResult : Azure.ResourceManager.Models.ResourceData
+    public partial class QueryResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryResult>
     {
         internal QueryResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.CostManagement.Models.QueryColumn> Columns { get { throw null; } }
@@ -1440,33 +1677,58 @@ namespace Azure.ResourceManager.CostManagement.Models
         public System.Collections.Generic.IReadOnlyList<System.Collections.Generic.IList<System.BinaryData>> Rows { get { throw null; } }
         public string Sku { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class QueryTimePeriod
+    public partial class QueryTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>
     {
         public QueryTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } }
         public System.DateTimeOffset To { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.QueryTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.QueryTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.QueryTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class RecommendationUsageDetails
+    public partial class RecommendationUsageDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>
     {
         public RecommendationUsageDetails() { }
         public System.Collections.Generic.IReadOnlyList<decimal> Charges { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.BenefitRecommendationUsageGrain? UsageGrain { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.RecommendationUsageDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigAggregation
+    public partial class ReportConfigAggregation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>
     {
         public ReportConfigAggregation(string name, Azure.ResourceManager.CostManagement.Models.FunctionType function) { }
         public Azure.ResourceManager.CostManagement.Models.FunctionType Function { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigComparisonExpression
+    public partial class ReportConfigComparisonExpression : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>
     {
         public ReportConfigComparisonExpression(string name, Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType @operator, System.Collections.Generic.IEnumerable<string> values) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ComparisonOperatorType Operator { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Values { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigDataset
+    public partial class ReportConfigDataset : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>
     {
         public ReportConfigDataset() { }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.CostManagement.Models.ReportConfigAggregation> Aggregation { get { throw null; } }
@@ -1475,26 +1737,46 @@ namespace Azure.ResourceManager.CostManagement.Models
         public Azure.ResourceManager.CostManagement.Models.ReportGranularityType? Granularity { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping> Grouping { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting> Sorting { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigDataset System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigDataset>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigFilter
+    public partial class ReportConfigFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>
     {
         public ReportConfigFilter() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter> And { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression Dimensions { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter> Or { get { throw null; } }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigComparisonExpression Tags { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigFilter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigFilter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigFilter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigGrouping
+    public partial class ReportConfigGrouping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>
     {
         public ReportConfigGrouping(Azure.ResourceManager.CostManagement.Models.QueryColumnType queryColumnType, string name) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.QueryColumnType QueryColumnType { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigGrouping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ReportConfigSorting
+    public partial class ReportConfigSorting : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>
     {
         public ReportConfigSorting(string name) { }
         public Azure.ResourceManager.CostManagement.Models.ReportConfigSortingType? Direction { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigSorting System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigSorting System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigSorting>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReportConfigSortingType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ReportConfigSortingType>
@@ -1514,11 +1796,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ReportConfigSortingType left, Azure.ResourceManager.CostManagement.Models.ReportConfigSortingType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ReportConfigTimePeriod
+    public partial class ReportConfigTimePeriod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>
     {
         public ReportConfigTimePeriod(System.DateTimeOffset from, System.DateTimeOffset to) { }
         public System.DateTimeOffset From { get { throw null; } set { } }
         public System.DateTimeOffset To { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ReportConfigTimePeriod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ReportGranularityType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ReportGranularityType>
@@ -1585,7 +1872,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ReservationReportSchema left, Azure.ResourceManager.CostManagement.Models.ReservationReportSchema right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SavingsPlanUtilizationSummary : Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary
+    public partial class SavingsPlanUtilizationSummary : Azure.ResourceManager.CostManagement.Models.BenefitUtilizationSummary, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>
     {
         public SavingsPlanUtilizationSummary() { }
         public string ArmSkuName { get { throw null; } }
@@ -1596,6 +1883,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         public decimal? MaxUtilizationPercentage { get { throw null; } }
         public decimal? MinUtilizationPercentage { get { throw null; } }
         public System.DateTimeOffset? UsageOn { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SavingsPlanUtilizationSummary>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScheduledActionDaysOfWeek : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ScheduledActionDaysOfWeek>
@@ -1714,7 +2006,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ScheduleFrequency left, Azure.ResourceManager.CostManagement.Models.ScheduleFrequency right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScheduleProperties
+    public partial class ScheduleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>
     {
         public ScheduleProperties(Azure.ResourceManager.CostManagement.Models.ScheduleFrequency frequency, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public int? DayOfMonth { get { throw null; } set { } }
@@ -1724,16 +2016,31 @@ namespace Azure.ResourceManager.CostManagement.Models
         public int? HourOfDay { get { throw null; } set { } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.CostManagement.Models.ScheduledActionWeeksOfMonth> WeeksOfMonth { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.ScheduleProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ScheduleProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ScheduleProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SharedScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties
+    public partial class SharedScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>
     {
         public SharedScopeBenefitRecommendationProperties() { }
+        Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SharedScopeBenefitRecommendationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SingleScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties
+    public partial class SingleScopeBenefitRecommendationProperties : Azure.ResourceManager.CostManagement.Models.BenefitRecommendationProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>
     {
         public SingleScopeBenefitRecommendationProperties() { }
         public string ResourceGroup { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.SingleScopeBenefitRecommendationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TenantResourceByExternalCloudProviderTypeDimensionsOptions
     {
@@ -1788,12 +2095,17 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ViewChartType left, Azure.ResourceManager.CostManagement.Models.ViewChartType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ViewKpiProperties
+    public partial class ViewKpiProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>
     {
         public ViewKpiProperties() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewKpiType? KpiType { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ViewKpiProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ViewKpiProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewKpiProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ViewKpiType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ViewKpiType>
@@ -1832,11 +2144,16 @@ namespace Azure.ResourceManager.CostManagement.Models
         public static bool operator !=(Azure.ResourceManager.CostManagement.Models.ViewMetricType left, Azure.ResourceManager.CostManagement.Models.ViewMetricType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ViewPivotProperties
+    public partial class ViewPivotProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>
     {
         public ViewPivotProperties() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.CostManagement.Models.ViewPivotType? PivotType { get { throw null; } set { } }
+        Azure.ResourceManager.CostManagement.Models.ViewPivotProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.CostManagement.Models.ViewPivotProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CostManagement.Models.ViewPivotProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ViewPivotType : System.IEquatable<Azure.ResourceManager.CostManagement.Models.ViewPivotType>

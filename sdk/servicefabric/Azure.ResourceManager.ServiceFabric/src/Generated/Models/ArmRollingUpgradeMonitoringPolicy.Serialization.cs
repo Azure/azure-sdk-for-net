@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
-    public partial class ArmRollingUpgradeMonitoringPolicy : IUtf8JsonSerializable
+    public partial class ArmRollingUpgradeMonitoringPolicy : IUtf8JsonSerializable, IJsonModel<ArmRollingUpgradeMonitoringPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmRollingUpgradeMonitoringPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArmRollingUpgradeMonitoringPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(FailureAction))
             {
@@ -46,21 +56,52 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("upgradeDomainTimeout"u8);
                 writer.WriteStringValue(UpgradeDomainTimeout.Value, "c");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmRollingUpgradeMonitoringPolicy DeserializeArmRollingUpgradeMonitoringPolicy(JsonElement element)
+        ArmRollingUpgradeMonitoringPolicy IJsonModel<ArmRollingUpgradeMonitoringPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmRollingUpgradeMonitoringPolicy(document.RootElement, options);
+        }
+
+        internal static ArmRollingUpgradeMonitoringPolicy DeserializeArmRollingUpgradeMonitoringPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ArmUpgradeFailureAction> failureAction = default;
-            Optional<TimeSpan> healthCheckWaitDuration = default;
-            Optional<TimeSpan> healthCheckStableDuration = default;
-            Optional<TimeSpan> healthCheckRetryTimeout = default;
-            Optional<TimeSpan> upgradeTimeout = default;
-            Optional<TimeSpan> upgradeDomainTimeout = default;
+            ArmUpgradeFailureAction? failureAction = default;
+            TimeSpan? healthCheckWaitDuration = default;
+            TimeSpan? healthCheckStableDuration = default;
+            TimeSpan? healthCheckRetryTimeout = default;
+            TimeSpan? upgradeTimeout = default;
+            TimeSpan? upgradeDomainTimeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("failureAction"u8))
@@ -117,8 +158,51 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     upgradeDomainTimeout = property.Value.GetTimeSpan("c");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmRollingUpgradeMonitoringPolicy(Optional.ToNullable(failureAction), Optional.ToNullable(healthCheckWaitDuration), Optional.ToNullable(healthCheckStableDuration), Optional.ToNullable(healthCheckRetryTimeout), Optional.ToNullable(upgradeTimeout), Optional.ToNullable(upgradeDomainTimeout));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ArmRollingUpgradeMonitoringPolicy(
+                failureAction,
+                healthCheckWaitDuration,
+                healthCheckStableDuration,
+                healthCheckRetryTimeout,
+                upgradeTimeout,
+                upgradeDomainTimeout,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArmRollingUpgradeMonitoringPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArmRollingUpgradeMonitoringPolicy IPersistableModel<ArmRollingUpgradeMonitoringPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmRollingUpgradeMonitoringPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmRollingUpgradeMonitoringPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmRollingUpgradeMonitoringPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmRollingUpgradeMonitoringPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

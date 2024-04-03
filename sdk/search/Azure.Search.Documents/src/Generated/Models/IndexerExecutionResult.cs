@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,12 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="warnings"> The item-level indexing warnings. </param>
         /// <param name="itemCount"> The number of items that were processed during this indexer execution. This includes both successfully processed items and items where indexing was attempted but failed. </param>
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="warnings"/> is null. </exception>
         internal IndexerExecutionResult(IndexerExecutionStatus status, IEnumerable<SearchIndexerError> errors, IEnumerable<SearchIndexerWarning> warnings, int itemCount, int failedItemCount)
         {
-            Argument.AssertNotNull(errors, nameof(errors));
-            Argument.AssertNotNull(warnings, nameof(warnings));
-
             Status = status;
             Errors = errors.ToList();
             Warnings = warnings.ToList();
@@ -36,6 +31,8 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="IndexerExecutionResult"/>. </summary>
         /// <param name="status"> The outcome of this indexer execution. </param>
+        /// <param name="statusDetail"> The outcome of this indexer execution. </param>
+        /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <param name="errorMessage"> The error message indicating the top-level error, if any. </param>
         /// <param name="startTime"> The start time of this indexer execution. </param>
         /// <param name="endTime"> The end time of this indexer execution, if the execution has already completed. </param>
@@ -45,9 +42,11 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="failedItemCount"> The number of items that failed to be indexed during this indexer execution. </param>
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
-        internal IndexerExecutionResult(IndexerExecutionStatus status, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
+        internal IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexerState currentState, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IReadOnlyList<SearchIndexerError> errors, IReadOnlyList<SearchIndexerWarning> warnings, int itemCount, int failedItemCount, string initialTrackingState, string finalTrackingState)
         {
             Status = status;
+            StatusDetail = statusDetail;
+            CurrentState = currentState;
             ErrorMessage = errorMessage;
             StartTime = startTime;
             EndTime = endTime;
@@ -61,6 +60,10 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> The outcome of this indexer execution. </summary>
         public IndexerExecutionStatus Status { get; }
+        /// <summary> The outcome of this indexer execution. </summary>
+        public IndexerExecutionStatusDetail? StatusDetail { get; }
+        /// <summary> All of the state that defines and dictates the indexer's current execution. </summary>
+        public IndexerState CurrentState { get; }
         /// <summary> The error message indicating the top-level error, if any. </summary>
         public string ErrorMessage { get; }
         /// <summary> The start time of this indexer execution. </summary>

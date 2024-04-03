@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class PartnerTopicsListResult
+    internal partial class PartnerTopicsListResult : IUtf8JsonSerializable, IJsonModel<PartnerTopicsListResult>
     {
-        internal static PartnerTopicsListResult DeserializePartnerTopicsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PartnerTopicsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PartnerTopicsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerTopicsListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<PartnerTopicData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PartnerTopicsListResult IJsonModel<PartnerTopicsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PartnerTopicsListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePartnerTopicsListResult(document.RootElement, options);
+        }
+
+        internal static PartnerTopicsListResult DeserializePartnerTopicsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<PartnerTopicData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PartnerTopicData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     List<PartnerTopicData> array = new List<PartnerTopicData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PartnerTopicData.DeserializePartnerTopicData(item));
+                        array.Add(PartnerTopicData.DeserializePartnerTopicData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PartnerTopicsListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PartnerTopicsListResult(value ?? new ChangeTrackingList<PartnerTopicData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PartnerTopicsListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PartnerTopicsListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PartnerTopicsListResult IPersistableModel<PartnerTopicsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PartnerTopicsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePartnerTopicsListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PartnerTopicsListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PartnerTopicsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

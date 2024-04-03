@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class CapabilitySetsList
+    internal partial class CapabilitySetsList : IUtf8JsonSerializable, IJsonModel<CapabilitySetsList>
     {
-        internal static CapabilitySetsList DeserializeCapabilitySetsList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CapabilitySetsList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CapabilitySetsList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitySetsList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CapabilitySetsList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<MySqlFlexibleServersCapabilityData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CapabilitySetsList IJsonModel<CapabilitySetsList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitySetsList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CapabilitySetsList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCapabilitySetsList(document.RootElement, options);
+        }
+
+        internal static CapabilitySetsList DeserializeCapabilitySetsList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFlexibleServersCapabilityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlFlexibleServersCapabilityData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServersCapabilityData> array = new List<MySqlFlexibleServersCapabilityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(item));
+                        array.Add(MySqlFlexibleServersCapabilityData.DeserializeMySqlFlexibleServersCapabilityData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CapabilitySetsList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CapabilitySetsList(value ?? new ChangeTrackingList<MySqlFlexibleServersCapabilityData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CapabilitySetsList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitySetsList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CapabilitySetsList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CapabilitySetsList IPersistableModel<CapabilitySetsList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CapabilitySetsList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCapabilitySetsList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CapabilitySetsList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CapabilitySetsList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

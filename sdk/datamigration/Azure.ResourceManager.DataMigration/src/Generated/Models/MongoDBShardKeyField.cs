@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes a field reference within a MongoDB shard key. </summary>
     public partial class MongoDBShardKeyField
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyField"/>. </summary>
         /// <param name="name"> The name of the field. </param>
         /// <param name="order"> The field ordering. </param>
@@ -23,6 +55,22 @@ namespace Azure.ResourceManager.DataMigration.Models
 
             Name = name;
             Order = order;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyField"/>. </summary>
+        /// <param name="name"> The name of the field. </param>
+        /// <param name="order"> The field ordering. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBShardKeyField(string name, MongoDBShardKeyOrder order, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Name = name;
+            Order = order;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBShardKeyField"/> for deserialization. </summary>
+        internal MongoDBShardKeyField()
+        {
         }
 
         /// <summary> The name of the field. </summary>

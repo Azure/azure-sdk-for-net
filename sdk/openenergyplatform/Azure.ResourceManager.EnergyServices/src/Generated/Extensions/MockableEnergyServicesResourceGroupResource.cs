@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EnergyServices;
 
 namespace Azure.ResourceManager.EnergyServices.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The resource name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerServiceFleet.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -138,6 +136,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -167,6 +173,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +212,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +247,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Fleets_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-10-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerServiceFleetResource"/></description>
         /// </item>
         /// </list>
         /// <item>

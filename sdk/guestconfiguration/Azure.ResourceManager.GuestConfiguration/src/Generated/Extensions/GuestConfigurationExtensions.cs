@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.GuestConfiguration.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -63,6 +61,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -93,6 +99,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -143,6 +157,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationHcrpAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -173,6 +195,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationHcrpAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -223,6 +253,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -253,6 +291,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// <item>

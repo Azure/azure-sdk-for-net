@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    internal partial class InteractionListResult
+    internal partial class InteractionListResult : IUtf8JsonSerializable, IJsonModel<InteractionListResult>
     {
-        internal static InteractionListResult DeserializeInteractionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InteractionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InteractionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InteractionListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<InteractionResourceFormatData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InteractionListResult IJsonModel<InteractionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InteractionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInteractionListResult(document.RootElement, options);
+        }
+
+        internal static InteractionListResult DeserializeInteractionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<InteractionResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<InteractionResourceFormatData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<InteractionResourceFormatData> array = new List<InteractionResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InteractionResourceFormatData.DeserializeInteractionResourceFormatData(item));
+                        array.Add(InteractionResourceFormatData.DeserializeInteractionResourceFormatData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InteractionListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InteractionListResult(value ?? new ChangeTrackingList<InteractionResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InteractionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InteractionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InteractionListResult IPersistableModel<InteractionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InteractionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInteractionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InteractionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InteractionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

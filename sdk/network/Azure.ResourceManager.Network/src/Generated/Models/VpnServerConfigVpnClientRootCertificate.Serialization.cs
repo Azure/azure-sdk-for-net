@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VpnServerConfigVpnClientRootCertificate : IUtf8JsonSerializable
+    public partial class VpnServerConfigVpnClientRootCertificate : IUtf8JsonSerializable, IJsonModel<VpnServerConfigVpnClientRootCertificate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnServerConfigVpnClientRootCertificate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VpnServerConfigVpnClientRootCertificate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigVpnClientRootCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnServerConfigVpnClientRootCertificate)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -33,17 +43,48 @@ namespace Azure.ResourceManager.Network.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VpnServerConfigVpnClientRootCertificate DeserializeVpnServerConfigVpnClientRootCertificate(JsonElement element)
+        VpnServerConfigVpnClientRootCertificate IJsonModel<VpnServerConfigVpnClientRootCertificate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigVpnClientRootCertificate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VpnServerConfigVpnClientRootCertificate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVpnServerConfigVpnClientRootCertificate(document.RootElement, options);
+        }
+
+        internal static VpnServerConfigVpnClientRootCertificate DeserializeVpnServerConfigVpnClientRootCertificate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<BinaryData> publicCertData = default;
+            string name = default;
+            BinaryData publicCertData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,8 +101,44 @@ namespace Azure.ResourceManager.Network.Models
                     publicCertData = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VpnServerConfigVpnClientRootCertificate(name.Value, publicCertData.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VpnServerConfigVpnClientRootCertificate(name, publicCertData, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VpnServerConfigVpnClientRootCertificate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigVpnClientRootCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VpnServerConfigVpnClientRootCertificate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VpnServerConfigVpnClientRootCertificate IPersistableModel<VpnServerConfigVpnClientRootCertificate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigVpnClientRootCertificate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVpnServerConfigVpnClientRootCertificate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnServerConfigVpnClientRootCertificate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VpnServerConfigVpnClientRootCertificate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

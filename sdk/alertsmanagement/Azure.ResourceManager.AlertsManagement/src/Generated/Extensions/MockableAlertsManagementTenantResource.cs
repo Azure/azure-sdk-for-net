@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.AlertsManagement.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Mocking
@@ -55,6 +52,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="identifier"> Identification of the information to be retrieved by API call. </param>
@@ -85,6 +90,14 @@ namespace Azure.ResourceManager.AlertsManagement.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alerts_MetaData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-05-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ServiceAlertResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

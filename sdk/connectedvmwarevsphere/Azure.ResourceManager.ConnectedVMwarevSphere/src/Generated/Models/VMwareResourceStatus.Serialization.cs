@@ -6,25 +6,102 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VMwareResourceStatus
+    public partial class VMwareResourceStatus : IUtf8JsonSerializable, IJsonModel<VMwareResourceStatus>
     {
-        internal static VMwareResourceStatus DeserializeVMwareResourceStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareResourceStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareResourceStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceStatusType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceStatusType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedAt"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VMwareResourceStatus IJsonModel<VMwareResourceStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareResourceStatus(document.RootElement, options);
+        }
+
+        internal static VMwareResourceStatus DeserializeVMwareResourceStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> status = default;
-            Optional<string> reason = default;
-            Optional<string> message = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> lastUpdatedAt = default;
+            string type = default;
+            string status = default;
+            string reason = default;
+            string message = default;
+            string severity = default;
+            DateTimeOffset? lastUpdatedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -61,8 +138,51 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     lastUpdatedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VMwareResourceStatus(type.Value, status.Value, reason.Value, message.Value, severity.Value, Optional.ToNullable(lastUpdatedAt));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareResourceStatus(
+                type,
+                status,
+                reason,
+                message,
+                severity,
+                lastUpdatedAt,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VMwareResourceStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VMwareResourceStatus IPersistableModel<VMwareResourceStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareResourceStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareResourceStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareResourceStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareResourceStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

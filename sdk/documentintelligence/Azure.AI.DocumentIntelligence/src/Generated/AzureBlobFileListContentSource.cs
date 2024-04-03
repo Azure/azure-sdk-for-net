@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> File list in Azure Blob Storage. </summary>
     public partial class AzureBlobFileListContentSource
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureBlobFileListContentSource"/>. </summary>
         /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
         /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
@@ -24,6 +56,22 @@ namespace Azure.AI.DocumentIntelligence
 
             ContainerUrl = containerUrl;
             FileList = fileList;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFileListContentSource"/>. </summary>
+        /// <param name="containerUrl"> Azure Blob Storage container URL. </param>
+        /// <param name="fileList"> Path to a JSONL file within the container specifying a subset of documents. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureBlobFileListContentSource(Uri containerUrl, string fileList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ContainerUrl = containerUrl;
+            FileList = fileList;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureBlobFileListContentSource"/> for deserialization. </summary>
+        internal AzureBlobFileListContentSource()
+        {
         }
 
         /// <summary> Azure Blob Storage container URL. </summary>

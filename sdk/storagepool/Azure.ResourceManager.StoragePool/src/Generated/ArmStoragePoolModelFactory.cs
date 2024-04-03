@@ -12,7 +12,6 @@ using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StoragePool;
 
 namespace Azure.ResourceManager.StoragePool.Models
 {
@@ -44,7 +43,63 @@ namespace Azure.ResourceManager.StoragePool.Models
             disks ??= new List<WritableSubResource>();
             additionalCapabilities ??= new List<string>();
 
-            return new DiskPoolData(id, name, resourceType, systemData, tags, location, sku, managedBy, managedByExtended?.ToList(), provisioningState, availabilityZones?.ToList(), status, disks?.ToList(), subnetId, additionalCapabilities?.ToList());
+            return new DiskPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                managedBy,
+                managedByExtended?.ToList(),
+                provisioningState,
+                availabilityZones?.ToList(),
+                status,
+                disks?.ToList(),
+                subnetId,
+                additionalCapabilities?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DiskPoolCreateOrUpdateContent"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="sku"> Determines the SKU of the Disk Pool. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="managedBy"> Azure resource id. Indicates if this resource is managed by another Azure resource. </param>
+        /// <param name="managedByExtended"> List of Azure resource ids that manage this resource. </param>
+        /// <param name="availabilityZones"> Logical zone for Disk Pool resource; example: ["1"]. </param>
+        /// <param name="disks"> List of Azure Managed Disks to attach to a Disk Pool. </param>
+        /// <param name="subnetId"> Azure Resource ID of a Subnet for the Disk Pool. </param>
+        /// <param name="additionalCapabilities"> List of additional capabilities for a Disk Pool. </param>
+        /// <returns> A new <see cref="Models.DiskPoolCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static DiskPoolCreateOrUpdateContent DiskPoolCreateOrUpdateContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, StoragePoolSku sku = null, IDictionary<string, string> tags = null, AzureLocation location = default, string managedBy = null, IEnumerable<string> managedByExtended = null, IEnumerable<string> availabilityZones = null, IEnumerable<WritableSubResource> disks = null, ResourceIdentifier subnetId = null, IEnumerable<string> additionalCapabilities = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            managedByExtended ??= new List<string>();
+            availabilityZones ??= new List<string>();
+            disks ??= new List<WritableSubResource>();
+            additionalCapabilities ??= new List<string>();
+
+            return new DiskPoolCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                tags,
+                location,
+                managedBy,
+                managedByExtended?.ToList(),
+                availabilityZones?.ToList(),
+                disks?.ToList(),
+                subnetId,
+                additionalCapabilities?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskPoolZoneInfo"/>. </summary>
@@ -57,7 +112,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             availabilityZones ??= new List<string>();
             additionalCapabilities ??= new List<string>();
 
-            return new DiskPoolZoneInfo(availabilityZones?.ToList(), additionalCapabilities?.ToList(), sku);
+            return new DiskPoolZoneInfo(availabilityZones?.ToList(), additionalCapabilities?.ToList(), sku, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuInfo"/>. </summary>
@@ -74,7 +129,15 @@ namespace Azure.ResourceManager.StoragePool.Models
             capabilities ??= new List<StoragePoolSkuCapability>();
             restrictions ??= new List<StoragePoolSkuRestrictions>();
 
-            return new StoragePoolSkuInfo(apiVersion, resourceType, capabilities?.ToList(), locationInfo, name, tier, restrictions?.ToList());
+            return new StoragePoolSkuInfo(
+                apiVersion,
+                resourceType,
+                capabilities?.ToList(),
+                locationInfo,
+                name,
+                tier,
+                restrictions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuCapability"/>. </summary>
@@ -83,7 +146,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <returns> A new <see cref="Models.StoragePoolSkuCapability"/> instance for mocking. </returns>
         public static StoragePoolSkuCapability StoragePoolSkuCapability(string name = null, string value = null)
         {
-            return new StoragePoolSkuCapability(name, value);
+            return new StoragePoolSkuCapability(name, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuLocationInfo"/>. </summary>
@@ -96,7 +159,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             zones ??= new List<string>();
             zoneDetails ??= new List<StoragePoolSkuZoneDetails>();
 
-            return new StoragePoolSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList());
+            return new StoragePoolSkuLocationInfo(location, zones?.ToList(), zoneDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuZoneDetails"/>. </summary>
@@ -108,7 +171,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             name ??= new List<string>();
             capabilities ??= new List<StoragePoolSkuCapability>();
 
-            return new StoragePoolSkuZoneDetails(name?.ToList(), capabilities?.ToList());
+            return new StoragePoolSkuZoneDetails(name?.ToList(), capabilities?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuRestrictions"/>. </summary>
@@ -121,7 +184,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         {
             values ??= new List<string>();
 
-            return new StoragePoolSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode);
+            return new StoragePoolSkuRestrictions(restrictionsType, values?.ToList(), restrictionInfo, reasonCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolSkuRestrictionInfo"/>. </summary>
@@ -133,7 +196,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             locations ??= new List<AzureLocation>();
             zones ??= new List<string>();
 
-            return new StoragePoolSkuRestrictionInfo(locations?.ToList(), zones?.ToList());
+            return new StoragePoolSkuRestrictionInfo(locations?.ToList(), zones?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StoragePoolOutboundEnvironment"/>. </summary>
@@ -144,7 +207,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         {
             endpoints ??= new List<OutboundEndpointDependency>();
 
-            return new StoragePoolOutboundEnvironment(category, endpoints?.ToList());
+            return new StoragePoolOutboundEnvironment(category, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutboundEndpointDependency"/>. </summary>
@@ -155,7 +218,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         {
             endpointDetails ??= new List<OutboundEndpointDetail>();
 
-            return new OutboundEndpointDependency(domainName, endpointDetails?.ToList());
+            return new OutboundEndpointDependency(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutboundEndpointDetail"/>. </summary>
@@ -166,7 +229,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <returns> A new <see cref="Models.OutboundEndpointDetail"/> instance for mocking. </returns>
         public static OutboundEndpointDetail OutboundEndpointDetail(IPAddress ipAddress = null, int? port = null, double? latencyInMs = null, bool? isAccessible = null)
         {
-            return new OutboundEndpointDetail(ipAddress, port, latencyInMs, isAccessible);
+            return new OutboundEndpointDetail(ipAddress, port, latencyInMs, isAccessible, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StoragePool.DiskPoolIscsiTargetData"/>. </summary>
@@ -194,7 +257,23 @@ namespace Azure.ResourceManager.StoragePool.Models
             endpoints ??= new List<string>();
             sessions ??= new List<string>();
 
-            return new DiskPoolIscsiTargetData(id, name, resourceType, systemData, managedBy, managedByExtended?.ToList(), aclMode, staticAcls?.ToList(), luns?.ToList(), targetIqn, provisioningState, status, endpoints?.ToList(), port, sessions?.ToList());
+            return new DiskPoolIscsiTargetData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                managedBy,
+                managedByExtended?.ToList(),
+                aclMode,
+                staticAcls?.ToList(),
+                luns?.ToList(),
+                targetIqn,
+                provisioningState,
+                status,
+                endpoints?.ToList(),
+                port,
+                sessions?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedDiskIscsiLun"/>. </summary>
@@ -204,7 +283,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         /// <returns> A new <see cref="Models.ManagedDiskIscsiLun"/> instance for mocking. </returns>
         public static ManagedDiskIscsiLun ManagedDiskIscsiLun(string name = null, ResourceIdentifier managedDiskAzureResourceId = null, int? lun = null)
         {
-            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, lun);
+            return new ManagedDiskIscsiLun(name, managedDiskAzureResourceId, lun, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskPoolIscsiTargetCreateOrUpdateContent"/>. </summary>
@@ -225,7 +304,18 @@ namespace Azure.ResourceManager.StoragePool.Models
             staticAcls ??= new List<DiskPoolIscsiTargetPortalGroupAcl>();
             luns ??= new List<ManagedDiskIscsiLun>();
 
-            return new DiskPoolIscsiTargetCreateOrUpdateContent(id, name, resourceType, systemData, managedBy, managedByExtended?.ToList(), aclMode, targetIqn, staticAcls?.ToList(), luns?.ToList());
+            return new DiskPoolIscsiTargetCreateOrUpdateContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                managedBy,
+                managedByExtended?.ToList(),
+                aclMode,
+                targetIqn,
+                staticAcls?.ToList(),
+                luns?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiskPoolIscsiTargetPatch"/>. </summary>
@@ -244,7 +334,16 @@ namespace Azure.ResourceManager.StoragePool.Models
             staticAcls ??= new List<DiskPoolIscsiTargetPortalGroupAcl>();
             luns ??= new List<ManagedDiskIscsiLun>();
 
-            return new DiskPoolIscsiTargetPatch(id, name, resourceType, systemData, managedBy, managedByExtended?.ToList(), staticAcls?.ToList(), luns?.ToList());
+            return new DiskPoolIscsiTargetPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                managedBy,
+                managedByExtended?.ToList(),
+                staticAcls?.ToList(),
+                luns?.ToList(),
+                serializedAdditionalRawData: null);
         }
     }
 }

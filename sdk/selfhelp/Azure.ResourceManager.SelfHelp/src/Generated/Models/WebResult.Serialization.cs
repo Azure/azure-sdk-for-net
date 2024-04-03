@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class WebResult : IUtf8JsonSerializable
+    public partial class WebResult : IUtf8JsonSerializable, IJsonModel<WebResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReplacementKey))
             {
@@ -27,21 +37,52 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in SearchResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchResult>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static WebResult DeserializeWebResult(JsonElement element)
+        WebResult IJsonModel<WebResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebResult(document.RootElement, options);
+        }
+
+        internal static WebResult DeserializeWebResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> replacementKey = default;
-            Optional<IList<SearchResult>> searchResults = default;
+            string replacementKey = default;
+            IList<SearchResult> searchResults = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("replacementKey"u8))
@@ -58,13 +99,49 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<SearchResult> array = new List<SearchResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SearchResult.DeserializeSearchResult(item));
+                        array.Add(SearchResult.DeserializeSearchResult(item, options));
                     }
                     searchResults = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WebResult(replacementKey.Value, Optional.ToList(searchResults));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WebResult(replacementKey, searchResults ?? new ChangeTrackingList<SearchResult>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WebResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebResult IPersistableModel<WebResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

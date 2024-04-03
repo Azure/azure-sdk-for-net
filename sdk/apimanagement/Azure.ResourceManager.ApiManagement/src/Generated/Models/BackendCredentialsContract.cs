@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Details of the Credentials used to connect to Backend. </summary>
     public partial class BackendCredentialsContract
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BackendCredentialsContract"/>. </summary>
         public BackendCredentialsContract()
         {
@@ -28,13 +60,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="query"> Query Parameter description. </param>
         /// <param name="header"> Header Parameter description. </param>
         /// <param name="authorization"> Authorization header authentication. </param>
-        internal BackendCredentialsContract(IList<string> certificateIds, IList<string> certificate, IDictionary<string, IList<string>> query, IDictionary<string, IList<string>> header, BackendAuthorizationHeaderCredentials authorization)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendCredentialsContract(IList<string> certificateIds, IList<string> certificate, IDictionary<string, IList<string>> query, IDictionary<string, IList<string>> header, BackendAuthorizationHeaderCredentials authorization, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateIds = certificateIds;
             Certificate = certificate;
             Query = query;
             Header = header;
             Authorization = authorization;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> List of Client Certificate Ids. </summary>

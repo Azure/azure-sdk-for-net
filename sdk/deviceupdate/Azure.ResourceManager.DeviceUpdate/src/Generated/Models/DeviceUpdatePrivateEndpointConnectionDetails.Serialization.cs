@@ -5,30 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    public partial class DeviceUpdatePrivateEndpointConnectionDetails : IUtf8JsonSerializable
+    public partial class DeviceUpdatePrivateEndpointConnectionDetails : IUtf8JsonSerializable, IJsonModel<DeviceUpdatePrivateEndpointConnectionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceUpdatePrivateEndpointConnectionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
+            {
+                writer.WritePropertyName("privateIpAddress"u8);
+                writer.WriteStringValue(PrivateIPAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LinkIdentifier))
+            {
+                writer.WritePropertyName("linkIdentifier"u8);
+                writer.WriteStringValue(LinkIdentifier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
+            {
+                writer.WritePropertyName("memberName"u8);
+                writer.WriteStringValue(MemberName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DeviceUpdatePrivateEndpointConnectionDetails DeserializeDeviceUpdatePrivateEndpointConnectionDetails(JsonElement element)
+        DeviceUpdatePrivateEndpointConnectionDetails IJsonModel<DeviceUpdatePrivateEndpointConnectionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceUpdatePrivateEndpointConnectionDetails(document.RootElement, options);
+        }
+
+        internal static DeviceUpdatePrivateEndpointConnectionDetails DeserializeDeviceUpdatePrivateEndpointConnectionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> privateIPAddress = default;
-            Optional<string> linkIdentifier = default;
-            Optional<string> groupId = default;
-            Optional<string> memberName = default;
+            string id = default;
+            string privateIPAddress = default;
+            string linkIdentifier = default;
+            string groupId = default;
+            string memberName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -56,8 +123,50 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     memberName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeviceUpdatePrivateEndpointConnectionDetails(id.Value, privateIPAddress.Value, linkIdentifier.Value, groupId.Value, memberName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceUpdatePrivateEndpointConnectionDetails(
+                id,
+                privateIPAddress,
+                linkIdentifier,
+                groupId,
+                memberName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeviceUpdatePrivateEndpointConnectionDetails IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceUpdatePrivateEndpointConnectionDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceUpdatePrivateEndpointConnectionDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

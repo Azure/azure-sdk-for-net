@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppAzureActiveDirectoryConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppAzureActiveDirectoryConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -23,37 +34,68 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryRegistrationConfiguration>(Registration, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryLoginConfiguration>(Login, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryValidationConfiguration>(Validation, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {
                 writer.WritePropertyName("isAutoProvisioned"u8);
                 writer.WriteBooleanValue(IsAutoProvisioned.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppAzureActiveDirectoryConfiguration DeserializeContainerAppAzureActiveDirectoryConfiguration(JsonElement element)
+        ContainerAppAzureActiveDirectoryConfiguration IJsonModel<ContainerAppAzureActiveDirectoryConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppAzureActiveDirectoryConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppAzureActiveDirectoryConfiguration DeserializeContainerAppAzureActiveDirectoryConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppAzureActiveDirectoryRegistrationConfiguration> registration = default;
-            Optional<ContainerAppAzureActiveDirectoryLoginConfiguration> login = default;
-            Optional<ContainerAppAzureActiveDirectoryValidationConfiguration> validation = default;
-            Optional<bool> isAutoProvisioned = default;
+            bool? enabled = default;
+            ContainerAppAzureActiveDirectoryRegistrationConfiguration registration = default;
+            ContainerAppAzureActiveDirectoryLoginConfiguration login = default;
+            ContainerAppAzureActiveDirectoryValidationConfiguration validation = default;
+            bool? isAutoProvisioned = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -71,7 +113,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value);
+                    registration = ContainerAppAzureActiveDirectoryRegistrationConfiguration.DeserializeContainerAppAzureActiveDirectoryRegistrationConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("login"u8))
@@ -80,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value);
+                    login = ContainerAppAzureActiveDirectoryLoginConfiguration.DeserializeContainerAppAzureActiveDirectoryLoginConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validation"u8))
@@ -89,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value);
+                    validation = ContainerAppAzureActiveDirectoryValidationConfiguration.DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAutoProvisioned"u8))
@@ -101,8 +143,50 @@ namespace Azure.ResourceManager.AppContainers.Models
                     isAutoProvisioned = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppAzureActiveDirectoryConfiguration(Optional.ToNullable(enabled), registration.Value, login.Value, validation.Value, Optional.ToNullable(isAutoProvisioned));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppAzureActiveDirectoryConfiguration(
+                enabled,
+                registration,
+                login,
+                validation,
+                isAutoProvisioned,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppAzureActiveDirectoryConfiguration IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppAzureActiveDirectoryConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

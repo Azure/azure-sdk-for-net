@@ -5,23 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    public partial class ContainerServiceFleetUpdateRunStatus
+    public partial class ContainerServiceFleetUpdateRunStatus : IUtf8JsonSerializable, IJsonModel<ContainerServiceFleetUpdateRunStatus>
     {
-        internal static ContainerServiceFleetUpdateRunStatus DeserializeContainerServiceFleetUpdateRunStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceFleetUpdateRunStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceFleetUpdateRunStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Stages))
+            {
+                writer.WritePropertyName("stages"u8);
+                writer.WriteStartArray();
+                foreach (var item in Stages)
+                {
+                    writer.WriteObjectValue<ContainerServiceFleetUpdateStageStatus>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeImageSelection))
+            {
+                writer.WritePropertyName("nodeImageSelection"u8);
+                writer.WriteObjectValue<NodeImageSelectionStatus>(NodeImageSelection, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerServiceFleetUpdateRunStatus IJsonModel<ContainerServiceFleetUpdateRunStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceFleetUpdateRunStatus(document.RootElement, options);
+        }
+
+        internal static ContainerServiceFleetUpdateRunStatus DeserializeContainerServiceFleetUpdateRunStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerServiceFleetUpdateStatus> status = default;
-            Optional<IReadOnlyList<ContainerServiceFleetUpdateStageStatus>> stages = default;
-            Optional<NodeImageSelectionStatus> nodeImageSelection = default;
+            ContainerServiceFleetUpdateStatus status = default;
+            IReadOnlyList<ContainerServiceFleetUpdateStageStatus> stages = default;
+            NodeImageSelectionStatus nodeImageSelection = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -30,7 +97,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value);
+                    status = ContainerServiceFleetUpdateStatus.DeserializeContainerServiceFleetUpdateStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stages"u8))
@@ -42,7 +109,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     List<ContainerServiceFleetUpdateStageStatus> array = new List<ContainerServiceFleetUpdateStageStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceFleetUpdateStageStatus.DeserializeContainerServiceFleetUpdateStageStatus(item));
+                        array.Add(ContainerServiceFleetUpdateStageStatus.DeserializeContainerServiceFleetUpdateStageStatus(item, options));
                     }
                     stages = array;
                     continue;
@@ -53,11 +120,47 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value);
+                    nodeImageSelection = NodeImageSelectionStatus.DeserializeNodeImageSelectionStatus(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceFleetUpdateRunStatus(status.Value, Optional.ToList(stages), nodeImageSelection.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServiceFleetUpdateRunStatus(status, stages ?? new ChangeTrackingList<ContainerServiceFleetUpdateStageStatus>(), nodeImageSelection, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceFleetUpdateRunStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceFleetUpdateRunStatus IPersistableModel<ContainerServiceFleetUpdateRunStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateRunStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceFleetUpdateRunStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateRunStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceFleetUpdateRunStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

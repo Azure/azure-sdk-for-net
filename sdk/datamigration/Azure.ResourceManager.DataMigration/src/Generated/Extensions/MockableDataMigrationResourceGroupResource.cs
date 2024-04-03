@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlDBInstanceName"> The <see cref="string"/> to use. </param>
@@ -79,6 +84,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlDb_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlDBResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,6 +126,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlMIResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="managedInstanceName"> The <see cref="string"/> to use. </param>
@@ -138,6 +159,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlMi_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlMIResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +201,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlVmResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlVirtualMachineName"> The <see cref="string"/> to use. </param>
@@ -197,6 +234,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DatabaseMigrationsSqlVm_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DatabaseMigrationSqlVmResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -231,6 +276,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sqlMigrationServiceName"> Name of the SQL Migration Service. </param>
@@ -253,6 +306,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SqlMigrationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SqlMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -284,6 +345,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="serviceName"> Name of the service. </param>
@@ -306,6 +375,14 @@ namespace Azure.ResourceManager.DataMigration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Services_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-30-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataMigrationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class SubscriptionScopeProperties
+    internal partial class SubscriptionScopeProperties : IUtf8JsonSerializable, IJsonModel<SubscriptionScopeProperties>
     {
-        internal static SubscriptionScopeProperties DeserializeSubscriptionScopeProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionScopeProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubscriptionScopeProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Scopes))
+            {
+                writer.WritePropertyName("scopes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Scopes)
+                {
+                    writer.WriteObjectValue<ScopeProperties>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SubscriptionScopeProperties IJsonModel<SubscriptionScopeProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionScopeProperties(document.RootElement, options);
+        }
+
+        internal static SubscriptionScopeProperties DeserializeSubscriptionScopeProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ScopeProperties>> scopes = default;
+            IReadOnlyList<ScopeProperties> scopes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("scopes"u8))
@@ -31,13 +88,49 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ScopeProperties> array = new List<ScopeProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ScopeProperties.DeserializeScopeProperties(item));
+                        array.Add(ScopeProperties.DeserializeScopeProperties(item, options));
                     }
                     scopes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionScopeProperties(Optional.ToList(scopes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubscriptionScopeProperties(scopes ?? new ChangeTrackingList<ScopeProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubscriptionScopeProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubscriptionScopeProperties IPersistableModel<SubscriptionScopeProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubscriptionScopeProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubscriptionScopeProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

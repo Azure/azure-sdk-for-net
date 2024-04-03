@@ -24,7 +24,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OutputSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string nodeName = default;
-            Optional<IList<OutputSelector>> outputSelectors = default;
+            IList<OutputSelector> outputSelectors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nodeName"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new NodeInput(nodeName, Optional.ToList(outputSelectors));
+            return new NodeInput(nodeName, outputSelectors ?? new ChangeTrackingList<OutputSelector>());
         }
     }
 }

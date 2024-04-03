@@ -5,25 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SqlLocationCapabilities
+    public partial class SqlLocationCapabilities : IUtf8JsonSerializable, IJsonModel<SqlLocationCapabilities>
     {
-        internal static SqlLocationCapabilities DeserializeSqlLocationCapabilities(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlLocationCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlLocationCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlLocationCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlLocationCapabilities)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedServerVersions))
+            {
+                writer.WritePropertyName("supportedServerVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedServerVersions)
+                {
+                    writer.WriteObjectValue<SqlServerVersionCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedManagedInstanceVersions))
+            {
+                writer.WritePropertyName("supportedManagedInstanceVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedManagedInstanceVersions)
+                {
+                    writer.WriteObjectValue<ManagedInstanceVersionCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlLocationCapabilities IJsonModel<SqlLocationCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlLocationCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlLocationCapabilities)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlLocationCapabilities(document.RootElement, options);
+        }
+
+        internal static SqlLocationCapabilities DeserializeSqlLocationCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<SqlServerVersionCapability>> supportedServerVersions = default;
-            Optional<IReadOnlyList<ManagedInstanceVersionCapability>> supportedManagedInstanceVersions = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<SqlServerVersionCapability> supportedServerVersions = default;
+            IReadOnlyList<ManagedInstanceVersionCapability> supportedManagedInstanceVersions = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -40,7 +124,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<SqlServerVersionCapability> array = new List<SqlServerVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item));
+                        array.Add(SqlServerVersionCapability.DeserializeSqlServerVersionCapability(item, options));
                     }
                     supportedServerVersions = array;
                     continue;
@@ -54,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceVersionCapability> array = new List<ManagedInstanceVersionCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item));
+                        array.Add(ManagedInstanceVersionCapability.DeserializeManagedInstanceVersionCapability(item, options));
                     }
                     supportedManagedInstanceVersions = array;
                     continue;
@@ -73,8 +157,169 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlLocationCapabilities(name.Value, Optional.ToList(supportedServerVersions), Optional.ToList(supportedManagedInstanceVersions), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlLocationCapabilities(
+                name,
+                supportedServerVersions ?? new ChangeTrackingList<SqlServerVersionCapability>(),
+                supportedManagedInstanceVersions ?? new ChangeTrackingList<ManagedInstanceVersionCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedServerVersions) || hasPropertyOverride)
+            {
+                if (SupportedServerVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedServerVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedServerVersions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedServerVersions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedManagedInstanceVersions), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedManagedInstanceVersions) || hasPropertyOverride)
+            {
+                if (SupportedManagedInstanceVersions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedManagedInstanceVersions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedManagedInstanceVersions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedManagedInstanceVersions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SqlLocationCapabilities>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlLocationCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlLocationCapabilities)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlLocationCapabilities IPersistableModel<SqlLocationCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlLocationCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlLocationCapabilities(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlLocationCapabilities)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlLocationCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

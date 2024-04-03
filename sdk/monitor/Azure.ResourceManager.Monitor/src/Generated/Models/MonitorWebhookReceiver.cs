@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> A webhook receiver. </summary>
     public partial class MonitorWebhookReceiver
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MonitorWebhookReceiver"/>. </summary>
         /// <param name="name"> The name of the webhook receiver. Names must be unique across all receivers within an action group. </param>
         /// <param name="serviceUri"> The URI where webhooks should be sent. </param>
@@ -34,7 +66,8 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="objectId"> Indicates the webhook app object Id for aad auth. </param>
         /// <param name="identifierUri"> Indicates the identifier uri for aad auth. </param>
         /// <param name="tenantId"> Indicates the tenant id for aad auth. </param>
-        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MonitorWebhookReceiver(string name, Uri serviceUri, bool? useCommonAlertSchema, bool? useAadAuth, string objectId, Uri identifierUri, Guid? tenantId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ServiceUri = serviceUri;
@@ -43,6 +76,12 @@ namespace Azure.ResourceManager.Monitor.Models
             ObjectId = objectId;
             IdentifierUri = identifierUri;
             TenantId = tenantId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorWebhookReceiver"/> for deserialization. </summary>
+        internal MonitorWebhookReceiver()
+        {
         }
 
         /// <summary> The name of the webhook receiver. Names must be unique across all receivers within an action group. </summary>

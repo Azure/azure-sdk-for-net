@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearning;
 using Azure.ResourceManager.MachineLearning.Models;
 
 namespace Azure.ResourceManager.MachineLearning.Mocking
@@ -71,6 +68,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningUsage.DeserializeMachineLearningUsage(e), UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -94,6 +95,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Usages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -103,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningUsage.DeserializeMachineLearningUsage, UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningUsage.DeserializeMachineLearningUsage(e), UsagesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -116,6 +121,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -125,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual AsyncPageable<MachineLearningVmSize> GetMachineLearningVmSizesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningVmSize.DeserializeMachineLearningVmSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -139,6 +148,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualMachineSizes_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location upon which virtual-machine-sizes is queried. </param>
@@ -147,7 +160,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         public virtual Pageable<MachineLearningVmSize> GetMachineLearningVmSizes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => VirtualMachineSizesRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningVmSize.DeserializeMachineLearningVmSize, VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningVmSize.DeserializeMachineLearningVmSize(e), VirtualMachineSizesClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningVmSizes", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -160,6 +173,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +190,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -187,6 +204,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for update quota is queried. </param>
@@ -199,7 +220,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateUpdateRequest(Id.SubscriptionId, location, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MachineLearningWorkspaceQuotaUpdate.DeserializeMachineLearningWorkspaceQuotaUpdate(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.UpdateMachineLearningQuotas", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -212,6 +233,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Quotas_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,7 +247,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -236,6 +261,10 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Quotas_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location for which resource usage is queried. </param>
@@ -245,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotasRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotasRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota, QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MachineLearningResourceQuota.DeserializeMachineLearningResourceQuota(e), QuotasClientDiagnostics, Pipeline, "MockableMachineLearningSubscriptionResource.GetMachineLearningQuotas", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,6 +287,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningRegistryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,6 +318,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <term>Operation Id</term>
         /// <description>Registries_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningRegistryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -302,6 +347,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,6 +379,14 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workspaces_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MachineLearningWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

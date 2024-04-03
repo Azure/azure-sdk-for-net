@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="version"> Optional. Deployment model version. If version is not specified, a default version will be assigned. The default version is different for different models and might change when there is new version available for a model. Default version for a model could be found from list models API. </param>
         /// <param name="source"> Optional. Deployment model source ARM resource ID. </param>
         /// <param name="callRateLimit"> The call rate limit Cognitive Services account. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="baseModel"> Base Model Identifier. </param>
         /// <param name="isDefaultVersion"> If the model is default version. </param>
         /// <param name="skus"> The list of Model Sku. </param>
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="deprecation"> Cognitive Services account ModelDeprecationInfo. </param>
         /// <param name="lifecycleStatus"> Model lifecycle status. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
-        internal CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(format, name, version, source, callRateLimit)
+        internal CognitiveServicesAccountModel(string format, string name, string version, string source, ServiceAccountCallRateLimit callRateLimit, IDictionary<string, BinaryData> serializedAdditionalRawData, CognitiveServicesAccountDeploymentModel baseModel, bool? isDefaultVersion, IList<CognitiveServicesModelSku> skus, int? maxCapacity, IDictionary<string, string> capabilities, IDictionary<string, string> finetuneCapabilities, ServiceAccountModelDeprecationInfo deprecation, ModelLifecycleStatus? lifecycleStatus, SystemData systemData) : base(format, name, version, source, callRateLimit, serializedAdditionalRawData)
         {
             BaseModel = baseModel;
             IsDefaultVersion = isDefaultVersion;
@@ -51,22 +52,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Base Model Identifier. </summary>
+        [WirePath("baseModel")]
         public CognitiveServicesAccountDeploymentModel BaseModel { get; set; }
         /// <summary> If the model is default version. </summary>
+        [WirePath("isDefaultVersion")]
         public bool? IsDefaultVersion { get; set; }
         /// <summary> The list of Model Sku. </summary>
+        [WirePath("skus")]
         public IList<CognitiveServicesModelSku> Skus { get; }
         /// <summary> The max capacity. </summary>
+        [WirePath("maxCapacity")]
         public int? MaxCapacity { get; set; }
         /// <summary> The capabilities. </summary>
+        [WirePath("capabilities")]
         public IDictionary<string, string> Capabilities { get; }
         /// <summary> The capabilities for finetune models. </summary>
+        [WirePath("finetuneCapabilities")]
         public IDictionary<string, string> FinetuneCapabilities { get; }
         /// <summary> Cognitive Services account ModelDeprecationInfo. </summary>
+        [WirePath("deprecation")]
         public ServiceAccountModelDeprecationInfo Deprecation { get; set; }
         /// <summary> Model lifecycle status. </summary>
+        [WirePath("lifecycleStatus")]
         public ModelLifecycleStatus? LifecycleStatus { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        [WirePath("systemData")]
         public SystemData SystemData { get; }
     }
 }

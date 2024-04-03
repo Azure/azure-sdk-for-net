@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class StringNotBeginsWithAdvancedFilter : IUtf8JsonSerializable
+    public partial class StringNotBeginsWithAdvancedFilter : IUtf8JsonSerializable, IJsonModel<StringNotBeginsWithAdvancedFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StringNotBeginsWithAdvancedFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StringNotBeginsWithAdvancedFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotBeginsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StringNotBeginsWithAdvancedFilter)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Values))
             {
@@ -33,18 +43,49 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StringNotBeginsWithAdvancedFilter DeserializeStringNotBeginsWithAdvancedFilter(JsonElement element)
+        StringNotBeginsWithAdvancedFilter IJsonModel<StringNotBeginsWithAdvancedFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotBeginsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StringNotBeginsWithAdvancedFilter)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStringNotBeginsWithAdvancedFilter(document.RootElement, options);
+        }
+
+        internal static StringNotBeginsWithAdvancedFilter DeserializeStringNotBeginsWithAdvancedFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> values = default;
+            IList<string> values = default;
             AdvancedFilterOperatorType operatorType = default;
-            Optional<string> key = default;
+            string key = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("values"u8))
@@ -71,8 +112,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     key = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StringNotBeginsWithAdvancedFilter(operatorType, key.Value, Optional.ToList(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StringNotBeginsWithAdvancedFilter(operatorType, key, serializedAdditionalRawData, values ?? new ChangeTrackingList<string>());
         }
+
+        BinaryData IPersistableModel<StringNotBeginsWithAdvancedFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotBeginsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StringNotBeginsWithAdvancedFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StringNotBeginsWithAdvancedFilter IPersistableModel<StringNotBeginsWithAdvancedFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StringNotBeginsWithAdvancedFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStringNotBeginsWithAdvancedFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StringNotBeginsWithAdvancedFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StringNotBeginsWithAdvancedFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

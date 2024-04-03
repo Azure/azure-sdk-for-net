@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
-                writer.WriteObjectValue(PreserveCompressionFileNameAsFolder);
+                writer.WriteObjectValue<object>(PreserveCompressionFileNameAsFolder);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -40,7 +40,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> preserveCompressionFileNameAsFolder = default;
+            object preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -63,14 +63,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TarReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
+            return new TarReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
 
         internal partial class TarReadSettingsConverter : JsonConverter<TarReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, TarReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TarReadSettings>(model);
             }
             public override TarReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -5,38 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureOperatorNexusArmTemplateArtifactProfile : IUtf8JsonSerializable
+    public partial class AzureOperatorNexusArmTemplateArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureOperatorNexusArmTemplateArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureOperatorNexusArmTemplateArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureOperatorNexusArmTemplateArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateArtifactProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateArtifactProfile))
             {
                 writer.WritePropertyName("templateArtifactProfile"u8);
-                writer.WriteObjectValue(TemplateArtifactProfile);
+                writer.WriteObjectValue<ArmTemplateArtifactProfile>(TemplateArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureOperatorNexusArmTemplateArtifactProfile DeserializeAzureOperatorNexusArmTemplateArtifactProfile(JsonElement element)
+        AzureOperatorNexusArmTemplateArtifactProfile IJsonModel<AzureOperatorNexusArmTemplateArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateArtifactProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureOperatorNexusArmTemplateArtifactProfile(document.RootElement, options);
+        }
+
+        internal static AzureOperatorNexusArmTemplateArtifactProfile DeserializeAzureOperatorNexusArmTemplateArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ArmTemplateArtifactProfile> templateArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            ArmTemplateArtifactProfile templateArtifactProfile = default;
+            WritableSubResource artifactStore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateArtifactProfile"u8))
@@ -45,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    templateArtifactProfile = ArmTemplateArtifactProfile.DeserializeArmTemplateArtifactProfile(property.Value);
+                    templateArtifactProfile = ArmTemplateArtifactProfile.DeserializeArmTemplateArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureOperatorNexusArmTemplateArtifactProfile(artifactStore, templateArtifactProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureOperatorNexusArmTemplateArtifactProfile(artifactStore, serializedAdditionalRawData, templateArtifactProfile);
         }
+
+        BinaryData IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateArtifactProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureOperatorNexusArmTemplateArtifactProfile IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureOperatorNexusArmTemplateArtifactProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureOperatorNexusArmTemplateArtifactProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureOperatorNexusArmTemplateArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -2,11 +2,12 @@
   <PropertyGroup>
     <Description>An OpenTelemetry .NET distro that exports to Azure Monitor</Description>
     <AssemblyTitle>AzureMonitor OpenTelemetry ASP.NET Core Distro</AssemblyTitle>
-    <Version>1.1.0-beta.1</Version>
+    <Version>1.2.0-beta.3</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <!-- TODO: Remove this condition from ApiCompatVersion after we release our next stable. Need to disable this because added new target framwork. -->
+    <ApiCompatVersion Condition="'$(TargetFramework)' != 'net6.0'">1.1.0</ApiCompatVersion>
     <PackageTags>Azure Monitor OpenTelemetry Exporter Distro ApplicationInsights</PackageTags>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net6.0;$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
     <NoWarn>SA1636</NoWarn>
     <!-- this is temporary. will remove in future PR. -->
@@ -15,21 +16,27 @@
 
   <ItemGroup>
     <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
-    <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
   </ItemGroup>
 
   <ItemGroup>
     <!-- Depending on monthly deliverables, we may switch between PackageReference or ProjectReference. Keeping both here to make the switch easier. -->
-    
-    <!--<PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />-->
-    <ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+
+    <!-- FOR PUBLIC RELEASES, MUST USE PackageReference. THIS REQUIRES A STAGGERED RELEASE IF SHIPPING A NEW EXPORTER. -->
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" />
+    <PackageReference Include="Azure.Monitor.OpenTelemetry.LiveMetrics" />
+
+    <!-- FOR LOCAL DEV, ProjectReference IS PREFERRED. -->
+    <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />-->
+    <!--<ProjectReference Include="..\..\Azure.Monitor.OpenTelemetry.LiveMetrics\src\Azure.Monitor.OpenTelemetry.LiveMetrics.csproj" />-->
   </ItemGroup>
-  
-  <!-- Shared source from Exporter -->
+
+  <!-- Shared sources -->
   <ItemGroup>
     <Compile Include="..\..\Azure.Monitor.OpenTelemetry.Exporter\src\Internals\ExceptionExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEventFormatting.cs" LinkBase="Shared\Core" />
+    <Compile Include="$(AzureCoreSharedSources)EventSourceEvent.cs" LinkBase="Shared\Core" />
   </ItemGroup>
-  
+
 </Project>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
@@ -43,11 +44,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// Contains information of the Identity Details for the BI.
         /// If it is null, default will be considered as System Assigned.
         /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="recoverOn"> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </param>
-        internal BackupRecoveryTimeBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, DateTimeOffset recoverOn) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails)
+        internal BackupRecoveryTimeBasedRestoreContent(string objectType, RestoreTargetInfoBase restoreTargetInfo, SourceDataStoreType sourceDataStoreType, ResourceIdentifier sourceResourceId, DataProtectionIdentityDetails identityDetails, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset recoverOn) : base(objectType, restoreTargetInfo, sourceDataStoreType, sourceResourceId, identityDetails, serializedAdditionalRawData)
         {
             RecoverOn = recoverOn;
             ObjectType = objectType ?? "AzureBackupRecoveryTimeBasedRestoreRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackupRecoveryTimeBasedRestoreContent"/> for deserialization. </summary>
+        internal BackupRecoveryTimeBasedRestoreContent()
+        {
         }
 
         /// <summary> The recovery time in ISO 8601 format example - 2020-08-14T17:30:00.0000000Z. </summary>

@@ -6,17 +6,31 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSapAseDatabaseProtectedItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapAseDatabaseProtectedItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
             if (Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
@@ -31,6 +45,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             {
                 writer.WritePropertyName("parentType"u8);
                 writer.WriteStringValue(ParentType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProtectionStatus))
+            {
+                writer.WritePropertyName("protectionStatus"u8);
+                writer.WriteStringValue(ProtectionStatus);
             }
             if (Optional.IsDefined(ProtectionState))
             {
@@ -50,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue(LastBackupErrorDetail);
+                writer.WriteObjectValue<BackupErrorDetail>(LastBackupErrorDetail, options);
             }
             if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
@@ -65,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<VmWorkloadProtectedItemExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
@@ -74,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KpiResourceHealthDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -84,12 +103,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DistributedNodesInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("protectedItemType"u8);
             writer.WriteStringValue(ProtectedItemType);
+            if (options.Format != "W" && Optional.IsDefined(BackupManagementType))
+            {
+                writer.WritePropertyName("backupManagementType"u8);
+                writer.WriteStringValue(BackupManagementType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(WorkloadType))
+            {
+                writer.WritePropertyName("workloadType"u8);
+                writer.WriteStringValue(WorkloadType.Value.ToString());
+            }
             if (Optional.IsDefined(ContainerName))
             {
                 writer.WritePropertyName("containerName"u8);
@@ -170,47 +199,84 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(VaultId))
+            {
+                writer.WritePropertyName("vaultId"u8);
+                writer.WriteStringValue(VaultId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSapAseDatabaseProtectedItem DeserializeVmWorkloadSapAseDatabaseProtectedItem(JsonElement element)
+        VmWorkloadSapAseDatabaseProtectedItem IJsonModel<VmWorkloadSapAseDatabaseProtectedItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSapAseDatabaseProtectedItem(document.RootElement, options);
+        }
+
+        internal static VmWorkloadSapAseDatabaseProtectedItem DeserializeVmWorkloadSapAseDatabaseProtectedItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<string> serverName = default;
-            Optional<string> parentName = default;
-            Optional<string> parentType = default;
-            Optional<string> protectionStatus = default;
-            Optional<BackupProtectionState> protectionState = default;
-            Optional<LastBackupStatus> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastBackupTime = default;
-            Optional<BackupErrorDetail> lastBackupErrorDetail = default;
-            Optional<string> protectedItemDataSourceId = default;
-            Optional<VmWorkloadProtectedItemHealthStatus> protectedItemHealthStatus = default;
-            Optional<VmWorkloadProtectedItemExtendedInfo> extendedInfo = default;
-            Optional<IDictionary<string, KpiResourceHealthDetails>> kpisHealths = default;
-            Optional<IList<DistributedNodesInfo>> nodesList = default;
+            string friendlyName = default;
+            string serverName = default;
+            string parentName = default;
+            string parentType = default;
+            string protectionStatus = default;
+            BackupProtectionState? protectionState = default;
+            LastBackupStatus? lastBackupStatus = default;
+            DateTimeOffset? lastBackupTime = default;
+            BackupErrorDetail lastBackupErrorDetail = default;
+            string protectedItemDataSourceId = default;
+            VmWorkloadProtectedItemHealthStatus? protectedItemHealthStatus = default;
+            VmWorkloadProtectedItemExtendedInfo extendedInfo = default;
+            IDictionary<string, KpiResourceHealthDetails> kpisHealths = default;
+            IList<DistributedNodesInfo> nodesList = default;
             string protectedItemType = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<BackupDataSourceType> workloadType = default;
-            Optional<string> containerName = default;
-            Optional<ResourceIdentifier> sourceResourceId = default;
-            Optional<ResourceIdentifier> policyId = default;
-            Optional<DateTimeOffset> lastRecoveryPoint = default;
-            Optional<string> backupSetName = default;
-            Optional<BackupCreateMode> createMode = default;
-            Optional<DateTimeOffset> deferredDeleteTimeInUTC = default;
-            Optional<bool> isScheduledForDeferredDelete = default;
-            Optional<string> deferredDeleteTimeRemaining = default;
-            Optional<bool> isDeferredDeleteScheduleUpcoming = default;
-            Optional<bool> isRehydrate = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isArchiveEnabled = default;
-            Optional<string> policyName = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
+            BackupManagementType? backupManagementType = default;
+            BackupDataSourceType? workloadType = default;
+            string containerName = default;
+            ResourceIdentifier sourceResourceId = default;
+            ResourceIdentifier policyId = default;
+            DateTimeOffset? lastRecoveryPoint = default;
+            string backupSetName = default;
+            BackupCreateMode? createMode = default;
+            DateTimeOffset? deferredDeleteTimeInUTC = default;
+            bool? isScheduledForDeferredDelete = default;
+            string deferredDeleteTimeRemaining = default;
+            bool? isDeferredDeleteScheduleUpcoming = default;
+            bool? isRehydrate = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isArchiveEnabled = default;
+            string policyName = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            string vaultId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -271,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value);
+                    lastBackupErrorDetail = BackupErrorDetail.DeserializeBackupErrorDetail(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemDataSourceId"u8))
@@ -294,7 +360,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value);
+                    extendedInfo = VmWorkloadProtectedItemExtendedInfo.DeserializeVmWorkloadProtectedItemExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kpisHealths"u8))
@@ -306,7 +372,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, KpiResourceHealthDetails> dictionary = new Dictionary<string, KpiResourceHealthDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value));
+                        dictionary.Add(property0.Name, KpiResourceHealthDetails.DeserializeKpiResourceHealthDetails(property0.Value, options));
                     }
                     kpisHealths = dictionary;
                     continue;
@@ -320,7 +386,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<DistributedNodesInfo> array = new List<DistributedNodesInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item));
+                        array.Add(DistributedNodesInfo.DeserializeDistributedNodesInfo(item, options));
                     }
                     nodesList = array;
                     continue;
@@ -472,8 +538,83 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     softDeleteRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (property.NameEquals("vaultId"u8))
+                {
+                    vaultId = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadSapAseDatabaseProtectedItem(protectedItemType, Optional.ToNullable(backupManagementType), Optional.ToNullable(workloadType), containerName.Value, sourceResourceId.Value, policyId.Value, Optional.ToNullable(lastRecoveryPoint), backupSetName.Value, Optional.ToNullable(createMode), Optional.ToNullable(deferredDeleteTimeInUTC), Optional.ToNullable(isScheduledForDeferredDelete), deferredDeleteTimeRemaining.Value, Optional.ToNullable(isDeferredDeleteScheduleUpcoming), Optional.ToNullable(isRehydrate), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isArchiveEnabled), policyName.Value, Optional.ToNullable(softDeleteRetentionPeriodInDays), friendlyName.Value, serverName.Value, parentName.Value, parentType.Value, protectionStatus.Value, Optional.ToNullable(protectionState), Optional.ToNullable(lastBackupStatus), Optional.ToNullable(lastBackupTime), lastBackupErrorDetail.Value, protectedItemDataSourceId.Value, Optional.ToNullable(protectedItemHealthStatus), extendedInfo.Value, Optional.ToDictionary(kpisHealths), Optional.ToList(nodesList));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmWorkloadSapAseDatabaseProtectedItem(
+                protectedItemType,
+                backupManagementType,
+                workloadType,
+                containerName,
+                sourceResourceId,
+                policyId,
+                lastRecoveryPoint,
+                backupSetName,
+                createMode,
+                deferredDeleteTimeInUTC,
+                isScheduledForDeferredDelete,
+                deferredDeleteTimeRemaining,
+                isDeferredDeleteScheduleUpcoming,
+                isRehydrate,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isArchiveEnabled,
+                policyName,
+                softDeleteRetentionPeriodInDays,
+                vaultId,
+                serializedAdditionalRawData,
+                friendlyName,
+                serverName,
+                parentName,
+                parentType,
+                protectionStatus,
+                protectionState,
+                lastBackupStatus,
+                lastBackupTime,
+                lastBackupErrorDetail,
+                protectedItemDataSourceId,
+                protectedItemHealthStatus,
+                extendedInfo,
+                kpisHealths ?? new ChangeTrackingDictionary<string, KpiResourceHealthDetails>(),
+                nodesList ?? new ChangeTrackingList<DistributedNodesInfo>());
         }
+
+        BinaryData IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VmWorkloadSapAseDatabaseProtectedItem IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmWorkloadSapAseDatabaseProtectedItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSapAseDatabaseProtectedItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmWorkloadSapAseDatabaseProtectedItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

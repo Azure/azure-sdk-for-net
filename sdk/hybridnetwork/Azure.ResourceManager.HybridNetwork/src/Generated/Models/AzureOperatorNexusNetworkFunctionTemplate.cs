@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
@@ -22,12 +22,13 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusNetworkFunctionTemplate"/>. </summary>
         /// <param name="nfviType"> The network function type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="networkFunctionApplications">
         /// Network function applications.
         /// Please note <see cref="AzureOperatorNexusNetworkFunctionApplication"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="AzureOperatorNexusNetworkFunctionArmTemplateApplication"/> and <see cref="AzureOperatorNexusNetworkFunctionImageApplication"/>.
         /// </param>
-        internal AzureOperatorNexusNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IList<AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications) : base(nfviType)
+        internal AzureOperatorNexusNetworkFunctionTemplate(VirtualNetworkFunctionNfviType nfviType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications) : base(nfviType, serializedAdditionalRawData)
         {
             NetworkFunctionApplications = networkFunctionApplications;
             NfviType = nfviType;

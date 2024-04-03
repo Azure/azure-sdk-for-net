@@ -5,16 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class AppliedReservationData
+    public partial class AppliedReservationData : IUtf8JsonSerializable, IJsonModel<AppliedReservationData>
     {
-        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppliedReservationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppliedReservationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ReservationOrderIds))
+            {
+                writer.WritePropertyName("reservationOrderIds"u8);
+                writer.WriteObjectValue<AppliedReservationList>(ReservationOrderIds, options);
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppliedReservationData IJsonModel<AppliedReservationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppliedReservationData(document.RootElement, options);
+        }
+
+        internal static AppliedReservationData DeserializeAppliedReservationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,8 +96,10 @@ namespace Azure.ResourceManager.Reservations.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<AppliedReservationList> reservationOrderIds = default;
+            SystemData systemData = default;
+            AppliedReservationList reservationOrderIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -65,14 +141,56 @@ namespace Azure.ResourceManager.Reservations.Models
                             {
                                 continue;
                             }
-                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value);
+                            reservationOrderIds = AppliedReservationList.DeserializeAppliedReservationList(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppliedReservationData(id, name, type, systemData.Value, reservationOrderIds.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppliedReservationData(
+                id,
+                name,
+                type,
+                systemData,
+                reservationOrderIds,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppliedReservationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppliedReservationData IPersistableModel<AppliedReservationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppliedReservationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppliedReservationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppliedReservationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppliedReservationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

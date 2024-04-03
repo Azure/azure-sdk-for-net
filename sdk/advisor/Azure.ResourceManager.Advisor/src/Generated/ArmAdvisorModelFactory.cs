@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Advisor.Models
@@ -33,7 +32,16 @@ namespace Azure.ResourceManager.Advisor.Models
             applicableScenarios ??= new List<Scenario>();
             supportedValues ??= new List<MetadataSupportedValueDetail>();
 
-            return new MetadataEntityData(id, name, resourceType, systemData, displayName, dependsOn?.ToList(), applicableScenarios?.ToList(), supportedValues?.ToList());
+            return new MetadataEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                dependsOn?.ToList(),
+                applicableScenarios?.ToList(),
+                supportedValues?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetadataSupportedValueDetail"/>. </summary>
@@ -42,7 +50,7 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <returns> A new <see cref="Models.MetadataSupportedValueDetail"/> instance for mocking. </returns>
         public static MetadataSupportedValueDetail MetadataSupportedValueDetail(string id = null, string displayName = null)
         {
-            return new MetadataSupportedValueDetail(id, displayName);
+            return new MetadataSupportedValueDetail(id, displayName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfigData"/>. </summary>
@@ -58,7 +66,15 @@ namespace Azure.ResourceManager.Advisor.Models
         {
             digests ??= new List<DigestConfig>();
 
-            return new ConfigData(id, name, resourceType, systemData, exclude, lowCpuThreshold, digests?.ToList());
+            return new ConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                exclude,
+                lowCpuThreshold,
+                digests?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Advisor.ResourceRecommendationBaseData"/>. </summary>
@@ -95,7 +111,31 @@ namespace Azure.ResourceManager.Advisor.Models
             remediation ??= new Dictionary<string, BinaryData>();
             exposedMetadataProperties ??= new Dictionary<string, BinaryData>();
 
-            return new ResourceRecommendationBaseData(id, name, resourceType, systemData, category, impact, impactedField, impactedValue, lastUpdated, metadata, recommendationTypeId, risk, shortDescription, suppressionIds?.ToList(), extendedProperties, resourceMetadata, description, label, learnMoreLink, potentialBenefits, actions?.ToList(), remediation, exposedMetadataProperties);
+            return new ResourceRecommendationBaseData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                category,
+                impact,
+                impactedField,
+                impactedValue,
+                lastUpdated,
+                metadata,
+                recommendationTypeId,
+                risk,
+                shortDescription,
+                suppressionIds?.ToList(),
+                extendedProperties,
+                resourceMetadata,
+                description,
+                label,
+                learnMoreLink,
+                potentialBenefits,
+                actions?.ToList(),
+                remediation,
+                exposedMetadataProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Advisor.SuppressionContractData"/>. </summary>
@@ -109,7 +149,15 @@ namespace Azure.ResourceManager.Advisor.Models
         /// <returns> A new <see cref="Advisor.SuppressionContractData"/> instance for mocking. </returns>
         public static SuppressionContractData SuppressionContractData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string suppressionId = null, string ttl = null, DateTimeOffset? expirationTimeStamp = null)
         {
-            return new SuppressionContractData(id, name, resourceType, systemData, suppressionId, ttl, expirationTimeStamp);
+            return new SuppressionContractData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                suppressionId,
+                ttl,
+                expirationTimeStamp,
+                serializedAdditionalRawData: null);
         }
     }
 }

@@ -18,6 +18,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -102,6 +103,12 @@ request-path-to-parent:
 
 operation-positions:
   ConsumerInvitations_ListInvitations: collection
+
+suppress-abstract-base-class:
+- ShareDataSetMappingData
+- DataShareTriggerData
+- ShareDataSetData
+- DataShareSynchronizationSettingData
 
 directive:
   - from: DataShare.json

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/>. </summary>
         /// <param name="name"> The name of the condition for the delivery rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the condition. </param>
-        internal DeliveryRuleSslProtocolCondition(MatchVariable name, DeliveryRuleSslProtocolMatchCondition properties) : base(name)
+        internal DeliveryRuleSslProtocolCondition(MatchVariable name, IDictionary<string, BinaryData> serializedAdditionalRawData, DeliveryRuleSslProtocolMatchCondition properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleSslProtocolCondition"/> for deserialization. </summary>
+        internal DeliveryRuleSslProtocolCondition()
+        {
         }
 
         /// <summary> Defines the parameters for the condition. </summary>

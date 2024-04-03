@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -55,7 +53,35 @@ namespace Azure.ResourceManager.AppService.Models
             certificates ??= new Dictionary<string, AppServiceCertificateProperties>();
             appServiceCertificateNotRenewableReasons ??= new List<AppServiceCertificateNotRenewableReason>();
 
-            return new AppServiceCertificateOrderData(id, name, resourceType, systemData, tags, location, certificates, distinguishedName, domainVerificationToken, validityInYears, keySize, productType, isAutoRenew, provisioningState, status, signedCertificate, csr, intermediate, root, serialNumber, lastCertificateIssuedOn, expireOn, isPrivateKeyExternal, appServiceCertificateNotRenewableReasons?.ToList(), nextAutoRenewTimeStamp, contact, kind);
+            return new AppServiceCertificateOrderData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                certificates,
+                distinguishedName,
+                domainVerificationToken,
+                validityInYears,
+                keySize,
+                productType,
+                isAutoRenew,
+                provisioningState,
+                status,
+                signedCertificate,
+                csr,
+                intermediate,
+                root,
+                serialNumber,
+                lastCertificateIssuedOn,
+                expireOn,
+                isPrivateKeyExternal,
+                appServiceCertificateNotRenewableReasons?.ToList(),
+                nextAutoRenewTimeStamp,
+                contact,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateProperties"/>. </summary>
@@ -65,7 +91,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceCertificateProperties"/> instance for mocking. </returns>
         public static AppServiceCertificateProperties AppServiceCertificateProperties(ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null)
         {
-            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState);
+            return new AppServiceCertificateProperties(keyVaultId, keyVaultSecretName, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateDetails"/>. </summary>
@@ -81,7 +107,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceCertificateDetails"/> instance for mocking. </returns>
         public static AppServiceCertificateDetails AppServiceCertificateDetails(int? version = null, string serialNumber = null, string thumbprintString = null, string subject = null, DateTimeOffset? notBefore = null, DateTimeOffset? notAfter = null, string signatureAlgorithm = null, string issuer = null, string rawData = null)
         {
-            return new AppServiceCertificateDetails(version, serialNumber, thumbprintString, subject, notBefore, notAfter, signatureAlgorithm, issuer, rawData);
+            return new AppServiceCertificateDetails(
+                version,
+                serialNumber,
+                thumbprintString,
+                subject,
+                notBefore,
+                notAfter,
+                signatureAlgorithm,
+                issuer,
+                rawData,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderContact"/>. </summary>
@@ -92,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CertificateOrderContact"/> instance for mocking. </returns>
         public static CertificateOrderContact CertificateOrderContact(string email = null, string nameFirst = null, string nameLast = null, string phone = null)
         {
-            return new CertificateOrderContact(email, nameFirst, nameLast, phone);
+            return new CertificateOrderContact(email, nameFirst, nameLast, phone, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateOrderPatch"/>. </summary>
@@ -127,7 +163,33 @@ namespace Azure.ResourceManager.AppService.Models
             certificates ??= new Dictionary<string, AppServiceCertificateProperties>();
             appServiceCertificateNotRenewableReasons ??= new List<AppServiceCertificateNotRenewableReason>();
 
-            return new AppServiceCertificateOrderPatch(id, name, resourceType, systemData, certificates, distinguishedName, domainVerificationToken, validityInYears, keySize, productType, isAutoRenew, provisioningState, status, signedCertificate, csr, intermediate, root, serialNumber, lastCertificateIssuanceOn, expireOn, isPrivateKeyExternal, appServiceCertificateNotRenewableReasons?.ToList(), nextAutoRenewalTimeStamp, contact, kind);
+            return new AppServiceCertificateOrderPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                certificates,
+                distinguishedName,
+                domainVerificationToken,
+                validityInYears,
+                keySize,
+                productType,
+                isAutoRenew,
+                provisioningState,
+                status,
+                signedCertificate,
+                csr,
+                intermediate,
+                root,
+                serialNumber,
+                lastCertificateIssuanceOn,
+                expireOn,
+                isPrivateKeyExternal,
+                appServiceCertificateNotRenewableReasons?.ToList(),
+                nextAutoRenewalTimeStamp,
+                contact,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceCertificateData"/>. </summary>
@@ -146,7 +208,18 @@ namespace Azure.ResourceManager.AppService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AppServiceCertificateData(id, name, resourceType, systemData, tags, location, keyVaultId, keyVaultSecretName, provisioningState, kind);
+            return new AppServiceCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                keyVaultId,
+                keyVaultSecretName,
+                provisioningState,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificatePatch"/>. </summary>
@@ -161,7 +234,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceCertificatePatch"/> instance for mocking. </returns>
         public static AppServiceCertificatePatch AppServiceCertificatePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier keyVaultId = null, string keyVaultSecretName = null, KeyVaultSecretStatus? provisioningState = null, string kind = null)
         {
-            return new AppServiceCertificatePatch(id, name, resourceType, systemData, keyVaultId, keyVaultSecretName, provisioningState, kind);
+            return new AppServiceCertificatePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                keyVaultId,
+                keyVaultSecretName,
+                provisioningState,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ReissueCertificateOrderContent"/>. </summary>
@@ -177,7 +259,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ReissueCertificateOrderContent"/> instance for mocking. </returns>
         public static ReissueCertificateOrderContent ReissueCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, int? delayExistingRevokeInHours = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
         {
-            return new ReissueCertificateOrderContent(id, name, resourceType, systemData, keySize, delayExistingRevokeInHours, csr, isPrivateKeyExternal, kind);
+            return new ReissueCertificateOrderContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                keySize,
+                delayExistingRevokeInHours,
+                csr,
+                isPrivateKeyExternal,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RenewCertificateOrderContent"/>. </summary>
@@ -192,21 +284,24 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.RenewCertificateOrderContent"/> instance for mocking. </returns>
         public static RenewCertificateOrderContent RenewCertificateOrderContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? keySize = null, string csr = null, bool? isPrivateKeyExternal = null, string kind = null)
         {
-            return new RenewCertificateOrderContent(id, name, resourceType, systemData, keySize, csr, isPrivateKeyExternal, kind);
+            return new RenewCertificateOrderContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                keySize,
+                csr,
+                isPrivateKeyExternal,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteSeal"/>. </summary>
         /// <param name="html"> HTML snippet. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="html"/> is null. </exception>
         /// <returns> A new <see cref="Models.SiteSeal"/> instance for mocking. </returns>
         public static SiteSeal SiteSeal(string html = null)
         {
-            if (html == null)
-            {
-                throw new ArgumentNullException(nameof(html));
-            }
-
-            return new SiteSeal(html);
+            return new SiteSeal(html, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CertificateOrderAction"/>. </summary>
@@ -220,7 +315,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CertificateOrderAction"/> instance for mocking. </returns>
         public static CertificateOrderAction CertificateOrderAction(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CertificateOrderActionType? actionType = null, DateTimeOffset? createdOn = null, string kind = null)
         {
-            return new CertificateOrderAction(id, name, resourceType, systemData, actionType, createdOn, kind);
+            return new CertificateOrderAction(
+                id,
+                name,
+                resourceType,
+                systemData,
+                actionType,
+                createdOn,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceCertificateEmail"/>. </summary>
@@ -234,7 +337,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceCertificateEmail"/> instance for mocking. </returns>
         public static AppServiceCertificateEmail AppServiceCertificateEmail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string emailId = null, DateTimeOffset? timeStamp = null, string kind = null)
         {
-            return new AppServiceCertificateEmail(id, name, resourceType, systemData, emailId, timeStamp, kind);
+            return new AppServiceCertificateEmail(
+                id,
+                name,
+                resourceType,
+                systemData,
+                emailId,
+                timeStamp,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
@@ -254,7 +365,18 @@ namespace Azure.ResourceManager.AppService.Models
             dataset ??= new List<DiagnosticDataset>();
             dataProvidersMetadata ??= new List<DataProviderMetadata>();
 
-            return new AppServiceDetectorData(id, name, resourceType, systemData, metadata, dataset?.ToList(), status, dataProvidersMetadata?.ToList(), suggestedUtterances, kind);
+            return new AppServiceDetectorData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                metadata,
+                dataset?.ToList(),
+                status,
+                dataProvidersMetadata?.ToList(),
+                suggestedUtterances,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DetectorInfo"/>. </summary>
@@ -273,7 +395,17 @@ namespace Azure.ResourceManager.AppService.Models
             supportTopicList ??= new List<DetectorSupportTopic>();
             analysisType ??= new List<string>();
 
-            return new DetectorInfo(id, name, description, author, category, supportTopicList?.ToList(), analysisType?.ToList(), detectorType, score);
+            return new DetectorInfo(
+                id,
+                name,
+                description,
+                author,
+                category,
+                supportTopicList?.ToList(),
+                analysisType?.ToList(),
+                detectorType,
+                score,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DetectorSupportTopic"/>. </summary>
@@ -282,7 +414,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
         public static DetectorSupportTopic DetectorSupportTopic(string id = null, ResourceIdentifier pesId = null)
         {
-            return new DetectorSupportTopic(id, pesId);
+            return new DetectorSupportTopic(id, pesId, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProviderMetadata"/>. </summary>
@@ -293,7 +425,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             propertyBag ??= new List<DataProviderKeyValuePair>();
 
-            return new DataProviderMetadata(providerName, propertyBag?.ToList());
+            return new DataProviderMetadata(providerName, propertyBag?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DataProviderKeyValuePair"/>. </summary>
@@ -302,7 +434,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
         public static DataProviderKeyValuePair DataProviderKeyValuePair(string key = null, BinaryData value = null)
         {
-            return new DataProviderKeyValuePair(key, value);
+            return new DataProviderKeyValuePair(key, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDescription"/>. </summary>
@@ -314,7 +446,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CsmOperationDescription"/> instance for mocking. </returns>
         public static CsmOperationDescription CsmOperationDescription(string name = null, bool? isDataAction = null, CsmOperationDisplay display = null, string origin = null, ServiceSpecification csmOperationDescriptionServiceSpecification = null)
         {
-            return new CsmOperationDescription(name, isDataAction, display, origin, csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification) : null);
+            return new CsmOperationDescription(
+                name,
+                isDataAction,
+                display,
+                origin,
+                csmOperationDescriptionServiceSpecification != null ? new CsmOperationDescriptionProperties(csmOperationDescriptionServiceSpecification, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CsmOperationDisplay"/>. </summary>
@@ -325,7 +463,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CsmOperationDisplay"/> instance for mocking. </returns>
         public static CsmOperationDisplay CsmOperationDisplay(string provider = null, string resource = null, string operation = null, string description = null)
         {
-            return new CsmOperationDisplay(provider, resource, operation, description);
+            return new CsmOperationDisplay(provider, resource, operation, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceSpecification"/>. </summary>
@@ -337,7 +475,7 @@ namespace Azure.ResourceManager.AppService.Models
             metricSpecifications ??= new List<MetricSpecification>();
             logSpecifications ??= new List<LogSpecification>();
 
-            return new ServiceSpecification(metricSpecifications?.ToList(), logSpecifications?.ToList());
+            return new ServiceSpecification(metricSpecifications?.ToList(), logSpecifications?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricSpecification"/>. </summary>
@@ -366,7 +504,25 @@ namespace Azure.ResourceManager.AppService.Models
             supportedTimeGrainTypes ??= new List<string>();
             supportedAggregationTypes ??= new List<string>();
 
-            return new MetricSpecification(name, displayName, displayDescription, unit, aggregationType, isInstanceLevelAggregationSupported, isRegionalMdmAccountEnabled, sourceMdmAccount, sourceMdmNamespace, metricFilterPattern, fillGapWithZero, isInternal, dimensions?.ToList(), category, availabilities?.ToList(), supportedTimeGrainTypes?.ToList(), supportedAggregationTypes?.ToList());
+            return new MetricSpecification(
+                name,
+                displayName,
+                displayDescription,
+                unit,
+                aggregationType,
+                isInstanceLevelAggregationSupported,
+                isRegionalMdmAccountEnabled,
+                sourceMdmAccount,
+                sourceMdmNamespace,
+                metricFilterPattern,
+                fillGapWithZero,
+                isInternal,
+                dimensions?.ToList(),
+                category,
+                availabilities?.ToList(),
+                supportedTimeGrainTypes?.ToList(),
+                supportedAggregationTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricDimension"/>. </summary>
@@ -377,7 +533,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.MetricDimension"/> instance for mocking. </returns>
         public static MetricDimension MetricDimension(string name = null, string displayName = null, string internalName = null, bool? isToBeExportedForShoebox = null)
         {
-            return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox);
+            return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MetricAvailability"/>. </summary>
@@ -386,7 +542,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
         public static MetricAvailability MetricAvailability(string timeGrain = null, TimeSpan? blobDuration = null)
         {
-            return new MetricAvailability(timeGrain, blobDuration);
+            return new MetricAvailability(timeGrain, blobDuration, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogSpecification"/>. </summary>
@@ -397,7 +553,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.LogSpecification"/> instance for mocking. </returns>
         public static LogSpecification LogSpecification(string name = null, string displayName = null, TimeSpan? blobDuration = null, string logFilterPattern = null)
         {
-            return new LogSpecification(name, displayName, blobDuration, logFilterPattern);
+            return new LogSpecification(name, displayName, blobDuration, logFilterPattern, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainAvailabilityCheckResult"/>. </summary>
@@ -407,7 +563,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DomainAvailabilityCheckResult"/> instance for mocking. </returns>
         public static DomainAvailabilityCheckResult DomainAvailabilityCheckResult(string name = null, bool? isAvailable = null, AppServiceDomainType? domainType = null)
         {
-            return new DomainAvailabilityCheckResult(name, isAvailable, domainType);
+            return new DomainAvailabilityCheckResult(name, isAvailable, domainType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDomainData"/>. </summary>
@@ -449,7 +605,35 @@ namespace Azure.ResourceManager.AppService.Models
             managedHostNames ??= new List<AppServiceHostName>();
             domainNotRenewableReasons ??= new List<DomainNotRenewableReason>();
 
-            return new AppServiceDomainData(id, name, resourceType, systemData, tags, location, contactAdmin, contactBilling, contactRegistrant, contactTech, registrationStatus, provisioningState, nameServers?.ToList(), isDomainPrivacyEnabled, createdOn, expireOn, lastRenewedOn, isAutoRenew, isDnsRecordManagementReady, managedHostNames?.ToList(), consent, domainNotRenewableReasons?.ToList(), dnsType, dnsZoneId, targetDnsType, authCode, kind);
+            return new AppServiceDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                contactAdmin,
+                contactBilling,
+                contactRegistrant,
+                contactTech,
+                registrationStatus,
+                provisioningState,
+                nameServers?.ToList(),
+                isDomainPrivacyEnabled,
+                createdOn,
+                expireOn,
+                lastRenewedOn,
+                isAutoRenew,
+                isDnsRecordManagementReady,
+                managedHostNames?.ToList(),
+                consent,
+                domainNotRenewableReasons?.ToList(),
+                dnsType,
+                dnsZoneId,
+                targetDnsType,
+                authCode,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceHostName"/>. </summary>
@@ -464,7 +648,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             siteNames ??= new List<string>();
 
-            return new AppServiceHostName(name, siteNames?.ToList(), azureResourceName, azureResourceType, customHostNameDnsRecordType, hostNameType);
+            return new AppServiceHostName(
+                name,
+                siteNames?.ToList(),
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DomainControlCenterSsoRequestInfo"/>. </summary>
@@ -474,7 +665,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DomainControlCenterSsoRequestInfo"/> instance for mocking. </returns>
         public static DomainControlCenterSsoRequestInfo DomainControlCenterSsoRequestInfo(Uri uri = null, string postParameterKey = null, string postParameterValue = null)
         {
-            return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue);
+            return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceDomainPatch"/>. </summary>
@@ -513,7 +704,33 @@ namespace Azure.ResourceManager.AppService.Models
             managedHostNames ??= new List<AppServiceHostName>();
             domainNotRenewableReasons ??= new List<DomainNotRenewableReason>();
 
-            return new AppServiceDomainPatch(id, name, resourceType, systemData, contactAdmin, contactBilling, contactRegistrant, contactTech, registrationStatus, provisioningState, nameServers?.ToList(), isDomainPrivacyEnabled, createdOn, expireOn, lastRenewedOn, isAutoRenew, isReadyForDnsRecordManagement, managedHostNames?.ToList(), consent, domainNotRenewableReasons?.ToList(), dnsType, dnsZoneId, targetDnsType, authCode, kind);
+            return new AppServiceDomainPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                contactAdmin,
+                contactBilling,
+                contactRegistrant,
+                contactTech,
+                registrationStatus,
+                provisioningState,
+                nameServers?.ToList(),
+                isDomainPrivacyEnabled,
+                createdOn,
+                expireOn,
+                lastRenewedOn,
+                isAutoRenew,
+                isReadyForDnsRecordManagement,
+                managedHostNames?.ToList(),
+                consent,
+                domainNotRenewableReasons?.ToList(),
+                dnsType,
+                dnsZoneId,
+                targetDnsType,
+                authCode,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.DomainOwnershipIdentifierData"/>. </summary>
@@ -526,7 +743,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.DomainOwnershipIdentifierData"/> instance for mocking. </returns>
         public static DomainOwnershipIdentifierData DomainOwnershipIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string ownershipId = null, string kind = null)
         {
-            return new DomainOwnershipIdentifierData(id, name, resourceType, systemData, ownershipId, kind);
+            return new DomainOwnershipIdentifierData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                ownershipId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.TopLevelDomainData"/>. </summary>
@@ -539,7 +763,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.TopLevelDomainData"/> instance for mocking. </returns>
         public static TopLevelDomainData TopLevelDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isDomainPrivacySupported = null, string kind = null)
         {
-            return new TopLevelDomainData(id, name, resourceType, systemData, isDomainPrivacySupported, kind);
+            return new TopLevelDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isDomainPrivacySupported,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TldLegalAgreement"/>. </summary>
@@ -550,7 +781,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.TldLegalAgreement"/> instance for mocking. </returns>
         public static TldLegalAgreement TldLegalAgreement(string agreementKey = null, string title = null, string content = null, Uri uri = null)
         {
-            return new TldLegalAgreement(agreementKey, title, content, uri);
+            return new TldLegalAgreement(agreementKey, title, content, uri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceEnvironmentData"/>. </summary>
@@ -587,7 +818,31 @@ namespace Azure.ResourceManager.AppService.Models
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
 
-            return new AppServiceEnvironmentData(id, name, resourceType, systemData, tags, location, provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant, kind);
+            return new AppServiceEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                status,
+                virtualNetwork,
+                internalLoadBalancingMode,
+                multiSize,
+                multiRoleCount,
+                ipSslAddressCount,
+                dnsSuffix,
+                maximumNumberOfMachines,
+                frontEndScaleFactor,
+                isSuspended,
+                clusterSettings?.ToList(),
+                userWhitelistedIPRanges?.ToList(),
+                hasLinuxWorkers,
+                dedicatedHostCount,
+                isZoneRedundant,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentProperties"/>. </summary>
@@ -616,7 +871,24 @@ namespace Azure.ResourceManager.AppService.Models
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
 
-            return new AppServiceEnvironmentProperties(provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant);
+            return new AppServiceEnvironmentProperties(
+                provisioningState,
+                status,
+                virtualNetwork,
+                internalLoadBalancingMode,
+                multiSize,
+                multiRoleCount,
+                ipSslAddressCount,
+                dnsSuffix,
+                maximumNumberOfMachines,
+                frontEndScaleFactor,
+                isSuspended,
+                clusterSettings?.ToList(),
+                userWhitelistedIPRanges?.ToList(),
+                hasLinuxWorkers,
+                dedicatedHostCount,
+                isZoneRedundant,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkProfile"/>. </summary>
@@ -627,7 +899,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkProfile"/> instance for mocking. </returns>
         public static AppServiceVirtualNetworkProfile AppServiceVirtualNetworkProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string subnet = null)
         {
-            return new AppServiceVirtualNetworkProfile(id, name, resourceType, subnet);
+            return new AppServiceVirtualNetworkProfile(id, name, resourceType, subnet, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentPatch"/>. </summary>
@@ -661,7 +933,29 @@ namespace Azure.ResourceManager.AppService.Models
             clusterSettings ??= new List<AppServiceNameValuePair>();
             userWhitelistedIPRanges ??= new List<string>();
 
-            return new AppServiceEnvironmentPatch(id, name, resourceType, systemData, provisioningState, status, virtualNetwork, internalLoadBalancingMode, multiSize, multiRoleCount, ipSslAddressCount, dnsSuffix, maximumNumberOfMachines, frontEndScaleFactor, isSuspended, clusterSettings?.ToList(), userWhitelistedIPRanges?.ToList(), hasLinuxWorkers, dedicatedHostCount, isZoneRedundant, kind);
+            return new AppServiceEnvironmentPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                status,
+                virtualNetwork,
+                internalLoadBalancingMode,
+                multiSize,
+                multiRoleCount,
+                ipSslAddressCount,
+                dnsSuffix,
+                maximumNumberOfMachines,
+                frontEndScaleFactor,
+                isSuspended,
+                clusterSettings?.ToList(),
+                userWhitelistedIPRanges?.ToList(),
+                hasLinuxWorkers,
+                dedicatedHostCount,
+                isZoneRedundant,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StampCapacity"/>. </summary>
@@ -687,7 +981,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StampCapacity"/> instance for mocking. </returns>
         public static StampCapacity StampCapacity(string name = null, long? availableCapacity = null, long? totalCapacity = null, string unit = null, ComputeModeOption? computeMode = null, WorkerSizeOption? workerSize = null, int? workerSizeId = null, bool? excludeFromCapacityAllocation = null, bool? isApplicableForAllComputeModes = null, string siteMode = null, bool? isLinux = null)
         {
-            return new StampCapacity(name, availableCapacity, totalCapacity, unit, computeMode, workerSize, workerSizeId, excludeFromCapacityAllocation, isApplicableForAllComputeModes, siteMode, isLinux);
+            return new StampCapacity(
+                name,
+                availableCapacity,
+                totalCapacity,
+                unit,
+                computeMode,
+                workerSize,
+                workerSizeId,
+                excludeFromCapacityAllocation,
+                isApplicableForAllComputeModes,
+                siteMode,
+                isLinux,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEnvironmentAddressResult"/>. </summary>
@@ -706,7 +1012,17 @@ namespace Azure.ResourceManager.AppService.Models
             outboundIPAddresses ??= new List<IPAddress>();
             virtualIPMappings ??= new List<VirtualIPMapping>();
 
-            return new AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, serviceIPAddress, internalIPAddress, outboundIPAddresses?.ToList(), virtualIPMappings?.ToList(), kind);
+            return new AppServiceEnvironmentAddressResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serviceIPAddress,
+                internalIPAddress,
+                outboundIPAddresses?.ToList(),
+                virtualIPMappings?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
@@ -728,7 +1044,18 @@ namespace Azure.ResourceManager.AppService.Models
             externalInboundIPAddresses ??= new List<IPAddress>();
             internalInboundIPAddresses ??= new List<IPAddress>();
 
-            return new AseV3NetworkingConfigurationData(id, name, resourceType, systemData, windowsOutboundIPAddresses?.ToList(), linuxOutboundIPAddresses?.ToList(), externalInboundIPAddresses?.ToList(), internalInboundIPAddresses?.ToList(), allowNewPrivateEndpointConnections, kind);
+            return new AseV3NetworkingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                windowsOutboundIPAddresses?.ToList(),
+                linuxOutboundIPAddresses?.ToList(),
+                externalInboundIPAddresses?.ToList(),
+                internalInboundIPAddresses?.ToList(),
+                allowNewPrivateEndpointConnections,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentDiagnostics"/>. </summary>
@@ -737,7 +1064,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.HostingEnvironmentDiagnostics"/> instance for mocking. </returns>
         public static HostingEnvironmentDiagnostics HostingEnvironmentDiagnostics(string name = null, string diagnosticsOutput = null)
         {
-            return new HostingEnvironmentDiagnostics(name, diagnosticsOutput);
+            return new HostingEnvironmentDiagnostics(name, diagnosticsOutput, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.InboundEnvironmentEndpoint"/>. </summary>
@@ -750,7 +1077,7 @@ namespace Azure.ResourceManager.AppService.Models
             endpoints ??= new List<string>();
             ports ??= new List<string>();
 
-            return new InboundEnvironmentEndpoint(description, endpoints?.ToList(), ports?.ToList());
+            return new InboundEnvironmentEndpoint(description, endpoints?.ToList(), ports?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceWorkerPoolData"/>. </summary>
@@ -770,7 +1097,19 @@ namespace Azure.ResourceManager.AppService.Models
         {
             instanceNames ??= new List<string>();
 
-            return new AppServiceWorkerPoolData(id, name, resourceType, systemData, sku, workerSizeId, computeMode, workerSize, workerCount, instanceNames?.ToList(), kind);
+            return new AppServiceWorkerPoolData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                workerSizeId,
+                computeMode,
+                workerSize,
+                workerCount,
+                instanceNames?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricDefinition"/>. </summary>
@@ -790,7 +1129,18 @@ namespace Azure.ResourceManager.AppService.Models
             metricAvailabilities ??= new List<ResourceMetricAvailability>();
             properties ??= new Dictionary<string, string>();
 
-            return new ResourceMetricDefinition(id, name, resourceType, systemData, unit, primaryAggregationType, metricAvailabilities?.ToList(), resourceUri, properties, kind);
+            return new ResourceMetricDefinition(
+                id,
+                name,
+                resourceType,
+                systemData,
+                unit,
+                primaryAggregationType,
+                metricAvailabilities?.ToList(),
+                resourceUri,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricAvailability"/>. </summary>
@@ -799,7 +1149,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ResourceMetricAvailability"/> instance for mocking. </returns>
         public static ResourceMetricAvailability ResourceMetricAvailability(string timeGrain = null, string retention = null)
         {
-            return new ResourceMetricAvailability(timeGrain, retention);
+            return new ResourceMetricAvailability(timeGrain, retention, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServicePoolSkuInfo"/>. </summary>
@@ -809,7 +1159,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServicePoolSkuInfo"/> instance for mocking. </returns>
         public static AppServicePoolSkuInfo AppServicePoolSkuInfo(ResourceType? resourceType = null, AppServiceSkuDescription sku = null, AppServiceSkuCapacity capacity = null)
         {
-            return new AppServicePoolSkuInfo(resourceType, sku, capacity);
+            return new AppServicePoolSkuInfo(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceUsage"/>. </summary>
@@ -829,7 +1179,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceUsage"/> instance for mocking. </returns>
         public static AppServiceUsage AppServiceUsage(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string resourceName = null, string unit = null, long? currentValue = null, long? limit = null, DateTimeOffset? nextResetOn = null, ComputeModeOption? computeMode = null, string siteMode = null, string kind = null)
         {
-            return new AppServiceUsage(id, name, resourceType, systemData, displayName, resourceName, unit, currentValue, limit, nextResetOn, computeMode, siteMode, kind);
+            return new AppServiceUsage(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                resourceName,
+                unit,
+                currentValue,
+                limit,
+                nextResetOn,
+                computeMode,
+                siteMode,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceOperation"/>. </summary>
@@ -846,7 +1210,16 @@ namespace Azure.ResourceManager.AppService.Models
         {
             errors ??= new List<ResponseError>();
 
-            return new AppServiceOperation(id, name, status, errors?.ToList(), createdOn, modifiedOn, expireOn, geoMasterOperationId);
+            return new AppServiceOperation(
+                id,
+                name,
+                status,
+                errors?.ToList(),
+                createdOn,
+                modifiedOn,
+                expireOn,
+                geoMasterOperationId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OutboundEnvironmentEndpoint"/>. </summary>
@@ -857,7 +1230,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             endpoints ??= new List<AppServiceEndpointDependency>();
 
-            return new OutboundEnvironmentEndpoint(category, endpoints?.ToList());
+            return new OutboundEnvironmentEndpoint(category, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEndpointDependency"/>. </summary>
@@ -868,7 +1241,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             endpointDetails ??= new List<AppServiceEndpointDetail>();
 
-            return new AppServiceEndpointDependency(domainName, endpointDetails?.ToList());
+            return new AppServiceEndpointDependency(domainName, endpointDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceEndpointDetail"/>. </summary>
@@ -879,7 +1252,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceEndpointDetail"/> instance for mocking. </returns>
         public static AppServiceEndpointDetail AppServiceEndpointDetail(IPAddress ipAddress = null, int? port = null, double? latency = null, bool? isAccessible = null)
         {
-            return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible);
+            return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
@@ -897,7 +1270,17 @@ namespace Azure.ResourceManager.AppService.Models
         {
             ipAddresses ??= new List<IPAddress>();
 
-            return new RemotePrivateEndpointConnectionARMResourceData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
+            return new RemotePrivateEndpointConnectionARMResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                privateLinkServiceConnectionState,
+                ipAddresses?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/>. </summary>
@@ -910,7 +1293,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.PrivateLinkConnectionApprovalRequestInfo"/> instance for mocking. </returns>
         public static PrivateLinkConnectionApprovalRequestInfo PrivateLinkConnectionApprovalRequestInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, PrivateLinkConnectionState privateLinkServiceConnectionState = null, string kind = null)
         {
-            return new PrivateLinkConnectionApprovalRequestInfo(id, name, resourceType, systemData, privateLinkServiceConnectionState, kind);
+            return new PrivateLinkConnectionApprovalRequestInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateLinkServiceConnectionState,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceData"/>. </summary>
@@ -922,7 +1312,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServicePrivateLinkResourceData"/> instance for mocking. </returns>
         public static AppServicePrivateLinkResourceData AppServicePrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServicePrivateLinkResourceProperties properties = null)
         {
-            return new AppServicePrivateLinkResourceData(id, name, resourceType, systemData, properties);
+            return new AppServicePrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServicePrivateLinkResourceProperties"/>. </summary>
@@ -935,7 +1331,7 @@ namespace Azure.ResourceManager.AppService.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new AppServicePrivateLinkResourceProperties(groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
@@ -981,7 +1377,39 @@ namespace Azure.ResourceManager.AppService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AppServicePlanData(id, name, resourceType, systemData, tags, location, sku, extendedLocation, workerTierName, status, subscription, hostingEnvironmentProfile, maximumNumberOfWorkers, geoRegion, isPerSiteScaling, isElasticScaleEnabled, maximumElasticWorkerCount, numberOfSites, isSpot, spotExpireOn, freeOfferExpireOn, resourceGroup, isReserved, isXenon, isHyperV, targetWorkerCount, targetWorkerSizeId, provisioningState, kubeEnvironmentProfile, isZoneRedundant, kind);
+            return new AppServicePlanData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                extendedLocation,
+                workerTierName,
+                status,
+                subscription,
+                hostingEnvironmentProfile,
+                maximumNumberOfWorkers,
+                geoRegion,
+                isPerSiteScaling,
+                isElasticScaleEnabled,
+                maximumElasticWorkerCount,
+                numberOfSites,
+                isSpot,
+                spotExpireOn,
+                freeOfferExpireOn,
+                resourceGroup,
+                isReserved,
+                isXenon,
+                isHyperV,
+                targetWorkerCount,
+                targetWorkerSizeId,
+                provisioningState,
+                kubeEnvironmentProfile,
+                isZoneRedundant,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentProfile"/>. </summary>
@@ -991,7 +1419,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.HostingEnvironmentProfile"/> instance for mocking. </returns>
         public static HostingEnvironmentProfile HostingEnvironmentProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new HostingEnvironmentProfile(id, name, resourceType);
+            return new HostingEnvironmentProfile(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentProfile"/>. </summary>
@@ -1001,7 +1429,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.KubeEnvironmentProfile"/> instance for mocking. </returns>
         public static KubeEnvironmentProfile KubeEnvironmentProfile(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new KubeEnvironmentProfile(id, name, resourceType);
+            return new KubeEnvironmentProfile(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
@@ -1084,7 +1512,58 @@ namespace Azure.ResourceManager.AppService.Models
             hostNameSslStates ??= new List<HostNameSslState>();
             trafficManagerHostNames ??= new List<string>();
 
-            return new WebSiteData(id, name, resourceType, systemData, tags, location, identity, extendedLocation, state, hostNames?.ToList(), repositorySiteName, usageState, isEnabled, enabledHostNames?.ToList(), availabilityState, hostNameSslStates?.ToList(), appServicePlanId, isReserved, isXenon, isHyperV, lastModifiedTimeUtc, siteConfig, trafficManagerHostNames?.ToList(), isScmSiteAlsoStopped, targetSwapSlot, hostingEnvironmentProfile, isClientAffinityEnabled, isClientCertEnabled, clientCertMode, clientCertExclusionPaths, isHostNameDisabled, customDomainVerificationId, outboundIPAddresses, possibleOutboundIPAddresses, containerSize, dailyMemoryTimeQuota, suspendOn, maxNumberOfWorkers, cloningInfo, resourceGroup, isDefaultContainer, defaultHostName, slotSwapStatus, isHttpsOnly, redundancyMode, inProgressOperationId, isStorageAccountRequired, keyVaultReferenceIdentity, virtualNetworkSubnetId, kind);
+            return new WebSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                extendedLocation,
+                state,
+                hostNames?.ToList(),
+                repositorySiteName,
+                usageState,
+                isEnabled,
+                enabledHostNames?.ToList(),
+                availabilityState,
+                hostNameSslStates?.ToList(),
+                appServicePlanId,
+                isReserved,
+                isXenon,
+                isHyperV,
+                lastModifiedTimeUtc,
+                siteConfig,
+                trafficManagerHostNames?.ToList(),
+                isScmSiteAlsoStopped,
+                targetSwapSlot,
+                hostingEnvironmentProfile,
+                isClientAffinityEnabled,
+                isClientCertEnabled,
+                clientCertMode,
+                clientCertExclusionPaths,
+                isHostNameDisabled,
+                customDomainVerificationId,
+                outboundIPAddresses,
+                possibleOutboundIPAddresses,
+                containerSize,
+                dailyMemoryTimeQuota,
+                suspendOn,
+                maxNumberOfWorkers,
+                cloningInfo,
+                resourceGroup,
+                isDefaultContainer,
+                defaultHostName,
+                slotSwapStatus,
+                isHttpsOnly,
+                redundancyMode,
+                inProgressOperationId,
+                isStorageAccountRequired,
+                keyVaultReferenceIdentity,
+                virtualNetworkSubnetId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteConfigProperties"/>. </summary>
@@ -1181,7 +1660,75 @@ namespace Azure.ResourceManager.AppService.Models
             scmIPSecurityRestrictions ??= new List<AppServiceIPSecurityRestriction>();
             azureStorageAccounts ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
-            return new SiteConfigProperties(numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess);
+            return new SiteConfigProperties(
+                numberOfWorkers,
+                defaultDocuments?.ToList(),
+                netFrameworkVersion,
+                phpVersion,
+                pythonVersion,
+                nodeVersion,
+                powerShellVersion,
+                linuxFxVersion,
+                windowsFxVersion,
+                isRequestTracingEnabled,
+                requestTracingExpirationOn,
+                isRemoteDebuggingEnabled,
+                remoteDebuggingVersion,
+                isHttpLoggingEnabled,
+                useManagedIdentityCreds,
+                acrUserManagedIdentityId,
+                logsDirectorySizeLimit,
+                isDetailedErrorLoggingEnabled,
+                publishingUsername,
+                appSettings?.ToList(),
+                connectionStrings?.ToList(),
+                machineKey,
+                handlerMappings?.ToList(),
+                documentRoot,
+                scmType,
+                use32BitWorkerProcess,
+                isWebSocketsEnabled,
+                isAlwaysOn,
+                javaVersion,
+                javaContainer,
+                javaContainerVersion,
+                appCommandLine,
+                managedPipelineMode,
+                virtualApplications?.ToList(),
+                loadBalancing,
+                experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList(), serializedAdditionalRawData: null) : null,
+                limits,
+                isAutoHealEnabled,
+                autoHealRules,
+                tracingOptions,
+                vnetName,
+                isVnetRouteAllEnabled,
+                vnetPrivatePortsCount,
+                cors,
+                push,
+                apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri, serializedAdditionalRawData: null) : null,
+                apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId, serializedAdditionalRawData: null) : null,
+                autoSwapSlotName,
+                isLocalMySqlEnabled,
+                managedServiceIdentityId,
+                xManagedServiceIdentityId,
+                keyVaultReferenceIdentity,
+                ipSecurityRestrictions?.ToList(),
+                scmIPSecurityRestrictions?.ToList(),
+                allowIPSecurityRestrictionsForScmToUseMain,
+                isHttp20Enabled,
+                minTlsVersion,
+                scmMinTlsVersion,
+                ftpsState,
+                preWarmedInstanceCount,
+                functionAppScaleLimit,
+                healthCheckPath,
+                isFunctionsRuntimeScaleMonitoringEnabled,
+                websiteTimeZone,
+                minimumElasticInstanceCount,
+                azureStorageAccounts,
+                publicNetworkAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteMachineKey"/>. </summary>
@@ -1192,7 +1739,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SiteMachineKey"/> instance for mocking. </returns>
         public static SiteMachineKey SiteMachineKey(string validation = null, string validationKey = null, string decryption = null, string decryptionKey = null)
         {
-            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey);
+            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppPushSettings"/>. </summary>
@@ -1213,7 +1760,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppPushSettings"/> instance for mocking. </returns>
         public static WebAppPushSettings WebAppPushSettings(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? isPushEnabled = null, string tagWhitelistJson = null, string tagsRequiringAuth = null, string dynamicTagsJson = null, string kind = null)
         {
-            return new WebAppPushSettings(id, name, resourceType, systemData, isPushEnabled, tagWhitelistJson, tagsRequiringAuth, dynamicTagsJson, kind);
+            return new WebAppPushSettings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isPushEnabled,
+                tagWhitelistJson,
+                tagsRequiringAuth,
+                dynamicTagsJson,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceStorageAccessInfo"/>. </summary>
@@ -1226,7 +1783,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceStorageAccessInfo"/> instance for mocking. </returns>
         public static AppServiceStorageAccessInfo AppServiceStorageAccessInfo(AppServiceStorageType? storageType = null, string accountName = null, string shareName = null, string accessKey = null, string mountPath = null, AppServiceStorageAccountState? state = null)
         {
-            return new AppServiceStorageAccessInfo(storageType, accountName, shareName, accessKey, mountPath, state);
+            return new AppServiceStorageAccessInfo(
+                storageType,
+                accountName,
+                shareName,
+                accessKey,
+                mountPath,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SlotSwapStatus"/>. </summary>
@@ -1236,7 +1800,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SlotSwapStatus"/> instance for mocking. </returns>
         public static SlotSwapStatus SlotSwapStatus(DateTimeOffset? timestampUtc = null, string sourceSlotName = null, string destinationSlotName = null)
         {
-            return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName);
+            return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CsmUsageQuota"/>. </summary>
@@ -1248,7 +1812,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.CsmUsageQuota"/> instance for mocking. </returns>
         public static CsmUsageQuota CsmUsageQuota(string unit = null, DateTimeOffset? nextResetOn = null, long? currentValue = null, long? limit = null, LocalizableString name = null)
         {
-            return new CsmUsageQuota(unit, nextResetOn, currentValue, limit, name);
+            return new CsmUsageQuota(
+                unit,
+                nextResetOn,
+                currentValue,
+                limit,
+                name,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LocalizableString"/>. </summary>
@@ -1257,7 +1827,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.LocalizableString"/> instance for mocking. </returns>
         public static LocalizableString LocalizableString(string value = null, string localizedValue = null)
         {
-            return new LocalizableString(value, localizedValue);
+            return new LocalizableString(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServicePlanPatch"/>. </summary>
@@ -1297,7 +1867,35 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
         public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string workerTierName = null, AppServicePlanStatus? status = null, string subscription = null, HostingEnvironmentProfile hostingEnvironmentProfile = null, int? maximumNumberOfWorkers = null, string geoRegion = null, bool? isPerSiteScaling = null, bool? isElasticScaleEnabled = null, int? maximumElasticWorkerCount = null, int? numberOfSites = null, bool? isSpot = null, DateTimeOffset? spotExpirationOn = null, DateTimeOffset? freeOfferExpirationOn = null, string resourceGroup = null, bool? isReserved = null, bool? isXenon = null, bool? isHyperV = null, int? targetWorkerCount = null, int? targetWorkerSizeId = null, ProvisioningState? provisioningState = null, KubeEnvironmentProfile kubeEnvironmentProfile = null, bool? isZoneRedundant = null, string kind = null)
         {
-            return new AppServicePlanPatch(id, name, resourceType, systemData, workerTierName, status, subscription, hostingEnvironmentProfile, maximumNumberOfWorkers, geoRegion, isPerSiteScaling, isElasticScaleEnabled, maximumElasticWorkerCount, numberOfSites, isSpot, spotExpirationOn, freeOfferExpirationOn, resourceGroup, isReserved, isXenon, isHyperV, targetWorkerCount, targetWorkerSizeId, provisioningState, kubeEnvironmentProfile, isZoneRedundant, kind);
+            return new AppServicePlanPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                workerTierName,
+                status,
+                subscription,
+                hostingEnvironmentProfile,
+                maximumNumberOfWorkers,
+                geoRegion,
+                isPerSiteScaling,
+                isElasticScaleEnabled,
+                maximumElasticWorkerCount,
+                numberOfSites,
+                isSpot,
+                spotExpirationOn,
+                freeOfferExpirationOn,
+                resourceGroup,
+                isReserved,
+                isXenon,
+                isHyperV,
+                targetWorkerCount,
+                targetWorkerSizeId,
+                provisioningState,
+                kubeEnvironmentProfile,
+                isZoneRedundant,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionData"/>. </summary>
@@ -1320,7 +1918,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.HybridConnectionData"/> instance for mocking. </returns>
         public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string serviceBusNamespace = null, string relayName = null, ResourceIdentifier relayArmId = null, string hostname = null, int? port = null, string sendKeyName = null, string sendKeyValue = null, string serviceBusSuffix = null, string kind = null)
         {
-            return new HybridConnectionData(id, name, resourceType, systemData, serviceBusNamespace, relayName, relayArmId, hostname, port, sendKeyName, sendKeyValue, serviceBusSuffix, kind);
+            return new HybridConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serviceBusNamespace,
+                relayName,
+                relayArmId,
+                hostname,
+                port,
+                sendKeyName,
+                sendKeyValue,
+                serviceBusSuffix,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HybridConnectionKey"/>. </summary>
@@ -1334,7 +1946,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.HybridConnectionKey"/> instance for mocking. </returns>
         public static HybridConnectionKey HybridConnectionKey(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sendKeyName = null, string sendKeyValue = null, string kind = null)
         {
-            return new HybridConnectionKey(id, name, resourceType, systemData, sendKeyName, sendKeyValue, kind);
+            return new HybridConnectionKey(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sendKeyName,
+                sendKeyValue,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionLimitData"/>. </summary>
@@ -1348,7 +1968,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.HybridConnectionLimitData"/> instance for mocking. </returns>
         public static HybridConnectionLimitData HybridConnectionLimitData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? current = null, int? maximum = null, string kind = null)
         {
-            return new HybridConnectionLimitData(id, name, resourceType, systemData, current, maximum, kind);
+            return new HybridConnectionLimitData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                current,
+                maximum,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkData"/>. </summary>
@@ -1372,7 +2000,20 @@ namespace Azure.ResourceManager.AppService.Models
         {
             routes ??= new List<AppServiceVirtualNetworkRoute>();
 
-            return new AppServiceVirtualNetworkData(id, name, resourceType, systemData, vnetResourceId, certThumbprintString, certBlob, routes?.ToList(), isResyncRequired, dnsServers, isSwift, kind);
+            return new AppServiceVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vnetResourceId,
+                certThumbprintString,
+                certBlob,
+                routes?.ToList(),
+                isResyncRequired,
+                dnsServers,
+                isSwift,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkProperties"/>. </summary>
@@ -1391,7 +2032,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             routes ??= new List<AppServiceVirtualNetworkRoute>();
 
-            return new AppServiceVirtualNetworkProperties(vnetResourceId, certThumbprintString, certBlob, routes?.ToList(), isResyncRequired, dnsServers, isSwift);
+            return new AppServiceVirtualNetworkProperties(
+                vnetResourceId,
+                certThumbprintString,
+                certBlob,
+                routes?.ToList(),
+                isResyncRequired,
+                dnsServers,
+                isSwift,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkRoute"/>. </summary>
@@ -1413,7 +2062,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkRoute"/> instance for mocking. </returns>
         public static AppServiceVirtualNetworkRoute AppServiceVirtualNetworkRoute(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string startAddress = null, string endAddress = null, AppServiceVirtualNetworkRouteType? routeType = null, string kind = null)
         {
-            return new AppServiceVirtualNetworkRoute(id, name, resourceType, systemData, startAddress, endAddress, routeType, kind);
+            return new AppServiceVirtualNetworkRoute(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startAddress,
+                endAddress,
+                routeType,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkGatewayData"/>. </summary>
@@ -1427,7 +2085,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
         public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vnetName = null, Uri vpnPackageUri = null, string kind = null)
         {
-            return new AppServiceVirtualNetworkGatewayData(id, name, resourceType, systemData, vnetName, vpnPackageUri, kind);
+            return new AppServiceVirtualNetworkGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vnetName,
+                vpnPackageUri,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppCertificateData"/>. </summary>
@@ -1465,7 +2131,36 @@ namespace Azure.ResourceManager.AppService.Models
             tags ??= new Dictionary<string, string>();
             hostNames ??= new List<string>();
 
-            return new AppCertificateData(id, name, resourceType, systemData, tags, location, password, friendlyName, subjectName, hostNames?.ToList(), pfxBlob, siteName, selfLink, issuer, issueOn, expireOn, thumbprintString, isValid, cerBlob, publicKeyHash, hostingEnvironmentProfile, keyVaultId, keyVaultSecretName, keyVaultSecretStatus, serverFarmId, canonicalName, domainValidationMethod, kind);
+            return new AppCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                password,
+                friendlyName,
+                subjectName,
+                hostNames?.ToList(),
+                pfxBlob,
+                siteName,
+                selfLink,
+                issuer,
+                issueOn,
+                expireOn,
+                thumbprintString,
+                isValid,
+                cerBlob,
+                publicKeyHash,
+                hostingEnvironmentProfile,
+                keyVaultId,
+                keyVaultSecretName,
+                keyVaultSecretStatus,
+                serverFarmId,
+                canonicalName,
+                domainValidationMethod,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppCertificatePatch"/>. </summary>
@@ -1500,7 +2195,34 @@ namespace Azure.ResourceManager.AppService.Models
         {
             hostNames ??= new List<string>();
 
-            return new AppCertificatePatch(id, name, resourceType, systemData, password, friendlyName, subjectName, hostNames?.ToList(), pfxBlob, siteName, selfLink, issuer, issueOn, expireOn, thumbprintString, isValid, cerBlob, publicKeyHash, hostingEnvironmentProfile, keyVaultId, keyVaultSecretName, keyVaultSecretStatus, serverFarmId, canonicalName, domainValidationMethod, kind);
+            return new AppCertificatePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                password,
+                friendlyName,
+                subjectName,
+                hostNames?.ToList(),
+                pfxBlob,
+                siteName,
+                selfLink,
+                issuer,
+                issueOn,
+                expireOn,
+                thumbprintString,
+                isValid,
+                cerBlob,
+                publicKeyHash,
+                hostingEnvironmentProfile,
+                keyVaultId,
+                keyVaultSecretName,
+                keyVaultSecretStatus,
+                serverFarmId,
+                canonicalName,
+                domainValidationMethod,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.DeletedSiteData"/>. </summary>
@@ -1520,7 +2242,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.DeletedSiteData"/> instance for mocking. </returns>
         public static DeletedSiteData DeletedSiteData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? deletedSiteId = null, string deletedTimestamp = null, string subscription = null, string resourceGroup = null, string deletedSiteName = null, string slot = null, string kindPropertiesKind = null, string geoRegionName = null, string kind = null)
         {
-            return new DeletedSiteData(id, name, resourceType, systemData, deletedSiteId, deletedTimestamp, subscription, resourceGroup, deletedSiteName, slot, kindPropertiesKind, geoRegionName, kind);
+            return new DeletedSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deletedSiteId,
+                deletedTimestamp,
+                subscription,
+                resourceGroup,
+                deletedSiteName,
+                slot,
+                kindPropertiesKind,
+                geoRegionName,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.DiagnosticCategoryData"/>. </summary>
@@ -1533,7 +2269,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.DiagnosticCategoryData"/> instance for mocking. </returns>
         public static DiagnosticCategoryData DiagnosticCategoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string kind = null)
         {
-            return new DiagnosticCategoryData(id, name, resourceType, systemData, description, kind);
+            return new DiagnosticCategoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebSiteAnalysisDefinitionData"/>. </summary>
@@ -1546,7 +2289,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.WebSiteAnalysisDefinitionData"/> instance for mocking. </returns>
         public static WebSiteAnalysisDefinitionData WebSiteAnalysisDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string kind = null)
         {
-            return new WebSiteAnalysisDefinitionData(id, name, resourceType, systemData, description, kind);
+            return new WebSiteAnalysisDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiagnosticAnalysis"/>. </summary>
@@ -1567,7 +2317,18 @@ namespace Azure.ResourceManager.AppService.Models
             payload ??= new List<AnalysisDetectorEvidences>();
             nonCorrelatedDetectors ??= new List<DetectorDefinition>();
 
-            return new DiagnosticAnalysis(id, name, resourceType, systemData, startOn, endOn, abnormalTimePeriods?.ToList(), payload?.ToList(), nonCorrelatedDetectors?.ToList(), kind);
+            return new DiagnosticAnalysis(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                abnormalTimePeriods?.ToList(),
+                payload?.ToList(),
+                nonCorrelatedDetectors?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DetectorDefinition"/>. </summary>
@@ -1578,7 +2339,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DetectorDefinition"/> instance for mocking. </returns>
         public static DetectorDefinition DetectorDefinition(string displayName = null, string description = null, double? rank = null, bool? isEnabled = null)
         {
-            return new DetectorDefinition(displayName, description, rank, isEnabled);
+            return new DetectorDefinition(displayName, description, rank, isEnabled, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.DetectorDefinitionResourceData"/>. </summary>
@@ -1594,7 +2355,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.DetectorDefinitionResourceData"/> instance for mocking. </returns>
         public static DetectorDefinitionResourceData DetectorDefinitionResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string displayName = null, string description = null, double? rank = null, bool? isEnabled = null, string kind = null)
         {
-            return new DetectorDefinitionResourceData(id, name, resourceType, systemData, displayName, description, rank, isEnabled, kind);
+            return new DetectorDefinitionResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                displayName,
+                description,
+                rank,
+                isEnabled,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DiagnosticDetectorResponse"/>. </summary>
@@ -1618,7 +2389,21 @@ namespace Azure.ResourceManager.AppService.Models
             abnormalTimePeriods ??= new List<DetectorAbnormalTimePeriod>();
             data ??= new List<IList<AppServiceNameValuePair>>();
 
-            return new DiagnosticDetectorResponse(id, name, resourceType, systemData, startOn, endOn, issueDetected, detectorDefinition, metrics?.ToList(), abnormalTimePeriods?.ToList(), data?.ToList(), dataSource != null ? new DetectorMetadata(dataSource) : null, kind);
+            return new DiagnosticDetectorResponse(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                issueDetected,
+                detectorDefinition,
+                metrics?.ToList(),
+                abnormalTimePeriods?.ToList(),
+                data?.ToList(),
+                dataSource != null ? new DetectorMetadata(dataSource, serializedAdditionalRawData: null) : null,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppSnapshot"/>. </summary>
@@ -1631,7 +2416,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppSnapshot"/> instance for mocking. </returns>
         public static AppSnapshot AppSnapshot(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string time = null, string kind = null)
         {
-            return new AppSnapshot(id, name, resourceType, systemData, time, kind);
+            return new AppSnapshot(
+                id,
+                name,
+                resourceType,
+                systemData,
+                time,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
@@ -1664,7 +2456,24 @@ namespace Azure.ResourceManager.AppService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new KubeEnvironmentData(id, name, resourceType, systemData, tags, location, extendedLocation, provisioningState, deploymentErrors, isInternalLoadBalancerEnabled, defaultDomain, staticIP, arcConfiguration, appLogsConfiguration, aksResourceId, kind);
+            return new KubeEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                extendedLocation,
+                provisioningState,
+                deploymentErrors,
+                isInternalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.KubeEnvironmentPatch"/>. </summary>
@@ -1692,7 +2501,21 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.KubeEnvironmentPatch"/> instance for mocking. </returns>
         public static KubeEnvironmentPatch KubeEnvironmentPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, KubeEnvironmentProvisioningState? provisioningState = null, string deploymentErrors = null, bool? isInternalLoadBalancerEnabled = null, string defaultDomain = null, string staticIP = null, ArcConfiguration arcConfiguration = null, AppLogsConfiguration appLogsConfiguration = null, ResourceIdentifier aksResourceId = null, string kind = null)
         {
-            return new KubeEnvironmentPatch(id, name, resourceType, systemData, provisioningState, deploymentErrors, isInternalLoadBalancerEnabled, defaultDomain, staticIP, arcConfiguration, appLogsConfiguration, aksResourceId, kind);
+            return new KubeEnvironmentPatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                deploymentErrors,
+                isInternalLoadBalancerEnabled,
+                defaultDomain,
+                staticIP,
+                arcConfiguration,
+                appLogsConfiguration,
+                aksResourceId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationStackResource"/>. </summary>
@@ -1714,7 +2537,19 @@ namespace Azure.ResourceManager.AppService.Models
             frameworks ??= new List<ApplicationStack>();
             isDeprecated ??= new List<ApplicationStack>();
 
-            return new ApplicationStackResource(id, name, resourceType, systemData, stackName, display, dependency, majorVersions?.ToList(), frameworks?.ToList(), isDeprecated?.ToList(), kind);
+            return new ApplicationStackResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                stackName,
+                display,
+                dependency,
+                majorVersions?.ToList(),
+                frameworks?.ToList(),
+                isDeprecated?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppStack"/>. </summary>
@@ -1733,7 +2568,18 @@ namespace Azure.ResourceManager.AppService.Models
         {
             majorVersions ??= new List<FunctionAppMajorVersion>();
 
-            return new FunctionAppStack(id, name, resourceType, systemData, location, displayText, value, majorVersions?.ToList(), preferredOS, kind);
+            return new FunctionAppStack(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                displayText,
+                value,
+                majorVersions?.ToList(),
+                preferredOS,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppMajorVersion"/>. </summary>
@@ -1745,7 +2591,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             minorVersions ??= new List<FunctionAppMinorVersion>();
 
-            return new FunctionAppMajorVersion(displayText, value, minorVersions?.ToList());
+            return new FunctionAppMajorVersion(displayText, value, minorVersions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppMinorVersion"/>. </summary>
@@ -1755,7 +2601,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.FunctionAppMinorVersion"/> instance for mocking. </returns>
         public static FunctionAppMinorVersion FunctionAppMinorVersion(string displayText = null, string value = null, FunctionAppRuntimes stackSettings = null)
         {
-            return new FunctionAppMinorVersion(displayText, value, stackSettings);
+            return new FunctionAppMinorVersion(displayText, value, stackSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppRuntimes"/>. </summary>
@@ -1764,7 +2610,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.FunctionAppRuntimes"/> instance for mocking. </returns>
         public static FunctionAppRuntimes FunctionAppRuntimes(FunctionAppRuntimeSettings linuxRuntimeSettings = null, FunctionAppRuntimeSettings windowsRuntimeSettings = null)
         {
-            return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings);
+            return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppRuntimeSettings"/>. </summary>
@@ -1788,7 +2634,22 @@ namespace Azure.ResourceManager.AppService.Models
             appSettingsDictionary ??= new Dictionary<string, string>();
             supportedFunctionsExtensionVersions ??= new List<string>();
 
-            return new FunctionAppRuntimeSettings(runtimeVersion, isRemoteDebuggingSupported, appInsightsSettings, gitHubActionSettings, appSettingsDictionary, siteConfigPropertiesDictionary, supportedFunctionsExtensionVersions?.ToList(), isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess, isDefault);
+            return new FunctionAppRuntimeSettings(
+                runtimeVersion,
+                isRemoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
+                appSettingsDictionary,
+                siteConfigPropertiesDictionary,
+                supportedFunctionsExtensionVersions?.ToList(),
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeOn,
+                isAutoUpdate,
+                isEarlyAccess,
+                isDefault,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppInsightsWebAppStackSettings"/>. </summary>
@@ -1797,7 +2658,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppInsightsWebAppStackSettings"/> instance for mocking. </returns>
         public static AppInsightsWebAppStackSettings AppInsightsWebAppStackSettings(bool? isSupported = null, bool? isDefaultOff = null)
         {
-            return new AppInsightsWebAppStackSettings(isSupported, isDefaultOff);
+            return new AppInsightsWebAppStackSettings(isSupported, isDefaultOff, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GitHubActionWebAppStackSettings"/>. </summary>
@@ -1806,7 +2667,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.GitHubActionWebAppStackSettings"/> instance for mocking. </returns>
         public static GitHubActionWebAppStackSettings GitHubActionWebAppStackSettings(bool? isSupported = null, string supportedVersion = null)
         {
-            return new GitHubActionWebAppStackSettings(isSupported, supportedVersion);
+            return new GitHubActionWebAppStackSettings(isSupported, supportedVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteConfigPropertiesDictionary"/>. </summary>
@@ -1817,7 +2678,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SiteConfigPropertiesDictionary"/> instance for mocking. </returns>
         public static SiteConfigPropertiesDictionary SiteConfigPropertiesDictionary(bool? use32BitWorkerProcess = null, string linuxFxVersion = null, string javaVersion = null, string powerShellVersion = null)
         {
-            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion);
+            return new SiteConfigPropertiesDictionary(use32BitWorkerProcess, linuxFxVersion, javaVersion, powerShellVersion, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppStack"/>. </summary>
@@ -1836,7 +2697,18 @@ namespace Azure.ResourceManager.AppService.Models
         {
             majorVersions ??= new List<WebAppMajorVersion>();
 
-            return new WebAppStack(id, name, resourceType, systemData, location, displayText, value, majorVersions?.ToList(), preferredOS, kind);
+            return new WebAppStack(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                displayText,
+                value,
+                majorVersions?.ToList(),
+                preferredOS,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppMajorVersion"/>. </summary>
@@ -1848,7 +2720,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             minorVersions ??= new List<WebAppMinorVersion>();
 
-            return new WebAppMajorVersion(displayText, value, minorVersions?.ToList());
+            return new WebAppMajorVersion(displayText, value, minorVersions?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppMinorVersion"/>. </summary>
@@ -1858,7 +2730,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppMinorVersion"/> instance for mocking. </returns>
         public static WebAppMinorVersion WebAppMinorVersion(string displayText = null, string value = null, WebAppRuntimes stackSettings = null)
         {
-            return new WebAppMinorVersion(displayText, value, stackSettings);
+            return new WebAppMinorVersion(displayText, value, stackSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppRuntimes"/>. </summary>
@@ -1869,7 +2741,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppRuntimes"/> instance for mocking. </returns>
         public static WebAppRuntimes WebAppRuntimes(WebAppRuntimeSettings linuxRuntimeSettings = null, WebAppRuntimeSettings windowsRuntimeSettings = null, LinuxJavaContainerSettings linuxContainerSettings = null, WindowsJavaContainerSettings windowsContainerSettings = null)
         {
-            return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings);
+            return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppRuntimeSettings"/>. </summary>
@@ -1886,7 +2758,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppRuntimeSettings"/> instance for mocking. </returns>
         public static WebAppRuntimeSettings WebAppRuntimeSettings(string runtimeVersion = null, bool? isRemoteDebuggingSupported = null, AppInsightsWebAppStackSettings appInsightsSettings = null, GitHubActionWebAppStackSettings gitHubActionSettings = null, bool? isPreview = null, bool? isDeprecated = null, bool? isHidden = null, DateTimeOffset? endOfLifeOn = null, bool? isAutoUpdate = null, bool? isEarlyAccess = null)
         {
-            return new WebAppRuntimeSettings(runtimeVersion, isRemoteDebuggingSupported, appInsightsSettings, gitHubActionSettings, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
+            return new WebAppRuntimeSettings(
+                runtimeVersion,
+                isRemoteDebuggingSupported,
+                appInsightsSettings,
+                gitHubActionSettings,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeOn,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinuxJavaContainerSettings"/>. </summary>
@@ -1901,7 +2784,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.LinuxJavaContainerSettings"/> instance for mocking. </returns>
         public static LinuxJavaContainerSettings LinuxJavaContainerSettings(string java11Runtime = null, string java8Runtime = null, bool? isPreview = null, bool? isDeprecated = null, bool? isHidden = null, DateTimeOffset? endOfLifeOn = null, bool? isAutoUpdate = null, bool? isEarlyAccess = null)
         {
-            return new LinuxJavaContainerSettings(java11Runtime, java8Runtime, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
+            return new LinuxJavaContainerSettings(
+                java11Runtime,
+                java8Runtime,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeOn,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WindowsJavaContainerSettings"/>. </summary>
@@ -1916,7 +2808,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WindowsJavaContainerSettings"/> instance for mocking. </returns>
         public static WindowsJavaContainerSettings WindowsJavaContainerSettings(string javaContainer = null, string javaContainerVersion = null, bool? isPreview = null, bool? isDeprecated = null, bool? isHidden = null, DateTimeOffset? endOfLifeOn = null, bool? isAutoUpdate = null, bool? isEarlyAccess = null)
         {
-            return new WindowsJavaContainerSettings(javaContainer, javaContainerVersion, isPreview, isDeprecated, isHidden, endOfLifeOn, isAutoUpdate, isEarlyAccess);
+            return new WindowsJavaContainerSettings(
+                javaContainer,
+                javaContainerVersion,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeOn,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceRecommendation"/>. </summary>
@@ -1954,7 +2855,36 @@ namespace Azure.ResourceManager.AppService.Models
             categoryTags ??= new List<string>();
             states ??= new List<string>();
 
-            return new AppServiceRecommendation(id, name, resourceType, systemData, createdOn, recommendationId, resourceId, resourceScope, ruleName, displayName, message, level, channels, categoryTags?.ToList(), actionName, enabled, states?.ToList(), startOn, endOn, nextNotificationOn, notificationExpirationOn, notifiedOn, score, isDynamic, extensionName, bladeName, forwardLink, kind);
+            return new AppServiceRecommendation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                createdOn,
+                recommendationId,
+                resourceId,
+                resourceScope,
+                ruleName,
+                displayName,
+                message,
+                level,
+                channels,
+                categoryTags?.ToList(),
+                actionName,
+                enabled,
+                states?.ToList(),
+                startOn,
+                endOn,
+                nextNotificationOn,
+                notificationExpirationOn,
+                notifiedOn,
+                score,
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RecommendationRuleData"/>. </summary>
@@ -1984,7 +2914,26 @@ namespace Azure.ResourceManager.AppService.Models
         {
             categoryTags ??= new List<string>();
 
-            return new RecommendationRuleData(id, name, resourceType, systemData, recommendationName, displayName, message, recommendationId, description, actionName, level, channels, categoryTags?.ToList(), isDynamic, extensionName, bladeName, forwardLink, kind);
+            return new RecommendationRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                recommendationName,
+                displayName,
+                message,
+                recommendationId,
+                description,
+                actionName,
+                level,
+                channels,
+                categoryTags?.ToList(),
+                isDynamic,
+                extensionName,
+                bladeName,
+                forwardLink,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ResourceHealthMetadataData"/>. </summary>
@@ -1998,7 +2947,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.ResourceHealthMetadataData"/> instance for mocking. </returns>
         public static ResourceHealthMetadataData ResourceHealthMetadataData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string category = null, bool? isSignalAvailable = null, string kind = null)
         {
-            return new ResourceHealthMetadataData(id, name, resourceType, systemData, category, isSignalAvailable, kind);
+            return new ResourceHealthMetadataData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                category,
+                isSignalAvailable,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.PublishingUserData"/>. </summary>
@@ -2015,7 +2972,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.PublishingUserData"/> instance for mocking. </returns>
         public static PublishingUserData PublishingUserData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publishingUserName = null, string publishingPassword = null, string publishingPasswordHash = null, string publishingPasswordHashSalt = null, Uri scmUri = null, string kind = null)
         {
-            return new PublishingUserData(id, name, resourceType, systemData, publishingUserName, publishingPassword, publishingPasswordHash, publishingPasswordHashSalt, scmUri, kind);
+            return new PublishingUserData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                publishingUserName,
+                publishingPassword,
+                publishingPasswordHash,
+                publishingPasswordHashSalt,
+                scmUri,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceSourceControlData"/>. </summary>
@@ -2031,7 +2999,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.AppServiceSourceControlData"/> instance for mocking. </returns>
         public static AppServiceSourceControlData AppServiceSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string token = null, string tokenSecret = null, string refreshToken = null, DateTimeOffset? expireOn = null, string kind = null)
         {
-            return new AppServiceSourceControlData(id, name, resourceType, systemData, token, tokenSecret, refreshToken, expireOn, kind);
+            return new AppServiceSourceControlData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                token,
+                tokenSecret,
+                refreshToken,
+                expireOn,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceBillingMeter"/>. </summary>
@@ -2049,7 +3027,29 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceBillingMeter"/> instance for mocking. </returns>
         public static AppServiceBillingMeter AppServiceBillingMeter(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Guid? meterId = null, AzureLocation? billingLocation = null, string shortName = null, string friendlyName = null, string osType = null, double? multiplier = null, string kind = null)
         {
-            return new AppServiceBillingMeter(id, name, resourceType, systemData, meterId, billingLocation, shortName, friendlyName, osType, multiplier, kind);
+            return new AppServiceBillingMeter(
+                id,
+                name,
+                resourceType,
+                systemData,
+                meterId,
+                billingLocation,
+                shortName,
+                friendlyName,
+                osType,
+                multiplier,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailabilityContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <returns> A new <see cref="Models.ResourceNameAvailabilityContent"/> instance for mocking. </returns>
+        public static ResourceNameAvailabilityContent ResourceNameAvailabilityContent(string name = null, CheckNameResourceType resourceType = default, bool? isFqdn = null)
+        {
+            return new ResourceNameAvailabilityContent(name, resourceType, isFqdn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceNameAvailability"/>. </summary>
@@ -2059,7 +3059,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ResourceNameAvailability"/> instance for mocking. </returns>
         public static ResourceNameAvailability ResourceNameAvailability(bool? isNameAvailable = null, InAvailabilityReasonType? reason = null, string message = null)
         {
-            return new ResourceNameAvailability(isNameAvailable, reason, message);
+            return new ResourceNameAvailability(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceDeploymentLocations"/>. </summary>
@@ -2073,7 +3073,7 @@ namespace Azure.ResourceManager.AppService.Models
             hostingEnvironments ??= new List<AppServiceEnvironmentProperties>();
             hostingEnvironmentDeploymentInfos ??= new List<HostingEnvironmentDeploymentInfo>();
 
-            return new AppServiceDeploymentLocations(locations?.ToList(), hostingEnvironments?.ToList(), hostingEnvironmentDeploymentInfos?.ToList());
+            return new AppServiceDeploymentLocations(locations?.ToList(), hostingEnvironments?.ToList(), hostingEnvironmentDeploymentInfos?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceGeoRegion"/>. </summary>
@@ -2088,7 +3088,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceGeoRegion"/> instance for mocking. </returns>
         public static AppServiceGeoRegion AppServiceGeoRegion(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string displayName = null, string orgDomain = null, string kind = null)
         {
-            return new AppServiceGeoRegion(id, name, resourceType, systemData, description, displayName, orgDomain, kind);
+            return new AppServiceGeoRegion(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                displayName,
+                orgDomain,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.HostingEnvironmentDeploymentInfo"/>. </summary>
@@ -2097,7 +3106,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.HostingEnvironmentDeploymentInfo"/> instance for mocking. </returns>
         public static HostingEnvironmentDeploymentInfo HostingEnvironmentDeploymentInfo(string name = null, AzureLocation? location = null)
         {
-            return new HostingEnvironmentDeploymentInfo(name, location);
+            return new HostingEnvironmentDeploymentInfo(name, location, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.AppServiceIdentifierData"/>. </summary>
@@ -2110,7 +3119,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.AppServiceIdentifierData"/> instance for mocking. </returns>
         public static AppServiceIdentifierData AppServiceIdentifierData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string value = null, string kind = null)
         {
-            return new AppServiceIdentifierData(id, name, resourceType, systemData, value, kind);
+            return new AppServiceIdentifierData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                value,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnOffer"/>. </summary>
@@ -2132,7 +3148,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.PremierAddOnOffer"/> instance for mocking. </returns>
         public static PremierAddOnOffer PremierAddOnOffer(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sku = null, string product = null, string vendor = null, bool? isPromoCodeRequired = null, int? quota = null, AppServicePlanRestriction? webHostingPlanRestrictions = null, Uri privacyPolicyUri = null, Uri legalTermsUri = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
         {
-            return new PremierAddOnOffer(id, name, resourceType, systemData, sku, product, vendor, isPromoCodeRequired, quota, webHostingPlanRestrictions, privacyPolicyUri, legalTermsUri, marketplacePublisher, marketplaceOffer, kind);
+            return new PremierAddOnOffer(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                product,
+                vendor,
+                isPromoCodeRequired,
+                quota,
+                webHostingPlanRestrictions,
+                privacyPolicyUri,
+                legalTermsUri,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceSkuResult"/>. </summary>
@@ -2143,7 +3175,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             skus ??= new List<GlobalCsmSkuDescription>();
 
-            return new AppServiceSkuResult(resourceType, skus?.ToList());
+            return new AppServiceSkuResult(resourceType, skus?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GlobalCsmSkuDescription"/>. </summary>
@@ -2160,7 +3192,15 @@ namespace Azure.ResourceManager.AppService.Models
             locations ??= new List<AzureLocation>();
             capabilities ??= new List<AppServiceSkuCapability>();
 
-            return new GlobalCsmSkuDescription(name, tier, size, family, capacity, locations?.ToList(), capabilities?.ToList());
+            return new GlobalCsmSkuDescription(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                locations?.ToList(),
+                capabilities?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkValidationContent"/>. </summary>
@@ -2176,7 +3216,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkValidationContent"/> instance for mocking. </returns>
         public static AppServiceVirtualNetworkValidationContent AppServiceVirtualNetworkValidationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string vnetResourceGroup = null, string vnetName = null, string vnetSubnetName = null, ResourceIdentifier subnetResourceId = null, string kind = null)
         {
-            return new AppServiceVirtualNetworkValidationContent(id, name, resourceType, systemData, vnetResourceGroup, vnetName, vnetSubnetName, subnetResourceId, kind);
+            return new AppServiceVirtualNetworkValidationContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                vnetResourceGroup,
+                vnetName,
+                vnetSubnetName,
+                subnetResourceId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkValidationFailureDetails"/>. </summary>
@@ -2195,7 +3245,17 @@ namespace Azure.ResourceManager.AppService.Models
             failedTests ??= new List<VirtualNetworkValidationTestFailure>();
             warnings ??= new List<VirtualNetworkValidationTestFailure>();
 
-            return new VirtualNetworkValidationFailureDetails(id, name, resourceType, systemData, message, isFailed, failedTests?.ToList(), warnings?.ToList(), kind);
+            return new VirtualNetworkValidationFailureDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                message,
+                isFailed,
+                failedTests?.ToList(),
+                warnings?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.VirtualNetworkValidationTestFailure"/>. </summary>
@@ -2209,7 +3269,57 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.VirtualNetworkValidationTestFailure"/> instance for mocking. </returns>
         public static VirtualNetworkValidationTestFailure VirtualNetworkValidationTestFailure(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string testName = null, string details = null, string kind = null)
         {
-            return new VirtualNetworkValidationTestFailure(id, name, resourceType, systemData, testName, details, kind);
+            return new VirtualNetworkValidationTestFailure(
+                id,
+                name,
+                resourceType,
+                systemData,
+                testName,
+                details,
+                kind,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AppServiceValidateContent"/>. </summary>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="validateResourceType"> Resource type used for verification. </param>
+        /// <param name="location"> Expected location of the resource. </param>
+        /// <param name="serverFarmId"> ARM resource ID of an App Service plan that would host the app. </param>
+        /// <param name="skuName"> Name of the target SKU for the App Service plan. </param>
+        /// <param name="needLinuxWorkers"> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Linux workers; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isSpot"> &lt;code&gt;true&lt;/code&gt; if App Service plan is for Spot instances; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="capacity"> Target capacity of the App Service plan (number of VMs). </param>
+        /// <param name="hostingEnvironment"> Name of App Service Environment where app or App Service plan should be created. </param>
+        /// <param name="isXenon"> &lt;code&gt;true&lt;/code&gt; if App Service plan is running as a windows container. </param>
+        /// <param name="containerRegistryBaseUri"> Base URL of the container registry. </param>
+        /// <param name="containerRegistryUsername"> Username for to access the container registry. </param>
+        /// <param name="containerRegistryPassword"> Password for to access the container registry. </param>
+        /// <param name="containerImageRepository"> Repository name (image name). </param>
+        /// <param name="containerImageTag"> Image tag. </param>
+        /// <param name="containerImagePlatform"> Platform (windows or linux). </param>
+        /// <param name="appServiceEnvironment"> App Service Environment Properties. </param>
+        /// <returns> A new <see cref="Models.AppServiceValidateContent"/> instance for mocking. </returns>
+        public static AppServiceValidateContent AppServiceValidateContent(string name = null, ValidateResourceType validateResourceType = default, AzureLocation location = default, ResourceIdentifier serverFarmId = null, string skuName = null, bool? needLinuxWorkers = null, bool? isSpot = null, int? capacity = null, string hostingEnvironment = null, bool? isXenon = null, Uri containerRegistryBaseUri = null, string containerRegistryUsername = null, string containerRegistryPassword = null, string containerImageRepository = null, string containerImageTag = null, string containerImagePlatform = null, AppServiceEnvironmentProperties appServiceEnvironment = null)
+        {
+            return new AppServiceValidateContent(
+                name,
+                validateResourceType,
+                location,
+                serverFarmId,
+                skuName,
+                needLinuxWorkers,
+                isSpot,
+                capacity,
+                hostingEnvironment,
+                isXenon,
+                containerRegistryBaseUri,
+                containerRegistryUsername,
+                containerRegistryPassword,
+                containerImageRepository,
+                containerImageTag,
+                containerImagePlatform,
+                appServiceEnvironment,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceValidateResult"/>. </summary>
@@ -2218,7 +3328,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceValidateResult"/> instance for mocking. </returns>
         public static AppServiceValidateResult AppServiceValidateResult(string status = null, ValidateResponseError error = null)
         {
-            return new AppServiceValidateResult(status, error);
+            return new AppServiceValidateResult(status, error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ValidateResponseError"/>. </summary>
@@ -2227,7 +3337,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ValidateResponseError"/> instance for mocking. </returns>
         public static ValidateResponseError ValidateResponseError(string code = null, string message = null)
         {
-            return new ValidateResponseError(code, message);
+            return new ValidateResponseError(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSitesWorkflowPreviewContent"/>. </summary>
@@ -2242,7 +3352,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSitesWorkflowPreviewContent"/> instance for mocking. </returns>
         public static StaticSitesWorkflowPreviewContent StaticSitesWorkflowPreviewContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repositoryUri = null, string branch = null, StaticSiteBuildProperties buildProperties = null, string kind = null)
         {
-            return new StaticSitesWorkflowPreviewContent(id, name, resourceType, systemData, repositoryUri, branch, buildProperties, kind);
+            return new StaticSitesWorkflowPreviewContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                repositoryUri,
+                branch,
+                buildProperties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSitesWorkflowPreview"/>. </summary>
@@ -2256,7 +3375,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSitesWorkflowPreview"/> instance for mocking. </returns>
         public static StaticSitesWorkflowPreview StaticSitesWorkflowPreview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string path = null, string contents = null, string kind = null)
         {
-            return new StaticSitesWorkflowPreview(id, name, resourceType, systemData, path, contents, kind);
+            return new StaticSitesWorkflowPreview(
+                id,
+                name,
+                resourceType,
+                systemData,
+                path,
+                contents,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteData"/>. </summary>
@@ -2291,7 +3418,31 @@ namespace Azure.ResourceManager.AppService.Models
             privateEndpointConnections ??= new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
 
-            return new StaticSiteData(id, name, resourceType, systemData, tags, location, sku, identity, defaultHostname, repositoryUri, branch, customDomains?.ToList(), repositoryToken, buildProperties, privateEndpointConnections?.ToList(), stagingEnvironmentPolicy, allowConfigFileUpdates, templateProperties, contentDistributionEndpoint, keyVaultReferenceIdentity, userProvidedFunctionApps?.ToList(), provider, kind);
+            return new StaticSiteData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                identity,
+                defaultHostname,
+                repositoryUri,
+                branch,
+                customDomains?.ToList(),
+                repositoryToken,
+                buildProperties,
+                privateEndpointConnections?.ToList(),
+                stagingEnvironmentPolicy,
+                allowConfigFileUpdates,
+                templateProperties,
+                contentDistributionEndpoint,
+                keyVaultReferenceIdentity,
+                userProvidedFunctionApps?.ToList(),
+                provider,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResponseMessageEnvelopeRemotePrivateEndpointConnection"/>. </summary>
@@ -2314,7 +3465,21 @@ namespace Azure.ResourceManager.AppService.Models
             tags ??= new Dictionary<string, string>();
             zones ??= new List<string>();
 
-            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(id, name, resourceType, systemData, location, tags, plan, properties, sku, status, error, identity, zones?.ToList());
+            return new ResponseMessageEnvelopeRemotePrivateEndpointConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                tags,
+                plan,
+                properties,
+                sku,
+                status,
+                error,
+                identity,
+                zones?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceArmPlan"/>. </summary>
@@ -2326,7 +3491,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.AppServiceArmPlan"/> instance for mocking. </returns>
         public static AppServiceArmPlan AppServiceArmPlan(string name = null, string publisher = null, string product = null, string promotionCode = null, string version = null)
         {
-            return new AppServiceArmPlan(name, publisher, product, promotionCode, version);
+            return new AppServiceArmPlan(
+                name,
+                publisher,
+                product,
+                promotionCode,
+                version,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateEndpointConnection"/>. </summary>
@@ -2344,7 +3515,17 @@ namespace Azure.ResourceManager.AppService.Models
         {
             ipAddresses ??= new List<IPAddress>();
 
-            return new RemotePrivateEndpointConnection(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, privateLinkServiceConnectionState, ipAddresses?.ToList(), kind);
+            return new RemotePrivateEndpointConnection(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                privateLinkServiceConnectionState,
+                ipAddresses?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/>. </summary>
@@ -2359,7 +3540,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
         public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier functionAppResourceId = null, string functionAppRegion = null, DateTimeOffset? createdOn = null, string kind = null)
         {
-            return new StaticSiteUserProvidedFunctionAppData(id, name, resourceType, systemData, functionAppResourceId, functionAppRegion, createdOn, kind);
+            return new StaticSiteUserProvidedFunctionAppData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                functionAppResourceId,
+                functionAppRegion,
+                createdOn,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSitePatch"/>. </summary>
@@ -2389,7 +3579,27 @@ namespace Azure.ResourceManager.AppService.Models
             privateEndpointConnections ??= new List<ResponseMessageEnvelopeRemotePrivateEndpointConnection>();
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
 
-            return new StaticSitePatch(id, name, resourceType, systemData, defaultHostname, repositoryUri, branch, customDomains?.ToList(), repositoryToken, buildProperties, privateEndpointConnections?.ToList(), stagingEnvironmentPolicy, allowConfigFileUpdates, templateProperties, contentDistributionEndpoint, keyVaultReferenceIdentity, userProvidedFunctionApps?.ToList(), provider, kind);
+            return new StaticSitePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                defaultHostname,
+                repositoryUri,
+                branch,
+                customDomains?.ToList(),
+                repositoryToken,
+                buildProperties,
+                privateEndpointConnections?.ToList(),
+                stagingEnvironmentPolicy,
+                allowConfigFileUpdates,
+                templateProperties,
+                contentDistributionEndpoint,
+                keyVaultReferenceIdentity,
+                userProvidedFunctionApps?.ToList(),
+                provider,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUser"/>. </summary>
@@ -2405,7 +3615,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteUser"/> instance for mocking. </returns>
         public static StaticSiteUser StaticSiteUser(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string provider = null, string userId = null, string displayName = null, string roles = null, string kind = null)
         {
-            return new StaticSiteUser(id, name, resourceType, systemData, provider, userId, displayName, roles, kind);
+            return new StaticSiteUser(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provider,
+                userId,
+                displayName,
+                roles,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBuildData"/>. </summary>
@@ -2427,7 +3647,21 @@ namespace Azure.ResourceManager.AppService.Models
         {
             userProvidedFunctionApps ??= new List<StaticSiteUserProvidedFunctionAppData>();
 
-            return new StaticSiteBuildData(id, name, resourceType, systemData, buildId, sourceBranch, pullRequestTitle, hostname, createdOn, lastUpdatedOn, status, userProvidedFunctionApps?.ToList(), kind);
+            return new StaticSiteBuildData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                buildId,
+                sourceBranch,
+                pullRequestTitle,
+                hostname,
+                createdOn,
+                lastUpdatedOn,
+                status,
+                userProvidedFunctionApps?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AppServiceConfigurationDictionary"/>. </summary>
@@ -2442,7 +3676,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             properties ??= new Dictionary<string, string>();
 
-            return new AppServiceConfigurationDictionary(id, name, resourceType, systemData, properties, kind);
+            return new AppServiceConfigurationDictionary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteFunctionOverview"/>. </summary>
@@ -2456,7 +3697,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteFunctionOverview"/> instance for mocking. </returns>
         public static StaticSiteFunctionOverview StaticSiteFunctionOverview(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string functionName = null, FunctionTriggerType? triggerType = null, string kind = null)
         {
-            return new StaticSiteFunctionOverview(id, name, resourceType, systemData, functionName, triggerType, kind);
+            return new StaticSiteFunctionOverview(
+                id,
+                name,
+                resourceType,
+                systemData,
+                functionName,
+                triggerType,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteZipDeployment"/>. </summary>
@@ -2473,7 +3722,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteZipDeployment"/> instance for mocking. </returns>
         public static StaticSiteZipDeployment StaticSiteZipDeployment(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri appZipUri = null, Uri apiZipUri = null, string deploymentTitle = null, string provider = null, string functionLanguage = null, string kind = null)
         {
-            return new StaticSiteZipDeployment(id, name, resourceType, systemData, appZipUri, apiZipUri, deploymentTitle, provider, functionLanguage, kind);
+            return new StaticSiteZipDeployment(
+                id,
+                name,
+                resourceType,
+                systemData,
+                appZipUri,
+                apiZipUri,
+                deploymentTitle,
+                provider,
+                functionLanguage,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserInvitationContent"/>. </summary>
@@ -2490,7 +3750,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteUserInvitationContent"/> instance for mocking. </returns>
         public static StaticSiteUserInvitationContent StaticSiteUserInvitationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string domain = null, string provider = null, string userDetails = null, string roles = null, int? numHoursToExpiration = null, string kind = null)
         {
-            return new StaticSiteUserInvitationContent(id, name, resourceType, systemData, domain, provider, userDetails, roles, numHoursToExpiration, kind);
+            return new StaticSiteUserInvitationContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                domain,
+                provider,
+                userDetails,
+                roles,
+                numHoursToExpiration,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteUserInvitationResult"/>. </summary>
@@ -2504,7 +3775,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteUserInvitationResult"/> instance for mocking. </returns>
         public static StaticSiteUserInvitationResult StaticSiteUserInvitationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? expiresOn = null, Uri invitationUri = null, string kind = null)
         {
-            return new StaticSiteUserInvitationResult(id, name, resourceType, systemData, expiresOn, invitationUri, kind);
+            return new StaticSiteUserInvitationResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                expiresOn,
+                invitationUri,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteCustomDomainOverviewData"/>. </summary>
@@ -2521,7 +3800,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.StaticSiteCustomDomainOverviewData"/> instance for mocking. </returns>
         public static StaticSiteCustomDomainOverviewData StaticSiteCustomDomainOverviewData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string domainName = null, DateTimeOffset? createdOn = null, CustomDomainStatus? status = null, string validationToken = null, string errorMessage = null, string kind = null)
         {
-            return new StaticSiteCustomDomainOverviewData(id, name, resourceType, systemData, domainName, createdOn, status, validationToken, errorMessage, kind);
+            return new StaticSiteCustomDomainOverviewData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                domainName,
+                createdOn,
+                status,
+                validationToken,
+                errorMessage,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteCustomDomainContent"/>. </summary>
@@ -2534,7 +3824,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteCustomDomainContent"/> instance for mocking. </returns>
         public static StaticSiteCustomDomainContent StaticSiteCustomDomainContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string validationMethod = null, string kind = null)
         {
-            return new StaticSiteCustomDomainContent(id, name, resourceType, systemData, validationMethod, kind);
+            return new StaticSiteCustomDomainContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                validationMethod,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteStringList"/>. </summary>
@@ -2549,7 +3846,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             properties ??= new List<string>();
 
-            return new StaticSiteStringList(id, name, resourceType, systemData, properties?.ToList(), kind);
+            return new StaticSiteStringList(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StaticSiteResetContent"/>. </summary>
@@ -2563,7 +3867,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StaticSiteResetContent"/> instance for mocking. </returns>
         public static StaticSiteResetContent StaticSiteResetContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string repositoryToken = null, bool? shouldUpdateRepository = null, string kind = null)
         {
-            return new StaticSiteResetContent(id, name, resourceType, systemData, repositoryToken, shouldUpdateRepository, kind);
+            return new StaticSiteResetContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                repositoryToken,
+                shouldUpdateRepository,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
@@ -2642,7 +3954,55 @@ namespace Azure.ResourceManager.AppService.Models
             hostNameSslStates ??= new List<HostNameSslState>();
             trafficManagerHostNames ??= new List<string>();
 
-            return new SitePatchInfo(id, name, resourceType, systemData, identity, state, hostNames?.ToList(), repositorySiteName, usageState, isEnabled, enabledHostNames?.ToList(), availabilityState, hostNameSslStates?.ToList(), serverFarmId, isReserved, isXenon, isHyperV, lastModifiedOn, siteConfig, trafficManagerHostNames?.ToList(), isScmSiteAlsoStopped, targetSwapSlot, hostingEnvironmentProfile, isClientAffinityEnabled, isClientCertEnabled, clientCertMode, clientCertExclusionPaths, isHostNameDisabled, customDomainVerificationId, outboundIPAddresses, possibleOutboundIPAddresses, containerSize, dailyMemoryTimeQuota, suspendOn, maxNumberOfWorkers, cloningInfo, resourceGroup, isDefaultContainer, defaultHostName, slotSwapStatus, isHttpsOnly, redundancyMode, inProgressOperationId, isStorageAccountRequired, keyVaultReferenceIdentity, virtualNetworkSubnetId, kind);
+            return new SitePatchInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identity,
+                state,
+                hostNames?.ToList(),
+                repositorySiteName,
+                usageState,
+                isEnabled,
+                enabledHostNames?.ToList(),
+                availabilityState,
+                hostNameSslStates?.ToList(),
+                serverFarmId,
+                isReserved,
+                isXenon,
+                isHyperV,
+                lastModifiedOn,
+                siteConfig,
+                trafficManagerHostNames?.ToList(),
+                isScmSiteAlsoStopped,
+                targetSwapSlot,
+                hostingEnvironmentProfile,
+                isClientAffinityEnabled,
+                isClientCertEnabled,
+                clientCertMode,
+                clientCertExclusionPaths,
+                isHostNameDisabled,
+                customDomainVerificationId,
+                outboundIPAddresses,
+                possibleOutboundIPAddresses,
+                containerSize,
+                dailyMemoryTimeQuota,
+                suspendOn,
+                maxNumberOfWorkers,
+                cloningInfo,
+                resourceGroup,
+                isDefaultContainer,
+                defaultHostName,
+                slotSwapStatus,
+                isHttpsOnly,
+                redundancyMode,
+                inProgressOperationId,
+                isStorageAccountRequired,
+                keyVaultReferenceIdentity,
+                virtualNetworkSubnetId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameAnalysisResult"/>. </summary>
@@ -2671,7 +4031,24 @@ namespace Azure.ResourceManager.AppService.Models
             alternateCNameRecords ??= new List<string>();
             alternateTxtRecords ??= new List<string>();
 
-            return new CustomHostnameAnalysisResult(id, name, resourceType, systemData, isHostnameAlreadyVerified, customDomainVerificationTest, customDomainVerificationFailureInfo, hasConflictOnScaleUnit, hasConflictAcrossSubscription, conflictingAppResourceId, cNameRecords?.ToList(), txtRecords?.ToList(), aRecords?.ToList(), alternateCNameRecords?.ToList(), alternateTxtRecords?.ToList(), kind);
+            return new CustomHostnameAnalysisResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isHostnameAlreadyVerified,
+                customDomainVerificationTest,
+                customDomainVerificationFailureInfo,
+                hasConflictOnScaleUnit,
+                hasConflictAcrossSubscription,
+                conflictingAppResourceId,
+                cNameRecords?.ToList(),
+                txtRecords?.ToList(),
+                aRecords?.ToList(),
+                alternateCNameRecords?.ToList(),
+                alternateTxtRecords?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppBackupInfo"/>. </summary>
@@ -2690,7 +4067,18 @@ namespace Azure.ResourceManager.AppService.Models
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
-            return new WebAppBackupInfo(id, name, resourceType, systemData, backupName, isEnabled, storageAccountUri, backupSchedule, databases?.ToList(), kind);
+            return new WebAppBackupInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupName,
+                isEnabled,
+                storageAccountUri,
+                backupSchedule,
+                databases?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppBackupSchedule"/>. </summary>
@@ -2703,7 +4091,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppBackupSchedule"/> instance for mocking. </returns>
         public static WebAppBackupSchedule WebAppBackupSchedule(int frequencyInterval = default, BackupFrequencyUnit frequencyUnit = default, bool shouldKeepAtLeastOneBackup = default, int retentionPeriodInDays = default, DateTimeOffset? startOn = null, DateTimeOffset? lastExecutedOn = null)
         {
-            return new WebAppBackupSchedule(frequencyInterval, frequencyUnit, shouldKeepAtLeastOneBackup, retentionPeriodInDays, startOn, lastExecutedOn);
+            return new WebAppBackupSchedule(
+                frequencyInterval,
+                frequencyUnit,
+                shouldKeepAtLeastOneBackup,
+                retentionPeriodInDays,
+                startOn,
+                lastExecutedOn,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebAppBackupData"/>. </summary>
@@ -2731,7 +4126,27 @@ namespace Azure.ResourceManager.AppService.Models
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
-            return new WebAppBackupData(id, name, resourceType, systemData, backupId, storageAccountUri, blobName, backupName, status, sizeInBytes, createdOn, log, databases?.ToList(), isScheduled, lastRestoreOn, finishedOn, correlationId, websiteSizeInBytes, kind);
+            return new WebAppBackupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                backupId,
+                storageAccountUri,
+                blobName,
+                backupName,
+                status,
+                sizeInBytes,
+                createdOn,
+                log,
+                databases?.ToList(),
+                isScheduled,
+                lastRestoreOn,
+                finishedOn,
+                correlationId,
+                websiteSizeInBytes,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RestoreRequestInfo"/>. </summary>
@@ -2759,7 +4174,24 @@ namespace Azure.ResourceManager.AppService.Models
         {
             databases ??= new List<AppServiceDatabaseBackupSetting>();
 
-            return new RestoreRequestInfo(id, name, resourceType, systemData, storageAccountUri, blobName, canOverwrite, siteName, databases?.ToList(), ignoreConflictingHostNames, ignoreDatabases, appServicePlan, operationType, adjustConnectionStrings, hostingEnvironment, kind);
+            return new RestoreRequestInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                storageAccountUri,
+                blobName,
+                canOverwrite,
+                siteName,
+                databases?.ToList(),
+                ignoreConflictingHostNames,
+                ignoreDatabases,
+                appServicePlan,
+                operationType,
+                adjustConnectionStrings,
+                hostingEnvironment,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/>. </summary>
@@ -2772,7 +4204,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/> instance for mocking. </returns>
         public static CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, bool? allow = null, string kind = null)
         {
-            return new CsmPublishingCredentialsPoliciesEntityData(id, name, resourceType, systemData, allow, kind);
+            return new CsmPublishingCredentialsPoliciesEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                allow,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SiteConfigData"/>. </summary>
@@ -2874,7 +4313,80 @@ namespace Azure.ResourceManager.AppService.Models
             scmIPSecurityRestrictions ??= new List<AppServiceIPSecurityRestriction>();
             azureStorageAccounts ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
-            return new SiteConfigData(id, name, resourceType, systemData, numberOfWorkers, defaultDocuments?.ToList(), netFrameworkVersion, phpVersion, pythonVersion, nodeVersion, powerShellVersion, linuxFxVersion, windowsFxVersion, isRequestTracingEnabled, requestTracingExpirationOn, isRemoteDebuggingEnabled, remoteDebuggingVersion, isHttpLoggingEnabled, useManagedIdentityCreds, acrUserManagedIdentityId, logsDirectorySizeLimit, isDetailedErrorLoggingEnabled, publishingUsername, appSettings?.ToList(), connectionStrings?.ToList(), machineKey, handlerMappings?.ToList(), documentRoot, scmType, use32BitWorkerProcess, isWebSocketsEnabled, isAlwaysOn, javaVersion, javaContainer, javaContainerVersion, appCommandLine, managedPipelineMode, virtualApplications?.ToList(), loadBalancing, experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList()) : null, limits, isAutoHealEnabled, autoHealRules, tracingOptions, vnetName, isVnetRouteAllEnabled, vnetPrivatePortsCount, cors, push, apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri) : null, apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId) : null, autoSwapSlotName, isLocalMySqlEnabled, managedServiceIdentityId, xManagedServiceIdentityId, keyVaultReferenceIdentity, ipSecurityRestrictions?.ToList(), scmIPSecurityRestrictions?.ToList(), allowIPSecurityRestrictionsForScmToUseMain, isHttp20Enabled, minTlsVersion, scmMinTlsVersion, ftpsState, preWarmedInstanceCount, functionAppScaleLimit, healthCheckPath, isFunctionsRuntimeScaleMonitoringEnabled, websiteTimeZone, minimumElasticInstanceCount, azureStorageAccounts, publicNetworkAccess, kind);
+            return new SiteConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                numberOfWorkers,
+                defaultDocuments?.ToList(),
+                netFrameworkVersion,
+                phpVersion,
+                pythonVersion,
+                nodeVersion,
+                powerShellVersion,
+                linuxFxVersion,
+                windowsFxVersion,
+                isRequestTracingEnabled,
+                requestTracingExpirationOn,
+                isRemoteDebuggingEnabled,
+                remoteDebuggingVersion,
+                isHttpLoggingEnabled,
+                useManagedIdentityCreds,
+                acrUserManagedIdentityId,
+                logsDirectorySizeLimit,
+                isDetailedErrorLoggingEnabled,
+                publishingUsername,
+                appSettings?.ToList(),
+                connectionStrings?.ToList(),
+                machineKey,
+                handlerMappings?.ToList(),
+                documentRoot,
+                scmType,
+                use32BitWorkerProcess,
+                isWebSocketsEnabled,
+                isAlwaysOn,
+                javaVersion,
+                javaContainer,
+                javaContainerVersion,
+                appCommandLine,
+                managedPipelineMode,
+                virtualApplications?.ToList(),
+                loadBalancing,
+                experimentsRampUpRules != null ? new RoutingRuleExperiments(experimentsRampUpRules?.ToList(), serializedAdditionalRawData: null) : null,
+                limits,
+                isAutoHealEnabled,
+                autoHealRules,
+                tracingOptions,
+                vnetName,
+                isVnetRouteAllEnabled,
+                vnetPrivatePortsCount,
+                cors,
+                push,
+                apiDefinitionUri != null ? new AppServiceApiDefinitionInfo(apiDefinitionUri, serializedAdditionalRawData: null) : null,
+                apiManagementConfigId != null ? new ApiManagementConfig(apiManagementConfigId, serializedAdditionalRawData: null) : null,
+                autoSwapSlotName,
+                isLocalMySqlEnabled,
+                managedServiceIdentityId,
+                xManagedServiceIdentityId,
+                keyVaultReferenceIdentity,
+                ipSecurityRestrictions?.ToList(),
+                scmIPSecurityRestrictions?.ToList(),
+                allowIPSecurityRestrictionsForScmToUseMain,
+                isHttp20Enabled,
+                minTlsVersion,
+                scmMinTlsVersion,
+                ftpsState,
+                preWarmedInstanceCount,
+                functionAppScaleLimit,
+                healthCheckPath,
+                isFunctionsRuntimeScaleMonitoringEnabled,
+                websiteTimeZone,
+                minimumElasticInstanceCount,
+                azureStorageAccounts,
+                publicNetworkAccess,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettings"/>. </summary>
@@ -3048,7 +4560,51 @@ namespace Azure.ResourceManager.AppService.Models
             gitHubOAuthScopes ??= new List<string>();
             microsoftAccountOAuthScopes ??= new List<string>();
 
-            return new SiteAuthSettings(id, name, resourceType, systemData, isEnabled, runtimeVersion, unauthenticatedClientAction, isTokenStoreEnabled, allowedExternalRedirectUrls?.ToList(), defaultProvider, tokenRefreshExtensionHours, clientId, clientSecret, clientSecretSettingName, clientSecretCertificateThumbprintString, issuer, validateIssuer, allowedAudiences?.ToList(), additionalLoginParams?.ToList(), aadClaimsAuthorization, googleClientId, googleClientSecret, googleClientSecretSettingName, googleOAuthScopes?.ToList(), facebookAppId, facebookAppSecret, facebookAppSecretSettingName, facebookOAuthScopes?.ToList(), gitHubClientId, gitHubClientSecret, gitHubClientSecretSettingName, gitHubOAuthScopes?.ToList(), twitterConsumerKey, twitterConsumerSecret, twitterConsumerSecretSettingName, microsoftAccountClientId, microsoftAccountClientSecret, microsoftAccountClientSecretSettingName, microsoftAccountOAuthScopes?.ToList(), isAuthFromFile, authFilePath, configVersion, kind);
+            return new SiteAuthSettings(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isEnabled,
+                runtimeVersion,
+                unauthenticatedClientAction,
+                isTokenStoreEnabled,
+                allowedExternalRedirectUrls?.ToList(),
+                defaultProvider,
+                tokenRefreshExtensionHours,
+                clientId,
+                clientSecret,
+                clientSecretSettingName,
+                clientSecretCertificateThumbprintString,
+                issuer,
+                validateIssuer,
+                allowedAudiences?.ToList(),
+                additionalLoginParams?.ToList(),
+                aadClaimsAuthorization,
+                googleClientId,
+                googleClientSecret,
+                googleClientSecretSettingName,
+                googleOAuthScopes?.ToList(),
+                facebookAppId,
+                facebookAppSecret,
+                facebookAppSecretSettingName,
+                facebookOAuthScopes?.ToList(),
+                gitHubClientId,
+                gitHubClientSecret,
+                gitHubClientSecretSettingName,
+                gitHubOAuthScopes?.ToList(),
+                twitterConsumerKey,
+                twitterConsumerSecret,
+                twitterConsumerSecretSettingName,
+                microsoftAccountClientId,
+                microsoftAccountClientSecret,
+                microsoftAccountClientSecretSettingName,
+                microsoftAccountOAuthScopes?.ToList(),
+                isAuthFromFile,
+                authFilePath,
+                configVersion,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteAuthSettingsV2"/>. </summary>
@@ -3065,7 +4621,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SiteAuthSettingsV2"/> instance for mocking. </returns>
         public static SiteAuthSettingsV2 SiteAuthSettingsV2(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AuthPlatform platform = null, GlobalValidation globalValidation = null, AppServiceIdentityProviders identityProviders = null, WebAppLoginInfo login = null, AppServiceHttpSettings httpSettings = null, string kind = null)
         {
-            return new SiteAuthSettingsV2(id, name, resourceType, systemData, platform, globalValidation, identityProviders, login, httpSettings, kind);
+            return new SiteAuthSettingsV2(
+                id,
+                name,
+                resourceType,
+                systemData,
+                platform,
+                globalValidation,
+                identityProviders,
+                login,
+                httpSettings,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStoragePropertyDictionary"/>. </summary>
@@ -3080,7 +4647,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             properties ??= new Dictionary<string, AppServiceStorageAccessInfo>();
 
-            return new AzureStoragePropertyDictionary(id, name, resourceType, systemData, properties, kind);
+            return new AzureStoragePropertyDictionary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ApiKeyVaultReferenceData"/>. </summary>
@@ -3101,7 +4675,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.ApiKeyVaultReferenceData"/> instance for mocking. </returns>
         public static ApiKeyVaultReferenceData ApiKeyVaultReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string reference = null, ResolveStatus? status = null, string vaultName = null, string secretName = null, string secretVersion = null, ManagedServiceIdentity identity = null, string details = null, ConfigReferenceSource? source = null, string activeVersion = null, string kind = null)
         {
-            return new ApiKeyVaultReferenceData(id, name, resourceType, systemData, reference, status, vaultName, secretName, secretVersion, identity, details, source, activeVersion, kind);
+            return new ApiKeyVaultReferenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                reference,
+                status,
+                vaultName,
+                secretName,
+                secretVersion,
+                identity,
+                details,
+                source,
+                activeVersion,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectionStringDictionary"/>. </summary>
@@ -3116,7 +4705,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             properties ??= new Dictionary<string, ConnStringValueTypePair>();
 
-            return new ConnectionStringDictionary(id, name, resourceType, systemData, properties, kind);
+            return new ConnectionStringDictionary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SiteLogsConfigData"/>. </summary>
@@ -3132,7 +4728,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.SiteLogsConfigData"/> instance for mocking. </returns>
         public static SiteLogsConfigData SiteLogsConfigData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ApplicationLogsConfig applicationLogs = null, AppServiceHttpLogsConfig httpLogs = null, bool? isFailedRequestsTracingEnabled = null, bool? isDetailedErrorMessagesEnabled = null, string kind = null)
         {
-            return new SiteLogsConfigData(id, name, resourceType, systemData, applicationLogs, httpLogs, isFailedRequestsTracingEnabled != null ? new WebAppEnabledConfig(isFailedRequestsTracingEnabled) : null, isDetailedErrorMessagesEnabled != null ? new WebAppEnabledConfig(isDetailedErrorMessagesEnabled) : null, kind);
+            return new SiteLogsConfigData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                applicationLogs,
+                httpLogs,
+                isFailedRequestsTracingEnabled != null ? new WebAppEnabledConfig(isFailedRequestsTracingEnabled, serializedAdditionalRawData: null) : null,
+                isDetailedErrorMessagesEnabled != null ? new WebAppEnabledConfig(isDetailedErrorMessagesEnabled, serializedAdditionalRawData: null) : null,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SlotConfigNamesResourceData"/>. </summary>
@@ -3151,7 +4757,16 @@ namespace Azure.ResourceManager.AppService.Models
             appSettingNames ??= new List<string>();
             azureStorageConfigNames ??= new List<string>();
 
-            return new SlotConfigNamesResourceData(id, name, resourceType, systemData, connectionStringNames?.ToList(), appSettingNames?.ToList(), azureStorageConfigNames?.ToList(), kind);
+            return new SlotConfigNamesResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectionStringNames?.ToList(),
+                appSettingNames?.ToList(),
+                azureStorageConfigNames?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteConfigurationSnapshotInfo"/>. </summary>
@@ -3165,7 +4780,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SiteConfigurationSnapshotInfo"/> instance for mocking. </returns>
         public static SiteConfigurationSnapshotInfo SiteConfigurationSnapshotInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? snapshotTakenOn = null, int? snapshotId = null, string kind = null)
         {
-            return new SiteConfigurationSnapshotInfo(id, name, resourceType, systemData, snapshotTakenOn, snapshotId, kind);
+            return new SiteConfigurationSnapshotInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                snapshotTakenOn,
+                snapshotId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ContinuousWebJobData"/>. </summary>
@@ -3189,7 +4812,23 @@ namespace Azure.ResourceManager.AppService.Models
         {
             settings ??= new Dictionary<string, BinaryData>();
 
-            return new ContinuousWebJobData(id, name, resourceType, systemData, status, detailedStatus, logUri, runCommand, uri, extraInfoUri, webJobType, error, isUsingSdk, settings, kind);
+            return new ContinuousWebJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                detailedStatus,
+                logUri,
+                runCommand,
+                uri,
+                extraInfoUri,
+                webJobType,
+                error,
+                isUsingSdk,
+                settings,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebAppDeploymentData"/>. </summary>
@@ -3210,7 +4849,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.WebAppDeploymentData"/> instance for mocking. </returns>
         public static WebAppDeploymentData WebAppDeploymentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? status = null, string message = null, string author = null, string deployer = null, string authorEmail = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isActive = null, string details = null, string kind = null)
         {
-            return new WebAppDeploymentData(id, name, resourceType, systemData, status, message, author, deployer, authorEmail, startOn, endOn, isActive, details, kind);
+            return new WebAppDeploymentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                message,
+                author,
+                deployer,
+                authorEmail,
+                startOn,
+                endOn,
+                isActive,
+                details,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.MSDeployStatusData"/>. </summary>
@@ -3227,7 +4881,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.MSDeployStatusData"/> instance for mocking. </returns>
         public static MSDeployStatusData MSDeployStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string deployer = null, MSDeployProvisioningState? provisioningState = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, bool? isComplete = null, string kind = null)
         {
-            return new MSDeployStatusData(id, name, resourceType, systemData, deployer, provisioningState, startOn, endOn, isComplete, kind);
+            return new MSDeployStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deployer,
+                provisioningState,
+                startOn,
+                endOn,
+                isComplete,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeploy"/>. </summary>
@@ -3256,7 +4921,20 @@ namespace Azure.ResourceManager.AppService.Models
         {
             setParameters ??= new Dictionary<string, string>();
 
-            return new WebAppMSDeploy(id, name, resourceType, systemData, packageUri, connectionString, dbType, setParametersXmlFileUri, setParameters, skipAppData, isAppOffline, kind);
+            return new WebAppMSDeploy(
+                id,
+                name,
+                resourceType,
+                systemData,
+                packageUri,
+                connectionString,
+                dbType,
+                setParametersXmlFileUri,
+                setParameters,
+                skipAppData,
+                isAppOffline,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeployLog"/>. </summary>
@@ -3271,7 +4949,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             entries ??= new List<WebAppMSDeployLogEntry>();
 
-            return new WebAppMSDeployLog(id, name, resourceType, systemData, entries?.ToList(), kind);
+            return new WebAppMSDeployLog(
+                id,
+                name,
+                resourceType,
+                systemData,
+                entries?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeployLogEntry"/>. </summary>
@@ -3281,7 +4966,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppMSDeployLogEntry"/> instance for mocking. </returns>
         public static WebAppMSDeployLogEntry WebAppMSDeployLogEntry(DateTimeOffset? time = null, WebAppMSDeployLogEntryType? entryType = null, string message = null)
         {
-            return new WebAppMSDeployLogEntry(time, entryType, message);
+            return new WebAppMSDeployLogEntry(time, entryType, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.FunctionEnvelopeData"/>. </summary>
@@ -3308,7 +4993,26 @@ namespace Azure.ResourceManager.AppService.Models
         {
             files ??= new Dictionary<string, string>();
 
-            return new FunctionEnvelopeData(id, name, resourceType, systemData, functionAppId, scriptRootPathHref, scriptHref, configHref, testDataHref, secretsFileHref, href, config, files, testData, invokeUrlTemplate, language, isDisabled, kind);
+            return new FunctionEnvelopeData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                functionAppId,
+                scriptRootPathHref,
+                scriptHref,
+                configHref,
+                testDataHref,
+                secretsFileHref,
+                href,
+                config,
+                files,
+                testData,
+                invokeUrlTemplate,
+                language,
+                isDisabled,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionSecrets"/>. </summary>
@@ -3317,7 +5021,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.FunctionSecrets"/> instance for mocking. </returns>
         public static FunctionSecrets FunctionSecrets(string key = null, Uri triggerUri = null)
         {
-            return new FunctionSecrets(key, triggerUri);
+            return new FunctionSecrets(key, triggerUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FunctionAppHostKeys"/>. </summary>
@@ -3330,7 +5034,7 @@ namespace Azure.ResourceManager.AppService.Models
             functionKeys ??= new Dictionary<string, string>();
             systemKeys ??= new Dictionary<string, string>();
 
-            return new FunctionAppHostKeys(masterKey, functionKeys, systemKeys);
+            return new FunctionAppHostKeys(masterKey, functionKeys, systemKeys, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.HostNameBindingData"/>. </summary>
@@ -3351,7 +5055,22 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.HostNameBindingData"/> instance for mocking. </returns>
         public static HostNameBindingData HostNameBindingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string siteName = null, string domainId = null, string azureResourceName = null, AppServiceResourceType? azureResourceType = null, CustomHostNameDnsRecordType? customHostNameDnsRecordType = null, AppServiceHostNameType? hostNameType = null, HostNameBindingSslState? sslState = null, string thumbprintString = null, string virtualIP = null, string kind = null)
         {
-            return new HostNameBindingData(id, name, resourceType, systemData, siteName, domainId, azureResourceName, azureResourceType, customHostNameDnsRecordType, hostNameType, sslState, thumbprintString, virtualIP, kind);
+            return new HostNameBindingData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                siteName,
+                domainId,
+                azureResourceName,
+                azureResourceType,
+                customHostNameDnsRecordType,
+                hostNameType,
+                sslState,
+                thumbprintString,
+                virtualIP,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.RelayServiceConnectionEntityData"/>. </summary>
@@ -3369,7 +5088,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.RelayServiceConnectionEntityData"/> instance for mocking. </returns>
         public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string entityName = null, string entityConnectionString = null, string resourceConnectionString = null, string hostname = null, int? port = null, Uri biztalkUri = null, string kind = null)
         {
-            return new RelayServiceConnectionEntityData(id, name, resourceType, systemData, entityName, entityConnectionString, resourceConnectionString, hostname, port, biztalkUri, kind);
+            return new RelayServiceConnectionEntityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                entityName,
+                entityConnectionString,
+                resourceConnectionString,
+                hostname,
+                port,
+                biztalkUri,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebSiteInstanceStatusData"/>. </summary>
@@ -3389,7 +5120,19 @@ namespace Azure.ResourceManager.AppService.Models
         {
             containers ??= new Dictionary<string, ContainerInfo>();
 
-            return new WebSiteInstanceStatusData(id, name, resourceType, systemData, state, statusUri, detectorUri, consoleUri, healthCheckUrlString, containers, kind);
+            return new WebSiteInstanceStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                state,
+                statusUri,
+                detectorUri,
+                consoleUri,
+                healthCheckUrlString,
+                containers,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ProcessInfoData"/>. </summary>
@@ -3443,7 +5186,49 @@ namespace Azure.ResourceManager.AppService.Models
             modules ??= new List<ProcessModuleInfoData>();
             environmentVariables ??= new Dictionary<string, string>();
 
-            return new ProcessInfoData(id, name, resourceType, systemData, identifier, deploymentName, href, minidump, isProfileRunning, isIisProfileRunning, iisProfileTimeoutInSeconds, parent, children?.ToList(), threads?.ToList(), openFileHandles?.ToList(), modules?.ToList(), fileName, commandLine, userName, handleCount, moduleCount, threadCount, startOn, totalCpuTime, userCpuTime, privilegedCpuTime, workingSet, peakWorkingSet, privateMemory, virtualMemory, peakVirtualMemory, pagedSystemMemory, nonPagedSystemMemory, pagedMemory, peakPagedMemory, timeStamp, environmentVariables, isScmSite, isWebjob, description, kind);
+            return new ProcessInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identifier,
+                deploymentName,
+                href,
+                minidump,
+                isProfileRunning,
+                isIisProfileRunning,
+                iisProfileTimeoutInSeconds,
+                parent,
+                children?.ToList(),
+                threads?.ToList(),
+                openFileHandles?.ToList(),
+                modules?.ToList(),
+                fileName,
+                commandLine,
+                userName,
+                handleCount,
+                moduleCount,
+                threadCount,
+                startOn,
+                totalCpuTime,
+                userCpuTime,
+                privilegedCpuTime,
+                workingSet,
+                peakWorkingSet,
+                privateMemory,
+                virtualMemory,
+                peakVirtualMemory,
+                pagedSystemMemory,
+                nonPagedSystemMemory,
+                pagedMemory,
+                peakPagedMemory,
+                timeStamp,
+                environmentVariables,
+                isScmSite,
+                isWebjob,
+                description,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProcessThreadInfo"/>. </summary>
@@ -3467,7 +5252,25 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.ProcessThreadInfo"/> instance for mocking. </returns>
         public static ProcessThreadInfo ProcessThreadInfo(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? identifier = null, string href = null, string process = null, string startAddress = null, int? currentPriority = null, string priorityLevel = null, int? basePriority = null, DateTimeOffset? startOn = null, string totalProcessorTime = null, string userProcessorTime = null, string state = null, string waitReason = null, string kind = null)
         {
-            return new ProcessThreadInfo(id, name, resourceType, systemData, identifier, href, process, startAddress, currentPriority, priorityLevel, basePriority, startOn, totalProcessorTime, userProcessorTime, state, waitReason, kind);
+            return new ProcessThreadInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                identifier,
+                href,
+                process,
+                startAddress,
+                currentPriority,
+                priorityLevel,
+                basePriority,
+                startOn,
+                totalProcessorTime,
+                userProcessorTime,
+                state,
+                waitReason,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.ProcessModuleInfoData"/>. </summary>
@@ -3490,7 +5293,24 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.ProcessModuleInfoData"/> instance for mocking. </returns>
         public static ProcessModuleInfoData ProcessModuleInfoData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string baseAddress = null, string fileName = null, string href = null, string filePath = null, int? moduleMemorySize = null, string fileVersion = null, string fileDescription = null, string product = null, string productVersion = null, bool? isDebug = null, string language = null, string kind = null)
         {
-            return new ProcessModuleInfoData(id, name, resourceType, systemData, baseAddress, fileName, href, filePath, moduleMemorySize, fileVersion, fileDescription, product, productVersion, isDebug, language, kind);
+            return new ProcessModuleInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                baseAddress,
+                fileName,
+                href,
+                filePath,
+                moduleMemorySize,
+                fileVersion,
+                fileDescription,
+                product,
+                productVersion,
+                isDebug,
+                language,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteCloneability"/>. </summary>
@@ -3508,7 +5328,7 @@ namespace Azure.ResourceManager.AppService.Models
             unsupportedFeatures ??= new List<SiteCloneabilityCriterion>();
             blockingCharacteristics ??= new List<SiteCloneabilityCriterion>();
 
-            return new SiteCloneability(result, blockingFeatures?.ToList(), unsupportedFeatures?.ToList(), blockingCharacteristics?.ToList());
+            return new SiteCloneability(result, blockingFeatures?.ToList(), unsupportedFeatures?.ToList(), blockingCharacteristics?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SiteCloneabilityCriterion"/>. </summary>
@@ -3517,7 +5337,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SiteCloneabilityCriterion"/> instance for mocking. </returns>
         public static SiteCloneabilityCriterion SiteCloneabilityCriterion(string name = null, string description = null)
         {
-            return new SiteCloneabilityCriterion(name, description);
+            return new SiteCloneabilityCriterion(name, description, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageMigrationContent"/>. </summary>
@@ -3533,7 +5353,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StorageMigrationContent"/> instance for mocking. </returns>
         public static StorageMigrationContent StorageMigrationContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string azurefilesConnectionString = null, string azurefilesShare = null, bool? switchSiteAfterMigration = null, bool? blockWriteAccessToSite = null, string kind = null)
         {
-            return new StorageMigrationContent(id, name, resourceType, systemData, azurefilesConnectionString, azurefilesShare, switchSiteAfterMigration, blockWriteAccessToSite, kind);
+            return new StorageMigrationContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                azurefilesConnectionString,
+                azurefilesShare,
+                switchSiteAfterMigration,
+                blockWriteAccessToSite,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageMigrationResult"/>. </summary>
@@ -3546,7 +5376,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.StorageMigrationResult"/> instance for mocking. </returns>
         public static StorageMigrationResult StorageMigrationResult(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string operationId = null, string kind = null)
         {
-            return new StorageMigrationResult(id, name, resourceType, systemData, operationId, kind);
+            return new StorageMigrationResult(
+                id,
+                name,
+                resourceType,
+                systemData,
+                operationId,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MigrateMySqlContent"/>. </summary>
@@ -3560,7 +5397,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.MigrateMySqlContent"/> instance for mocking. </returns>
         public static MigrateMySqlContent MigrateMySqlContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string connectionString = null, MySqlMigrationType? migrationType = null, string kind = null)
         {
-            return new MigrateMySqlContent(id, name, resourceType, systemData, connectionString, migrationType, kind);
+            return new MigrateMySqlContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                connectionString,
+                migrationType,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.MigrateMySqlStatusData"/>. </summary>
@@ -3575,7 +5420,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.MigrateMySqlStatusData"/> instance for mocking. </returns>
         public static MigrateMySqlStatusData MigrateMySqlStatusData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AppServiceOperationStatus? migrationOperationStatus = null, string operationId = null, bool? isLocalMySqlEnabled = null, string kind = null)
         {
-            return new MigrateMySqlStatusData(id, name, resourceType, systemData, migrationOperationStatus, operationId, isLocalMySqlEnabled, kind);
+            return new MigrateMySqlStatusData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                migrationOperationStatus,
+                operationId,
+                isLocalMySqlEnabled,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SwiftVirtualNetworkData"/>. </summary>
@@ -3589,7 +5443,15 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
         public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier subnetResourceId = null, bool? isSwiftSupported = null, string kind = null)
         {
-            return new SwiftVirtualNetworkData(id, name, resourceType, systemData, subnetResourceId, isSwiftSupported, kind);
+            return new SwiftVirtualNetworkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                subnetResourceId,
+                isSwiftSupported,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.NetworkFeatureData"/>. </summary>
@@ -3608,7 +5470,17 @@ namespace Azure.ResourceManager.AppService.Models
             hybridConnections ??= new List<RelayServiceConnectionEntityData>();
             hybridConnectionsV2 ??= new List<HybridConnectionData>();
 
-            return new NetworkFeatureData(id, name, resourceType, systemData, virtualNetworkName, virtualNetworkConnection, hybridConnections?.ToList(), hybridConnectionsV2?.ToList(), kind);
+            return new NetworkFeatureData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                virtualNetworkName,
+                virtualNetworkConnection,
+                hybridConnections?.ToList(),
+                hybridConnectionsV2?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WebAppNetworkTrace"/>. </summary>
@@ -3618,7 +5490,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.WebAppNetworkTrace"/> instance for mocking. </returns>
         public static WebAppNetworkTrace WebAppNetworkTrace(string path = null, string status = null, string message = null)
         {
-            return new WebAppNetworkTrace(path, status, message);
+            return new WebAppNetworkTrace(path, status, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerfMonResponseInfo"/>. </summary>
@@ -3628,7 +5500,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.PerfMonResponseInfo"/> instance for mocking. </returns>
         public static PerfMonResponseInfo PerfMonResponseInfo(string code = null, string message = null, PerfMonSet data = null)
         {
-            return new PerfMonResponseInfo(code, message, data);
+            return new PerfMonResponseInfo(code, message, data, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerfMonSet"/>. </summary>
@@ -3642,7 +5514,13 @@ namespace Azure.ResourceManager.AppService.Models
         {
             values ??= new List<PerfMonSample>();
 
-            return new PerfMonSet(name, startOn, endOn, timeGrain, values?.ToList());
+            return new PerfMonSet(
+                name,
+                startOn,
+                endOn,
+                timeGrain,
+                values?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PerfMonSample"/>. </summary>
@@ -3652,7 +5530,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.PerfMonSample"/> instance for mocking. </returns>
         public static PerfMonSample PerfMonSample(DateTimeOffset? time = null, string instanceName = null, double? value = null)
         {
-            return new PerfMonSample(time, instanceName, value);
+            return new PerfMonSample(time, instanceName, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SitePhpErrorLogFlag"/>. </summary>
@@ -3668,7 +5546,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SitePhpErrorLogFlag"/> instance for mocking. </returns>
         public static SitePhpErrorLogFlag SitePhpErrorLogFlag(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string localLogErrors = null, string masterLogErrors = null, string localLogErrorsMaxLength = null, string masterLogErrorsMaxLength = null, string kind = null)
         {
-            return new SitePhpErrorLogFlag(id, name, resourceType, systemData, localLogErrors, masterLogErrors, localLogErrorsMaxLength, masterLogErrorsMaxLength, kind);
+            return new SitePhpErrorLogFlag(
+                id,
+                name,
+                resourceType,
+                systemData,
+                localLogErrors,
+                masterLogErrors,
+                localLogErrorsMaxLength,
+                masterLogErrorsMaxLength,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.PremierAddOnData"/>. </summary>
@@ -3689,7 +5577,20 @@ namespace Azure.ResourceManager.AppService.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PremierAddOnData(id, name, resourceType, systemData, tags, location, sku, product, vendor, marketplacePublisher, marketplaceOffer, kind);
+            return new PremierAddOnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                product,
+                vendor,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PremierAddOnPatchResource"/>. </summary>
@@ -3706,7 +5607,18 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.PremierAddOnPatchResource"/> instance for mocking. </returns>
         public static PremierAddOnPatchResource PremierAddOnPatchResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string sku = null, string product = null, string vendor = null, string marketplacePublisher = null, string marketplaceOffer = null, string kind = null)
         {
-            return new PremierAddOnPatchResource(id, name, resourceType, systemData, sku, product, vendor, marketplacePublisher, marketplaceOffer, kind);
+            return new PremierAddOnPatchResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                product,
+                vendor,
+                marketplacePublisher,
+                marketplaceOffer,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.PrivateAccessData"/>. </summary>
@@ -3722,7 +5634,15 @@ namespace Azure.ResourceManager.AppService.Models
         {
             virtualNetworks ??= new List<PrivateAccessVirtualNetwork>();
 
-            return new PrivateAccessData(id, name, resourceType, systemData, isEnabled, virtualNetworks?.ToList(), kind);
+            return new PrivateAccessData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                isEnabled,
+                virtualNetworks?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.PublicCertificateData"/>. </summary>
@@ -3737,7 +5657,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.PublicCertificateData"/> instance for mocking. </returns>
         public static PublicCertificateData PublicCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, byte[] blob = null, PublicCertificateLocation? publicCertificateLocation = null, string thumbprintString = null, string kind = null)
         {
-            return new PublicCertificateData(id, name, resourceType, systemData, blob, publicCertificateLocation, thumbprintString, kind);
+            return new PublicCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                blob,
+                publicCertificateLocation,
+                thumbprintString,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeletedAppRestoreContent"/>. </summary>
@@ -3759,7 +5688,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.DeletedAppRestoreContent"/> instance for mocking. </returns>
         public static DeletedAppRestoreContent DeletedAppRestoreContent(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier deletedSiteId = null, bool? recoverConfiguration = null, string snapshotTime = null, bool? useDRSecondary = null, string kind = null)
         {
-            return new DeletedAppRestoreContent(id, name, resourceType, systemData, deletedSiteId, recoverConfiguration, snapshotTime, useDRSecondary, kind);
+            return new DeletedAppRestoreContent(
+                id,
+                name,
+                resourceType,
+                systemData,
+                deletedSiteId,
+                recoverConfiguration,
+                snapshotTime,
+                useDRSecondary,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SnapshotRestoreRequest"/>. </summary>
@@ -3783,7 +5722,19 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SnapshotRestoreRequest"/> instance for mocking. </returns>
         public static SnapshotRestoreRequest SnapshotRestoreRequest(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotTime = null, SnapshotRecoverySource recoverySource = null, bool? canOverwrite = null, bool? recoverConfiguration = null, bool? ignoreConflictingHostNames = null, bool? useDRSecondary = null, string kind = null)
         {
-            return new SnapshotRestoreRequest(id, name, resourceType, systemData, snapshotTime, recoverySource, canOverwrite, recoverConfiguration, ignoreConflictingHostNames, useDRSecondary, kind);
+            return new SnapshotRestoreRequest(
+                id,
+                name,
+                resourceType,
+                systemData,
+                snapshotTime,
+                recoverySource,
+                canOverwrite,
+                recoverConfiguration,
+                ignoreConflictingHostNames,
+                useDRSecondary,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SiteExtensionInfoData"/>. </summary>
@@ -3817,7 +5768,33 @@ namespace Azure.ResourceManager.AppService.Models
         {
             authors ??= new List<string>();
 
-            return new SiteExtensionInfoData(id, name, resourceType, systemData, extensionId, title, extensionType, summary, description, version, extensionUri, projectUri, iconUri, licenseUri, feedUri, authors?.ToList(), installerCommandLineParams, publishedOn, downloadCount, localIsLatestVersion, localPath, installedOn, provisioningState, comment, kind);
+            return new SiteExtensionInfoData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                extensionId,
+                title,
+                extensionType,
+                summary,
+                description,
+                version,
+                extensionUri,
+                projectUri,
+                iconUri,
+                licenseUri,
+                feedUri,
+                authors?.ToList(),
+                installerCommandLineParams,
+                publishedOn,
+                downloadCount,
+                localIsLatestVersion,
+                localPath,
+                installedOn,
+                provisioningState,
+                comment,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SlotDifference"/>. </summary>
@@ -3836,7 +5813,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="Models.SlotDifference"/> instance for mocking. </returns>
         public static SlotDifference SlotDifference(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string level = null, string settingType = null, string diffRule = null, string settingName = null, string valueInCurrentSlot = null, string valueInTargetSlot = null, string description = null, string kind = null)
         {
-            return new SlotDifference(id, name, resourceType, systemData, level, settingType, diffRule, settingName, valueInCurrentSlot, valueInTargetSlot, description, kind);
+            return new SlotDifference(
+                id,
+                name,
+                resourceType,
+                systemData,
+                level,
+                settingType,
+                diffRule,
+                settingName,
+                valueInCurrentSlot,
+                valueInTargetSlot,
+                description,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.SiteSourceControlData"/>. </summary>
@@ -3855,7 +5845,20 @@ namespace Azure.ResourceManager.AppService.Models
         /// <returns> A new <see cref="AppService.SiteSourceControlData"/> instance for mocking. </returns>
         public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, Uri repoUri = null, string branch = null, bool? isManualIntegration = null, bool? isGitHubAction = null, bool? isDeploymentRollbackEnabled = null, bool? isMercurial = null, GitHubActionConfiguration gitHubActionConfiguration = null, string kind = null)
         {
-            return new SiteSourceControlData(id, name, resourceType, systemData, repoUri, branch, isManualIntegration, isGitHubAction, isDeploymentRollbackEnabled, isMercurial, gitHubActionConfiguration, kind);
+            return new SiteSourceControlData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                repoUri,
+                branch,
+                isManualIntegration,
+                isGitHubAction,
+                isDeploymentRollbackEnabled,
+                isMercurial,
+                gitHubActionConfiguration,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.TriggeredWebJobData"/>. </summary>
@@ -3879,7 +5882,23 @@ namespace Azure.ResourceManager.AppService.Models
         {
             settings ??= new Dictionary<string, BinaryData>();
 
-            return new TriggeredWebJobData(id, name, resourceType, systemData, latestRun, historyUri, schedulerLogsUri, runCommand, uri, extraInfoUri, webJobType, error, isUsingSdk, settings, kind);
+            return new TriggeredWebJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                latestRun,
+                historyUri,
+                schedulerLogsUri,
+                runCommand,
+                uri,
+                extraInfoUri,
+                webJobType,
+                error,
+                isUsingSdk,
+                settings,
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.TriggeredJobHistoryData"/>. </summary>
@@ -3894,7 +5913,14 @@ namespace Azure.ResourceManager.AppService.Models
         {
             runs ??= new List<TriggeredJobRun>();
 
-            return new TriggeredJobHistoryData(id, name, resourceType, systemData, runs?.ToList(), kind);
+            return new TriggeredJobHistoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runs?.ToList(),
+                kind,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AppService.WebJobData"/>. </summary>
@@ -3915,7 +5941,20 @@ namespace Azure.ResourceManager.AppService.Models
         {
             settings ??= new Dictionary<string, BinaryData>();
 
-            return new WebJobData(id, name, resourceType, systemData, runCommand, uri, extraInfoUri, webJobType, error, isUsingSdk, settings, kind);
+            return new WebJobData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                runCommand,
+                uri,
+                extraInfoUri,
+                webJobType,
+                error,
+                isUsingSdk,
+                settings,
+                kind,
+                serializedAdditionalRawData: null);
         }
     }
 }

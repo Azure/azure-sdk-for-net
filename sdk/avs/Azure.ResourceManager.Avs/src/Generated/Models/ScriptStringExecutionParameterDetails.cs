@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/>. </summary>
         /// <param name="name"> The parameter name. </param>
         /// <param name="parameterType"> The type of execution parameter. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="value"> The value for the passed parameter. </param>
-        internal ScriptStringExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, string value) : base(name, parameterType)
+        internal ScriptStringExecutionParameterDetails(string name, ScriptExecutionParameterType parameterType, IDictionary<string, BinaryData> serializedAdditionalRawData, string value) : base(name, parameterType, serializedAdditionalRawData)
         {
             Value = value;
             ParameterType = parameterType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScriptStringExecutionParameterDetails"/> for deserialization. </summary>
+        internal ScriptStringExecutionParameterDetails()
+        {
         }
 
         /// <summary> The value for the passed parameter. </summary>

@@ -20,13 +20,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<PipelineTopologyProperties>(Properties);
             }
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
             if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
@@ -42,10 +44,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string name = default;
-            Optional<SystemData> systemData = default;
-            Optional<PipelineTopologyProperties> properties = default;
+            SystemData systemData = default;
+            PipelineTopologyProperties properties = default;
             string methodName = default;
-            Optional<string> apiVersion = default;
+            string apiVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -82,7 +84,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new PipelineTopologySetRequestBody(methodName, apiVersion.Value, name, systemData.Value, properties.Value);
+            return new PipelineTopologySetRequestBody(methodName, apiVersion, name, systemData, properties);
         }
     }
 }

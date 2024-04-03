@@ -35,7 +35,7 @@ public partial class ChatWithVision
         #region Snippet:GetResponseFromImages
         Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
         ChatChoice choice = chatResponse.Value.Choices[0];
-        if (choice.FinishDetails is StopFinishDetails stopDetails)
+        if (choice.FinishDetails is StopFinishDetails stopDetails || choice.FinishReason == CompletionsFinishReason.Stopped)
         {
             Console.WriteLine($"{choice.Message.Role}: {choice.Message.Content}");
         }

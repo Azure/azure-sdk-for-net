@@ -33,6 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricDiscoveryMachineId"> The ARM Id of discovered machine. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="disksDefault"> The default disk input. </param>
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="runAsAccountId"> The run-as account Id. </param>
         /// <param name="processServerId"> The process server Id. </param>
         /// <param name="multiVmGroupName"> The multi VM group name. </param>
-        internal InMageRcmEnableProtectionContent(string instanceType, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName) : base(instanceType)
+        internal InMageRcmEnableProtectionContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string fabricDiscoveryMachineId, IList<InMageRcmDiskContent> disksToInclude, InMageRcmDisksDefaultContent disksDefault, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, string targetVmName, string targetVmSize, SiteRecoveryLicenseType? licenseType, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string runAsAccountId, Guid processServerId, string multiVmGroupName) : base(instanceType, serializedAdditionalRawData)
         {
             FabricDiscoveryMachineId = fabricDiscoveryMachineId;
             DisksToInclude = disksToInclude;
@@ -72,6 +73,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProcessServerId = processServerId;
             MultiVmGroupName = multiVmGroupName;
             InstanceType = instanceType ?? "InMageRcm";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageRcmEnableProtectionContent"/> for deserialization. </summary>
+        internal InMageRcmEnableProtectionContent()
+        {
         }
 
         /// <summary> The ARM Id of discovered machine. </summary>

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class FixedInputData : IUtf8JsonSerializable
+    public partial class FixedInputData : IUtf8JsonSerializable, IJsonModel<FixedInputData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FixedInputData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FixedInputData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FixedInputData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FixedInputData)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Columns))
             {
@@ -53,20 +62,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStringValue(JobInputType.ToString());
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FixedInputData DeserializeFixedInputData(JsonElement element)
+        FixedInputData IJsonModel<FixedInputData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FixedInputData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FixedInputData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFixedInputData(document.RootElement, options);
+        }
+
+        internal static FixedInputData DeserializeFixedInputData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> columns = default;
-            Optional<string> dataContext = default;
+            IDictionary<string, string> columns = default;
+            string dataContext = default;
             MonitoringInputDataType inputDataType = default;
             JobInputType jobInputType = default;
             Uri uri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("columns"u8))
@@ -109,8 +149,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     uri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FixedInputData(Optional.ToDictionary(columns), dataContext.Value, inputDataType, jobInputType, uri);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FixedInputData(
+                columns ?? new ChangeTrackingDictionary<string, string>(),
+                dataContext,
+                inputDataType,
+                jobInputType,
+                uri,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FixedInputData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FixedInputData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FixedInputData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FixedInputData IPersistableModel<FixedInputData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FixedInputData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFixedInputData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FixedInputData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FixedInputData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

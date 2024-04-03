@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -141,7 +140,15 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new MetricEnrichedSeriesData(series, timestampList, valueList, isAnomalyList, periodList, expectedValueList, lowerBoundaryList, upperBoundaryList);
+            return new MetricEnrichedSeriesData(
+                series,
+                timestampList,
+                valueList,
+                isAnomalyList,
+                periodList,
+                expectedValueList,
+                lowerBoundaryList,
+                upperBoundaryList);
         }
     }
 }

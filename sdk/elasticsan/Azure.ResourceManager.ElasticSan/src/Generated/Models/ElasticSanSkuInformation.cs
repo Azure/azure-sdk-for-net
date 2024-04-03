@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ElasticSan.Models
 {
     /// <summary> ElasticSAN SKU and its properties. </summary>
     public partial class ElasticSanSkuInformation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformation"/>. </summary>
         /// <param name="name"> Sku Name. </param>
         internal ElasticSanSkuInformation(ElasticSanSkuName name)
@@ -30,7 +62,8 @@ namespace Azure.ResourceManager.ElasticSan.Models
         /// <param name="locations"> The set of locations that the SKU is available. This will be supported and registered Azure Geo Regions (e.g. West US, East US, Southeast Asia, etc.). </param>
         /// <param name="locationInfo"> Availability of the SKU for the location/zone. </param>
         /// <param name="capabilities"> The capability information in the specified SKU. </param>
-        internal ElasticSanSkuInformation(ElasticSanSkuName name, ElasticSanSkuTier? tier, string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo, IReadOnlyList<ElasticSanSkuCapability> capabilities)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ElasticSanSkuInformation(ElasticSanSkuName name, ElasticSanSkuTier? tier, string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ElasticSanSkuLocationInfo> locationInfo, IReadOnlyList<ElasticSanSkuCapability> capabilities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Tier = tier;
@@ -38,6 +71,12 @@ namespace Azure.ResourceManager.ElasticSan.Models
             Locations = locations;
             LocationInfo = locationInfo;
             Capabilities = capabilities;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ElasticSanSkuInformation"/> for deserialization. </summary>
+        internal ElasticSanSkuInformation()
+        {
         }
 
         /// <summary> Sku Name. </summary>

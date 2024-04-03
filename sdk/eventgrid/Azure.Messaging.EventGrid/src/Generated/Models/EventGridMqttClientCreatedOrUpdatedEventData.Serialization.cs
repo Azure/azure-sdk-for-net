@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,13 +21,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<EventGridMqttClientState> state = default;
-            Optional<DateTimeOffset> createdOn = default;
-            Optional<DateTimeOffset> updatedOn = default;
-            Optional<IReadOnlyDictionary<string, string>> attributes = default;
-            Optional<string> clientAuthenticationName = default;
-            Optional<string> clientName = default;
-            Optional<string> namespaceName = default;
+            EventGridMqttClientState? state = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
+            IReadOnlyDictionary<string, string> attributes = default;
+            string clientAuthenticationName = default;
+            string clientName = default;
+            string namespaceName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("state"u8))
@@ -88,7 +87,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new EventGridMqttClientCreatedOrUpdatedEventData(clientAuthenticationName.Value, clientName.Value, namespaceName.Value, Optional.ToNullable(state), Optional.ToNullable(createdOn), Optional.ToNullable(updatedOn), Optional.ToDictionary(attributes));
+            return new EventGridMqttClientCreatedOrUpdatedEventData(
+                clientAuthenticationName,
+                clientName,
+                namespaceName,
+                state,
+                createdOn,
+                updatedOn,
+                attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -14,6 +15,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> App Service billing entity that contains information about meter which the Azure billing system utilizes to charge users for services. </summary>
     public partial class AppServiceBillingMeter : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceBillingMeter"/>. </summary>
         public AppServiceBillingMeter()
         {
@@ -31,7 +64,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="osType"> App Service OS type meter used for. </param>
         /// <param name="multiplier"> Meter Multiplier. </param>
         /// <param name="kind"> Kind of resource. </param>
-        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceBillingMeter(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Guid? meterId, AzureLocation? billingLocation, string shortName, string friendlyName, string osType, double? multiplier, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             MeterId = meterId;
             BillingLocation = billingLocation;
@@ -40,21 +74,29 @@ namespace Azure.ResourceManager.AppService.Models
             OSType = osType;
             Multiplier = multiplier;
             Kind = kind;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Meter GUID onboarded in Commerce. </summary>
+        [WirePath("properties.meterId")]
         public Guid? MeterId { get; set; }
         /// <summary> Azure Location of billable resource. </summary>
+        [WirePath("properties.billingLocation")]
         public AzureLocation? BillingLocation { get; set; }
         /// <summary> Short Name from App Service Azure pricing Page. </summary>
+        [WirePath("properties.shortName")]
         public string ShortName { get; set; }
         /// <summary> Friendly name of the meter. </summary>
+        [WirePath("properties.friendlyName")]
         public string FriendlyName { get; set; }
         /// <summary> App Service OS type meter used for. </summary>
+        [WirePath("properties.osType")]
         public string OSType { get; set; }
         /// <summary> Meter Multiplier. </summary>
+        [WirePath("properties.multiplier")]
         public double? Multiplier { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

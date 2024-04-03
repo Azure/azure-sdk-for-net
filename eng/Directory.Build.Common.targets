@@ -12,9 +12,9 @@
     <Error Condition="'@(RequiredTargetFrameworks)' == ''" Text="List of required target frameworks is empty something must have messed up property RequiredTargetFrameworks[$(RequiredTargetFrameworks)]." />
     <Error Condition="'@(MissingTargetFrameworks)' != ''" Text="Missing required target frameworks '@(MissingTargetFrameworks)'. Please ensure you add those frameworks." />
   </Target>
-  
+
   <Target Name="ValidateRunApiCompat" BeforeTargets="Build" Condition="'$(ValidateRunApiCompat)' == 'true'">
-    <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'" 
+    <Error Condition="'$(RunApiCompat)' == 'false' and '$(IncludeBuildOutput)' != 'false'"
            Text="Api Compat cannot be disabled."/>
   </Target>
 
@@ -201,10 +201,7 @@
   <!-- *********** Files needed for LRO ************* -->
   <ItemGroup Condition="'$(IncludeOperationsSharedSource)' == 'true'">
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Argument.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)AsyncLockWithValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingDictionary.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)ChangeTrackingList.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ClientDiagnostics.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared/Core" />
@@ -216,7 +213,6 @@
     <Compile Include="$(AzureCoreSharedSources)IOperationSource.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IUtf8JsonSerializable.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)IXmlSerializable.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)JsonElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)NextLinkOperationImplementation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationFinalStateVia.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationHelpers.cs" LinkBase="Shared/Core" />
@@ -224,13 +220,11 @@
     <Compile Include="$(AzureCoreSharedSources)OperationInternalBase.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationInternalOfT.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)OperationPoller.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Optional.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)Page.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)PageableHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperation.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ProtocolOperationHelpers.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)RequestContentHelper.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestHeaderExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)RequestUriBuilderExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)ResponseHeadersExtensions.cs" LinkBase="Shared/Core" />
@@ -241,12 +235,8 @@
     <Compile Include="$(AzureCoreSharedSources)StringRequestContent.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TaskExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)TypeFormatters.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonRequestContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)Utf8JsonWriterExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)VoidValue.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XElementExtensions.cs" LinkBase="Shared/Core" />
     <Compile Include="$(AzureCoreSharedSources)XmlWriterContent.cs" LinkBase="Shared/Core" />
-    <Compile Include="$(AzureCoreSharedSources)XmlWriterExtensions.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
     <!-- *********** Management Client Library Override section ************* -->
@@ -254,6 +244,7 @@
 
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.ClientModel" />
 
     <!-- TODO: Review these file references-->
     <Compile Include="$(AzureCoreSharedSources)NoValueResponseOfT.cs" LinkBase="Shared" />

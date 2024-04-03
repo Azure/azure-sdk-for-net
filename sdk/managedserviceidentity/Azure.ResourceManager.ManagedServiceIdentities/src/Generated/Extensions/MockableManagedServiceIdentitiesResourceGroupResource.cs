@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedServiceIdentities;
 
 namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the identity resource. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UserAssignedIdentities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="UserAssignedIdentityResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

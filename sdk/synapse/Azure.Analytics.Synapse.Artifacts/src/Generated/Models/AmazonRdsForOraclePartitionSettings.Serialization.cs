@@ -21,22 +21,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PartitionNames))
             {
                 writer.WritePropertyName("partitionNames"u8);
-                writer.WriteObjectValue(PartitionNames);
+                writer.WriteObjectValue<object>(PartitionNames);
             }
             if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
-                writer.WriteObjectValue(PartitionColumnName);
+                writer.WriteObjectValue<object>(PartitionColumnName);
             }
             if (Optional.IsDefined(PartitionUpperBound))
             {
                 writer.WritePropertyName("partitionUpperBound"u8);
-                writer.WriteObjectValue(PartitionUpperBound);
+                writer.WriteObjectValue<object>(PartitionUpperBound);
             }
             if (Optional.IsDefined(PartitionLowerBound))
             {
                 writer.WritePropertyName("partitionLowerBound"u8);
-                writer.WriteObjectValue(PartitionLowerBound);
+                writer.WriteObjectValue<object>(PartitionLowerBound);
             }
             writer.WriteEndObject();
         }
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> partitionNames = default;
-            Optional<object> partitionColumnName = default;
-            Optional<object> partitionUpperBound = default;
-            Optional<object> partitionLowerBound = default;
+            object partitionNames = default;
+            object partitionColumnName = default;
+            object partitionUpperBound = default;
+            object partitionLowerBound = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("partitionNames"u8))
@@ -90,14 +90,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AmazonRdsForOraclePartitionSettings(partitionNames.Value, partitionColumnName.Value, partitionUpperBound.Value, partitionLowerBound.Value);
+            return new AmazonRdsForOraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
         internal partial class AmazonRdsForOraclePartitionSettingsConverter : JsonConverter<AmazonRdsForOraclePartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, AmazonRdsForOraclePartitionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AmazonRdsForOraclePartitionSettings>(model);
             }
             public override AmazonRdsForOraclePartitionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

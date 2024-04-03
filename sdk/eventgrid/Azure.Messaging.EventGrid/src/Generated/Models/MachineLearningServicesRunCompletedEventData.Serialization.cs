@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> experimentId = default;
-            Optional<string> experimentName = default;
-            Optional<string> runId = default;
-            Optional<string> runType = default;
-            Optional<object> runTags = default;
-            Optional<object> runProperties = default;
+            string experimentId = default;
+            string experimentName = default;
+            string runId = default;
+            string runType = default;
+            object runTags = default;
+            object runProperties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("experimentId"u8))
@@ -68,7 +67,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MachineLearningServicesRunCompletedEventData(experimentId.Value, experimentName.Value, runId.Value, runType.Value, runTags.Value, runProperties.Value);
+            return new MachineLearningServicesRunCompletedEventData(
+                experimentId,
+                experimentName,
+                runId,
+                runType,
+                runTags,
+                runProperties);
         }
 
         internal partial class MachineLearningServicesRunCompletedEventDataConverter : JsonConverter<MachineLearningServicesRunCompletedEventData>

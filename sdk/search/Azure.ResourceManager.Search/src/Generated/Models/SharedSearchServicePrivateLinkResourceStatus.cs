@@ -7,7 +7,7 @@
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Status of the shared private link resource. Can be Pending, Approved, Rejected or Disconnected. </summary>
+    /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
     public enum SharedSearchServicePrivateLinkResourceStatus
     {
         /// <summary> Pending. </summary>

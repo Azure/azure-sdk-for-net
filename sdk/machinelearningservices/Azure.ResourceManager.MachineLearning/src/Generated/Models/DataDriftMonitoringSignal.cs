@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -49,6 +48,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataSegment"> The data segment used for scoping on a subset of the data population. </param>
         /// <param name="featureDataTypeOverride"> A dictionary that maps feature names to their respective data types. </param>
         /// <param name="features">
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MonitoringInputDataBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="FixedInputData"/>, <see cref="StaticInputData"/> and <see cref="TrailingInputData"/>.
         /// </param>
-        internal DataDriftMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, MonitoringDataSegment dataSegment, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType)
+        internal DataDriftMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, MonitoringDataSegment dataSegment, IDictionary<string, MonitoringFeatureDataType> featureDataTypeOverride, MonitoringFeatureFilterBase features, IList<DataDriftMetricThresholdBase> metricThresholds, MonitoringInputDataBase productionData, MonitoringInputDataBase referenceData) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             DataSegment = dataSegment;
             FeatureDataTypeOverride = featureDataTypeOverride;
@@ -80,6 +80,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             ProductionData = productionData;
             ReferenceData = referenceData;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataDriftMonitoringSignal"/> for deserialization. </summary>
+        internal DataDriftMonitoringSignal()
+        {
         }
 
         /// <summary> The data segment used for scoping on a subset of the data population. </summary>

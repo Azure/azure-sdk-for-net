@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HybridNetwork.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -309,6 +307,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -338,6 +344,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -386,6 +400,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -415,6 +437,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -463,6 +493,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -492,6 +530,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -540,6 +586,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -569,6 +623,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -617,6 +679,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -646,6 +716,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -677,6 +755,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -704,6 +790,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationGroupValues_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfigurationGroupValueResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -733,6 +827,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -760,6 +862,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkFunctions_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkFunctionResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -789,6 +899,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -816,6 +934,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Publishers_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PublisherResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -845,6 +971,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -872,6 +1006,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Sites_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -901,6 +1043,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -928,6 +1078,14 @@ namespace Azure.ResourceManager.HybridNetwork
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SiteNetworkServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SiteNetworkServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

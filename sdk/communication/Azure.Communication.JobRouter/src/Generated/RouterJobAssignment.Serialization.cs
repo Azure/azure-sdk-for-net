@@ -6,25 +6,93 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterJobAssignment
+    public partial class RouterJobAssignment : IUtf8JsonSerializable, IJsonModel<RouterJobAssignment>
     {
-        internal static RouterJobAssignment DeserializeRouterJobAssignment(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterJobAssignment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouterJobAssignment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("assignmentId"u8);
+                writer.WriteStringValue(AssignmentId);
+            }
+            if (Optional.IsDefined(WorkerId))
+            {
+                writer.WritePropertyName("workerId"u8);
+                writer.WriteStringValue(WorkerId);
+            }
+            writer.WritePropertyName("assignedAt"u8);
+            writer.WriteStringValue(AssignedAt, "O");
+            if (Optional.IsDefined(CompletedAt))
+            {
+                writer.WritePropertyName("completedAt"u8);
+                writer.WriteStringValue(CompletedAt.Value, "O");
+            }
+            if (Optional.IsDefined(ClosedAt))
+            {
+                writer.WritePropertyName("closedAt"u8);
+                writer.WriteStringValue(ClosedAt.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterJobAssignment IJsonModel<RouterJobAssignment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterJobAssignment(document.RootElement, options);
+        }
+
+        internal static RouterJobAssignment DeserializeRouterJobAssignment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string assignmentId = default;
-            Optional<string> workerId = default;
+            string workerId = default;
             DateTimeOffset assignedAt = default;
-            Optional<DateTimeOffset> completedAt = default;
-            Optional<DateTimeOffset> closedAt = default;
+            DateTimeOffset? completedAt = default;
+            DateTimeOffset? closedAt = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assignmentId"u8))
@@ -60,9 +128,51 @@ namespace Azure.Communication.JobRouter
                     closedAt = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterJobAssignment(assignmentId, workerId.Value, assignedAt, Optional.ToNullable(completedAt), Optional.ToNullable(closedAt));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RouterJobAssignment(
+                assignmentId,
+                workerId,
+                assignedAt,
+                completedAt,
+                closedAt,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterJobAssignment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RouterJobAssignment IPersistableModel<RouterJobAssignment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJobAssignment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouterJobAssignment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouterJobAssignment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouterJobAssignment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -70,6 +180,14 @@ namespace Azure.Communication.JobRouter
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRouterJobAssignment(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RouterJobAssignment>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

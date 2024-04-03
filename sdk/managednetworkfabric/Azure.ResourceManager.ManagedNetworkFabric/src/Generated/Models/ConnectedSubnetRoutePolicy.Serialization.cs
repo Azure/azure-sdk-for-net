@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable
+    public partial class ConnectedSubnetRoutePolicy : IUtf8JsonSerializable, IJsonModel<ConnectedSubnetRoutePolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedSubnetRoutePolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectedSubnetRoutePolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedSubnetRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ExportRoutePolicyId))
             {
@@ -23,19 +34,50 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                writer.WriteObjectValue<L3ExportRoutePolicy>(ExportRoutePolicy, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ConnectedSubnetRoutePolicy DeserializeConnectedSubnetRoutePolicy(JsonElement element)
+        ConnectedSubnetRoutePolicy IJsonModel<ConnectedSubnetRoutePolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedSubnetRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedSubnetRoutePolicy(document.RootElement, options);
+        }
+
+        internal static ConnectedSubnetRoutePolicy DeserializeConnectedSubnetRoutePolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> exportRoutePolicyId = default;
-            Optional<L3ExportRoutePolicy> exportRoutePolicy = default;
+            ResourceIdentifier exportRoutePolicyId = default;
+            L3ExportRoutePolicy exportRoutePolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("exportRoutePolicyId"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value);
+                    exportRoutePolicy = L3ExportRoutePolicy.DeserializeL3ExportRoutePolicy(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId.Value, exportRoutePolicy.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectedSubnetRoutePolicy(exportRoutePolicyId, exportRoutePolicy, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectedSubnetRoutePolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedSubnetRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectedSubnetRoutePolicy IPersistableModel<ConnectedSubnetRoutePolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedSubnetRoutePolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectedSubnetRoutePolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedSubnetRoutePolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectedSubnetRoutePolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,12 +18,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<AcsRouterLabelOperator> labelOperator = default;
-            Optional<object> labelValue = default;
-            Optional<float> ttlSeconds = default;
-            Optional<AcsRouterWorkerSelectorState> state = default;
-            Optional<DateTimeOffset> expirationTime = default;
+            string key = default;
+            AcsRouterLabelOperator? labelOperator = default;
+            object labelValue = default;
+            float? ttlSeconds = default;
+            AcsRouterWorkerSelectorState? state = default;
+            DateTimeOffset? expirationTime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -78,7 +77,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsRouterWorkerSelector(key.Value, Optional.ToNullable(labelOperator), labelValue.Value, Optional.ToNullable(ttlSeconds), Optional.ToNullable(state), Optional.ToNullable(expirationTime));
+            return new AcsRouterWorkerSelector(
+                key,
+                labelOperator,
+                labelValue,
+                ttlSeconds,
+                state,
+                expirationTime);
         }
     }
 }

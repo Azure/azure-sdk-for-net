@@ -6,18 +6,33 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingCosmosDBSqlApiProperties : IUtf8JsonSerializable
+    public partial class RoutingCosmosDBSqlApiProperties : IUtf8JsonSerializable, IJsonModel<RoutingCosmosDBSqlApiProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingCosmosDBSqlApiProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoutingCosmosDBSqlApiProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
             if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
@@ -38,7 +53,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             if (Optional.IsDefined(PrimaryKey))
             {
@@ -64,28 +79,59 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("partitionKeyTemplate"u8);
                 writer.WriteStringValue(PartitionKeyTemplate);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutingCosmosDBSqlApiProperties DeserializeRoutingCosmosDBSqlApiProperties(JsonElement element)
+        RoutingCosmosDBSqlApiProperties IJsonModel<RoutingCosmosDBSqlApiProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingCosmosDBSqlApiProperties(document.RootElement, options);
+        }
+
+        internal static RoutingCosmosDBSqlApiProperties DeserializeRoutingCosmosDBSqlApiProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<string> id = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string id = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             Uri endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
-            Optional<string> primaryKey = default;
-            Optional<string> secondaryKey = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
+            string primaryKey = default;
+            string secondaryKey = default;
             string databaseName = default;
             string containerName = default;
-            Optional<string> partitionKeyName = default;
-            Optional<string> partitionKeyTemplate = default;
+            string partitionKeyName = default;
+            string partitionKeyTemplate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -128,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("primaryKey"u8))
@@ -161,8 +207,58 @@ namespace Azure.ResourceManager.IotHub.Models
                     partitionKeyTemplate = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingCosmosDBSqlApiProperties(name, id.Value, subscriptionId.Value, resourceGroup.Value, endpointUri, Optional.ToNullable(authenticationType), identity.Value, primaryKey.Value, secondaryKey.Value, databaseName, containerName, partitionKeyName.Value, partitionKeyTemplate.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoutingCosmosDBSqlApiProperties(
+                name,
+                id,
+                subscriptionId,
+                resourceGroup,
+                endpointUri,
+                authenticationType,
+                identity,
+                primaryKey,
+                secondaryKey,
+                databaseName,
+                containerName,
+                partitionKeyName,
+                partitionKeyTemplate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoutingCosmosDBSqlApiProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoutingCosmosDBSqlApiProperties IPersistableModel<RoutingCosmosDBSqlApiProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingCosmosDBSqlApiProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingCosmosDBSqlApiProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingCosmosDBSqlApiProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingCosmosDBSqlApiProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

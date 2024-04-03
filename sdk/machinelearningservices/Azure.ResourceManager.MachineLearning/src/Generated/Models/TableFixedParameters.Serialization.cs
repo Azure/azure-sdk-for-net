@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class TableFixedParameters : IUtf8JsonSerializable
+    public partial class TableFixedParameters : IUtf8JsonSerializable, IJsonModel<TableFixedParameters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TableFixedParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TableFixedParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Booster))
             {
@@ -241,35 +252,66 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("withStd"u8);
                 writer.WriteBooleanValue(WithStd.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TableFixedParameters DeserializeTableFixedParameters(JsonElement element)
+        TableFixedParameters IJsonModel<TableFixedParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TableFixedParameters)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTableFixedParameters(document.RootElement, options);
+        }
+
+        internal static TableFixedParameters DeserializeTableFixedParameters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> booster = default;
-            Optional<string> boostingType = default;
-            Optional<string> growPolicy = default;
-            Optional<double?> learningRate = default;
-            Optional<int?> maxBin = default;
-            Optional<int?> maxDepth = default;
-            Optional<int?> maxLeaves = default;
-            Optional<int?> minDataInLeaf = default;
-            Optional<double?> minSplitGain = default;
-            Optional<string> modelName = default;
-            Optional<int?> nEstimators = default;
-            Optional<int?> numLeaves = default;
-            Optional<string> preprocessorName = default;
-            Optional<double?> regAlpha = default;
-            Optional<double?> regLambda = default;
-            Optional<double?> subsample = default;
-            Optional<double?> subsampleFreq = default;
-            Optional<string> treeMethod = default;
-            Optional<bool> withMean = default;
-            Optional<bool> withStd = default;
+            string booster = default;
+            string boostingType = default;
+            string growPolicy = default;
+            double? learningRate = default;
+            int? maxBin = default;
+            int? maxDepth = default;
+            int? maxLeaves = default;
+            int? minDataInLeaf = default;
+            double? minSplitGain = default;
+            string modelName = default;
+            int? nEstimators = default;
+            int? numLeaves = default;
+            string preprocessorName = default;
+            double? regAlpha = default;
+            double? regLambda = default;
+            double? subsample = default;
+            double? subsampleFreq = default;
+            string treeMethod = default;
+            bool? withMean = default;
+            bool? withStd = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("booster"u8))
@@ -470,8 +512,65 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     withStd = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TableFixedParameters(booster.Value, boostingType.Value, growPolicy.Value, Optional.ToNullable(learningRate), Optional.ToNullable(maxBin), Optional.ToNullable(maxDepth), Optional.ToNullable(maxLeaves), Optional.ToNullable(minDataInLeaf), Optional.ToNullable(minSplitGain), modelName.Value, Optional.ToNullable(nEstimators), Optional.ToNullable(numLeaves), preprocessorName.Value, Optional.ToNullable(regAlpha), Optional.ToNullable(regLambda), Optional.ToNullable(subsample), Optional.ToNullable(subsampleFreq), treeMethod.Value, Optional.ToNullable(withMean), Optional.ToNullable(withStd));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TableFixedParameters(
+                booster,
+                boostingType,
+                growPolicy,
+                learningRate,
+                maxBin,
+                maxDepth,
+                maxLeaves,
+                minDataInLeaf,
+                minSplitGain,
+                modelName,
+                nEstimators,
+                numLeaves,
+                preprocessorName,
+                regAlpha,
+                regLambda,
+                subsample,
+                subsampleFreq,
+                treeMethod,
+                withMean,
+                withStd,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TableFixedParameters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TableFixedParameters IPersistableModel<TableFixedParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TableFixedParameters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTableFixedParameters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TableFixedParameters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TableFixedParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

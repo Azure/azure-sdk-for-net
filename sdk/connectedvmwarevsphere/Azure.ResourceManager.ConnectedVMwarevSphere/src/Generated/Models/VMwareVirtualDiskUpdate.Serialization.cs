@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VMwareVirtualDiskUpdate : IUtf8JsonSerializable
+    public partial class VMwareVirtualDiskUpdate : IUtf8JsonSerializable, IJsonModel<VMwareVirtualDiskUpdate>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareVirtualDiskUpdate>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VMwareVirtualDiskUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareVirtualDiskUpdate)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -55,7 +66,167 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("diskType"u8);
                 writer.WriteStringValue(DiskType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        VMwareVirtualDiskUpdate IJsonModel<VMwareVirtualDiskUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VMwareVirtualDiskUpdate)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVMwareVirtualDiskUpdate(document.RootElement, options);
+        }
+
+        internal static VMwareVirtualDiskUpdate DeserializeVMwareVirtualDiskUpdate(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string name = default;
+            int? diskSizeGB = default;
+            int? deviceKey = default;
+            VMwareDiskMode? diskMode = default;
+            int? controllerKey = default;
+            int? unitNumber = default;
+            string deviceName = default;
+            VMwareDiskType? diskType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskSizeGB"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskSizeGB = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("deviceKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    deviceKey = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("diskMode"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskMode = new VMwareDiskMode(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("controllerKey"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    controllerKey = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("unitNumber"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    unitNumber = property.Value.GetInt32();
+                    continue;
+                }
+                if (property.NameEquals("deviceName"u8))
+                {
+                    deviceName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("diskType"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskType = new VMwareDiskType(property.Value.GetString());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VMwareVirtualDiskUpdate(
+                name,
+                diskSizeGB,
+                deviceKey,
+                diskMode,
+                controllerKey,
+                unitNumber,
+                deviceName,
+                diskType,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<VMwareVirtualDiskUpdate>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VMwareVirtualDiskUpdate)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VMwareVirtualDiskUpdate IPersistableModel<VMwareVirtualDiskUpdate>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareVirtualDiskUpdate>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVMwareVirtualDiskUpdate(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VMwareVirtualDiskUpdate)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VMwareVirtualDiskUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

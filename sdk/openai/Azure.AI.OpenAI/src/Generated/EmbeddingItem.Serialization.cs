@@ -6,21 +6,77 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class EmbeddingItem
+    public partial class EmbeddingItem : IUtf8JsonSerializable, IJsonModel<EmbeddingItem>
     {
-        internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EmbeddingItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EmbeddingItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("embedding"u8);
+            writer.WriteStartArray();
+            foreach (var item in Embedding.Span)
+            {
+                writer.WriteNumberValue(item);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("index"u8);
+            writer.WriteNumberValue(Index);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EmbeddingItem IJsonModel<EmbeddingItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEmbeddingItem(document.RootElement, options);
+        }
+
+        internal static EmbeddingItem DeserializeEmbeddingItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ReadOnlyMemory<float> embedding = default;
             int index = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("embedding"u8))
@@ -44,9 +100,45 @@ namespace Azure.AI.OpenAI
                     index = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EmbeddingItem(embedding, index);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EmbeddingItem(embedding, index, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EmbeddingItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EmbeddingItem IPersistableModel<EmbeddingItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EmbeddingItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEmbeddingItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EmbeddingItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EmbeddingItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -54,6 +146,14 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeEmbeddingItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EmbeddingItem>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

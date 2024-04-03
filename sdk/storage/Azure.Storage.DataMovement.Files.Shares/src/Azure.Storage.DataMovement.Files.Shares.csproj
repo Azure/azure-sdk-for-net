@@ -29,12 +29,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)CancellationHelper.cs" LinkBase="SharedCore" />
-    <Compile Include="$(AzureCoreSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared\Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared\Core" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(AzureStorageSharedSources)ContentRange.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Constants.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.cs" LinkBase="Shared" />
     <Compile Include="$(AzureStorageSharedSources)Errors.Clients.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)SyncAsyncEventHandlerExtensions.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureStorageSharedSources)Argument.cs" LinkBase="Shared" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(AzureStorageDataMovementSharedSources)DataMovementConstants.cs" LinkBase="Shared\DataMovement" />

@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> Result information for an operation that transcribed spoken audio into written text. </summary>
     public partial class AudioTranscription
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AudioTranscription"/>. </summary>
         /// <param name="text"> The transcribed text for the provided audio data. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
@@ -34,13 +65,20 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
         /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
-        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranscription(string text, AudioTaskLabel? internalAudioTaskLabel, string language, TimeSpan? duration, IReadOnlyList<AudioTranscriptionSegment> segments, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             InternalAudioTaskLabel = internalAudioTaskLabel;
             Language = language;
             Duration = duration;
             Segments = segments;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranscription"/> for deserialization. </summary>
+        internal AudioTranscription()
+        {
         }
 
         /// <summary> The transcribed text for the provided audio data. </summary>

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryWranglingDataFlowProperties : IUtf8JsonSerializable
+    public partial class DataFactoryWranglingDataFlowProperties : IUtf8JsonSerializable, IJsonModel<DataFactoryWranglingDataFlowProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryWranglingDataFlowProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryWranglingDataFlowProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryWranglingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryWranglingDataFlowProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DataFlowType);
@@ -49,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DataFlowFolder>(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
@@ -59,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PowerQuerySource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,22 +83,53 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStringValue(DocumentLocale);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryWranglingDataFlowProperties DeserializeDataFactoryWranglingDataFlowProperties(JsonElement element)
+        DataFactoryWranglingDataFlowProperties IJsonModel<DataFactoryWranglingDataFlowProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryWranglingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryWranglingDataFlowProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryWranglingDataFlowProperties(document.RootElement, options);
+        }
+
+        internal static DataFactoryWranglingDataFlowProperties DeserializeDataFactoryWranglingDataFlowProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<string> description = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<DataFlowFolder> folder = default;
-            Optional<IList<PowerQuerySource>> sources = default;
-            Optional<string> script = default;
-            Optional<string> documentLocale = default;
+            string description = default;
+            IList<BinaryData> annotations = default;
+            DataFlowFolder folder = default;
+            IList<PowerQuerySource> sources = default;
+            string script = default;
+            string documentLocale = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -129,7 +169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value);
+                    folder = DataFlowFolder.DeserializeDataFlowFolder(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("typeProperties"u8))
@@ -150,7 +190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PowerQuerySource> array = new List<PowerQuerySource>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item));
+                                array.Add(PowerQuerySource.DeserializePowerQuerySource(item, options));
                             }
                             sources = array;
                             continue;
@@ -168,8 +208,52 @@ namespace Azure.ResourceManager.DataFactory.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataFactoryWranglingDataFlowProperties(type, description.Value, Optional.ToList(annotations), folder.Value, Optional.ToList(sources), script.Value, documentLocale.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataFactoryWranglingDataFlowProperties(
+                type,
+                description,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                folder,
+                serializedAdditionalRawData,
+                sources ?? new ChangeTrackingList<PowerQuerySource>(),
+                script,
+                documentLocale);
         }
+
+        BinaryData IPersistableModel<DataFactoryWranglingDataFlowProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryWranglingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryWranglingDataFlowProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryWranglingDataFlowProperties IPersistableModel<DataFactoryWranglingDataFlowProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryWranglingDataFlowProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryWranglingDataFlowProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryWranglingDataFlowProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryWranglingDataFlowProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes how a MongoDB data migration should be performed. </summary>
     public partial class MongoDBMigrationSettings
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MongoDBMigrationSettings"/>. </summary>
         /// <param name="databases"> The databases on the source cluster to migrate to the target. The keys are the names of the databases. </param>
         /// <param name="source"> Settings used to connect to the source cluster. </param>
@@ -37,7 +68,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="source"> Settings used to connect to the source cluster. </param>
         /// <param name="target"> Settings used to connect to the target cluster. </param>
         /// <param name="throttling"> Settings used to limit the resource usage of the migration. </param>
-        internal MongoDBMigrationSettings(int? boostRUs, IDictionary<string, MongoDBDatabaseSettings> databases, MongoDBReplication? replication, MongoDBConnectionInfo source, MongoDBConnectionInfo target, MongoDBThrottlingSettings throttling)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBMigrationSettings(int? boostRUs, IDictionary<string, MongoDBDatabaseSettings> databases, MongoDBReplication? replication, MongoDBConnectionInfo source, MongoDBConnectionInfo target, MongoDBThrottlingSettings throttling, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BoostRUs = boostRUs;
             Databases = databases;
@@ -45,6 +77,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             Source = source;
             Target = target;
             Throttling = throttling;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBMigrationSettings"/> for deserialization. </summary>
+        internal MongoDBMigrationSettings()
+        {
         }
 
         /// <summary> The RU limit on a CosmosDB target that collections will be temporarily increased to (if lower) during the initial copy of a migration, from 10,000 to 1,000,000, or 0 to use the default boost (which is generally the maximum), or null to not boost the RUs. This setting has no effect on non-CosmosDB targets. </summary>

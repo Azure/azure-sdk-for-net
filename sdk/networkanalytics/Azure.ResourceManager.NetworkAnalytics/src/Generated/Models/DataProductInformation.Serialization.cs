@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class DataProductInformation : IUtf8JsonSerializable
+    public partial class DataProductInformation : IUtf8JsonSerializable, IJsonModel<DataProductInformation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProductInformation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataProductInformation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProductInformation)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataProductName"u8);
             writer.WriteStringValue(DataProductName);
@@ -24,14 +34,43 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataProductVersions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProductVersion>(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProductInformation DeserializeDataProductInformation(JsonElement element)
+        DataProductInformation IJsonModel<DataProductInformation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductInformation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProductInformation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProductInformation(document.RootElement, options);
+        }
+
+        internal static DataProductInformation DeserializeDataProductInformation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,6 +78,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             string dataProductName = default;
             string description = default;
             IList<DataProductVersion> dataProductVersions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataProductName"u8))
@@ -56,13 +97,49 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     List<DataProductVersion> array = new List<DataProductVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProductVersion.DeserializeDataProductVersion(item));
+                        array.Add(DataProductVersion.DeserializeDataProductVersion(item, options));
                     }
                     dataProductVersions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProductInformation(dataProductName, description, dataProductVersions);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProductInformation(dataProductName, description, dataProductVersions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProductInformation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProductInformation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProductInformation IPersistableModel<DataProductInformation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProductInformation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProductInformation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProductInformation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProductInformation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

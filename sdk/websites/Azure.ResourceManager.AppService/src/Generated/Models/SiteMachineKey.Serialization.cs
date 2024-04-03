@@ -5,23 +5,92 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SiteMachineKey
+    public partial class SiteMachineKey : IUtf8JsonSerializable, IJsonModel<SiteMachineKey>
     {
-        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteMachineKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteMachineKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Validation))
+            {
+                writer.WritePropertyName("validation"u8);
+                writer.WriteStringValue(Validation);
+            }
+            if (Optional.IsDefined(ValidationKey))
+            {
+                writer.WritePropertyName("validationKey"u8);
+                writer.WriteStringValue(ValidationKey);
+            }
+            if (Optional.IsDefined(Decryption))
+            {
+                writer.WritePropertyName("decryption"u8);
+                writer.WriteStringValue(Decryption);
+            }
+            if (Optional.IsDefined(DecryptionKey))
+            {
+                writer.WritePropertyName("decryptionKey"u8);
+                writer.WriteStringValue(DecryptionKey);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteMachineKey IJsonModel<SiteMachineKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteMachineKey(document.RootElement, options);
+        }
+
+        internal static SiteMachineKey DeserializeSiteMachineKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> validation = default;
-            Optional<string> validationKey = default;
-            Optional<string> decryption = default;
-            Optional<string> decryptionKey = default;
+            string validation = default;
+            string validationKey = default;
+            string decryption = default;
+            string decryptionKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("validation"u8))
@@ -44,8 +113,149 @@ namespace Azure.ResourceManager.AppService.Models
                     decryptionKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteMachineKey(validation.Value, validationKey.Value, decryption.Value, decryptionKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Validation), out propertyOverride);
+            if (Optional.IsDefined(Validation) || hasPropertyOverride)
+            {
+                builder.Append("  validation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Validation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Validation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Validation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
+            if (Optional.IsDefined(ValidationKey) || hasPropertyOverride)
+            {
+                builder.Append("  validationKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ValidationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ValidationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ValidationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Decryption), out propertyOverride);
+            if (Optional.IsDefined(Decryption) || hasPropertyOverride)
+            {
+                builder.Append("  decryption: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Decryption.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Decryption}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Decryption}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DecryptionKey), out propertyOverride);
+            if (Optional.IsDefined(DecryptionKey) || hasPropertyOverride)
+            {
+                builder.Append("  decryptionKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DecryptionKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DecryptionKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DecryptionKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteMachineKey IPersistableModel<SiteMachineKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteMachineKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteMachineKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

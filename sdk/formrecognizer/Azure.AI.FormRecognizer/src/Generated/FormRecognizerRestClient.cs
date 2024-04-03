@@ -11,7 +11,6 @@ using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.FormRecognizer.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,7 +54,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(trainRequest);
+            content.JsonWriter.WriteObjectValue<TrainRequest>(trainRequest);
             request.Content = content;
             return message;
         }
@@ -240,7 +239,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -314,7 +313,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -324,7 +323,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;
@@ -452,7 +451,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(copyRequest);
+            content.JsonWriter.WriteObjectValue<CopyRequest>(copyRequest);
             request.Content = content;
             return message;
         }
@@ -644,7 +643,7 @@ namespace Azure.AI.FormRecognizer
             request.Headers.Add("Accept", "application/json, text/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(composeRequest);
+            content.JsonWriter.WriteObjectValue<ComposeRequest>(composeRequest);
             request.Content = content;
             return message;
         }
@@ -723,7 +722,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -799,7 +798,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -809,7 +808,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;
@@ -935,7 +934,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1011,7 +1010,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1021,7 +1020,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1143,7 +1142,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1213,7 +1212,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("includeTextDetails", includeTextDetails.Value, true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1223,7 +1222,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1347,7 +1346,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1423,7 +1422,7 @@ namespace Azure.AI.FormRecognizer
             {
                 uri.AppendQuery("locale", locale.Value.ToString(), true);
             }
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1433,7 +1432,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;
@@ -1551,7 +1550,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1627,7 +1626,7 @@ namespace Azure.AI.FormRecognizer
             uri.AppendRaw("/formrecognizer/", false);
             uri.AppendRaw(_apiVersion, false);
             uri.AppendPath("/layout/analyze", false);
-            if (pages != null && Optional.IsCollectionDefined(pages))
+            if (pages != null && !(pages is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("pages", pages, ",", true);
             }
@@ -1645,7 +1644,7 @@ namespace Azure.AI.FormRecognizer
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(fileStream);
+                content.JsonWriter.WriteObjectValue<SourcePath>(fileStream);
                 request.Content = content;
             }
             return message;

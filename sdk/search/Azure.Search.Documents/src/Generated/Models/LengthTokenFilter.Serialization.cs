@@ -38,8 +38,8 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<int> min = default;
-            Optional<int> max = default;
+            int? min = default;
+            int? max = default;
             string odataType = default;
             string name = default;
             foreach (var property in element.EnumerateObject())
@@ -73,7 +73,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LengthTokenFilter(odataType, name, Optional.ToNullable(min), Optional.ToNullable(max));
+            return new LengthTokenFilter(odataType, name, min, max);
         }
     }
 }

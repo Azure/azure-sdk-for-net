@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class ReplicationUsage
+    public partial class ReplicationUsage : IUtf8JsonSerializable, IJsonModel<ReplicationUsage>
     {
-        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReplicationUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(MonitoringSummary))
+            {
+                writer.WritePropertyName("monitoringSummary"u8);
+                writer.WriteObjectValue<VaultMonitoringSummary>(MonitoringSummary, options);
+            }
+            if (Optional.IsDefined(JobsSummary))
+            {
+                writer.WritePropertyName("jobsSummary"u8);
+                writer.WriteObjectValue<ReplicationJobSummary>(JobsSummary, options);
+            }
+            if (Optional.IsDefined(ProtectedItemCount))
+            {
+                writer.WritePropertyName("protectedItemCount"u8);
+                writer.WriteNumberValue(ProtectedItemCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryPlanCount))
+            {
+                writer.WritePropertyName("recoveryPlanCount"u8);
+                writer.WriteNumberValue(RecoveryPlanCount.Value);
+            }
+            if (Optional.IsDefined(RegisteredServersCount))
+            {
+                writer.WritePropertyName("registeredServersCount"u8);
+                writer.WriteNumberValue(RegisteredServersCount.Value);
+            }
+            if (Optional.IsDefined(RecoveryServicesProviderAuthType))
+            {
+                writer.WritePropertyName("recoveryServicesProviderAuthType"u8);
+                writer.WriteNumberValue(RecoveryServicesProviderAuthType.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReplicationUsage IJsonModel<ReplicationUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationUsage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationUsage(document.RootElement, options);
+        }
+
+        internal static ReplicationUsage DeserializeReplicationUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<VaultMonitoringSummary> monitoringSummary = default;
-            Optional<ReplicationJobSummary> jobsSummary = default;
-            Optional<int> protectedItemCount = default;
-            Optional<int> recoveryPlanCount = default;
-            Optional<int> registeredServersCount = default;
-            Optional<int> recoveryServicesProviderAuthType = default;
+            VaultMonitoringSummary monitoringSummary = default;
+            ReplicationJobSummary jobsSummary = default;
+            int? protectedItemCount = default;
+            int? recoveryPlanCount = default;
+            int? registeredServersCount = default;
+            int? recoveryServicesProviderAuthType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSummary"u8))
@@ -32,7 +110,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value);
+                    monitoringSummary = VaultMonitoringSummary.DeserializeVaultMonitoringSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("jobsSummary"u8))
@@ -41,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value);
+                    jobsSummary = ReplicationJobSummary.DeserializeReplicationJobSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protectedItemCount"u8))
@@ -80,8 +158,51 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     recoveryServicesProviderAuthType = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReplicationUsage(monitoringSummary.Value, jobsSummary.Value, Optional.ToNullable(protectedItemCount), Optional.ToNullable(recoveryPlanCount), Optional.ToNullable(registeredServersCount), Optional.ToNullable(recoveryServicesProviderAuthType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReplicationUsage(
+                monitoringSummary,
+                jobsSummary,
+                protectedItemCount,
+                recoveryPlanCount,
+                registeredServersCount,
+                recoveryServicesProviderAuthType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReplicationUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReplicationUsage IPersistableModel<ReplicationUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReplicationUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationUsage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReplicationUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

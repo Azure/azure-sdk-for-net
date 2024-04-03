@@ -6,19 +6,18 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
     /// Format read settings.
     /// Please note <see cref="FormatReadSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="JsonReadSettings"/>, <see cref="XmlReadSettings"/> and <see cref="DelimitedTextReadSettings"/>.
+    /// The available derived classes include <see cref="BinaryReadSettings"/>, <see cref="DelimitedTextReadSettings"/>, <see cref="JsonReadSettings"/> and <see cref="XmlReadSettings"/>.
     /// </summary>
-    public partial class FormatReadSettings
+    public abstract partial class FormatReadSettings
     {
         /// <summary> Initializes a new instance of <see cref="FormatReadSettings"/>. </summary>
-        public FormatReadSettings()
+        protected FormatReadSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }

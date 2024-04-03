@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
-    public partial class HeavyScheduleAvailabilityContent : IUtf8JsonSerializable
+    public partial class HeavyScheduleAvailabilityContent : IUtf8JsonSerializable, IJsonModel<HeavyScheduleAvailabilityContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HeavyScheduleAvailabilityContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HeavyScheduleAvailabilityContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HeavyScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HeavyScheduleAvailabilityContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("storageLocation"u8);
             writer.WriteStringValue(StorageLocation);
@@ -24,7 +35,104 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        HeavyScheduleAvailabilityContent IJsonModel<HeavyScheduleAvailabilityContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HeavyScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HeavyScheduleAvailabilityContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHeavyScheduleAvailabilityContent(document.RootElement, options);
+        }
+
+        internal static HeavyScheduleAvailabilityContent DeserializeHeavyScheduleAvailabilityContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation storageLocation = default;
+            DataBoxSkuName skuName = default;
+            string country = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("storageLocation"u8))
+                {
+                    storageLocation = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("skuName"u8))
+                {
+                    skuName = property.Value.GetString().ToDataBoxSkuName();
+                    continue;
+                }
+                if (property.NameEquals("country"u8))
+                {
+                    country = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HeavyScheduleAvailabilityContent(storageLocation, skuName, country, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<HeavyScheduleAvailabilityContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HeavyScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HeavyScheduleAvailabilityContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HeavyScheduleAvailabilityContent IPersistableModel<HeavyScheduleAvailabilityContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HeavyScheduleAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHeavyScheduleAvailabilityContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HeavyScheduleAvailabilityContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HeavyScheduleAvailabilityContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerDataEncryption : IUtf8JsonSerializable
+    public partial class PostgreSqlFlexibleServerDataEncryption : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerDataEncryption>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerDataEncryption>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlFlexibleServerDataEncryption>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PrimaryKeyUri))
             {
@@ -51,22 +62,53 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 writer.WritePropertyName("geoBackupEncryptionKeyStatus"u8);
                 writer.WriteStringValue(GeoBackupEncryptionKeyStatus.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PostgreSqlFlexibleServerDataEncryption DeserializePostgreSqlFlexibleServerDataEncryption(JsonElement element)
+        PostgreSqlFlexibleServerDataEncryption IJsonModel<PostgreSqlFlexibleServerDataEncryption>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerDataEncryption(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerDataEncryption DeserializePostgreSqlFlexibleServerDataEncryption(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> primaryKeyUri = default;
-            Optional<ResourceIdentifier> primaryUserAssignedIdentityId = default;
-            Optional<Uri> geoBackupKeyUri = default;
-            Optional<string> geoBackupUserAssignedIdentityId = default;
-            Optional<PostgreSqlFlexibleServerKeyType> type = default;
-            Optional<PostgreSqlKeyStatus> primaryEncryptionKeyStatus = default;
-            Optional<PostgreSqlKeyStatus> geoBackupEncryptionKeyStatus = default;
+            Uri primaryKeyUri = default;
+            ResourceIdentifier primaryUserAssignedIdentityId = default;
+            Uri geoBackupKeyUri = default;
+            string geoBackupUserAssignedIdentityId = default;
+            PostgreSqlFlexibleServerKeyType? type = default;
+            PostgreSqlKeyStatus? primaryEncryptionKeyStatus = default;
+            PostgreSqlKeyStatus? geoBackupEncryptionKeyStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryKeyURI"u8))
@@ -128,8 +170,175 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     geoBackupEncryptionKeyStatus = new PostgreSqlKeyStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerDataEncryption(primaryKeyUri.Value, primaryUserAssignedIdentityId.Value, geoBackupKeyUri.Value, geoBackupUserAssignedIdentityId.Value, Optional.ToNullable(type), Optional.ToNullable(primaryEncryptionKeyStatus), Optional.ToNullable(geoBackupEncryptionKeyStatus));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PostgreSqlFlexibleServerDataEncryption(
+                primaryKeyUri,
+                primaryUserAssignedIdentityId,
+                geoBackupKeyUri,
+                geoBackupUserAssignedIdentityId,
+                type,
+                primaryEncryptionKeyStatus,
+                geoBackupEncryptionKeyStatus,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryKeyUri), out propertyOverride);
+            if (Optional.IsDefined(PrimaryKeyUri) || hasPropertyOverride)
+            {
+                builder.Append("  primaryKeyURI: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrimaryKeyUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryUserAssignedIdentityId), out propertyOverride);
+            if (Optional.IsDefined(PrimaryUserAssignedIdentityId) || hasPropertyOverride)
+            {
+                builder.Append("  primaryUserAssignedIdentityId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrimaryUserAssignedIdentityId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupKeyUri), out propertyOverride);
+            if (Optional.IsDefined(GeoBackupKeyUri) || hasPropertyOverride)
+            {
+                builder.Append("  geoBackupKeyURI: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{GeoBackupKeyUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupUserAssignedIdentityId), out propertyOverride);
+            if (Optional.IsDefined(GeoBackupUserAssignedIdentityId) || hasPropertyOverride)
+            {
+                builder.Append("  geoBackupUserAssignedIdentityId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (GeoBackupUserAssignedIdentityId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeoBackupUserAssignedIdentityId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeoBackupUserAssignedIdentityId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyType), out propertyOverride);
+            if (Optional.IsDefined(KeyType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KeyType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryEncryptionKeyStatus), out propertyOverride);
+            if (Optional.IsDefined(PrimaryEncryptionKeyStatus) || hasPropertyOverride)
+            {
+                builder.Append("  primaryEncryptionKeyStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrimaryEncryptionKeyStatus.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoBackupEncryptionKeyStatus), out propertyOverride);
+            if (Optional.IsDefined(GeoBackupEncryptionKeyStatus) || hasPropertyOverride)
+            {
+                builder.Append("  geoBackupEncryptionKeyStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{GeoBackupEncryptionKeyStatus.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerDataEncryption>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerDataEncryption IPersistableModel<PostgreSqlFlexibleServerDataEncryption>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerDataEncryption>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerDataEncryption(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerDataEncryption)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerDataEncryption>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

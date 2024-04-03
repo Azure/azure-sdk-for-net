@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
@@ -22,8 +23,9 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="details"> Error details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the sample output request. </param>
-        internal StreamAnalyticsTestDatasourceResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, StreamAnalyticsTestDatasourceResultStatus? status) : base(code, message, target, details)
+        internal StreamAnalyticsTestDatasourceResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamAnalyticsTestDatasourceResultStatus? status) : base(code, message, target, details, serializedAdditionalRawData)
         {
             Status = status;
         }

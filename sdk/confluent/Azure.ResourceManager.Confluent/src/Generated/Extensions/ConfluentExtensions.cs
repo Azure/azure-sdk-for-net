@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Confluent.Mocking;
 using Azure.ResourceManager.Confluent.Models;
 using Azure.ResourceManager.Resources;
@@ -82,6 +80,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +117,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +156,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -172,6 +190,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Validations_ValidateOrganization</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -192,6 +214,74 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
+        /// Organization Validate proxy resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganizationV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="data"> Organization resource model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        public static async Task<Response<ConfluentOrganizationValidationResult>> ValidateOrganizationV2Async(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2Async(organizationName, data, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Organization Validate proxy resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Confluent/validations/{organizationName}/orgvalidateV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Validations_ValidateOrganizationV2</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// </list>
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableConfluentResourceGroupResource.ValidateOrganizationV2(string,ConfluentOrganizationData,CancellationToken)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
+        /// <param name="organizationName"> Organization resource name. </param>
+        /// <param name="data"> Organization resource model. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="organizationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/>, <paramref name="organizationName"/> or <paramref name="data"/> is null. </exception>
+        public static Response<ConfluentOrganizationValidationResult> ValidateOrganizationV2(this ResourceGroupResource resourceGroupResource, string organizationName, ConfluentOrganizationData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableConfluentResourceGroupResource(resourceGroupResource).ValidateOrganizationV2(organizationName, data, cancellationToken);
+        }
+
+        /// <summary>
         /// List Confluent marketplace agreements in the subscription.
         /// <list type="bullet">
         /// <item>
@@ -201,6 +291,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -230,6 +324,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -257,6 +355,10 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
         /// </item>
         /// </list>
         /// <item>
@@ -286,6 +388,10 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>MarketplaceAgreements_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -314,6 +420,14 @@ namespace Azure.ResourceManager.Confluent
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -341,6 +455,14 @@ namespace Azure.ResourceManager.Confluent
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Organization_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-13</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfluentOrganizationResource"/></description>
         /// </item>
         /// </list>
         /// <item>

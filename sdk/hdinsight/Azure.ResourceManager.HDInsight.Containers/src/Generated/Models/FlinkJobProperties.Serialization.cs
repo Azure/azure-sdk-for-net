@@ -5,19 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class FlinkJobProperties : IUtf8JsonSerializable
+    public partial class FlinkJobProperties : IUtf8JsonSerializable, IJsonModel<FlinkJobProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FlinkJobProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FlinkJobProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
-            writer.WritePropertyName("jobName"u8);
-            writer.WriteStringValue(JobName);
+            if (Optional.IsDefined(RunId))
+            {
+                writer.WritePropertyName("runId"u8);
+                writer.WriteStringValue(RunId);
+            }
+            if (Optional.IsDefined(JobName))
+            {
+                writer.WritePropertyName("jobName"u8);
+                writer.WriteStringValue(JobName);
+            }
             if (Optional.IsDefined(JobJarDirectory))
             {
                 writer.WritePropertyName("jobJarDirectory"u8);
@@ -59,33 +77,95 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobOutput))
+            {
+                writer.WritePropertyName("jobOutput"u8);
+                writer.WriteStringValue(JobOutput);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ActionResult))
+            {
+                writer.WritePropertyName("actionResult"u8);
+                writer.WriteStringValue(ActionResult);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSavePoint))
+            {
+                writer.WritePropertyName("lastSavePoint"u8);
+                writer.WriteStringValue(LastSavePoint);
+            }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FlinkJobProperties DeserializeFlinkJobProperties(JsonElement element)
+        FlinkJobProperties IJsonModel<FlinkJobProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFlinkJobProperties(document.RootElement, options);
+        }
+
+        internal static FlinkJobProperties DeserializeFlinkJobProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string runId = default;
             string jobName = default;
-            Optional<string> jobJarDirectory = default;
-            Optional<string> jarName = default;
-            Optional<string> entryClass = default;
-            Optional<string> args = default;
-            Optional<string> savePointName = default;
-            Optional<FlinkJobAction> action = default;
-            Optional<IDictionary<string, string>> flinkConfiguration = default;
-            Optional<string> jobId = default;
-            Optional<string> status = default;
-            Optional<string> jobOutput = default;
-            Optional<string> actionResult = default;
-            Optional<string> lastSavePoint = default;
+            string jobJarDirectory = default;
+            string jarName = default;
+            string entryClass = default;
+            string args = default;
+            string savePointName = default;
+            FlinkJobAction? action = default;
+            IDictionary<string, string> flinkConfiguration = default;
+            string jobId = default;
+            string status = default;
+            string jobOutput = default;
+            string actionResult = default;
+            string lastSavePoint = default;
             ClusterJobType jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("runId"u8))
+                {
+                    runId = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("jobName"u8))
                 {
                     jobName = property.Value.GetString();
@@ -169,8 +249,60 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     jobType = new ClusterJobType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FlinkJobProperties(jobType, jobName, jobJarDirectory.Value, jarName.Value, entryClass.Value, args.Value, savePointName.Value, Optional.ToNullable(action), Optional.ToDictionary(flinkConfiguration), jobId.Value, status.Value, jobOutput.Value, actionResult.Value, lastSavePoint.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FlinkJobProperties(
+                jobType,
+                serializedAdditionalRawData,
+                runId,
+                jobName,
+                jobJarDirectory,
+                jarName,
+                entryClass,
+                args,
+                savePointName,
+                action,
+                flinkConfiguration ?? new ChangeTrackingDictionary<string, string>(),
+                jobId,
+                status,
+                jobOutput,
+                actionResult,
+                lastSavePoint);
         }
+
+        BinaryData IPersistableModel<FlinkJobProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FlinkJobProperties IPersistableModel<FlinkJobProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FlinkJobProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFlinkJobProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FlinkJobProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FlinkJobProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -44,7 +43,28 @@ namespace Azure.ResourceManager.Logic.Models
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, LogicWorkflowParameterInfo>();
 
-            return new LogicWorkflowData(id, name, resourceType, systemData, tags, location, identity, provisioningState, createdOn, changedOn, state, version, accessEndpoint, endpointsConfiguration, accessControl, sku, integrationAccount, integrationServiceEnvironment, definition, parameters);
+            return new LogicWorkflowData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                identity,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                integrationServiceEnvironment,
+                definition,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicSku"/>. </summary>
@@ -53,7 +73,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicSku"/> instance for mocking. </returns>
         public static LogicSku LogicSku(LogicSkuName name = default, LogicResourceReference plan = null)
         {
-            return new LogicSku(name, plan);
+            return new LogicSku(name, plan, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicResourceReference"/>. </summary>
@@ -63,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicResourceReference"/> instance for mocking. </returns>
         public static LogicResourceReference LogicResourceReference(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new LogicResourceReference(id, name, resourceType);
+            return new LogicResourceReference(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerCallbackUri"/>. </summary>
@@ -78,7 +98,14 @@ namespace Azure.ResourceManager.Logic.Models
         {
             relativePathParameters ??= new List<string>();
 
-            return new LogicWorkflowTriggerCallbackUri(value, method, basePath, relativePath, relativePathParameters?.ToList(), queries);
+            return new LogicWorkflowTriggerCallbackUri(
+                value,
+                method,
+                basePath,
+                relativePath,
+                relativePathParameters?.ToList(),
+                queries,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerCallbackQueryParameterInfo"/>. </summary>
@@ -90,7 +117,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowTriggerCallbackQueryParameterInfo"/> instance for mocking. </returns>
         public static LogicWorkflowTriggerCallbackQueryParameterInfo LogicWorkflowTriggerCallbackQueryParameterInfo(string apiVersion = null, string sp = null, string sv = null, string sig = null, string se = null)
         {
-            return new LogicWorkflowTriggerCallbackQueryParameterInfo(apiVersion, sp, sv, sig, se);
+            return new LogicWorkflowTriggerCallbackQueryParameterInfo(
+                apiVersion,
+                sp,
+                sv,
+                sig,
+                se,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowReference"/>. </summary>
@@ -100,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowReference"/> instance for mocking. </returns>
         public static LogicWorkflowReference LogicWorkflowReference(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new LogicWorkflowReference(id, name, resourceType);
+            return new LogicWorkflowReference(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowVersionData"/>. </summary>
@@ -128,7 +161,26 @@ namespace Azure.ResourceManager.Logic.Models
             tags ??= new Dictionary<string, string>();
             parameters ??= new Dictionary<string, LogicWorkflowParameterInfo>();
 
-            return new LogicWorkflowVersionData(id, name, resourceType, systemData, tags, location, provisioningState, createdOn, changedOn, state, version, accessEndpoint, endpointsConfiguration, accessControl, sku, integrationAccount, definition, parameters);
+            return new LogicWorkflowVersionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                version,
+                accessEndpoint,
+                endpointsConfiguration,
+                accessControl,
+                sku,
+                integrationAccount,
+                definition,
+                parameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowTriggerData"/>. </summary>
@@ -148,7 +200,21 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Logic.LogicWorkflowTriggerData"/> instance for mocking. </returns>
         public static LogicWorkflowTriggerData LogicWorkflowTriggerData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, LogicWorkflowTriggerProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, DateTimeOffset? changedOn = null, LogicWorkflowState? state = null, LogicWorkflowStatus? status = null, DateTimeOffset? lastExecutionOn = null, DateTimeOffset? nextExecutionOn = null, LogicWorkflowTriggerRecurrence recurrence = null, LogicResourceReference workflow = null)
         {
-            return new LogicWorkflowTriggerData(id, name, resourceType, systemData, provisioningState, createdOn, changedOn, state, status, lastExecutionOn, nextExecutionOn, recurrence, workflow);
+            return new LogicWorkflowTriggerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                createdOn,
+                changedOn,
+                state,
+                status,
+                lastExecutionOn,
+                nextExecutionOn,
+                recurrence,
+                workflow,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicJsonSchema"/>. </summary>
@@ -157,7 +223,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicJsonSchema"/> instance for mocking. </returns>
         public static LogicJsonSchema LogicJsonSchema(string title = null, BinaryData content = null)
         {
-            return new LogicJsonSchema(title, content);
+            return new LogicJsonSchema(title, content, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowTriggerReference"/>. </summary>
@@ -169,7 +235,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowTriggerReference"/> instance for mocking. </returns>
         public static LogicWorkflowTriggerReference LogicWorkflowTriggerReference(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string flowName = null, string triggerName = null)
         {
-            return new LogicWorkflowTriggerReference(id, name, resourceType, flowName, triggerName);
+            return new LogicWorkflowTriggerReference(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                flowName,
+                triggerName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowTriggerHistoryData"/>. </summary>
@@ -192,7 +264,24 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Logic.LogicWorkflowTriggerHistoryData"/> instance for mocking. </returns>
         public static LogicWorkflowTriggerHistoryData LogicWorkflowTriggerHistoryData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, DateTimeOffset? scheduledOn = null, LogicWorkflowStatus? status = null, string code = null, BinaryData error = null, Guid? trackingId = null, string correlationClientTrackingId = null, LogicContentLink inputsLink = null, LogicContentLink outputsLink = null, bool? isFired = null, LogicResourceReference run = null)
         {
-            return new LogicWorkflowTriggerHistoryData(id, name, resourceType, systemData, startOn, endOn, scheduledOn, status, code, error, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, inputsLink, outputsLink, isFired, run);
+            return new LogicWorkflowTriggerHistoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                scheduledOn,
+                status,
+                code,
+                error,
+                trackingId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                inputsLink,
+                outputsLink,
+                isFired,
+                run,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicContentLink"/>. </summary>
@@ -204,7 +293,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicContentLink"/> instance for mocking. </returns>
         public static LogicContentLink LogicContentLink(Uri uri = null, string contentVersion = null, long? contentSize = null, LogicContentHash contentHash = null, BinaryData metadata = null)
         {
-            return new LogicContentLink(uri, contentVersion, contentSize, contentHash, metadata);
+            return new LogicContentLink(
+                uri,
+                contentVersion,
+                contentSize,
+                contentHash,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicContentHash"/>. </summary>
@@ -213,7 +308,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicContentHash"/> instance for mocking. </returns>
         public static LogicContentHash LogicContentHash(string algorithm = null, string value = null)
         {
-            return new LogicContentHash(algorithm, value);
+            return new LogicContentHash(algorithm, value, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunData"/>. </summary>
@@ -238,7 +333,24 @@ namespace Azure.ResourceManager.Logic.Models
         {
             outputs ??= new Dictionary<string, LogicWorkflowOutputParameterInfo>();
 
-            return new LogicWorkflowRunData(id, name, resourceType, systemData, waitEndOn, startOn, endOn, status, code, error, correlationId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, workflow, trigger, outputs, response);
+            return new LogicWorkflowRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                waitEndOn,
+                startOn,
+                endOn,
+                status,
+                code,
+                error,
+                correlationId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                workflow,
+                trigger,
+                outputs,
+                response,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowRunTrigger"/>. </summary>
@@ -259,7 +371,22 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowRunTrigger"/> instance for mocking. </returns>
         public static LogicWorkflowRunTrigger LogicWorkflowRunTrigger(string name = null, BinaryData inputs = null, LogicContentLink inputsLink = null, BinaryData outputs = null, LogicContentLink outputsLink = null, DateTimeOffset? scheduledOn = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, Guid? trackingId = null, string correlationClientTrackingId = null, string code = null, LogicWorkflowStatus? status = null, BinaryData error = null, BinaryData trackedProperties = null)
         {
-            return new LogicWorkflowRunTrigger(name, inputs, inputsLink, outputs, outputsLink, scheduledOn, startOn, endOn, trackingId, correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId) : null, code, status, error, trackedProperties);
+            return new LogicWorkflowRunTrigger(
+                name,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                scheduledOn,
+                startOn,
+                endOn,
+                trackingId,
+                correlationClientTrackingId != null ? new Correlation(correlationClientTrackingId, serializedAdditionalRawData: null) : null,
+                code,
+                status,
+                error,
+                trackedProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWorkflowOutputParameterInfo"/>. </summary>
@@ -271,7 +398,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicWorkflowOutputParameterInfo"/> instance for mocking. </returns>
         public static LogicWorkflowOutputParameterInfo LogicWorkflowOutputParameterInfo(LogicWorkflowParameterType? parameterType = null, BinaryData value = null, BinaryData metadata = null, string description = null, BinaryData error = null)
         {
-            return new LogicWorkflowOutputParameterInfo(parameterType, value, metadata, description, error);
+            return new LogicWorkflowOutputParameterInfo(
+                parameterType,
+                value,
+                metadata,
+                description,
+                serializedAdditionalRawData: null,
+                error);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunActionData"/>. </summary>
@@ -295,7 +428,23 @@ namespace Azure.ResourceManager.Logic.Models
         {
             retryHistory ??= new List<LogicWorkRetryHistory>();
 
-            return new LogicWorkflowRunActionData(id, name, resourceType, systemData, startOn, endOn, status, code, error, trackingId, correlation, inputsLink, outputsLink, trackedProperties, retryHistory?.ToList());
+            return new LogicWorkflowRunActionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startOn,
+                endOn,
+                status,
+                code,
+                error,
+                trackingId,
+                correlation,
+                inputsLink,
+                outputsLink,
+                trackedProperties,
+                retryHistory?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicExpressionRoot"/>. </summary>
@@ -309,7 +458,13 @@ namespace Azure.ResourceManager.Logic.Models
         {
             subexpressions ??= new List<LogicExpression>();
 
-            return new LogicExpressionRoot(text, value, subexpressions?.ToList(), error, path);
+            return new LogicExpressionRoot(
+                text,
+                value,
+                subexpressions?.ToList(),
+                error,
+                serializedAdditionalRawData: null,
+                path);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicExpression"/>. </summary>
@@ -322,38 +477,27 @@ namespace Azure.ResourceManager.Logic.Models
         {
             subexpressions ??= new List<LogicExpression>();
 
-            return new LogicExpression(text, value, subexpressions?.ToList(), error);
+            return new LogicExpression(text, value, subexpressions?.ToList(), error, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicExpressionErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogicExpressionErrorInfo"/> instance for mocking. </returns>
         public static LogicExpressionErrorInfo LogicExpressionErrorInfo(string code = null, string message = null, IEnumerable<LogicExpressionErrorInfo> details = null)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
             details ??= new List<LogicExpressionErrorInfo>();
 
-            return new LogicExpressionErrorInfo(code, message, details?.ToList());
+            return new LogicExpressionErrorInfo(code, serializedAdditionalRawData: null, message, details?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicErrorInfo"/>. </summary>
         /// <param name="code"> The error code. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/> is null. </exception>
         /// <returns> A new <see cref="Models.LogicErrorInfo"/> instance for mocking. </returns>
         public static LogicErrorInfo LogicErrorInfo(string code = null)
         {
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
-
-            return new LogicErrorInfo(code);
+            return new LogicErrorInfo(code, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRunActionRepetitionDefinitionData"/>. </summary>
@@ -385,7 +529,29 @@ namespace Azure.ResourceManager.Logic.Models
             retryHistory ??= new List<LogicWorkRetryHistory>();
             repetitionIndexes ??= new List<LogicWorkflowRepetitionIndex>();
 
-            return new LogicWorkflowRunActionRepetitionDefinitionData(id, name, resourceType, systemData, tags, location, startOn, endOn, correlation, status, code, error, trackingId, inputs, inputsLink, outputs, outputsLink, trackedProperties, retryHistory?.ToList(), iterationCount, repetitionIndexes?.ToList());
+            return new LogicWorkflowRunActionRepetitionDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                startOn,
+                endOn,
+                correlation,
+                status,
+                code,
+                error,
+                trackingId,
+                inputs,
+                inputsLink,
+                outputs,
+                outputsLink,
+                trackedProperties,
+                retryHistory?.ToList(),
+                iterationCount,
+                repetitionIndexes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.LogicWorkflowRequestHistoryData"/>. </summary>
@@ -401,7 +567,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LogicWorkflowRequestHistoryData(id, name, resourceType, systemData, tags, location, properties);
+            return new LogicWorkflowRequestHistoryData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountData"/>. </summary>
@@ -419,7 +593,17 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountData(id, name, resourceType, systemData, tags, location, skuName.HasValue ? new IntegrationAccountSku(skuName.Value) : null, integrationServiceEnvironment, state);
+            return new IntegrationAccountData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName.HasValue ? new IntegrationAccountSku(skuName.Value, serializedAdditionalRawData: null) : null,
+                integrationServiceEnvironment,
+                state,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountAssemblyDefinitionData"/>. </summary>
@@ -435,7 +619,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountAssemblyDefinitionData(id, name, resourceType, systemData, tags, location, properties);
+            return new IntegrationAccountAssemblyDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountBatchConfigurationData"/>. </summary>
@@ -451,7 +643,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountBatchConfigurationData(id, name, resourceType, systemData, tags, location, properties);
+            return new IntegrationAccountBatchConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ListOperationCallbackUri"/>. </summary>
@@ -459,7 +659,16 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.ListOperationCallbackUri"/> instance for mocking. </returns>
         public static ListOperationCallbackUri ListOperationCallbackUri(Uri uri = null)
         {
-            return new ListOperationCallbackUri(uri);
+            return new ListOperationCallbackUri(uri, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountListKeyVaultKeyContent"/>. </summary>
+        /// <param name="keyVault"> The key vault reference. </param>
+        /// <param name="skipToken"> The skip token. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountListKeyVaultKeyContent"/> instance for mocking. </returns>
+        public static IntegrationAccountListKeyVaultKeyContent IntegrationAccountListKeyVaultKeyContent(IntegrationAccountKeyVaultNameReference keyVault = null, string skipToken = null)
+        {
+            return new IntegrationAccountListKeyVaultKeyContent(keyVault, skipToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultNameReference"/>. </summary>
@@ -469,7 +678,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationAccountKeyVaultNameReference"/> instance for mocking. </returns>
         public static IntegrationAccountKeyVaultNameReference IntegrationAccountKeyVaultNameReference(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null)
         {
-            return new IntegrationAccountKeyVaultNameReference(id, name, resourceType);
+            return new IntegrationAccountKeyVaultNameReference(id, name, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultKey"/>. </summary>
@@ -480,7 +689,37 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationAccountKeyVaultKey"/> instance for mocking. </returns>
         public static IntegrationAccountKeyVaultKey IntegrationAccountKeyVaultKey(Uri keyId = null, bool? isEnabled = null, DateTimeOffset? createdOn = null, DateTimeOffset? updatedOn = null)
         {
-            return new IntegrationAccountKeyVaultKey(keyId, isEnabled, createdOn, updatedOn);
+            return new IntegrationAccountKeyVaultKey(keyId, isEnabled, createdOn, updatedOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountTrackingEventsContent"/>. </summary>
+        /// <param name="sourceType"> The source type. </param>
+        /// <param name="trackEventsOptions"> The track events options. </param>
+        /// <param name="events"> The events. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountTrackingEventsContent"/> instance for mocking. </returns>
+        public static IntegrationAccountTrackingEventsContent IntegrationAccountTrackingEventsContent(string sourceType = null, IntegrationAccountTrackEventOperationOption? trackEventsOptions = null, IEnumerable<IntegrationAccountTrackingEvent> events = null)
+        {
+            events ??= new List<IntegrationAccountTrackingEvent>();
+
+            return new IntegrationAccountTrackingEventsContent(sourceType, trackEventsOptions, events?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountTrackingEvent"/>. </summary>
+        /// <param name="eventLevel"> The event level. </param>
+        /// <param name="eventOn"> The event time. </param>
+        /// <param name="recordType"> The record type. </param>
+        /// <param name="record"> The record. </param>
+        /// <param name="error"> The error. </param>
+        /// <returns> A new <see cref="Models.IntegrationAccountTrackingEvent"/> instance for mocking. </returns>
+        public static IntegrationAccountTrackingEvent IntegrationAccountTrackingEvent(IntegrationAccountEventLevel eventLevel = default, DateTimeOffset eventOn = default, IntegrationAccountTrackingRecordType recordType = default, BinaryData record = null, IntegrationAccountTrackingEventErrorInfo error = null)
+        {
+            return new IntegrationAccountTrackingEvent(
+                eventLevel,
+                eventOn,
+                recordType,
+                record,
+                error,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountSchemaData"/>. </summary>
@@ -505,7 +744,24 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountSchemaData(id, name, resourceType, systemData, tags, location, schemaType, targetNamespace, documentName, fileName, createdOn, changedOn, metadata, content, contentType, contentLink);
+            return new IntegrationAccountSchemaData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                schemaType,
+                targetNamespace,
+                documentName,
+                fileName,
+                createdOn,
+                changedOn,
+                metadata,
+                content,
+                contentType,
+                contentLink,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountMapData"/>. </summary>
@@ -528,7 +784,22 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountMapData(id, name, resourceType, systemData, tags, location, mapType, parametersSchemaRef != null ? new IntegrationAccountMapPropertiesParametersSchema(parametersSchemaRef) : null, createdOn, changedOn, content, contentType, contentLink, metadata);
+            return new IntegrationAccountMapData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                mapType,
+                parametersSchemaRef != null ? new IntegrationAccountMapPropertiesParametersSchema(parametersSchemaRef, serializedAdditionalRawData: null) : null,
+                createdOn,
+                changedOn,
+                content,
+                contentType,
+                contentLink,
+                metadata,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountPartnerData"/>. </summary>
@@ -549,7 +820,19 @@ namespace Azure.ResourceManager.Logic.Models
             tags ??= new Dictionary<string, string>();
             b2bBusinessIdentities ??= new List<IntegrationAccountBusinessIdentity>();
 
-            return new IntegrationAccountPartnerData(id, name, resourceType, systemData, tags, location, partnerType, createdOn, changedOn, metadata, b2bBusinessIdentities != null ? new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList())) : null);
+            return new IntegrationAccountPartnerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                partnerType,
+                createdOn,
+                changedOn,
+                metadata,
+                b2bBusinessIdentities != null ? new IntegrationAccountPartnerContent(new B2BPartnerContent(b2bBusinessIdentities?.ToList(), serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountAgreementData"/>. </summary>
@@ -573,7 +856,23 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountAgreementData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, metadata, agreementType, hostPartner, guestPartner, hostIdentity, guestIdentity, content);
+            return new IntegrationAccountAgreementData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                changedOn,
+                metadata,
+                agreementType,
+                hostPartner,
+                guestPartner,
+                hostIdentity,
+                guestIdentity,
+                content,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountCertificateData"/>. </summary>
@@ -593,7 +892,19 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountCertificateData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, metadata, key, publicCertificate);
+            return new IntegrationAccountCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                changedOn,
+                metadata,
+                key,
+                publicCertificate,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationAccountKeyVaultKeyReference"/>. </summary>
@@ -605,7 +916,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationAccountKeyVaultKeyReference"/> instance for mocking. </returns>
         public static IntegrationAccountKeyVaultKeyReference IntegrationAccountKeyVaultKeyReference(string keyName = null, string keyVersion = null, ResourceIdentifier resourceId = null, string resourceName = null, ResourceType? resourceType = null)
         {
-            return new IntegrationAccountKeyVaultKeyReference(keyName, keyVersion, resourceId, resourceName, resourceType);
+            return new IntegrationAccountKeyVaultKeyReference(
+                keyName,
+                keyVersion,
+                resourceId,
+                resourceName,
+                resourceType,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationAccountSessionData"/>. </summary>
@@ -623,7 +940,17 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationAccountSessionData(id, name, resourceType, systemData, tags, location, createdOn, changedOn, content);
+            return new IntegrationAccountSessionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                createdOn,
+                changedOn,
+                content,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationServiceEnvironmentData"/>. </summary>
@@ -641,7 +968,17 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new IntegrationServiceEnvironmentData(id, name, resourceType, systemData, tags, location, properties, sku, identity);
+            return new IntegrationServiceEnvironmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                sku,
+                identity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuDefinition"/>. </summary>
@@ -651,7 +988,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentSkuDefinition"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentSkuDefinition IntegrationServiceEnvironmentSkuDefinition(ResourceType? resourceType = null, IntegrationServiceEnvironmentSkuDefinitionSku sku = null, IntegrationServiceEnvironmentSkuCapacity capacity = null)
         {
-            return new IntegrationServiceEnvironmentSkuDefinition(resourceType, sku, capacity);
+            return new IntegrationServiceEnvironmentSkuDefinition(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuDefinitionSku"/>. </summary>
@@ -660,7 +997,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentSkuDefinitionSku"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentSkuDefinitionSku IntegrationServiceEnvironmentSkuDefinitionSku(IntegrationServiceEnvironmentSkuName? name = null, string tier = null)
         {
-            return new IntegrationServiceEnvironmentSkuDefinitionSku(name, tier);
+            return new IntegrationServiceEnvironmentSkuDefinitionSku(name, tier, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSkuCapacity"/>. </summary>
@@ -671,7 +1008,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentSkuCapacity"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentSkuCapacity IntegrationServiceEnvironmentSkuCapacity(int? minimum = null, int? maximum = null, int? @default = null, IntegrationServiceEnvironmentSkuScaleType? scaleType = null)
         {
-            return new IntegrationServiceEnvironmentSkuCapacity(minimum, maximum, @default, scaleType);
+            return new IntegrationServiceEnvironmentSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentSubnetNetworkHealth"/>. </summary>
@@ -683,7 +1020,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             outboundNetworkDependencies ??= new List<IntegrationServiceEnvironmentNetworkDependency>();
 
-            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies?.ToList(), outboundNetworkHealth, networkDependencyHealthState);
+            return new IntegrationServiceEnvironmentSubnetNetworkHealth(outboundNetworkDependencies?.ToList(), outboundNetworkHealth, networkDependencyHealthState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkDependency"/>. </summary>
@@ -695,7 +1032,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             endpoints ??= new List<IntegrationServiceEnvironmentNetworkEndpoint>();
 
-            return new IntegrationServiceEnvironmentNetworkDependency(category, displayName, endpoints?.ToList());
+            return new IntegrationServiceEnvironmentNetworkDependency(category, displayName, endpoints?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkEndpoint"/>. </summary>
@@ -707,7 +1044,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             ports ??= new List<string>();
 
-            return new IntegrationServiceEnvironmentNetworkEndpoint(accessibility, domainName, ports?.ToList());
+            return new IntegrationServiceEnvironmentNetworkEndpoint(accessibility, domainName, ports?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceEnvironmentNetworkDependencyHealth"/>. </summary>
@@ -716,7 +1053,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.IntegrationServiceEnvironmentNetworkDependencyHealth"/> instance for mocking. </returns>
         public static IntegrationServiceEnvironmentNetworkDependencyHealth IntegrationServiceEnvironmentNetworkDependencyHealth(IntegrationServiceErrorInfo error = null, IntegrationServiceEnvironmentNetworkDependencyHealthState? state = null)
         {
-            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error, state);
+            return new IntegrationServiceEnvironmentNetworkDependencyHealth(error, state, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.IntegrationServiceErrorInfo"/>. </summary>
@@ -729,7 +1066,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             details ??= new List<IntegrationServiceErrorInfo>();
 
-            return new IntegrationServiceErrorInfo(code, message, details?.ToList(), innerError);
+            return new IntegrationServiceErrorInfo(code, message, details?.ToList(), innerError, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Logic.IntegrationServiceEnvironmentManagedApiData"/>. </summary>
@@ -761,7 +1098,28 @@ namespace Azure.ResourceManager.Logic.Models
             runtimeUris ??= new List<Uri>();
             capabilities ??= new List<string>();
 
-            return new IntegrationServiceEnvironmentManagedApiData(id, name, resourceType, systemData, tags, location, namePropertiesName, connectionParameters, metadata, runtimeUris?.ToList(), generalInformation, capabilities?.ToList(), serviceUri != null ? new LogicApiResourceBackendService(serviceUri) : null, policies, apiDefinitionUri, apiDefinitions, integrationServiceEnvironment, provisioningState, category, deploymentParametersContentLinkDefinition != null ? new IntegrationServiceEnvironmentManagedApiDeploymentParameters(deploymentParametersContentLinkDefinition) : null);
+            return new IntegrationServiceEnvironmentManagedApiData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                namePropertiesName,
+                connectionParameters,
+                metadata,
+                runtimeUris?.ToList(),
+                generalInformation,
+                capabilities?.ToList(),
+                serviceUri != null ? new LogicApiResourceBackendService(serviceUri, serializedAdditionalRawData: null) : null,
+                policies,
+                apiDefinitionUri,
+                apiDefinitions,
+                integrationServiceEnvironment,
+                provisioningState,
+                category,
+                deploymentParametersContentLinkDefinition != null ? new IntegrationServiceEnvironmentManagedApiDeploymentParameters(deploymentParametersContentLinkDefinition, serializedAdditionalRawData: null) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceMetadata"/>. </summary>
@@ -780,7 +1138,18 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LogicApiResourceMetadata(source, brandColor, hideKey, tags, apiType, wsdlService, wsdlImportMethod, connectionType, provisioningState, deploymentParameters);
+            return new LogicApiResourceMetadata(
+                source,
+                brandColor,
+                hideKey,
+                tags,
+                apiType,
+                wsdlService,
+                wsdlImportMethod,
+                connectionType,
+                provisioningState,
+                deploymentParameters,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicWsdlService"/>. </summary>
@@ -791,7 +1160,7 @@ namespace Azure.ResourceManager.Logic.Models
         {
             endpointQualifiedNames ??= new List<string>();
 
-            return new LogicWsdlService(qualifiedName, endpointQualifiedNames?.ToList());
+            return new LogicWsdlService(qualifiedName, endpointQualifiedNames?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiDeploymentParameterMetadataSet"/>. </summary>
@@ -800,7 +1169,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiDeploymentParameterMetadataSet"/> instance for mocking. </returns>
         public static LogicApiDeploymentParameterMetadataSet LogicApiDeploymentParameterMetadataSet(LogicApiDeploymentParameterMetadata packageContentLink = null, LogicApiDeploymentParameterMetadata redisCacheConnectionString = null)
         {
-            return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString);
+            return new LogicApiDeploymentParameterMetadataSet(packageContentLink, redisCacheConnectionString, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiDeploymentParameterMetadata"/>. </summary>
@@ -812,7 +1181,13 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiDeploymentParameterMetadata"/> instance for mocking. </returns>
         public static LogicApiDeploymentParameterMetadata LogicApiDeploymentParameterMetadata(string apiDeploymentParameterMetadataType = null, bool? isRequired = null, string displayName = null, string description = null, LogicApiDeploymentParameterVisibility? visibility = null)
         {
-            return new LogicApiDeploymentParameterMetadata(apiDeploymentParameterMetadataType, isRequired, displayName, description, visibility);
+            return new LogicApiDeploymentParameterMetadata(
+                apiDeploymentParameterMetadataType,
+                isRequired,
+                displayName,
+                description,
+                visibility,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceGeneralInformation"/>. </summary>
@@ -825,7 +1200,14 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiResourceGeneralInformation"/> instance for mocking. </returns>
         public static LogicApiResourceGeneralInformation LogicApiResourceGeneralInformation(Uri iconUri = null, string displayName = null, string description = null, Uri termsOfUseUri = null, string releaseTag = null, LogicApiTier? tier = null)
         {
-            return new LogicApiResourceGeneralInformation(iconUri, displayName, description, termsOfUseUri, releaseTag, tier);
+            return new LogicApiResourceGeneralInformation(
+                iconUri,
+                displayName,
+                description,
+                termsOfUseUri,
+                releaseTag,
+                tier,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourcePolicies"/>. </summary>
@@ -834,7 +1216,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiResourcePolicies"/> instance for mocking. </returns>
         public static LogicApiResourcePolicies LogicApiResourcePolicies(BinaryData content = null, string contentLink = null)
         {
-            return new LogicApiResourcePolicies(content, contentLink);
+            return new LogicApiResourcePolicies(content, contentLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiResourceDefinitions"/>. </summary>
@@ -843,7 +1225,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiResourceDefinitions"/> instance for mocking. </returns>
         public static LogicApiResourceDefinitions LogicApiResourceDefinitions(Uri originalSwaggerUri = null, Uri modifiedSwaggerUri = null)
         {
-            return new LogicApiResourceDefinitions(originalSwaggerUri, modifiedSwaggerUri);
+            return new LogicApiResourceDefinitions(originalSwaggerUri, modifiedSwaggerUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiOperationInfo"/>. </summary>
@@ -859,7 +1241,15 @@ namespace Azure.ResourceManager.Logic.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new LogicApiOperationInfo(id, name, resourceType, systemData, tags, location, properties);
+            return new LogicApiOperationInfo(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LogicApiReference"/>. </summary>
@@ -876,7 +1266,18 @@ namespace Azure.ResourceManager.Logic.Models
         /// <returns> A new <see cref="Models.LogicApiReference"/> instance for mocking. </returns>
         public static LogicApiReference LogicApiReference(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, string displayName = null, string description = null, Uri iconUri = null, BinaryData swagger = null, string brandColor = null, LogicApiTier? category = null, LogicResourceReference integrationServiceEnvironment = null)
         {
-            return new LogicApiReference(id, name, resourceType, displayName, description, iconUri, swagger, brandColor, category, integrationServiceEnvironment);
+            return new LogicApiReference(
+                id,
+                name,
+                resourceType,
+                serializedAdditionalRawData: null,
+                displayName,
+                description,
+                iconUri,
+                swagger,
+                brandColor,
+                category,
+                integrationServiceEnvironment);
         }
     }
 }

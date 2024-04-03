@@ -5,21 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class AtaExternalSecuritySolution : IUtf8JsonSerializable
+    public partial class AtaExternalSecuritySolution : IUtf8JsonSerializable, IJsonModel<AtaExternalSecuritySolution>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AtaExternalSecuritySolution>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AtaExternalSecuritySolution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AtaSolutionProperties>(Properties, options);
             }
             if (Kind != null)
             {
@@ -30,22 +41,78 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 writer.WriteNull("kind");
             }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AtaExternalSecuritySolution DeserializeAtaExternalSecuritySolution(JsonElement element)
+        AtaExternalSecuritySolution IJsonModel<AtaExternalSecuritySolution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAtaExternalSecuritySolution(document.RootElement, options);
+        }
+
+        internal static AtaExternalSecuritySolution DeserializeAtaExternalSecuritySolution(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AtaSolutionProperties> properties = default;
+            AtaSolutionProperties properties = default;
             ExternalSecuritySolutionKind? kind = default;
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -54,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value);
+                    properties = AtaSolutionProperties.DeserializeAtaSolutionProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -100,8 +167,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AtaExternalSecuritySolution(id, name, type, systemData.Value, kind, Optional.ToNullable(location), properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AtaExternalSecuritySolution(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
+
+        BinaryData IPersistableModel<AtaExternalSecuritySolution>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AtaExternalSecuritySolution IPersistableModel<AtaExternalSecuritySolution>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AtaExternalSecuritySolution>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAtaExternalSecuritySolution(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AtaExternalSecuritySolution)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AtaExternalSecuritySolution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

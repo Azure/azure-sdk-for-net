@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Quota;
 using Azure.ResourceManager.Quota.Models;
 
 namespace Azure.ResourceManager.Quota.Mocking
@@ -54,6 +51,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <term>Operation Id</term>
         /// <description>QuotaOperation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -76,6 +77,10 @@ namespace Azure.ResourceManager.Quota.Mocking
         /// <term>Operation Id</term>
         /// <description>QuotaOperation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.Quota.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => QuotaOperationRestClient.CreateListRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => QuotaOperationRestClient.CreateListNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, QuotaOperationResult.DeserializeQuotaOperationResult, QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => QuotaOperationResult.DeserializeQuotaOperationResult(e), QuotaOperationClientDiagnostics, Pipeline, "MockableQuotaTenantResource.GetQuotaOperations", "value", "nextLink", cancellationToken);
         }
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class OracleConnectionInfo : IUtf8JsonSerializable
+    public partial class OracleConnectionInfo : IUtf8JsonSerializable, IJsonModel<OracleConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OracleConnectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OracleConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OracleConnectionInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
@@ -49,23 +60,54 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OracleConnectionInfo DeserializeOracleConnectionInfo(JsonElement element)
+        OracleConnectionInfo IJsonModel<OracleConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OracleConnectionInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOracleConnectionInfo(document.RootElement, options);
+        }
+
+        internal static OracleConnectionInfo DeserializeOracleConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string dataSource = default;
-            Optional<string> serverName = default;
-            Optional<string> serverVersion = default;
-            Optional<int> port = default;
-            Optional<AuthenticationType> authentication = default;
+            string serverName = default;
+            string serverVersion = default;
+            int? port = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataSource"u8))
@@ -116,8 +158,53 @@ namespace Azure.ResourceManager.DataMigration.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OracleConnectionInfo(type, userName.Value, password.Value, dataSource, serverName.Value, serverVersion.Value, Optional.ToNullable(port), Optional.ToNullable(authentication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OracleConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                dataSource,
+                serverName,
+                serverVersion,
+                port,
+                authentication);
         }
+
+        BinaryData IPersistableModel<OracleConnectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(OracleConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OracleConnectionInfo IPersistableModel<OracleConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OracleConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOracleConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OracleConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OracleConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,13 +14,41 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class RoleAssignmentArtifact : IUtf8JsonSerializable
+    public partial class RoleAssignmentArtifact : IUtf8JsonSerializable, IJsonModel<RoleAssignmentArtifact>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentArtifact>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleAssignmentArtifact>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
@@ -59,11 +88,40 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStringValue(ResourceGroup);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentArtifact DeserializeRoleAssignmentArtifact(JsonElement element)
+        RoleAssignmentArtifact IJsonModel<RoleAssignmentArtifact>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentArtifact(document.RootElement, options);
+        }
+
+        internal static RoleAssignmentArtifact DeserializeRoleAssignmentArtifact(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -72,13 +130,15 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            IList<string> dependsOn = default;
             string roleDefinitionId = default;
             BinaryData principalIds = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -161,8 +221,56 @@ namespace Azure.ResourceManager.Blueprint.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, displayName.Value, description.Value, Optional.ToList(dependsOn), roleDefinitionId, principalIds, resourceGroup.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoleAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                roleDefinitionId,
+                principalIds,
+                resourceGroup);
         }
+
+        BinaryData IPersistableModel<RoleAssignmentArtifact>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoleAssignmentArtifact IPersistableModel<RoleAssignmentArtifact>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleAssignmentArtifact(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleAssignmentArtifact>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

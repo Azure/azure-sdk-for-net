@@ -5,19 +5,28 @@
 
 #nullable disable
 
-using System.Collections.Generic;
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningDatastoreProperties : IUtf8JsonSerializable
+    public partial class MachineLearningDatastoreProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningDatastoreProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningDatastoreProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningDatastoreProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            writer.WriteObjectValue<MachineLearningDatastoreCredentials>(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -25,12 +34,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
                 }
                 else
                 {
                     writer.WriteNull("intellectualProperty");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -80,11 +94,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningDatastoreProperties DeserializeMachineLearningDatastoreProperties(JsonElement element)
+        MachineLearningDatastoreProperties IJsonModel<MachineLearningDatastoreProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningDatastoreProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningDatastoreProperties DeserializeMachineLearningDatastoreProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -93,94 +136,46 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element);
-                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element);
-                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element);
-                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element);
-                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element);
-                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element);
+                    case "AzureBlob": return MachineLearningAzureBlobDatastore.DeserializeMachineLearningAzureBlobDatastore(element, options);
+                    case "AzureDataLakeGen1": return MachineLearningAzureDataLakeGen1Datastore.DeserializeMachineLearningAzureDataLakeGen1Datastore(element, options);
+                    case "AzureDataLakeGen2": return MachineLearningAzureDataLakeGen2Datastore.DeserializeMachineLearningAzureDataLakeGen2Datastore(element, options);
+                    case "AzureFile": return MachineLearningAzureFileDatastore.DeserializeMachineLearningAzureFileDatastore(element, options);
+                    case "Hdfs": return HdfsDatastore.DeserializeHdfsDatastore(element, options);
+                    case "OneLake": return OneLakeDatastore.DeserializeOneLakeDatastore(element, options);
                 }
             }
-            MachineLearningDatastoreCredentials credentials = default;
-            DatastoreType datastoreType = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("credentials"u8))
-                {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("datastoreType"u8))
-                {
-                    datastoreType = new DatastoreType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("intellectualProperty"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        intellectualProperty = null;
-                        continue;
-                    }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("isDefault"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    isDefault = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("description"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        description = null;
-                        continue;
-                    }
-                    description = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        properties = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    properties = dictionary;
-                    continue;
-                }
-                if (property.NameEquals("tags"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        tags = null;
-                        continue;
-                    }
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    tags = dictionary;
-                    continue;
-                }
-            }
-            return new MachineLearningDatastoreProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault));
+            return UnknownDatastore.DeserializeUnknownDatastore(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningDatastoreProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningDatastoreProperties IPersistableModel<MachineLearningDatastoreProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningDatastoreProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningDatastoreProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningDatastoreProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningDatastoreProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

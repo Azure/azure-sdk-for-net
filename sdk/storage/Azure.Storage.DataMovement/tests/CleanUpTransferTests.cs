@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Moq;
@@ -27,11 +28,11 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(b => b.GetDestinationCheckpointData())
                 .Returns(new MockResourceCheckpointData());
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new StorageResourceProperties(
-                    lastModified: DateTimeOffset.UtcNow.AddDays(-1),
-                    createdOn: DateTimeOffset.UtcNow.AddDays(-2),
-                    contentLength: length,
-                    lastAccessed: DateTimeOffset.UtcNow.AddHours(-1))));
+                .Returns(Task.FromResult(new StorageResourceItemProperties(
+                    resourceLength: length,
+                    eTag: default,
+                    lastModifiedTime: DateTimeOffset.UtcNow,
+                    properties: default)));
             mock.Setup(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<HttpAuthorization>(default));
             return mock;
@@ -52,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
                 .Returns(new MockResourceCheckpointData());
             mock.Setup(b => b.GetDestinationCheckpointData())
                 .Returns(new MockResourceCheckpointData());
-            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<CancellationToken>()))
+            mock.Setup(b => b.CompleteTransferAsync(It.IsAny<bool>(), It.IsAny<StorageResourceCompleteTransferOptions>(), It.IsAny<CancellationToken>()))
                 .Returns(Task.CompletedTask);
             // Throw a failure when doing a CopyFromUri call to trigger a failed state
             mock.Setup(b => b.CopyFromUriAsync(It.IsAny<StorageResourceItem>(), It.IsAny<bool>(), It.IsAny<long>(), It.IsAny<StorageResourceCopyFromUriOptions>(), It.IsAny<CancellationToken>()))
@@ -119,7 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),
@@ -158,7 +159,7 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceMock.Object,
                 false,
                 sourceLength,
-                default,
+                It.IsAny<StorageResourceCopyFromUriOptions>(),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             destMock.Verify(b => b.DeleteIfExistsAsync(It.IsAny<CancellationToken>()),

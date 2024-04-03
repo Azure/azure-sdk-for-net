@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="topicTypeName"> Name of the topic type. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopicTypes_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <term>Operation Id</term>
         /// <description>VerifiedPartners_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VerifiedPartnerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="verifiedPartnerName"> Name of the verified partner. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.EventGrid.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VerifiedPartners_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VerifiedPartnerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

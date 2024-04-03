@@ -29,6 +29,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="createdOn"> The time the bookmark was created. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
-        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsHuntingBookmark(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, DateTimeOffset? createdOn, SecurityInsightsUserInfo createdBy, string displayName, DateTimeOffset? eventOn, IList<string> labels, string notes, string query, string queryResult, DateTimeOffset? updatedOn, SecurityInsightsUserInfo updatedBy, SecurityInsightsBookmarkIncidentInfo incidentInfo) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

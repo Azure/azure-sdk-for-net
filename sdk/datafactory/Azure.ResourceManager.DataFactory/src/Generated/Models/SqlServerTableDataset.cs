@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -44,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             Table = table;
             DatasetType = datasetType ?? "SqlServerTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SqlServerTableDataset"/> for deserialization. </summary>
+        internal SqlServerTableDataset()
+        {
         }
 
         /// <summary>

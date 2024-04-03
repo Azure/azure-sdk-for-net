@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -35,6 +35,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="kind"> Kind of service virtual hub. This is metadata used for the Azure portal experience for Route Server. </param>
         /// <param name="virtualWan"> The VirtualWAN to which the VirtualHub belongs. </param>
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="preferredRoutingGateway"> The preferred gateway to route on-prem traffic. </param>
         /// <param name="hubRoutingPreference"> The hubRoutingPreference of this VirtualHub. </param>
         /// <param name="virtualRouterAutoScaleConfiguration"> The VirtualHub Router autoscale configuration. </param>
-        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, string kind, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2sVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration) : base(id, name, resourceType, location, tags)
+        internal VirtualHubData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string kind, WritableSubResource virtualWan, WritableSubResource vpnGateway, WritableSubResource p2sVpnGateway, WritableSubResource expressRouteGateway, WritableSubResource azureFirewall, WritableSubResource securityPartnerProvider, string addressPrefix, VirtualHubRouteTable routeTable, NetworkProvisioningState? provisioningState, string securityProviderName, IList<VirtualHubRouteTableV2Data> virtualHubRouteTableV2S, string sku, RoutingState? routingState, IReadOnlyList<WritableSubResource> bgpConnections, IReadOnlyList<WritableSubResource> ipConfigurations, IReadOnlyList<WritableSubResource> routeMaps, long? virtualRouterAsn, IList<string> virtualRouterIPs, bool? allowBranchToBranchTraffic, PreferredRoutingGateway? preferredRoutingGateway, HubRoutingPreference? hubRoutingPreference, VirtualRouterAutoScaleConfiguration virtualRouterAutoScaleConfiguration) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             Kind = kind;

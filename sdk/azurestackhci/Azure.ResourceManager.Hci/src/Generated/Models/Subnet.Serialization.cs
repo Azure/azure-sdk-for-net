@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class Subnet : IUtf8JsonSerializable
+    public partial class Subnet : IUtf8JsonSerializable, IJsonModel<Subnet>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Subnet>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Subnet>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Subnet)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -57,7 +67,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(RouteTable))
             {
                 writer.WritePropertyName("routeTable"u8);
-                writer.WriteObjectValue(RouteTable);
+                writer.WriteObjectValue<RouteTable>(RouteTable, options);
             }
             if (Optional.IsCollectionDefined(IPPools))
             {
@@ -65,7 +75,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in IPPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPPool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,23 +85,54 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteNumberValue(Vlan.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Subnet DeserializeSubnet(JsonElement element)
+        Subnet IJsonModel<Subnet>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Subnet)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubnet(document.RootElement, options);
+        }
+
+        internal static Subnet DeserializeSubnet(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> addressPrefix = default;
-            Optional<IList<string>> addressPrefixes = default;
-            Optional<IPAllocationMethodEnum> ipAllocationMethod = default;
-            Optional<IList<WritableSubResource>> ipConfigurationReferences = default;
-            Optional<RouteTable> routeTable = default;
-            Optional<IList<IPPool>> ipPools = default;
-            Optional<int> vlan = default;
+            string name = default;
+            string addressPrefix = default;
+            IList<string> addressPrefixes = default;
+            IPAllocationMethodEnum? ipAllocationMethod = default;
+            IList<WritableSubResource> ipConfigurationReferences = default;
+            RouteTable routeTable = default;
+            IList<IPPool> ipPools = default;
+            int? vlan = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -156,7 +197,7 @@ namespace Azure.ResourceManager.Hci.Models
                             {
                                 continue;
                             }
-                            routeTable = RouteTable.DeserializeRouteTable(property0.Value);
+                            routeTable = RouteTable.DeserializeRouteTable(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ipPools"u8))
@@ -168,7 +209,7 @@ namespace Azure.ResourceManager.Hci.Models
                             List<IPPool> array = new List<IPPool>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(IPPool.DeserializeIPPool(item));
+                                array.Add(IPPool.DeserializeIPPool(item, options));
                             }
                             ipPools = array;
                             continue;
@@ -185,8 +226,53 @@ namespace Azure.ResourceManager.Hci.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Subnet(name.Value, addressPrefix.Value, Optional.ToList(addressPrefixes), Optional.ToNullable(ipAllocationMethod), Optional.ToList(ipConfigurationReferences), routeTable.Value, Optional.ToList(ipPools), Optional.ToNullable(vlan));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Subnet(
+                name,
+                addressPrefix,
+                addressPrefixes ?? new ChangeTrackingList<string>(),
+                ipAllocationMethod,
+                ipConfigurationReferences ?? new ChangeTrackingList<WritableSubResource>(),
+                routeTable,
+                ipPools ?? new ChangeTrackingList<IPPool>(),
+                vlan,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Subnet>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Subnet)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Subnet IPersistableModel<Subnet>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Subnet>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubnet(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Subnet)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Subnet>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

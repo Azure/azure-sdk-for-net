@@ -5,20 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class RefundPolicyResult
+    internal partial class RefundPolicyResult : IUtf8JsonSerializable, IJsonModel<RefundPolicyResult>
     {
-        internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RefundPolicyResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RefundPolicyResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RefundPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RefundPolicyResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<ReservationRefundPolicyResultProperty>(Properties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RefundPolicyResult IJsonModel<RefundPolicyResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RefundPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RefundPolicyResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRefundPolicyResult(document.RootElement, options);
+        }
+
+        internal static RefundPolicyResult DeserializeRefundPolicyResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ReservationRefundPolicyResultProperty> properties = default;
+            ReservationRefundPolicyResultProperty properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -27,11 +80,47 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ReservationRefundPolicyResultProperty.DeserializeReservationRefundPolicyResultProperty(property.Value);
+                    properties = ReservationRefundPolicyResultProperty.DeserializeReservationRefundPolicyResultProperty(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RefundPolicyResult(properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RefundPolicyResult(properties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RefundPolicyResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RefundPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RefundPolicyResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RefundPolicyResult IPersistableModel<RefundPolicyResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RefundPolicyResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRefundPolicyResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RefundPolicyResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RefundPolicyResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

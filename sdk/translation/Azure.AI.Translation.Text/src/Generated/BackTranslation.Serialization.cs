@@ -5,15 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class BackTranslation
+    public partial class BackTranslation : IUtf8JsonSerializable, IJsonModel<BackTranslation>
     {
-        internal static BackTranslation DeserializeBackTranslation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackTranslation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackTranslation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackTranslation)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("normalizedText"u8);
+            writer.WriteStringValue(NormalizedText);
+            writer.WritePropertyName("displayText"u8);
+            writer.WriteStringValue(DisplayText);
+            writer.WritePropertyName("numExamples"u8);
+            writer.WriteNumberValue(NumExamples);
+            writer.WritePropertyName("frequencyCount"u8);
+            writer.WriteNumberValue(FrequencyCount);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        BackTranslation IJsonModel<BackTranslation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackTranslation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackTranslation(document.RootElement, options);
+        }
+
+        internal static BackTranslation DeserializeBackTranslation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -22,6 +76,8 @@ namespace Azure.AI.Translation.Text
             string displayText = default;
             int numExamples = default;
             int frequencyCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("normalizedText"u8))
@@ -44,9 +100,45 @@ namespace Azure.AI.Translation.Text
                     frequencyCount = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackTranslation(normalizedText, displayText, numExamples, frequencyCount);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackTranslation(normalizedText, displayText, numExamples, frequencyCount, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackTranslation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackTranslation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackTranslation IPersistableModel<BackTranslation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackTranslation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackTranslation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackTranslation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackTranslation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -54,6 +146,14 @@ namespace Azure.AI.Translation.Text
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeBackTranslation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BackTranslation>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

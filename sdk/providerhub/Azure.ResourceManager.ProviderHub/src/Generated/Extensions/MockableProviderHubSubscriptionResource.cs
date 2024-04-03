@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ProviderHub;
 
 namespace Azure.ResourceManager.ProviderHub.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderRegistrationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="providerNamespace"> The name of the resource provider hosted within ProviderHub. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ProviderHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProviderRegistrations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-11-20</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ProviderRegistrationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

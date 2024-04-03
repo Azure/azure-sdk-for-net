@@ -6,20 +6,55 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubCertificateProperties : IUtf8JsonSerializable
+    public partial class IotHubCertificateProperties : IUtf8JsonSerializable, IJsonModel<IotHubCertificateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubCertificateProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IotHubCertificateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            {
+                writer.WritePropertyName("expiry"u8);
+                writer.WriteStringValue(ExpireOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(ThumbprintString);
+            }
             if (Optional.IsDefined(IsVerified))
             {
                 writer.WritePropertyName("isVerified"u8);
                 writer.WriteBooleanValue(IsVerified.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("created"u8);
+                writer.WriteStringValue(CreatedOn.Value, "R");
+            }
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
+            {
+                writer.WritePropertyName("updated"u8);
+                writer.WriteStringValue(UpdatedOn.Value, "R");
             }
             if (Optional.IsDefined(Certificate))
             {
@@ -33,22 +68,53 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element)
+        IotHubCertificateProperties IJsonModel<IotHubCertificateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubCertificateProperties(document.RootElement, options);
+        }
+
+        internal static IotHubCertificateProperties DeserializeIotHubCertificateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> expiry = default;
-            Optional<string> thumbprint = default;
-            Optional<bool> isVerified = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<DateTimeOffset> updated = default;
-            Optional<BinaryData> certificate = default;
+            string subject = default;
+            DateTimeOffset? expiry = default;
+            string thumbprint = default;
+            bool? isVerified = default;
+            DateTimeOffset? created = default;
+            DateTimeOffset? updated = default;
+            BinaryData certificate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subject"u8))
@@ -106,8 +172,52 @@ namespace Azure.ResourceManager.IotHub.Models
                     certificate = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubCertificateProperties(subject.Value, Optional.ToNullable(expiry), thumbprint.Value, Optional.ToNullable(isVerified), Optional.ToNullable(created), Optional.ToNullable(updated), certificate.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IotHubCertificateProperties(
+                subject,
+                expiry,
+                thumbprint,
+                isVerified,
+                created,
+                updated,
+                certificate,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubCertificateProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IotHubCertificateProperties IPersistableModel<IotHubCertificateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubCertificateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubCertificateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubCertificateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class DeliveryConfiguration : IUtf8JsonSerializable
+    public partial class DeliveryConfiguration : IUtf8JsonSerializable, IJsonModel<DeliveryConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeliveryConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeliveryConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeliveryMode))
             {
@@ -23,25 +34,56 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(Queue))
             {
                 writer.WritePropertyName("queue"u8);
-                writer.WriteObjectValue(Queue);
+                writer.WriteObjectValue<QueueInfo>(Queue, options);
             }
             if (Optional.IsDefined(Push))
             {
                 writer.WritePropertyName("push"u8);
-                writer.WriteObjectValue(Push);
+                writer.WriteObjectValue<PushInfo>(Push, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DeliveryConfiguration DeserializeDeliveryConfiguration(JsonElement element)
+        DeliveryConfiguration IJsonModel<DeliveryConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeliveryConfiguration(document.RootElement, options);
+        }
+
+        internal static DeliveryConfiguration DeserializeDeliveryConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DeliveryMode> deliveryMode = default;
-            Optional<QueueInfo> queue = default;
-            Optional<PushInfo> push = default;
+            DeliveryMode? deliveryMode = default;
+            QueueInfo queue = default;
+            PushInfo push = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryMode"u8))
@@ -59,7 +101,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    queue = QueueInfo.DeserializeQueueInfo(property.Value);
+                    queue = QueueInfo.DeserializeQueueInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("push"u8))
@@ -68,11 +110,47 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    push = PushInfo.DeserializePushInfo(property.Value);
+                    push = PushInfo.DeserializePushInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DeliveryConfiguration(Optional.ToNullable(deliveryMode), queue.Value, push.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeliveryConfiguration(deliveryMode, queue, push, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DeliveryConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeliveryConfiguration IPersistableModel<DeliveryConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeliveryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeliveryConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeliveryConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeliveryConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

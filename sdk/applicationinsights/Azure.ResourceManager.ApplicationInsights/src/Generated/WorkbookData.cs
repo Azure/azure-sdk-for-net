@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// </summary>
     public partial class WorkbookData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WorkbookData"/>. </summary>
         /// <param name="location"> The location. </param>
         public WorkbookData(AzureLocation location) : base(location)
@@ -46,7 +77,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="identity"> Identity used for BYOS. </param>
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="etag"> Resource etag. </param>
-        internal WorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, string sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WorkbookData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string displayName, string serializedData, string version, DateTimeOffset? modifiedOn, string category, string userId, string sourceId, Uri storageUri, string description, string revision, ManagedServiceIdentity identity, WorkbookSharedTypeKind? kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             DisplayName = displayName;
             SerializedData = serializedData;
@@ -61,33 +93,52 @@ namespace Azure.ResourceManager.ApplicationInsights
             Identity = identity;
             Kind = kind;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="WorkbookData"/> for deserialization. </summary>
+        internal WorkbookData()
+        {
         }
 
         /// <summary> The user-defined name (display name) of the workbook. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
+        [WirePath("properties.serializedData")]
         public string SerializedData { get; set; }
         /// <summary> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
+        [WirePath("properties.timeModified")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Unique user id of the specific user that owns this workbook. </summary>
+        [WirePath("properties.userId")]
         public string UserId { get; }
         /// <summary> ResourceId for a source resource. </summary>
+        [WirePath("properties.sourceId")]
         public string SourceId { get; set; }
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
+        [WirePath("properties.storageUri")]
         public Uri StorageUri { get; set; }
         /// <summary> The description of the workbook. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The unique revision id for this workbook definition. </summary>
+        [WirePath("properties.revision")]
         public string Revision { get; }
         /// <summary> Identity used for BYOS. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The kind of workbook. Only valid value is shared. </summary>
+        [WirePath("kind")]
         public WorkbookSharedTypeKind? Kind { get; set; }
         /// <summary> Resource etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ImageGenerationOptions : IUtf8JsonSerializable
+    public partial class ImageGenerationOptions : IUtf8JsonSerializable, IJsonModel<ImageGenerationOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImageGenerationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ImageGenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageGenerationOptions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeploymentName))
             {
@@ -53,23 +63,54 @@ namespace Azure.AI.OpenAI
                 writer.WritePropertyName("user"u8);
                 writer.WriteStringValue(User);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ImageGenerationOptions DeserializeImageGenerationOptions(JsonElement element)
+        ImageGenerationOptions IJsonModel<ImageGenerationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ImageGenerationOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeImageGenerationOptions(document.RootElement, options);
+        }
+
+        internal static ImageGenerationOptions DeserializeImageGenerationOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> model = default;
+            string model = default;
             string prompt = default;
-            Optional<int> n = default;
-            Optional<ImageSize> size = default;
-            Optional<ImageGenerationResponseFormat> responseFormat = default;
-            Optional<ImageGenerationQuality> quality = default;
-            Optional<ImageGenerationStyle> style = default;
-            Optional<string> user = default;
+            int? n = default;
+            ImageSize? size = default;
+            ImageGenerationResponseFormat? responseFormat = default;
+            ImageGenerationQuality? quality = default;
+            ImageGenerationStyle? style = default;
+            string user = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("model"u8))
@@ -132,9 +173,54 @@ namespace Azure.AI.OpenAI
                     user = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ImageGenerationOptions(model.Value, prompt, Optional.ToNullable(n), Optional.ToNullable(size), Optional.ToNullable(responseFormat), Optional.ToNullable(quality), Optional.ToNullable(style), user.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ImageGenerationOptions(
+                model,
+                prompt,
+                n,
+                size,
+                responseFormat,
+                quality,
+                style,
+                user,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ImageGenerationOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ImageGenerationOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ImageGenerationOptions IPersistableModel<ImageGenerationOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ImageGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeImageGenerationOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ImageGenerationOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ImageGenerationOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -148,7 +234,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImageGenerationOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

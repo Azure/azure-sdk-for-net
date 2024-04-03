@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DigitalTwins.Models
 {
-    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable
+    public partial class DataExplorerConnectionProperties : IUtf8JsonSerializable, IJsonModel<DataExplorerConnectionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataExplorerConnectionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataExplorerConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("adxResourceId"u8);
             writer.WriteStringValue(AdxResourceId);
@@ -90,23 +100,57 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             writer.WritePropertyName("connectionType"u8);
             writer.WriteStringValue(ConnectionType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<DigitalTwinsManagedIdentityReference>(Identity, options);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataExplorerConnectionProperties DeserializeDataExplorerConnectionProperties(JsonElement element)
+        DataExplorerConnectionProperties IJsonModel<DataExplorerConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataExplorerConnectionProperties(document.RootElement, options);
+        }
+
+        internal static DataExplorerConnectionProperties DeserializeDataExplorerConnectionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -114,17 +158,19 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             ResourceIdentifier adxResourceId = default;
             Uri adxEndpointUri = default;
             string adxDatabaseName = default;
-            Optional<string> adxTableName = default;
-            Optional<string> adxTwinLifecycleEventsTableName = default;
-            Optional<string> adxRelationshipLifecycleEventsTableName = default;
+            string adxTableName = default;
+            string adxTwinLifecycleEventsTableName = default;
+            string adxRelationshipLifecycleEventsTableName = default;
             Uri eventHubEndpointUri = default;
             string eventHubEntityPath = default;
             ResourceIdentifier eventHubNamespaceResourceId = default;
-            Optional<string> eventHubConsumerGroup = default;
-            Optional<RecordPropertyAndItemRemoval?> recordPropertyAndItemRemovals = default;
+            string eventHubConsumerGroup = default;
+            RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals = default;
             ConnectionType connectionType = default;
-            Optional<TimeSeriesDatabaseConnectionState> provisioningState = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            TimeSeriesDatabaseConnectionState? provisioningState = default;
+            DigitalTwinsManagedIdentityReference identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adxResourceId"u8))
@@ -228,11 +274,62 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataExplorerConnectionProperties(connectionType, Optional.ToNullable(provisioningState), identity.Value, adxResourceId, adxEndpointUri, adxDatabaseName, adxTableName.Value, adxTwinLifecycleEventsTableName.Value, adxRelationshipLifecycleEventsTableName.Value, eventHubEndpointUri, eventHubEntityPath, eventHubNamespaceResourceId, eventHubConsumerGroup.Value, Optional.ToNullable(recordPropertyAndItemRemovals));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataExplorerConnectionProperties(
+                connectionType,
+                provisioningState,
+                identity,
+                serializedAdditionalRawData,
+                adxResourceId,
+                adxEndpointUri,
+                adxDatabaseName,
+                adxTableName,
+                adxTwinLifecycleEventsTableName,
+                adxRelationshipLifecycleEventsTableName,
+                eventHubEndpointUri,
+                eventHubEntityPath,
+                eventHubNamespaceResourceId,
+                eventHubConsumerGroup,
+                recordPropertyAndItemRemovals);
         }
+
+        BinaryData IPersistableModel<DataExplorerConnectionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataExplorerConnectionProperties IPersistableModel<DataExplorerConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataExplorerConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataExplorerConnectionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataExplorerConnectionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataExplorerConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

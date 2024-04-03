@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.HybridCompute.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.HybridCompute
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-12-27";
+            _apiVersion = apiVersion ?? "2023-10-03-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ExtensionValueData>> GetAsync(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridComputeExtensionValueData>> GetAsync(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
@@ -83,13 +82,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        ExtensionValueData value = default;
+                        HybridComputeExtensionValueData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = ExtensionValueData.DeserializeExtensionValueData(document.RootElement);
+                        value = HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtensionValueData)null, message.Response);
+                    return Response.FromValue((HybridComputeExtensionValueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="publisher"/>, <paramref name="extensionType"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ExtensionValueData> Get(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
+        public Response<HybridComputeExtensionValueData> Get(string subscriptionId, AzureLocation location, string publisher, string extensionType, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(publisher, nameof(publisher));
@@ -117,13 +116,13 @@ namespace Azure.ResourceManager.HybridCompute
             {
                 case 200:
                     {
-                        ExtensionValueData value = default;
+                        HybridComputeExtensionValueData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = ExtensionValueData.DeserializeExtensionValueData(document.RootElement);
+                        value = HybridComputeExtensionValueData.DeserializeHybridComputeExtensionValueData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((ExtensionValueData)null, message.Response);
+                    return Response.FromValue((HybridComputeExtensionValueData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }

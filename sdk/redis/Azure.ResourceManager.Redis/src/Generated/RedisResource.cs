@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
@@ -116,6 +114,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ruleName"> The name of the firewall rule. </param>
@@ -138,6 +144,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FirewallRules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisFirewallRuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,6 +183,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisPatchScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="defaultName"> Default string modeled as parameter for auto generation to work correctly. </param>
@@ -189,6 +211,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PatchSchedules_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisPatchScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,6 +248,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>LinkedServer_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="linkedServerName"> The name of the linked server. </param>
@@ -240,6 +278,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedServer_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisLinkedServerWithPropertyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -271,6 +317,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection associated with the Azure resource. </param>
@@ -293,6 +347,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,6 +386,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>AccessPolicy_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisCacheAccessPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyName"> The name of the access policy that is being added to the Redis cache. </param>
@@ -346,6 +416,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AccessPolicy_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisCacheAccessPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +455,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>AccessPolicyAssignment_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the access policy assignment. </param>
@@ -400,6 +486,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>AccessPolicyAssignment_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisCacheAccessPolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="accessPolicyAssignmentName"> The name of the access policy assignment. </param>
@@ -422,6 +516,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,6 +557,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -486,6 +596,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -521,6 +639,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -554,6 +680,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,6 +727,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -631,6 +773,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListUpgradeNotifications</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
@@ -640,7 +790,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListUpgradeNotificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, RedisUpgradeNotification.DeserializeRedisUpgradeNotification, _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => RedisUpgradeNotification.DeserializeRedisUpgradeNotification(e), _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -654,6 +804,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListUpgradeNotifications</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="history"> how many minutes in past to look for upgrade notifications. </param>
@@ -663,7 +821,7 @@ namespace Azure.ResourceManager.Redis
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _redisRestClient.CreateListUpgradeNotificationsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _redisRestClient.CreateListUpgradeNotificationsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, history);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, RedisUpgradeNotification.DeserializeRedisUpgradeNotification, _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => RedisUpgradeNotification.DeserializeRedisUpgradeNotification(e), _redisClientDiagnostics, Pipeline, "RedisResource.GetUpgradeNotifications", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -676,6 +834,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -707,6 +873,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListKeys</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -736,6 +910,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -771,6 +953,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Specifies which key to regenerate. </param>
@@ -804,6 +994,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ForceReboot</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -839,6 +1037,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ForceReboot</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Specifies which Redis node(s) to reboot. </param>
@@ -872,6 +1078,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ImportData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -911,6 +1125,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ImportData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -948,6 +1170,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_ExportData</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -987,6 +1217,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ExportData</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1025,6 +1263,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_FlushCache</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1058,6 +1304,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_FlushCache</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1093,6 +1347,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByRedisCache</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1100,7 +1358,7 @@ namespace Azure.ResourceManager.Redis
         public virtual AsyncPageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCacheAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1114,6 +1372,10 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByRedisCache</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1121,7 +1383,7 @@ namespace Azure.ResourceManager.Redis
         public virtual Pageable<RedisPrivateLinkResource> GetPrivateLinkResourcesByRedisCache(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateListByRedisCacheRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => RedisPrivateLinkResource.DeserializeRedisPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "RedisResource.GetPrivateLinkResourcesByRedisCache", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1134,6 +1396,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1189,6 +1459,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -1243,6 +1521,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1292,6 +1578,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -1340,6 +1634,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1392,6 +1694,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

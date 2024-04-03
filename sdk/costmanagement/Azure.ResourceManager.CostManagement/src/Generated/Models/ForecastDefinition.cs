@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> The definition of a forecast. </summary>
     public partial class ForecastDefinition
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/>. </summary>
         /// <param name="forecastType"> The type of the forecast. </param>
         /// <param name="timeframe"> The time frame for pulling data for the forecast. If custom, then a specific time period must be provided. </param>
@@ -34,7 +66,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="dataset"> Has definition for data in this forecast. </param>
         /// <param name="includeActualCost"> A boolean determining if actualCost will be included. </param>
         /// <param name="includeFreshPartialCost"> A boolean determining if FreshPartialCost will be included. </param>
-        internal ForecastDefinition(ForecastType forecastType, ForecastTimeframe timeframe, ForecastTimePeriod timePeriod, ForecastDataset dataset, bool? includeActualCost, bool? includeFreshPartialCost)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ForecastDefinition(ForecastType forecastType, ForecastTimeframe timeframe, ForecastTimePeriod timePeriod, ForecastDataset dataset, bool? includeActualCost, bool? includeFreshPartialCost, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ForecastType = forecastType;
             Timeframe = timeframe;
@@ -42,6 +75,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             Dataset = dataset;
             IncludeActualCost = includeActualCost;
             IncludeFreshPartialCost = includeFreshPartialCost;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ForecastDefinition"/> for deserialization. </summary>
+        internal ForecastDefinition()
+        {
         }
 
         /// <summary> The type of the forecast. </summary>

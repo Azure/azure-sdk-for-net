@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -32,13 +31,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="baseImageDependencies"> List of base image dependencies for a step. </param>
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageNames"> The fully qualified image names including the repository and tag. </param>
         /// <param name="isPushEnabled"> The value of this property indicates whether the image built should be pushed to the registry or not. </param>
         /// <param name="noCache"> The value of this property indicates whether the image cache is enabled or not. </param>
         /// <param name="dockerFilePath"> The Docker file path relative to the source context. </param>
         /// <param name="target"> The name of the target build stage for the docker build. </param>
         /// <param name="arguments"> The collection of override arguments to be used when executing this build step. </param>
-        internal ContainerRegistryDockerBuildStep(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, string target, IList<ContainerRegistryRunArgument> arguments) : base(containerRegistryTaskStepType, baseImageDependencies, contextPath, contextAccessToken)
+        internal ContainerRegistryDockerBuildStep(ContainerRegistryTaskStepType containerRegistryTaskStepType, IReadOnlyList<ContainerRegistryBaseImageDependency> baseImageDependencies, string contextPath, string contextAccessToken, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> imageNames, bool? isPushEnabled, bool? noCache, string dockerFilePath, string target, IList<ContainerRegistryRunArgument> arguments) : base(containerRegistryTaskStepType, baseImageDependencies, contextPath, contextAccessToken, serializedAdditionalRawData)
         {
             ImageNames = imageNames;
             IsPushEnabled = isPushEnabled;
@@ -47,6 +47,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             Target = target;
             Arguments = arguments;
             ContainerRegistryTaskStepType = containerRegistryTaskStepType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryDockerBuildStep"/> for deserialization. </summary>
+        internal ContainerRegistryDockerBuildStep()
+        {
         }
 
         /// <summary> The fully qualified image names including the repository and tag. </summary>

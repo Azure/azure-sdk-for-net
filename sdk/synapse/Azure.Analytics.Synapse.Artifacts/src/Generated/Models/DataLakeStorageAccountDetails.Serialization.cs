@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> accountUrl = default;
-            Optional<string> filesystem = default;
+            string accountUrl = default;
+            string filesystem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountUrl"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value);
+            return new DataLakeStorageAccountDetails(accountUrl, filesystem);
         }
 
         internal partial class DataLakeStorageAccountDetailsConverter : JsonConverter<DataLakeStorageAccountDetails>
         {
             public override void Write(Utf8JsonWriter writer, DataLakeStorageAccountDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataLakeStorageAccountDetails>(model);
             }
             public override DataLakeStorageAccountDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,35 +6,126 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class LatencyMetric : IUtf8JsonSerializable
+    public partial class LatencyMetric : IUtf8JsonSerializable, IJsonModel<LatencyMetric>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LatencyMetric>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LatencyMetric>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDateTimeUTC"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(AValue))
+            {
+                writer.WritePropertyName("aValue"u8);
+                writer.WriteNumberValue(AValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BValue))
+            {
+                writer.WritePropertyName("bValue"u8);
+                writer.WriteNumberValue(BValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Delta))
+            {
+                writer.WritePropertyName("delta"u8);
+                writer.WriteNumberValue(Delta.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeltaPercent))
+            {
+                writer.WritePropertyName("deltaPercent"u8);
+                writer.WriteNumberValue(DeltaPercent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ACLower95CI))
+            {
+                writer.WritePropertyName("aCLower95CI"u8);
+                writer.WriteNumberValue(ACLower95CI.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AHUpper95CI))
+            {
+                writer.WritePropertyName("aHUpper95CI"u8);
+                writer.WriteNumberValue(AHUpper95CI.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BCLower95CI))
+            {
+                writer.WritePropertyName("bCLower95CI"u8);
+                writer.WriteNumberValue(BCLower95CI.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BUpper95CI))
+            {
+                writer.WritePropertyName("bUpper95CI"u8);
+                writer.WriteNumberValue(BUpper95CI.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LatencyMetric DeserializeLatencyMetric(JsonElement element)
+        LatencyMetric IJsonModel<LatencyMetric>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLatencyMetric(document.RootElement, options);
+        }
+
+        internal static LatencyMetric DeserializeLatencyMetric(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> endDateTimeUtc = default;
-            Optional<float> aValue = default;
-            Optional<float> bValue = default;
-            Optional<float> delta = default;
-            Optional<float> deltaPercent = default;
-            Optional<float> acLower95CI = default;
-            Optional<float> ahUpper95CI = default;
-            Optional<float> bcLower95CI = default;
-            Optional<float> bUpper95CI = default;
+            string name = default;
+            DateTimeOffset? endDateTimeUtc = default;
+            float? aValue = default;
+            float? bValue = default;
+            float? delta = default;
+            float? deltaPercent = default;
+            float? acLower95CI = default;
+            float? ahUpper95CI = default;
+            float? bcLower95CI = default;
+            float? bUpper95CI = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -123,8 +214,55 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     bUpper95CI = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LatencyMetric(name.Value, Optional.ToNullable(endDateTimeUtc), Optional.ToNullable(aValue), Optional.ToNullable(bValue), Optional.ToNullable(delta), Optional.ToNullable(deltaPercent), Optional.ToNullable(acLower95CI), Optional.ToNullable(ahUpper95CI), Optional.ToNullable(bcLower95CI), Optional.ToNullable(bUpper95CI));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LatencyMetric(
+                name,
+                endDateTimeUtc,
+                aValue,
+                bValue,
+                delta,
+                deltaPercent,
+                acLower95CI,
+                ahUpper95CI,
+                bcLower95CI,
+                bUpper95CI,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LatencyMetric>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LatencyMetric IPersistableModel<LatencyMetric>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LatencyMetric>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLatencyMetric(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LatencyMetric)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LatencyMetric>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

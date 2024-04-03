@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -34,6 +33,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="taskFilePath"> The template/definition file path relative to the source. </param>
         /// <param name="valuesFilePath"> The values/parameters file path relative to the source. </param>
         /// <param name="values"> The collection of overridable values that can be passed when running a task. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// If it is relative URL, the relative path should be obtained from calling listBuildSourceUploadUrl API.
         /// </param>
         /// <param name="credentials"> The properties that describes a set of credentials that will be used when this run is invoked. </param>
-        internal ContainerRegistryFileTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        internal ContainerRegistryFileTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, string taskFilePath, string valuesFilePath, IList<ContainerRegistryTaskOverridableValue> values, int? timeoutInSeconds, ContainerRegistryPlatformProperties platform, ContainerRegistryAgentProperties agentConfiguration, string sourceLocation, ContainerRegistryCredentials credentials) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
         {
             TaskFilePath = taskFilePath;
             ValuesFilePath = valuesFilePath;
@@ -56,6 +56,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             SourceLocation = sourceLocation;
             Credentials = credentials;
             RunRequestType = runRequestType ?? "FileTaskRunRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryFileTaskRunContent"/> for deserialization. </summary>
+        internal ContainerRegistryFileTaskRunContent()
+        {
         }
 
         /// <summary> The template/definition file path relative to the source. </summary>

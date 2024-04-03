@@ -21,12 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
-                writer.WriteObjectValue(VideoCreationProperties);
+                writer.WriteObjectValue<VideoCreationProperties>(VideoCreationProperties);
             }
             if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
-                writer.WriteObjectValue(VideoPublishingOptions);
+                writer.WriteObjectValue<VideoPublishingOptions>(VideoPublishingOptions);
             }
             writer.WritePropertyName("localMediaCachePath"u8);
             writer.WriteStringValue(LocalMediaCachePath);
@@ -40,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -53,8 +53,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             string videoName = default;
-            Optional<VideoCreationProperties> videoCreationProperties = default;
-            Optional<VideoPublishingOptions> videoPublishingOptions = default;
+            VideoCreationProperties videoCreationProperties = default;
+            VideoPublishingOptions videoPublishingOptions = default;
             string localMediaCachePath = default;
             string localMediaCacheMaximumSizeMiB = default;
             string type = default;
@@ -116,7 +116,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new VideoSink(type, name, inputs, videoName, videoCreationProperties.Value, videoPublishingOptions.Value, localMediaCachePath, localMediaCacheMaximumSizeMiB);
+            return new VideoSink(
+                type,
+                name,
+                inputs,
+                videoName,
+                videoCreationProperties,
+                videoPublishingOptions,
+                localMediaCachePath,
+                localMediaCacheMaximumSizeMiB);
         }
     }
 }

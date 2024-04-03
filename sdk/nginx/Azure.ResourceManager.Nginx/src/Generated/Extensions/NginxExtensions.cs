@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Nginx.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -119,6 +117,14 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -139,7 +145,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -149,6 +155,14 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -156,7 +170,7 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="deploymentName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -169,7 +183,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -178,6 +192,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -197,7 +219,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List the Nginx deployments resources
+        /// List the NGINX deployments resources
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -206,6 +228,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// <item>

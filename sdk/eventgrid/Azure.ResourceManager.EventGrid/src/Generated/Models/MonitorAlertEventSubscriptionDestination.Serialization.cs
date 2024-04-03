@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class MonitorAlertEventSubscriptionDestination : IUtf8JsonSerializable
+    public partial class MonitorAlertEventSubscriptionDestination : IUtf8JsonSerializable, IJsonModel<MonitorAlertEventSubscriptionDestination>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorAlertEventSubscriptionDestination>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitorAlertEventSubscriptionDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
@@ -46,19 +56,50 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorAlertEventSubscriptionDestination DeserializeMonitorAlertEventSubscriptionDestination(JsonElement element)
+        MonitorAlertEventSubscriptionDestination IJsonModel<MonitorAlertEventSubscriptionDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorAlertEventSubscriptionDestination(document.RootElement, options);
+        }
+
+        internal static MonitorAlertEventSubscriptionDestination DeserializeMonitorAlertEventSubscriptionDestination(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             EndpointType endpointType = default;
-            Optional<MonitorAlertSeverity> severity = default;
-            Optional<string> description = default;
-            Optional<IList<ResourceIdentifier>> actionGroups = default;
+            MonitorAlertSeverity? severity = default;
+            string description = default;
+            IList<ResourceIdentifier> actionGroups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpointType"u8))
@@ -113,8 +154,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorAlertEventSubscriptionDestination(endpointType, Optional.ToNullable(severity), description.Value, Optional.ToList(actionGroups));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorAlertEventSubscriptionDestination(endpointType, serializedAdditionalRawData, severity, description, actionGroups ?? new ChangeTrackingList<ResourceIdentifier>());
         }
+
+        BinaryData IPersistableModel<MonitorAlertEventSubscriptionDestination>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorAlertEventSubscriptionDestination IPersistableModel<MonitorAlertEventSubscriptionDestination>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorAlertEventSubscriptionDestination>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorAlertEventSubscriptionDestination(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorAlertEventSubscriptionDestination)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorAlertEventSubscriptionDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

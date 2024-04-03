@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -59,13 +58,14 @@ namespace Azure.ResourceManager.DataBox.Models
         /// The available derived classes include <see cref="DataCenterAddressInstructionResult"/> and <see cref="DataCenterAddressLocationResult"/>.
         /// </param>
         /// <param name="dataCenterCode"> DataCenter code. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="importDiskDetails"> Contains the map of disk serial number to the disk details for import jobs. </param>
         /// <param name="exportDiskDetails"> Contains the map of disk serial number to the disk details for export jobs. </param>
         /// <param name="copyProgress"> Copy progress per disk. </param>
         /// <param name="deliverToDataCenterPackageDetails"> Delivery package shipping details. </param>
         /// <param name="returnToCustomerPackageDetails"> Return package shipping details. </param>
         /// <param name="enableManifestBackup"> Flag to indicate if disk manifest should be backed-up in the Storage Account. </param>
-        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, ImportDiskDetails> importDiskDetails, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDataCenterPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode)
+        internal DataBoxCustomerDiskJobDetails(IReadOnlyList<DataBoxJobStage> jobStages, DataBoxContactDetails contactDetails, DataBoxShippingAddress shippingAddress, PackageShippingDetails deliveryPackage, PackageShippingDetails returnPackage, IList<DataImportDetails> dataImportDetails, IList<DataExportDetails> dataExportDetails, DataBoxOrderType jobDetailsType, DataBoxOrderPreferences preferences, ReverseShippingDetails reverseShippingDetails, IReadOnlyList<CopyLogDetails> copyLogDetails, string reverseShipmentLabelSasKey, string chainOfCustodySasKey, DeviceErasureDetails deviceErasureDetails, DataBoxKeyEncryptionKey keyEncryptionKey, int? expectedDataSizeInTerabytes, IReadOnlyList<CustomerResolutionCode> actions, LastMitigationActionOnJob lastMitigationActionOnJob, DataCenterAddressResult dataCenterAddress, DataCenterCode? dataCenterCode, IDictionary<string, BinaryData> serializedAdditionalRawData, IDictionary<string, ImportDiskDetails> importDiskDetails, IReadOnlyDictionary<string, ExportDiskDetails> exportDiskDetails, IReadOnlyList<DataBoxCustomerDiskCopyProgress> copyProgress, PackageCarrierInfo deliverToDataCenterPackageDetails, PackageCarrierDetails returnToCustomerPackageDetails, bool? enableManifestBackup) : base(jobStages, contactDetails, shippingAddress, deliveryPackage, returnPackage, dataImportDetails, dataExportDetails, jobDetailsType, preferences, reverseShippingDetails, copyLogDetails, reverseShipmentLabelSasKey, chainOfCustodySasKey, deviceErasureDetails, keyEncryptionKey, expectedDataSizeInTerabytes, actions, lastMitigationActionOnJob, dataCenterAddress, dataCenterCode, serializedAdditionalRawData)
         {
             ImportDiskDetails = importDiskDetails;
             ExportDiskDetails = exportDiskDetails;
@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.DataBox.Models
             ReturnToCustomerPackageDetails = returnToCustomerPackageDetails;
             EnableManifestBackup = enableManifestBackup;
             JobDetailsType = jobDetailsType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxCustomerDiskJobDetails"/> for deserialization. </summary>
+        internal DataBoxCustomerDiskJobDetails()
+        {
         }
 
         /// <summary> Contains the map of disk serial number to the disk details for import jobs. </summary>

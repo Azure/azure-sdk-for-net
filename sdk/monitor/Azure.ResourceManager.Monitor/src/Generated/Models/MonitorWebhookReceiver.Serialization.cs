@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorWebhookReceiver : IUtf8JsonSerializable
+    public partial class MonitorWebhookReceiver : IUtf8JsonSerializable, IJsonModel<MonitorWebhookReceiver>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorWebhookReceiver>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitorWebhookReceiver>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -45,22 +55,53 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MonitorWebhookReceiver DeserializeMonitorWebhookReceiver(JsonElement element)
+        MonitorWebhookReceiver IJsonModel<MonitorWebhookReceiver>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorWebhookReceiver(document.RootElement, options);
+        }
+
+        internal static MonitorWebhookReceiver DeserializeMonitorWebhookReceiver(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             Uri serviceUri = default;
-            Optional<bool> useCommonAlertSchema = default;
-            Optional<bool> useAadAuth = default;
-            Optional<string> objectId = default;
-            Optional<Uri> identifierUri = default;
-            Optional<Guid> tenantId = default;
+            bool? useCommonAlertSchema = default;
+            bool? useAadAuth = default;
+            string objectId = default;
+            Uri identifierUri = default;
+            Guid? tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -114,8 +155,52 @@ namespace Azure.ResourceManager.Monitor.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorWebhookReceiver(name, serviceUri, Optional.ToNullable(useCommonAlertSchema), Optional.ToNullable(useAadAuth), objectId.Value, identifierUri.Value, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorWebhookReceiver(
+                name,
+                serviceUri,
+                useCommonAlertSchema,
+                useAadAuth,
+                objectId,
+                identifierUri,
+                tenantId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorWebhookReceiver>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorWebhookReceiver IPersistableModel<MonitorWebhookReceiver>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorWebhookReceiver>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorWebhookReceiver(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorWebhookReceiver)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorWebhookReceiver>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

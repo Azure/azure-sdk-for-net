@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 
 namespace Azure.ResourceManager.Automation
@@ -111,6 +109,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControl_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -143,6 +149,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControl_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -174,6 +188,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControl_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +231,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControl_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -242,6 +272,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControl_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,6 +315,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControl_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The parameters supplied to the update source control operation. </param>
@@ -310,6 +356,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -346,6 +396,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
@@ -381,6 +435,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
@@ -411,6 +469,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -443,6 +505,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -452,7 +518,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceControlSyncJob.DeserializeSourceControlSyncJob, _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -466,6 +532,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJob_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -475,7 +545,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobRestClient.CreateListByAutomationAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceControlSyncJob.DeserializeSourceControlSyncJob, _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJob.DeserializeSourceControlSyncJob(e), _sourceControlSyncJobClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobs", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -488,6 +558,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJobStreams_ListBySyncJob</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +573,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream, _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(e), _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -513,6 +587,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJobStreams_ListBySyncJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlSyncJobId"> The source control sync job id. </param>
@@ -523,7 +601,7 @@ namespace Azure.ResourceManager.Automation
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _sourceControlSyncJobStreamsRestClient.CreateListBySyncJobNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, sourceControlSyncJobId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream, _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SourceControlSyncJobStream.DeserializeSourceControlSyncJobStream(e), _sourceControlSyncJobStreamsClientDiagnostics, Pipeline, "AutomationSourceControlResource.GetSourceControlSyncJobStreams", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -536,6 +614,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJobStreams_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -572,6 +654,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControlSyncJobStreams_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>

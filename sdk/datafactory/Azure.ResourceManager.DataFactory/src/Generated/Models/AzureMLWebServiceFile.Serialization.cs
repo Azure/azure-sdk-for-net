@@ -5,32 +5,74 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AzureMLWebServiceFile : IUtf8JsonSerializable
+    public partial class AzureMLWebServiceFile : IUtf8JsonSerializable, IJsonModel<AzureMLWebServiceFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureMLWebServiceFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureMLWebServiceFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLWebServiceFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLWebServiceFile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("filePath"u8);
             JsonSerializer.Serialize(writer, FilePath);
             writer.WritePropertyName("linkedServiceName"u8);
             JsonSerializer.Serialize(writer, LinkedServiceName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element)
+        AzureMLWebServiceFile IJsonModel<AzureMLWebServiceFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLWebServiceFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureMLWebServiceFile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureMLWebServiceFile(document.RootElement, options);
+        }
+
+        internal static AzureMLWebServiceFile DeserializeAzureMLWebServiceFile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DataFactoryElement<string> filePath = default;
             DataFactoryLinkedServiceReference linkedServiceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("filePath"u8))
@@ -43,8 +85,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                     linkedServiceName = JsonSerializer.Deserialize<DataFactoryLinkedServiceReference>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureMLWebServiceFile(filePath, linkedServiceName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureMLWebServiceFile(filePath, linkedServiceName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureMLWebServiceFile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLWebServiceFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLWebServiceFile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureMLWebServiceFile IPersistableModel<AzureMLWebServiceFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureMLWebServiceFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureMLWebServiceFile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureMLWebServiceFile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureMLWebServiceFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

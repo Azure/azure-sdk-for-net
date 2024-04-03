@@ -6,32 +6,120 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentClassifierBuildOperationDetails
+    public partial class DocumentClassifierBuildOperationDetails : IUtf8JsonSerializable, IJsonModel<DocumentClassifierBuildOperationDetails>
     {
-        internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentClassifierBuildOperationDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentClassifierBuildOperationDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Result))
+            {
+                writer.WritePropertyName("result"u8);
+                writer.WriteObjectValue<DocumentClassifierDetails>(Result, options);
+            }
+            writer.WritePropertyName("operationId"u8);
+            writer.WriteStringValue(OperationId);
+            writer.WritePropertyName("status"u8);
+            writer.WriteStringValue(Status.ToString());
+            if (Optional.IsDefined(PercentCompleted))
+            {
+                writer.WritePropertyName("percentCompleted"u8);
+                writer.WriteNumberValue(PercentCompleted.Value);
+            }
+            writer.WritePropertyName("createdDateTime"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("lastUpdatedDateTime"u8);
+            writer.WriteStringValue(LastUpdatedOn, "O");
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            writer.WritePropertyName("resourceLocation"u8);
+            writer.WriteStringValue(ResourceLocation.AbsoluteUri);
+            if (Optional.IsDefined(ApiVersion))
+            {
+                writer.WritePropertyName("apiVersion"u8);
+                writer.WriteStringValue(ApiVersion);
+            }
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentClassifierBuildOperationDetails IJsonModel<DocumentClassifierBuildOperationDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentClassifierBuildOperationDetails(document.RootElement, options);
+        }
+
+        internal static DocumentClassifierBuildOperationDetails DeserializeDocumentClassifierBuildOperationDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DocumentClassifierDetails> result = default;
+            DocumentClassifierDetails result = default;
             string operationId = default;
             OperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             OperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<DocumentIntelligenceError> error = default;
+            string apiVersion = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            DocumentIntelligenceError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -40,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    result = DocumentClassifierDetails.DeserializeDocumentClassifierDetails(property.Value);
+                    result = DocumentClassifierDetails.DeserializeDocumentClassifierDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("operationId"u8))
@@ -107,12 +195,60 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value);
+                    error = DocumentIntelligenceError.DeserializeDocumentIntelligenceError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentClassifierBuildOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error.Value, result.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentClassifierBuildOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                serializedAdditionalRawData,
+                result);
         }
+
+        BinaryData IPersistableModel<DocumentClassifierBuildOperationDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentClassifierBuildOperationDetails IPersistableModel<DocumentClassifierBuildOperationDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentClassifierBuildOperationDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentClassifierBuildOperationDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -120,6 +256,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentClassifierBuildOperationDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentClassifierBuildOperationDetails>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

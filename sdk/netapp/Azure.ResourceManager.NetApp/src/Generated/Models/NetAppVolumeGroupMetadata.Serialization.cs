@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppVolumeGroupMetadata : IUtf8JsonSerializable
+    public partial class NetAppVolumeGroupMetadata : IUtf8JsonSerializable, IJsonModel<NetAppVolumeGroupMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppVolumeGroupMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetAppVolumeGroupMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(GroupDescription))
             {
@@ -37,30 +47,60 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WriteStartArray();
                 foreach (var item in GlobalPlacementRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetAppVolumePlacementRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DeploymentSpecId))
+            if (options.Format != "W" && Optional.IsDefined(VolumesCount))
             {
-                writer.WritePropertyName("deploymentSpecId"u8);
-                writer.WriteStringValue(DeploymentSpecId);
+                writer.WritePropertyName("volumesCount"u8);
+                writer.WriteNumberValue(VolumesCount.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NetAppVolumeGroupMetadata DeserializeNetAppVolumeGroupMetadata(JsonElement element)
+        NetAppVolumeGroupMetadata IJsonModel<NetAppVolumeGroupMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppVolumeGroupMetadata(document.RootElement, options);
+        }
+
+        internal static NetAppVolumeGroupMetadata DeserializeNetAppVolumeGroupMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> groupDescription = default;
-            Optional<NetAppApplicationType> applicationType = default;
-            Optional<string> applicationIdentifier = default;
-            Optional<IList<NetAppVolumePlacementRule>> globalPlacementRules = default;
-            Optional<string> deploymentSpecId = default;
-            Optional<long> volumesCount = default;
+            string groupDescription = default;
+            NetAppApplicationType? applicationType = default;
+            string applicationIdentifier = default;
+            IList<NetAppVolumePlacementRule> globalPlacementRules = default;
+            long? volumesCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("groupDescription"u8))
@@ -91,14 +131,9 @@ namespace Azure.ResourceManager.NetApp.Models
                     List<NetAppVolumePlacementRule> array = new List<NetAppVolumePlacementRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item));
+                        array.Add(NetAppVolumePlacementRule.DeserializeNetAppVolumePlacementRule(item, options));
                     }
                     globalPlacementRules = array;
-                    continue;
-                }
-                if (property.NameEquals("deploymentSpecId"u8))
-                {
-                    deploymentSpecId = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("volumesCount"u8))
@@ -110,8 +145,50 @@ namespace Azure.ResourceManager.NetApp.Models
                     volumesCount = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetAppVolumeGroupMetadata(groupDescription.Value, Optional.ToNullable(applicationType), applicationIdentifier.Value, Optional.ToList(globalPlacementRules), deploymentSpecId.Value, Optional.ToNullable(volumesCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppVolumeGroupMetadata(
+                groupDescription,
+                applicationType,
+                applicationIdentifier,
+                globalPlacementRules ?? new ChangeTrackingList<NetAppVolumePlacementRule>(),
+                volumesCount,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetAppVolumeGroupMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppVolumeGroupMetadata IPersistableModel<NetAppVolumeGroupMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeGroupMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppVolumeGroupMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppVolumeGroupMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppVolumeGroupMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

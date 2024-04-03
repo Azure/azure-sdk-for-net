@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: SecurityCenter
 namespace: Azure.ResourceManager.SecurityCenter
-require: https://github.com/Azure/azure-rest-api-specs/blob/def187e2e78d7173d8fdd7f77740dd9719e1dfbf/specification/security/resource-manager/readme.md
-#tag: package-composite-v3
+require: https://github.com/Azure/azure-rest-api-specs/blob/6c4497e6b0aaad8127f2dd50fa8a29aaf68f24e6/specification/security/resource-manager/readme.md
+tag: package-dotnet-sdk
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,10 +20,11 @@ sample-gen:
   - InformationProtectionPolicies_List
   - SubAssessments_ListAll
   - Assessments_List
-tag: package-dotnet-sdk
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
+use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
 
 #mgmt-debug:
@@ -247,6 +248,57 @@ rename-mapping:
   Code: ExtensionOperationStatusCode
   OperationStatus: ExtensionOperationStatus
   IsEnabled: IsExtensionEnabled
+  GitlabScopeEnvironmentData: GitlabScopeEnvironment
+  AzureDevOpsOrg: DevOpsOrg
+  AzureDevOpsOrgProperties: DevOpsOrgProperties
+  AzureDevOpsOrgProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  AzureDevOpsProject: DevOpsProject
+  AzureDevOpsProjectProperties: DevOpsProjectProperties
+  AzureDevOpsProjectProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  AzureDevOpsRepository: DevOpsRepository
+  AzureDevOpsRepositoryProperties: DevOpsRepositoryProperties
+  AzureDevOpsRepositoryProperties.provisioningStatusUpdateTimeUtc: ProvisioningStatusUpdatedOn
+  OnboardingState: ResourceOnboardingState
+  DefenderForStorageSetting.properties.isEnabled: IsEnabled
+  DefenderForStorageSetting.properties.overrideSubscriptionLevelSettings: IsOverrideSubscriptionLevelSettingsEnabled
+  DefenderForStorageSetting.properties.sensitiveDataDiscovery.isEnabled: IsSensitiveDataDiscoveryEnabled
+  DefenderForStorageSetting.properties.sensitiveDataDiscovery.operationStatus: SensitiveDataDiscoveryOperationStatus
+  DefenderForStorageSetting.properties.malwareScanning.operationStatus: MalwareScanningOperationStatus
+  DefenderForStorageSetting.properties.malwareScanning.onUpload.isEnabled: IsMalwareScanningOnUploadEnabled
+  GetSensitivitySettingsResponse: SensitivitySettings
+  GetSensitivitySettingsResponseProperties: SensitivitySettingsProperties
+  GitHubOwner: SecurityConnectorGitHubOwner
+  GitHubOwnerProperties: SecurityConnectorGitHubOwnerProperties
+  GitHubRepository: SecurityConnectorGitHubRepository
+  GitHubRepositoryProperties: SecurityConnectorGitHubRepositoryProperties
+  GitLabGroup: SecurityConnectorGitLabGroup
+  GitLabGroupProperties: SecurityConnectorGitLabGroupProperties
+  GitLabProject: SecurityConnectorGitLabProject
+  GitLabProjectProperties: SecurityConnectorGitLabProjectProperties
+  HealthReport: SecurityHealthReport
+  Issue: SecurityHealthReportIssue
+  AutoDiscovery: DevOpsAutoDiscovery
+  DefenderCspmAwsOfferingDatabasesDspm.enabled: IsEnabled
+  DefenderCspmAwsOfferingDataSensitivityDiscovery.enabled: IsEnabled
+  DefenderCspmAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderCspmAwsOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderCspmGcpOfferingDataSensitivityDiscovery.enabled: IsEnabled
+  DefenderCspmGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderCspmGcpOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderCspmGcpOfferingVmScanners.enabled: IsEnabled
+  DefenderFoDatabasesAwsOfferingDatabasesDspm.enabled: IsEnabled
+  DefenderForContainersAwsOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderForContainersAwsOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S.enabled: IsEnabled
+  DefenderForContainersGcpOfferingMdcContainersImageAssessment.enabled: IsEnabled
+  DefenderForServersGcpOfferingVmScanners.enabled: IsEnabled
+  SensitivityLabel.enabled: IsEnabled
+  Label: MipSensitivityLabel
+  Source: HealthReportSource
+  HealthReportResourceDetails.id: -|arm-id
+  StatusName: HealthReportStatusName
+  Authorization: DevOpsAuthorization
+  InfoType: UserDefinedInformationType
 
 prepend-rp-prefix:
   - CloudName
@@ -256,6 +308,7 @@ prepend-rp-prefix:
   - CloudOffering
   - ConnectionType
   - PublisherInfo
+  - ApiCollection
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -300,6 +353,7 @@ acronym-mapping:
   ATA: Ata
   CEF: Cef
   SSM: Ssm
+  K8s: K8S
 
 override-operation-name:
   Alerts_UpdateResourceGroupLevelStateToResolve: Resolve
@@ -315,6 +369,8 @@ override-operation-name:
   GovernanceRules_RuleIdExecuteSingleSubscription: ExecuteRule
   SubscriptionGovernanceRulesExecuteStatus_Get: GetRuleExecutionStatus
   ExternalSecuritySolutions_List: GetExternalSecuritySolutions
+  AzureDevOpsOrgs_Get: GetDevOpsOrg
+  AzureDevOpsOrgs_ListAvailable: GetAvailableDevOpsOrgs
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/alerts/{alertName}: SubscriptionSecurityAlert
@@ -341,6 +397,12 @@ operation-positions:
 list-exception:
   - /{resourceId}/providers/Microsoft.Security/assessments/{assessmentName}
   - /subscriptions/{subscriptionId}/providers/Microsoft.Security/locations/{ascLocation}/applicationWhitelistings/{groupName}
+  - /{resourceId}/providers/Microsoft.Security/defenderForStorageSettings/{settingName}
+
+suppress-abstract-base-class:
+- SecuritySettingData
+- ExternalSecuritySolution
+- SecurityAlertSimulatorRequestProperties
 
 directive:
   - rename-operation:
@@ -459,4 +521,16 @@ directive:
     where: $.parameters
     transform: >
         $.Scope['x-ms-skip-url-encoding'] = true;
+  - from: defenderForStorageSettings.json
+    where: $.parameters
+    transform: >
+        $.DefenderForStorageSettingName['x-ms-enum']['name'] = "defenderForStorageSettingName";
+  - from: healthReports.json
+    where: $.definitions
+    transform: >
+      $.resourceDetails['x-ms-client-name'] = 'HealthReportResourceDetails';
+  - from: healthReports.json
+    where: $.definitions
+    transform: >
+      $.status['x-ms-client-name'] = 'HealthReportStatus';
 ```

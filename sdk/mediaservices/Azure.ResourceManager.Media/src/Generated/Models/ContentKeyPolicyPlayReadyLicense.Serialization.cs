@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class ContentKeyPolicyPlayReadyLicense : IUtf8JsonSerializable
+    public partial class ContentKeyPolicyPlayReadyLicense : IUtf8JsonSerializable, IJsonModel<ContentKeyPolicyPlayReadyLicense>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContentKeyPolicyPlayReadyLicense>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContentKeyPolicyPlayReadyLicense>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("allowTestDevices"u8);
             writer.WriteBooleanValue(AllowTestDevices);
@@ -51,34 +61,65 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue(PlayRight);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyPlayRight>(PlayRight, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue(ContentKeyLocation);
+            writer.WriteObjectValue<ContentKeyPolicyPlayReadyContentKeyLocation>(ContentKeyLocation, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element)
+        ContentKeyPolicyPlayReadyLicense IJsonModel<ContentKeyPolicyPlayReadyLicense>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContentKeyPolicyPlayReadyLicense(document.RootElement, options);
+        }
+
+        internal static ContentKeyPolicyPlayReadyLicense DeserializeContentKeyPolicyPlayReadyLicense(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool allowTestDevices = default;
-            Optional<PlayReadySecurityLevel> securityLevel = default;
-            Optional<DateTimeOffset> beginDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<TimeSpan> relativeBeginDate = default;
-            Optional<TimeSpan> relativeExpirationDate = default;
-            Optional<TimeSpan> gracePeriod = default;
-            Optional<ContentKeyPolicyPlayReadyPlayRight> playRight = default;
+            PlayReadySecurityLevel? securityLevel = default;
+            DateTimeOffset? beginDate = default;
+            DateTimeOffset? expirationDate = default;
+            TimeSpan? relativeBeginDate = default;
+            TimeSpan? relativeExpirationDate = default;
+            TimeSpan? gracePeriod = default;
+            ContentKeyPolicyPlayReadyPlayRight playRight = default;
             ContentKeyPolicyPlayReadyLicenseType licenseType = default;
             ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation = default;
             ContentKeyPolicyPlayReadyContentType contentType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowTestDevices"u8))
@@ -146,7 +187,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value);
+                    playRight = ContentKeyPolicyPlayReadyPlayRight.DeserializeContentKeyPolicyPlayReadyPlayRight(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("licenseType"u8))
@@ -156,7 +197,7 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (property.NameEquals("contentKeyLocation"u8))
                 {
-                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value);
+                    contentKeyLocation = ContentKeyPolicyPlayReadyContentKeyLocation.DeserializeContentKeyPolicyPlayReadyContentKeyLocation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("contentType"u8))
@@ -164,8 +205,56 @@ namespace Azure.ResourceManager.Media.Models
                     contentType = new ContentKeyPolicyPlayReadyContentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContentKeyPolicyPlayReadyLicense(allowTestDevices, Optional.ToNullable(securityLevel), Optional.ToNullable(beginDate), Optional.ToNullable(expirationDate), Optional.ToNullable(relativeBeginDate), Optional.ToNullable(relativeExpirationDate), Optional.ToNullable(gracePeriod), playRight.Value, licenseType, contentKeyLocation, contentType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContentKeyPolicyPlayReadyLicense(
+                allowTestDevices,
+                securityLevel,
+                beginDate,
+                expirationDate,
+                relativeBeginDate,
+                relativeExpirationDate,
+                gracePeriod,
+                playRight,
+                licenseType,
+                contentKeyLocation,
+                contentType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContentKeyPolicyPlayReadyLicense IPersistableModel<ContentKeyPolicyPlayReadyLicense>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContentKeyPolicyPlayReadyLicense(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContentKeyPolicyPlayReadyLicense>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

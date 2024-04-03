@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
@@ -27,6 +27,24 @@ namespace Azure.AI.Translation.Text
             Argument.AssertNotNull(translation, nameof(translation));
 
             Translation = translation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleTextItem"/>. </summary>
+        /// <param name="text"> Text to translate. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="translation">
+        /// A string specifying the translated text previously returned by the Dictionary lookup operation.
+        /// This should be the value from the normalizedTarget field in the translations list of the Dictionary
+        /// lookup response. The service will return examples for the specific source-target word-pair.
+        /// </param>
+        internal DictionaryExampleTextItem(string text, IDictionary<string, BinaryData> serializedAdditionalRawData, string translation) : base(text, serializedAdditionalRawData)
+        {
+            Translation = translation;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DictionaryExampleTextItem"/> for deserialization. </summary>
+        internal DictionaryExampleTextItem()
+        {
         }
 
         /// <summary>

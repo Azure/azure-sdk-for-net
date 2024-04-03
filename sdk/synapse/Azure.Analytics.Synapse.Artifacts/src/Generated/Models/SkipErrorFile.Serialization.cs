@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(FileMissing))
             {
                 writer.WritePropertyName("fileMissing"u8);
-                writer.WriteObjectValue(FileMissing);
+                writer.WriteObjectValue<object>(FileMissing);
             }
             if (Optional.IsDefined(DataInconsistency))
             {
                 writer.WritePropertyName("dataInconsistency"u8);
-                writer.WriteObjectValue(DataInconsistency);
+                writer.WriteObjectValue<object>(DataInconsistency);
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> fileMissing = default;
-            Optional<object> dataInconsistency = default;
+            object fileMissing = default;
+            object dataInconsistency = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileMissing"u8))
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SkipErrorFile(fileMissing.Value, dataInconsistency.Value);
+            return new SkipErrorFile(fileMissing, dataInconsistency);
         }
 
         internal partial class SkipErrorFileConverter : JsonConverter<SkipErrorFile>
         {
             public override void Write(Utf8JsonWriter writer, SkipErrorFile model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SkipErrorFile>(model);
             }
             public override SkipErrorFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -32,15 +31,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="authenticationProvisioningState"> State of the multi-cloud connector. </param>
         /// <param name="grantedPermissions"> The permissions detected in the cloud account. </param>
         /// <param name="authenticationType"> Connect to your cloud account, for AWS use either account credentials or role-based authentication. For GCP use account organization credentials. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="accountId"> The ID of the cloud account. </param>
         /// <param name="awsAccessKeyId"> Public key element of the AWS credential object (write only). </param>
         /// <param name="awsSecretAccessKey"> Secret key element of the AWS credential object (write only). </param>
-        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType)
+        internal AwsCredsAuthenticationDetailsProperties(AuthenticationProvisioningState? authenticationProvisioningState, IReadOnlyList<SecurityCenterCloudPermission> grantedPermissions, AuthenticationType authenticationType, IDictionary<string, BinaryData> serializedAdditionalRawData, string accountId, string awsAccessKeyId, string awsSecretAccessKey) : base(authenticationProvisioningState, grantedPermissions, authenticationType, serializedAdditionalRawData)
         {
             AccountId = accountId;
             AwsAccessKeyId = awsAccessKeyId;
             AwsSecretAccessKey = awsSecretAccessKey;
             AuthenticationType = authenticationType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AwsCredsAuthenticationDetailsProperties"/> for deserialization. </summary>
+        internal AwsCredsAuthenticationDetailsProperties()
+        {
         }
 
         /// <summary> The ID of the cloud account. </summary>

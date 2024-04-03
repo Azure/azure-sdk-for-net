@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class AutomationRulePropertyValuesChangedCondition : IUtf8JsonSerializable
+    public partial class AutomationRulePropertyValuesChangedCondition : IUtf8JsonSerializable, IJsonModel<AutomationRulePropertyValuesChangedCondition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRulePropertyValuesChangedCondition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationRulePropertyValuesChangedCondition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PropertyName))
             {
@@ -41,19 +51,50 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element)
+        AutomationRulePropertyValuesChangedCondition IJsonModel<AutomationRulePropertyValuesChangedCondition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRulePropertyValuesChangedCondition(document.RootElement, options);
+        }
+
+        internal static AutomationRulePropertyValuesChangedCondition DeserializeAutomationRulePropertyValuesChangedCondition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AutomationRulePropertyChangedConditionSupportedPropertyType> propertyName = default;
-            Optional<AutomationRulePropertyChangedConditionSupportedChangedType> changeType = default;
-            Optional<AutomationRulePropertyConditionSupportedOperator> @operator = default;
-            Optional<IList<string>> propertyValues = default;
+            AutomationRulePropertyChangedConditionSupportedPropertyType? propertyName = default;
+            AutomationRulePropertyChangedConditionSupportedChangedType? changeType = default;
+            AutomationRulePropertyConditionSupportedOperator? @operator = default;
+            IList<string> propertyValues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propertyName"u8))
@@ -97,8 +138,44 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     propertyValues = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRulePropertyValuesChangedCondition(Optional.ToNullable(propertyName), Optional.ToNullable(changeType), Optional.ToNullable(@operator), Optional.ToList(propertyValues));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationRulePropertyValuesChangedCondition(propertyName, changeType, @operator, propertyValues ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationRulePropertyValuesChangedCondition IPersistableModel<AutomationRulePropertyValuesChangedCondition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyValuesChangedCondition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationRulePropertyValuesChangedCondition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyValuesChangedCondition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationRulePropertyValuesChangedCondition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

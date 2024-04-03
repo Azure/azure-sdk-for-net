@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EdgeOrder;
 using Azure.ResourceManager.EdgeOrder.Models;
 
 namespace Azure.ResourceManager.EdgeOrder.Mocking
@@ -63,6 +60,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> $filter is supported to filter based on shipping address properties. Filter supports only equals operation. </param>
@@ -86,6 +91,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListAddressesAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderAddressResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,6 +124,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Filters for showing the product families. </param>
@@ -125,7 +142,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -138,6 +155,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamilies</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -153,7 +174,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesRequest(Id.SubscriptionId, content, expand, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesNextPageRequest(nextLink, Id.SubscriptionId, content, expand, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamily.DeserializeProductFamily, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamily.DeserializeProductFamily(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamilies", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -166,6 +187,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -180,7 +205,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -193,6 +218,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +236,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListConfigurationsRequest(Id.SubscriptionId, content, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListConfigurationsNextPageRequest(nextLink, Id.SubscriptionId, content, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductConfiguration.DeserializeProductConfiguration, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductConfiguration.DeserializeProductConfiguration(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetConfigurations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -220,6 +249,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -230,7 +263,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -244,6 +277,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListProductFamiliesMetadata</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on list of product families metadata, which provides the next page in the list of product families metadata. </param>
@@ -253,7 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListProductFamiliesMetadataRequest(Id.SubscriptionId, skipToken);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListProductFamiliesMetadataNextPageRequest(nextLink, Id.SubscriptionId, skipToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProductFamiliesMetadata.DeserializeProductFamiliesMetadata, DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProductFamiliesMetadata.DeserializeProductFamiliesMetadata(e), DefaultClientDiagnostics, Pipeline, "MockableEdgeOrderSubscriptionResource.GetProductFamiliesMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,6 +303,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -290,6 +331,10 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <term>Operation Id</term>
         /// <description>ListOrderAtSubscriptionLevel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> $skipToken is supported on Get list of order, which provides the next page in the list of order. </param>
@@ -312,6 +357,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -337,6 +390,14 @@ namespace Azure.ResourceManager.EdgeOrder.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListOrderItemsAtSubscriptionLevel</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-12-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EdgeOrderItemResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

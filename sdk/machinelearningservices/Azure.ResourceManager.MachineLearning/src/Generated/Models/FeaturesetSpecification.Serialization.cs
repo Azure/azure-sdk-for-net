@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class FeaturesetSpecification : IUtf8JsonSerializable
+    internal partial class FeaturesetSpecification : IUtf8JsonSerializable, IJsonModel<FeaturesetSpecification>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FeaturesetSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FeaturesetSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesetSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Path))
             {
@@ -27,16 +38,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("path");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static FeaturesetSpecification DeserializeFeaturesetSpecification(JsonElement element)
+        FeaturesetSpecification IJsonModel<FeaturesetSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesetSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFeaturesetSpecification(document.RootElement, options);
+        }
+
+        internal static FeaturesetSpecification DeserializeFeaturesetSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> path = default;
+            string path = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -49,8 +91,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     path = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FeaturesetSpecification(path.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FeaturesetSpecification(path, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FeaturesetSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesetSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FeaturesetSpecification IPersistableModel<FeaturesetSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FeaturesetSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFeaturesetSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FeaturesetSpecification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FeaturesetSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

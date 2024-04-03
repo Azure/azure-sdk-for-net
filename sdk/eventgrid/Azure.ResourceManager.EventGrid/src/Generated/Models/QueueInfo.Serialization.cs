@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    public partial class QueueInfo : IUtf8JsonSerializable
+    public partial class QueueInfo : IUtf8JsonSerializable, IJsonModel<QueueInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueueInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueueInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ReceiveLockDurationInSeconds))
             {
@@ -29,26 +39,57 @@ namespace Azure.ResourceManager.EventGrid.Models
             if (Optional.IsDefined(DeadLetterDestinationWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterDestinationWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterDestinationWithResourceIdentity);
+                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterDestinationWithResourceIdentity, options);
             }
             if (Optional.IsDefined(EventTimeToLive))
             {
                 writer.WritePropertyName("eventTimeToLive"u8);
                 writer.WriteStringValue(EventTimeToLive.Value, "P");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QueueInfo DeserializeQueueInfo(JsonElement element)
+        QueueInfo IJsonModel<QueueInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueueInfo(document.RootElement, options);
+        }
+
+        internal static QueueInfo DeserializeQueueInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> receiveLockDurationInSeconds = default;
-            Optional<int> maxDeliveryCount = default;
-            Optional<DeadLetterWithResourceIdentity> deadLetterDestinationWithResourceIdentity = default;
-            Optional<TimeSpan> eventTimeToLive = default;
+            int? receiveLockDurationInSeconds = default;
+            int? maxDeliveryCount = default;
+            DeadLetterWithResourceIdentity deadLetterDestinationWithResourceIdentity = default;
+            TimeSpan? eventTimeToLive = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("receiveLockDurationInSeconds"u8))
@@ -75,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                     {
                         continue;
                     }
-                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value);
+                    deadLetterDestinationWithResourceIdentity = DeadLetterWithResourceIdentity.DeserializeDeadLetterWithResourceIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTimeToLive"u8))
@@ -87,8 +128,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     eventTimeToLive = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueueInfo(Optional.ToNullable(receiveLockDurationInSeconds), Optional.ToNullable(maxDeliveryCount), deadLetterDestinationWithResourceIdentity.Value, Optional.ToNullable(eventTimeToLive));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueueInfo(receiveLockDurationInSeconds, maxDeliveryCount, deadLetterDestinationWithResourceIdentity, eventTimeToLive, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QueueInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QueueInfo IPersistableModel<QueueInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueueInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueueInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueueInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueueInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

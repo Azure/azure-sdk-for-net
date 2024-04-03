@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class AuthorizationProfile : IUtf8JsonSerializable
+    public partial class AuthorizationProfile : IUtf8JsonSerializable, IJsonModel<AuthorizationProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AuthorizationProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AuthorizationProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthorizationProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(UserIds))
             {
@@ -36,17 +46,48 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AuthorizationProfile DeserializeAuthorizationProfile(JsonElement element)
+        AuthorizationProfile IJsonModel<AuthorizationProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AuthorizationProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAuthorizationProfile(document.RootElement, options);
+        }
+
+        internal static AuthorizationProfile DeserializeAuthorizationProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> userIds = default;
-            Optional<IList<string>> groupIds = default;
+            IList<string> userIds = default;
+            IList<string> groupIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userIds"u8))
@@ -77,8 +118,44 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     groupIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AuthorizationProfile(Optional.ToList(userIds), Optional.ToList(groupIds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AuthorizationProfile(userIds ?? new ChangeTrackingList<string>(), groupIds ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AuthorizationProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AuthorizationProfile IPersistableModel<AuthorizationProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AuthorizationProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAuthorizationProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AuthorizationProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AuthorizationProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

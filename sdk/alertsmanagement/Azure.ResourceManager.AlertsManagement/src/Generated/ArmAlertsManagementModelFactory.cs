@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.AlertsManagement;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
@@ -30,7 +29,15 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new AlertProcessingRuleData(id, name, resourceType, systemData, tags, location, properties);
+            return new AlertProcessingRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertMetadata"/>. </summary>
@@ -42,7 +49,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertMetadata"/> instance for mocking. </returns>
         public static ServiceAlertMetadata ServiceAlertMetadata(ServiceAlertMetadataProperties properties = null)
         {
-            return new ServiceAlertMetadata(properties);
+            return new ServiceAlertMetadata(properties, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagement.ServiceAlertData"/>. </summary>
@@ -54,7 +61,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="AlertsManagement.ServiceAlertData"/> instance for mocking. </returns>
         public static ServiceAlertData ServiceAlertData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertProperties properties = null)
         {
-            return new ServiceAlertData(id, name, resourceType, systemData, properties);
+            return new ServiceAlertData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertProperties"/>. </summary>
@@ -64,7 +77,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertProperties"/> instance for mocking. </returns>
         public static ServiceAlertProperties ServiceAlertProperties(ServiceAlertEssentials essentials = null, BinaryData context = null, BinaryData egressConfig = null)
         {
-            return new ServiceAlertProperties(essentials, context, egressConfig);
+            return new ServiceAlertProperties(essentials, context, egressConfig, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertEssentials"/>. </summary>
@@ -90,7 +103,27 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertEssentials"/> instance for mocking. </returns>
         public static ServiceAlertEssentials ServiceAlertEssentials(ServiceAlertSeverity? severity = null, ServiceAlertSignalType? signalType = null, ServiceAlertState? alertState = null, MonitorCondition? monitorCondition = null, string targetResource = null, string targetResourceName = null, string targetResourceGroup = null, string targetResourceType = null, MonitorServiceSourceForAlert? monitorService = null, string alertRule = null, string sourceCreatedId = null, Guid? smartGroupId = null, string smartGroupingReason = null, DateTimeOffset? startOn = null, DateTimeOffset? lastModifiedOn = null, DateTimeOffset? monitorConditionResolvedOn = null, string lastModifiedBy = null, bool? isSuppressed = null, string description = null)
         {
-            return new ServiceAlertEssentials(severity, signalType, alertState, monitorCondition, targetResource, targetResourceName, targetResourceGroup, targetResourceType, monitorService, alertRule, sourceCreatedId, smartGroupId, smartGroupingReason, startOn, lastModifiedOn, monitorConditionResolvedOn, lastModifiedBy, isSuppressed != null ? new ServiceAlertActionStatus(isSuppressed) : null, description);
+            return new ServiceAlertEssentials(
+                severity,
+                signalType,
+                alertState,
+                monitorCondition,
+                targetResource,
+                targetResourceName,
+                targetResourceGroup,
+                targetResourceType,
+                monitorService,
+                alertRule,
+                sourceCreatedId,
+                smartGroupId,
+                smartGroupingReason,
+                startOn,
+                lastModifiedOn,
+                monitorConditionResolvedOn,
+                lastModifiedBy,
+                isSuppressed != null ? new ServiceAlertActionStatus(isSuppressed, serializedAdditionalRawData: null) : null,
+                description,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModification"/>. </summary>
@@ -102,7 +135,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertModification"/> instance for mocking. </returns>
         public static ServiceAlertModification ServiceAlertModification(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertModificationProperties properties = null)
         {
-            return new ServiceAlertModification(id, name, resourceType, systemData, properties);
+            return new ServiceAlertModification(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertModificationProperties"/>. </summary>
@@ -113,7 +152,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             modifications ??= new List<ServiceAlertModificationItemInfo>();
 
-            return new ServiceAlertModificationProperties(alertId, modifications?.ToList());
+            return new ServiceAlertModificationProperties(alertId, modifications?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ServiceAlertSummary"/>. </summary>
@@ -125,7 +164,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.ServiceAlertSummary"/> instance for mocking. </returns>
         public static ServiceAlertSummary ServiceAlertSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ServiceAlertSummaryGroup properties = null)
         {
-            return new ServiceAlertSummary(id, name, resourceType, systemData, properties);
+            return new ServiceAlertSummary(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AlertsManagement.SmartGroupData"/>. </summary>
@@ -158,7 +203,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             alertStates ??= new List<SmartGroupAggregatedProperty>();
             alertSeverities ??= new List<SmartGroupAggregatedProperty>();
 
-            return new SmartGroupData(id, name, resourceType, systemData, alertsCount, smartGroupState, severity, startOn, lastModifiedOn, lastModifiedBy, resources?.ToList(), resourceTypes?.ToList(), resourceGroups?.ToList(), monitorServices?.ToList(), monitorConditions?.ToList(), alertStates?.ToList(), alertSeverities?.ToList(), nextLink);
+            return new SmartGroupData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                alertsCount,
+                smartGroupState,
+                severity,
+                startOn,
+                lastModifiedOn,
+                lastModifiedBy,
+                resources?.ToList(),
+                resourceTypes?.ToList(),
+                resourceGroups?.ToList(),
+                monitorServices?.ToList(),
+                monitorConditions?.ToList(),
+                alertStates?.ToList(),
+                alertSeverities?.ToList(),
+                nextLink,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModification"/>. </summary>
@@ -170,7 +234,13 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.SmartGroupModification"/> instance for mocking. </returns>
         public static SmartGroupModification SmartGroupModification(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SmartGroupModificationProperties properties = null)
         {
-            return new SmartGroupModification(id, name, resourceType, systemData, properties);
+            return new SmartGroupModification(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmartGroupModificationProperties"/>. </summary>
@@ -182,7 +252,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             modifications ??= new List<SmartGroupModificationItemInfo>();
 
-            return new SmartGroupModificationProperties(smartGroupId, modifications?.ToList(), nextLink);
+            return new SmartGroupModificationProperties(smartGroupId, modifications?.ToList(), nextLink, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceList"/>. </summary>
@@ -192,7 +262,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         {
             data ??= new List<MonitorServiceDetails>();
 
-            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, data?.ToList());
+            return new MonitorServiceList(ServiceAlertMetadataIdentifier.MonitorServiceList, serializedAdditionalRawData: null, data?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonitorServiceDetails"/>. </summary>
@@ -201,7 +271,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <returns> A new <see cref="Models.MonitorServiceDetails"/> instance for mocking. </returns>
         public static MonitorServiceDetails MonitorServiceDetails(string name = null, string displayName = null)
         {
-            return new MonitorServiceDetails(name, displayName);
+            return new MonitorServiceDetails(name, displayName, serializedAdditionalRawData: null);
         }
     }
 }

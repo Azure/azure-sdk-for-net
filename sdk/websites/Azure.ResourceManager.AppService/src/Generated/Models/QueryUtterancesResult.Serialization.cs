@@ -5,37 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class QueryUtterancesResult : IUtf8JsonSerializable
+    public partial class QueryUtterancesResult : IUtf8JsonSerializable, IJsonModel<QueryUtterancesResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryUtterancesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryUtterancesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryUtterancesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryUtterancesResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SampleUtterance))
             {
                 writer.WritePropertyName("sampleUtterance"u8);
-                writer.WriteObjectValue(SampleUtterance);
+                writer.WriteObjectValue<SampleUtterance>(SampleUtterance, options);
             }
             if (Optional.IsDefined(Score))
             {
                 writer.WritePropertyName("score"u8);
                 writer.WriteNumberValue(Score.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element)
+        QueryUtterancesResult IJsonModel<QueryUtterancesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryUtterancesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryUtterancesResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryUtterancesResult(document.RootElement, options);
+        }
+
+        internal static QueryUtterancesResult DeserializeQueryUtterancesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SampleUtterance> sampleUtterance = default;
-            Optional<float> score = default;
+            SampleUtterance sampleUtterance = default;
+            float? score = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sampleUtterance"u8))
@@ -44,7 +87,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value);
+                    sampleUtterance = SampleUtterance.DeserializeSampleUtterance(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("score"u8))
@@ -56,8 +99,89 @@ namespace Azure.ResourceManager.AppService.Models
                     score = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryUtterancesResult(sampleUtterance.Value, Optional.ToNullable(score));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueryUtterancesResult(sampleUtterance, score, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SampleUtterance), out propertyOverride);
+            if (Optional.IsDefined(SampleUtterance) || hasPropertyOverride)
+            {
+                builder.Append("  sampleUtterance: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SampleUtterance, options, 2, false, "  sampleUtterance: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Score), out propertyOverride);
+            if (Optional.IsDefined(Score) || hasPropertyOverride)
+            {
+                builder.Append("  score: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Score.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<QueryUtterancesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryUtterancesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(QueryUtterancesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QueryUtterancesResult IPersistableModel<QueryUtterancesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryUtterancesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryUtterancesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryUtterancesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryUtterancesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

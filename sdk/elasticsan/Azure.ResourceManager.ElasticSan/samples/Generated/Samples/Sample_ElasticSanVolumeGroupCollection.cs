@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 using Azure.ResourceManager.Models;
 
@@ -128,17 +125,17 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 [new ResourceIdentifier("key7482")] = new UserAssignedIdentity(),
 },
                 },
-                ProtocolType = StorageTargetType.Iscsi,
+                ProtocolType = ElasticSanStorageTargetType.Iscsi,
                 Encryption = ElasticSanEncryptionType.EncryptionAtRestWithCustomerManagedKey,
-                EncryptionProperties = new Models.EncryptionProperties()
+                EncryptionProperties = new ElasticSanEncryptionProperties()
                 {
-                    KeyVaultProperties = new Models.KeyVaultProperties()
+                    KeyVaultProperties = new ElasticSanKeyVaultProperties()
                     {
                         KeyName = "sftaiernmrzypnrkpakrrawxcbsqzc",
                         KeyVersion = "c",
                         KeyVaultUri = new Uri("https://microsoft.com/axmblwp"),
                     },
-                    EncryptionUserAssignedIdentity = "im",
+                    EncryptionUserAssignedIdentity = new ResourceIdentifier("im"),
                 },
                 VirtualNetworkRules =
 {

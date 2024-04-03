@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="frontendEndpoints"> Frontend endpoints associated with this rule. </param>
         /// <param name="acceptedProtocols"> Protocol schemes to match for this rule. </param>
         /// <param name="patternsToMatch"> The route patterns of the rule. </param>
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="rulesEngine"> A reference to a specific Rules Engine Configuration to apply to this route. </param>
         /// <param name="webApplicationFirewallPolicyLink"> Defines the Web Application Firewall policy for each routing rule (if applicable). </param>
         /// <param name="resourceState"> Resource status. </param>
-        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType)
+        internal RoutingRuleData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WritableSubResource> frontendEndpoints, IList<FrontDoorProtocol> acceptedProtocols, IList<string> patternsToMatch, RoutingRuleEnabledState? enabledState, RouteConfiguration routeConfiguration, WritableSubResource rulesEngine, WritableSubResource webApplicationFirewallPolicyLink, FrontDoorResourceState? resourceState) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             FrontendEndpoints = frontendEndpoints;
             AcceptedProtocols = acceptedProtocols;

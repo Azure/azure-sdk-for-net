@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.StorageMover;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -30,7 +29,16 @@ namespace Azure.ResourceManager.StorageMover.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new StorageMoverData(id, name, resourceType, systemData, tags, location, description, provisioningState);
+            return new StorageMoverData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverAgentData"/>. </summary>
@@ -53,7 +61,24 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.StorageMoverAgentData"/> instance for mocking. </returns>
         public static StorageMoverAgentData StorageMoverAgentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, string agentVersion = null, string arcResourceId = null, string arcVmUuid = null, StorageMoverAgentStatus? agentStatus = null, DateTimeOffset? lastStatusUpdate = null, string localIPAddress = null, long? memoryInMB = null, long? numberOfCores = null, long? uptimeInSeconds = null, StorageMoverAgentPropertiesErrorDetails errorDetails = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new StorageMoverAgentData(id, name, resourceType, systemData, description, agentVersion, arcResourceId, arcVmUuid, agentStatus, lastStatusUpdate, localIPAddress, memoryInMB, numberOfCores, uptimeInSeconds, errorDetails, provisioningState);
+            return new StorageMoverAgentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                agentVersion,
+                arcResourceId,
+                arcVmUuid,
+                agentStatus,
+                lastStatusUpdate,
+                localIPAddress,
+                memoryInMB,
+                numberOfCores,
+                uptimeInSeconds,
+                errorDetails,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.StorageMoverAgentPropertiesErrorDetails"/>. </summary>
@@ -62,7 +87,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.StorageMoverAgentPropertiesErrorDetails"/> instance for mocking. </returns>
         public static StorageMoverAgentPropertiesErrorDetails StorageMoverAgentPropertiesErrorDetails(string code = null, string message = null)
         {
-            return new StorageMoverAgentPropertiesErrorDetails(code, message);
+            return new StorageMoverAgentPropertiesErrorDetails(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverEndpointData"/>. </summary>
@@ -78,7 +103,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.StorageMoverEndpointData"/> instance for mocking. </returns>
         public static StorageMoverEndpointData StorageMoverEndpointData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, EndpointBaseProperties properties = null)
         {
-            return new StorageMoverEndpointData(id, name, resourceType, systemData, properties);
+            return new StorageMoverEndpointData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.EndpointBaseProperties"/>. </summary>
@@ -86,9 +117,9 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
         /// <returns> A new <see cref="Models.EndpointBaseProperties"/> instance for mocking. </returns>
-        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = "Unknown", string description = null, StorageMoverProvisioningState? provisioningState = null)
+        public static EndpointBaseProperties EndpointBaseProperties(string endpointType = null, string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new UnknownEndpointBaseProperties(endpointType, description, provisioningState);
+            return new UnknownEndpointBaseProperties(endpointType == null ? default : new EndpointType(endpointType), description, provisioningState, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.StorageMoverProjectData"/>. </summary>
@@ -101,7 +132,14 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.StorageMoverProjectData"/> instance for mocking. </returns>
         public static StorageMoverProjectData StorageMoverProjectData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new StorageMoverProjectData(id, name, resourceType, systemData, description, provisioningState);
+            return new StorageMoverProjectData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.JobDefinitionData"/>. </summary>
@@ -126,7 +164,26 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.JobDefinitionData"/> instance for mocking. </returns>
         public static JobDefinitionData JobDefinitionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string description = null, StorageMoverCopyMode copyMode = default, string sourceName = null, ResourceIdentifier sourceResourceId = null, string sourceSubpath = null, string targetName = null, ResourceIdentifier targetResourceId = null, string targetSubpath = null, string latestJobRunName = null, ResourceIdentifier latestJobRunResourceId = null, JobRunStatus? latestJobRunStatus = null, string agentName = null, ResourceIdentifier agentResourceId = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new JobDefinitionData(id, name, resourceType, systemData, description, copyMode, sourceName, sourceResourceId, sourceSubpath, targetName, targetResourceId, targetSubpath, latestJobRunName, latestJobRunResourceId, latestJobRunStatus, agentName, agentResourceId, provisioningState);
+            return new JobDefinitionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                description,
+                copyMode,
+                sourceName,
+                sourceResourceId,
+                sourceSubpath,
+                targetName,
+                targetResourceId,
+                targetSubpath,
+                latestJobRunName,
+                latestJobRunResourceId,
+                latestJobRunStatus,
+                agentName,
+                agentResourceId,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.JobRunResourceId"/>. </summary>
@@ -134,7 +191,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.JobRunResourceId"/> instance for mocking. </returns>
         public static JobRunResourceId JobRunResourceId(ResourceIdentifier jobRunResourceIdValue = null)
         {
-            return new JobRunResourceId(jobRunResourceIdValue);
+            return new JobRunResourceId(jobRunResourceIdValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMover.JobRunData"/>. </summary>
@@ -173,7 +230,40 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="StorageMover.JobRunData"/> instance for mocking. </returns>
         public static JobRunData JobRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, JobRunStatus? status = null, JobRunScanStatus? scanStatus = null, string agentName = null, ResourceIdentifier agentResourceId = null, DateTimeOffset? executionStartOn = null, DateTimeOffset? executionEndOn = null, DateTimeOffset? lastStatusUpdate = null, long? itemsScanned = null, long? itemsExcluded = null, long? itemsUnsupported = null, long? itemsNoTransferNeeded = null, long? itemsFailed = null, long? itemsTransferred = null, long? bytesScanned = null, long? bytesExcluded = null, long? bytesUnsupported = null, long? bytesNoTransferNeeded = null, long? bytesFailed = null, long? bytesTransferred = null, string sourceName = null, ResourceIdentifier sourceResourceId = null, BinaryData sourceProperties = null, string targetName = null, ResourceIdentifier targetResourceId = null, BinaryData targetProperties = null, BinaryData jobDefinitionProperties = null, JobRunError error = null, StorageMoverProvisioningState? provisioningState = null)
         {
-            return new JobRunData(id, name, resourceType, systemData, status, scanStatus, agentName, agentResourceId, executionStartOn, executionEndOn, lastStatusUpdate, itemsScanned, itemsExcluded, itemsUnsupported, itemsNoTransferNeeded, itemsFailed, itemsTransferred, bytesScanned, bytesExcluded, bytesUnsupported, bytesNoTransferNeeded, bytesFailed, bytesTransferred, sourceName, sourceResourceId, sourceProperties, targetName, targetResourceId, targetProperties, jobDefinitionProperties, error, provisioningState);
+            return new JobRunData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                status,
+                scanStatus,
+                agentName,
+                agentResourceId,
+                executionStartOn,
+                executionEndOn,
+                lastStatusUpdate,
+                itemsScanned,
+                itemsExcluded,
+                itemsUnsupported,
+                itemsNoTransferNeeded,
+                itemsFailed,
+                itemsTransferred,
+                bytesScanned,
+                bytesExcluded,
+                bytesUnsupported,
+                bytesNoTransferNeeded,
+                bytesFailed,
+                bytesTransferred,
+                sourceName,
+                sourceResourceId,
+                sourceProperties,
+                targetName,
+                targetResourceId,
+                targetProperties,
+                jobDefinitionProperties,
+                error,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.JobRunError"/>. </summary>
@@ -183,7 +273,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.JobRunError"/> instance for mocking. </returns>
         public static JobRunError JobRunError(string code = null, string message = null, string target = null)
         {
-            return new JobRunError(code, message, target);
+            return new JobRunError(code, message, target, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageBlobContainerEndpointProperties"/>. </summary>
@@ -194,7 +284,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageBlobContainerEndpointProperties"/> instance for mocking. </returns>
         public static AzureStorageBlobContainerEndpointProperties AzureStorageBlobContainerEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string storageAccountResourceId = null, string blobContainerName = null)
         {
-            return new AzureStorageBlobContainerEndpointProperties(EndpointType.AzureStorageBlobContainer, description, provisioningState, storageAccountResourceId, blobContainerName);
+            return new AzureStorageBlobContainerEndpointProperties(
+                EndpointType.AzureStorageBlobContainer,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                storageAccountResourceId,
+                blobContainerName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NfsMountEndpointProperties"/>. </summary>
@@ -206,7 +302,14 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.NfsMountEndpointProperties"/> instance for mocking. </returns>
         public static NfsMountEndpointProperties NfsMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, NfsVersion? nfsVersion = null, string export = null)
         {
-            return new NfsMountEndpointProperties(EndpointType.NfsMount, description, provisioningState, host, nfsVersion, export);
+            return new NfsMountEndpointProperties(
+                EndpointType.NfsMount,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                host,
+                nfsVersion,
+                export);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/>. </summary>
@@ -217,7 +320,13 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.AzureStorageSmbFileShareEndpointProperties"/> instance for mocking. </returns>
         public static AzureStorageSmbFileShareEndpointProperties AzureStorageSmbFileShareEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, ResourceIdentifier storageAccountResourceId = null, string fileShareName = null)
         {
-            return new AzureStorageSmbFileShareEndpointProperties(EndpointType.AzureStorageSmbFileShare, description, provisioningState, storageAccountResourceId, fileShareName);
+            return new AzureStorageSmbFileShareEndpointProperties(
+                EndpointType.AzureStorageSmbFileShare,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                storageAccountResourceId,
+                fileShareName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SmbMountEndpointProperties"/>. </summary>
@@ -229,7 +338,14 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <returns> A new <see cref="Models.SmbMountEndpointProperties"/> instance for mocking. </returns>
         public static SmbMountEndpointProperties SmbMountEndpointProperties(string description = null, StorageMoverProvisioningState? provisioningState = null, string host = null, string shareName = null, AzureKeyVaultSmbCredentials credentials = null)
         {
-            return new SmbMountEndpointProperties(EndpointType.SmbMount, description, provisioningState, host, shareName, credentials);
+            return new SmbMountEndpointProperties(
+                EndpointType.SmbMount,
+                description,
+                provisioningState,
+                serializedAdditionalRawData: null,
+                host,
+                shareName,
+                credentials);
         }
     }
 }

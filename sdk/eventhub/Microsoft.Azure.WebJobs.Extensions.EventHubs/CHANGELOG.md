@@ -1,12 +1,36 @@
 # Release History
 
-## 6.1.0-beta.1 (Unreleased)
+## 6.3.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Added a new setting to `EventHubOptions` to allow checkpointing to be disabled for applications that always want to use their `initialOffsetOptions` when starting to process a new partition.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 6.2.0 (2024-03-05)
+
+### Other Changes
+
+- Adjusted checkpointing logic to no longer write a checkpoint when the listener is shutting down.  This was necessary to prevent potential data loss from occurring when shutting down Function retries.  Because the trigger cannot know if the Function host would have retried a failure if it were not shutting down, we cannot assume that it is safe to checkpoint. This change ensures that the batch of events being processed when shut down was requested will be retried by another instance or the next time the Function app is run.
+
+- Updated the `Azure.Messaging.EventHubs`, which includes a new build of the AMQP transport library. The notable bug fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.
+
+## 6.1.0 (2024-02-13)
+
+### Bugs Fixed
+
+- The `SystemProperties` binding will now return certain item as string values instead of an AMQP structure that requires calling `ToString()` to read.  The affected system properties are:
+  - MessageId
+  - CorelationId
+  - To
+  - ReplyTo
+
+- Avoid race condition when determining whether to checkpoint when the host is in the process of shutting down.
 
 ### Other Changes
 

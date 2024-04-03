@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class WorkspaceConnectionServicePrincipal : IUtf8JsonSerializable
+    public partial class WorkspaceConnectionServicePrincipal : IUtf8JsonSerializable, IJsonModel<WorkspaceConnectionServicePrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkspaceConnectionServicePrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkspaceConnectionServicePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkspaceConnectionServicePrincipal)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -31,18 +41,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WorkspaceConnectionServicePrincipal DeserializeWorkspaceConnectionServicePrincipal(JsonElement element)
+        WorkspaceConnectionServicePrincipal IJsonModel<WorkspaceConnectionServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkspaceConnectionServicePrincipal)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkspaceConnectionServicePrincipal(document.RootElement, options);
+        }
+
+        internal static WorkspaceConnectionServicePrincipal DeserializeWorkspaceConnectionServicePrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<string> clientSecret = default;
-            Optional<Guid> tenantId = default;
+            string clientId = default;
+            string clientSecret = default;
+            Guid? tenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -64,8 +105,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tenantId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkspaceConnectionServicePrincipal(clientId.Value, clientSecret.Value, Optional.ToNullable(tenantId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkspaceConnectionServicePrincipal(clientId, clientSecret, tenantId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WorkspaceConnectionServicePrincipal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkspaceConnectionServicePrincipal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkspaceConnectionServicePrincipal IPersistableModel<WorkspaceConnectionServicePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkspaceConnectionServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkspaceConnectionServicePrincipal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkspaceConnectionServicePrincipal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkspaceConnectionServicePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

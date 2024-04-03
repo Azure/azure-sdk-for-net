@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.Network
         /// <summary> Initializes a new instance of <see cref="BastionHostData"/>. </summary>
         public BastionHostData()
         {
+            Zones = new ChangeTrackingList<string>();
             IPConfigurations = new ChangeTrackingList<BastionHostIPConfiguration>();
         }
 
@@ -31,6 +32,8 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The sku of this Bastion Host. </param>
         /// <param name="ipConfigurations"> IP configuration of the Bastion Host resource. </param>
@@ -45,8 +48,9 @@ namespace Azure.ResourceManager.Network
         /// <param name="enableShareableLink"> Enable/Disable Shareable Link of the Bastion Host resource. </param>
         /// <param name="enableTunneling"> Enable/Disable Tunneling feature of the Bastion Host resource. </param>
         /// <param name="enableKerberos"> Enable/Disable Kerberos feature of the Bastion Host resource. </param>
-        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags)
+        internal BastionHostData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<string> zones, ETag? etag, NetworkSku sku, IList<BastionHostIPConfiguration> ipConfigurations, string dnsName, WritableSubResource virtualNetwork, BastionHostPropertiesFormatNetworkAcls networkAcls, NetworkProvisioningState? provisioningState, int? scaleUnits, bool? disableCopyPaste, bool? enableFileCopy, bool? enableIPConnect, bool? enableShareableLink, bool? enableTunneling, bool? enableKerberos) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
+            Zones = zones;
             ETag = etag;
             Sku = sku;
             IPConfigurations = ipConfigurations;
@@ -63,6 +67,8 @@ namespace Azure.ResourceManager.Network
             EnableKerberos = enableKerberos;
         }
 
+        /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        public IList<string> Zones { get; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
         /// <summary> The sku of this Bastion Host. </summary>

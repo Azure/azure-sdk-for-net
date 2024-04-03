@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Microsoft.Identity.Client;
 
 namespace Azure.Identity.Tests.Mock
@@ -70,6 +71,9 @@ namespace Azure.Identity.Tests.Mock
             string tenantId,
             bool enableCae,
             BrowserCustomizationOptions browserOptions,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
@@ -94,6 +98,9 @@ namespace Azure.Identity.Tests.Mock
             IAccount account,
             string tenantId,
             bool enableCae,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {
@@ -111,6 +118,9 @@ namespace Azure.Identity.Tests.Mock
             AuthenticationRecord record,
             string tenantId,
             bool enableCae,
+#if PREVIEW_FEATURE_FLAG
+            PopTokenRequestContext? popTokenRequestContext,
+#endif
             bool async,
             CancellationToken cancellationToken)
         {

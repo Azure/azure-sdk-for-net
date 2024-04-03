@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
@@ -85,6 +83,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationTransactions_ListByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -108,6 +110,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationTransactions_ListByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation transactions by date range. The properties/EventDate for start date and end date. The filter supports 'le' and  'ge'. Note: API returns data for the entire start date's and end date's billing month. For example, filter properties/eventDate+ge+2020-01-01+AND+properties/eventDate+le+2020-12-29 will include data for entire December 2020 month (i.e. will contain records for dates December 30 and 31). </param>
@@ -117,7 +123,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationTransactionsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationTransactionsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction, _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionModernReservationTransaction.DeserializeConsumptionModernReservationTransaction(e), _reservationTransactionsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetReservationTransactions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -130,6 +136,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Events_ListByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -145,7 +155,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionEventSummary.DeserializeConsumptionEventSummary(e), _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -158,6 +168,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Events_ListByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -173,7 +187,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _eventsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name, startDate, endDate);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _eventsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name, startDate, endDate);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionEventSummary.DeserializeConsumptionEventSummary, _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionEventSummary.DeserializeConsumptionEventSummary(e), _eventsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetEvents", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -186,6 +200,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Lots_ListByBillingProfile</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +213,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _lotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionLotSummary.DeserializeConsumptionLotSummary(e), _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -209,6 +227,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>Lots_ListByBillingProfile</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -217,7 +239,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _lotsRestClient.CreateListByBillingProfileRequest(Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _lotsRestClient.CreateListByBillingProfileNextPageRequest(nextLink, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionLotSummary.DeserializeConsumptionLotSummary, _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionLotSummary.DeserializeConsumptionLotSummary(e), _lotsClientDiagnostics, Pipeline, "BillingProfileConsumptionResource.GetLots", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,6 +252,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Credits_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -260,6 +286,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Credits_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

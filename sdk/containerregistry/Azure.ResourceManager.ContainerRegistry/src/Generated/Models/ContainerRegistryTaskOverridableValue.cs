@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The properties of a overridable value that can be passed to a task template. </summary>
     public partial class ContainerRegistryTaskOverridableValue
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskOverridableValue"/>. </summary>
         /// <param name="name"> The name of the overridable value. </param>
         /// <param name="value"> The overridable value. </param>
@@ -30,11 +62,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="name"> The name of the overridable value. </param>
         /// <param name="value"> The overridable value. </param>
         /// <param name="isSecret"> Flag to indicate whether the value represents a secret or not. </param>
-        internal ContainerRegistryTaskOverridableValue(string name, string value, bool? isSecret)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerRegistryTaskOverridableValue(string name, string value, bool? isSecret, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Value = value;
             IsSecret = isSecret;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskOverridableValue"/> for deserialization. </summary>
+        internal ContainerRegistryTaskOverridableValue()
+        {
         }
 
         /// <summary> The name of the overridable value. </summary>

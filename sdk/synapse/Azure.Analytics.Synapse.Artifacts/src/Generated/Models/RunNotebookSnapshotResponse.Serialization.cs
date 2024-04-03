@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,8 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> message = default;
-            Optional<RunNotebookSnapshotResult> result = default;
+            string message = default;
+            RunNotebookSnapshotResult result = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -40,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new RunNotebookSnapshotResponse(message.Value, result.Value);
+            return new RunNotebookSnapshotResponse(message, result);
         }
 
         internal partial class RunNotebookSnapshotResponseConverter : JsonConverter<RunNotebookSnapshotResponse>

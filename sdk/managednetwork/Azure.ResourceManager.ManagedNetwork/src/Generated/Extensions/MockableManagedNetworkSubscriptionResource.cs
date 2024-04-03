@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetwork;
 
 namespace Azure.ResourceManager.ManagedNetwork.Mocking
 {
@@ -53,6 +50,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> May be used to limit the number of results in a page for list queries. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ManagedNetwork.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedNetworks_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

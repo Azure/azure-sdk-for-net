@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> A request to perform the connectivity check operation on a API Management service. </summary>
     public partial class ConnectivityCheckContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/>. </summary>
         /// <param name="source"> Definitions about the connectivity check origin. </param>
         /// <param name="destination"> The connectivity check operation destination. </param>
@@ -32,13 +64,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="preferredIPVersion"> The IP version to be used. Only IPv4 is supported for now. </param>
         /// <param name="protocol"> The request's protocol. Specific protocol configuration can be available based on this selection. The specified destination address must be coherent with this value. </param>
         /// <param name="protocolConfiguration"> Protocol-specific configuration. </param>
-        internal ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination, PreferredIPVersion? preferredIPVersion, ConnectivityCheckProtocol? protocol, ConnectivityCheckRequestProtocolConfiguration protocolConfiguration)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ConnectivityCheckContent(ConnectivityCheckRequestSource source, ConnectivityCheckRequestDestination destination, PreferredIPVersion? preferredIPVersion, ConnectivityCheckProtocol? protocol, ConnectivityCheckRequestProtocolConfiguration protocolConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Source = source;
             Destination = destination;
             PreferredIPVersion = preferredIPVersion;
             Protocol = protocol;
             ProtocolConfiguration = protocolConfiguration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectivityCheckContent"/> for deserialization. </summary>
+        internal ConnectivityCheckContent()
+        {
         }
 
         /// <summary> Definitions about the connectivity check origin. </summary>

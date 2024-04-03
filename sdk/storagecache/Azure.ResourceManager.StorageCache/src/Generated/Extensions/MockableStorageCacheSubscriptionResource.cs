@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Mocking
@@ -76,6 +73,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,6 +103,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>amlFilesystems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AmlFileSystemResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,6 +132,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,6 +168,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>checkAmlFSSubnets</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information about the subnets to validate. </param>
@@ -181,6 +202,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,6 +238,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>getRequiredAmlFSSubnetsSize</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Information to determine the number of available IPs a subnet will need to host the AML file system. </param>
@@ -244,6 +273,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -252,7 +285,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageCacheSku.DeserializeStorageCacheSku(e), SkusClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -266,6 +299,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,7 +311,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheSku.DeserializeStorageCacheSku, SkusClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageCacheSku.DeserializeStorageCacheSku(e), SkusClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -287,6 +324,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +337,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetUsageModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageCacheUsageModel.DeserializeStorageCacheUsageModel(e), UsageModelsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -310,6 +351,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>UsageModels_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,7 +363,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsageModelsRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsageModelsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsageModel.DeserializeStorageCacheUsageModel, UsageModelsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetUsageModels", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageCacheUsageModel.DeserializeStorageCacheUsageModel(e), UsageModelsClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetUsageModels", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -331,6 +376,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +390,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => StorageCacheUsage.DeserializeStorageCacheUsage(e), AscUsagesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -355,6 +404,10 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <term>Operation Id</term>
         /// <description>AscUsages_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of the region to query for usage information. </param>
@@ -364,7 +417,7 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => AscUsagesRestClient.CreateListRequest(Id.SubscriptionId, location);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => AscUsagesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, StorageCacheUsage.DeserializeStorageCacheUsage, AscUsagesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => StorageCacheUsage.DeserializeStorageCacheUsage(e), AscUsagesClientDiagnostics, Pipeline, "MockableStorageCacheSubscriptionResource.GetStorageCacheUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -377,6 +430,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -399,6 +460,14 @@ namespace Azure.ResourceManager.StorageCache.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Caches_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageCacheResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

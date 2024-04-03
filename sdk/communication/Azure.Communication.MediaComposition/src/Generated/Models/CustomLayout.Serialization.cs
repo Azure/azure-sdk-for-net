@@ -24,7 +24,7 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Layers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<LayoutLayer>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition
             foreach (var item in InputGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<InputGroup>(item.Value);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -62,12 +62,12 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<IDictionary<string, LayoutLayer>> layers = default;
+            IDictionary<string, LayoutLayer> layers = default;
             IDictionary<string, InputGroup> inputGroups = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"u8))
@@ -123,7 +123,13 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CustomLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), Optional.ToDictionary(layers), inputGroups);
+            return new CustomLayout(
+                kind,
+                resolution,
+                placeholderImageUri,
+                scalingMode,
+                layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
+                inputGroups);
         }
     }
 }

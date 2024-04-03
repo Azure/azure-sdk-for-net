@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> Appliances name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ResourceConnector.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Appliances_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-27</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceConnectorApplianceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

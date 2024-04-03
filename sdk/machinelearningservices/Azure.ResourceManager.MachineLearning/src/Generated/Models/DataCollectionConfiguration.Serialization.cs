@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class DataCollectionConfiguration : IUtf8JsonSerializable
+    public partial class DataCollectionConfiguration : IUtf8JsonSerializable, IJsonModel<DataCollectionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataCollectionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataCollectionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -49,19 +60,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataCollectionConfiguration DeserializeDataCollectionConfiguration(JsonElement element)
+        DataCollectionConfiguration IJsonModel<DataCollectionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataCollectionConfiguration(document.RootElement, options);
+        }
+
+        internal static DataCollectionConfiguration DeserializeDataCollectionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> clientId = default;
-            Optional<DataCollectionMode> dataCollectionMode = default;
-            Optional<string> dataId = default;
-            Optional<double> samplingRate = default;
+            string clientId = default;
+            DataCollectionMode? dataCollectionMode = default;
+            string dataId = default;
+            double? samplingRate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -102,8 +144,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     samplingRate = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataCollectionConfiguration(clientId.Value, Optional.ToNullable(dataCollectionMode), dataId.Value, Optional.ToNullable(samplingRate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataCollectionConfiguration(clientId, dataCollectionMode, dataId, samplingRate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataCollectionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataCollectionConfiguration IPersistableModel<DataCollectionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataCollectionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataCollectionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

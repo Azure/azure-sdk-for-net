@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,10 +17,10 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> firstInstructionIndex = default;
-            Optional<int> lastInstructionIndex = default;
-            Optional<int> groupLengthInMeters = default;
-            Optional<string> groupMessage = default;
+            int? firstInstructionIndex = default;
+            int? lastInstructionIndex = default;
+            int? groupLengthInMeters = default;
+            string groupMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("firstInstructionIndex"u8))
@@ -57,7 +56,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteInstructionGroup(Optional.ToNullable(firstInstructionIndex), Optional.ToNullable(lastInstructionIndex), Optional.ToNullable(groupLengthInMeters), groupMessage.Value);
+            return new RouteInstructionGroup(firstInstructionIndex, lastInstructionIndex, groupLengthInMeters, groupMessage);
         }
     }
 }

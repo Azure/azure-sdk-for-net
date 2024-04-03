@@ -3,19 +3,15 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
     internal class ImdsManagedIdentitySource : ManagedIdentitySource
     {
-        // IMDS constants. Docs for IMDS are available here https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
+        // IMDS constants. Docs for IMDS are available at https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
 
@@ -93,7 +89,14 @@ namespace Azure.Identity
             }
             catch (RequestFailedException e) when (e.Status == 0)
             {
-                throw new CredentialUnavailableException(NoResponseError, e);
+                if (e.InnerException is TaskCanceledException)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw new CredentialUnavailableException(NoResponseError, e);
+                }
             }
             catch (TaskCanceledException e)
             {

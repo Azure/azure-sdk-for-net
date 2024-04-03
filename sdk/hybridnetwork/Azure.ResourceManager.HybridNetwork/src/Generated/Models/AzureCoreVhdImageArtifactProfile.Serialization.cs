@@ -5,38 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureCoreVhdImageArtifactProfile : IUtf8JsonSerializable
+    public partial class AzureCoreVhdImageArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureCoreVhdImageArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreVhdImageArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureCoreVhdImageArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VhdArtifactProfile))
             {
                 writer.WritePropertyName("vhdArtifactProfile"u8);
-                writer.WriteObjectValue(VhdArtifactProfile);
+                writer.WriteObjectValue<VhdImageArtifactProfile>(VhdArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureCoreVhdImageArtifactProfile DeserializeAzureCoreVhdImageArtifactProfile(JsonElement element)
+        AzureCoreVhdImageArtifactProfile IJsonModel<AzureCoreVhdImageArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureCoreVhdImageArtifactProfile(document.RootElement, options);
+        }
+
+        internal static AzureCoreVhdImageArtifactProfile DeserializeAzureCoreVhdImageArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<VhdImageArtifactProfile> vhdArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            VhdImageArtifactProfile vhdArtifactProfile = default;
+            WritableSubResource artifactStore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdArtifactProfile"u8))
@@ -45,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value);
+                    vhdArtifactProfile = VhdImageArtifactProfile.DeserializeVhdImageArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureCoreVhdImageArtifactProfile(artifactStore, vhdArtifactProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureCoreVhdImageArtifactProfile(artifactStore, serializedAdditionalRawData, vhdArtifactProfile);
         }
+
+        BinaryData IPersistableModel<AzureCoreVhdImageArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureCoreVhdImageArtifactProfile IPersistableModel<AzureCoreVhdImageArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureCoreVhdImageArtifactProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageArtifactProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureCoreVhdImageArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesAzureBlob : IUtf8JsonSerializable
+    public partial class KubernetesAzureBlob : IUtf8JsonSerializable, IJsonModel<KubernetesAzureBlob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesAzureBlob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesAzureBlob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Uri))
             {
@@ -69,7 +79,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ServicePrincipal != null)
                 {
                     writer.WritePropertyName("servicePrincipal"u8);
-                    writer.WriteObjectValue(ServicePrincipal);
+                    writer.WriteObjectValue<KubernetesServicePrincipal>(ServicePrincipal, options);
                 }
                 else
                 {
@@ -105,7 +115,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 if (ManagedIdentity != null)
                 {
                     writer.WritePropertyName("managedIdentity"u8);
-                    writer.WriteObjectValue(ManagedIdentity);
+                    writer.WriteObjectValue<KubernetesAzureBlobManagedIdentity>(ManagedIdentity, options);
                 }
                 else
                 {
@@ -124,24 +134,55 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("localAuthRef");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesAzureBlob DeserializeKubernetesAzureBlob(JsonElement element)
+        KubernetesAzureBlob IJsonModel<KubernetesAzureBlob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesAzureBlob(document.RootElement, options);
+        }
+
+        internal static KubernetesAzureBlob DeserializeKubernetesAzureBlob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> url = default;
-            Optional<string> containerName = default;
-            Optional<long?> timeoutInSeconds = default;
-            Optional<long?> syncIntervalInSeconds = default;
-            Optional<KubernetesServicePrincipal> servicePrincipal = default;
-            Optional<string> accountKey = default;
-            Optional<string> sasToken = default;
-            Optional<KubernetesAzureBlobManagedIdentity> managedIdentity = default;
-            Optional<string> localAuthRef = default;
+            Uri url = default;
+            string containerName = default;
+            long? timeoutInSeconds = default;
+            long? syncIntervalInSeconds = default;
+            KubernetesServicePrincipal servicePrincipal = default;
+            string accountKey = default;
+            string sasToken = default;
+            KubernetesAzureBlobManagedIdentity managedIdentity = default;
+            string localAuthRef = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("url"u8))
@@ -191,7 +232,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         servicePrincipal = null;
                         continue;
                     }
-                    servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value);
+                    servicePrincipal = KubernetesServicePrincipal.DeserializeKubernetesServicePrincipal(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("accountKey"u8))
@@ -221,7 +262,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         managedIdentity = null;
                         continue;
                     }
-                    managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value);
+                    managedIdentity = KubernetesAzureBlobManagedIdentity.DeserializeKubernetesAzureBlobManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("localAuthRef"u8))
@@ -234,8 +275,54 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     localAuthRef = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesAzureBlob(url.Value, containerName.Value, Optional.ToNullable(timeoutInSeconds), Optional.ToNullable(syncIntervalInSeconds), servicePrincipal.Value, accountKey.Value, sasToken.Value, managedIdentity.Value, localAuthRef.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesAzureBlob(
+                url,
+                containerName,
+                timeoutInSeconds,
+                syncIntervalInSeconds,
+                servicePrincipal,
+                accountKey,
+                sasToken,
+                managedIdentity,
+                localAuthRef,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesAzureBlob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesAzureBlob IPersistableModel<KubernetesAzureBlob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesAzureBlob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesAzureBlob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesAzureBlob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesAzureBlob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

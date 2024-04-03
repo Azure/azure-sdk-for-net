@@ -6,21 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformAppProperties : IUtf8JsonSerializable
+    public partial class AppPlatformAppProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsPublic))
             {
                 writer.WritePropertyName("public"u8);
                 writer.WriteBooleanValue(IsPublic.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UriString))
+            {
+                writer.WritePropertyName("url"u8);
+                writer.WriteStringValue(UriString);
             }
             if (Optional.IsCollectionDefined(AddonConfigs))
             {
@@ -56,6 +70,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            {
+                writer.WritePropertyName("fqdn"u8);
+                writer.WriteStringValue(Fqdn);
+            }
             if (Optional.IsDefined(IsHttpsOnly))
             {
                 writer.WritePropertyName("httpsOnly"u8);
@@ -64,12 +88,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(TemporaryDisk))
             {
                 writer.WritePropertyName("temporaryDisk"u8);
-                writer.WriteObjectValue(TemporaryDisk);
+                writer.WriteObjectValue<AppTemporaryDisk>(TemporaryDisk, options);
             }
             if (Optional.IsDefined(PersistentDisk))
             {
                 writer.WritePropertyName("persistentDisk"u8);
-                writer.WriteObjectValue(PersistentDisk);
+                writer.WriteObjectValue<AppPersistentDisk>(PersistentDisk, options);
             }
             if (Optional.IsCollectionDefined(CustomPersistentDisks))
             {
@@ -77,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomPersistentDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppCustomPersistentDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -92,42 +116,73 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in LoadedCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppLoadedCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VnetAddons))
             {
                 writer.WritePropertyName("vnetAddons"u8);
-                writer.WriteObjectValue(VnetAddons);
+                writer.WriteObjectValue<AppVnetAddons>(VnetAddons, options);
             }
             if (Optional.IsDefined(IngressSettings))
             {
                 writer.WritePropertyName("ingressSettings"u8);
-                writer.WriteObjectValue(IngressSettings);
+                writer.WriteObjectValue<AppIngressSettings>(IngressSettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element)
+        AppPlatformAppProperties IJsonModel<AppPlatformAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformAppProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformAppProperties DeserializeAppPlatformAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> @public = default;
-            Optional<string> uri = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppPlatformAppProvisioningState> provisioningState = default;
-            Optional<string> fqdn = default;
-            Optional<bool> httpsOnly = default;
-            Optional<AppTemporaryDisk> temporaryDisk = default;
-            Optional<AppPersistentDisk> persistentDisk = default;
-            Optional<IList<AppCustomPersistentDisk>> customPersistentDisks = default;
-            Optional<bool> enableEndToEndTls = default;
-            Optional<IList<AppLoadedCertificate>> loadedCertificates = default;
-            Optional<AppVnetAddons> vnetAddons = default;
-            Optional<AppIngressSettings> ingressSettings = default;
+            bool? @public = default;
+            string uri = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppPlatformAppProvisioningState? provisioningState = default;
+            string fqdn = default;
+            bool? httpsOnly = default;
+            AppTemporaryDisk temporaryDisk = default;
+            AppPersistentDisk persistentDisk = default;
+            IList<AppCustomPersistentDisk> customPersistentDisks = default;
+            bool? enableEndToEndTls = default;
+            IList<AppLoadedCertificate> loadedCertificates = default;
+            AppVnetAddons vnetAddons = default;
+            AppIngressSettings ingressSettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("public"u8))
@@ -206,7 +261,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value);
+                    temporaryDisk = AppTemporaryDisk.DeserializeAppTemporaryDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("persistentDisk"u8))
@@ -215,7 +270,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value);
+                    persistentDisk = AppPersistentDisk.DeserializeAppPersistentDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customPersistentDisks"u8))
@@ -227,7 +282,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppCustomPersistentDisk> array = new List<AppCustomPersistentDisk>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item));
+                        array.Add(AppCustomPersistentDisk.DeserializeAppCustomPersistentDisk(item, options));
                     }
                     customPersistentDisks = array;
                     continue;
@@ -250,7 +305,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppLoadedCertificate> array = new List<AppLoadedCertificate>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item));
+                        array.Add(AppLoadedCertificate.DeserializeAppLoadedCertificate(item, options));
                     }
                     loadedCertificates = array;
                     continue;
@@ -261,7 +316,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value);
+                    vnetAddons = AppVnetAddons.DeserializeAppVnetAddons(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ingressSettings"u8))
@@ -270,11 +325,61 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value);
+                    ingressSettings = AppIngressSettings.DeserializeAppIngressSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformAppProperties(Optional.ToNullable(@public), uri.Value, Optional.ToDictionary(addonConfigs), Optional.ToNullable(provisioningState), fqdn.Value, Optional.ToNullable(httpsOnly), temporaryDisk.Value, persistentDisk.Value, Optional.ToList(customPersistentDisks), Optional.ToNullable(enableEndToEndTls), Optional.ToList(loadedCertificates), vnetAddons.Value, ingressSettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformAppProperties(
+                @public,
+                uri,
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                provisioningState,
+                fqdn,
+                httpsOnly,
+                temporaryDisk,
+                persistentDisk,
+                customPersistentDisks ?? new ChangeTrackingList<AppCustomPersistentDisk>(),
+                enableEndToEndTls,
+                loadedCertificates ?? new ChangeTrackingList<AppLoadedCertificate>(),
+                vnetAddons,
+                ingressSettings,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformAppProperties IPersistableModel<AppPlatformAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformAppProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

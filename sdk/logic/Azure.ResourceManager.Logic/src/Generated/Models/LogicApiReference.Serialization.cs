@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class LogicApiReference : IUtf8JsonSerializable
+    public partial class LogicApiReference : IUtf8JsonSerializable, IJsonModel<LogicApiReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogicApiReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogicApiReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -56,32 +66,73 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LogicApiReference DeserializeLogicApiReference(JsonElement element)
+        LogicApiReference IJsonModel<LogicApiReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogicApiReference(document.RootElement, options);
+        }
+
+        internal static LogicApiReference DeserializeLogicApiReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUri = default;
-            Optional<BinaryData> swagger = default;
-            Optional<string> brandColor = default;
-            Optional<LogicApiTier> category = default;
-            Optional<LogicResourceReference> integrationServiceEnvironment = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
+            string displayName = default;
+            string description = default;
+            Uri iconUri = default;
+            BinaryData swagger = default;
+            string brandColor = default;
+            LogicApiTier? category = default;
+            LogicResourceReference integrationServiceEnvironment = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -132,7 +183,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value);
+                    integrationServiceEnvironment = DeserializeLogicResourceReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -158,8 +209,55 @@ namespace Azure.ResourceManager.Logic.Models
                     type = new ResourceType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LogicApiReference(id.Value, name.Value, Optional.ToNullable(type), displayName.Value, description.Value, iconUri.Value, swagger.Value, brandColor.Value, Optional.ToNullable(category), integrationServiceEnvironment.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogicApiReference(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                iconUri,
+                swagger,
+                brandColor,
+                category,
+                integrationServiceEnvironment);
         }
+
+        BinaryData IPersistableModel<LogicApiReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogicApiReference IPersistableModel<LogicApiReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogicApiReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogicApiReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogicApiReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogicApiReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

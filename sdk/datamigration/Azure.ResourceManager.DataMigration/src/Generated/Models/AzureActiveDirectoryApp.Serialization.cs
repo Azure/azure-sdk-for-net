@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class AzureActiveDirectoryApp : IUtf8JsonSerializable
+    public partial class AzureActiveDirectoryApp : IUtf8JsonSerializable, IJsonModel<AzureActiveDirectoryApp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureActiveDirectoryApp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureActiveDirectoryApp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureActiveDirectoryApp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureActiveDirectoryApp)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ApplicationId))
             {
@@ -36,19 +46,50 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("ignoreAzurePermissions"u8);
                 writer.WriteBooleanValue(IgnoreAzurePermissions.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureActiveDirectoryApp DeserializeAzureActiveDirectoryApp(JsonElement element)
+        AzureActiveDirectoryApp IJsonModel<AzureActiveDirectoryApp>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureActiveDirectoryApp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureActiveDirectoryApp)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureActiveDirectoryApp(document.RootElement, options);
+        }
+
+        internal static AzureActiveDirectoryApp DeserializeAzureActiveDirectoryApp(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> applicationId = default;
-            Optional<string> appKey = default;
-            Optional<Guid> tenantId = default;
-            Optional<bool> ignoreAzurePermissions = default;
+            string applicationId = default;
+            string appKey = default;
+            Guid? tenantId = default;
+            bool? ignoreAzurePermissions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applicationId"u8))
@@ -79,8 +120,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     ignoreAzurePermissions = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureActiveDirectoryApp(applicationId.Value, appKey.Value, Optional.ToNullable(tenantId), Optional.ToNullable(ignoreAzurePermissions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureActiveDirectoryApp(applicationId, appKey, tenantId, ignoreAzurePermissions, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureActiveDirectoryApp>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureActiveDirectoryApp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureActiveDirectoryApp)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureActiveDirectoryApp IPersistableModel<AzureActiveDirectoryApp>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureActiveDirectoryApp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureActiveDirectoryApp(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureActiveDirectoryApp)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureActiveDirectoryApp>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

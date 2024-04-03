@@ -6,22 +6,84 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class SubscriptionTerm
+    public partial class SubscriptionTerm : IUtf8JsonSerializable, IJsonModel<SubscriptionTerm>
     {
-        internal static SubscriptionTerm DeserializeSubscriptionTerm(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubscriptionTerm>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubscriptionTerm>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TermUnit))
+            {
+                writer.WritePropertyName("termUnit"u8);
+                writer.WriteStringValue(TermUnit);
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDate"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (Optional.IsDefined(EndOn))
+            {
+                writer.WritePropertyName("endDate"u8);
+                writer.WriteStringValue(EndOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SubscriptionTerm IJsonModel<SubscriptionTerm>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubscriptionTerm(document.RootElement, options);
+        }
+
+        internal static SubscriptionTerm DeserializeSubscriptionTerm(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> termUnit = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> endDate = default;
+            string termUnit = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? endDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("termUnit"u8))
@@ -47,8 +109,44 @@ namespace Azure.ResourceManager.Grafana.Models
                     endDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubscriptionTerm(termUnit.Value, Optional.ToNullable(startDate), Optional.ToNullable(endDate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubscriptionTerm(termUnit, startDate, endDate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubscriptionTerm>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubscriptionTerm IPersistableModel<SubscriptionTerm>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubscriptionTerm(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubscriptionTerm>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

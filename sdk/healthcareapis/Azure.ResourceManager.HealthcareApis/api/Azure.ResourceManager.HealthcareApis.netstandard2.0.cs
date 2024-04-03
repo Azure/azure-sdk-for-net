@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.DicomServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.DicomServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DicomServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DicomServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>
     {
         public DicomServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration AuthenticationConfiguration { get { throw null; } set { } }
@@ -25,11 +25,18 @@ namespace Azure.ResourceManager.HealthcareApis
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? EventState { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public bool? IsDataPartitionsEnabled { get { throw null; } set { } }
         public System.Uri KeyEncryptionKeyUri { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Uri ServiceUri { get { throw null; } }
+        public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration StorageConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.DicomServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.DicomServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.DicomServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DicomServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -68,7 +75,7 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.FhirServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.FhirServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FhirServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class FhirServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>
     {
         public FhirServiceData(Azure.Core.AzureLocation location) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -88,6 +95,11 @@ namespace Azure.ResourceManager.HealthcareApis
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration ResourceVersionPolicyConfiguration { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.FhirServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.FhirServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.FhirServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FhirServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -151,7 +163,7 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HealthcareApisIotConnectorData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class HealthcareApisIotConnectorData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>
     {
         public HealthcareApisIotConnectorData(Azure.Core.AzureLocation location) { }
         public System.BinaryData DeviceMappingContent { get { throw null; } set { } }
@@ -159,6 +171,11 @@ namespace Azure.ResourceManager.HealthcareApis
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration IngestionEndpointConfiguration { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotConnectorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthcareApisIotConnectorResource : Azure.ResourceManager.ArmResource
     {
@@ -200,7 +217,7 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HealthcareApisIotFhirDestinationData : Azure.ResourceManager.Models.ResourceData
+    public partial class HealthcareApisIotFhirDestinationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>
     {
         public HealthcareApisIotFhirDestinationData(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType resourceIdentityResolutionType, Azure.Core.ResourceIdentifier fhirServiceResourceId, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties fhirMapping) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
@@ -209,6 +226,11 @@ namespace Azure.ResourceManager.HealthcareApis
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType ResourceIdentityResolutionType { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthcareApisIotFhirDestinationResource : Azure.ResourceManager.ArmResource
     {
@@ -224,19 +246,29 @@ namespace Azure.ResourceManager.HealthcareApis
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HealthcareApis.HealthcareApisIotFhirDestinationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class HealthcareApisPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class HealthcareApisPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>
     {
         public HealthcareApisPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class HealthcareApisPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>
     {
         public HealthcareApisPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthcareApisServiceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource>, System.Collections.IEnumerable
     {
@@ -255,13 +287,18 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HealthcareApisServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class HealthcareApisServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>
     {
         public HealthcareApisServiceData(Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisKind kind) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisKind Kind { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthcareApisServicePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisServicePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisServicePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -362,11 +399,16 @@ namespace Azure.ResourceManager.HealthcareApis
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class HealthcareApisWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class HealthcareApisWorkspaceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>
     {
         public HealthcareApisWorkspaceData(Azure.Core.AzureLocation location) { }
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HealthcareApisWorkspacePrivateEndpointConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspacePrivateEndpointConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspacePrivateEndpointConnectionResource>, System.Collections.IEnumerable
     {
@@ -504,7 +546,9 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration DicomServiceAuthenticationConfiguration(string authority = null, System.Collections.Generic.IEnumerable<string> audiences = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration, System.Uri serviceUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
-        public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration = null, System.Uri serviceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration = null, System.Uri serviceUri = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration storageConfiguration = null, bool? isDataPartitionsEnabled = default(bool?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.HealthcareApis.DicomServiceData DicomServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration corsConfiguration, System.Uri serviceUri, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState, System.Uri keyEncryptionKeyUri, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.FhirServiceData FhirServiceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind? kind = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind?), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration acrConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration authenticationConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration corsConfiguration = null, string exportStorageAccountName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState = default(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState?), Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration = null, Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration importConfiguration = null, bool? isUsCoreMissingDataEnabled = default(bool?), System.Uri keyEncryptionKeyUri = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.HealthcareApis.FhirServiceData FhirServiceData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind? kind, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry> accessPolicies, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration acrConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration authenticationConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration corsConfiguration, string exportStorageAccountName, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState? eventState, Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration resourceVersionPolicyConfiguration, Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration importConfiguration, Azure.ResourceManager.Models.ManagedServiceIdentity identity, Azure.ETag? etag) { throw null; }
@@ -518,13 +562,18 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static Azure.ResourceManager.HealthcareApis.HealthcareApisWorkspaceData HealthcareApisWorkspaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties properties = null, Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties HealthcareApisWorkspaceProperties(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? provisioningState = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess?)) { throw null; }
     }
-    public partial class DicomServiceAuthenticationConfiguration
+    public partial class DicomServiceAuthenticationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>
     {
         public DicomServiceAuthenticationConfiguration() { }
         public System.Collections.Generic.IReadOnlyList<string> Audiences { get { throw null; } }
         public string Authority { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceAuthenticationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DicomServiceCorsConfiguration
+    public partial class DicomServiceCorsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>
     {
         public DicomServiceCorsConfiguration() { }
         public bool? AllowCredentials { get { throw null; } set { } }
@@ -532,11 +581,21 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public int? MaxAge { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Methods { get { throw null; } }
         public System.Collections.Generic.IList<string> Origins { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServiceCorsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DicomServicePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags
+    public partial class DicomServicePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>
     {
         public DicomServicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.DicomServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FhirResourceVersionPolicy : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy>
@@ -558,25 +617,42 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public override string ToString() { throw null; }
     }
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class FhirServiceAccessPolicyEntry
+    public partial class FhirServiceAccessPolicyEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>
     {
         public FhirServiceAccessPolicyEntry(string objectId) { }
+        public FhirServiceAccessPolicyEntry(string objectId, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData) { }
         public string ObjectId { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FhirServiceAcrConfiguration
+    public partial class FhirServiceAcrConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>
     {
         public FhirServiceAcrConfiguration() { }
         public System.Collections.Generic.IList<string> LoginServers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry> OciArtifacts { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAcrConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FhirServiceAuthenticationConfiguration
+    public partial class FhirServiceAuthenticationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>
     {
         public FhirServiceAuthenticationConfiguration() { }
         public string Audience { get { throw null; } set { } }
         public string Authority { get { throw null; } set { } }
         public bool? IsSmartProxyEnabled { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration> SmartIdentityProviders { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAuthenticationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FhirServiceCorsConfiguration
+    public partial class FhirServiceCorsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>
     {
         public FhirServiceCorsConfiguration() { }
         public bool? AllowCredentials { get { throw null; } set { } }
@@ -584,6 +660,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public int? MaxAge { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Methods { get { throw null; } }
         public System.Collections.Generic.IList<string> Origins { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceCorsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FhirServiceEventState : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState>
@@ -604,12 +685,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState left, Azure.ResourceManager.HealthcareApis.Models.FhirServiceEventState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FhirServiceImportConfiguration
+    public partial class FhirServiceImportConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>
     {
         public FhirServiceImportConfiguration() { }
         public string IntegrationDataStore { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsInitialImportMode { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceImportConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FhirServiceKind : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind>
@@ -629,28 +715,48 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind left, Azure.ResourceManager.HealthcareApis.Models.FhirServiceKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class FhirServicePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags
+    public partial class FhirServicePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>
     {
         public FhirServicePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class FhirServiceResourceVersionPolicyConfiguration
+    public partial class FhirServiceResourceVersionPolicyConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>
     {
         public FhirServiceResourceVersionPolicyConfiguration() { }
         public Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy? Default { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.HealthcareApis.Models.FhirResourceVersionPolicy> ResourceTypeOverrides { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceResourceVersionPolicyConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration
+    public partial class HealthcareApisIotConnectorEventHubIngestionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>
     {
         public HealthcareApisIotConnectorEventHubIngestionConfiguration() { }
         public string ConsumerGroup { get { throw null; } set { } }
         public string EventHubName { get { throw null; } set { } }
         public string FullyQualifiedEventHubNamespace { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorEventHubIngestionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisIotConnectorPatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags
+    public partial class HealthcareApisIotConnectorPatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>
     {
         public HealthcareApisIotConnectorPatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotConnectorPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthcareApisIotIdentityResolutionType : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType>
@@ -670,10 +776,15 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotIdentityResolutionType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HealthcareApisIotMappingProperties
+    public partial class HealthcareApisIotMappingProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>
     {
         public HealthcareApisIotMappingProperties() { }
         public System.BinaryData Content { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisIotMappingProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum HealthcareApisKind
     {
@@ -681,18 +792,28 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         FhirStu3 = 1,
         FhirR4 = 2,
     }
-    public partial class HealthcareApisNameAvailabilityContent
+    public partial class HealthcareApisNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>
     {
         public HealthcareApisNameAvailabilityContent(string name, Azure.Core.ResourceType resourceType) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisNameAvailabilityResult
+    public partial class HealthcareApisNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>
     {
         internal HealthcareApisNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum HealthcareApisNameUnavailableReason
     {
@@ -738,12 +859,17 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HealthcareApisPrivateLinkServiceConnectionState
+    public partial class HealthcareApisPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>
     {
         public HealthcareApisPrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HealthcareApisProvisioningState : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState>
@@ -792,30 +918,50 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess left, Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HealthcareApisResourceTags
+    public partial class HealthcareApisResourceTags : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>
     {
         public HealthcareApisResourceTags() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceAccessPolicyEntry
+    public partial class HealthcareApisServiceAccessPolicyEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>
     {
         public HealthcareApisServiceAccessPolicyEntry(string objectId) { }
         public string ObjectId { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceAcrConfiguration
+    public partial class HealthcareApisServiceAcrConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>
     {
         public HealthcareApisServiceAcrConfiguration() { }
         public System.Collections.Generic.IList<string> LoginServers { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry> OciArtifacts { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAcrConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceAuthenticationConfiguration
+    public partial class HealthcareApisServiceAuthenticationConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>
     {
         public HealthcareApisServiceAuthenticationConfiguration() { }
         public string Audience { get { throw null; } set { } }
         public string Authority { get { throw null; } set { } }
         public bool? IsSmartProxyEnabled { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAuthenticationConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceCorsConfiguration
+    public partial class HealthcareApisServiceCorsConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>
     {
         public HealthcareApisServiceCorsConfiguration() { }
         public bool? AllowCredentials { get { throw null; } set { } }
@@ -823,35 +969,60 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public int? MaxAge { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> Methods { get { throw null; } }
         public System.Collections.Generic.IList<string> Origins { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCorsConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceCosmosDbConfiguration
+    public partial class HealthcareApisServiceCosmosDbConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>
     {
         public HealthcareApisServiceCosmosDbConfiguration() { }
         public System.Guid? CrossTenantCmkApplicationId { get { throw null; } set { } }
         public System.Uri KeyVaultKeyUri { get { throw null; } set { } }
         public int? OfferThroughput { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceCosmosDbConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceImportConfiguration
+    public partial class HealthcareApisServiceImportConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>
     {
         public HealthcareApisServiceImportConfiguration() { }
         public string IntegrationDataStore { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
         public bool? IsInitialImportMode { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceImportConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceOciArtifactEntry
+    public partial class HealthcareApisServiceOciArtifactEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>
     {
         public HealthcareApisServiceOciArtifactEntry() { }
         public string Digest { get { throw null; } set { } }
         public string ImageName { get { throw null; } set { } }
         public string LoginServer { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceOciArtifactEntry>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServicePatch
+    public partial class HealthcareApisServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>
     {
         public HealthcareApisServicePatch() { }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisServiceProperties
+    public partial class HealthcareApisServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>
     {
         public HealthcareApisServiceProperties() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceAccessPolicyEntry> AccessPolicies { get { throw null; } }
@@ -864,16 +1035,82 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisWorkspacePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags
+    public partial class HealthcareApisServiceStorageConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>
+    {
+        public HealthcareApisServiceStorageConfiguration() { }
+        public string FileSystemName { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier StorageResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisServiceStorageConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class HealthcareApisWorkspacePatch : Azure.ResourceManager.HealthcareApis.Models.HealthcareApisResourceTags, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>
     {
         public HealthcareApisWorkspacePatch() { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspacePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class HealthcareApisWorkspaceProperties
+    public partial class HealthcareApisWorkspaceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>
     {
         public HealthcareApisWorkspaceProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HealthcareApis.HealthcareApisPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.HealthcareApis.Models.HealthcareApisPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.HealthcareApisWorkspaceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct SmartDataAction : System.IEquatable<Azure.ResourceManager.HealthcareApis.Models.SmartDataAction>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public SmartDataAction(string value) { throw null; }
+        public static Azure.ResourceManager.HealthcareApis.Models.SmartDataAction Read { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HealthcareApis.Models.SmartDataAction other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HealthcareApis.Models.SmartDataAction left, Azure.ResourceManager.HealthcareApis.Models.SmartDataAction right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HealthcareApis.Models.SmartDataAction (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HealthcareApis.Models.SmartDataAction left, Azure.ResourceManager.HealthcareApis.Models.SmartDataAction right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class SmartIdentityProviderApplication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>
+    {
+        public SmartIdentityProviderApplication() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.SmartDataAction> AllowedDataActions { get { throw null; } }
+        public string Audience { get { throw null; } set { } }
+        public string ClientId { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SmartIdentityProviderConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>
+    {
+        public SmartIdentityProviderConfiguration() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderApplication> Applications { get { throw null; } }
+        public string Authority { get { throw null; } set { } }
+        Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.SmartIdentityProviderConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

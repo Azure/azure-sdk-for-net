@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BackupResourceVaultConfigProperties : IUtf8JsonSerializable
+    public partial class BackupResourceVaultConfigProperties : IUtf8JsonSerializable, IJsonModel<BackupResourceVaultConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupResourceVaultConfigProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupResourceVaultConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StorageModelType))
             {
@@ -61,23 +71,54 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isSoftDeleteFeatureStateEditable"u8);
                 writer.WriteBooleanValue(IsSoftDeleteFeatureStateEditable.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BackupResourceVaultConfigProperties DeserializeBackupResourceVaultConfigProperties(JsonElement element)
+        BackupResourceVaultConfigProperties IJsonModel<BackupResourceVaultConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupResourceVaultConfigProperties(document.RootElement, options);
+        }
+
+        internal static BackupResourceVaultConfigProperties DeserializeBackupResourceVaultConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BackupStorageType> storageModelType = default;
-            Optional<BackupStorageType> storageType = default;
-            Optional<BackupStorageTypeState> storageTypeState = default;
-            Optional<EnhancedSecurityState> enhancedSecurityState = default;
-            Optional<SoftDeleteFeatureState> softDeleteFeatureState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<bool> isSoftDeleteFeatureStateEditable = default;
+            BackupStorageType? storageModelType = default;
+            BackupStorageType? storageType = default;
+            BackupStorageTypeState? storageTypeState = default;
+            EnhancedSecurityState? enhancedSecurityState = default;
+            SoftDeleteFeatureState? softDeleteFeatureState = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            IList<string> resourceGuardOperationRequests = default;
+            bool? isSoftDeleteFeatureStateEditable = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageModelType"u8))
@@ -157,8 +198,53 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isSoftDeleteFeatureStateEditable = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupResourceVaultConfigProperties(Optional.ToNullable(storageModelType), Optional.ToNullable(storageType), Optional.ToNullable(storageTypeState), Optional.ToNullable(enhancedSecurityState), Optional.ToNullable(softDeleteFeatureState), Optional.ToNullable(softDeleteRetentionPeriodInDays), Optional.ToList(resourceGuardOperationRequests), Optional.ToNullable(isSoftDeleteFeatureStateEditable));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupResourceVaultConfigProperties(
+                storageModelType,
+                storageType,
+                storageTypeState,
+                enhancedSecurityState,
+                softDeleteFeatureState,
+                softDeleteRetentionPeriodInDays,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                isSoftDeleteFeatureStateEditable,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupResourceVaultConfigProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupResourceVaultConfigProperties IPersistableModel<BackupResourceVaultConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupResourceVaultConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupResourceVaultConfigProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupResourceVaultConfigProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupResourceVaultConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

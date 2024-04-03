@@ -5,36 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupFindRestorableTimeRangeResult : IUtf8JsonSerializable
+    public partial class BackupFindRestorableTimeRangeResult : IUtf8JsonSerializable, IJsonModel<BackupFindRestorableTimeRangeResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupFindRestorableTimeRangeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupFindRestorableTimeRangeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackupFindRestorableTimeRangeResultProperties>(Properties, options);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackupFindRestorableTimeRangeResult DeserializeBackupFindRestorableTimeRangeResult(JsonElement element)
+        BackupFindRestorableTimeRangeResult IJsonModel<BackupFindRestorableTimeRangeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, options);
+        }
+
+        internal static BackupFindRestorableTimeRangeResult DeserializeBackupFindRestorableTimeRangeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BackupFindRestorableTimeRangeResultProperties> properties = default;
+            BackupFindRestorableTimeRangeResultProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -43,7 +105,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    properties = BackupFindRestorableTimeRangeResultProperties.DeserializeBackupFindRestorableTimeRangeResultProperties(property.Value);
+                    properties = BackupFindRestorableTimeRangeResultProperties.DeserializeBackupFindRestorableTimeRangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -70,8 +132,50 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupFindRestorableTimeRangeResult(id, name, type, systemData.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupFindRestorableTimeRangeResult(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupFindRestorableTimeRangeResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupFindRestorableTimeRangeResult IPersistableModel<BackupFindRestorableTimeRangeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupFindRestorableTimeRangeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupFindRestorableTimeRangeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

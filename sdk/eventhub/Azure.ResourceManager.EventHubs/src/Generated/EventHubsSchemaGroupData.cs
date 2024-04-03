@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.EventHubs.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.EventHubs
     /// </summary>
     public partial class EventHubsSchemaGroupData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventHubsSchemaGroupData"/>. </summary>
         public EventHubsSchemaGroupData()
         {
@@ -38,7 +69,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="schemaCompatibility"></param>
         /// <param name="schemaType"></param>
         /// <param name="location"> The geo-location where the resource lives. </param>
-        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsSchemaGroupData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? updatedAtUtc, DateTimeOffset? createdAtUtc, ETag? eTag, IDictionary<string, string> groupProperties, EventHubsSchemaCompatibility? schemaCompatibility, EventHubsSchemaType? schemaType, AzureLocation? location, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             UpdatedAtUtc = updatedAtUtc;
             CreatedAtUtc = createdAtUtc;
@@ -47,21 +79,29 @@ namespace Azure.ResourceManager.EventHubs
             SchemaCompatibility = schemaCompatibility;
             SchemaType = schemaType;
             Location = location;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Exact time the Schema Group was updated. </summary>
+        [WirePath("properties.updatedAtUtc")]
         public DateTimeOffset? UpdatedAtUtc { get; }
         /// <summary> Exact time the Schema Group was created. </summary>
+        [WirePath("properties.createdAtUtc")]
         public DateTimeOffset? CreatedAtUtc { get; }
         /// <summary> The ETag value. </summary>
+        [WirePath("properties.eTag")]
         public ETag? ETag { get; }
         /// <summary> dictionary object for SchemaGroup group properties. </summary>
+        [WirePath("properties.groupProperties")]
         public IDictionary<string, string> GroupProperties { get; }
         /// <summary> Gets or sets the schema compatibility. </summary>
+        [WirePath("properties.schemaCompatibility")]
         public EventHubsSchemaCompatibility? SchemaCompatibility { get; set; }
         /// <summary> Gets or sets the schema type. </summary>
+        [WirePath("properties.schemaType")]
         public EventHubsSchemaType? SchemaType { get; set; }
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
     }
 }

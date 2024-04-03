@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {
@@ -77,6 +74,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>GalleryImages_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -98,6 +103,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +134,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -142,6 +163,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,6 +194,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -186,6 +223,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +254,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -230,6 +283,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -253,6 +314,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageContainers_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -274,6 +343,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageContainers_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -297,6 +374,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -318,6 +403,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,6 +434,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -362,6 +463,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

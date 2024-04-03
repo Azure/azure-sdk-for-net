@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class KerberosPasswordSecrets : IUtf8JsonSerializable
+    public partial class KerberosPasswordSecrets : IUtf8JsonSerializable, IJsonModel<KerberosPasswordSecrets>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KerberosPasswordSecrets>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KerberosPasswordSecrets>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KerberosPasswordSecrets)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KerberosPassword))
             {
@@ -29,17 +40,48 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("secretsType"u8);
             writer.WriteStringValue(SecretsType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KerberosPasswordSecrets DeserializeKerberosPasswordSecrets(JsonElement element)
+        KerberosPasswordSecrets IJsonModel<KerberosPasswordSecrets>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordSecrets>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KerberosPasswordSecrets)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKerberosPasswordSecrets(document.RootElement, options);
+        }
+
+        internal static KerberosPasswordSecrets DeserializeKerberosPasswordSecrets(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kerberosPassword = default;
+            string kerberosPassword = default;
             SecretsType secretsType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kerberosPassword"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     secretsType = new SecretsType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KerberosPasswordSecrets(secretsType, kerberosPassword.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KerberosPasswordSecrets(secretsType, serializedAdditionalRawData, kerberosPassword);
         }
+
+        BinaryData IPersistableModel<KerberosPasswordSecrets>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KerberosPasswordSecrets)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KerberosPasswordSecrets IPersistableModel<KerberosPasswordSecrets>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KerberosPasswordSecrets>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKerberosPasswordSecrets(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KerberosPasswordSecrets)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KerberosPasswordSecrets>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

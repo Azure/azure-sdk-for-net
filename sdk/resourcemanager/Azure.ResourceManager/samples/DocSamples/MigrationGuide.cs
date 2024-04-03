@@ -326,6 +326,105 @@ namespace Azure.ResourceManager.Tests.Samples
             return virtualMachine;
         }
 
+        public async Task<VirtualMachineResource> MigrationExample_UpdateVmByReplace(ResourceGroupResource resourceGroup,VirtualMachineResource virtualMachine, NetworkInterfaceResource networkInterface)
+        {
+            #region Snippet:UpdateByReplace_Fluent_VirtualMachine
+            var virtualMachineDataToModify = new VirtualMachineData(AzureLocation.EastUS)
+            {
+                HardwareProfile = new VirtualMachineHardwareProfile()
+                {
+                    VmSize = VirtualMachineSizeType.StandardD2V3
+                },
+                StorageProfile = new VirtualMachineStorageProfile()
+                {
+                    ImageReference = new ImageReference()
+                    {
+                        Publisher = "Canonical",
+                        Offer = "0001-com-ubuntu-server-jammy",
+                        Sku = "22_04-lts-gen2",
+                        Version = "latest",
+                    },
+                    OSDisk = new VirtualMachineOSDisk(DiskCreateOptionType.FromImage)
+                    {
+                        OSType = SupportedOperatingSystemType.Windows,
+                        Name = "QuickstartVmOSDisk",
+                        Caching = CachingType.ReadOnly,
+                        ManagedDisk = new VirtualMachineManagedDisk()
+                        {
+                            StorageAccountType = StorageAccountType.StandardLrs,
+                        },
+                    },
+                },
+                OSProfile = new VirtualMachineOSProfile()
+                {
+                    AdminUsername = "admin-username",
+                    AdminPassword = "admin-p4$$w0rd",
+                    ComputerName = "computer-name"
+                },
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+                    {
+                        new VirtualMachineNetworkInterfaceReference()
+                        {
+                            Id = networkInterface.Id,
+                            Primary = false,
+                        }
+                    }
+                }
+            };
+            VirtualMachineCollection virtualMachines = resourceGroup.GetVirtualMachines();
+            var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachine.Data.Name, virtualMachineDataToModify)).Value;
+            #endregion
+
+            return virtualMachineModify;
+        }
+
+        public async Task<VirtualMachineResource> MigrationExample_UpdateVmByUpdateAsync(ResourceGroupResource resourceGroup, VirtualMachineResource virtualMachine, NetworkInterfaceResource networkInterface)
+        {
+            #region Snippet:UpdateByUpdateAsync_Fluent_VirtualMachine
+            var patch = new VirtualMachinePatch()
+            {
+                NetworkProfile = new VirtualMachineNetworkProfile()
+                {
+                    NetworkInterfaces =
+                    {
+                        new VirtualMachineNetworkInterfaceReference()
+                        {
+                            Id = networkInterface.Id,
+                            Primary = false,
+                        }
+                    }
+                }
+            };
+            var virtualMachineModify = (await virtualMachine.UpdateAsync(WaitUntil.Completed, patch)).Value;
+            #endregion
+
+            return virtualMachineModify;
+        }
+
+        public async Task<VirtualMachineResource> MigrationExample_UpdateVmByDataProerty(ResourceGroupResource resourceGroup, VirtualMachineResource virtualMachine, NetworkInterfaceResource networkInterface)
+        {
+            #region Snippet:UpdateByDataProerty_Fluent_VirtualMachine
+            var virtualMachines = resourceGroup.GetVirtualMachines();
+            var virtualMachineGet = (await virtualMachines.GetAsync(virtualMachine.Data.Name)).Value;
+            virtualMachineGet.Data.NetworkProfile = new VirtualMachineNetworkProfile()
+            {
+                NetworkInterfaces =
+                {
+                    new VirtualMachineNetworkInterfaceReference()
+                    {
+                        Id = networkInterface.Id,
+                        Primary = false,
+                    }
+                }
+            };
+            var virtualMachineModify = (await virtualMachines.CreateOrUpdateAsync(WaitUntil.Completed, virtualMachine.Data.Name, virtualMachineGet.Data)).Value;
+            #endregion
+
+            return virtualMachineModify;
+        }
+
         public async Task MigrationExample_Fluent_ListNetworks(ResourceGroupResource resourceGroup)
         {
             #region Snippet:Create_Fluent_ListNetworks

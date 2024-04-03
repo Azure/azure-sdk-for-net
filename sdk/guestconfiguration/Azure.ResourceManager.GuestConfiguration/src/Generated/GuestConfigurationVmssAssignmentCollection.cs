@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.GuestConfiguration
 {
@@ -64,6 +62,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
@@ -100,6 +106,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -138,6 +152,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -159,6 +181,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -179,6 +209,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -215,6 +253,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> The guest configuration assignment name. </param>
@@ -249,6 +295,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,6 +340,14 @@ namespace Azure.ResourceManager.GuestConfiguration
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

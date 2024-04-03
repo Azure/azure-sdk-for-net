@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Mocking
 {
@@ -61,6 +58,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,6 +122,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -131,6 +152,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -155,6 +184,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The number of items to be included in the result. </param>
@@ -177,6 +214,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationServiceEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

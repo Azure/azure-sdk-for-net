@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
     /// <summary> Describes a query to be executed. </summary>
     public partial class ResourceQueryContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ResourceQueryContent"/>. </summary>
         /// <param name="query"> The resources query. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="query"/> is null. </exception>
@@ -33,13 +64,20 @@ namespace Azure.ResourceManager.ResourceGraph.Models
         /// <param name="query"> The resources query. </param>
         /// <param name="options"> The query evaluation options. </param>
         /// <param name="facets"> An array of facet requests to be computed against the query result. </param>
-        internal ResourceQueryContent(IList<string> subscriptions, IList<string> managementGroups, string query, ResourceQueryRequestOptions options, IList<FacetRequest> facets)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceQueryContent(IList<string> subscriptions, IList<string> managementGroups, string query, ResourceQueryRequestOptions options, IList<FacetRequest> facets, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Subscriptions = subscriptions;
             ManagementGroups = managementGroups;
             Query = query;
             Options = options;
             Facets = facets;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceQueryContent"/> for deserialization. </summary>
+        internal ResourceQueryContent()
+        {
         }
 
         /// <summary> Azure subscriptions against which to execute the query. </summary>

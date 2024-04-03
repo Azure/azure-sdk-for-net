@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Mocking
 {
@@ -53,6 +50,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skiptoken"> Continuation token for pagination. </param>
@@ -75,6 +80,14 @@ namespace Azure.ResourceManager.MachineLearningCompute.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationalizationClusters_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2017-08-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalizationClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EventGrid.Models;
 
 namespace Azure.ResourceManager.EventGrid
@@ -69,6 +67,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -107,6 +113,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +161,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,7 +172,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual AsyncPageable<NetworkSecurityPerimeterConfigurationData> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -168,6 +186,10 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -175,7 +197,7 @@ namespace Azure.ResourceManager.EventGrid
         public virtual Pageable<NetworkSecurityPerimeterConfigurationData> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _networkSecurityPerimeterConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, "topics", Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData, _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetworkSecurityPerimeterConfigurationData.DeserializeNetworkSecurityPerimeterConfigurationData(e), _networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, "TopicNetworkSecurityPerimeterConfigurationCollection.GetAll", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -188,6 +210,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,6 +256,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="perimeterGuid"> Unique identifier for perimeter. </param>
@@ -262,6 +300,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -301,6 +347,14 @@ namespace Azure.ResourceManager.EventGrid
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkSecurityPerimeterConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-12-15-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopicNetworkSecurityPerimeterConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

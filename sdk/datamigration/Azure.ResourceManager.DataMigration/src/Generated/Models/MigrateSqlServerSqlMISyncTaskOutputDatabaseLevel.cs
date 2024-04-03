@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -25,6 +24,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel"/>. </summary>
         /// <param name="id"> Result identifier. </param>
         /// <param name="resultType"> Result type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceDatabaseName"> Name of the database. </param>
         /// <param name="migrationState"> Current state of database. </param>
         /// <param name="startedOn"> Database migration start time. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="errorPrefix"> prefix string to use for querying errors for this database. </param>
         /// <param name="isFullBackupRestored"> Whether full backup has been applied to the target database or not. </param>
         /// <param name="exceptionsAndWarnings"> Migration exceptions and warnings. </param>
-        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id, string resultType, string sourceDatabaseName, DatabaseMigrationState? migrationState, DateTimeOffset? startedOn, DateTimeOffset? endedOn, BackupSetInfo fullBackupSetInfo, BackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<BackupSetInfo> activeBackupSets, string containerName, string errorPrefix, bool? isFullBackupRestored, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType)
+        internal MigrateSqlServerSqlMISyncTaskOutputDatabaseLevel(string id, string resultType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceDatabaseName, DatabaseMigrationState? migrationState, DateTimeOffset? startedOn, DateTimeOffset? endedOn, BackupSetInfo fullBackupSetInfo, BackupSetInfo lastRestoredBackupSetInfo, IReadOnlyList<BackupSetInfo> activeBackupSets, string containerName, string errorPrefix, bool? isFullBackupRestored, IReadOnlyList<ReportableException> exceptionsAndWarnings) : base(id, resultType, serializedAdditionalRawData)
         {
             SourceDatabaseName = sourceDatabaseName;
             MigrationState = migrationState;

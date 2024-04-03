@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -53,18 +53,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
-            writer.WriteObjectValue(Host);
+            writer.WriteObjectValue<object>(Host);
             if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
-                writer.WriteObjectValue(Port);
+                writer.WriteObjectValue<object>(Port);
             }
             if (Optional.IsDefined(AuthenticationType))
             {
@@ -74,48 +74,48 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             if (Optional.IsDefined(PrivateKeyPath))
             {
                 writer.WritePropertyName("privateKeyPath"u8);
-                writer.WriteObjectValue(PrivateKeyPath);
+                writer.WriteObjectValue<object>(PrivateKeyPath);
             }
             if (Optional.IsDefined(PrivateKeyContent))
             {
                 writer.WritePropertyName("privateKeyContent"u8);
-                writer.WriteObjectValue(PrivateKeyContent);
+                writer.WriteObjectValue<SecretBase>(PrivateKeyContent);
             }
             if (Optional.IsDefined(PassPhrase))
             {
                 writer.WritePropertyName("passPhrase"u8);
-                writer.WriteObjectValue(PassPhrase);
+                writer.WriteObjectValue<SecretBase>(PassPhrase);
             }
             if (Optional.IsDefined(SkipHostKeyValidation))
             {
                 writer.WritePropertyName("skipHostKeyValidation"u8);
-                writer.WriteObjectValue(SkipHostKeyValidation);
+                writer.WriteObjectValue<object>(SkipHostKeyValidation);
             }
             if (Optional.IsDefined(HostKeyFingerprint))
             {
                 writer.WritePropertyName("hostKeyFingerprint"u8);
-                writer.WriteObjectValue(HostKeyFingerprint);
+                writer.WriteObjectValue<object>(HostKeyFingerprint);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -127,21 +127,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object host = default;
-            Optional<object> port = default;
-            Optional<SftpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> privateKeyPath = default;
-            Optional<SecretBase> privateKeyContent = default;
-            Optional<SecretBase> passPhrase = default;
-            Optional<object> skipHostKeyValidation = default;
-            Optional<object> hostKeyFingerprint = default;
+            object port = default;
+            SftpAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object encryptedCredential = default;
+            object privateKeyPath = default;
+            SecretBase privateKeyContent = default;
+            SecretBase passPhrase = default;
+            object skipHostKeyValidation = default;
+            object hostKeyFingerprint = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -310,14 +310,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SftpServerLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, host, port.Value, Optional.ToNullable(authenticationType), userName.Value, password.Value, encryptedCredential.Value, privateKeyPath.Value, privateKeyContent.Value, passPhrase.Value, skipHostKeyValidation.Value, hostKeyFingerprint.Value);
+            return new SftpServerLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                host,
+                port,
+                authenticationType,
+                userName,
+                password,
+                encryptedCredential,
+                privateKeyPath,
+                privateKeyContent,
+                passPhrase,
+                skipHostKeyValidation,
+                hostKeyFingerprint);
         }
 
         internal partial class SftpServerLinkedServiceConverter : JsonConverter<SftpServerLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SftpServerLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SftpServerLinkedService>(model);
             }
             public override SftpServerLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PrivateDns;
 
 namespace Azure.ResourceManager.PrivateDns.Mocking
 {
@@ -53,6 +50,14 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of Private DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -75,6 +80,14 @@ namespace Azure.ResourceManager.PrivateDns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

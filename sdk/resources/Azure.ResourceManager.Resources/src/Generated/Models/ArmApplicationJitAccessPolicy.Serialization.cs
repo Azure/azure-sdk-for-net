@@ -6,16 +6,27 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable
+    public partial class ArmApplicationJitAccessPolicy : IUtf8JsonSerializable, IJsonModel<ArmApplicationJitAccessPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArmApplicationJitAccessPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArmApplicationJitAccessPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("jitAccessEnabled"u8);
             writer.WriteBooleanValue(JitAccessEnabled);
@@ -30,7 +41,7 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in JitApprovers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<JitApprover>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -39,19 +50,50 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("maximumJitAccessDuration"u8);
                 writer.WriteStringValue(MaximumJitAccessDuration.Value, "P");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element)
+        ArmApplicationJitAccessPolicy IJsonModel<ArmApplicationJitAccessPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
+        }
+
+        internal static ArmApplicationJitAccessPolicy DeserializeArmApplicationJitAccessPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             bool jitAccessEnabled = default;
-            Optional<JitApprovalMode> jitApprovalMode = default;
-            Optional<IList<JitApprover>> jitApprovers = default;
-            Optional<TimeSpan> maximumJitAccessDuration = default;
+            JitApprovalMode? jitApprovalMode = default;
+            IList<JitApprover> jitApprovers = default;
+            TimeSpan? maximumJitAccessDuration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jitAccessEnabled"u8))
@@ -77,7 +119,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<JitApprover> array = new List<JitApprover>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(JitApprover.DeserializeJitApprover(item));
+                        array.Add(JitApprover.DeserializeJitApprover(item, options));
                     }
                     jitApprovers = array;
                     continue;
@@ -91,8 +133,124 @@ namespace Azure.ResourceManager.Resources.Models
                     maximumJitAccessDuration = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, Optional.ToNullable(jitApprovalMode), Optional.ToList(jitApprovers), Optional.ToNullable(maximumJitAccessDuration));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ArmApplicationJitAccessPolicy(jitAccessEnabled, jitApprovalMode, jitApprovers ?? new ChangeTrackingList<JitApprover>(), maximumJitAccessDuration, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitAccessEnabled), out propertyOverride);
+            builder.Append("  jitAccessEnabled: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var boolValue = JitAccessEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovalMode), out propertyOverride);
+            if (Optional.IsDefined(JitApprovalMode) || hasPropertyOverride)
+            {
+                builder.Append("  jitApprovalMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{JitApprovalMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JitApprovers), out propertyOverride);
+            if (Optional.IsCollectionDefined(JitApprovers) || hasPropertyOverride)
+            {
+                if (JitApprovers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  jitApprovers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in JitApprovers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  jitApprovers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumJitAccessDuration), out propertyOverride);
+            if (Optional.IsDefined(MaximumJitAccessDuration) || hasPropertyOverride)
+            {
+                builder.Append("  maximumJitAccessDuration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(MaximumJitAccessDuration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ArmApplicationJitAccessPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArmApplicationJitAccessPolicy IPersistableModel<ArmApplicationJitAccessPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArmApplicationJitAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArmApplicationJitAccessPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArmApplicationJitAccessPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArmApplicationJitAccessPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

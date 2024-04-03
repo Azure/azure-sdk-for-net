@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -42,7 +41,26 @@ namespace Azure.ResourceManager.Analysis.Models
             tags ??= new Dictionary<string, string>();
             asAdministratorIdentities ??= new List<string>();
 
-            return new AnalysisServerData(id, name, resourceType, systemData, tags, location, asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList()) : null, backupBlobContainerUri, gatewayDetails, iPv4FirewallSettings, queryPoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServerSku, analysisSku);
+            return new AnalysisServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList(), serializedAdditionalRawData: null) : null,
+                backupBlobContainerUri,
+                gatewayDetails,
+                iPv4FirewallSettings,
+                queryPoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                state,
+                provisioningState,
+                serverFullName,
+                analysisServerSku,
+                analysisSku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalysisGatewayDetails"/>. </summary>
@@ -52,7 +70,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <returns> A new <see cref="Models.AnalysisGatewayDetails"/> instance for mocking. </returns>
         public static AnalysisGatewayDetails AnalysisGatewayDetails(string gatewayResourceId = null, string gatewayObjectId = null, Uri dmtsClusterUri = null)
         {
-            return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri);
+            return new AnalysisGatewayDetails(gatewayResourceId, gatewayObjectId, dmtsClusterUri, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalysisExistingSku"/>. </summary>
@@ -61,7 +79,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <returns> A new <see cref="Models.AnalysisExistingSku"/> instance for mocking. </returns>
         public static AnalysisExistingSku AnalysisExistingSku(AnalysisResourceSku sku = null, ResourceType? resourceType = null)
         {
-            return new AnalysisExistingSku(sku, resourceType);
+            return new AnalysisExistingSku(sku, resourceType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalysisGatewayStatus"/>. </summary>
@@ -69,7 +87,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <returns> A new <see cref="Models.AnalysisGatewayStatus"/> instance for mocking. </returns>
         public static AnalysisGatewayStatus AnalysisGatewayStatus(AnalysisStatus? status = null)
         {
-            return new AnalysisGatewayStatus(status);
+            return new AnalysisGatewayStatus(status, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalysisServerNameAvailabilityResult"/>. </summary>
@@ -79,7 +97,7 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <returns> A new <see cref="Models.AnalysisServerNameAvailabilityResult"/> instance for mocking. </returns>
         public static AnalysisServerNameAvailabilityResult AnalysisServerNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new AnalysisServerNameAvailabilityResult(isNameAvailable, reason, message);
+            return new AnalysisServerNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
     }
 }

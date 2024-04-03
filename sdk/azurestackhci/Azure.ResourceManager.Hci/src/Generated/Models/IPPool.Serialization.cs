@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class IPPool : IUtf8JsonSerializable
+    public partial class IPPool : IUtf8JsonSerializable, IJsonModel<IPPool>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IPPool>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IPPool>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPPool)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -38,22 +49,53 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Info))
             {
                 writer.WritePropertyName("info"u8);
-                writer.WriteObjectValue(Info);
+                writer.WriteObjectValue<IPPoolInfo>(Info, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IPPool DeserializeIPPool(JsonElement element)
+        IPPool IJsonModel<IPPool>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IPPool)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIPPool(document.RootElement, options);
+        }
+
+        internal static IPPool DeserializeIPPool(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IPPoolTypeEnum> ipPoolType = default;
-            Optional<string> start = default;
-            Optional<string> end = default;
-            Optional<IPPoolInfo> info = default;
+            string name = default;
+            IPPoolTypeEnum? ipPoolType = default;
+            string start = default;
+            string end = default;
+            IPPoolInfo info = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -86,11 +128,53 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value);
+                    info = IPPoolInfo.DeserializeIPPoolInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IPPool(name.Value, Optional.ToNullable(ipPoolType), start.Value, end.Value, info.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IPPool(
+                name,
+                ipPoolType,
+                start,
+                end,
+                info,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IPPool>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IPPool)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IPPool IPersistableModel<IPPool>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IPPool>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIPPool(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IPPool)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IPPool>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

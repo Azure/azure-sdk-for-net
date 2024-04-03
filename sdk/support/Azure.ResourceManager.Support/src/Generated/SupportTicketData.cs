@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class SupportTicketData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SupportTicketData"/>. </summary>
         public SupportTicketData()
         {
@@ -56,7 +88,8 @@ namespace Azure.ResourceManager.Support
         /// <param name="technicalTicketDetails"> Additional ticket details associated with a technical support ticket request. </param>
         /// <param name="quotaTicketDetails"> Additional ticket details associated with a quota support ticket request. </param>
         /// <param name="secondaryConsent"> This property indicates secondary consents for the support ticket. </param>
-        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent? advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportTicketData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string supportTicketId, string description, string problemClassificationId, string problemClassificationDisplayName, SupportSeverityLevel? severity, string enrollmentId, bool? require24X7Response, AdvancedDiagnosticConsent? advancedDiagnosticConsent, string problemScopingQuestions, string supportPlanId, SupportContactProfile contactDetails, SupportServiceLevelAgreement serviceLevelAgreement, SupportEngineer supportEngineer, string supportPlanType, string supportPlanDisplayName, string title, DateTimeOffset? problemStartOn, string serviceId, string serviceDisplayName, string status, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, string fileWorkspaceName, TechnicalTicketDetails technicalTicketDetails, QuotaTicketDetails quotaTicketDetails, IList<SecondaryConsent> secondaryConsent, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SupportTicketId = supportTicketId;
             Description = description;
@@ -84,6 +117,7 @@ namespace Azure.ResourceManager.Support
             TechnicalTicketDetails = technicalTicketDetails;
             QuotaTicketDetails = quotaTicketDetails;
             SecondaryConsent = secondaryConsent;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> System generated support ticket Id that is unique. </summary>
@@ -97,7 +131,7 @@ namespace Azure.ResourceManager.Support
         /// <summary> A value that indicates the urgency of the case, which in turn determines the response time according to the service level agreement of the technical support plan you have with Azure. Note: 'Highest critical impact', also known as the 'Emergency - Severe impact' level in the Azure portal is reserved only for our Premium customers. </summary>
         public SupportSeverityLevel? Severity { get; set; }
         /// <summary> Enrollment Id associated with the support ticket. </summary>
-        public string EnrollmentId { get; }
+        public string EnrollmentId { get; set; }
         /// <summary> Indicates if this requires a 24x7 response from Azure. </summary>
         public bool? Require24X7Response { get; set; }
         /// <summary> Advanced diagnostic consent to be updated on the support ticket. </summary>

@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component Continuous Export configuration request definition. </summary>
     public partial class ApplicationInsightsComponentExportRequest
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentExportRequest"/>. </summary>
         public ApplicationInsightsComponentExportRequest()
         {
@@ -27,7 +60,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="destinationStorageSubscriptionId"> The subscription ID of the destination storage container. </param>
         /// <param name="destinationStorageLocationId"> The location ID of the destination storage container. </param>
         /// <param name="destinationAccountId"> The name of destination storage account. </param>
-        internal ApplicationInsightsComponentExportRequest(string recordTypes, string destinationType, string destinationAddress, string isEnabled, string notificationQueueEnabled, Uri notificationQueueUri, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentExportRequest(string recordTypes, string destinationType, string destinationAddress, string isEnabled, string notificationQueueEnabled, Uri notificationQueueUri, string destinationStorageSubscriptionId, string destinationStorageLocationId, string destinationAccountId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecordTypes = recordTypes;
             DestinationType = destinationType;
@@ -38,25 +72,35 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             DestinationStorageSubscriptionId = destinationStorageSubscriptionId;
             DestinationStorageLocationId = destinationStorageLocationId;
             DestinationAccountId = destinationAccountId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </summary>
+        [WirePath("RecordTypes")]
         public string RecordTypes { get; set; }
         /// <summary> The Continuous Export destination type. This has to be 'Blob'. </summary>
+        [WirePath("DestinationType")]
         public string DestinationType { get; set; }
         /// <summary> The SAS URL for the destination storage container. It must grant write permission. </summary>
+        [WirePath("DestinationAddress")]
         public string DestinationAddress { get; set; }
         /// <summary> Set to 'true' to create a Continuous Export configuration as enabled, otherwise set it to 'false'. </summary>
+        [WirePath("IsEnabled")]
         public string IsEnabled { get; set; }
         /// <summary> Deprecated. </summary>
+        [WirePath("NotificationQueueEnabled")]
         public string NotificationQueueEnabled { get; set; }
         /// <summary> Deprecated. </summary>
+        [WirePath("NotificationQueueUri")]
         public Uri NotificationQueueUri { get; set; }
         /// <summary> The subscription ID of the destination storage container. </summary>
+        [WirePath("DestinationStorageSubscriptionId")]
         public string DestinationStorageSubscriptionId { get; set; }
         /// <summary> The location ID of the destination storage container. </summary>
+        [WirePath("DestinationStorageLocationId")]
         public string DestinationStorageLocationId { get; set; }
         /// <summary> The name of destination storage account. </summary>
+        [WirePath("DestinationAccountId")]
         public string DestinationAccountId { get; set; }
     }
 }

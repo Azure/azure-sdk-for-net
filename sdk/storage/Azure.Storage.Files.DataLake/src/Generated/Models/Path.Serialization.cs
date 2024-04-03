@@ -7,7 +7,7 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Files.DataLake.Models
 {
@@ -19,18 +19,18 @@ namespace Azure.Storage.Files.DataLake.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DateTimeOffset> lastModified = default;
-            Optional<string> owner = default;
-            Optional<string> group = default;
-            Optional<string> permissions = default;
-            Optional<string> encryptionScope = default;
-            Optional<string> creationTime = default;
-            Optional<string> expiryTime = default;
-            Optional<string> encryptionContext = default;
-            Optional<string> contentLength = default;
-            Optional<string> isDirectory = default;
-            Optional<string> etag = default;
+            string name = default;
+            DateTimeOffset? lastModified = default;
+            string owner = default;
+            string group = default;
+            string permissions = default;
+            string encryptionScope = default;
+            string creationTime = default;
+            string expiryTime = default;
+            string encryptionContext = default;
+            string contentLength = default;
+            string isDirectory = default;
+            string etag = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -98,7 +98,19 @@ namespace Azure.Storage.Files.DataLake.Models
                     continue;
                 }
             }
-            return new Path(name.Value, Optional.ToNullable(lastModified), owner.Value, group.Value, permissions.Value, encryptionScope.Value, creationTime.Value, expiryTime.Value, encryptionContext.Value, contentLength.Value, isDirectory.Value, etag.Value);
+            return new Path(
+                name,
+                lastModified,
+                owner,
+                group,
+                permissions,
+                encryptionScope,
+                creationTime,
+                expiryTime,
+                encryptionContext,
+                contentLength,
+                isDirectory,
+                etag);
         }
     }
 }

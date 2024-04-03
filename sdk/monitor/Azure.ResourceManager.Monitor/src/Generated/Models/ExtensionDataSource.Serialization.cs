@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class ExtensionDataSource : IUtf8JsonSerializable
+    public partial class ExtensionDataSource : IUtf8JsonSerializable, IJsonModel<ExtensionDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExtensionDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExtensionDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Streams))
             {
@@ -56,20 +65,51 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element)
+        ExtensionDataSource IJsonModel<ExtensionDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExtensionDataSource(document.RootElement, options);
+        }
+
+        internal static ExtensionDataSource DeserializeExtensionDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ExtensionDataSourceStream>> streams = default;
+            IList<ExtensionDataSourceStream> streams = default;
             string extensionName = default;
-            Optional<BinaryData> extensionSettings = default;
-            Optional<IList<string>> inputDataSources = default;
-            Optional<string> name = default;
+            BinaryData extensionSettings = default;
+            IList<string> inputDataSources = default;
+            string name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("streams"u8))
@@ -119,8 +159,50 @@ namespace Azure.ResourceManager.Monitor.Models
                     name = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExtensionDataSource(Optional.ToList(streams), extensionName, extensionSettings.Value, Optional.ToList(inputDataSources), name.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExtensionDataSource(
+                streams ?? new ChangeTrackingList<ExtensionDataSourceStream>(),
+                extensionName,
+                extensionSettings,
+                inputDataSources ?? new ChangeTrackingList<string>(),
+                name,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExtensionDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExtensionDataSource IPersistableModel<ExtensionDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExtensionDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExtensionDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExtensionDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExtensionDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

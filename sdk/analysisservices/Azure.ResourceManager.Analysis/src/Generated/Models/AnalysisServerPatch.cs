@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Analysis.Models
 {
     /// <summary> Provision request specification. </summary>
     public partial class AnalysisServerPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AnalysisServerPatch"/>. </summary>
         public AnalysisServerPatch()
         {
@@ -30,7 +61,8 @@ namespace Azure.ResourceManager.Analysis.Models
         /// <param name="querypoolConnectionMode"> How the read-write server's participation in the query pool is controlled.&lt;br/&gt;It can have the following values: &lt;ul&gt;&lt;li&gt;readOnly - indicates that the read-write server is intended not to participate in query operations&lt;/li&gt;&lt;li&gt;all - indicates that the read-write server can participate in query operations&lt;/li&gt;&lt;/ul&gt;Specifying readOnly when capacity is 1 results in error. </param>
         /// <param name="managedMode"> The managed mode of the server (0 = not managed, 1 = managed). </param>
         /// <param name="serverMonitorMode"> The server monitor mode for AS server. </param>
-        internal AnalysisServerPatch(AnalysisResourceSku sku, IDictionary<string, string> tags, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings ipV4FirewallSettings, AnalysisConnectionMode? querypoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AnalysisServerPatch(AnalysisResourceSku sku, IDictionary<string, string> tags, ServerAdministrators asAdministrators, Uri backupBlobContainerUri, AnalysisGatewayDetails gatewayDetails, AnalysisIPv4FirewallSettings ipV4FirewallSettings, AnalysisConnectionMode? querypoolConnectionMode, AnalysisManagedMode? managedMode, ServerMonitorMode? serverMonitorMode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sku = sku;
             Tags = tags;
@@ -41,6 +73,7 @@ namespace Azure.ResourceManager.Analysis.Models
             QuerypoolConnectionMode = querypoolConnectionMode;
             ManagedMode = managedMode;
             ServerMonitorMode = serverMonitorMode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The SKU of the Analysis Services resource. </summary>

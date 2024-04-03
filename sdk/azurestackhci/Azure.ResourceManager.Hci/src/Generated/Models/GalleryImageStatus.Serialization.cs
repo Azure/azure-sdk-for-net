@@ -5,24 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class GalleryImageStatus
+    public partial class GalleryImageStatus : IUtf8JsonSerializable, IJsonModel<GalleryImageStatus>
     {
-        internal static GalleryImageStatus DeserializeGalleryImageStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GalleryImageStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryImageStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ErrorCode))
+            {
+                writer.WritePropertyName("errorCode"u8);
+                writer.WriteStringValue(ErrorCode);
+            }
+            if (Optional.IsDefined(ErrorMessage))
+            {
+                writer.WritePropertyName("errorMessage"u8);
+                writer.WriteStringValue(ErrorMessage);
+            }
+            if (Optional.IsDefined(ProvisioningStatus))
+            {
+                writer.WritePropertyName("provisioningStatus"u8);
+                writer.WriteObjectValue<GalleryImageStatusProvisioningStatus>(ProvisioningStatus, options);
+            }
+            if (Optional.IsDefined(DownloadStatus))
+            {
+                writer.WritePropertyName("downloadStatus"u8);
+                writer.WriteObjectValue<GalleryImageStatusDownloadStatus>(DownloadStatus, options);
+            }
+            if (Optional.IsDefined(ProgressPercentage))
+            {
+                writer.WritePropertyName("progressPercentage"u8);
+                writer.WriteNumberValue(ProgressPercentage.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GalleryImageStatus IJsonModel<GalleryImageStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GalleryImageStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGalleryImageStatus(document.RootElement, options);
+        }
+
+        internal static GalleryImageStatus DeserializeGalleryImageStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<GalleryImageStatusProvisioningStatus> provisioningStatus = default;
-            Optional<GalleryImageStatusDownloadStatus> downloadStatus = default;
-            Optional<long> progressPercentage = default;
+            string errorCode = default;
+            string errorMessage = default;
+            GalleryImageStatusProvisioningStatus provisioningStatus = default;
+            GalleryImageStatusDownloadStatus downloadStatus = default;
+            long? progressPercentage = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -41,7 +114,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = GalleryImageStatusProvisioningStatus.DeserializeGalleryImageStatusProvisioningStatus(property.Value);
+                    provisioningStatus = GalleryImageStatusProvisioningStatus.DeserializeGalleryImageStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("downloadStatus"u8))
@@ -50,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    downloadStatus = GalleryImageStatusDownloadStatus.DeserializeGalleryImageStatusDownloadStatus(property.Value);
+                    downloadStatus = GalleryImageStatusDownloadStatus.DeserializeGalleryImageStatusDownloadStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progressPercentage"u8))
@@ -62,8 +135,50 @@ namespace Azure.ResourceManager.Hci.Models
                     progressPercentage = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GalleryImageStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, downloadStatus.Value, Optional.ToNullable(progressPercentage));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GalleryImageStatus(
+                errorCode,
+                errorMessage,
+                provisioningStatus,
+                downloadStatus,
+                progressPercentage,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GalleryImageStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GalleryImageStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GalleryImageStatus IPersistableModel<GalleryImageStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGalleryImageStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GalleryImageStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GalleryImageStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

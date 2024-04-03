@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -164,6 +162,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -185,6 +191,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentLinkedStorageAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-03-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ComponentLinkedStorageAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageType"> The type of the Application Insights component data source for the linked storage account. </param>
@@ -205,6 +219,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,6 +260,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -269,6 +299,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,6 +342,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -338,6 +384,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_UpdateTags</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="componentTags"> Updated tag information to set into the component instance. </param>
@@ -371,6 +425,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_UpdateTags</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -409,6 +471,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Purge</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
@@ -446,6 +516,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Purge</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="body"> Describes the body of a request to purge data in a single table of an Application Insights component. </param>
@@ -479,6 +557,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_GetPurgeStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -515,6 +601,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_GetPurgeStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="purgeId"> In a purge status request, this is the Id of the operation the status of which is returned. </param>
@@ -550,6 +644,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="start"> The start time to query from for annotations, cannot be older than 90 days from current date. </param>
@@ -563,7 +661,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -576,6 +674,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -590,7 +692,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(end, nameof(end));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, start, end);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -603,6 +705,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -615,7 +721,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -629,6 +735,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationProperties"> Properties that need to be specified to create an annotation of a Application Insights component. </param>
@@ -640,7 +750,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(annotationProperties, nameof(annotationProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationProperties);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -653,6 +763,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Annotations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -689,6 +803,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
@@ -724,6 +842,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
@@ -736,7 +858,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -750,6 +872,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Annotations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="annotationId"> The unique annotation ID. This is unique within a Application Insights component. </param>
@@ -762,7 +888,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNullOrEmpty(annotationId, nameof(annotationId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _annotationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, annotationId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, Annotation.DeserializeAnnotation, _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => Annotation.DeserializeAnnotation(e), _annotationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnnotations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -775,6 +901,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -783,7 +913,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentAPIKey> GetAPIKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey, _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -797,6 +927,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -804,7 +938,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentAPIKey> GetAPIKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _apiKeysRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey, _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAPIKey.DeserializeApplicationInsightsComponentAPIKey(e), _apiKeysClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAPIKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -817,6 +951,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -852,6 +990,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Properties that need to be specified to create an API key of a Application Insights component. </param>
@@ -885,6 +1027,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -921,6 +1067,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyId"> The API Key ID. This is unique within a Application Insights component. </param>
@@ -955,6 +1105,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>APIKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -991,6 +1145,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>APIKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="keyId"> The API Key ID. This is unique within a Application Insights component. </param>
@@ -1026,6 +1184,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1033,7 +1195,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1047,6 +1209,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1054,7 +1220,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentExportConfiguration> GetExportConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1067,6 +1233,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1079,7 +1249,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1093,6 +1263,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportProperties"> Properties that need to be specified to create a Continuous Export configuration of a Application Insights component. </param>
@@ -1104,7 +1278,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(exportProperties, nameof(exportProperties));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _exportConfigurationsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, exportProperties);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration, _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentExportConfiguration.DeserializeApplicationInsightsComponentExportConfiguration(e), _exportConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.CreateExportConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1117,6 +1291,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1153,6 +1331,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1187,6 +1369,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1223,6 +1409,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1257,6 +1447,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1295,6 +1489,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ExportConfigurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="exportId"> The Continuous Export configuration ID. This is unique within a Application Insights component. </param>
@@ -1332,6 +1530,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1362,6 +1564,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1391,6 +1597,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1426,6 +1636,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentCurrentBillingFeatures_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingFeaturesProperties"> Properties that need to be specified to update billing features for an Application Insights component. </param>
@@ -1460,6 +1674,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentQuotaStatus_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1489,6 +1707,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentQuotaStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1520,6 +1742,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentFeatureCapabilities_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1549,6 +1775,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentFeatureCapabilities_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1580,6 +1810,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ComponentAvailableFeatures_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1609,6 +1843,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ComponentAvailableFeatures_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1640,6 +1878,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1647,7 +1889,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration, _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(e), _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1661,6 +1903,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1668,7 +1914,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentProactiveDetectionConfiguration> GetProactiveDetectionConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _proactiveDetectionConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration, _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentProactiveDetectionConfiguration.DeserializeApplicationInsightsComponentProactiveDetectionConfiguration(e), _proactiveDetectionConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetProactiveDetectionConfigurations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -1681,6 +1927,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1717,6 +1967,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
@@ -1751,6 +2005,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1789,6 +2047,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>ProactiveDetectionConfigurations_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationId"> The ProactiveDetection configuration ID. This is unique within a Application Insights component. </param>
@@ -1826,6 +2088,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1833,7 +2099,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<WorkItemConfiguration> GetWorkItemConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, WorkItemConfiguration.DeserializeWorkItemConfiguration, _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => WorkItemConfiguration.DeserializeWorkItemConfiguration(e), _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1847,6 +2113,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1854,7 +2124,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<WorkItemConfiguration> GetWorkItemConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _workItemConfigurationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, WorkItemConfiguration.DeserializeWorkItemConfiguration, _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => WorkItemConfiguration.DeserializeWorkItemConfiguration(e), _workItemConfigurationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWorkItemConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1867,6 +2137,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Create</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1902,6 +2176,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Create</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigurationProperties"> Properties that need to be specified to create a work item configuration of a Application Insights component. </param>
@@ -1936,6 +2214,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1966,6 +2248,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetDefault</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1995,6 +2281,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2031,6 +2321,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2065,6 +2359,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetItem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2101,6 +2399,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_GetItem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2135,6 +2437,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_UpdateItem</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2173,6 +2479,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WorkItemConfigurations_UpdateItem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workItemConfigId"> The unique work item configuration Id. This can be either friendly name of connector as defined in connector configuration. </param>
@@ -2210,6 +2520,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
@@ -2221,7 +2535,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentFavorite> GetFavoritesAsync(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite, _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2235,6 +2549,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
@@ -2246,7 +2564,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentFavorite> GetFavorites(FavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _favoritesRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, favoriteType, sourceType, canFetchContent, tags);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite, _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(e), _favoritesClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetFavorites", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2259,6 +2577,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2295,6 +2617,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2329,6 +2655,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Add</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2367,6 +2697,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Add</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2403,6 +2737,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2441,6 +2779,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2478,6 +2820,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Favorites_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
@@ -2512,6 +2858,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Favorites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2548,6 +2898,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>webTestLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2555,7 +2909,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation, _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(e), _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2569,6 +2923,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>webTestLocations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2576,7 +2934,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentWebTestLocation> GetWebTestLocations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _webTestLocationsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation, _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentWebTestLocation.DeserializeApplicationInsightsComponentWebTestLocation(e), _webTestLocationsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetWebTestLocations", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2589,6 +2947,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebTests_ListByComponent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2612,6 +2978,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>WebTests_ListByComponent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebTestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2634,6 +3008,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2645,7 +3023,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual AsyncPageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItemsAsync(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem, _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2659,6 +3037,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2670,7 +3052,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Pageable<ApplicationInsightsComponentAnalyticsItem> GetAnalyticsItems(ItemScopePath scopePath, ItemScope? scope = null, ItemTypeParameter? type = null, bool? includeContent = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _analyticsItemsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, scopePath, scope, type, includeContent);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem, _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ApplicationInsightsComponentAnalyticsItem.DeserializeApplicationInsightsComponentAnalyticsItem(e), _analyticsItemsClientDiagnostics, Pipeline, "ApplicationInsightsComponentResource.GetAnalyticsItems", "", null, cancellationToken);
         }
 
         /// <summary>
@@ -2683,6 +3065,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2717,6 +3103,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2749,6 +3139,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Put</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2786,6 +3180,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Put</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2822,6 +3220,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2855,6 +3257,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>AnalyticsItems_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-05-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scopePath"> Enum indicating if this item definition is owned by a specific user or is shared between all users with access to the Application Insights component. </param>
@@ -2887,6 +3293,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2942,6 +3356,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2996,6 +3418,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -3045,6 +3475,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -3093,6 +3531,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3145,6 +3591,14 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Components_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-02-02</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ApplicationInsightsComponentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

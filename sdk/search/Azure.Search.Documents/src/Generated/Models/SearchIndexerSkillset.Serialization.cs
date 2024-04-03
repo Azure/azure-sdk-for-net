@@ -27,18 +27,23 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerSkill>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
-                writer.WriteObjectValue(CognitiveServicesAccount);
+                writer.WriteObjectValue<CognitiveServicesAccount>(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
-                writer.WriteObjectValue(KnowledgeStore);
+                writer.WriteObjectValue<KnowledgeStore>(KnowledgeStore);
+            }
+            if (Optional.IsDefined(IndexProjections))
+            {
+                writer.WritePropertyName("indexProjections"u8);
+                writer.WriteObjectValue<SearchIndexerIndexProjections>(IndexProjections);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -50,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -67,12 +72,13 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             IList<SearchIndexerSkill> skills = default;
-            Optional<CognitiveServicesAccount> cognitiveServices = default;
-            Optional<KnowledgeStore> knowledgeStore = default;
-            Optional<string> odataEtag = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            CognitiveServicesAccount cognitiveServices = default;
+            KnowledgeStore knowledgeStore = default;
+            SearchIndexerIndexProjections indexProjections = default;
+            string odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -113,6 +119,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     knowledgeStore = KnowledgeStore.DeserializeKnowledgeStore(property.Value);
                     continue;
                 }
+                if (property.NameEquals("indexProjections"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    indexProjections = SearchIndexerIndexProjections.DeserializeSearchIndexerIndexProjections(property.Value);
+                    continue;
+                }
                 if (property.NameEquals("@odata.etag"u8))
                 {
                     odataEtag = property.Value.GetString();
@@ -129,7 +144,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new SearchIndexerSkillset(name, description.Value, skills, cognitiveServices.Value, knowledgeStore.Value, odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexerSkillset(
+                name,
+                description,
+                skills,
+                cognitiveServices,
+                knowledgeStore,
+                indexProjections,
+                odataEtag,
+                encryptionKey);
         }
     }
 }

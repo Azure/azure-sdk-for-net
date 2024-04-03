@@ -5,29 +5,128 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class LocationMetadata
+    public partial class LocationMetadata : IUtf8JsonSerializable, IJsonModel<LocationMetadata>
     {
-        internal static LocationMetadata DeserializeLocationMetadata(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LocationMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LocationMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(RegionType))
+            {
+                writer.WritePropertyName("regionType"u8);
+                writer.WriteStringValue(RegionType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RegionCategory))
+            {
+                writer.WritePropertyName("regionCategory"u8);
+                writer.WriteStringValue(RegionCategory.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Geography))
+            {
+                writer.WritePropertyName("geography"u8);
+                writer.WriteStringValue(Geography);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeographyGroup))
+            {
+                writer.WritePropertyName("geographyGroup"u8);
+                writer.WriteStringValue(GeographyGroup);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
+            {
+                writer.WritePropertyName("longitude"u8);
+                WriteLongitude(writer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
+            {
+                writer.WritePropertyName("latitude"u8);
+                WriteLatitude(writer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PhysicalLocation))
+            {
+                writer.WritePropertyName("physicalLocation"u8);
+                writer.WriteStringValue(PhysicalLocation);
+            }
+            if (Optional.IsCollectionDefined(PairedRegions))
+            {
+                writer.WritePropertyName("pairedRegion"u8);
+                writer.WriteStartArray();
+                foreach (var item in PairedRegions)
+                {
+                    writer.WriteObjectValue<PairedRegion>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(HomeLocation))
+            {
+                writer.WritePropertyName("homeLocation"u8);
+                writer.WriteStringValue(HomeLocation);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LocationMetadata IJsonModel<LocationMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LocationMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLocationMetadata(document.RootElement, options);
+        }
+
+        internal static LocationMetadata DeserializeLocationMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RegionType> regionType = default;
-            Optional<RegionCategory> regionCategory = default;
-            Optional<string> geography = default;
-            Optional<string> geographyGroup = default;
-            Optional<double> longitude = default;
-            Optional<double> latitude = default;
-            Optional<string> physicalLocation = default;
-            Optional<IReadOnlyList<PairedRegion>> pairedRegion = default;
-            Optional<string> homeLocation = default;
+            RegionType? regionType = default;
+            RegionCategory? regionCategory = default;
+            string geography = default;
+            string geographyGroup = default;
+            double? longitude = default;
+            double? latitude = default;
+            string physicalLocation = default;
+            IReadOnlyList<PairedRegion> pairedRegion = default;
+            string homeLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("regionType"u8))
@@ -82,7 +181,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<PairedRegion> array = new List<PairedRegion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PairedRegion.DeserializePairedRegion(item));
+                        array.Add(PairedRegion.DeserializePairedRegion(item, options));
                     }
                     pairedRegion = array;
                     continue;
@@ -92,8 +191,237 @@ namespace Azure.ResourceManager.Resources.Models
                     homeLocation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LocationMetadata(Optional.ToNullable(regionType), Optional.ToNullable(regionCategory), geography.Value, geographyGroup.Value, Optional.ToNullable(longitude), Optional.ToNullable(latitude), physicalLocation.Value, Optional.ToList(pairedRegion), homeLocation.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LocationMetadata(
+                regionType,
+                regionCategory,
+                geography,
+                geographyGroup,
+                longitude,
+                latitude,
+                physicalLocation,
+                pairedRegion ?? new ChangeTrackingList<PairedRegion>(),
+                homeLocation,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionType), out propertyOverride);
+            if (Optional.IsDefined(RegionType) || hasPropertyOverride)
+            {
+                builder.Append("  regionType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RegionType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegionCategory), out propertyOverride);
+            if (Optional.IsDefined(RegionCategory) || hasPropertyOverride)
+            {
+                builder.Append("  regionCategory: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RegionCategory.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Geography), out propertyOverride);
+            if (Optional.IsDefined(Geography) || hasPropertyOverride)
+            {
+                builder.Append("  geography: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Geography.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Geography}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Geography}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeographyGroup), out propertyOverride);
+            if (Optional.IsDefined(GeographyGroup) || hasPropertyOverride)
+            {
+                builder.Append("  geographyGroup: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (GeographyGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeographyGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeographyGroup}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Longitude), out propertyOverride);
+            if (Optional.IsDefined(Longitude) || hasPropertyOverride)
+            {
+                builder.Append("  longitude: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Longitude.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Latitude), out propertyOverride);
+            if (Optional.IsDefined(Latitude) || hasPropertyOverride)
+            {
+                builder.Append("  latitude: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Latitude.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PhysicalLocation), out propertyOverride);
+            if (Optional.IsDefined(PhysicalLocation) || hasPropertyOverride)
+            {
+                builder.Append("  physicalLocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PhysicalLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PhysicalLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PhysicalLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PairedRegions), out propertyOverride);
+            if (Optional.IsCollectionDefined(PairedRegions) || hasPropertyOverride)
+            {
+                if (PairedRegions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  pairedRegion: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PairedRegions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  pairedRegion: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HomeLocation), out propertyOverride);
+            if (Optional.IsDefined(HomeLocation) || hasPropertyOverride)
+            {
+                builder.Append("  homeLocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HomeLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HomeLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HomeLocation}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LocationMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LocationMetadata IPersistableModel<LocationMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LocationMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLocationMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LocationMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LocationMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

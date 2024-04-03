@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights.Mocking
@@ -59,6 +56,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>LiveToken_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -92,6 +93,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LiveToken_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-14</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -6,8 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataShare.Models
@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> Kind of synchronization on trigger. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="createdOn"> Time at which the trigger was created. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <param name="recurrenceInterval"> Recurrence Interval. </param>
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.DataShare.Models
         /// <param name="synchronizeOn"> Synchronization time. </param>
         /// <param name="triggerStatus"> Gets the trigger state. </param>
         /// <param name="userName"> Name of the user who created the trigger. </param>
-        internal ScheduledTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, SynchronizationMode? synchronizationMode, DateTimeOffset synchronizeOn, DataShareTriggerStatus? triggerStatus, string userName) : base(id, name, resourceType, systemData, kind)
+        internal ScheduledTrigger(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, TriggerKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset? createdOn, DataShareProvisioningState? provisioningState, DataShareSynchronizationRecurrenceInterval recurrenceInterval, SynchronizationMode? synchronizationMode, DateTimeOffset synchronizeOn, DataShareTriggerStatus? triggerStatus, string userName) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             CreatedOn = createdOn;
             ProvisioningState = provisioningState;
@@ -48,6 +49,11 @@ namespace Azure.ResourceManager.DataShare.Models
             TriggerStatus = triggerStatus;
             UserName = userName;
             Kind = kind;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ScheduledTrigger"/> for deserialization. </summary>
+        internal ScheduledTrigger()
+        {
         }
 
         /// <summary> Time at which the trigger was created. </summary>

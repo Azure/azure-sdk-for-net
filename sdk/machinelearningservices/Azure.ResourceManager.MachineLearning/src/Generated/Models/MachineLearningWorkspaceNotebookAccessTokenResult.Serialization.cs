@@ -5,27 +5,115 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWorkspaceNotebookAccessTokenResult
+    public partial class MachineLearningWorkspaceNotebookAccessTokenResult : IUtf8JsonSerializable, IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>
     {
-        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AccessToken))
+            {
+                writer.WritePropertyName("accessToken"u8);
+                writer.WriteStringValue(AccessToken);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiresIn))
+            {
+                writer.WritePropertyName("expiresIn"u8);
+                writer.WriteNumberValue(ExpiresIn.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotebookResourceId))
+            {
+                writer.WritePropertyName("notebookResourceId"u8);
+                writer.WriteStringValue(NotebookResourceId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PublicDns))
+            {
+                writer.WritePropertyName("publicDns"u8);
+                writer.WriteStringValue(PublicDns);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RefreshToken))
+            {
+                writer.WritePropertyName("refreshToken"u8);
+                writer.WriteStringValue(RefreshToken);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Scope))
+            {
+                writer.WritePropertyName("scope"u8);
+                writer.WriteStringValue(Scope);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TokenType))
+            {
+                writer.WritePropertyName("tokenType"u8);
+                writer.WriteStringValue(TokenType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IJsonModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement, options);
+        }
+
+        internal static MachineLearningWorkspaceNotebookAccessTokenResult DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> accessToken = default;
-            Optional<int> expiresIn = default;
-            Optional<string> hostName = default;
-            Optional<string> notebookResourceId = default;
-            Optional<string> publicDns = default;
-            Optional<string> refreshToken = default;
-            Optional<string> scope = default;
-            Optional<string> tokenType = default;
+            string accessToken = default;
+            int? expiresIn = default;
+            string hostName = default;
+            string notebookResourceId = default;
+            string publicDns = default;
+            string refreshToken = default;
+            string scope = default;
+            string tokenType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accessToken"u8))
@@ -72,8 +160,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tokenType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningWorkspaceNotebookAccessTokenResult(accessToken.Value, Optional.ToNullable(expiresIn), hostName.Value, notebookResourceId.Value, publicDns.Value, refreshToken.Value, scope.Value, tokenType.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningWorkspaceNotebookAccessTokenResult(
+                accessToken,
+                expiresIn,
+                hostName,
+                notebookResourceId,
+                publicDns,
+                refreshToken,
+                scope,
+                tokenType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningWorkspaceNotebookAccessTokenResult IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningWorkspaceNotebookAccessTokenResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceNotebookAccessTokenResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningWorkspaceNotebookAccessTokenResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

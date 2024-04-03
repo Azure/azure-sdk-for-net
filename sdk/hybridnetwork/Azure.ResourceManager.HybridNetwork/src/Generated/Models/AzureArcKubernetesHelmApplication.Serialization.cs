@@ -5,25 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureArcKubernetesHelmApplication : IUtf8JsonSerializable
+    public partial class AzureArcKubernetesHelmApplication : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesHelmApplication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesHelmApplication>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureArcKubernetesHelmApplication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesHelmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesHelmApplication)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArtifactProfile))
             {
                 writer.WritePropertyName("artifactProfile"u8);
-                writer.WriteObjectValue(ArtifactProfile);
+                writer.WriteObjectValue<AzureArcKubernetesArtifactProfile>(ArtifactProfile, options);
             }
             if (Optional.IsDefined(DeployParametersMappingRuleProfile))
             {
                 writer.WritePropertyName("deployParametersMappingRuleProfile"u8);
-                writer.WriteObjectValue(DeployParametersMappingRuleProfile);
+                writer.WriteObjectValue<AzureArcKubernetesDeployMappingRuleProfile>(DeployParametersMappingRuleProfile, options);
             }
             writer.WritePropertyName("artifactType"u8);
             writer.WriteStringValue(ArtifactType.ToString());
@@ -35,22 +46,53 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile);
+                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AzureArcKubernetesHelmApplication DeserializeAzureArcKubernetesHelmApplication(JsonElement element)
+        AzureArcKubernetesHelmApplication IJsonModel<AzureArcKubernetesHelmApplication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesHelmApplication>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesHelmApplication)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureArcKubernetesHelmApplication(document.RootElement, options);
+        }
+
+        internal static AzureArcKubernetesHelmApplication DeserializeAzureArcKubernetesHelmApplication(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureArcKubernetesArtifactProfile> artifactProfile = default;
-            Optional<AzureArcKubernetesDeployMappingRuleProfile> deployParametersMappingRuleProfile = default;
+            AzureArcKubernetesArtifactProfile artifactProfile = default;
+            AzureArcKubernetesDeployMappingRuleProfile deployParametersMappingRuleProfile = default;
             AzureArcKubernetesArtifactType artifactType = default;
-            Optional<string> name = default;
-            Optional<DependsOnProfile> dependsOnProfile = default;
+            string name = default;
+            DependsOnProfile dependsOnProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("artifactProfile"u8))
@@ -59,7 +101,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    artifactProfile = AzureArcKubernetesArtifactProfile.DeserializeAzureArcKubernetesArtifactProfile(property.Value);
+                    artifactProfile = AzureArcKubernetesArtifactProfile.DeserializeAzureArcKubernetesArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deployParametersMappingRuleProfile"u8))
@@ -68,7 +110,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    deployParametersMappingRuleProfile = AzureArcKubernetesDeployMappingRuleProfile.DeserializeAzureArcKubernetesDeployMappingRuleProfile(property.Value);
+                    deployParametersMappingRuleProfile = AzureArcKubernetesDeployMappingRuleProfile.DeserializeAzureArcKubernetesDeployMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactType"u8))
@@ -87,11 +129,53 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value);
+                    dependsOnProfile = DependsOnProfile.DeserializeDependsOnProfile(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureArcKubernetesHelmApplication(name.Value, dependsOnProfile.Value, artifactType, artifactProfile.Value, deployParametersMappingRuleProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureArcKubernetesHelmApplication(
+                name,
+                dependsOnProfile,
+                serializedAdditionalRawData,
+                artifactType,
+                artifactProfile,
+                deployParametersMappingRuleProfile);
         }
+
+        BinaryData IPersistableModel<AzureArcKubernetesHelmApplication>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesHelmApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesHelmApplication)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureArcKubernetesHelmApplication IPersistableModel<AzureArcKubernetesHelmApplication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesHelmApplication>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureArcKubernetesHelmApplication(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesHelmApplication)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureArcKubernetesHelmApplication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

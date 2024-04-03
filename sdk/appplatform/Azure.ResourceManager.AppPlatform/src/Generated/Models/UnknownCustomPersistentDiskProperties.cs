@@ -5,11 +5,12 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownCustomPersistentDiskProperties. </summary>
+    /// <summary> Unknown version of CustomPersistentDiskProperties. </summary>
     internal partial class UnknownCustomPersistentDiskProperties : AppCustomPersistentDiskProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCustomPersistentDiskProperties"/>. </summary>
@@ -17,9 +18,15 @@ namespace Azure.ResourceManager.AppPlatform.Models
         /// <param name="mountPath"> The mount path of the persistent disk. </param>
         /// <param name="isReadOnly"> Indicates whether the persistent disk is a readOnly one. </param>
         /// <param name="mountOptions"> These are the mount options for a persistent disk. </param>
-        internal UnknownCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? isReadOnly, IList<string> mountOptions) : base(underlyingResourceType, mountPath, isReadOnly, mountOptions)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownCustomPersistentDiskProperties(UnderlyingResourceType underlyingResourceType, string mountPath, bool? isReadOnly, IList<string> mountOptions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(underlyingResourceType, mountPath, isReadOnly, mountOptions, serializedAdditionalRawData)
         {
             UnderlyingResourceType = underlyingResourceType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownCustomPersistentDiskProperties"/> for deserialization. </summary>
+        internal UnknownCustomPersistentDiskProperties()
+        {
         }
     }
 }

@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> Metric data. </summary>
     public partial class CosmosDBBaseMetric
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CosmosDBBaseMetric"/>. </summary>
         internal CosmosDBBaseMetric()
         {
@@ -27,7 +58,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
-        internal CosmosDBBaseMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDBBaseMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -35,19 +67,26 @@ namespace Azure.ResourceManager.CosmosDB.Models
             Unit = unit;
             Name = name;
             MetricValues = metricValues;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The time grain to be used to summarize the metric values. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public CosmosDBMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public CosmosDBMetricName Name { get; }
         /// <summary> The metric values for the specified time window and timestep. </summary>
+        [WirePath("metricValues")]
         public IReadOnlyList<CosmosDBMetricValue> MetricValues { get; }
     }
 }

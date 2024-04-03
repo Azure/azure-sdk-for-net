@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -19,7 +18,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<IReadOnlyList<KeyVaultSetting>> settings = default;
+            IReadOnlyList<KeyVaultSetting> settings = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("settings"u8))
@@ -37,7 +36,7 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new GetSettingsResult(Optional.ToList(settings));
+            return new GetSettingsResult(settings ?? new ChangeTrackingList<KeyVaultSetting>());
         }
     }
 }

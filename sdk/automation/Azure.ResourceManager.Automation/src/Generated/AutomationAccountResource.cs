@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Resources;
 
@@ -169,6 +167,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationPrivateEndpointConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection. </param>
@@ -191,6 +197,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateEndpointConnections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationPrivateEndpointConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +236,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Python2Package_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountPython2PackageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="packageName"> The python package name. </param>
@@ -244,6 +266,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Python2Package_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountPython2PackageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,6 +305,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="moduleName"> The module name. </param>
@@ -297,6 +335,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Module_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountModuleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,6 +374,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscNode_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscNodeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nodeId"> The node id. </param>
@@ -350,6 +404,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscNode_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscNodeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,6 +443,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscNodeConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscNodeConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="nodeConfigurationName"> The Dsc node configuration name. </param>
@@ -403,6 +473,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscNodeConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscNodeConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -434,6 +512,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="compilationJobName"> The DSC configuration Id. </param>
@@ -456,6 +542,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -487,6 +581,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SourceControl_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlName"> The name of source control. </param>
@@ -509,6 +611,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SourceControl_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -540,6 +650,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Certificate_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="certificateName"> The name of certificate. </param>
@@ -562,6 +680,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificate_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -593,6 +719,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Connection_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationConnectionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionName"> The name of connection. </param>
@@ -615,6 +749,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Connection_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationConnectionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,6 +788,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>ConnectionType_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationConnectionTypeResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="connectionTypeName"> The name of connection type. </param>
@@ -668,6 +818,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectionType_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationConnectionTypeResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -699,6 +857,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="credentialName"> The name of credential. </param>
@@ -721,6 +887,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Credential_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationCredentialResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -752,6 +926,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>JobSchedule_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobScheduleId"> The job schedule name. </param>
@@ -772,6 +954,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>JobSchedule_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -801,6 +991,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Schedule_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationScheduleResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scheduleName"> The schedule name. </param>
@@ -823,6 +1021,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Schedule_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationScheduleResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -854,6 +1060,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="variableName"> The name of variable. </param>
@@ -876,6 +1090,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Variable_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationVariableResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -907,6 +1129,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Watcher_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWatcherResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="watcherName"> The watcher name. </param>
@@ -929,6 +1159,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Watcher_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWatcherResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -960,6 +1198,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscConfiguration_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configurationName"> The configuration name. </param>
@@ -982,6 +1228,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscConfiguration_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1013,6 +1267,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Job_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobName"> The job name. </param>
@@ -1036,6 +1298,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Job_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1068,6 +1338,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_GetByName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationName"> The name of the software update configuration to be created. </param>
@@ -1091,6 +1369,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurations_GetByName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SoftwareUpdateConfigurationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1123,6 +1409,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Runbook_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationRunbookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="runbookName"> The runbook name. </param>
@@ -1145,6 +1439,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Runbook_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationRunbookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1176,6 +1478,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="webhookName"> The webhook name. </param>
@@ -1198,6 +1508,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Webhook_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1229,6 +1547,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkerGroup_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
@@ -1252,6 +1578,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>HybridRunbookWorkerGroup_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HybridRunbookWorkerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="hybridRunbookWorkerGroupName"> The hybrid runbook worker group name. </param>
@@ -1274,6 +1608,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1307,6 +1649,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1338,6 +1688,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1373,6 +1731,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -1406,6 +1772,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1441,6 +1815,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Parameters supplied to the update automation account. </param>
@@ -1475,6 +1857,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Automation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1482,7 +1868,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationPrivateLinkResource> AutomationPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1496,6 +1882,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_Automation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1503,7 +1893,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationPrivateLinkResource> AutomationPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _privateLinkResourcesRestClient.CreateAutomationRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource, _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationPrivateLinkResource.DeserializeAutomationPrivateLinkResource(e), _privateLinkResourcesClientDiagnostics, Pipeline, "AutomationAccountResource.AutomationPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1516,6 +1906,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentRegistrationInformation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1547,6 +1941,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AgentRegistrationInformation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1576,6 +1974,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AgentRegistrationInformation_RegenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1611,6 +2013,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AgentRegistrationInformation_RegenerateKey</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The name of the agent registration key to be regenerated. </param>
@@ -1644,6 +2050,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_GetStream</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1681,6 +2095,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJob_GetStream</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DscCompilationJobResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
@@ -1717,6 +2139,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJobStream_ListByJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
@@ -1725,7 +2151,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationJobStream> GetDscCompilationJobStreamsAsync(Guid jobId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationJobStream.DeserializeAutomationJobStream, _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationJobStream.DeserializeAutomationJobStream(e), _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1739,6 +2165,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>DscCompilationJobStream_ListByJob</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="jobId"> The job id. </param>
@@ -1747,7 +2177,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationJobStream> GetDscCompilationJobStreams(Guid jobId, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dscCompilationJobStreamRestClient.CreateListByJobRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationJobStream.DeserializeAutomationJobStream, _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationJobStream.DeserializeAutomationJobStream(e), _dscCompilationJobStreamClientDiagnostics, Pipeline, "AutomationAccountResource.GetDscCompilationJobStreams", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1760,6 +2190,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NodeCountInformation_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1769,7 +2203,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<DscNodeCount> GetAllNodeCountInformationAsync(AutomationCountType countType, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, DscNodeCount.DeserializeDscNodeCount, _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => DscNodeCount.DeserializeDscNodeCount(e), _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1783,6 +2217,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>NodeCountInformation_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="countType"> The type of counts to retrieve. </param>
@@ -1791,7 +2229,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<DscNodeCount> GetAllNodeCountInformation(AutomationCountType countType, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _nodeCountInformationRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, countType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, DscNodeCount.DeserializeDscNodeCount, _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => DscNodeCount.DeserializeDscNodeCount(e), _nodeCountInformationClientDiagnostics, Pipeline, "AutomationAccountResource.GetAllNodeCountInformation", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1804,6 +2242,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Statistics_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1813,7 +2255,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationAccountStatistics> GetStatisticsAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationAccountStatistics.DeserializeAutomationAccountStatistics, _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationAccountStatistics.DeserializeAutomationAccountStatistics(e), _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1827,6 +2269,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Statistics_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> The filter to apply on the operation. </param>
@@ -1835,7 +2281,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationAccountStatistics> GetStatistics(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _statisticsRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationAccountStatistics.DeserializeAutomationAccountStatistics, _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationAccountStatistics.DeserializeAutomationAccountStatistics(e), _statisticsClientDiagnostics, Pipeline, "AutomationAccountResource.GetStatistics", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1848,6 +2294,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Usages_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1856,7 +2306,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationUsage> GetUsagesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationUsage.DeserializeAutomationUsage, _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationUsage.DeserializeAutomationUsage(e), _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1870,6 +2320,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Usages_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1877,7 +2331,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationUsage> GetUsages(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _usagesRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationUsage.DeserializeAutomationUsage, _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationUsage.DeserializeAutomationUsage(e), _usagesClientDiagnostics, Pipeline, "AutomationAccountResource.GetUsages", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1890,6 +2344,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Keys_ListByAutomationAccount</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1898,7 +2356,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<AutomationKey> GetAutomationAccountKeysAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationKey.DeserializeAutomationKey, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationKey.DeserializeAutomationKey(e), _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
         }
 
         /// <summary>
@@ -1912,6 +2370,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Keys_ListByAutomationAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1919,7 +2381,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<AutomationKey> GetAutomationAccountKeys(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _keysRestClient.CreateListByAutomationAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationKey.DeserializeAutomationKey, _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationKey.DeserializeAutomationKey(e), _keysClientDiagnostics, Pipeline, "AutomationAccountResource.GetAutomationAccountKeys", "keys", null, cancellationToken);
         }
 
         /// <summary>
@@ -1932,6 +2394,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LinkedWorkspace_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1963,6 +2429,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>LinkedWorkspace_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1993,6 +2463,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>ObjectDataTypes_ListFieldsByType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
@@ -2005,7 +2479,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2019,6 +2493,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>ObjectDataTypes_ListFieldsByType</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-13-preview</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="typeName"> The name of type. </param>
@@ -2031,7 +2509,7 @@ namespace Azure.ResourceManager.Automation
             Argument.AssertNotNullOrEmpty(typeName, nameof(typeName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _objectDataTypesRestClient.CreateListFieldsByTypeRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, typeName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AutomationModuleField.DeserializeAutomationModuleField, _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AutomationModuleField.DeserializeAutomationModuleField(e), _objectDataTypesClientDiagnostics, Pipeline, "AutomationAccountResource.GetFieldsByType", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2044,6 +2522,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>convertGraphRunbookContent</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2079,6 +2561,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>convertGraphRunbookContent</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Input data describing the graphical runbook. </param>
@@ -2113,6 +2599,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationRunId"> The Id of the software update configuration run. </param>
@@ -2144,6 +2634,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationRuns_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2177,6 +2671,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -2188,7 +2686,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun, _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(e), _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2202,6 +2700,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -2213,7 +2715,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<SoftwareUpdateConfigurationRun> GetSoftwareUpdateConfigurationRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun, _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationRun.DeserializeSoftwareUpdateConfigurationRun(e), _softwareUpdateConfigurationRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2226,6 +2728,10 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2259,6 +2765,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationMachineRuns_GetById</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="softwareUpdateConfigurationMachineRunId"> The Id of the software update configuration machine run. </param>
@@ -2291,6 +2801,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -2302,7 +2816,7 @@ namespace Azure.ResourceManager.Automation
         public virtual AsyncPageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRunsAsync(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun, _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(e), _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2316,6 +2830,10 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>SoftwareUpdateConfigurationMachineRuns_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-06-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clientRequestId"> Identifies this specific client request. </param>
@@ -2327,7 +2845,7 @@ namespace Azure.ResourceManager.Automation
         public virtual Pageable<SoftwareUpdateConfigurationMachineRun> GetSoftwareUpdateConfigurationMachineRuns(string clientRequestId = null, string filter = null, string skip = null, string top = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _softwareUpdateConfigurationMachineRunsRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, clientRequestId, filter, skip, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun, _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SoftwareUpdateConfigurationMachineRun.DeserializeSoftwareUpdateConfigurationMachineRun(e), _softwareUpdateConfigurationMachineRunsClientDiagnostics, Pipeline, "AutomationAccountResource.GetSoftwareUpdateConfigurationMachineRuns", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -2340,6 +2858,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Webhook_GenerateUri</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2371,6 +2897,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>Webhook_GenerateUri</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2015-10-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationWebhookResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -2400,6 +2934,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2455,6 +2997,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -2509,6 +3059,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2558,6 +3116,14 @@ namespace Azure.ResourceManager.Automation
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -2606,6 +3172,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2658,6 +3232,14 @@ namespace Azure.ResourceManager.Automation
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutomationAccount_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-22</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutomationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,15 +14,23 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class VnetRoute : IUtf8JsonSerializable
+    public partial class VnetRoute : IUtf8JsonSerializable, IJsonModel<VnetRoute>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VnetRoute>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VnetRoute>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VnetRoute)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StaticRoutesConfig))
             {
                 writer.WritePropertyName("staticRoutesConfig"u8);
-                writer.WriteObjectValue(StaticRoutesConfig);
+                writer.WriteObjectValue<StaticRoutesConfig>(StaticRoutesConfig, options);
             }
             if (Optional.IsCollectionDefined(StaticRoutes))
             {
@@ -28,22 +38,63 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in StaticRoutes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StaticRoute>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(BgpConnections))
+            {
+                writer.WritePropertyName("bgpConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in BgpConnections)
+                {
+                    JsonSerializer.Serialize(writer, item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static VnetRoute DeserializeVnetRoute(JsonElement element)
+        VnetRoute IJsonModel<VnetRoute>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VnetRoute)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVnetRoute(document.RootElement, options);
+        }
+
+        internal static VnetRoute DeserializeVnetRoute(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<StaticRoutesConfig> staticRoutesConfig = default;
-            Optional<IList<StaticRoute>> staticRoutes = default;
-            Optional<IReadOnlyList<WritableSubResource>> bgpConnections = default;
+            StaticRoutesConfig staticRoutesConfig = default;
+            IList<StaticRoute> staticRoutes = default;
+            IReadOnlyList<WritableSubResource> bgpConnections = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("staticRoutesConfig"u8))
@@ -52,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value);
+                    staticRoutesConfig = StaticRoutesConfig.DeserializeStaticRoutesConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("staticRoutes"u8))
@@ -64,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<StaticRoute> array = new List<StaticRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StaticRoute.DeserializeStaticRoute(item));
+                        array.Add(StaticRoute.DeserializeStaticRoute(item, options));
                     }
                     staticRoutes = array;
                     continue;
@@ -83,8 +134,44 @@ namespace Azure.ResourceManager.Network.Models
                     bgpConnections = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VnetRoute(staticRoutesConfig.Value, Optional.ToList(staticRoutes), Optional.ToList(bgpConnections));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VnetRoute(staticRoutesConfig, staticRoutes ?? new ChangeTrackingList<StaticRoute>(), bgpConnections ?? new ChangeTrackingList<WritableSubResource>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VnetRoute>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VnetRoute)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VnetRoute IPersistableModel<VnetRoute>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VnetRoute>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVnetRoute(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VnetRoute)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VnetRoute>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

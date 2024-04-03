@@ -5,38 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    internal partial class UserCreatedAcrAccount : IUtf8JsonSerializable
+    internal partial class UserCreatedAcrAccount : IUtf8JsonSerializable, IJsonModel<UserCreatedAcrAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UserCreatedAcrAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UserCreatedAcrAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
                 }
                 else
                 {
                     writer.WriteNull("armResourceId");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UserCreatedAcrAccount DeserializeUserCreatedAcrAccount(JsonElement element)
+        UserCreatedAcrAccount IJsonModel<UserCreatedAcrAccount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUserCreatedAcrAccount(document.RootElement, options);
+        }
+
+        internal static UserCreatedAcrAccount DeserializeUserCreatedAcrAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ArmResourceId> armResourceId = default;
+            ArmResourceId armResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("armResourceId"u8))
@@ -46,11 +88,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value);
+                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UserCreatedAcrAccount(armResourceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UserCreatedAcrAccount(armResourceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UserCreatedAcrAccount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UserCreatedAcrAccount IPersistableModel<UserCreatedAcrAccount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UserCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUserCreatedAcrAccount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UserCreatedAcrAccount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UserCreatedAcrAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

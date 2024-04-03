@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HardwareSecurityModules;
 
 namespace Azure.ResourceManager.HardwareSecurityModules.Models
 {
-    internal partial class DedicatedHsmListResult
+    internal partial class DedicatedHsmListResult : IUtf8JsonSerializable, IJsonModel<DedicatedHsmListResult>
     {
-        internal static DedicatedHsmListResult DeserializeDedicatedHsmListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DedicatedHsmListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DedicatedHsmListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DedicatedHsmListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<DedicatedHsmData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DedicatedHsmListResult IJsonModel<DedicatedHsmListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DedicatedHsmListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDedicatedHsmListResult(document.RootElement, options);
+        }
+
+        internal static DedicatedHsmListResult DeserializeDedicatedHsmListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DedicatedHsmData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DedicatedHsmData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     List<DedicatedHsmData> array = new List<DedicatedHsmData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item));
+                        array.Add(DedicatedHsmData.DeserializeDedicatedHsmData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DedicatedHsmListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DedicatedHsmListResult(value ?? new ChangeTrackingList<DedicatedHsmData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DedicatedHsmListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DedicatedHsmListResult IPersistableModel<DedicatedHsmListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DedicatedHsmListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDedicatedHsmListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DedicatedHsmListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DedicatedHsmListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

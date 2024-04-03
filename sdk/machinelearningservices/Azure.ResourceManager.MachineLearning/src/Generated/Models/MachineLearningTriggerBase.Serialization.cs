@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningTriggerBase : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownTriggerBase))]
+    public partial class MachineLearningTriggerBase : IUtf8JsonSerializable, IJsonModel<MachineLearningTriggerBase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningTriggerBase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningTriggerBase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTriggerBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EndTime))
             {
@@ -46,11 +57,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("triggerType"u8);
             writer.WriteStringValue(TriggerType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningTriggerBase DeserializeMachineLearningTriggerBase(JsonElement element)
+        MachineLearningTriggerBase IJsonModel<MachineLearningTriggerBase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTriggerBase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningTriggerBase(document.RootElement, options);
+        }
+
+        internal static MachineLearningTriggerBase DeserializeMachineLearningTriggerBase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -59,11 +99,42 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cron": return CronTrigger.DeserializeCronTrigger(element);
-                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element);
+                    case "Cron": return CronTrigger.DeserializeCronTrigger(element, options);
+                    case "Recurrence": return MachineLearningRecurrenceTrigger.DeserializeMachineLearningRecurrenceTrigger(element, options);
                 }
             }
-            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element);
+            return UnknownTriggerBase.DeserializeUnknownTriggerBase(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningTriggerBase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTriggerBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningTriggerBase IPersistableModel<MachineLearningTriggerBase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningTriggerBase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningTriggerBase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningTriggerBase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningTriggerBase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,38 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureArcKubernetesArtifactProfile : IUtf8JsonSerializable
+    public partial class AzureArcKubernetesArtifactProfile : IUtf8JsonSerializable, IJsonModel<AzureArcKubernetesArtifactProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureArcKubernetesArtifactProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureArcKubernetesArtifactProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HelmArtifactProfile))
             {
                 writer.WritePropertyName("helmArtifactProfile"u8);
-                writer.WriteObjectValue(HelmArtifactProfile);
+                writer.WriteObjectValue<HelmArtifactProfile>(HelmArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {
                 writer.WritePropertyName("artifactStore"u8);
                 JsonSerializer.Serialize(writer, ArtifactStore);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureArcKubernetesArtifactProfile DeserializeAzureArcKubernetesArtifactProfile(JsonElement element)
+        AzureArcKubernetesArtifactProfile IJsonModel<AzureArcKubernetesArtifactProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureArcKubernetesArtifactProfile(document.RootElement, options);
+        }
+
+        internal static AzureArcKubernetesArtifactProfile DeserializeAzureArcKubernetesArtifactProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<HelmArtifactProfile> helmArtifactProfile = default;
-            Optional<WritableSubResource> artifactStore = default;
+            HelmArtifactProfile helmArtifactProfile = default;
+            WritableSubResource artifactStore = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("helmArtifactProfile"u8))
@@ -45,7 +87,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value);
+                    helmArtifactProfile = HelmArtifactProfile.DeserializeHelmArtifactProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("artifactStore"u8))
@@ -57,8 +99,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     artifactStore = JsonSerializer.Deserialize<WritableSubResource>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureArcKubernetesArtifactProfile(artifactStore, helmArtifactProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureArcKubernetesArtifactProfile(artifactStore, serializedAdditionalRawData, helmArtifactProfile);
         }
+
+        BinaryData IPersistableModel<AzureArcKubernetesArtifactProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureArcKubernetesArtifactProfile IPersistableModel<AzureArcKubernetesArtifactProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureArcKubernetesArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureArcKubernetesArtifactProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureArcKubernetesArtifactProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureArcKubernetesArtifactProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

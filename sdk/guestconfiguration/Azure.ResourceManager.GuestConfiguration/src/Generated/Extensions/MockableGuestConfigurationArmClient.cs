@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.GuestConfiguration;
 
 namespace Azure.ResourceManager.GuestConfiguration.Mocking
 {
@@ -63,6 +60,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -86,6 +91,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +136,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationHcrpAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -146,6 +167,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationHCRPAssignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationHcrpAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -183,6 +212,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -206,6 +243,14 @@ namespace Azure.ResourceManager.GuestConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GuestConfigurationAssignmentsVMSS_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-01-25</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GuestConfigurationVmssAssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

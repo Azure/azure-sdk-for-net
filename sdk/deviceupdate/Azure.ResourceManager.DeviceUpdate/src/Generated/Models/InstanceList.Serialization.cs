@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
-    internal partial class InstanceList
+    internal partial class InstanceList : IUtf8JsonSerializable, IJsonModel<InstanceList>
     {
-        internal static InstanceList DeserializeInstanceList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InstanceList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InstanceList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<DeviceUpdateInstanceData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InstanceList IJsonModel<InstanceList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InstanceList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInstanceList(document.RootElement, options);
+        }
+
+        internal static InstanceList DeserializeInstanceList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DeviceUpdateInstanceData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DeviceUpdateInstanceData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -38,13 +99,49 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateInstanceData> array = new List<DeviceUpdateInstanceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item));
+                        array.Add(DeviceUpdateInstanceData.DeserializeDeviceUpdateInstanceData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InstanceList(nextLink.Value, Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InstanceList(nextLink, value ?? new ChangeTrackingList<DeviceUpdateInstanceData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InstanceList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InstanceList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InstanceList IPersistableModel<InstanceList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InstanceList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInstanceList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InstanceList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InstanceList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

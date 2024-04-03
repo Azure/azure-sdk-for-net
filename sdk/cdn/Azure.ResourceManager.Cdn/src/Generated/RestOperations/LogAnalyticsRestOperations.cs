@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Cdn.Models;
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            if (metrics != null && !(metrics is ChangeTrackingList<LogMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in metrics)
                 {
@@ -63,35 +62,35 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
+            if (groupBy != null && !(groupBy is ChangeTrackingList<LogMetricsGroupBy> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in groupBy)
                 {
                     uri.AppendQuery("groupBy", param.ToString(), true);
                 }
             }
-            if (continents != null && Optional.IsCollectionDefined(continents))
+            if (continents != null && !(continents is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in continents)
                 {
                     uri.AppendQuery("continents", param, true);
                 }
             }
-            if (countryOrRegions != null && Optional.IsCollectionDefined(countryOrRegions))
+            if (countryOrRegions != null && !(countryOrRegions is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in countryOrRegions)
                 {
                     uri.AppendQuery("countryOrRegions", param, true);
                 }
             }
-            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in customDomains)
                 {
                     uri.AppendQuery("customDomains", param, true);
                 }
             }
-            if (protocols != null && Optional.IsCollectionDefined(protocols))
+            if (protocols != null && !(protocols is ChangeTrackingList<string> changeTrackingList4 && changeTrackingList4.IsUndefined))
             {
                 foreach (var param in protocols)
                 {
@@ -201,14 +200,14 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (rankings != null && Optional.IsCollectionDefined(rankings))
+            if (rankings != null && !(rankings is ChangeTrackingList<LogRanking> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in rankings)
                 {
                     uri.AppendQuery("rankings", param.ToString(), true);
                 }
             }
-            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            if (metrics != null && !(metrics is ChangeTrackingList<LogRankingMetric> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in metrics)
                 {
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("maxRanking", maxRanking, true);
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
-            if (customDomains != null && Optional.IsCollectionDefined(customDomains))
+            if (customDomains != null && !(customDomains is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in customDomains)
                 {
@@ -478,7 +477,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsMetrics", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in metrics)
                 {
@@ -488,21 +487,21 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("granularity", granularity.ToString(), true);
-            if (actions != null && Optional.IsCollectionDefined(actions))
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in actions)
                 {
                     uri.AppendQuery("actions", param.ToString(), true);
                 }
             }
-            if (groupBy != null && Optional.IsCollectionDefined(groupBy))
+            if (groupBy != null && !(groupBy is ChangeTrackingList<WafRankingGroupBy> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in groupBy)
                 {
                     uri.AppendQuery("groupBy", param.ToString(), true);
                 }
             }
-            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in ruleTypes)
                 {
@@ -604,7 +603,7 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendPath(profileName, true);
             uri.AppendPath("/getWafLogAnalyticsRankings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (metrics != null && Optional.IsCollectionDefined(metrics))
+            if (metrics != null && !(metrics is ChangeTrackingList<WafMetric> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in metrics)
                 {
@@ -614,21 +613,21 @@ namespace Azure.ResourceManager.Cdn
             uri.AppendQuery("dateTimeBegin", dateTimeBegin, "O", true);
             uri.AppendQuery("dateTimeEnd", dateTimeEnd, "O", true);
             uri.AppendQuery("maxRanking", maxRanking, true);
-            if (rankings != null && Optional.IsCollectionDefined(rankings))
+            if (rankings != null && !(rankings is ChangeTrackingList<WafRankingType> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in rankings)
                 {
                     uri.AppendQuery("rankings", param.ToString(), true);
                 }
             }
-            if (actions != null && Optional.IsCollectionDefined(actions))
+            if (actions != null && !(actions is ChangeTrackingList<WafAction> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in actions)
                 {
                     uri.AppendQuery("actions", param.ToString(), true);
                 }
             }
-            if (ruleTypes != null && Optional.IsCollectionDefined(ruleTypes))
+            if (ruleTypes != null && !(ruleTypes is ChangeTrackingList<WafRuleType> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in ruleTypes)
                 {

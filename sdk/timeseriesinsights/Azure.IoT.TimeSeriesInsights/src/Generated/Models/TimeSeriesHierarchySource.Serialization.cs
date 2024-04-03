@@ -35,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<IList<string>> instanceFieldNames = default;
+            IList<string> instanceFieldNames = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("instanceFieldNames"u8))
@@ -53,7 +53,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesHierarchySource(Optional.ToList(instanceFieldNames));
+            return new TimeSeriesHierarchySource(instanceFieldNames ?? new ChangeTrackingList<string>());
         }
     }
 }

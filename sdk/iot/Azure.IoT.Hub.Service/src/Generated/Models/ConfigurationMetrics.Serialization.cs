@@ -47,8 +47,8 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, long>> results = default;
-            Optional<IDictionary<string, string>> queries = default;
+            IDictionary<string, long> results = default;
+            IDictionary<string, string> queries = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("results"u8))
@@ -80,7 +80,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new ConfigurationMetrics(Optional.ToDictionary(results), Optional.ToDictionary(queries));
+            return new ConfigurationMetrics(results ?? new ChangeTrackingDictionary<string, long>(), queries ?? new ChangeTrackingDictionary<string, string>());
         }
     }
 }

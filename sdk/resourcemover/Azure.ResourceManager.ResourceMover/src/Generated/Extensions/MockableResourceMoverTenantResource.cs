@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ResourceMover;
 using Azure.ResourceManager.ResourceMover.Models;
 
 namespace Azure.ResourceManager.ResourceMover.Mocking
@@ -53,6 +50,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationsDiscovery_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         public virtual AsyncPageable<MoverOperationsDiscovery> GetOperationsDiscoveriesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(e), OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -73,6 +74,10 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         /// <term>Operation Id</term>
         /// <description>OperationsDiscovery_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -80,7 +85,7 @@ namespace Azure.ResourceManager.ResourceMover.Mocking
         public virtual Pageable<MoverOperationsDiscovery> GetOperationsDiscoveries(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => OperationsDiscoveryRestClient.CreateGetRequest();
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery, OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(e), OperationsDiscoveryClientDiagnostics, Pipeline, "MockableResourceMoverTenantResource.GetOperationsDiscoveries", "value", null, cancellationToken);
         }
     }
 }

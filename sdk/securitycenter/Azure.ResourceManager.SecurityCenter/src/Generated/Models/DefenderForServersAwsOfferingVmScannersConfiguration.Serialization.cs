@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOfferingVmScannersConfiguration : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOfferingVmScannersConfiguration : IUtf8JsonSerializable, IJsonModel<DefenderForServersAwsOfferingVmScannersConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderForServersAwsOfferingVmScannersConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CloudRoleArn))
             {
@@ -37,18 +47,49 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element)
+        DefenderForServersAwsOfferingVmScannersConfiguration IJsonModel<DefenderForServersAwsOfferingVmScannersConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(document.RootElement, options);
+        }
+
+        internal static DefenderForServersAwsOfferingVmScannersConfiguration DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> cloudRoleArn = default;
-            Optional<DefenderForServersScanningMode> scanningMode = default;
-            Optional<IDictionary<string, string>> exclusionTags = default;
+            string cloudRoleArn = default;
+            DefenderForServersScanningMode? scanningMode = default;
+            IDictionary<string, string> exclusionTags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("cloudRoleArn"u8))
@@ -79,8 +120,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     exclusionTags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn.Value, Optional.ToNullable(scanningMode), Optional.ToDictionary(exclusionTags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForServersAwsOfferingVmScannersConfiguration(cloudRoleArn, scanningMode, exclusionTags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderForServersAwsOfferingVmScannersConfiguration IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForServersAwsOfferingVmScannersConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOfferingVmScannersConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForServersAwsOfferingVmScannersConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

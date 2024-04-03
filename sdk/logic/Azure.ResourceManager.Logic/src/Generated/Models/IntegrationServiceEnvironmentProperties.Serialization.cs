@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceEnvironmentProperties : IUtf8JsonSerializable
+    public partial class IntegrationServiceEnvironmentProperties : IUtf8JsonSerializable, IJsonModel<IntegrationServiceEnvironmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceEnvironmentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationServiceEnvironmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -33,33 +44,64 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
             }
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<IntegrationServiceNetworkConfiguration>(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
-                writer.WriteObjectValue(EncryptionConfiguration);
+                writer.WriteObjectValue<IntegrationServiceEnvironmenEncryptionConfiguration>(EncryptionConfiguration, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element)
+        IntegrationServiceEnvironmentProperties IJsonModel<IntegrationServiceEnvironmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceEnvironmentProperties(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceEnvironmentProperties DeserializeIntegrationServiceEnvironmentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<LogicWorkflowProvisioningState> provisioningState = default;
-            Optional<LogicWorkflowState> state = default;
-            Optional<string> integrationServiceEnvironmentId = default;
-            Optional<FlowEndpointsConfiguration> endpointsConfiguration = default;
-            Optional<IntegrationServiceNetworkConfiguration> networkConfiguration = default;
-            Optional<IntegrationServiceEnvironmenEncryptionConfiguration> encryptionConfiguration = default;
+            LogicWorkflowProvisioningState? provisioningState = default;
+            LogicWorkflowState? state = default;
+            string integrationServiceEnvironmentId = default;
+            FlowEndpointsConfiguration endpointsConfiguration = default;
+            IntegrationServiceNetworkConfiguration networkConfiguration = default;
+            IntegrationServiceEnvironmenEncryptionConfiguration encryptionConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -91,7 +133,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value);
+                    endpointsConfiguration = FlowEndpointsConfiguration.DeserializeFlowEndpointsConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("networkConfiguration"u8))
@@ -100,7 +142,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value);
+                    networkConfiguration = IntegrationServiceNetworkConfiguration.DeserializeIntegrationServiceNetworkConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptionConfiguration"u8))
@@ -109,11 +151,54 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value);
+                    encryptionConfiguration = IntegrationServiceEnvironmenEncryptionConfiguration.DeserializeIntegrationServiceEnvironmenEncryptionConfiguration(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceEnvironmentProperties(Optional.ToNullable(provisioningState), Optional.ToNullable(state), integrationServiceEnvironmentId.Value, endpointsConfiguration.Value, networkConfiguration.Value, encryptionConfiguration.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationServiceEnvironmentProperties(
+                provisioningState,
+                state,
+                integrationServiceEnvironmentId,
+                endpointsConfiguration,
+                networkConfiguration,
+                encryptionConfiguration,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceEnvironmentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationServiceEnvironmentProperties IPersistableModel<IntegrationServiceEnvironmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationServiceEnvironmentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationServiceEnvironmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RemoteDeviceAdapter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -40,8 +40,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<RemoteDeviceAdapter>> value = default;
-            Optional<string> continuationToken = default;
+            IList<RemoteDeviceAdapter> value = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new RemoteDeviceAdapterCollection(Optional.ToList(value), continuationToken.Value);
+            return new RemoteDeviceAdapterCollection(value ?? new ChangeTrackingList<RemoteDeviceAdapter>(), continuationToken);
         }
     }
 }

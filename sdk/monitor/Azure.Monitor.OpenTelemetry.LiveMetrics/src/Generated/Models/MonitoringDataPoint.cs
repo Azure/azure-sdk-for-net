@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -35,7 +34,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
         /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
         /// <param name="metrics"> An array of meric data points. </param>
-        /// <param name="documents"> An array of documents of a specific type {RequestDocumentIngress}, {RemoteDependencyDocumentIngress}, {ExceptionDocumentIngress}, {EventDocumentIngress}, or {TraceDocumentIngress}. </param>
+        /// <param name="documents">
+        /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
+        /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
+        /// </param>
         /// <param name="topCpuProcesses"> An array of top cpu consumption data point. </param>
         /// <param name="collectionConfigurationErrors"> An array of error while parsing and applying . </param>
         internal MonitoringDataPoint(string version, int? invariantVersion, string instance, string roleName, string machineName, string streamId, DateTimeOffset? timestamp, DateTimeOffset? transmissionTime, bool? isWebApp, bool? performanceCollectionSupported, IList<MetricPoint> metrics, IList<DocumentIngress> documents, IList<ProcessCpuData> topCpuProcesses, IList<CollectionConfigurationError> collectionConfigurationErrors)
@@ -78,7 +81,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         public bool? PerformanceCollectionSupported { get; set; }
         /// <summary> An array of meric data points. </summary>
         public IList<MetricPoint> Metrics { get; }
-        /// <summary> An array of documents of a specific type {RequestDocumentIngress}, {RemoteDependencyDocumentIngress}, {ExceptionDocumentIngress}, {EventDocumentIngress}, or {TraceDocumentIngress}. </summary>
+        /// <summary>
+        /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
+        /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
+        /// </summary>
         public IList<DocumentIngress> Documents { get; }
         /// <summary> An array of top cpu consumption data point. </summary>
         public IList<ProcessCpuData> TopCpuProcesses { get; }

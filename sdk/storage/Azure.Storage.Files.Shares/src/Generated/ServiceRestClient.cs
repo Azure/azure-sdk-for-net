@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Files.Shares.Models;
 
 namespace Azure.Storage.Files.Shares
@@ -30,7 +30,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-02-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-05-04". </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="url"/> or <paramref name="version"/> is null. </exception>
         public ServiceRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string url, string version)
         {
@@ -203,7 +203,7 @@ namespace Azure.Storage.Files.Shares
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && Optional.IsCollectionDefined(include))
+            if (include != null && !(include is Common.ChangeTrackingList<ListSharesIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

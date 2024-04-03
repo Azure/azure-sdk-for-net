@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 
@@ -17,8 +19,6 @@ namespace Azure.Storage.DataMovement.Blobs
     {
         internal PageBlobClient BlobClient { get; set; }
         internal PageBlobStorageResourceOptions _options;
-        internal long? _length;
-        internal ETag? _etagDownloadLock = default;
 
         protected override string ResourceId => "PageBlob";
 
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Will return default if the length was not set by a GetStorageResources API call.
         /// </summary>
-        protected override long? Length => _length;
+        protected override long? Length => ResourceProperties?.ResourceLength;
 
         /// <summary>
         /// The constructor for a new instance of the <see cref="PageBlobStorageResource"/>
@@ -59,18 +59,15 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Internal Constructor for constructing the resource retrieved by a GetStorageResources
         /// </summary>
         /// <param name="blobClient">The blob client which will service the storage resource operations.</param>
-        /// <param name="length">The content length of the blob.</param>
-        /// <param name="etagLock">Preset etag to lock on for reads.</param>
+        /// <param name="resourceProperties">Properties specific to the resource.</param>
         /// <param name="options">Options for the storage resource. See <see cref="PageBlobStorageResourceOptions"/>.</param>
         internal PageBlobStorageResource(
             PageBlobClient blobClient,
-            long? length,
-            ETag? etagLock,
+            StorageResourceItemProperties resourceProperties,
             PageBlobStorageResourceOptions options = default)
             : this(blobClient, options)
         {
-            _length = length;
-            _etagDownloadLock = etagLock;
+            ResourceProperties = resourceProperties;
         }
 
         /// <summary>
@@ -93,8 +90,14 @@ namespace Azure.Storage.DataMovement.Blobs
             CancellationToken cancellationToken = default)
         {
             Response<BlobDownloadStreamingResult> response = await BlobClient.DownloadStreamingAsync(
-                _options.ToBlobDownloadOptions(new HttpRange(position, length), _etagDownloadLock),
+                _options.ToBlobDownloadOptions(new HttpRange(position, length), ResourceProperties?.ETag),
                 cancellationToken).ConfigureAwait(false);
+
+            // Set the resource properties if we currently do not have any stored on the resource.
+            if (ResourceProperties == default)
+            {
+                ResourceProperties = response.Value.ToStorageResourceItemProperties();
+            }
             return response.Value.ToReadStreamStorageResourceInfo();
         }
 
@@ -134,7 +137,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await BlobClient.CreateAsync(
                     size: completeLength,
-                    options: _options.ToCreateOptions(overwrite),
+                    options: DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken: cancellationToken).ConfigureAwait(false);
             }
             if (streamLength > 0)
@@ -173,7 +179,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             await BlobClient.CreateAsync(
                 size: completeLength,
-                options: _options.ToCreateOptions(overwrite),
+                options: DataMovementBlobsExtensions.GetCreateOptions(
+                    _options,
+                    overwrite,
+                    options?.SourceProperties),
                 cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // There is no synchronous single-call copy API for Append/Page -> Page Blob
@@ -221,7 +230,10 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 await BlobClient.CreateAsync(
                     size: completeLength,
-                    _options.ToCreateOptions(overwrite),
+                    DataMovementBlobsExtensions.GetCreateOptions(
+                        _options,
+                        overwrite,
+                        options?.SourceProperties),
                     cancellationToken).ConfigureAwait(false);
             }
 
@@ -236,14 +248,26 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Get properties of the resource.
         ///
-        /// See <see cref="StorageResourceProperties"/>.
+        /// See <see cref="StorageResourceItemProperties"/>.
         /// </summary>
-        /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceProperties"/></returns>
-        protected override async Task<StorageResourceProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
+        /// <returns>Returns the properties of the Page Blob Storage Resource. See <see cref="StorageResourceItemProperties"/></returns>
+        protected override async Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken cancellationToken = default)
         {
-            Response<BlobProperties> response = await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
-            GrabEtag(response.GetRawResponse());
-            return response.Value.ToStorageResourceProperties();
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
+
+            // The properties could be populated during construction (from enumeration)
+            if (ResourceProperties != default)
+            {
+                return ResourceProperties;
+            }
+            else
+            {
+                BlobProperties blobProperties = (await BlobClient.GetPropertiesAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value;
+                StorageResourceItemProperties resourceProperties = blobProperties.ToStorageResourceProperties();
+
+                ResourceProperties = resourceProperties;
+                return ResourceProperties;
+            }
         }
 
         /// <summary>
@@ -265,7 +289,10 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Commits the block list given.
         /// </summary>
-        protected override Task CompleteTransferAsync(bool overwrite, CancellationToken cancellationToken = default)
+        protected override Task CompleteTransferAsync(
+            bool overwrite,
+            StorageResourceCompleteTransferOptions completeTransferOptions = default,
+            CancellationToken cancellationToken = default)
         {
             // no-op for now
             return Task.CompletedTask;
@@ -295,19 +322,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
         {
             return new BlobDestinationCheckpointData(
-                BlobType.Page,
-                _options?.HttpHeaders,
-                _options?.AccessTier,
-                _options?.Metadata,
-                _options?.Tags);
-        }
-
-        private void GrabEtag(Response response)
-        {
-            if (_etagDownloadLock == default && response.TryExtractStorageEtag(out ETag etag))
-            {
-                _etagDownloadLock = etag;
-            }
+                blobType: BlobType.Page,
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata: _options?.Metadata,
+                tags: default);
         }
     }
 }

@@ -16,6 +16,7 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.OperationalInsights/workspaces/{workspaceName}/providers/Microsoft.SecurityInsights/threatIntelligence/main/indicators/{name}: SecurityInsightsThreatIntelligenceIndicator
@@ -246,6 +247,14 @@ acronym-mapping:
   AAD: Aad
   IoT: Iot
 #  Nt: NT
+
+suppress-abstract-base-class:
+- SecurityInsightsAlertRuleData
+- SecurityInsightsAlertRuleTemplateData
+- SecurityInsightsDataConnectorData
+- SecurityInsightsThreatIntelligenceIndicatorBaseData
+- SecurityMLAnalyticsSettingData
+- SecurityInsightsEntity
 
 directive:
   - rename-operation:

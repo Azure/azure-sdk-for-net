@@ -5,20 +5,34 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
-    public partial class ScalarFunctionProperties : IUtf8JsonSerializable
+    public partial class ScalarFunctionProperties : IUtf8JsonSerializable, IJsonModel<ScalarFunctionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalarFunctionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalarFunctionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalarFunctionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(FunctionPropertiesType);
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Inputs))
@@ -27,35 +41,66 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
             }
             if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
-                writer.WriteObjectValue(Binding);
+                writer.WriteObjectValue<StreamingJobFunctionBinding>(Binding, options);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalarFunctionProperties DeserializeScalarFunctionProperties(JsonElement element)
+        ScalarFunctionProperties IJsonModel<ScalarFunctionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalarFunctionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalarFunctionProperties(document.RootElement, options);
+        }
+
+        internal static ScalarFunctionProperties DeserializeScalarFunctionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
-            Optional<ETag> etag = default;
-            Optional<IList<StreamingJobFunctionInput>> inputs = default;
-            Optional<StreamingJobFunctionOutput> output = default;
-            Optional<StreamingJobFunctionBinding> binding = default;
+            ETag? etag = default;
+            IList<StreamingJobFunctionInput> inputs = default;
+            StreamingJobFunctionOutput output = default;
+            StreamingJobFunctionBinding binding = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -90,7 +135,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             List<StreamingJobFunctionInput> array = new List<StreamingJobFunctionInput>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item));
+                                array.Add(StreamingJobFunctionInput.DeserializeStreamingJobFunctionInput(item, options));
                             }
                             inputs = array;
                             continue;
@@ -101,7 +146,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value);
+                            output = StreamingJobFunctionOutput.DeserializeStreamingJobFunctionOutput(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("binding"u8))
@@ -110,14 +155,56 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                             {
                                 continue;
                             }
-                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value);
+                            binding = StreamingJobFunctionBinding.DeserializeStreamingJobFunctionBinding(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalarFunctionProperties(type, Optional.ToNullable(etag), Optional.ToList(inputs), output.Value, binding.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScalarFunctionProperties(
+                type,
+                etag,
+                inputs ?? new ChangeTrackingList<StreamingJobFunctionInput>(),
+                output,
+                binding,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalarFunctionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalarFunctionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScalarFunctionProperties IPersistableModel<ScalarFunctionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalarFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalarFunctionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalarFunctionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalarFunctionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.RecoveryServices.Mocking;
 using Azure.ResourceManager.RecoveryServices.Models;
 using Azure.ResourceManager.Resources;
@@ -120,6 +118,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -149,6 +155,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -182,6 +196,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -213,6 +231,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -241,6 +263,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -271,6 +297,10 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>RecoveryServices_Capabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -300,6 +330,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -327,6 +365,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Vaults_ListBySubscriptionId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultResource"/></description>
         /// </item>
         /// </list>
         /// <item>

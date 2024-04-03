@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class SolutionsTroubleshooters : IUtf8JsonSerializable
+    public partial class SolutionsTroubleshooters : IUtf8JsonSerializable, IJsonModel<SolutionsTroubleshooters>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SolutionsTroubleshooters>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SolutionsTroubleshooters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SolutionId))
             {
@@ -30,18 +41,49 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SolutionsTroubleshooters DeserializeSolutionsTroubleshooters(JsonElement element)
+        SolutionsTroubleshooters IJsonModel<SolutionsTroubleshooters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSolutionsTroubleshooters(document.RootElement, options);
+        }
+
+        internal static SolutionsTroubleshooters DeserializeSolutionsTroubleshooters(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> solutionId = default;
-            Optional<string> title = default;
-            Optional<string> summary = default;
+            string solutionId = default;
+            string title = default;
+            string summary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("solutionId"u8))
@@ -59,8 +101,44 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     summary = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SolutionsTroubleshooters(solutionId.Value, title.Value, summary.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SolutionsTroubleshooters(solutionId, title, summary, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SolutionsTroubleshooters>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SolutionsTroubleshooters IPersistableModel<SolutionsTroubleshooters>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SolutionsTroubleshooters>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSolutionsTroubleshooters(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SolutionsTroubleshooters)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SolutionsTroubleshooters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

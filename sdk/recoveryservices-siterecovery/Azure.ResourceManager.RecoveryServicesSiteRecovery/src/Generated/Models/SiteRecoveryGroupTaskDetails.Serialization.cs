@@ -5,14 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryGroupTaskDetails
+    [PersistableModelProxy(typeof(UnknownGroupTaskDetails))]
+    public partial class SiteRecoveryGroupTaskDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryGroupTaskDetails>
     {
-        internal static SiteRecoveryGroupTaskDetails DeserializeSiteRecoveryGroupTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryGroupTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryGroupTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryGroupTaskDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(ChildTasks))
+            {
+                writer.WritePropertyName("childTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildTasks)
+                {
+                    writer.WriteObjectValue<AsrTask>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryGroupTaskDetails IJsonModel<SiteRecoveryGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryGroupTaskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryGroupTaskDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryGroupTaskDetails DeserializeSiteRecoveryGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,12 +80,43 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "InlineWorkflowTaskDetails": return InlineWorkflowTaskDetails.DeserializeInlineWorkflowTaskDetails(element);
-                    case "RecoveryPlanGroupTaskDetails": return RecoveryPlanGroupTaskDetails.DeserializeRecoveryPlanGroupTaskDetails(element);
-                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element);
+                    case "InlineWorkflowTaskDetails": return InlineWorkflowTaskDetails.DeserializeInlineWorkflowTaskDetails(element, options);
+                    case "RecoveryPlanGroupTaskDetails": return RecoveryPlanGroupTaskDetails.DeserializeRecoveryPlanGroupTaskDetails(element, options);
+                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element, options);
                 }
             }
-            return UnknownGroupTaskDetails.DeserializeUnknownGroupTaskDetails(element);
+            return UnknownGroupTaskDetails.DeserializeUnknownGroupTaskDetails(element, options);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryGroupTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryGroupTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryGroupTaskDetails IPersistableModel<SiteRecoveryGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryGroupTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryGroupTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

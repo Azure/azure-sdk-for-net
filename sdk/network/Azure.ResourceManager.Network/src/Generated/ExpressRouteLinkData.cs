@@ -5,7 +5,8 @@
 
 #nullable disable
 
-using Azure;
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -26,6 +27,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceType"> Resource type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="routerName"> Name of Azure router associated with physical port. </param>
         /// <param name="interfaceName"> Name of Azure router interface. </param>
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="adminState"> Administrative state of the physical port. </param>
         /// <param name="provisioningState"> The provisioning state of the express route link resource. </param>
         /// <param name="macSecConfig"> MacSec configuration. </param>
-        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType)
+        internal ExpressRouteLinkData(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, string routerName, string interfaceName, string patchPanelId, string rackId, string coloLocation, ExpressRouteLinkConnectorType? connectorType, ExpressRouteLinkAdminState? adminState, NetworkProvisioningState? provisioningState, ExpressRouteLinkMacSecConfig macSecConfig) : base(id, name, resourceType, serializedAdditionalRawData)
         {
             ETag = etag;
             RouterName = routerName;

@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Blueprint;
 
 namespace Azure.ResourceManager.Blueprint.Mocking
 {
@@ -59,6 +56,14 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -82,6 +87,14 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Blueprints_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BlueprintResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="scope"> The scope that the resource will apply against. </param>
@@ -138,6 +159,14 @@ namespace Azure.ResourceManager.Blueprint.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Assignments_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-11-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AssignmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

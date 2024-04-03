@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningOnlineEndpointProperties : IUtf8JsonSerializable
+    public partial class MachineLearningOnlineEndpointProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningOnlineEndpointProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningOnlineEndpointProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningOnlineEndpointProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Compute))
             {
@@ -46,6 +55,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 {
                     writer.WriteNull("mirrorTraffic");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -89,7 +103,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    writer.WriteObjectValue<MachineLearningEndpointAuthKeys>(Keys, options);
                 }
                 else
                 {
@@ -114,26 +128,81 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
+            {
+                if (ScoringUri != null)
+                {
+                    writer.WritePropertyName("scoringUri"u8);
+                    writer.WriteStringValue(ScoringUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("scoringUri");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
+            {
+                if (SwaggerUri != null)
+                {
+                    writer.WritePropertyName("swaggerUri"u8);
+                    writer.WriteStringValue(SwaggerUri.AbsoluteUri);
+                }
+                else
+                {
+                    writer.WriteNull("swaggerUri");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element)
+        MachineLearningOnlineEndpointProperties IJsonModel<MachineLearningOnlineEndpointProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningOnlineEndpointProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningOnlineEndpointProperties DeserializeMachineLearningOnlineEndpointProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> compute = default;
-            Optional<IDictionary<string, int>> mirrorTraffic = default;
-            Optional<MachineLearningEndpointProvisioningState> provisioningState = default;
-            Optional<MachineLearningPublicNetworkAccessType> publicNetworkAccess = default;
-            Optional<IDictionary<string, int>> traffic = default;
+            string compute = default;
+            IDictionary<string, int> mirrorTraffic = default;
+            MachineLearningEndpointProvisioningState? provisioningState = default;
+            MachineLearningPublicNetworkAccessType? publicNetworkAccess = default;
+            IDictionary<string, int> traffic = default;
             MachineLearningEndpointAuthMode authMode = default;
-            Optional<string> description = default;
-            Optional<MachineLearningEndpointAuthKeys> keys = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<Uri> scoringUri = default;
-            Optional<Uri> swaggerUri = default;
+            string description = default;
+            MachineLearningEndpointAuthKeys keys = default;
+            IDictionary<string, string> properties = default;
+            Uri scoringUri = default;
+            Uri swaggerUri = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("compute"u8))
@@ -216,7 +285,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         keys = null;
                         continue;
                     }
-                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value);
+                    keys = MachineLearningEndpointAuthKeys.DeserializeMachineLearningEndpointAuthKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -254,8 +323,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     swaggerUri = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningOnlineEndpointProperties(authMode, description.Value, keys.Value, Optional.ToDictionary(properties), scoringUri.Value, swaggerUri.Value, compute.Value, Optional.ToDictionary(mirrorTraffic), Optional.ToNullable(provisioningState), Optional.ToNullable(publicNetworkAccess), Optional.ToDictionary(traffic));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningOnlineEndpointProperties(
+                authMode,
+                description,
+                keys,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                scoringUri,
+                swaggerUri,
+                serializedAdditionalRawData,
+                compute,
+                mirrorTraffic ?? new ChangeTrackingDictionary<string, int>(),
+                provisioningState,
+                publicNetworkAccess,
+                traffic ?? new ChangeTrackingDictionary<string, int>());
         }
+
+        BinaryData IPersistableModel<MachineLearningOnlineEndpointProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningOnlineEndpointProperties IPersistableModel<MachineLearningOnlineEndpointProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningOnlineEndpointProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineEndpointProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningOnlineEndpointProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

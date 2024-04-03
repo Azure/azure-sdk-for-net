@@ -6,27 +6,115 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class LinuxJavaContainerSettings
+    public partial class LinuxJavaContainerSettings : IUtf8JsonSerializable, IJsonModel<LinuxJavaContainerSettings>
     {
-        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinuxJavaContainerSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LinuxJavaContainerSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LinuxJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Java11Runtime))
+            {
+                writer.WritePropertyName("java11Runtime"u8);
+                writer.WriteStringValue(Java11Runtime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Java8Runtime))
+            {
+                writer.WritePropertyName("java8Runtime"u8);
+                writer.WriteStringValue(Java8Runtime);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsPreview))
+            {
+                writer.WritePropertyName("isPreview"u8);
+                writer.WriteBooleanValue(IsPreview.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDeprecated))
+            {
+                writer.WritePropertyName("isDeprecated"u8);
+                writer.WriteBooleanValue(IsDeprecated.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsHidden))
+            {
+                writer.WritePropertyName("isHidden"u8);
+                writer.WriteBooleanValue(IsHidden.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOfLifeOn))
+            {
+                writer.WritePropertyName("endOfLifeDate"u8);
+                writer.WriteStringValue(EndOfLifeOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsAutoUpdate))
+            {
+                writer.WritePropertyName("isAutoUpdate"u8);
+                writer.WriteBooleanValue(IsAutoUpdate.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEarlyAccess))
+            {
+                writer.WritePropertyName("isEarlyAccess"u8);
+                writer.WriteBooleanValue(IsEarlyAccess.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LinuxJavaContainerSettings IJsonModel<LinuxJavaContainerSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinuxJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLinuxJavaContainerSettings(document.RootElement, options);
+        }
+
+        internal static LinuxJavaContainerSettings DeserializeLinuxJavaContainerSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> java11Runtime = default;
-            Optional<string> java8Runtime = default;
-            Optional<bool> isPreview = default;
-            Optional<bool> isDeprecated = default;
-            Optional<bool> isHidden = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<bool> isAutoUpdate = default;
-            Optional<bool> isEarlyAccess = default;
+            string java11Runtime = default;
+            string java8Runtime = default;
+            bool? isPreview = default;
+            bool? isDeprecated = default;
+            bool? isHidden = default;
+            DateTimeOffset? endOfLifeDate = default;
+            bool? isAutoUpdate = default;
+            bool? isEarlyAccess = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("java11Runtime"u8))
@@ -93,8 +181,204 @@ namespace Azure.ResourceManager.AppService.Models
                     isEarlyAccess = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LinuxJavaContainerSettings(java11Runtime.Value, java8Runtime.Value, Optional.ToNullable(isPreview), Optional.ToNullable(isDeprecated), Optional.ToNullable(isHidden), Optional.ToNullable(endOfLifeDate), Optional.ToNullable(isAutoUpdate), Optional.ToNullable(isEarlyAccess));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LinuxJavaContainerSettings(
+                java11Runtime,
+                java8Runtime,
+                isPreview,
+                isDeprecated,
+                isHidden,
+                endOfLifeDate,
+                isAutoUpdate,
+                isEarlyAccess,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Java11Runtime), out propertyOverride);
+            if (Optional.IsDefined(Java11Runtime) || hasPropertyOverride)
+            {
+                builder.Append("  java11Runtime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Java11Runtime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Java11Runtime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Java11Runtime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Java8Runtime), out propertyOverride);
+            if (Optional.IsDefined(Java8Runtime) || hasPropertyOverride)
+            {
+                builder.Append("  java8Runtime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Java8Runtime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Java8Runtime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Java8Runtime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPreview), out propertyOverride);
+            if (Optional.IsDefined(IsPreview) || hasPropertyOverride)
+            {
+                builder.Append("  isPreview: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPreview.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDeprecated), out propertyOverride);
+            if (Optional.IsDefined(IsDeprecated) || hasPropertyOverride)
+            {
+                builder.Append("  isDeprecated: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDeprecated.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHidden), out propertyOverride);
+            if (Optional.IsDefined(IsHidden) || hasPropertyOverride)
+            {
+                builder.Append("  isHidden: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsHidden.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOfLifeOn), out propertyOverride);
+            if (Optional.IsDefined(EndOfLifeOn) || hasPropertyOverride)
+            {
+                builder.Append("  endOfLifeDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOfLifeOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAutoUpdate), out propertyOverride);
+            if (Optional.IsDefined(IsAutoUpdate) || hasPropertyOverride)
+            {
+                builder.Append("  isAutoUpdate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAutoUpdate.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEarlyAccess), out propertyOverride);
+            if (Optional.IsDefined(IsEarlyAccess) || hasPropertyOverride)
+            {
+                builder.Append("  isEarlyAccess: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEarlyAccess.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LinuxJavaContainerSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinuxJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LinuxJavaContainerSettings IPersistableModel<LinuxJavaContainerSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LinuxJavaContainerSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLinuxJavaContainerSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinuxJavaContainerSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LinuxJavaContainerSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

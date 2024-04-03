@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Support.Models
 {
-    public partial class SecondaryConsent : IUtf8JsonSerializable
+    public partial class SecondaryConsent : IUtf8JsonSerializable, IJsonModel<SecondaryConsent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecondaryConsent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecondaryConsent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserConsent))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.Support.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecondaryConsentType);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecondaryConsent DeserializeSecondaryConsent(JsonElement element)
+        SecondaryConsent IJsonModel<SecondaryConsent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecondaryConsent(document.RootElement, options);
+        }
+
+        internal static SecondaryConsent DeserializeSecondaryConsent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<UserConsent> userConsent = default;
-            Optional<string> type = default;
+            UserConsent? userConsent = default;
+            string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userConsent"u8))
@@ -52,8 +94,44 @@ namespace Azure.ResourceManager.Support.Models
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecondaryConsent(Optional.ToNullable(userConsent), type.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecondaryConsent(userConsent, type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecondaryConsent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecondaryConsent IPersistableModel<SecondaryConsent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecondaryConsent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecondaryConsent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

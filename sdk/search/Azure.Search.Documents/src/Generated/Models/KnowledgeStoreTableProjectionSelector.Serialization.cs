@@ -44,7 +44,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InputFieldMappingEntry>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -58,11 +58,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string tableName = default;
-            Optional<string> referenceKeyName = default;
-            Optional<string> generatedKeyName = default;
-            Optional<string> source = default;
-            Optional<string> sourceContext = default;
-            Optional<IList<InputFieldMappingEntry>> inputs = default;
+            string referenceKeyName = default;
+            string generatedKeyName = default;
+            string source = default;
+            string sourceContext = default;
+            IList<InputFieldMappingEntry> inputs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -105,7 +105,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new KnowledgeStoreTableProjectionSelector(referenceKeyName.Value, generatedKeyName.Value, source.Value, sourceContext.Value, Optional.ToList(inputs), tableName);
+            return new KnowledgeStoreTableProjectionSelector(
+                referenceKeyName,
+                generatedKeyName,
+                source,
+                sourceContext,
+                inputs ?? new ChangeTrackingList<InputFieldMappingEntry>(),
+                tableName);
         }
     }
 }

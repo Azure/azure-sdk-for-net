@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -33,6 +32,11 @@ namespace Azure.ResourceManager.Cdn.Models
             DateTimeBegin = dateTimeBegin;
             DateTimeEnd = dateTimeEnd;
             CustomDomains = new ChangeTrackingList<string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ProfileResourceGetLogAnalyticsRankingsOptions"/> for deserialization. </summary>
+        internal ProfileResourceGetLogAnalyticsRankingsOptions()
+        {
         }
 
         /// <summary> The rankings. </summary>

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -20,7 +21,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="ResourceRestoreParameters"/>. </summary>
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
-        internal ResourceRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc) : base(restoreSource, restoreTimestampInUtc)
+        /// <param name="isRestoreWithTtlDisabled"> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceRestoreParameters(string restoreSource, DateTimeOffset? restoreTimestampInUtc, bool? isRestoreWithTtlDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(restoreSource, restoreTimestampInUtc, isRestoreWithTtlDisabled, serializedAdditionalRawData)
         {
         }
     }

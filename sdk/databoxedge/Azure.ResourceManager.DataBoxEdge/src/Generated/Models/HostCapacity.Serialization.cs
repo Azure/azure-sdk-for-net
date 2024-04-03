@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class HostCapacity : IUtf8JsonSerializable
+    public partial class HostCapacity : IUtf8JsonSerializable, IJsonModel<HostCapacity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HostCapacity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HostCapacity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostCapacity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(HostName))
             {
@@ -38,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 foreach (var item in VmUsedMemory)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DataBoxEdgeVmMemory>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -53,25 +63,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in NumaNodesData)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NumaNodeInfo>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static HostCapacity DeserializeHostCapacity(JsonElement element)
+        HostCapacity IJsonModel<HostCapacity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HostCapacity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHostCapacity(document.RootElement, options);
+        }
+
+        internal static HostCapacity DeserializeHostCapacity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> hostName = default;
-            Optional<long> effectiveAvailableMemoryMbOnHost = default;
-            Optional<int> availableGpuCount = default;
-            Optional<IDictionary<string, DataBoxEdgeVmMemory>> vmUsedMemory = default;
-            Optional<string> gpuType = default;
-            Optional<IList<NumaNodeInfo>> numaNodesData = default;
+            string hostName = default;
+            long? effectiveAvailableMemoryMbOnHost = default;
+            int? availableGpuCount = default;
+            IDictionary<string, DataBoxEdgeVmMemory> vmUsedMemory = default;
+            string gpuType = default;
+            IList<NumaNodeInfo> numaNodesData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hostName"u8))
@@ -106,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     Dictionary<string, DataBoxEdgeVmMemory> dictionary = new Dictionary<string, DataBoxEdgeVmMemory>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value));
+                        dictionary.Add(property0.Name, DataBoxEdgeVmMemory.DeserializeDataBoxEdgeVmMemory(property0.Value, options));
                     }
                     vmUsedMemory = dictionary;
                     continue;
@@ -125,13 +166,56 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<NumaNodeInfo> array = new List<NumaNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item));
+                        array.Add(NumaNodeInfo.DeserializeNumaNodeInfo(item, options));
                     }
                     numaNodesData = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HostCapacity(hostName.Value, Optional.ToNullable(effectiveAvailableMemoryMbOnHost), Optional.ToNullable(availableGpuCount), Optional.ToDictionary(vmUsedMemory), gpuType.Value, Optional.ToList(numaNodesData));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HostCapacity(
+                hostName,
+                effectiveAvailableMemoryMbOnHost,
+                availableGpuCount,
+                vmUsedMemory ?? new ChangeTrackingDictionary<string, DataBoxEdgeVmMemory>(),
+                gpuType,
+                numaNodesData ?? new ChangeTrackingList<NumaNodeInfo>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HostCapacity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HostCapacity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HostCapacity IPersistableModel<HostCapacity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HostCapacity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHostCapacity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HostCapacity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HostCapacity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,39 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformCustomDomainProperties : IUtf8JsonSerializable
+    public partial class AppPlatformCustomDomainProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformCustomDomainProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformCustomDomainProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformCustomDomainProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
+            if (options.Format != "W" && Optional.IsDefined(AppName))
+            {
+                writer.WritePropertyName("appName"u8);
+                writer.WriteStringValue(AppName);
+            }
             if (Optional.IsDefined(CertName))
             {
                 writer.WritePropertyName("certName"u8);
                 writer.WriteStringValue(CertName);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformCustomDomainProperties DeserializeAppPlatformCustomDomainProperties(JsonElement element)
+        AppPlatformCustomDomainProperties IJsonModel<AppPlatformCustomDomainProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformCustomDomainProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformCustomDomainProperties DeserializeAppPlatformCustomDomainProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> thumbprint = default;
-            Optional<string> appName = default;
-            Optional<string> certName = default;
-            Optional<AppPlatformCustomDomainProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string appName = default;
+            string certName = default;
+            AppPlatformCustomDomainProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("thumbprint"u8))
@@ -64,8 +116,44 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     provisioningState = new AppPlatformCustomDomainProvisioningState(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformCustomDomainProperties(thumbprint.Value, appName.Value, certName.Value, Optional.ToNullable(provisioningState));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformCustomDomainProperties(thumbprint, appName, certName, provisioningState, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformCustomDomainProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformCustomDomainProperties IPersistableModel<AppPlatformCustomDomainProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformCustomDomainProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformCustomDomainProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformCustomDomainProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformCustomDomainProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

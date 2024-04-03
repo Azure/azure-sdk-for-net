@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -22,11 +23,17 @@ namespace Azure.ResourceManager.Media.Models
 
         /// <summary> Initializes a new instance of <see cref="ContentKeyPolicySymmetricTokenKey"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyValue"> The key value of the key. </param>
-        internal ContentKeyPolicySymmetricTokenKey(string odataType, byte[] keyValue) : base(odataType)
+        internal ContentKeyPolicySymmetricTokenKey(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, byte[] keyValue) : base(odataType, serializedAdditionalRawData)
         {
             KeyValue = keyValue;
             OdataType = odataType ?? "#Microsoft.Media.ContentKeyPolicySymmetricTokenKey";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentKeyPolicySymmetricTokenKey"/> for deserialization. </summary>
+        internal ContentKeyPolicySymmetricTokenKey()
+        {
         }
 
         /// <summary> The key value of the key. </summary>

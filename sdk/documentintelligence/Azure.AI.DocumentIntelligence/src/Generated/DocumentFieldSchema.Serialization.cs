@@ -5,26 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentFieldSchema
+    public partial class DocumentFieldSchema : IUtf8JsonSerializable, IJsonModel<DocumentFieldSchema>
     {
-        internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentFieldSchema>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentFieldSchema>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type.ToString());
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Example))
+            {
+                writer.WritePropertyName("example"u8);
+                writer.WriteStringValue(Example);
+            }
+            if (Optional.IsDefined(Items))
+            {
+                writer.WritePropertyName("items"u8);
+                writer.WriteObjectValue<DocumentFieldSchema>(Items, options);
+            }
+            if (Optional.IsCollectionDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteStartObject();
+                foreach (var item in Properties)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue<DocumentFieldSchema>(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentFieldSchema IJsonModel<DocumentFieldSchema>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentFieldSchema(document.RootElement, options);
+        }
+
+        internal static DocumentFieldSchema DeserializeDocumentFieldSchema(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DocumentFieldType type = default;
-            Optional<string> description = default;
-            Optional<string> example = default;
-            Optional<DocumentFieldSchema> items = default;
-            Optional<IReadOnlyDictionary<string, DocumentFieldSchema>> properties = default;
+            string description = default;
+            string example = default;
+            DocumentFieldSchema items = default;
+            IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -48,7 +122,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    items = DeserializeDocumentFieldSchema(property.Value);
+                    items = DeserializeDocumentFieldSchema(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("properties"u8))
@@ -60,14 +134,56 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DeserializeDocumentFieldSchema(property0.Value));
+                        dictionary.Add(property0.Name, DeserializeDocumentFieldSchema(property0.Value, options));
                     }
                     properties = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentFieldSchema(type, description.Value, example.Value, items.Value, Optional.ToDictionary(properties));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentFieldSchema(
+                type,
+                description,
+                example,
+                items,
+                properties ?? new ChangeTrackingDictionary<string, DocumentFieldSchema>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentFieldSchema>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentFieldSchema IPersistableModel<DocumentFieldSchema>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentFieldSchema(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentFieldSchema>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -75,6 +191,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentFieldSchema(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentFieldSchema>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

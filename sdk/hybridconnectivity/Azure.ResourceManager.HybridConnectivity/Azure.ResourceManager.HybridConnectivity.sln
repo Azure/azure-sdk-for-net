@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.HybridConnectivity", "src\Azure.ResourceManager.HybridConnectivity.csproj", "{80EE38ED-CC19-44D3-A1CF-34F7EFD1F1D2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HybridConnectivity", "src\Azure.ResourceManager.HybridConnectivity.csproj", "{80EE38ED-CC19-44D3-A1CF-34F7EFD1F1D2}"
 EndProject
-Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.HybridConnectivity.Tests", "tests\Azure.ResourceManager.HybridConnectivity.Tests.csproj", "{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HybridConnectivity.Tests", "tests\Azure.ResourceManager.HybridConnectivity.Tests.csproj", "{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}"
 EndProject
-Project("{F30FA6CB-9503-46F3-907B-1F7B07F86EE3}") = "Azure.ResourceManager.HybridConnectivity.Samples", "samples\Azure.ResourceManager.HybridConnectivity.Samples.csproj", "{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.HybridConnectivity.Samples", "samples\Azure.ResourceManager.HybridConnectivity.Samples.csproj", "{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B6BBA18D-DD95-40D8-A34B-33FD6C3C7474}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}.Release|x64.Build.0 = Release|Any CPU
 		{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}.Release|x86.ActiveCfg = Release|Any CPU
 		{2AFB4C5B-6F23-4AE5-9270-301E1C1A23FE}.Release|x86.Build.0 = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|x64.Build.0 = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Debug|x86.Build.0 = Debug|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|x64.ActiveCfg = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|x64.Build.0 = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|x86.ActiveCfg = Release|Any CPU
+		{9DE610ED-BCB1-4FEF-BCE9-5F27336929D5}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B6BBA18D-DD95-40D8-A34B-33FD6C3C7474}
 	EndGlobalSection
 EndGlobal

@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Mocking
 {
@@ -61,6 +58,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="containerGroupName"> The name of the container group. </param>
@@ -106,6 +119,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -147,6 +164,10 @@ namespace Azure.ResourceManager.ContainerInstance.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Mocking
 {
@@ -66,6 +63,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="queryPackName"> The name of the Log Analytics QueryPack resource. </param>
@@ -88,6 +93,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -119,6 +132,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> Name of the Log Analytics Cluster. </param>
@@ -141,6 +162,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -172,6 +201,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -195,6 +232,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>Workspaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="OperationalInsightsWorkspaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workspaceName"> The name of the workspace. </param>
@@ -217,6 +262,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -252,6 +305,14 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>QueryPacks_CreateOrUpdateWithoutName</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogAnalyticsQueryPackResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Properties that need to be specified to create or update a Log Analytics QueryPack. </param>
@@ -286,6 +347,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -306,6 +371,10 @@ namespace Azure.ResourceManager.OperationalInsights.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedWorkspaces_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

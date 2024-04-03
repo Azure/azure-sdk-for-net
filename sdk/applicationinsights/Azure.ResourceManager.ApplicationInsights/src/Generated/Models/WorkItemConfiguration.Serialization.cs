@@ -5,24 +5,98 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class WorkItemConfiguration
+    public partial class WorkItemConfiguration : IUtf8JsonSerializable, IJsonModel<WorkItemConfiguration>
     {
-        internal static WorkItemConfiguration DeserializeWorkItemConfiguration(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WorkItemConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WorkItemConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ConnectorId))
+            {
+                writer.WritePropertyName("ConnectorId"u8);
+                writer.WriteStringValue(ConnectorId);
+            }
+            if (Optional.IsDefined(ConfigDisplayName))
+            {
+                writer.WritePropertyName("ConfigDisplayName"u8);
+                writer.WriteStringValue(ConfigDisplayName);
+            }
+            if (Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("IsDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("Id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ConfigProperties))
+            {
+                writer.WritePropertyName("ConfigProperties"u8);
+                writer.WriteStringValue(ConfigProperties);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        WorkItemConfiguration IJsonModel<WorkItemConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWorkItemConfiguration(document.RootElement, options);
+        }
+
+        internal static WorkItemConfiguration DeserializeWorkItemConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> connectorId = default;
-            Optional<string> configDisplayName = default;
-            Optional<bool> isDefault = default;
-            Optional<string> id = default;
-            Optional<string> configProperties = default;
+            string connectorId = default;
+            string configDisplayName = default;
+            bool? isDefault = default;
+            string id = default;
+            string configProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ConnectorId"u8))
@@ -54,8 +128,170 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     configProperties = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WorkItemConfiguration(connectorId.Value, configDisplayName.Value, Optional.ToNullable(isDefault), id.Value, configProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WorkItemConfiguration(
+                connectorId,
+                configDisplayName,
+                isDefault,
+                id,
+                configProperties,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectorId), out propertyOverride);
+            if (Optional.IsDefined(ConnectorId) || hasPropertyOverride)
+            {
+                builder.Append("  ConnectorId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConnectorId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConnectorId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConnectorId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigDisplayName), out propertyOverride);
+            if (Optional.IsDefined(ConfigDisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  ConfigDisplayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConfigDisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigDisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigDisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsDefault), out propertyOverride);
+            if (Optional.IsDefined(IsDefault) || hasPropertyOverride)
+            {
+                builder.Append("  IsDefault: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsDefault.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  Id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConfigProperties), out propertyOverride);
+            if (Optional.IsDefined(ConfigProperties) || hasPropertyOverride)
+            {
+                builder.Append("  ConfigProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ConfigProperties.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ConfigProperties}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ConfigProperties}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<WorkItemConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WorkItemConfiguration IPersistableModel<WorkItemConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WorkItemConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWorkItemConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WorkItemConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WorkItemConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

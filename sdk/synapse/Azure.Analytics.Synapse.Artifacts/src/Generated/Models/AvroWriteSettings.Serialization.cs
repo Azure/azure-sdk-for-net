@@ -32,19 +32,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -55,10 +55,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> recordName = default;
-            Optional<string> recordNamespace = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            string recordName = default;
+            string recordNamespace = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -100,14 +100,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AvroWriteSettings(type, additionalProperties, recordName.Value, recordNamespace.Value, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new AvroWriteSettings(
+                type,
+                additionalProperties,
+                recordName,
+                recordNamespace,
+                maxRowsPerFile,
+                fileNamePrefix);
         }
 
         internal partial class AvroWriteSettingsConverter : JsonConverter<AvroWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AvroWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AvroWriteSettings>(model);
             }
             public override AvroWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

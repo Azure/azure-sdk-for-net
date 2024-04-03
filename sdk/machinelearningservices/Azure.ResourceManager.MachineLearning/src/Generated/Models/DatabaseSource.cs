@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,11 +23,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="DatabaseSource"/>. </summary>
         /// <param name="connection"> Workspace connection for data import source storage. </param>
         /// <param name="sourceType"> [Required] Specifies the type of data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="query"> SQL Query statement for data import Database source. </param>
         /// <param name="storedProcedure"> SQL StoredProcedure on data import Database source. </param>
         /// <param name="storedProcedureParams"> SQL StoredProcedure parameters. </param>
         /// <param name="tableName"> Name of the table on data import Database source. </param>
-        internal DatabaseSource(string connection, DataImportSourceType sourceType, string query, string storedProcedure, IList<IDictionary<string, string>> storedProcedureParams, string tableName) : base(connection, sourceType)
+        internal DatabaseSource(string connection, DataImportSourceType sourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string query, string storedProcedure, IList<IDictionary<string, string>> storedProcedureParams, string tableName) : base(connection, sourceType, serializedAdditionalRawData)
         {
             Query = query;
             StoredProcedure = storedProcedure;

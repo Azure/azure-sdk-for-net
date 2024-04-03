@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.HybridCompute.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.HybridCompute
     /// </summary>
     public partial class HybridComputeMachineData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/>. </summary>
         /// <param name="location"> The location. </param>
         public HybridComputeMachineData(AzureLocation location) : base(location)
@@ -39,12 +70,14 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="location"> The location. </param>
         /// <param name="resources"> The list of extensions affiliated to the machine. </param>
         /// <param name="identity"> Identity for the resource. Current supported identity types: SystemAssigned. </param>
+        /// <param name="kind"> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </param>
         /// <param name="locationData"> Metadata pertaining to the geographic location of the resource. </param>
         /// <param name="agentConfiguration"> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </param>
         /// <param name="serviceStatuses"> Statuses of dependent services that are reported back to ARM. </param>
         /// <param name="cloudMetadata"> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </param>
         /// <param name="agentUpgrade"> The info of the machine w.r.t Agent Upgrade. </param>
         /// <param name="osProfile"> Specifies the operating system settings for the hybrid machine. </param>
+        /// <param name="licenseProfile"> Specifies the License related properties for a machine. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="status"> The status of the hybrid machine agent. </param>
         /// <param name="lastStatusChange"> The time of the last status change. </param>
@@ -60,23 +93,28 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="vmUuid"> Specifies the Arc Machine's unique SMBIOS ID. </param>
         /// <param name="extensions"> Machine Extensions information (deprecated field). </param>
         /// <param name="osSku"> Specifies the Operating System product SKU. </param>
+        /// <param name="osEdition"> The edition of the Operating System. </param>
         /// <param name="domainName"> Specifies the Windows domain name. </param>
         /// <param name="adFqdn"> Specifies the AD fully qualified display name. </param>
         /// <param name="dnsFqdn"> Specifies the DNS fully qualified display name. </param>
         /// <param name="privateLinkScopeResourceId"> The resource id of the private link scope this machine is assigned to, if any. </param>
         /// <param name="parentClusterResourceId"> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </param>
-        /// <param name="mssqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
+        /// <param name="msSqlDiscovered"> Specifies whether any MS SQL instance is discovered on the machine. </param>
         /// <param name="detectedProperties"> Detected properties from the machine. </param>
-        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, LocationData locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, CloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, OSProfile osProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string mssqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="networkProfile"> Information about the network the machine is on. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HybridComputeMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, IReadOnlyList<HybridComputeMachineExtensionData> resources, ManagedServiceIdentity identity, ArcKindEnum? kind, HybridComputeLocation locationData, AgentConfiguration agentConfiguration, HybridComputeServiceStatuses serviceStatuses, HybridComputeCloudMetadata cloudMetadata, AgentUpgrade agentUpgrade, HybridComputeOSProfile osProfile, LicenseProfileMachineInstanceView licenseProfile, string provisioningState, HybridComputeStatusType? status, DateTimeOffset? lastStatusChange, IReadOnlyList<ResponseError> errorDetails, string agentVersion, Guid? vmId, string displayName, string machineFqdn, string clientPublicKey, string osName, string osVersion, string osType, Guid? vmUuid, IList<MachineExtensionInstanceView> extensions, string osSku, string osEdition, string domainName, string adFqdn, string dnsFqdn, ResourceIdentifier privateLinkScopeResourceId, ResourceIdentifier parentClusterResourceId, string msSqlDiscovered, IReadOnlyDictionary<string, string> detectedProperties, HybridComputeNetworkProfile networkProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Resources = resources;
             Identity = identity;
+            Kind = kind;
             LocationData = locationData;
             AgentConfiguration = agentConfiguration;
             ServiceStatuses = serviceStatuses;
             CloudMetadata = cloudMetadata;
             AgentUpgrade = agentUpgrade;
             OSProfile = osProfile;
+            LicenseProfile = licenseProfile;
             ProvisioningState = provisioningState;
             Status = status;
             LastStatusChange = lastStatusChange;
@@ -92,27 +130,37 @@ namespace Azure.ResourceManager.HybridCompute
             VmUuid = vmUuid;
             Extensions = extensions;
             OSSku = osSku;
+            OSEdition = osEdition;
             DomainName = domainName;
-            AdFqdn = adFqdn;
+            ADFqdn = adFqdn;
             DnsFqdn = dnsFqdn;
             PrivateLinkScopeResourceId = privateLinkScopeResourceId;
             ParentClusterResourceId = parentClusterResourceId;
-            MssqlDiscovered = mssqlDiscovered;
+            MSSqlDiscovered = msSqlDiscovered;
             DetectedProperties = detectedProperties;
+            NetworkProfile = networkProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HybridComputeMachineData"/> for deserialization. </summary>
+        internal HybridComputeMachineData()
+        {
         }
 
         /// <summary> The list of extensions affiliated to the machine. </summary>
         public IReadOnlyList<HybridComputeMachineExtensionData> Resources { get; }
         /// <summary> Identity for the resource. Current supported identity types: SystemAssigned. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+        /// <summary> Indicates which kind of Arc machine placement on-premises, such as HCI, SCVMM or VMware etc. </summary>
+        public ArcKindEnum? Kind { get; set; }
         /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
-        public LocationData LocationData { get; set; }
+        public HybridComputeLocation LocationData { get; set; }
         /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         public AgentConfiguration AgentConfiguration { get; }
         /// <summary> Statuses of dependent services that are reported back to ARM. </summary>
         public HybridComputeServiceStatuses ServiceStatuses { get; set; }
         /// <summary> The metadata of the cloud environment (Azure/GCP/AWS/OCI...). </summary>
-        internal CloudMetadata CloudMetadata { get; set; }
+        internal HybridComputeCloudMetadata CloudMetadata { get; set; }
         /// <summary> Specifies the cloud provider (Azure/AWS/GCP...). </summary>
         public string CloudMetadataProvider
         {
@@ -122,7 +170,9 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The info of the machine w.r.t Agent Upgrade. </summary>
         public AgentUpgrade AgentUpgrade { get; set; }
         /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
-        public OSProfile OSProfile { get; set; }
+        public HybridComputeOSProfile OSProfile { get; set; }
+        /// <summary> Specifies the License related properties for a machine. </summary>
+        public LicenseProfileMachineInstanceView LicenseProfile { get; set; }
         /// <summary> The provisioning state, which only appears in the response. </summary>
         public string ProvisioningState { get; }
         /// <summary> The status of the hybrid machine agent. </summary>
@@ -153,10 +203,12 @@ namespace Azure.ResourceManager.HybridCompute
         public IList<MachineExtensionInstanceView> Extensions { get; }
         /// <summary> Specifies the Operating System product SKU. </summary>
         public string OSSku { get; }
+        /// <summary> The edition of the Operating System. </summary>
+        public string OSEdition { get; }
         /// <summary> Specifies the Windows domain name. </summary>
         public string DomainName { get; }
         /// <summary> Specifies the AD fully qualified display name. </summary>
-        public string AdFqdn { get; }
+        public string ADFqdn { get; }
         /// <summary> Specifies the DNS fully qualified display name. </summary>
         public string DnsFqdn { get; }
         /// <summary> The resource id of the private link scope this machine is assigned to, if any. </summary>
@@ -164,8 +216,15 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The resource id of the parent cluster (Azure HCI) this machine is assigned to, if any. </summary>
         public ResourceIdentifier ParentClusterResourceId { get; set; }
         /// <summary> Specifies whether any MS SQL instance is discovered on the machine. </summary>
-        public string MssqlDiscovered { get; set; }
+        public string MSSqlDiscovered { get; set; }
         /// <summary> Detected properties from the machine. </summary>
         public IReadOnlyDictionary<string, string> DetectedProperties { get; }
+        /// <summary> Information about the network the machine is on. </summary>
+        internal HybridComputeNetworkProfile NetworkProfile { get; }
+        /// <summary> The list of network interfaces. </summary>
+        public IReadOnlyList<HybridComputeNetworkInterface> NetworkInterfaces
+        {
+            get => NetworkProfile?.NetworkInterfaces;
+        }
     }
 }

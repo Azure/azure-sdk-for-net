@@ -6,39 +6,231 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
-    public partial class RouterJob
+    public partial class RouterJob : IUtf8JsonSerializable, IJsonModel<RouterJob>
     {
-        internal static RouterJob DeserializeRouterJob(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RouterJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RouterJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(ChannelReference))
+            {
+                writer.WritePropertyName("channelReference"u8);
+                writer.WriteStringValue(ChannelReference);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(EnqueuedAt))
+            {
+                writer.WritePropertyName("enqueuedAt"u8);
+                writer.WriteStringValue(EnqueuedAt.Value, "O");
+            }
+            if (Optional.IsDefined(ChannelId))
+            {
+                writer.WritePropertyName("channelId"u8);
+                writer.WriteStringValue(ChannelId);
+            }
+            if (Optional.IsDefined(ClassificationPolicyId))
+            {
+                writer.WritePropertyName("classificationPolicyId"u8);
+                writer.WriteStringValue(ClassificationPolicyId);
+            }
+            if (Optional.IsDefined(QueueId))
+            {
+                writer.WritePropertyName("queueId"u8);
+                writer.WriteStringValue(QueueId);
+            }
+            if (Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteNumberValue(Priority.Value);
+            }
+            if (Optional.IsDefined(DispositionCode))
+            {
+                writer.WritePropertyName("dispositionCode"u8);
+                writer.WriteStringValue(DispositionCode);
+            }
+            if (Optional.IsCollectionDefined(RequestedWorkerSelectors))
+            {
+                writer.WritePropertyName("requestedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequestedWorkerSelectors)
+                {
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedWorkerSelectors))
+            {
+                writer.WritePropertyName("attachedWorkerSelectors"u8);
+                writer.WriteStartArray();
+                foreach (var item in AttachedWorkerSelectors)
+                {
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(_labels))
+            {
+                writer.WritePropertyName("labels"u8);
+                writer.WriteStartObject();
+                foreach (var item in _labels)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Assignments))
+            {
+                writer.WritePropertyName("assignments"u8);
+                writer.WriteStartObject();
+                foreach (var item in Assignments)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue<RouterJobAssignment>(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(_tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in _tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(Notes))
+            {
+                writer.WritePropertyName("notes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Notes)
+                {
+                    writer.WriteObjectValue<RouterJobNote>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ScheduledAt))
+            {
+                writer.WritePropertyName("scheduledAt"u8);
+                writer.WriteStringValue(ScheduledAt.Value, "O");
+            }
+            if (Optional.IsDefined(MatchingMode))
+            {
+                writer.WritePropertyName("matchingMode"u8);
+                writer.WriteObjectValue<JobMatchingMode>(MatchingMode, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RouterJob IJsonModel<RouterJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRouterJob(document.RootElement, options);
+        }
+
+        internal static RouterJob DeserializeRouterJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ETag etag = default;
             string id = default;
-            Optional<string> channelReference = default;
-            Optional<RouterJobStatus> status = default;
-            Optional<DateTimeOffset> enqueuedAt = default;
-            Optional<string> channelId = default;
-            Optional<string> classificationPolicyId = default;
-            Optional<string> queueId = default;
-            Optional<int> priority = default;
-            Optional<string> dispositionCode = default;
-            Optional<IList<RouterWorkerSelector>> requestedWorkerSelectors = default;
-            Optional<IReadOnlyList<RouterWorkerSelector>> attachedWorkerSelectors = default;
-            Optional<IDictionary<string, BinaryData>> labels = default;
-            Optional<IReadOnlyDictionary<string, RouterJobAssignment>> assignments = default;
-            Optional<IDictionary<string, BinaryData>> tags = default;
-            Optional<IList<RouterJobNote>> notes = default;
-            Optional<DateTimeOffset> scheduledAt = default;
-            Optional<JobMatchingMode> matchingMode = default;
+            string channelReference = default;
+            RouterJobStatus? status = default;
+            DateTimeOffset? enqueuedAt = default;
+            string channelId = default;
+            string classificationPolicyId = default;
+            string queueId = default;
+            int? priority = default;
+            string dispositionCode = default;
+            IList<RouterWorkerSelector> requestedWorkerSelectors = default;
+            IReadOnlyList<RouterWorkerSelector> attachedWorkerSelectors = default;
+            IDictionary<string, BinaryData> labels = default;
+            IReadOnlyDictionary<string, RouterJobAssignment> assignments = default;
+            IDictionary<string, BinaryData> tags = default;
+            IList<RouterJobNote> notes = default;
+            DateTimeOffset? scheduledAt = default;
+            JobMatchingMode matchingMode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -112,7 +304,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     requestedWorkerSelectors = array;
                     continue;
@@ -126,7 +318,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterWorkerSelector> array = new List<RouterWorkerSelector>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item));
+                        array.Add(RouterWorkerSelector.DeserializeRouterWorkerSelector(item, options));
                     }
                     attachedWorkerSelectors = array;
                     continue;
@@ -161,7 +353,7 @@ namespace Azure.Communication.JobRouter
                     Dictionary<string, RouterJobAssignment> dictionary = new Dictionary<string, RouterJobAssignment>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value));
+                        dictionary.Add(property0.Name, RouterJobAssignment.DeserializeRouterJobAssignment(property0.Value, options));
                     }
                     assignments = dictionary;
                     continue;
@@ -196,7 +388,7 @@ namespace Azure.Communication.JobRouter
                     List<RouterJobNote> array = new List<RouterJobNote>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RouterJobNote.DeserializeRouterJobNote(item));
+                        array.Add(RouterJobNote.DeserializeRouterJobNote(item, options));
                     }
                     notes = array;
                     continue;
@@ -216,12 +408,67 @@ namespace Azure.Communication.JobRouter
                     {
                         continue;
                     }
-                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value);
+                    matchingMode = JobMatchingMode.DeserializeJobMatchingMode(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RouterJob(etag, id, channelReference.Value, Optional.ToNullable(status), Optional.ToNullable(enqueuedAt), channelId.Value, classificationPolicyId.Value, queueId.Value, Optional.ToNullable(priority), dispositionCode.Value, Optional.ToList(requestedWorkerSelectors), Optional.ToList(attachedWorkerSelectors), Optional.ToDictionary(labels), Optional.ToDictionary(assignments), Optional.ToDictionary(tags), Optional.ToList(notes), Optional.ToNullable(scheduledAt), matchingMode.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RouterJob(
+                etag,
+                id,
+                channelReference,
+                status,
+                enqueuedAt,
+                channelId,
+                classificationPolicyId,
+                queueId,
+                priority,
+                dispositionCode,
+                requestedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                attachedWorkerSelectors ?? new ChangeTrackingList<RouterWorkerSelector>(),
+                labels ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                assignments ?? new ChangeTrackingDictionary<string, RouterJobAssignment>(),
+                tags ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                notes ?? new ChangeTrackingList<RouterJobNote>(),
+                scheduledAt,
+                matchingMode,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RouterJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RouterJob IPersistableModel<RouterJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRouterJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RouterJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

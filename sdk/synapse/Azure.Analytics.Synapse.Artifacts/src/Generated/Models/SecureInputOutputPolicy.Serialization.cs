@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secureInput"u8))
@@ -60,14 +60,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SecureInputOutputPolicy(Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput));
+            return new SecureInputOutputPolicy(secureInput, secureOutput);
         }
 
         internal partial class SecureInputOutputPolicyConverter : JsonConverter<SecureInputOutputPolicy>
         {
             public override void Write(Utf8JsonWriter writer, SecureInputOutputPolicy model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SecureInputOutputPolicy>(model);
             }
             public override SecureInputOutputPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

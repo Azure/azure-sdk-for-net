@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -30,6 +29,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of usage details. </param>
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="billingAccountId"> Billing Account identifier. </param>
         /// <param name="billingAccountName"> Billing Account Name. </param>
         /// <param name="billingPeriodStartOn"> The billing period start date. </param>
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="benefitId"> Unique identifier for the applicable benefit. </param>
         /// <param name="benefitName"> Name of the applicable benefit. </param>
         /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
-        internal ConsumptionLegacyUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel) : base(id, name, resourceType, systemData, kind, etag, tags)
+        internal ConsumptionLegacyUsageDetail(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UsageDetailsKind kind, ETag? etag, IReadOnlyDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel) : base(id, name, resourceType, systemData, kind, etag, tags, serializedAdditionalRawData)
         {
             BillingAccountId = billingAccountId;
             BillingAccountName = billingAccountName;

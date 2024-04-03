@@ -5,31 +5,139 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
-    public partial class FirewallSupportInfo
+    public partial class FirewallSupportInfo : IUtf8JsonSerializable, IJsonModel<FirewallSupportInfo>
     {
-        internal static FirewallSupportInfo DeserializeFirewallSupportInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirewallSupportInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<FirewallSupportInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ProductSku))
+            {
+                writer.WritePropertyName("productSku"u8);
+                writer.WriteStringValue(ProductSku);
+            }
+            if (Optional.IsDefined(ProductSerial))
+            {
+                writer.WritePropertyName("productSerial"u8);
+                writer.WriteStringValue(ProductSerial);
+            }
+            if (Optional.IsDefined(AccountRegistered))
+            {
+                writer.WritePropertyName("accountRegistered"u8);
+                writer.WriteStringValue(AccountRegistered.Value.ToString());
+            }
+            if (Optional.IsDefined(AccountId))
+            {
+                writer.WritePropertyName("accountId"u8);
+                writer.WriteStringValue(AccountId);
+            }
+            if (Optional.IsDefined(UserDomainSupported))
+            {
+                writer.WritePropertyName("userDomainSupported"u8);
+                writer.WriteStringValue(UserDomainSupported.Value.ToString());
+            }
+            if (Optional.IsDefined(UserRegistered))
+            {
+                writer.WritePropertyName("userRegistered"u8);
+                writer.WriteStringValue(UserRegistered.Value.ToString());
+            }
+            if (Optional.IsDefined(FreeTrial))
+            {
+                writer.WritePropertyName("freeTrial"u8);
+                writer.WriteStringValue(FreeTrial.Value.ToString());
+            }
+            if (Optional.IsDefined(FreeTrialDaysLeft))
+            {
+                writer.WritePropertyName("freeTrialDaysLeft"u8);
+                writer.WriteNumberValue(FreeTrialDaysLeft.Value);
+            }
+            if (Optional.IsDefined(FreeTrialCreditLeft))
+            {
+                writer.WritePropertyName("freeTrialCreditLeft"u8);
+                writer.WriteNumberValue(FreeTrialCreditLeft.Value);
+            }
+            if (Optional.IsDefined(HelpURL))
+            {
+                writer.WritePropertyName("helpURL"u8);
+                writer.WriteStringValue(HelpURL);
+            }
+            if (Optional.IsDefined(SupportURL))
+            {
+                writer.WritePropertyName("supportURL"u8);
+                writer.WriteStringValue(SupportURL);
+            }
+            if (Optional.IsDefined(RegisterURL))
+            {
+                writer.WritePropertyName("registerURL"u8);
+                writer.WriteStringValue(RegisterURL);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        FirewallSupportInfo IJsonModel<FirewallSupportInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeFirewallSupportInfo(document.RootElement, options);
+        }
+
+        internal static FirewallSupportInfo DeserializeFirewallSupportInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> productSku = default;
-            Optional<string> productSerial = default;
-            Optional<FirewallBooleanType> accountRegistered = default;
-            Optional<string> accountId = default;
-            Optional<FirewallBooleanType> userDomainSupported = default;
-            Optional<FirewallBooleanType> userRegistered = default;
-            Optional<FirewallBooleanType> freeTrial = default;
-            Optional<int> freeTrialDaysLeft = default;
-            Optional<int> freeTrialCreditLeft = default;
-            Optional<string> helpURL = default;
-            Optional<string> supportURL = default;
-            Optional<string> registerURL = default;
+            string productSku = default;
+            string productSerial = default;
+            FirewallBooleanType? accountRegistered = default;
+            string accountId = default;
+            FirewallBooleanType? userDomainSupported = default;
+            FirewallBooleanType? userRegistered = default;
+            FirewallBooleanType? freeTrial = default;
+            int? freeTrialDaysLeft = default;
+            int? freeTrialCreditLeft = default;
+            string helpURL = default;
+            string supportURL = default;
+            string registerURL = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("productSku"u8))
@@ -116,8 +224,57 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                     registerURL = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new FirewallSupportInfo(productSku.Value, productSerial.Value, Optional.ToNullable(accountRegistered), accountId.Value, Optional.ToNullable(userDomainSupported), Optional.ToNullable(userRegistered), Optional.ToNullable(freeTrial), Optional.ToNullable(freeTrialDaysLeft), Optional.ToNullable(freeTrialCreditLeft), helpURL.Value, supportURL.Value, registerURL.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new FirewallSupportInfo(
+                productSku,
+                productSerial,
+                accountRegistered,
+                accountId,
+                userDomainSupported,
+                userRegistered,
+                freeTrial,
+                freeTrialDaysLeft,
+                freeTrialCreditLeft,
+                helpURL,
+                supportURL,
+                registerURL,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<FirewallSupportInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        FirewallSupportInfo IPersistableModel<FirewallSupportInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<FirewallSupportInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeFirewallSupportInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirewallSupportInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<FirewallSupportInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

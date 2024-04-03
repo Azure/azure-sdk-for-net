@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
     /// <summary> The result summary of an installation operation. </summary>
     public partial class MachineInstallPatchesResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MachineInstallPatchesResult"/>. </summary>
         internal MachineInstallPatchesResult()
         {
@@ -34,7 +66,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
-        internal MachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, OSType? osType, ResponseError errorDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -51,10 +84,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             PatchServiceUsed = patchServiceUsed;
             OSType = osType;
             ErrorDetails = errorDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The overall success or failure status of the operation. It remains "InProgress" until the operation completes. At that point it will become "Failed", "Succeeded", "Unknown" or "CompletedWithWarnings.". </summary>
-        public PatchOperationStatus? Status { get; }
+        public MachineOperationStatus? Status { get; }
         /// <summary> The activity ID of the operation that produced this result. </summary>
         public string InstallationActivityId { get; }
         /// <summary> The reboot state of the VM following completion of the operation. </summary>
@@ -80,7 +114,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the patch service used for the operation. </summary>
         public PatchServiceUsed? PatchServiceUsed { get; }
         /// <summary> The operating system type of the machine. </summary>
-        public OSType? OSType { get; }
+        public HybridComputeOSType? OSType { get; }
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ResponseError ErrorDetails { get; }
     }

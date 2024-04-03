@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class PolicyDescriptionListResult
+    internal partial class PolicyDescriptionListResult : IUtf8JsonSerializable, IJsonModel<PolicyDescriptionListResult>
     {
-        internal static PolicyDescriptionListResult DeserializePolicyDescriptionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicyDescriptionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolicyDescriptionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyDescriptionListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<PolicyDescriptionContractData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PolicyDescriptionListResult IJsonModel<PolicyDescriptionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolicyDescriptionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolicyDescriptionListResult(document.RootElement, options);
+        }
+
+        internal static PolicyDescriptionListResult DeserializePolicyDescriptionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<PolicyDescriptionContractData>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<PolicyDescriptionContractData> value = default;
+            long? count = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PolicyDescriptionContractData> array = new List<PolicyDescriptionContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item));
+                        array.Add(PolicyDescriptionContractData.DeserializePolicyDescriptionContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -46,8 +108,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PolicyDescriptionListResult(Optional.ToList(value), Optional.ToNullable(count));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PolicyDescriptionListResult(value ?? new ChangeTrackingList<PolicyDescriptionContractData>(), count, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PolicyDescriptionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolicyDescriptionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PolicyDescriptionListResult IPersistableModel<PolicyDescriptionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolicyDescriptionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolicyDescriptionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicyDescriptionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolicyDescriptionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

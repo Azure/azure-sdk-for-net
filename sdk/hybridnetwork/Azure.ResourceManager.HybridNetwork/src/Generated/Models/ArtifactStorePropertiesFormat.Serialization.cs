@@ -5,16 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ArtifactStorePropertiesFormat : IUtf8JsonSerializable
+    public partial class ArtifactStorePropertiesFormat : IUtf8JsonSerializable, IJsonModel<ArtifactStorePropertiesFormat>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ArtifactStorePropertiesFormat>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ArtifactStorePropertiesFormat>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(StoreType))
             {
                 writer.WritePropertyName("storeType"u8);
@@ -28,22 +44,58 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
+            {
+                writer.WritePropertyName("storageResourceId"u8);
+                writer.WriteStringValue(StorageResourceId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ArtifactStorePropertiesFormat DeserializeArtifactStorePropertiesFormat(JsonElement element)
+        ArtifactStorePropertiesFormat IJsonModel<ArtifactStorePropertiesFormat>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeArtifactStorePropertiesFormat(document.RootElement, options);
+        }
+
+        internal static ArtifactStorePropertiesFormat DeserializeArtifactStorePropertiesFormat(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<ArtifactStoreType> storeType = default;
-            Optional<ArtifactReplicationStrategy> replicationStrategy = default;
-            Optional<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration> managedResourceGroupConfiguration = default;
-            Optional<ResourceIdentifier> storageResourceId = default;
+            ProvisioningState? provisioningState = default;
+            ArtifactStoreType? storeType = default;
+            ArtifactReplicationStrategy? replicationStrategy = default;
+            ArtifactStorePropertiesFormatManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            ResourceIdentifier storageResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -79,7 +131,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value);
+                    managedResourceGroupConfiguration = ArtifactStorePropertiesFormatManagedResourceGroupConfiguration.DeserializeArtifactStorePropertiesFormatManagedResourceGroupConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageResourceId"u8))
@@ -91,8 +143,50 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     storageResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ArtifactStorePropertiesFormat(Optional.ToNullable(provisioningState), Optional.ToNullable(storeType), Optional.ToNullable(replicationStrategy), managedResourceGroupConfiguration.Value, storageResourceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ArtifactStorePropertiesFormat(
+                provisioningState,
+                storeType,
+                replicationStrategy,
+                managedResourceGroupConfiguration,
+                storageResourceId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ArtifactStorePropertiesFormat>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ArtifactStorePropertiesFormat IPersistableModel<ArtifactStorePropertiesFormat>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeArtifactStorePropertiesFormat(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ArtifactStorePropertiesFormat>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

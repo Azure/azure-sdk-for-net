@@ -6,26 +6,104 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureContainerRegistryScopedTokenCredential
+    public partial class AzureContainerRegistryScopedTokenCredential : IUtf8JsonSerializable, IJsonModel<AzureContainerRegistryScopedTokenCredential>
     {
-        internal static AzureContainerRegistryScopedTokenCredential DeserializeAzureContainerRegistryScopedTokenCredential(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureContainerRegistryScopedTokenCredential>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureContainerRegistryScopedTokenCredential>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureContainerRegistryScopedTokenCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureContainerRegistryScopedTokenCredential)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Username))
+            {
+                writer.WritePropertyName("username"u8);
+                writer.WriteStringValue(Username);
+            }
+            if (Optional.IsDefined(AcrToken))
+            {
+                writer.WritePropertyName("acrToken"u8);
+                writer.WriteStringValue(AcrToken);
+            }
+            if (Optional.IsDefined(AcrServerUri))
+            {
+                writer.WritePropertyName("acrServerUrl"u8);
+                writer.WriteStringValue(AcrServerUri.AbsoluteUri);
+            }
+            if (Optional.IsCollectionDefined(Repositories))
+            {
+                writer.WritePropertyName("repositories"u8);
+                writer.WriteStartArray();
+                foreach (var item in Repositories)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Expiry))
+            {
+                writer.WritePropertyName("expiry"u8);
+                writer.WriteStringValue(Expiry.Value, "O");
+            }
+            writer.WritePropertyName("credentialType"u8);
+            writer.WriteStringValue(CredentialType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AzureContainerRegistryScopedTokenCredential IJsonModel<AzureContainerRegistryScopedTokenCredential>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureContainerRegistryScopedTokenCredential>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureContainerRegistryScopedTokenCredential)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureContainerRegistryScopedTokenCredential(document.RootElement, options);
+        }
+
+        internal static AzureContainerRegistryScopedTokenCredential DeserializeAzureContainerRegistryScopedTokenCredential(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> username = default;
-            Optional<string> acrToken = default;
-            Optional<Uri> acrServerUrl = default;
-            Optional<IReadOnlyList<string>> repositories = default;
-            Optional<DateTimeOffset> expiry = default;
+            string username = default;
+            string acrToken = default;
+            Uri acrServerUrl = default;
+            IReadOnlyList<string> repositories = default;
+            DateTimeOffset? expiry = default;
             CredentialType credentialType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("username"u8))
@@ -75,8 +153,51 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     credentialType = new CredentialType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureContainerRegistryScopedTokenCredential(credentialType, username.Value, acrToken.Value, acrServerUrl.Value, Optional.ToList(repositories), Optional.ToNullable(expiry));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureContainerRegistryScopedTokenCredential(
+                credentialType,
+                serializedAdditionalRawData,
+                username,
+                acrToken,
+                acrServerUrl,
+                repositories ?? new ChangeTrackingList<string>(),
+                expiry);
         }
+
+        BinaryData IPersistableModel<AzureContainerRegistryScopedTokenCredential>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureContainerRegistryScopedTokenCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureContainerRegistryScopedTokenCredential)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureContainerRegistryScopedTokenCredential IPersistableModel<AzureContainerRegistryScopedTokenCredential>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureContainerRegistryScopedTokenCredential>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureContainerRegistryScopedTokenCredential(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureContainerRegistryScopedTokenCredential)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureContainerRegistryScopedTokenCredential>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

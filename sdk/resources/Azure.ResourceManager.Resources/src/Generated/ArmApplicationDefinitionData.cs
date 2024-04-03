@@ -39,6 +39,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="lockLevel"> The managed application lock level. </param>
         /// <param name="displayName"> The managed application definition display name. </param>
         /// <param name="isEnabled"> A value indicating whether the package is enabled or not. </param>
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="deploymentPolicy"> The managed application deployment policy. </param>
         /// <param name="managementPolicy"> The managed application management policy that determines publisher's access to the managed resource group. </param>
         /// <param name="policies"> The managed application provider policies. </param>
-        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmApplicationLockLevel lockLevel, string displayName, bool? isEnabled, IList<ArmApplicationAuthorization> authorizations, IList<ArmApplicationDefinitionArtifact> artifacts, string description, Uri packageFileUri, BinaryData mainTemplate, BinaryData createUiDefinition, ArmApplicationNotificationPolicy notificationPolicy, ArmApplicationPackageLockingPolicy lockingPolicy, ArmApplicationDeploymentPolicy deploymentPolicy, ArmApplicationManagementPolicy managementPolicy, IList<ArmApplicationPolicy> policies) : base(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData)
         {
             LockLevel = lockLevel;
             DisplayName = displayName;
@@ -71,19 +72,31 @@ namespace Azure.ResourceManager.Resources
             Policies = policies;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationDefinitionData"/> for deserialization. </summary>
+        internal ArmApplicationDefinitionData()
+        {
+        }
+
         /// <summary> The managed application lock level. </summary>
+        [WirePath("properties.lockLevel")]
         public ArmApplicationLockLevel LockLevel { get; set; }
         /// <summary> The managed application definition display name. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> A value indicating whether the package is enabled or not. </summary>
+        [WirePath("properties.isEnabled")]
         public bool? IsEnabled { get; set; }
         /// <summary> The managed application provider authorizations. </summary>
+        [WirePath("properties.authorizations")]
         public IList<ArmApplicationAuthorization> Authorizations { get; }
         /// <summary> The collection of managed application artifacts. The portal will use the files specified as artifacts to construct the user experience of creating a managed application from a managed application definition. </summary>
+        [WirePath("properties.artifacts")]
         public IList<ArmApplicationDefinitionArtifact> Artifacts { get; }
         /// <summary> The managed application definition description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The managed application definition package file Uri. Use this element. </summary>
+        [WirePath("properties.packageFileUri")]
         public Uri PackageFileUri { get; set; }
         /// <summary>
         /// The inline main template json which has resources to be provisioned. It can be a JObject or well-formed JSON string.
@@ -115,6 +128,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.mainTemplate")]
         public BinaryData MainTemplate { get; set; }
         /// <summary>
         /// The createUiDefinition json for the backing template with Microsoft.Solutions/applications resource. It can be a JObject or well-formed JSON string.
@@ -146,10 +160,12 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.createUiDefinition")]
         public BinaryData CreateUiDefinition { get; set; }
         /// <summary> The managed application notification policy. </summary>
         internal ArmApplicationNotificationPolicy NotificationPolicy { get; set; }
         /// <summary> The managed application notification endpoint. </summary>
+        [WirePath("properties.notificationPolicy.notificationEndpoints")]
         public IList<ArmApplicationNotificationEndpoint> NotificationEndpoints
         {
             get => NotificationPolicy is null ? default : NotificationPolicy.NotificationEndpoints;
@@ -157,6 +173,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The managed application locking policy. </summary>
+        [WirePath("properties.lockingPolicy")]
         public ArmApplicationPackageLockingPolicy LockingPolicy { get; set; }
         /// <summary> The managed application deployment policy. </summary>
         internal ArmApplicationDeploymentPolicy DeploymentPolicy { get; set; }
@@ -164,6 +181,7 @@ namespace Azure.ResourceManager.Resources
         /// <summary> The managed application management policy that determines publisher's access to the managed resource group. </summary>
         internal ArmApplicationManagementPolicy ManagementPolicy { get; set; }
         /// <summary> The managed application management mode. </summary>
+        [WirePath("properties.managementPolicy.mode")]
         public ArmApplicationManagementMode? ManagementMode
         {
             get => ManagementPolicy is null ? default : ManagementPolicy.Mode;
@@ -176,6 +194,7 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The managed application provider policies. </summary>
+        [WirePath("properties.policies")]
         public IList<ArmApplicationPolicy> Policies { get; }
     }
 }

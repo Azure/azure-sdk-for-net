@@ -5,23 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class HyperVReplicaAzureEventDetails
+    public partial class HyperVReplicaAzureEventDetails : IUtf8JsonSerializable, IJsonModel<HyperVReplicaAzureEventDetails>
     {
-        internal static HyperVReplicaAzureEventDetails DeserializeHyperVReplicaAzureEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVReplicaAzureEventDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HyperVReplicaAzureEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ContainerName))
+            {
+                writer.WritePropertyName("containerName"u8);
+                writer.WriteStringValue(ContainerName);
+            }
+            if (Optional.IsDefined(FabricName))
+            {
+                writer.WritePropertyName("fabricName"u8);
+                writer.WriteStringValue(FabricName);
+            }
+            if (Optional.IsDefined(RemoteContainerName))
+            {
+                writer.WritePropertyName("remoteContainerName"u8);
+                writer.WriteStringValue(RemoteContainerName);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HyperVReplicaAzureEventDetails IJsonModel<HyperVReplicaAzureEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHyperVReplicaAzureEventDetails(document.RootElement, options);
+        }
+
+        internal static HyperVReplicaAzureEventDetails DeserializeHyperVReplicaAzureEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> containerName = default;
-            Optional<string> fabricName = default;
-            Optional<string> remoteContainerName = default;
+            string containerName = default;
+            string fabricName = default;
+            string remoteContainerName = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("containerName"u8))
@@ -44,8 +109,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HyperVReplicaAzureEventDetails(instanceType, containerName.Value, fabricName.Value, remoteContainerName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HyperVReplicaAzureEventDetails(instanceType, serializedAdditionalRawData, containerName, fabricName, remoteContainerName);
         }
+
+        BinaryData IPersistableModel<HyperVReplicaAzureEventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HyperVReplicaAzureEventDetails IPersistableModel<HyperVReplicaAzureEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHyperVReplicaAzureEventDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureEventDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HyperVReplicaAzureEventDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

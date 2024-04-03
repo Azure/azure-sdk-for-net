@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Network;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.Network.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetActiveConnectivityConfigurations_ListActiveConnectivityConfigurations()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerActiveConnectivityConfigurationsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerActiveConnectivityConfigurationsList.json
             // this example is just showing the usage of "ListActiveConnectivityConfigurations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +59,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetActiveSecurityAdminRules_ListActiveSecurityAdminRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerActiveSecurityAdminRulesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerActiveSecurityAdminRulesList.json
             // this example is just showing the usage of "ListActiveSecurityAdminRules" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -100,7 +97,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_NetworkManagersGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerGet.json
             // this example is just showing the usage of "NetworkManagers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +128,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_NetworkManagersDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerDelete.json
             // this example is just showing the usage of "NetworkManagers_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -159,7 +156,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_NetworkManagesPatch()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerPatch.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerPatch.json
             // this example is just showing the usage of "NetworkManagers_Patch" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +195,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkManagers_NetworkManagersList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerListAll.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerListAll.json
             // this example is just showing the usage of "NetworkManagers_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -230,7 +227,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task PostNetworkManagerCommit_NetworkManageCommitPost()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerCommitPost.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerCommitPost.json
             // this example is just showing the usage of "NetworkManagerCommits_Post" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -268,7 +265,7 @@ new AzureLocation("westus")
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetNetworkManagerDeploymentStatus_NetworkManagerDeploymentStatusList()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-06-01/examples/NetworkManagerDeploymentStatusList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2023-09-01/examples/NetworkManagerDeploymentStatusList.json
             // this example is just showing the usage of "NetworkManagerDeploymentStatus_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

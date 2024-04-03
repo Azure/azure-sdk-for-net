@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
         public CloudServicesNetworksTests(bool isAsync) : base(isAsync) {}
 
         [Test]
+        [RecordedTest]
         public async Task CloudServicesNetworks()
         {
             var cloudServicesNetworkCollection = ResourceGroupResource.GetNetworkCloudCloudServicesNetworks();

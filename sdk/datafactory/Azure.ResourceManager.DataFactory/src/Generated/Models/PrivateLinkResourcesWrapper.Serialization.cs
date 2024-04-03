@@ -5,20 +5,75 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class PrivateLinkResourcesWrapper
+    internal partial class PrivateLinkResourcesWrapper : IUtf8JsonSerializable, IJsonModel<PrivateLinkResourcesWrapper>
     {
-        internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateLinkResourcesWrapper>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateLinkResourcesWrapper>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkResourcesWrapper)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<DataFactoryPrivateLinkResource>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateLinkResourcesWrapper IJsonModel<PrivateLinkResourcesWrapper>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateLinkResourcesWrapper)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateLinkResourcesWrapper(document.RootElement, options);
+        }
+
+        internal static PrivateLinkResourcesWrapper DeserializePrivateLinkResourcesWrapper(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<DataFactoryPrivateLinkResource> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -26,13 +81,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<DataFactoryPrivateLinkResource> array = new List<DataFactoryPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(item));
+                        array.Add(DataFactoryPrivateLinkResource.DeserializeDataFactoryPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateLinkResourcesWrapper(value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateLinkResourcesWrapper(value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateLinkResourcesWrapper>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesWrapper>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateLinkResourcesWrapper)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateLinkResourcesWrapper IPersistableModel<PrivateLinkResourcesWrapper>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResourcesWrapper>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateLinkResourcesWrapper(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateLinkResourcesWrapper)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateLinkResourcesWrapper>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

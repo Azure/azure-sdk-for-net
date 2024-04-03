@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,16 +17,16 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<CallMediaRecognitionType> recognitionType = default;
-            Optional<CollectTonesResult> collectTonesResult = default;
-            Optional<DtmfResult> dtmfResult = default;
-            Optional<SpeechResult> speechResult = default;
-            Optional<ChoiceResult> choiceResult = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            CallMediaRecognitionType recognitionType = default;
+            CollectTonesResult collectTonesResult = default;
+            DtmfResult dtmfResult = default;
+            SpeechResult speechResult = default;
+            ChoiceResult choiceResult = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("operationContext"u8))
@@ -105,7 +104,17 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new RecognizeCompletedInternal(operationContext.Value, resultInformation.Value, recognitionType, collectTonesResult.Value, dtmfResult.Value, speechResult.Value, choiceResult.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new RecognizeCompletedInternal(
+                operationContext,
+                resultInformation,
+                recognitionType,
+                collectTonesResult,
+                dtmfResult,
+                speechResult,
+                choiceResult,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

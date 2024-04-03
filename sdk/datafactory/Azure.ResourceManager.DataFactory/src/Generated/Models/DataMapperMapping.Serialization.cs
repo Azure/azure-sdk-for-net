@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataMapperMapping : IUtf8JsonSerializable
+    public partial class DataMapperMapping : IUtf8JsonSerializable, IJsonModel<DataMapperMapping>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataMapperMapping>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataMapperMapping>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TargetEntityName))
             {
@@ -29,12 +39,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(SourceConnectionReference))
             {
                 writer.WritePropertyName("sourceConnectionReference"u8);
-                writer.WriteObjectValue(SourceConnectionReference);
+                writer.WriteObjectValue<MapperConnectionReference>(SourceConnectionReference, options);
             }
             if (Optional.IsDefined(AttributeMappingInfo))
             {
                 writer.WritePropertyName("attributeMappingInfo"u8);
-                writer.WriteObjectValue(AttributeMappingInfo);
+                writer.WriteObjectValue<MapperAttributeMappings>(AttributeMappingInfo, options);
             }
             if (Optional.IsDefined(SourceDenormalizeInfo))
             {
@@ -48,20 +58,51 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataMapperMapping DeserializeDataMapperMapping(JsonElement element)
+        DataMapperMapping IJsonModel<DataMapperMapping>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataMapperMapping)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataMapperMapping(document.RootElement, options);
+        }
+
+        internal static DataMapperMapping DeserializeDataMapperMapping(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> targetEntityName = default;
-            Optional<string> sourceEntityName = default;
-            Optional<MapperConnectionReference> sourceConnectionReference = default;
-            Optional<MapperAttributeMappings> attributeMappingInfo = default;
-            Optional<BinaryData> sourceDenormalizeInfo = default;
+            string targetEntityName = default;
+            string sourceEntityName = default;
+            MapperConnectionReference sourceConnectionReference = default;
+            MapperAttributeMappings attributeMappingInfo = default;
+            BinaryData sourceDenormalizeInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetEntityName"u8))
@@ -80,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value);
+                    sourceConnectionReference = MapperConnectionReference.DeserializeMapperConnectionReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("attributeMappingInfo"u8))
@@ -89,7 +130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value);
+                    attributeMappingInfo = MapperAttributeMappings.DeserializeMapperAttributeMappings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDenormalizeInfo"u8))
@@ -101,8 +142,50 @@ namespace Azure.ResourceManager.DataFactory.Models
                     sourceDenormalizeInfo = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataMapperMapping(targetEntityName.Value, sourceEntityName.Value, sourceConnectionReference.Value, attributeMappingInfo.Value, sourceDenormalizeInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataMapperMapping(
+                targetEntityName,
+                sourceEntityName,
+                sourceConnectionReference,
+                attributeMappingInfo,
+                sourceDenormalizeInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataMapperMapping>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataMapperMapping IPersistableModel<DataMapperMapping>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataMapperMapping>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataMapperMapping(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataMapperMapping)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataMapperMapping>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

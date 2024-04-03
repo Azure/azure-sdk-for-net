@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Automation.Models;
 using Azure.ResourceManager.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.Automation
     /// </summary>
     public partial class DscNodeData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DscNodeData"/>. </summary>
         public DscNodeData()
         {
@@ -41,7 +72,8 @@ namespace Azure.ResourceManager.Automation
         /// <param name="totalCount"> Gets the total number of records matching filter criteria. </param>
         /// <param name="extensionHandler"> Gets or sets the list of extensionHandler properties for a Node. </param>
         /// <param name="namePropertiesNodeConfigurationName"> Gets or sets the name of the dsc node configuration. </param>
-        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscNodeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? lastSeenOn, DateTimeOffset? registrationOn, string ip, string accountId, string status, string nodeId, ETag? etag, int? totalCount, IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler, string namePropertiesNodeConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             LastSeenOn = lastSeenOn;
             RegistrationOn = registrationOn;
@@ -53,6 +85,7 @@ namespace Azure.ResourceManager.Automation
             TotalCount = totalCount;
             ExtensionHandler = extensionHandler;
             NamePropertiesNodeConfigurationName = namePropertiesNodeConfigurationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the last seen time of the node. </summary>

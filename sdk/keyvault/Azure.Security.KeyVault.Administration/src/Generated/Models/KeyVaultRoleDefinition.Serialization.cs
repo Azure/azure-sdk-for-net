@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
                 writer.WriteStartArray();
                 foreach (var item in Permissions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyVaultPermission>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -63,14 +63,14 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<KeyVaultRoleDefinitionType> type = default;
-            Optional<string> roleName = default;
-            Optional<string> description = default;
-            Optional<KeyVaultRoleType> type0 = default;
-            Optional<IList<KeyVaultPermission>> permissions = default;
-            Optional<IList<KeyVaultRoleScope>> assignableScopes = default;
+            string id = default;
+            string name = default;
+            KeyVaultRoleDefinitionType? type = default;
+            string roleName = default;
+            string description = default;
+            KeyVaultRoleType? type0 = default;
+            IList<KeyVaultPermission> permissions = default;
+            IList<KeyVaultRoleScope> assignableScopes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -152,7 +152,15 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultRoleDefinition(id.Value, name.Value, Optional.ToNullable(type), roleName.Value, description.Value, Optional.ToNullable(type0), Optional.ToList(permissions), Optional.ToList(assignableScopes));
+            return new KeyVaultRoleDefinition(
+                id,
+                name,
+                type,
+                roleName,
+                description,
+                type0,
+                permissions ?? new ChangeTrackingList<KeyVaultPermission>(),
+                assignableScopes ?? new ChangeTrackingList<KeyVaultRoleScope>());
         }
     }
 }

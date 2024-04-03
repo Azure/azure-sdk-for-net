@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,14 +21,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> deliveryStatus = default;
-            Optional<string> deliveryStatusDetails = default;
-            Optional<IReadOnlyList<AcsSmsDeliveryAttemptProperties>> deliveryAttempts = default;
-            Optional<DateTimeOffset> receivedTimestamp = default;
-            Optional<string> tag = default;
-            Optional<string> messageId = default;
-            Optional<string> @from = default;
-            Optional<string> to = default;
+            string deliveryStatus = default;
+            string deliveryStatusDetails = default;
+            IReadOnlyList<AcsSmsDeliveryAttemptProperties> deliveryAttempts = default;
+            DateTimeOffset? receivedTimestamp = default;
+            string tag = default;
+            string messageId = default;
+            string @from = default;
+            string to = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deliveryStatus"u8))
@@ -86,7 +85,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsSmsDeliveryReportReceivedEventData(messageId.Value, @from.Value, to.Value, deliveryStatus.Value, deliveryStatusDetails.Value, Optional.ToList(deliveryAttempts), Optional.ToNullable(receivedTimestamp), tag.Value);
+            return new AcsSmsDeliveryReportReceivedEventData(
+                messageId,
+                @from,
+                to,
+                deliveryStatus,
+                deliveryStatusDetails,
+                deliveryAttempts ?? new ChangeTrackingList<AcsSmsDeliveryAttemptProperties>(),
+                receivedTimestamp,
+                tag);
         }
 
         internal partial class AcsSmsDeliveryReportReceivedEventDataConverter : JsonConverter<AcsSmsDeliveryReportReceivedEventData>

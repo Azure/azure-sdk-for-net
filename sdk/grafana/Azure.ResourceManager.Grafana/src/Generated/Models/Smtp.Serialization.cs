@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Grafana.Models
 {
-    public partial class Smtp : IUtf8JsonSerializable
+    public partial class Smtp : IUtf8JsonSerializable, IJsonModel<Smtp>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Smtp>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Smtp>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Smtp)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Enabled))
             {
@@ -55,23 +66,54 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("skipVerify"u8);
                 writer.WriteBooleanValue(SkipVerify.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Smtp DeserializeSmtp(JsonElement element)
+        Smtp IJsonModel<Smtp>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Smtp)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSmtp(document.RootElement, options);
+        }
+
+        internal static Smtp DeserializeSmtp(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<string> host = default;
-            Optional<string> user = default;
-            Optional<string> password = default;
-            Optional<string> fromAddress = default;
-            Optional<string> fromName = default;
-            Optional<StartTLSPolicy> startTLSPolicy = default;
-            Optional<bool> skipVerify = default;
+            bool? enabled = default;
+            string host = default;
+            string user = default;
+            string password = default;
+            string fromAddress = default;
+            string fromName = default;
+            StartTLSPolicy? startTLSPolicy = default;
+            bool? skipVerify = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enabled"u8))
@@ -126,8 +168,53 @@ namespace Azure.ResourceManager.Grafana.Models
                     skipVerify = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Smtp(Optional.ToNullable(enabled), host.Value, user.Value, password.Value, fromAddress.Value, fromName.Value, Optional.ToNullable(startTLSPolicy), Optional.ToNullable(skipVerify));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Smtp(
+                enabled,
+                host,
+                user,
+                password,
+                fromAddress,
+                fromName,
+                startTLSPolicy,
+                skipVerify,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Smtp>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Smtp)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Smtp IPersistableModel<Smtp>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Smtp>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSmtp(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Smtp)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Smtp>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

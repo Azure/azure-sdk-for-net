@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
@@ -12,6 +14,38 @@ namespace Azure.ResourceManager.Sql.Models
     /// <summary> Contains the information necessary to perform long term retention backup copy operation. </summary>
     public partial class CopyLongTermRetentionBackupContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="CopyLongTermRetentionBackupContent"/>. </summary>
         public CopyLongTermRetentionBackupContent()
         {
@@ -24,7 +58,8 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="targetServerFullyQualifiedDomainName"> The fully qualified domain name of the target server. </param>
         /// <param name="targetDatabaseName"> The name of the database owns the copied backup. </param>
         /// <param name="targetBackupStorageRedundancy"> The storage redundancy type of the copied backup. </param>
-        internal CopyLongTermRetentionBackupContent(string targetSubscriptionId, string targetResourceGroup, ResourceIdentifier targetServerResourceId, string targetServerFullyQualifiedDomainName, string targetDatabaseName, SqlBackupStorageRedundancy? targetBackupStorageRedundancy)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CopyLongTermRetentionBackupContent(string targetSubscriptionId, string targetResourceGroup, ResourceIdentifier targetServerResourceId, string targetServerFullyQualifiedDomainName, string targetDatabaseName, SqlBackupStorageRedundancy? targetBackupStorageRedundancy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TargetSubscriptionId = targetSubscriptionId;
             TargetResourceGroup = targetResourceGroup;
@@ -32,19 +67,26 @@ namespace Azure.ResourceManager.Sql.Models
             TargetServerFullyQualifiedDomainName = targetServerFullyQualifiedDomainName;
             TargetDatabaseName = targetDatabaseName;
             TargetBackupStorageRedundancy = targetBackupStorageRedundancy;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The subscription that owns the target server. </summary>
+        [WirePath("properties.targetSubscriptionId")]
         public string TargetSubscriptionId { get; set; }
         /// <summary> The resource group that owns the target server. </summary>
+        [WirePath("properties.targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
         /// <summary> The resource Id of the target server that owns the database. </summary>
+        [WirePath("properties.targetServerResourceId")]
         public ResourceIdentifier TargetServerResourceId { get; set; }
         /// <summary> The fully qualified domain name of the target server. </summary>
+        [WirePath("properties.targetServerFullyQualifiedDomainName")]
         public string TargetServerFullyQualifiedDomainName { get; set; }
         /// <summary> The name of the database owns the copied backup. </summary>
+        [WirePath("properties.targetDatabaseName")]
         public string TargetDatabaseName { get; set; }
         /// <summary> The storage redundancy type of the copied backup. </summary>
+        [WirePath("properties.targetBackupStorageRedundancy")]
         public SqlBackupStorageRedundancy? TargetBackupStorageRedundancy { get; set; }
     }
 }

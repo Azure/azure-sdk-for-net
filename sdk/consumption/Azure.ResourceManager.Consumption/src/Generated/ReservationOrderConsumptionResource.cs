@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Consumption.Models;
 
 namespace Azure.ResourceManager.Consumption
@@ -75,6 +73,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_ListByReservationOrder</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -85,7 +87,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderRequest(Id.Name, grain, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderNextPageRequest(nextLink, Id.Name, grain, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -99,6 +101,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsSummaries_ListByReservationOrder</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="grain"> Can be daily or monthly. </param>
@@ -109,7 +115,7 @@ namespace Azure.ResourceManager.Consumption
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsSummariesRestClient.CreateListByReservationOrderRequest(Id.Name, grain, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsSummariesRestClient.CreateListByReservationOrderNextPageRequest(nextLink, Id.Name, grain, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationSummary.DeserializeConsumptionReservationSummary, _reservationsSummariesClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(e), _reservationsSummariesClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationSummaries", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -122,6 +128,10 @@ namespace Azure.ResourceManager.Consumption
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_ListByReservationOrder</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -135,7 +145,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsDetailsRestClient.CreateListByReservationOrderRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsDetailsRestClient.CreateListByReservationOrderNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationDetail.DeserializeConsumptionReservationDetail(e), _reservationsDetailsClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -149,6 +159,10 @@ namespace Azure.ResourceManager.Consumption
         /// <term>Operation Id</term>
         /// <description>ReservationsDetails_ListByReservationOrder</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Filter reservation details by date range. The properties/UsageDate for start date and end date. The filter supports 'le' and  'ge'. </param>
@@ -161,7 +175,7 @@ namespace Azure.ResourceManager.Consumption
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _reservationsDetailsRestClient.CreateListByReservationOrderRequest(Id.Name, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _reservationsDetailsRestClient.CreateListByReservationOrderNextPageRequest(nextLink, Id.Name, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConsumptionReservationDetail.DeserializeConsumptionReservationDetail, _reservationsDetailsClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ConsumptionReservationDetail.DeserializeConsumptionReservationDetail(e), _reservationsDetailsClientDiagnostics, Pipeline, "ReservationOrderConsumptionResource.GetReservationDetails", "value", "nextLink", cancellationToken);
         }
     }
 }

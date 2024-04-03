@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementPartner.Mocking;
 using Azure.ResourceManager.ManagementPartner.Models;
 using Azure.ResourceManager.Resources;
@@ -77,6 +75,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -106,6 +112,14 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Partner_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PartnerResponseResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -137,6 +151,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -164,6 +182,10 @@ namespace Azure.ResourceManager.ManagementPartner
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Operation_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-02-01</description>
         /// </item>
         /// </list>
         /// <item>

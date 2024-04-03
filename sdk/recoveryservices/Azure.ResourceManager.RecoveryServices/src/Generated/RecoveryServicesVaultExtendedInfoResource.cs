@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.RecoveryServices
 {
@@ -100,6 +98,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -163,6 +177,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -198,6 +220,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="info"> Details of ResourceExtendedInfo. </param>
@@ -231,6 +261,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +307,14 @@ namespace Azure.ResourceManager.RecoveryServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VaultExtendedInfo_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RecoveryServicesVaultExtendedInfoResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

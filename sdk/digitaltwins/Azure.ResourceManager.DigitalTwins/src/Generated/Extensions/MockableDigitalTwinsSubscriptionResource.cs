@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DigitalTwins;
 using Azure.ResourceManager.DigitalTwins.Models;
 
 namespace Azure.ResourceManager.DigitalTwins.Mocking
@@ -56,6 +53,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -78,6 +83,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -99,6 +112,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -134,6 +155,14 @@ namespace Azure.ResourceManager.DigitalTwins.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DigitalTwins_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-31</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DigitalTwinsDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

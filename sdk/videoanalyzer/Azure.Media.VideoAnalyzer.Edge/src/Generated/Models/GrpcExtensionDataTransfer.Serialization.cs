@@ -31,7 +31,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<string> sharedMemorySizeMiB = default;
+            string sharedMemorySizeMiB = default;
             GrpcExtensionDataTransferMode mode = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -46,7 +46,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new GrpcExtensionDataTransfer(sharedMemorySizeMiB.Value, mode);
+            return new GrpcExtensionDataTransfer(sharedMemorySizeMiB, mode);
         }
     }
 }

@@ -7,14 +7,11 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.StorageCache;
 using Azure.ResourceManager.StorageCache.Models;
 
 namespace Azure.ResourceManager.StorageCache.Samples
@@ -26,7 +23,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_AmlFilesystemsListByResourceGroup()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_ListByResourceGroup.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/amlFilesystems_ListByResourceGroup.json
             // this example is just showing the usage of "amlFilesystems_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -62,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AmlFilesystemsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/amlFilesystems_Get.json
             // this example is just showing the usage of "amlFilesystems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AmlFilesystemsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/amlFilesystems_Get.json
             // this example is just showing the usage of "amlFilesystems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -126,7 +123,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_AmlFilesystemsGet()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_Get.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/amlFilesystems_Get.json
             // this example is just showing the usage of "amlFilesystems_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -168,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AmlFilesystemsCreateOrUpdate()
         {
-            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/stable/2023-05-01/examples/amlFilesystems_CreateOrUpdate.json
+            // Generated from example definition: specification/storagecache/resource-manager/Microsoft.StorageCache/preview/2023-11-01-preview/examples/amlFilesystems_CreateOrUpdate.json
             // this example is just showing the usage of "amlFilesystems_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,6 +216,13 @@ namespace Azure.ResourceManager.StorageCache.Samples
                     {
                         ImportPrefix = "/",
                     },
+                },
+                RootSquashSettings = new AmlFileSystemRootSquashSettings()
+                {
+                    Mode = AmlFileSystemSquashMode.All,
+                    NoSquashNidLists = "10.0.0.[5-6]@tcp;10.0.1.2@tcp",
+                    SquashUID = 99,
+                    SquashGID = 99,
                 },
                 Tags =
 {

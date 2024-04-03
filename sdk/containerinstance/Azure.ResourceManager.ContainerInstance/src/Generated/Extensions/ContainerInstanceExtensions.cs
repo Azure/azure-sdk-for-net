@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ContainerInstance.Mocking;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Resources;
@@ -82,6 +80,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -112,6 +118,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -141,6 +155,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -173,6 +191,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>SubnetServiceAssociationLink_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -204,6 +226,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -232,6 +262,14 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>ContainerGroups_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ContainerGroupResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -259,6 +297,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -289,6 +331,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListUsage</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -317,6 +363,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -347,6 +397,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCachedImages</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -376,6 +430,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -404,6 +462,10 @@ namespace Azure.ResourceManager.ContainerInstance
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Location_ListCapabilities</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01</description>
         /// </item>
         /// </list>
         /// <item>

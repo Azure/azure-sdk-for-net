@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.StorageMover.Models
 {
@@ -31,15 +31,21 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="endpointType"> The Endpoint resource type. </param>
         /// <param name="description"> A description for the Endpoint. </param>
         /// <param name="provisioningState"> The provisioning state of this resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="host"> The host name or IP address of the server exporting the file system. </param>
         /// <param name="nfsVersion"> The NFS protocol version. </param>
         /// <param name="export"> The directory being exported from the server. </param>
-        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, provisioningState)
+        internal NfsMountEndpointProperties(EndpointType endpointType, string description, StorageMoverProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string host, NfsVersion? nfsVersion, string export) : base(endpointType, description, provisioningState, serializedAdditionalRawData)
         {
             Host = host;
             NfsVersion = nfsVersion;
             Export = export;
             EndpointType = endpointType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NfsMountEndpointProperties"/> for deserialization. </summary>
+        internal NfsMountEndpointProperties()
+        {
         }
 
         /// <summary> The host name or IP address of the server exporting the file system. </summary>

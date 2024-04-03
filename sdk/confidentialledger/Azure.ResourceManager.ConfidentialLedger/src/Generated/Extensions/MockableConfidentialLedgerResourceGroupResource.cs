@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ConfidentialLedger;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="ledgerName"> Name of the Confidential Ledger. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Ledger_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConfidentialLedgerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="appName"> Name of the Managed CCF. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.ConfidentialLedger.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedCCF_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-26-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagedCcfResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -53,54 +53,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("clusterUri"u8);
-            writer.WriteObjectValue(ClusterUri);
+            writer.WriteObjectValue<object>(ClusterUri);
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
-                writer.WriteObjectValue(HcatalogLinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(HcatalogLinkedServiceName);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             if (Optional.IsDefined(IsEspEnabled))
             {
                 writer.WritePropertyName("isEspEnabled"u8);
-                writer.WriteObjectValue(IsEspEnabled);
+                writer.WriteObjectValue<object>(IsEspEnabled);
             }
             if (Optional.IsDefined(FileSystem))
             {
                 writer.WritePropertyName("fileSystem"u8);
-                writer.WriteObjectValue(FileSystem);
+                writer.WriteObjectValue<object>(FileSystem);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -112,18 +112,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object clusterUri = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<LinkedServiceReference> hcatalogLinkedServiceName = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> isEspEnabled = default;
-            Optional<object> fileSystem = default;
+            object userName = default;
+            SecretBase password = default;
+            LinkedServiceReference linkedServiceName = default;
+            LinkedServiceReference hcatalogLinkedServiceName = default;
+            object encryptedCredential = default;
+            object isEspEnabled = default;
+            object fileSystem = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -265,14 +265,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, clusterUri, userName.Value, password.Value, linkedServiceName.Value, hcatalogLinkedServiceName.Value, encryptedCredential.Value, isEspEnabled.Value, fileSystem.Value);
+            return new HDInsightLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                clusterUri,
+                userName,
+                password,
+                linkedServiceName,
+                hcatalogLinkedServiceName,
+                encryptedCredential,
+                isEspEnabled,
+                fileSystem);
         }
 
         internal partial class HDInsightLinkedServiceConverter : JsonConverter<HDInsightLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, HDInsightLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<HDInsightLinkedService>(model);
             }
             public override HDInsightLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

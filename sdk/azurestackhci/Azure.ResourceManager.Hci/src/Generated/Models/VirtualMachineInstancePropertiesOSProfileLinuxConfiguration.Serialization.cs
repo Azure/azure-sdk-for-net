@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    public partial class VirtualMachineInstancePropertiesOSProfileLinuxConfiguration : IUtf8JsonSerializable
+    public partial class VirtualMachineInstancePropertiesOSProfileLinuxConfiguration : IUtf8JsonSerializable, IJsonModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileLinuxConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisablePasswordAuthentication))
             {
@@ -23,7 +34,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(Ssh))
             {
                 writer.WritePropertyName("ssh"u8);
-                writer.WriteObjectValue(Ssh);
+                writer.WriteObjectValue<SshConfiguration>(Ssh, options);
             }
             if (Optional.IsDefined(ProvisionVmAgent))
             {
@@ -35,19 +46,50 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VirtualMachineInstancePropertiesOSProfileLinuxConfiguration DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(JsonElement element)
+        VirtualMachineInstancePropertiesOSProfileLinuxConfiguration IJsonModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileLinuxConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(document.RootElement, options);
+        }
+
+        internal static VirtualMachineInstancePropertiesOSProfileLinuxConfiguration DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> disablePasswordAuthentication = default;
-            Optional<SshConfiguration> ssh = default;
-            Optional<bool> provisionVmAgent = default;
-            Optional<bool> provisionVmConfigAgent = default;
+            bool? disablePasswordAuthentication = default;
+            SshConfiguration ssh = default;
+            bool? provisionVmAgent = default;
+            bool? provisionVmConfigAgent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("disablePasswordAuthentication"u8))
@@ -65,7 +107,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value);
+                    ssh = SshConfiguration.DeserializeSshConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisionVMAgent"u8))
@@ -86,8 +128,44 @@ namespace Azure.ResourceManager.Hci.Models
                     provisionVmConfigAgent = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualMachineInstancePropertiesOSProfileLinuxConfiguration(Optional.ToNullable(disablePasswordAuthentication), ssh.Value, Optional.ToNullable(provisionVmAgent), Optional.ToNullable(provisionVmConfigAgent));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualMachineInstancePropertiesOSProfileLinuxConfiguration(disablePasswordAuthentication, ssh, provisionVmAgent, provisionVmConfigAgent, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileLinuxConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualMachineInstancePropertiesOSProfileLinuxConfiguration IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfileLinuxConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

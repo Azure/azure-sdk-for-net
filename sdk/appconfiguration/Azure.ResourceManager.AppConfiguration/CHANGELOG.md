@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.4.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,22 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.1 (2024-03-23)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
+## 1.2.0 (2024-01-30)
+
+### Features Added
+
+- Updated AppConfiguration RP API version to `2023-03-01` (ReplicaCollection, ReplicaData and ReplicaResource)
+
+### Other Changes
+
+- Removed AppConfigurationKeyValueCollection.GetAll() and AppConfigurationKeyValueCollection.GetAllAsync() (They never work. You may use data plane sdk: Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSettings() or Azure.Data.AppConfiguration.ConfigurationClient.GetConfigurationSettingsAsync() )
 
 ## 1.1.0 (2023-11-27)
 

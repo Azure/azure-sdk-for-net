@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class SecretDeploymentResourceReference : IUtf8JsonSerializable
+    public partial class SecretDeploymentResourceReference : IUtf8JsonSerializable, IJsonModel<SecretDeploymentResourceReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretDeploymentResourceReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecretDeploymentResourceReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             }
             writer.WritePropertyName("idType"u8);
             writer.WriteStringValue(IdType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecretDeploymentResourceReference DeserializeSecretDeploymentResourceReference(JsonElement element)
+        SecretDeploymentResourceReference IJsonModel<SecretDeploymentResourceReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretDeploymentResourceReference(document.RootElement, options);
+        }
+
+        internal static SecretDeploymentResourceReference DeserializeSecretDeploymentResourceReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             IdType idType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -49,8 +91,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     idType = new IdType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecretDeploymentResourceReference(idType, id.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecretDeploymentResourceReference(idType, serializedAdditionalRawData, id);
         }
+
+        BinaryData IPersistableModel<SecretDeploymentResourceReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecretDeploymentResourceReference IPersistableModel<SecretDeploymentResourceReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretDeploymentResourceReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecretDeploymentResourceReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretDeploymentResourceReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecretDeploymentResourceReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

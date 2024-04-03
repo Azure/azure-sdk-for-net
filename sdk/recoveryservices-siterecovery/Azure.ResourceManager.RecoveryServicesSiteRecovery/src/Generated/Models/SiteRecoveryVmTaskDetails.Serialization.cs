@@ -5,23 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryVmTaskDetails
+    public partial class SiteRecoveryVmTaskDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryVmTaskDetails>
     {
-        internal static SiteRecoveryVmTaskDetails DeserializeSiteRecoveryVmTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryVmTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryVmTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SkippedReason))
+            {
+                writer.WritePropertyName("skippedReason"u8);
+                writer.WriteStringValue(SkippedReason);
+            }
+            if (Optional.IsDefined(SkippedReasonString))
+            {
+                writer.WritePropertyName("skippedReasonString"u8);
+                writer.WriteStringValue(SkippedReasonString);
+            }
+            if (Optional.IsDefined(JobTask))
+            {
+                writer.WritePropertyName("jobTask"u8);
+                writer.WriteObjectValue<SiteRecoveryJobEntity>(JobTask, options);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryVmTaskDetails IJsonModel<SiteRecoveryVmTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryVmTaskDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryVmTaskDetails DeserializeSiteRecoveryVmTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> skippedReason = default;
-            Optional<string> skippedReasonString = default;
-            Optional<SiteRecoveryJobEntity> jobTask = default;
+            string skippedReason = default;
+            string skippedReasonString = default;
+            SiteRecoveryJobEntity jobTask = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("skippedReason"u8))
@@ -40,7 +105,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value);
+                    jobTask = SiteRecoveryJobEntity.DeserializeSiteRecoveryJobEntity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceType"u8))
@@ -48,8 +113,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryVmTaskDetails(instanceType, jobTask.Value, skippedReason.Value, skippedReasonString.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteRecoveryVmTaskDetails(instanceType, serializedAdditionalRawData, jobTask, skippedReason, skippedReasonString);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryVmTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryVmTaskDetails IPersistableModel<SiteRecoveryVmTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryVmTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryVmTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

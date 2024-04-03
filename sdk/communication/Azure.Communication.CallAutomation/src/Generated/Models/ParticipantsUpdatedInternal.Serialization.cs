@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -19,11 +18,11 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<IReadOnlyList<CallParticipantInternal>> participants = default;
-            Optional<int> sequenceNumber = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
+            IReadOnlyList<CallParticipantInternal> participants = default;
+            int? sequenceNumber = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("participants"u8))
@@ -65,7 +64,7 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new ParticipantsUpdatedInternal(Optional.ToList(participants), Optional.ToNullable(sequenceNumber), callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new ParticipantsUpdatedInternal(participants ?? new ChangeTrackingList<CallParticipantInternal>(), sequenceNumber, callConnectionId, serverCallId, correlationId);
         }
     }
 }

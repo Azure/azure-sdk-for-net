@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Communication.JobRouter
 {
@@ -15,12 +15,18 @@ namespace Azure.Communication.JobRouter
     {
         /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/>. </summary>
         /// <param name="kind"> The type discriminator describing a sub-type of QueueSelectorAttachment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The label key to query against. </param>
         /// <param name="labelOperator"> Describes how the value of the label is compared to the value pass through. </param>
-        internal PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind kind, string key, LabelOperator labelOperator) : base(kind)
+        internal PassThroughQueueSelectorAttachment(QueueSelectorAttachmentKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string key, LabelOperator labelOperator) : base(kind, serializedAdditionalRawData)
         {
             Key = key;
             LabelOperator = labelOperator;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PassThroughQueueSelectorAttachment"/> for deserialization. </summary>
+        internal PassThroughQueueSelectorAttachment()
+        {
         }
 
         /// <summary> The label key to query against. </summary>

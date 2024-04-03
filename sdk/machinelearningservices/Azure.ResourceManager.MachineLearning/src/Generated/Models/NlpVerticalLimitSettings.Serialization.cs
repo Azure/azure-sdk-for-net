@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class NlpVerticalLimitSettings : IUtf8JsonSerializable
+    public partial class NlpVerticalLimitSettings : IUtf8JsonSerializable, IJsonModel<NlpVerticalLimitSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NlpVerticalLimitSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NlpVerticalLimitSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxConcurrentTrials))
             {
@@ -41,20 +51,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("trialTimeout"u8);
                 writer.WriteStringValue(TrialTimeout.Value, "P");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NlpVerticalLimitSettings DeserializeNlpVerticalLimitSettings(JsonElement element)
+        NlpVerticalLimitSettings IJsonModel<NlpVerticalLimitSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNlpVerticalLimitSettings(document.RootElement, options);
+        }
+
+        internal static NlpVerticalLimitSettings DeserializeNlpVerticalLimitSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> maxConcurrentTrials = default;
-            Optional<int> maxNodes = default;
-            Optional<int> maxTrials = default;
-            Optional<TimeSpan> timeout = default;
-            Optional<TimeSpan> trialTimeout = default;
+            int? maxConcurrentTrials = default;
+            int? maxNodes = default;
+            int? maxTrials = default;
+            TimeSpan? timeout = default;
+            TimeSpan? trialTimeout = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxConcurrentTrials"u8))
@@ -102,8 +143,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     trialTimeout = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NlpVerticalLimitSettings(Optional.ToNullable(maxConcurrentTrials), Optional.ToNullable(maxNodes), Optional.ToNullable(maxTrials), Optional.ToNullable(timeout), Optional.ToNullable(trialTimeout));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NlpVerticalLimitSettings(
+                maxConcurrentTrials,
+                maxNodes,
+                maxTrials,
+                timeout,
+                trialTimeout,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NlpVerticalLimitSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NlpVerticalLimitSettings IPersistableModel<NlpVerticalLimitSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NlpVerticalLimitSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNlpVerticalLimitSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NlpVerticalLimitSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NlpVerticalLimitSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

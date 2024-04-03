@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.DigitalTwins
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DigitalTwinsDescriptionData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DigitalTwinsDescriptionData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>
     {
         public DigitalTwinsDescriptionData(Azure.Core.AzureLocation location) { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -27,6 +27,11 @@ namespace Azure.ResourceManager.DigitalTwins
         public System.Collections.Generic.IList<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess? PublicNetworkAccess { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DigitalTwinsDescriptionResource : Azure.ResourceManager.ArmResource
     {
@@ -91,10 +96,15 @@ namespace Azure.ResourceManager.DigitalTwins
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DigitalTwinsEndpointResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class DigitalTwinsEndpointResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>
     {
         public DigitalTwinsEndpointResourceData(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties properties) { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class DigitalTwinsExtensions
     {
@@ -128,10 +138,15 @@ namespace Azure.ResourceManager.DigitalTwins
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DigitalTwinsPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class DigitalTwinsPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>
     {
         public DigitalTwinsPrivateEndpointConnectionData(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties properties) { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DigitalTwinsPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -172,10 +187,15 @@ namespace Azure.ResourceManager.DigitalTwins
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DigitalTwinsPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class DigitalTwinsPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>
     {
         internal DigitalTwinsPrivateLinkResourceData() { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties Properties { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TimeSeriesDatabaseConnectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>, System.Collections.IEnumerable
     {
@@ -194,10 +214,15 @@ namespace Azure.ResourceManager.DigitalTwins
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TimeSeriesDatabaseConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class TimeSeriesDatabaseConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>
     {
         public TimeSeriesDatabaseConnectionData() { }
         public Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TimeSeriesDatabaseConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -250,9 +275,10 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties DataExplorerConnectionProperties(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, Azure.Core.ResourceIdentifier adxResourceId = null, System.Uri adxEndpointUri = null, string adxDatabaseName = null, string adxTableName = null, string adxTwinLifecycleEventsTableName = null, string adxRelationshipLifecycleEventsTableName = null, System.Uri eventHubEndpointUri = null, string eventHubEntityPath = null, Azure.Core.ResourceIdentifier eventHubNamespaceResourceId = null, string eventHubConsumerGroup = null, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval? recordPropertyAndItemRemovals = default(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval?)) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.DigitalTwinsDescriptionData DigitalTwinsDescriptionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsProvisioningState?), string hostName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData> privateEndpointConnections = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess? publicNetworkAccess = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess?), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.DigitalTwinsEndpointResourceData DigitalTwinsEndpointResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = "Unknown", Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties DigitalTwinsEndpointResourceProperties(string endpointType = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties DigitalTwinsEventGridProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string topicEndpoint = null, string accessKey1 = null, string accessKey2 = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties DigitalTwinsEventHubProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string connectionStringPrimaryKey = null, string connectionStringSecondaryKey = null, System.Uri endpointUri = null, string entityPath = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent DigitalTwinsNameContent(string name = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType resourceType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType)) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult DigitalTwinsNameResult(bool? isNameAvailable = default(bool?), string message = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason? reason = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason?)) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.DigitalTwinsPrivateEndpointConnectionData DigitalTwinsPrivateEndpointConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties DigitalTwinsPrivateEndpointConnectionProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState?), Azure.Core.ResourceIdentifier privateEndpointId = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState privateLinkServiceConnectionState = null) { throw null; }
@@ -260,7 +286,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties DigitalTwinsPrivateLinkResourceProperties(string groupId = null, System.Collections.Generic.IEnumerable<string> requiredMembers = null, System.Collections.Generic.IEnumerable<string> requiredZoneNames = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties DigitalTwinsServiceBusProperties(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? authenticationType = default(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType?), string deadLetterSecret = null, System.Uri deadLetterUri = null, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null, string primaryConnectionString = null, string secondaryConnectionString = null, System.Uri endpointUri = null, string entityPath = null) { throw null; }
         public static Azure.ResourceManager.DigitalTwins.TimeSeriesDatabaseConnectionData TimeSeriesDatabaseConnectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = "Unknown", Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
+        public static Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties TimeSeriesDatabaseConnectionProperties(string connectionType = null, Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? provisioningState = default(Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState?), Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference identity = null) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct CleanupConnectionArtifact : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact>
@@ -280,7 +306,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact left, Azure.ResourceManager.DigitalTwins.Models.CleanupConnectionArtifact right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DataExplorerConnectionProperties : Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties
+    public partial class DataExplorerConnectionProperties : Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>
     {
         public DataExplorerConnectionProperties(Azure.Core.ResourceIdentifier adxResourceId, System.Uri adxEndpointUri, string adxDatabaseName, System.Uri eventHubEndpointUri, string eventHubEntityPath, Azure.Core.ResourceIdentifier eventHubNamespaceResourceId) { }
         public string AdxDatabaseName { get { throw null; } set { } }
@@ -294,6 +320,11 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public string EventHubEntityPath { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier EventHubNamespaceResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval? RecordPropertyAndItemRemovals { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DataExplorerConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsAuthenticationType : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType>
@@ -313,12 +344,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DigitalTwinsDescriptionPatch
+    public partial class DigitalTwinsDescriptionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>
     {
         public DigitalTwinsDescriptionPatch() { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPublicNetworkAccess? DigitalTwinsPatchPublicNetworkAccess { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsDescriptionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsEndpointProvisioningState : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState>
@@ -348,7 +384,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class DigitalTwinsEndpointResourceProperties
+    public abstract partial class DigitalTwinsEndpointResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>
     {
         protected DigitalTwinsEndpointResourceProperties() { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsAuthenticationType? AuthenticationType { get { throw null; } set { } }
@@ -357,27 +393,47 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public System.Uri DeadLetterUri { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DigitalTwinsEventGridProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsEventGridProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>
     {
         public DigitalTwinsEventGridProperties(string topicEndpoint, string accessKey1) { }
         public string AccessKey1 { get { throw null; } set { } }
         public string AccessKey2 { get { throw null; } set { } }
         public string TopicEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventGridProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DigitalTwinsEventHubProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsEventHubProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>
     {
         public DigitalTwinsEventHubProperties() { }
         public string ConnectionStringPrimaryKey { get { throw null; } set { } }
         public string ConnectionStringSecondaryKey { get { throw null; } set { } }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEventHubProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DigitalTwinsManagedIdentityReference
+    public partial class DigitalTwinsManagedIdentityReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>
     {
         public DigitalTwinsManagedIdentityReference() { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType? IdentityType { get { throw null; } set { } }
         public string UserAssignedIdentity { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsManagedIdentityType : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType>
@@ -397,18 +453,28 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DigitalTwinsNameContent
+    public partial class DigitalTwinsNameContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>
     {
         public DigitalTwinsNameContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DigitalTwinsNameResult
+    public partial class DigitalTwinsNameResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>
     {
         internal DigitalTwinsNameResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsNameUnavailableReason : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason>
@@ -428,20 +494,30 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DigitalTwinsPrivateEndpointConnectionProperties
+    public partial class DigitalTwinsPrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>
     {
         public DigitalTwinsPrivateEndpointConnectionProperties() { }
         public System.Collections.Generic.IList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DigitalTwinsPrivateLinkResourceProperties
+    public partial class DigitalTwinsPrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>
     {
         internal DigitalTwinsPrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredZoneNames { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsPrivateLinkResourceProvisioningState : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState>
@@ -463,12 +539,17 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkResourceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DigitalTwinsPrivateLinkServiceConnectionState
+    public partial class DigitalTwinsPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>
     {
         public DigitalTwinsPrivateLinkServiceConnectionState(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus status, string description) { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus Status { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DigitalTwinsPrivateLinkServiceConnectionStatus : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsPrivateLinkServiceConnectionStatus>
@@ -552,13 +633,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType left, Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsResourceType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DigitalTwinsServiceBusProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties
+    public partial class DigitalTwinsServiceBusProperties : Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsEndpointResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>
     {
         public DigitalTwinsServiceBusProperties() { }
         public System.Uri EndpointUri { get { throw null; } set { } }
         public string EntityPath { get { throw null; } set { } }
         public string PrimaryConnectionString { get { throw null; } set { } }
         public string SecondaryConnectionString { get { throw null; } set { } }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsServiceBusProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RecordPropertyAndItemRemoval : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval>
@@ -578,11 +664,16 @@ namespace Azure.ResourceManager.DigitalTwins.Models
         public static bool operator !=(Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval left, Azure.ResourceManager.DigitalTwins.Models.RecordPropertyAndItemRemoval right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public abstract partial class TimeSeriesDatabaseConnectionProperties
+    public abstract partial class TimeSeriesDatabaseConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>
     {
         protected TimeSeriesDatabaseConnectionProperties() { }
         public Azure.ResourceManager.DigitalTwins.Models.DigitalTwinsManagedIdentityReference Identity { get { throw null; } set { } }
         public Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TimeSeriesDatabaseConnectionState : System.IEquatable<Azure.ResourceManager.DigitalTwins.Models.TimeSeriesDatabaseConnectionState>

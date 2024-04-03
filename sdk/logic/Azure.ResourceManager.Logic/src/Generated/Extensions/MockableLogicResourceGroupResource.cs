@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Mocking
 {
@@ -61,6 +58,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="workflowName"> The workflow name. </param>
@@ -83,6 +88,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -114,6 +127,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationAccountName"> The integration account name. </param>
@@ -136,6 +157,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IntegrationAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +196,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
@@ -190,6 +227,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <term>Operation Id</term>
         /// <description>IntegrationServiceEnvironments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IntegrationServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="integrationServiceEnvironmentName"> The integration service environment name. </param>
@@ -212,6 +257,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -250,6 +303,14 @@ namespace Azure.ResourceManager.Logic.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Workflows_ValidateByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicWorkflowResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

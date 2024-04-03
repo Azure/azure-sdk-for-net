@@ -5,24 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class AccessInformationListResult
+    internal partial class AccessInformationListResult : IUtf8JsonSerializable, IJsonModel<AccessInformationListResult>
     {
-        internal static AccessInformationListResult DeserializeAccessInformationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessInformationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AccessInformationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccessInformationListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<TenantAccessInfoData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AccessInformationListResult IJsonModel<AccessInformationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AccessInformationListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAccessInformationListResult(document.RootElement, options);
+        }
+
+        internal static AccessInformationListResult DeserializeAccessInformationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<TenantAccessInfoData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<TenantAccessInfoData> value = default;
+            long? count = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -34,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<TenantAccessInfoData> array = new List<TenantAccessInfoData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item));
+                        array.Add(TenantAccessInfoData.DeserializeTenantAccessInfoData(item, options));
                     }
                     value = array;
                     continue;
@@ -53,8 +119,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AccessInformationListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AccessInformationListResult(value ?? new ChangeTrackingList<TenantAccessInfoData>(), count, nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AccessInformationListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AccessInformationListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AccessInformationListResult IPersistableModel<AccessInformationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AccessInformationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAccessInformationListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AccessInformationListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AccessInformationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

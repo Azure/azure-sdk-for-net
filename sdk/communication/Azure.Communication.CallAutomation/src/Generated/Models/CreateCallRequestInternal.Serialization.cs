@@ -19,13 +19,13 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(SourceCallerIdNumber))
             {
                 writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(SourceCallerIdNumber);
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(Source);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -47,22 +47,22 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(TranscriptionConfiguration))
             {
                 writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue(TranscriptionConfiguration);
+                writer.WriteObjectValue<TranscriptionOptionsInternal>(TranscriptionConfiguration);
             }
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue(CallIntelligenceOptions);
+                writer.WriteObjectValue<CallIntelligenceOptionsInternal>(CallIntelligenceOptions);
             }
             if (Optional.IsDefined(CustomCallingContext))
             {
                 writer.WritePropertyName("customCallingContext"u8);
-                writer.WriteObjectValue(CustomCallingContext);
+                writer.WriteObjectValue<CustomCallingContextInternal>(CustomCallingContext);
             }
             writer.WriteEndObject();
         }

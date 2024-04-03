@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PowerBIDedicated.Mocking;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +136,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_GetDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +192,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,6 +229,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -238,6 +268,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -265,6 +303,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -294,6 +340,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -322,6 +376,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -349,6 +411,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -379,6 +449,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>Capacities_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DedicatedCapacityResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -408,6 +486,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -435,6 +521,14 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AutoScaleVCores_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AutoScaleVCoreResource"/></description>
         /// </item>
         /// </list>
         /// <item>

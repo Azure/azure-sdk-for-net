@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Redis.Mocking;
 using Azure.ResourceManager.Redis.Models;
 using Azure.ResourceManager.Resources;
@@ -196,6 +194,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +231,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -256,6 +270,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -283,6 +305,14 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Redis_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -312,6 +342,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -340,6 +378,14 @@ namespace Azure.ResourceManager.Redis
         /// <term>Operation Id</term>
         /// <description>Redis_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RedisResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -367,6 +413,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AsyncOperationStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -397,6 +447,10 @@ namespace Azure.ResourceManager.Redis
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AsyncOperationStatus_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
         /// </item>
         /// </list>
         /// <item>

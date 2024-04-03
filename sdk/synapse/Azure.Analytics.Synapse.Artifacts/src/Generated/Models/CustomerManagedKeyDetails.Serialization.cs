@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<WorkspaceKeyDetails>(Key);
             }
             writer.WriteEndObject();
         }
@@ -32,8 +32,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<WorkspaceKeyDetails> key = default;
+            string status = default;
+            WorkspaceKeyDetails key = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -51,14 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CustomerManagedKeyDetails(status.Value, key.Value);
+            return new CustomerManagedKeyDetails(status, key);
         }
 
         internal partial class CustomerManagedKeyDetailsConverter : JsonConverter<CustomerManagedKeyDetails>
         {
             public override void Write(Utf8JsonWriter writer, CustomerManagedKeyDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CustomerManagedKeyDetails>(model);
             }
             public override CustomerManagedKeyDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

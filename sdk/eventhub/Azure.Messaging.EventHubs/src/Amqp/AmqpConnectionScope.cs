@@ -1246,10 +1246,18 @@ namespace Azure.Messaging.EventHubs.Amqp
                 ReceiveBufferSize = receiveBufferSizeBytes,
             };
 
-            return new TlsTransportSettings(tcpSettings)
+            // If TLS is explicitly disabled, then use the TCP settings as-is.  Otherwise,
+            // wrap them for TLS usage.
+
+            return useTls switch
             {
-                TargetHost = connectionEndpoint.Host,
-                CertificateValidationCallback = certificateValidationCallback
+                false => tcpSettings,
+
+                _ => new TlsTransportSettings(tcpSettings)
+                {
+                    TargetHost = connectionEndpoint.Host,
+                    CertificateValidationCallback = certificateValidationCallback
+                }
             };
         }
 

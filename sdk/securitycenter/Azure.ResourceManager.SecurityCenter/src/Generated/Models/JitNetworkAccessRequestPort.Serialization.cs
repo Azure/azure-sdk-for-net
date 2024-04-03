@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class JitNetworkAccessRequestPort : IUtf8JsonSerializable
+    public partial class JitNetworkAccessRequestPort : IUtf8JsonSerializable, IJsonModel<JitNetworkAccessRequestPort>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JitNetworkAccessRequestPort>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JitNetworkAccessRequestPort>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("number"u8);
             writer.WriteNumberValue(Number);
@@ -45,22 +54,53 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("mappedPort"u8);
                 writer.WriteNumberValue(MappedPort.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static JitNetworkAccessRequestPort DeserializeJitNetworkAccessRequestPort(JsonElement element)
+        JitNetworkAccessRequestPort IJsonModel<JitNetworkAccessRequestPort>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJitNetworkAccessRequestPort(document.RootElement, options);
+        }
+
+        internal static JitNetworkAccessRequestPort DeserializeJitNetworkAccessRequestPort(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int number = default;
-            Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            string allowedSourceAddressPrefix = default;
+            IList<string> allowedSourceAddressPrefixes = default;
             DateTimeOffset endTimeUtc = default;
             JitNetworkAccessPortStatus status = default;
             JitNetworkAccessPortStatusReason statusReason = default;
-            Optional<int> mappedPort = default;
+            int? mappedPort = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("number"u8))
@@ -111,8 +151,52 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     mappedPort = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new JitNetworkAccessRequestPort(number, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), endTimeUtc, status, statusReason, Optional.ToNullable(mappedPort));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JitNetworkAccessRequestPort(
+                number,
+                allowedSourceAddressPrefix,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                endTimeUtc,
+                status,
+                statusReason,
+                mappedPort,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<JitNetworkAccessRequestPort>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JitNetworkAccessRequestPort IPersistableModel<JitNetworkAccessRequestPort>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessRequestPort>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJitNetworkAccessRequestPort(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JitNetworkAccessRequestPort)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JitNetworkAccessRequestPort>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

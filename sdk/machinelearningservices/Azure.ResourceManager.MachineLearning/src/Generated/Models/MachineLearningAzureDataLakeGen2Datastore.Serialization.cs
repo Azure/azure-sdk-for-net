@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningAzureDataLakeGen2Datastore : IUtf8JsonSerializable
+    public partial class MachineLearningAzureDataLakeGen2Datastore : IUtf8JsonSerializable, IJsonModel<MachineLearningAzureDataLakeGen2Datastore>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningAzureDataLakeGen2Datastore>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningAzureDataLakeGen2Datastore>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen2Datastore)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("accountName"u8);
             writer.WriteStringValue(AccountName);
@@ -74,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(Credentials);
+            writer.WriteObjectValue<MachineLearningDatastoreCredentials>(Credentials, options);
             writer.WritePropertyName("datastoreType"u8);
             writer.WriteStringValue(DatastoreType.ToString());
             if (Optional.IsDefined(IntellectualProperty))
@@ -82,12 +92,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (IntellectualProperty != null)
                 {
                     writer.WritePropertyName("intellectualProperty"u8);
-                    writer.WriteObjectValue(IntellectualProperty);
+                    writer.WriteObjectValue<IntellectualProperty>(IntellectualProperty, options);
                 }
                 else
                 {
                     writer.WriteNull("intellectualProperty");
                 }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDefault))
+            {
+                writer.WritePropertyName("isDefault"u8);
+                writer.WriteBooleanValue(IsDefault.Value);
             }
             if (Optional.IsDefined(Description))
             {
@@ -137,29 +152,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningAzureDataLakeGen2Datastore DeserializeMachineLearningAzureDataLakeGen2Datastore(JsonElement element)
+        MachineLearningAzureDataLakeGen2Datastore IJsonModel<MachineLearningAzureDataLakeGen2Datastore>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen2Datastore)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningAzureDataLakeGen2Datastore(document.RootElement, options);
+        }
+
+        internal static MachineLearningAzureDataLakeGen2Datastore DeserializeMachineLearningAzureDataLakeGen2Datastore(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string accountName = default;
-            Optional<string> endpoint = default;
+            string endpoint = default;
             string filesystem = default;
-            Optional<string> protocol = default;
-            Optional<MachineLearningServiceDataAccessAuthIdentity> serviceDataAccessAuthIdentity = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> subscriptionId = default;
+            string protocol = default;
+            MachineLearningServiceDataAccessAuthIdentity? serviceDataAccessAuthIdentity = default;
+            string resourceGroup = default;
+            string subscriptionId = default;
             MachineLearningDatastoreCredentials credentials = default;
             DatastoreType datastoreType = default;
-            Optional<IntellectualProperty> intellectualProperty = default;
-            Optional<bool> isDefault = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IntellectualProperty intellectualProperty = default;
+            bool? isDefault = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -223,7 +269,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("credentials"u8))
                 {
-                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value);
+                    credentials = MachineLearningDatastoreCredentials.DeserializeMachineLearningDatastoreCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datastoreType"u8))
@@ -238,7 +284,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         intellectualProperty = null;
                         continue;
                     }
-                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value);
+                    intellectualProperty = IntellectualProperty.DeserializeIntellectualProperty(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isDefault"u8))
@@ -290,8 +336,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningAzureDataLakeGen2Datastore(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), credentials, datastoreType, intellectualProperty.Value, Optional.ToNullable(isDefault), accountName, endpoint.Value, filesystem, protocol.Value, Optional.ToNullable(serviceDataAccessAuthIdentity), resourceGroup.Value, subscriptionId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningAzureDataLakeGen2Datastore(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                credentials,
+                datastoreType,
+                intellectualProperty,
+                isDefault,
+                accountName,
+                endpoint,
+                filesystem,
+                protocol,
+                serviceDataAccessAuthIdentity,
+                resourceGroup,
+                subscriptionId);
         }
+
+        BinaryData IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen2Datastore)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningAzureDataLakeGen2Datastore IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningAzureDataLakeGen2Datastore(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningAzureDataLakeGen2Datastore)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningAzureDataLakeGen2Datastore>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

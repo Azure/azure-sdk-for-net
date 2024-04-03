@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    internal partial class SecurityAssessmentMetadataResponseList
+    internal partial class SecurityAssessmentMetadataResponseList : IUtf8JsonSerializable, IJsonModel<SecurityAssessmentMetadataResponseList>
     {
-        internal static SecurityAssessmentMetadataResponseList DeserializeSecurityAssessmentMetadataResponseList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityAssessmentMetadataResponseList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityAssessmentMetadataResponseList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataResponseList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataResponseList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<SecurityAssessmentMetadataData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SecurityAssessmentMetadataResponseList IJsonModel<SecurityAssessmentMetadataResponseList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataResponseList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataResponseList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityAssessmentMetadataResponseList(document.RootElement, options);
+        }
+
+        internal static SecurityAssessmentMetadataResponseList DeserializeSecurityAssessmentMetadataResponseList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityAssessmentMetadataData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityAssessmentMetadataData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAssessmentMetadataData> array = new List<SecurityAssessmentMetadataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item));
+                        array.Add(SecurityAssessmentMetadataData.DeserializeSecurityAssessmentMetadataData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityAssessmentMetadataResponseList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityAssessmentMetadataResponseList(value ?? new ChangeTrackingList<SecurityAssessmentMetadataData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityAssessmentMetadataResponseList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataResponseList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataResponseList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityAssessmentMetadataResponseList IPersistableModel<SecurityAssessmentMetadataResponseList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataResponseList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityAssessmentMetadataResponseList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataResponseList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityAssessmentMetadataResponseList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

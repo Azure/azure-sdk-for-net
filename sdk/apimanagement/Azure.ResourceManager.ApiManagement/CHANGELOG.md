@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fixed [a bug](https://github.com/Azure/azure-sdk-for-net/issues/38076) by changing the  the way how `BackendResponseCode` is serialized and deserialized.
 
 ### Other Changes
 

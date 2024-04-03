@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="virtualHub"> The VirtualHub to which the gateway belongs. </param>
         /// <param name="p2sConnectionConfigurations"> List of all p2s connection configurations of the gateway. </param>
@@ -41,7 +42,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="vpnClientConnectionHealth"> All P2S VPN clients' connection health status. </param>
         /// <param name="customDnsServers"> List of all customer specified DNS servers IP addresses. </param>
         /// <param name="isRoutingPreferenceInternet"> Enable Routing Preference property for the Public IP Interface of the P2SVpnGateway. </param>
-        internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags)
+        internal P2SVpnGatewayData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ETag? etag, WritableSubResource virtualHub, IList<P2SConnectionConfiguration> p2sConnectionConfigurations, NetworkProvisioningState? provisioningState, int? vpnGatewayScaleUnit, WritableSubResource vpnServerConfiguration, VpnClientConnectionHealth vpnClientConnectionHealth, IList<string> customDnsServers, bool? isRoutingPreferenceInternet) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ETag = etag;
             VirtualHub = virtualHub;

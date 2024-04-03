@@ -75,8 +75,8 @@ namespace Azure.AI.MetricsAdvisor.Models
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> accountKey = default;
+            string accountName = default;
+            string accountKey = default;
             string fileSystemName = default;
             string directoryTemplate = default;
             string fileTemplate = default;
@@ -133,7 +133,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AzureDataLakeStorageGen2Parameter(accountName.Value, accountKey.Value, fileSystemName, directoryTemplate, fileTemplate);
+            return new AzureDataLakeStorageGen2Parameter(accountName, accountKey, fileSystemName, directoryTemplate, fileTemplate);
         }
     }
 }

@@ -37,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    writer.WriteObjectValue<IndexingSchedule>(Schedule);
                 }
                 else
                 {
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Parameters != null)
                 {
                     writer.WritePropertyName("parameters"u8);
-                    writer.WriteObjectValue(Parameters);
+                    writer.WriteObjectValue<IndexingParameters>(Parameters);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -98,11 +98,23 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
                     writer.WriteNull("encryptionKey");
+                }
+            }
+            if (Optional.IsDefined(Cache))
+            {
+                if (Cache != null)
+                {
+                    writer.WritePropertyName("cache"u8);
+                    writer.WriteObjectValue<SearchIndexerCache>(Cache);
+                }
+                else
+                {
+                    writer.WriteNull("cache");
                 }
             }
             writer.WriteEndObject();
@@ -115,17 +127,18 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string dataSourceName = default;
-            Optional<string> skillsetName = default;
+            string skillsetName = default;
             string targetIndexName = default;
-            Optional<IndexingSchedule> schedule = default;
-            Optional<IndexingParameters> parameters = default;
-            Optional<IList<FieldMapping>> fieldMappings = default;
-            Optional<IList<FieldMapping>> outputFieldMappings = default;
-            Optional<bool?> disabled = default;
-            Optional<string> odataEtag = default;
-            Optional<SearchResourceEncryptionKey> encryptionKey = default;
+            IndexingSchedule schedule = default;
+            IndexingParameters parameters = default;
+            IList<FieldMapping> fieldMappings = default;
+            IList<FieldMapping> outputFieldMappings = default;
+            bool? disabled = default;
+            string odataEtag = default;
+            SearchResourceEncryptionKey encryptionKey = default;
+            SearchIndexerCache cache = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -226,8 +239,31 @@ namespace Azure.Search.Documents.Indexes.Models
                     encryptionKey = SearchResourceEncryptionKey.DeserializeSearchResourceEncryptionKey(property.Value);
                     continue;
                 }
+                if (property.NameEquals("cache"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        cache = null;
+                        continue;
+                    }
+                    cache = SearchIndexerCache.DeserializeSearchIndexerCache(property.Value);
+                    continue;
+                }
             }
-            return new SearchIndexer(name, description.Value, dataSourceName, skillsetName.Value, targetIndexName, schedule.Value, parameters.Value, Optional.ToList(fieldMappings), Optional.ToList(outputFieldMappings), Optional.ToNullable(disabled), odataEtag.Value, encryptionKey.Value);
+            return new SearchIndexer(
+                name,
+                description,
+                dataSourceName,
+                skillsetName,
+                targetIndexName,
+                schedule,
+                parameters,
+                fieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                outputFieldMappings ?? new ChangeTrackingList<FieldMapping>(),
+                disabled,
+                odataEtag,
+                encryptionKey,
+                cache);
         }
     }
 }

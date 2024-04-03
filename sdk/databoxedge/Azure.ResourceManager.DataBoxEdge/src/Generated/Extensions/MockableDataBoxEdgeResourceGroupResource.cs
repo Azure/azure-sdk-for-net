@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deviceName"> The device name. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Devices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataBoxEdgeDeviceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

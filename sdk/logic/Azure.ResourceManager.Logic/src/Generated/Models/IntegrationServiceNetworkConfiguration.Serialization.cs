@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class IntegrationServiceNetworkConfiguration : IUtf8JsonSerializable
+    public partial class IntegrationServiceNetworkConfiguration : IUtf8JsonSerializable, IJsonModel<IntegrationServiceNetworkConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IntegrationServiceNetworkConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IntegrationServiceNetworkConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(VirtualNetworkAddressSpace))
             {
@@ -24,7 +34,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(AccessEndpoint))
             {
                 writer.WritePropertyName("accessEndpoint"u8);
-                writer.WriteObjectValue(AccessEndpoint);
+                writer.WriteObjectValue<IntegrationServiceEnvironmentAccessEndpoint>(AccessEndpoint, options);
             }
             if (Optional.IsCollectionDefined(Subnets))
             {
@@ -32,22 +42,53 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogicResourceReference>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static IntegrationServiceNetworkConfiguration DeserializeIntegrationServiceNetworkConfiguration(JsonElement element)
+        IntegrationServiceNetworkConfiguration IJsonModel<IntegrationServiceNetworkConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIntegrationServiceNetworkConfiguration(document.RootElement, options);
+        }
+
+        internal static IntegrationServiceNetworkConfiguration DeserializeIntegrationServiceNetworkConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> virtualNetworkAddressSpace = default;
-            Optional<IntegrationServiceEnvironmentAccessEndpoint> accessEndpoint = default;
-            Optional<IList<LogicResourceReference>> subnets = default;
+            string virtualNetworkAddressSpace = default;
+            IntegrationServiceEnvironmentAccessEndpoint accessEndpoint = default;
+            IList<LogicResourceReference> subnets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualNetworkAddressSpace"u8))
@@ -61,7 +102,7 @@ namespace Azure.ResourceManager.Logic.Models
                     {
                         continue;
                     }
-                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value);
+                    accessEndpoint = IntegrationServiceEnvironmentAccessEndpoint.DeserializeIntegrationServiceEnvironmentAccessEndpoint(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnets"u8))
@@ -73,13 +114,49 @@ namespace Azure.ResourceManager.Logic.Models
                     List<LogicResourceReference> array = new List<LogicResourceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item));
+                        array.Add(LogicResourceReference.DeserializeLogicResourceReference(item, options));
                     }
                     subnets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace.Value, accessEndpoint.Value, Optional.ToList(subnets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IntegrationServiceNetworkConfiguration(virtualNetworkAddressSpace, accessEndpoint, subnets ?? new ChangeTrackingList<LogicResourceReference>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IntegrationServiceNetworkConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IntegrationServiceNetworkConfiguration IPersistableModel<IntegrationServiceNetworkConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIntegrationServiceNetworkConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IntegrationServiceNetworkConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IntegrationServiceNetworkConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

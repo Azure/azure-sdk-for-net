@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.3.2 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
 ## 1.3.1 (2023-11-27)
 
 ### Features Added

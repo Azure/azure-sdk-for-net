@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -22,9 +21,9 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> label = default;
-            Optional<long> progress = default;
-            Optional<IReadOnlyDictionary<string, string>> jobCorrelationData = default;
+            string label = default;
+            long? progress = default;
+            IReadOnlyDictionary<string, string> jobCorrelationData = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("label"u8))
@@ -56,7 +55,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaJobOutputProgressEventData(label.Value, Optional.ToNullable(progress), Optional.ToDictionary(jobCorrelationData));
+            return new MediaJobOutputProgressEventData(label, progress, jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class MediaJobOutputProgressEventDataConverter : JsonConverter<MediaJobOutputProgressEventData>

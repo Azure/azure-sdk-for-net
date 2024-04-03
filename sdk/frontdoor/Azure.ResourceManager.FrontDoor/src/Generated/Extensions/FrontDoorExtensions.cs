@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FrontDoor.Mocking;
 using Azure.ResourceManager.FrontDoor.Models;
 using Azure.ResourceManager.Resources;
@@ -182,6 +180,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -211,6 +217,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Policies_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorWebApplicationFirewallPolicyResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -259,6 +273,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -288,6 +310,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -336,6 +366,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -365,6 +403,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -396,6 +442,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -423,6 +473,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ManagedRuleSets_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -452,6 +506,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -479,6 +537,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailabilityWithSubscription_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -508,6 +570,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -535,6 +605,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -564,6 +642,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -591,6 +677,14 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkExperimentProfiles_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="FrontDoorNetworkExperimentProfileResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -620,6 +714,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -647,6 +745,10 @@ namespace Azure.ResourceManager.FrontDoor
         /// <item>
         /// <term>Operation Id</term>
         /// <description>FrontDoorNameAvailability_Check</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-06-01</description>
         /// </item>
         /// </list>
         /// <item>

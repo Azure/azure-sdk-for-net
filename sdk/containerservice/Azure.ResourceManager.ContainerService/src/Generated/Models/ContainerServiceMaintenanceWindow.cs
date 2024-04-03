@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
     /// <summary> Maintenance window used to configure scheduled auto-upgrade for a Managed Cluster. </summary>
     public partial class ContainerServiceMaintenanceWindow
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWindow"/>. </summary>
         /// <param name="schedule"> Recurrence schedule for the maintenance window. </param>
         /// <param name="durationHours"> Length of maintenance window range from 4 to 24 hours. </param>
@@ -37,7 +68,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="startDate"> The date the maintenance window activates. If the current date is before this date, the maintenance window is inactive and will not be used for upgrades. If not specified, the maintenance window will be active right away. </param>
         /// <param name="startTime"> The start time of the maintenance window. Accepted values are from '00:00' to '23:59'. 'utcOffset' applies to this field. For example: '02:00' with 'utcOffset: +02:00' means UTC time '00:00'. </param>
         /// <param name="notAllowedDates"> Date ranges on which upgrade is not allowed. 'utcOffset' applies to this field. For example, with 'utcOffset: +02:00' and 'dateSpan' being '2022-12-23' to '2023-01-03', maintenance will be blocked from '2022-12-22 22:00' to '2023-01-03 22:00' in UTC time. </param>
-        internal ContainerServiceMaintenanceWindow(ContainerServiceMaintenanceSchedule schedule, int durationHours, string utcOffset, string startDate, string startTime, IList<ContainerServiceDateSpan> notAllowedDates)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceMaintenanceWindow(ContainerServiceMaintenanceSchedule schedule, int durationHours, string utcOffset, string startDate, string startTime, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Schedule = schedule;
             DurationHours = durationHours;
@@ -45,6 +77,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             StartDate = startDate;
             StartTime = startTime;
             NotAllowedDates = notAllowedDates;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceMaintenanceWindow"/> for deserialization. </summary>
+        internal ContainerServiceMaintenanceWindow()
+        {
         }
 
         /// <summary> Recurrence schedule for the maintenance window. </summary>
@@ -53,6 +91,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         public int DurationHours { get; set; }
         /// <summary> The UTC offset in format +/-HH:mm. For example, '+05:30' for IST and '-07:00' for PST. If not specified, the default is '+00:00'. </summary>
         public string UtcOffset { get; set; }
+        /// <summary> The date the maintenance window activates. If the current date is before this date, the maintenance window is inactive and will not be used for upgrades. If not specified, the maintenance window will be active right away. </summary>
+        public string StartDate { get; set; }
         /// <summary> The start time of the maintenance window. Accepted values are from '00:00' to '23:59'. 'utcOffset' applies to this field. For example: '02:00' with 'utcOffset: +02:00' means UTC time '00:00'. </summary>
         public string StartTime { get; set; }
         /// <summary> Date ranges on which upgrade is not allowed. 'utcOffset' applies to this field. For example, with 'utcOffset: +02:00' and 'dateSpan' being '2022-12-23' to '2023-01-03', maintenance will be blocked from '2022-12-22 22:00' to '2023-01-03 22:00' in UTC time. </summary>

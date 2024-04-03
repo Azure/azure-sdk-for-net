@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.BotService.Models;
 
 namespace Azure.ResourceManager.BotService.Mocking
@@ -68,6 +65,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -89,6 +94,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Bots_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -112,6 +125,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -119,7 +140,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual AsyncPageable<BotServiceProvider> GetBotConnectionServiceProvidersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -133,6 +154,14 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>BotConnection_ListServiceProviders</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BotConnectionSettingResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -140,7 +169,7 @@ namespace Azure.ResourceManager.BotService.Mocking
         public virtual Pageable<BotServiceProvider> GetBotConnectionServiceProviders(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => BotConnectionSettingBotConnectionRestClient.CreateListServiceProvidersRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, BotServiceProvider.DeserializeBotServiceProvider, BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => BotServiceProvider.DeserializeBotServiceProvider(e), BotConnectionSettingBotConnectionClientDiagnostics, Pipeline, "MockableBotServiceSubscriptionResource.GetBotConnectionServiceProviders", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -153,6 +182,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>QnAMakerEndpointKeys_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,6 +221,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>QnAMakerEndpointKeys_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> The request body parameters to provide for the check name availability request. </param>
@@ -222,6 +259,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <term>Operation Id</term>
         /// <description>HostSettings_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -251,6 +292,10 @@ namespace Azure.ResourceManager.BotService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>HostSettings_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-15</description>
         /// </item>
         /// </list>
         /// </summary>

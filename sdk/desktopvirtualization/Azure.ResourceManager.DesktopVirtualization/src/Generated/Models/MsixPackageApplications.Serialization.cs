@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class MsixPackageApplications : IUtf8JsonSerializable
+    public partial class MsixPackageApplications : IUtf8JsonSerializable, IJsonModel<MsixPackageApplications>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MsixPackageApplications>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MsixPackageApplications>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppId))
             {
@@ -65,22 +75,53 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element)
+        MsixPackageApplications IJsonModel<MsixPackageApplications>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMsixPackageApplications(document.RootElement, options);
+        }
+
+        internal static MsixPackageApplications DeserializeMsixPackageApplications(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> appId = default;
-            Optional<string> description = default;
-            Optional<string> appUserModelId = default;
-            Optional<string> friendlyName = default;
-            Optional<string> iconImageName = default;
-            Optional<BinaryData> rawIcon = default;
-            Optional<BinaryData> rawPng = default;
+            string appId = default;
+            string description = default;
+            string appUserModelId = default;
+            string friendlyName = default;
+            string iconImageName = default;
+            BinaryData rawIcon = default;
+            BinaryData rawPng = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appId"u8))
@@ -126,8 +167,52 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     rawPng = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MsixPackageApplications(appId.Value, description.Value, appUserModelId.Value, friendlyName.Value, iconImageName.Value, rawIcon.Value, rawPng.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MsixPackageApplications(
+                appId,
+                description,
+                appUserModelId,
+                friendlyName,
+                iconImageName,
+                rawIcon,
+                rawPng,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MsixPackageApplications>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MsixPackageApplications IPersistableModel<MsixPackageApplications>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MsixPackageApplications>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMsixPackageApplications(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MsixPackageApplications)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MsixPackageApplications>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

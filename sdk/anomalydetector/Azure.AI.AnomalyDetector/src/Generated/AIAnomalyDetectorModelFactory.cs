@@ -14,6 +14,15 @@ namespace Azure.AI.AnomalyDetector
     /// <summary> Model factory for models. </summary>
     public static partial class AIAnomalyDetectorModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.TimeSeriesPoint"/>. </summary>
+        /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
+        /// <param name="value"> Measurement of that point. </param>
+        /// <returns> A new <see cref="AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
+        public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? timestamp = null, float value = default)
+        {
+            return new TimeSeriesPoint(timestamp, value, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateLastDetectionResult"/>. </summary>
         /// <param name="period">
         /// Frequency extracted from the series. Zero means no recurrent pattern has been
@@ -51,7 +60,56 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.UnivariateLastDetectionResult"/> instance for mocking. </returns>
         public static UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = default, int suggestedWindow = default, float expectedValue = default, float upperMargin = default, float lowerMargin = default, bool isAnomaly = default, bool isNegativeAnomaly = default, bool isPositiveAnomaly = default, float? severity = null)
         {
-            return new UnivariateLastDetectionResult(period, suggestedWindow, expectedValue, upperMargin, lowerMargin, isAnomaly, isNegativeAnomaly, isPositiveAnomaly, severity);
+            return new UnivariateLastDetectionResult(
+                period,
+                suggestedWindow,
+                expectedValue,
+                upperMargin,
+                lowerMargin,
+                isAnomaly,
+                isNegativeAnomaly,
+                isPositiveAnomaly,
+                severity,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/>. </summary>
+        /// <param name="series">
+        /// Time series data points. Points should be sorted by time stamp in ascending
+        /// order to match the change point detection result.
+        /// </param>
+        /// <param name="granularity"> Granularity is used to verify whether the input series is valid. </param>
+        /// <param name="customInterval">
+        /// A custom interval is used to set a nonstandard time interval. For example, if the
+        /// series is 5 minutes, the request can be set as {"granularity":"minutely",
+        /// "customInterval":5}.
+        /// </param>
+        /// <param name="period">
+        /// Argument that indicates the periodic value of a time series. If the value is null or
+        /// not present, the API will determine the period automatically.
+        /// </param>
+        /// <param name="stableTrendWindow">
+        /// Argument that indicates an advanced model parameter. A default stableTrendWindow value will
+        /// be used in detection.
+        /// </param>
+        /// <param name="threshold">
+        /// Argument that indicates an advanced model parameter between 0.0 and 1.0. The lower the
+        /// value is, the larger the trend error is, which means less change point will
+        /// be accepted.
+        /// </param>
+        /// <returns> A new <see cref="AnomalyDetector.UnivariateChangePointDetectionOptions"/> instance for mocking. </returns>
+        public static UnivariateChangePointDetectionOptions UnivariateChangePointDetectionOptions(IEnumerable<TimeSeriesPoint> series = null, TimeGranularity granularity = default, int? customInterval = null, int? period = null, int? stableTrendWindow = null, float? threshold = null)
+        {
+            series ??= new List<TimeSeriesPoint>();
+
+            return new UnivariateChangePointDetectionOptions(
+                series?.ToList(),
+                granularity,
+                customInterval,
+                period,
+                stableTrendWindow,
+                threshold,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.UnivariateChangePointDetectionResult"/>. </summary>
@@ -71,7 +129,7 @@ namespace Azure.AI.AnomalyDetector
             isChangePoint ??= new List<bool>();
             confidenceScores ??= new List<float>();
 
-            return new UnivariateChangePointDetectionResult(period, isChangePoint?.ToList(), confidenceScores?.ToList());
+            return new UnivariateChangePointDetectionResult(period, isChangePoint?.ToList(), confidenceScores?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateDetectionResult"/>. </summary>
@@ -83,7 +141,7 @@ namespace Azure.AI.AnomalyDetector
         {
             results ??= new List<AnomalyState>();
 
-            return new MultivariateDetectionResult(resultId, summary, results?.ToList());
+            return new MultivariateDetectionResult(resultId, summary, results?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateBatchDetectionResultSummary"/>. </summary>
@@ -100,7 +158,7 @@ namespace Azure.AI.AnomalyDetector
             errors ??= new List<ErrorResponse>();
             variableStates ??= new List<VariableState>();
 
-            return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo);
+            return new MultivariateBatchDetectionResultSummary(status, errors?.ToList(), variableStates?.ToList(), setupInfo, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyState"/>. </summary>
@@ -112,7 +170,7 @@ namespace Azure.AI.AnomalyDetector
         {
             errors ??= new List<ErrorResponse>();
 
-            return new AnomalyState(timestamp, value, errors?.ToList());
+            return new AnomalyState(timestamp, value, errors?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyValue"/>. </summary>
@@ -128,7 +186,7 @@ namespace Azure.AI.AnomalyDetector
         {
             interpretation ??= new List<AnomalyInterpretation>();
 
-            return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList());
+            return new AnomalyValue(isAnomaly, severity, score, interpretation?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyInterpretation"/>. </summary>
@@ -141,7 +199,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.AnomalyInterpretation"/> instance for mocking. </returns>
         public static AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = null, CorrelationChanges correlationChanges = null)
         {
-            return new AnomalyInterpretation(variable, contributionScore, correlationChanges);
+            return new AnomalyInterpretation(variable, contributionScore, correlationChanges, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.CorrelationChanges"/>. </summary>
@@ -151,7 +209,7 @@ namespace Azure.AI.AnomalyDetector
         {
             changedVariables ??= new List<string>();
 
-            return new CorrelationChanges(changedVariables?.ToList());
+            return new CorrelationChanges(changedVariables?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.ModelInfo"/>. </summary>
@@ -189,7 +247,18 @@ namespace Azure.AI.AnomalyDetector
         {
             errors ??= new List<ErrorResponse>();
 
-            return new ModelInfo(dataSource, dataSchema, startTime, endTime, displayName, slidingWindow, alignPolicy, status, errors?.ToList(), diagnosticsInfo);
+            return new ModelInfo(
+                dataSource,
+                dataSchema,
+                startTime,
+                endTime,
+                displayName,
+                slidingWindow,
+                alignPolicy,
+                status,
+                errors?.ToList(),
+                diagnosticsInfo,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.AnomalyDetectionModel"/>. </summary>
@@ -203,7 +272,7 @@ namespace Azure.AI.AnomalyDetector
         /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
         public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = null)
         {
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo);
+            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="AnomalyDetector.MultivariateLastDetectionResult"/>. </summary>
@@ -215,7 +284,7 @@ namespace Azure.AI.AnomalyDetector
             variableStates ??= new List<VariableState>();
             results ??= new List<AnomalyState>();
 
-            return new MultivariateLastDetectionResult(variableStates?.ToList(), results?.ToList());
+            return new MultivariateLastDetectionResult(variableStates?.ToList(), results?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

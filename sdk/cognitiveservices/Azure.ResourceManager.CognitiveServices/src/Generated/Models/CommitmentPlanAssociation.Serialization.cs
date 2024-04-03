@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
-    public partial class CommitmentPlanAssociation
+    public partial class CommitmentPlanAssociation : IUtf8JsonSerializable, IJsonModel<CommitmentPlanAssociation>
     {
-        internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommitmentPlanAssociation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommitmentPlanAssociation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(CommitmentPlanId))
+            {
+                writer.WritePropertyName("commitmentPlanId"u8);
+                writer.WriteStringValue(CommitmentPlanId);
+            }
+            if (Optional.IsDefined(CommitmentPlanLocation))
+            {
+                writer.WritePropertyName("commitmentPlanLocation"u8);
+                writer.WriteStringValue(CommitmentPlanLocation);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CommitmentPlanAssociation IJsonModel<CommitmentPlanAssociation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommitmentPlanAssociation(document.RootElement, options);
+        }
+
+        internal static CommitmentPlanAssociation DeserializeCommitmentPlanAssociation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> commitmentPlanId = default;
-            Optional<string> commitmentPlanLocation = default;
+            ResourceIdentifier commitmentPlanId = default;
+            string commitmentPlanLocation = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("commitmentPlanId"u8))
@@ -36,8 +95,97 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     commitmentPlanLocation = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommitmentPlanAssociation(commitmentPlanId.Value, commitmentPlanLocation.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CommitmentPlanAssociation(commitmentPlanId, commitmentPlanLocation, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanId), out propertyOverride);
+            if (Optional.IsDefined(CommitmentPlanId) || hasPropertyOverride)
+            {
+                builder.Append("  commitmentPlanId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CommitmentPlanId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CommitmentPlanLocation), out propertyOverride);
+            if (Optional.IsDefined(CommitmentPlanLocation) || hasPropertyOverride)
+            {
+                builder.Append("  commitmentPlanLocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CommitmentPlanLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CommitmentPlanLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CommitmentPlanLocation}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<CommitmentPlanAssociation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CommitmentPlanAssociation IPersistableModel<CommitmentPlanAssociation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommitmentPlanAssociation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommitmentPlanAssociation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommitmentPlanAssociation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommitmentPlanAssociation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

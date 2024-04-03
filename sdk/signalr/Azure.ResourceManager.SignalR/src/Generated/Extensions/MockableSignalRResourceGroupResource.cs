@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the resource. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.SignalR.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SignalR_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SignalRResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,26 +5,115 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceEditionCapability
+    public partial class ManagedInstanceEditionCapability : IUtf8JsonSerializable, IJsonModel<ManagedInstanceEditionCapability>
     {
-        internal static ManagedInstanceEditionCapability DeserializeManagedInstanceEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedInstanceEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceEditionCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedFamilies))
+            {
+                writer.WritePropertyName("supportedFamilies"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedFamilies)
+                {
+                    writer.WriteObjectValue<ManagedInstanceFamilyCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedStorageCapabilities))
+            {
+                writer.WritePropertyName("supportedStorageCapabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedStorageCapabilities)
+                {
+                    writer.WriteObjectValue<StorageCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
+            {
+                writer.WritePropertyName("zoneRedundant"u8);
+                writer.WriteBooleanValue(IsZoneRedundant.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedInstanceEditionCapability IJsonModel<ManagedInstanceEditionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceEditionCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceEditionCapability(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceEditionCapability DeserializeManagedInstanceEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ManagedInstanceFamilyCapability>> supportedFamilies = default;
-            Optional<IReadOnlyList<StorageCapability>> supportedStorageCapabilities = default;
-            Optional<bool> zoneRedundant = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string name = default;
+            IReadOnlyList<ManagedInstanceFamilyCapability> supportedFamilies = default;
+            IReadOnlyList<StorageCapability> supportedStorageCapabilities = default;
+            bool? zoneRedundant = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -41,7 +130,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceFamilyCapability> array = new List<ManagedInstanceFamilyCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item));
+                        array.Add(ManagedInstanceFamilyCapability.DeserializeManagedInstanceFamilyCapability(item, options));
                     }
                     supportedFamilies = array;
                     continue;
@@ -55,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<StorageCapability> array = new List<StorageCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageCapability.DeserializeStorageCapability(item));
+                        array.Add(StorageCapability.DeserializeStorageCapability(item, options));
                     }
                     supportedStorageCapabilities = array;
                     continue;
@@ -83,8 +172,185 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceEditionCapability(name.Value, Optional.ToList(supportedFamilies), Optional.ToList(supportedStorageCapabilities), Optional.ToNullable(zoneRedundant), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedInstanceEditionCapability(
+                name,
+                supportedFamilies ?? new ChangeTrackingList<ManagedInstanceFamilyCapability>(),
+                supportedStorageCapabilities ?? new ChangeTrackingList<StorageCapability>(),
+                zoneRedundant,
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedFamilies), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedFamilies) || hasPropertyOverride)
+            {
+                if (SupportedFamilies.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedFamilies: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedFamilies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedFamilies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageCapabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedStorageCapabilities) || hasPropertyOverride)
+            {
+                if (SupportedStorageCapabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedStorageCapabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedStorageCapabilities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedStorageCapabilities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundant: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedInstanceEditionCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceEditionCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedInstanceEditionCapability IPersistableModel<ManagedInstanceEditionCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedInstanceEditionCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceEditionCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedInstanceEditionCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

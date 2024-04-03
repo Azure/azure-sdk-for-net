@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<SparkConfiguration>(Properties);
             writer.WriteEndObject();
         }
 
@@ -30,10 +30,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             SparkConfiguration properties = default;
-            Optional<string> etag = default;
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string etag = default;
+            string id = default;
+            string name = default;
+            string type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -62,14 +62,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfigurationResource(id.Value, name.Value, type.Value, etag.Value, properties);
+            return new SparkConfigurationResource(id, name, type, etag, properties);
         }
 
         internal partial class SparkConfigurationResourceConverter : JsonConverter<SparkConfigurationResource>
         {
             public override void Write(Utf8JsonWriter writer, SparkConfigurationResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SparkConfigurationResource>(model);
             }
             public override SparkConfigurationResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

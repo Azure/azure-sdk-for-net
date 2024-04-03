@@ -141,10 +141,21 @@ namespace Azure.Monitor.Query.Tests
             StringAssert.StartsWith("https://api.loganalytics.io", mockTransport.SingleRequest.Uri.ToString());
         }
 
-        [TestCase(null, "https://api.loganalytics.io//.default")]
-        [TestCase("https://api.loganalytics.gov", "https://api.loganalytics.gov//.default")]
-        [TestCase("https://api.loganalytics.cn", "https://api.loganalytics.cn//.default")]
-        public async Task UsesDefaultAuthScope(string host, string expectedScope)
+        /// <summary>
+        ///   Provides the invalid test cases for the constructor tests.
+        /// </summary>
+        ///
+        private static IEnumerable<object[]> GetAudience()
+        {
+            yield return new object[] { null, "https://api.loganalytics.io//.default" };
+            yield return new object[] { LogsQueryAudience.AzurePublicCloud, "https://api.loganalytics.io//.default" };
+            yield return new object[] { LogsQueryAudience.AzureGovernment, "https://api.loganalytics.us//.default" };
+            yield return new object[] { LogsQueryAudience.AzureChina, "https://api.loganalytics.azure.cn//.default" };
+        }
+
+        [Test]
+        [TestCaseSource(nameof(GetAudience))]
+        public async Task UsesDefaultAuthScope(LogsQueryAudience audience, string expectedScope)
         {
             var mockTransport = MockTransport.FromMessageCallback(message =>
             {
@@ -162,12 +173,11 @@ namespace Azure.Monitor.Query.Tests
 
             var options = new LogsQueryClientOptions()
             {
-                Transport = mockTransport
+                Transport = mockTransport,
+                Audience = audience
             };
 
-            var client = host == null ?
-                new LogsQueryClient(mock.Object, options) :
-                new LogsQueryClient(new Uri(host), mock.Object, options);
+            var client = new LogsQueryClient(mock.Object, options);
 
             await client.QueryWorkspaceAsync("", "", QueryTimeRange.All);
             Assert.AreEqual(new[] { expectedScope }, scopes);

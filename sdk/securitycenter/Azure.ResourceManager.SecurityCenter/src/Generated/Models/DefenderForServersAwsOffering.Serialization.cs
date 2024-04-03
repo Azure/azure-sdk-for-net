@@ -5,65 +5,112 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class DefenderForServersAwsOffering : IUtf8JsonSerializable
+    public partial class DefenderForServersAwsOffering : IUtf8JsonSerializable, IJsonModel<DefenderForServersAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefenderForServersAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefenderForServersAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefenderForServers))
             {
                 writer.WritePropertyName("defenderForServers"u8);
-                writer.WriteObjectValue(DefenderForServers);
+                writer.WriteObjectValue<AwsDefenderForServersInfo>(DefenderForServers, options);
             }
             if (Optional.IsDefined(ArcAutoProvisioning))
             {
                 writer.WritePropertyName("arcAutoProvisioning"u8);
-                writer.WriteObjectValue(ArcAutoProvisioning);
+                writer.WriteObjectValue<DefenderForServersAwsOfferingArcAutoProvisioning>(ArcAutoProvisioning, options);
             }
             if (Optional.IsDefined(VaAutoProvisioning))
             {
                 writer.WritePropertyName("vaAutoProvisioning"u8);
-                writer.WriteObjectValue(VaAutoProvisioning);
+                writer.WriteObjectValue<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning>(VaAutoProvisioning, options);
             }
             if (Optional.IsDefined(MdeAutoProvisioning))
             {
                 writer.WritePropertyName("mdeAutoProvisioning"u8);
-                writer.WriteObjectValue(MdeAutoProvisioning);
+                writer.WriteObjectValue<DefenderForServersAwsOfferingMdeAutoProvisioning>(MdeAutoProvisioning, options);
             }
             if (Optional.IsDefined(SubPlan))
             {
                 writer.WritePropertyName("subPlan"u8);
-                writer.WriteObjectValue(SubPlan);
+                writer.WriteObjectValue<DefenderForServersAwsOfferingSubPlan>(SubPlan, options);
             }
             if (Optional.IsDefined(VmScanners))
             {
                 writer.WritePropertyName("vmScanners"u8);
-                writer.WriteObjectValue(VmScanners);
+                writer.WriteObjectValue<DefenderForServersAwsOfferingVmScanners>(VmScanners, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefenderForServersAwsOffering DeserializeDefenderForServersAwsOffering(JsonElement element)
+        DefenderForServersAwsOffering IJsonModel<DefenderForServersAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefenderForServersAwsOffering(document.RootElement, options);
+        }
+
+        internal static DefenderForServersAwsOffering DeserializeDefenderForServersAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AwsDefenderForServersInfo> defenderForServers = default;
-            Optional<DefenderForServersAwsOfferingArcAutoProvisioning> arcAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning> vaAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingMdeAutoProvisioning> mdeAutoProvisioning = default;
-            Optional<DefenderForServersAwsOfferingSubPlan> subPlan = default;
-            Optional<DefenderForServersAwsOfferingVmScanners> vmScanners = default;
+            AwsDefenderForServersInfo defenderForServers = default;
+            DefenderForServersAwsOfferingArcAutoProvisioning arcAutoProvisioning = default;
+            DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning vaAutoProvisioning = default;
+            DefenderForServersAwsOfferingMdeAutoProvisioning mdeAutoProvisioning = default;
+            DefenderForServersAwsOfferingSubPlan subPlan = default;
+            DefenderForServersAwsOfferingVmScanners vmScanners = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defenderForServers"u8))
@@ -72,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    defenderForServers = AwsDefenderForServersInfo.DeserializeAwsDefenderForServersInfo(property.Value);
+                    defenderForServers = AwsDefenderForServersInfo.DeserializeAwsDefenderForServersInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("arcAutoProvisioning"u8))
@@ -81,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    arcAutoProvisioning = DefenderForServersAwsOfferingArcAutoProvisioning.DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(property.Value);
+                    arcAutoProvisioning = DefenderForServersAwsOfferingArcAutoProvisioning.DeserializeDefenderForServersAwsOfferingArcAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vaAutoProvisioning"u8))
@@ -90,7 +137,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vaAutoProvisioning = DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(property.Value);
+                    vaAutoProvisioning = DefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning.DeserializeDefenderForServersAwsOfferingVulnerabilityAssessmentAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mdeAutoProvisioning"u8))
@@ -99,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    mdeAutoProvisioning = DefenderForServersAwsOfferingMdeAutoProvisioning.DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(property.Value);
+                    mdeAutoProvisioning = DefenderForServersAwsOfferingMdeAutoProvisioning.DeserializeDefenderForServersAwsOfferingMdeAutoProvisioning(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subPlan"u8))
@@ -108,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    subPlan = DefenderForServersAwsOfferingSubPlan.DeserializeDefenderForServersAwsOfferingSubPlan(property.Value);
+                    subPlan = DefenderForServersAwsOfferingSubPlan.DeserializeDefenderForServersAwsOfferingSubPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vmScanners"u8))
@@ -117,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    vmScanners = DefenderForServersAwsOfferingVmScanners.DeserializeDefenderForServersAwsOfferingVmScanners(property.Value);
+                    vmScanners = DefenderForServersAwsOfferingVmScanners.DeserializeDefenderForServersAwsOfferingVmScanners(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -130,8 +177,53 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefenderForServersAwsOffering(offeringType, description.Value, defenderForServers.Value, arcAutoProvisioning.Value, vaAutoProvisioning.Value, mdeAutoProvisioning.Value, subPlan.Value, vmScanners.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefenderForServersAwsOffering(
+                offeringType,
+                description,
+                serializedAdditionalRawData,
+                defenderForServers,
+                arcAutoProvisioning,
+                vaAutoProvisioning,
+                mdeAutoProvisioning,
+                subPlan,
+                vmScanners);
         }
+
+        BinaryData IPersistableModel<DefenderForServersAwsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefenderForServersAwsOffering IPersistableModel<DefenderForServersAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefenderForServersAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefenderForServersAwsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefenderForServersAwsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefenderForServersAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

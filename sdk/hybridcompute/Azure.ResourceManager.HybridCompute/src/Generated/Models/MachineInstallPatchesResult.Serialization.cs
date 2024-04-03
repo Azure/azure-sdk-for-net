@@ -6,35 +6,156 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
-    public partial class MachineInstallPatchesResult
+    public partial class MachineInstallPatchesResult : IUtf8JsonSerializable, IJsonModel<MachineInstallPatchesResult>
     {
-        internal static MachineInstallPatchesResult DeserializeMachineInstallPatchesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineInstallPatchesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineInstallPatchesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
+            {
+                writer.WritePropertyName("installationActivityId"u8);
+                writer.WriteStringValue(InstallationActivityId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
+            {
+                writer.WritePropertyName("rebootStatus"u8);
+                writer.WriteStringValue(RebootStatus.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
+            {
+                writer.WritePropertyName("maintenanceWindowExceeded"u8);
+                writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
+            {
+                writer.WritePropertyName("excludedPatchCount"u8);
+                writer.WriteNumberValue(ExcludedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
+            {
+                writer.WritePropertyName("notSelectedPatchCount"u8);
+                writer.WriteNumberValue(NotSelectedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
+            {
+                writer.WritePropertyName("pendingPatchCount"u8);
+                writer.WriteNumberValue(PendingPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
+            {
+                writer.WritePropertyName("installedPatchCount"u8);
+                writer.WriteNumberValue(InstalledPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
+            {
+                writer.WritePropertyName("failedPatchCount"u8);
+                writer.WriteNumberValue(FailedPatchCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                writer.WritePropertyName("startDateTime"u8);
+                writer.WriteStringValue(StartOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedDateTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            {
+                writer.WritePropertyName("startedBy"u8);
+                writer.WriteStringValue(StartedBy.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PatchServiceUsed))
+            {
+                writer.WritePropertyName("patchServiceUsed"u8);
+                writer.WriteStringValue(PatchServiceUsed.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                JsonSerializer.Serialize(writer, ErrorDetails);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineInstallPatchesResult IJsonModel<MachineInstallPatchesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineInstallPatchesResult(document.RootElement, options);
+        }
+
+        internal static MachineInstallPatchesResult DeserializeMachineInstallPatchesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> installationActivityId = default;
-            Optional<VmGuestPatchRebootStatus> rebootStatus = default;
-            Optional<bool> maintenanceWindowExceeded = default;
-            Optional<int> excludedPatchCount = default;
-            Optional<int> notSelectedPatchCount = default;
-            Optional<int> pendingPatchCount = default;
-            Optional<int> installedPatchCount = default;
-            Optional<int> failedPatchCount = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<DateTimeOffset> lastModifiedDateTime = default;
-            Optional<PatchOperationStartedBy> startedBy = default;
-            Optional<PatchServiceUsed> patchServiceUsed = default;
-            Optional<OSType> osType = default;
-            Optional<ResponseError> errorDetails = default;
+            MachineOperationStatus? status = default;
+            string installationActivityId = default;
+            VmGuestPatchRebootStatus? rebootStatus = default;
+            bool? maintenanceWindowExceeded = default;
+            int? excludedPatchCount = default;
+            int? notSelectedPatchCount = default;
+            int? pendingPatchCount = default;
+            int? installedPatchCount = default;
+            int? failedPatchCount = default;
+            DateTimeOffset? startDateTime = default;
+            DateTimeOffset? lastModifiedDateTime = default;
+            PatchOperationStartedBy? startedBy = default;
+            PatchServiceUsed? patchServiceUsed = default;
+            HybridComputeOSType? osType = default;
+            ResponseError errorDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -43,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    status = new PatchOperationStatus(property.Value.GetString());
+                    status = new MachineOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("installationActivityId"u8))
@@ -156,7 +277,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    osType = new OSType(property.Value.GetString());
+                    osType = new HybridComputeOSType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorDetails"u8))
@@ -168,8 +289,60 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     errorDetails = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineInstallPatchesResult(Optional.ToNullable(status), installationActivityId.Value, Optional.ToNullable(rebootStatus), Optional.ToNullable(maintenanceWindowExceeded), Optional.ToNullable(excludedPatchCount), Optional.ToNullable(notSelectedPatchCount), Optional.ToNullable(pendingPatchCount), Optional.ToNullable(installedPatchCount), Optional.ToNullable(failedPatchCount), Optional.ToNullable(startDateTime), Optional.ToNullable(lastModifiedDateTime), Optional.ToNullable(startedBy), Optional.ToNullable(patchServiceUsed), Optional.ToNullable(osType), errorDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineInstallPatchesResult(
+                status,
+                installationActivityId,
+                rebootStatus,
+                maintenanceWindowExceeded,
+                excludedPatchCount,
+                notSelectedPatchCount,
+                pendingPatchCount,
+                installedPatchCount,
+                failedPatchCount,
+                startDateTime,
+                lastModifiedDateTime,
+                startedBy,
+                patchServiceUsed,
+                osType,
+                errorDetails,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineInstallPatchesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineInstallPatchesResult IPersistableModel<MachineInstallPatchesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineInstallPatchesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineInstallPatchesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppDiagnosticDataTableResult : IUtf8JsonSerializable
+    public partial class ContainerAppDiagnosticDataTableResult : IUtf8JsonSerializable, IJsonModel<ContainerAppDiagnosticDataTableResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppDiagnosticDataTableResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppDiagnosticDataTableResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataTableResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataTableResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TableName))
             {
@@ -28,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Columns)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppDiagnosticDataColumn>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,18 +63,49 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppDiagnosticDataTableResult DeserializeContainerAppDiagnosticDataTableResult(JsonElement element)
+        ContainerAppDiagnosticDataTableResult IJsonModel<ContainerAppDiagnosticDataTableResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataTableResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataTableResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppDiagnosticDataTableResult(document.RootElement, options);
+        }
+
+        internal static ContainerAppDiagnosticDataTableResult DeserializeContainerAppDiagnosticDataTableResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> tableName = default;
-            Optional<IList<ContainerAppDiagnosticDataColumn>> columns = default;
-            Optional<IList<BinaryData>> rows = default;
+            string tableName = default;
+            IList<ContainerAppDiagnosticDataColumn> columns = default;
+            IList<BinaryData> rows = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tableName"u8))
@@ -82,7 +122,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppDiagnosticDataColumn> array = new List<ContainerAppDiagnosticDataColumn>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppDiagnosticDataColumn.DeserializeContainerAppDiagnosticDataColumn(item));
+                        array.Add(ContainerAppDiagnosticDataColumn.DeserializeContainerAppDiagnosticDataColumn(item, options));
                     }
                     columns = array;
                     continue;
@@ -108,8 +148,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     rows = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppDiagnosticDataTableResult(tableName.Value, Optional.ToList(columns), Optional.ToList(rows));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppDiagnosticDataTableResult(tableName, columns ?? new ChangeTrackingList<ContainerAppDiagnosticDataColumn>(), rows ?? new ChangeTrackingList<BinaryData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppDiagnosticDataTableResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataTableResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataTableResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppDiagnosticDataTableResult IPersistableModel<ContainerAppDiagnosticDataTableResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDiagnosticDataTableResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppDiagnosticDataTableResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppDiagnosticDataTableResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppDiagnosticDataTableResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

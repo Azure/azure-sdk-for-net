@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService.Mocking
@@ -123,6 +120,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Name of the top-level domain. </param>
@@ -145,6 +150,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TopLevelDomains_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TopLevelDomainResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,6 +189,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deletedSiteId"> The numeric ID of the deleted app, e.g. 12345. </param>
@@ -198,6 +219,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Global_GetDeletedWebApp</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -222,6 +251,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -244,6 +281,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceCertificateOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -265,6 +310,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,6 +349,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceCertificateOrders_ValidatePurchaseInformation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="data"> Information for a certificate order. </param>
@@ -333,6 +386,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -368,6 +425,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_CheckAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="identifier"> Name of the domain. </param>
@@ -402,6 +463,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -424,6 +493,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceDomainResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -445,6 +522,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -476,6 +557,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_GetControlCenterSsoRequest</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -506,6 +591,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -518,7 +607,7 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier, DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -532,6 +621,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Domains_ListRecommendations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Search parameters for domain name recommendations. </param>
@@ -544,7 +637,7 @@ namespace Azure.ResourceManager.AppService.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainsRestClient.CreateListRecommendationsRequest(Id.SubscriptionId, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainsRestClient.CreateListRecommendationsNextPageRequest(nextLink, Id.SubscriptionId, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier, DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceDomainNameIdentifier.DeserializeAppServiceDomainNameIdentifier(e), DomainsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAppServiceDomainRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -557,6 +650,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -580,6 +681,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServiceEnvironments_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -601,6 +710,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -628,6 +745,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>AppServicePlans_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServicePlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="detailed">
@@ -654,6 +779,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Return only information specified in the filter (using OData syntax). For example: $filter=KeyVaultId eq 'KeyVaultId'. </param>
@@ -676,6 +809,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Certificates_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppCertificateResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -700,6 +841,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -723,6 +872,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_ListByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -745,6 +902,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -782,6 +947,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DeletedWebApps_GetDeletedWebAppByLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -818,6 +991,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -839,6 +1020,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>KubeEnvironments_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="KubeEnvironmentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -862,6 +1051,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacksOnPrem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
@@ -871,7 +1064,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksOnPremRequest(Id.SubscriptionId, osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksOnPremNextPageRequest(nextLink, Id.SubscriptionId, osTypeSelected);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -885,6 +1078,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacksOnPrem</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
@@ -894,7 +1091,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksOnPremRequest(Id.SubscriptionId, osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksOnPremNextPageRequest(nextLink, Id.SubscriptionId, osTypeSelected);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAvailableStacksOnPremProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -907,6 +1104,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -918,7 +1119,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecommendationsRestClient.CreateListRequest(Id.SubscriptionId, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, featured, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -932,6 +1133,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="featured"> Specify &lt;code&gt;true&lt;/code&gt; to return only the most critical recommendations. The default is &lt;code&gt;false&lt;/code&gt;, which returns all recommendations. </param>
@@ -942,7 +1147,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => RecommendationsRestClient.CreateListRequest(Id.SubscriptionId, featured, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => RecommendationsRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, featured, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceRecommendation.DeserializeAppServiceRecommendation, RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceRecommendation.DeserializeAppServiceRecommendation(e), RecommendationsClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetRecommendations", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -955,6 +1160,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_ResetAllFilters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -986,6 +1195,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_ResetAllFilters</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1015,6 +1228,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,6 +1268,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Recommendations_DisableRecommendationForSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="name"> Rule name. </param>
@@ -1086,6 +1307,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceHealthMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1094,7 +1319,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceHealthMetadataRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceHealthMetadataRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ResourceHealthMetadataData.DeserializeResourceHealthMetadataData, ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(e), ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1108,6 +1333,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceHealthMetadata_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1116,7 +1345,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ResourceHealthMetadataRestClient.CreateListRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ResourceHealthMetadataRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ResourceHealthMetadataData.DeserializeResourceHealthMetadataData, ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceHealthMetadataData.DeserializeResourceHealthMetadataData(e), ResourceHealthMetadataClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetAllResourceHealthMetadata", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1129,6 +1358,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListBillingMeters</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1140,7 +1373,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListBillingMetersRequest(Id.SubscriptionId, billingLocation, osType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListBillingMetersNextPageRequest(nextLink, Id.SubscriptionId, billingLocation, osType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceBillingMeter.DeserializeAppServiceBillingMeter, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceBillingMeter.DeserializeAppServiceBillingMeter(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1154,6 +1387,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListBillingMeters</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingLocation"> Azure Location of billable resource. </param>
@@ -1164,7 +1401,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListBillingMetersRequest(Id.SubscriptionId, billingLocation, osType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListBillingMetersNextPageRequest(nextLink, Id.SubscriptionId, billingLocation, osType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceBillingMeter.DeserializeAppServiceBillingMeter, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceBillingMeter.DeserializeAppServiceBillingMeter(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetBillingMeters", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1177,6 +1414,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1212,6 +1453,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Name availability request. </param>
@@ -1246,6 +1491,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>GetSubscriptionDeploymentLocations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1275,6 +1524,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetSubscriptionDeploymentLocations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1306,6 +1559,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListGeoRegions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1318,7 +1575,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListGeoRegionsRequest(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListGeoRegionsNextPageRequest(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AppServiceGeoRegion.DeserializeAppServiceGeoRegion, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AppServiceGeoRegion.DeserializeAppServiceGeoRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1332,6 +1589,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListGeoRegions</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sku"> Name of SKU used to filter the regions. </param>
@@ -1344,7 +1605,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListGeoRegionsRequest(Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListGeoRegionsNextPageRequest(nextLink, Id.SubscriptionId, sku, linuxWorkersEnabled, xenonWorkersEnabled, linuxDynamicWorkersEnabled);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AppServiceGeoRegion.DeserializeAppServiceGeoRegion, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AppServiceGeoRegion.DeserializeAppServiceGeoRegion(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetGeoRegions", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1357,6 +1618,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListPremierAddOnOffers</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1366,7 +1631,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListPremierAddOnOffersRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListPremierAddOnOffersNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, PremierAddOnOffer.DeserializePremierAddOnOffer, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PremierAddOnOffer.DeserializePremierAddOnOffer(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1380,6 +1645,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListPremierAddOnOffers</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1388,7 +1657,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateListPremierAddOnOffersRequest(Id.SubscriptionId);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateListPremierAddOnOffersNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, PremierAddOnOffer.DeserializePremierAddOnOffer, DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PremierAddOnOffer.DeserializePremierAddOnOffer(e), DefaultClientDiagnostics, Pipeline, "MockableAppServiceSubscriptionResource.GetPremierAddOnOffers", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -1401,6 +1670,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ListSkus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1432,6 +1705,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>ListSkus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1461,6 +1738,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VerifyHostingEnvironmentVnet</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1496,6 +1777,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>VerifyHostingEnvironmentVnet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> VNET information. </param>
@@ -1529,6 +1814,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_PreviewWorkflow</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1565,6 +1854,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>StaticSites_PreviewWorkflow</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Location where you plan to create the static site. </param>
@@ -1600,6 +1893,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1621,6 +1922,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StaticSites_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StaticSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1644,6 +1953,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -1665,6 +1982,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>WebApps_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="WebSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

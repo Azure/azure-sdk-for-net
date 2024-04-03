@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Communication;
 
 namespace Azure.ResourceManager.Communication.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="communicationServiceName"> The name of the CommunicationService resource. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CommunicationServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="CommunicationServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -107,6 +120,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="emailServiceName"> The name of the EmailService resource. </param>
@@ -129,6 +150,14 @@ namespace Azure.ResourceManager.Communication.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EmailServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EmailServiceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

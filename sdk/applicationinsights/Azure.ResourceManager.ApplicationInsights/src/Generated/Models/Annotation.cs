@@ -6,12 +6,45 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> Annotation associated with an application insights resource. </summary>
     public partial class Annotation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="Annotation"/>. </summary>
         public Annotation()
         {
@@ -24,7 +57,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="id"> Unique Id for annotation. </param>
         /// <param name="properties"> Serialized JSON object for detailed properties. </param>
         /// <param name="relatedAnnotation"> Related parent annotation if any. </param>
-        internal Annotation(string annotationName, string category, DateTimeOffset? eventOn, string id, string properties, string relatedAnnotation)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal Annotation(string annotationName, string category, DateTimeOffset? eventOn, string id, string properties, string relatedAnnotation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AnnotationName = annotationName;
             Category = category;
@@ -32,19 +66,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             Id = id;
             Properties = properties;
             RelatedAnnotation = relatedAnnotation;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name of annotation. </summary>
+        [WirePath("AnnotationName")]
         public string AnnotationName { get; set; }
         /// <summary> Category of annotation, free form. </summary>
+        [WirePath("Category")]
         public string Category { get; set; }
         /// <summary> Time when event occurred. </summary>
+        [WirePath("EventTime")]
         public DateTimeOffset? EventOn { get; set; }
         /// <summary> Unique Id for annotation. </summary>
+        [WirePath("Id")]
         public string Id { get; set; }
         /// <summary> Serialized JSON object for detailed properties. </summary>
+        [WirePath("Properties")]
         public string Properties { get; set; }
         /// <summary> Related parent annotation if any. </summary>
+        [WirePath("RelatedAnnotation")]
         public string RelatedAnnotation { get; set; }
     }
 }

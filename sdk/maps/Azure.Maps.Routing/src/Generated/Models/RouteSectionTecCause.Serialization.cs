@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<int> mainCauseCode = default;
-            Optional<int> subCauseCode = default;
+            int? mainCauseCode = default;
+            int? subCauseCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mainCauseCode"u8))
@@ -41,7 +40,7 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteSectionTecCause(Optional.ToNullable(mainCauseCode), Optional.ToNullable(subCauseCode));
+            return new RouteSectionTecCause(mainCauseCode, subCauseCode);
         }
     }
 }

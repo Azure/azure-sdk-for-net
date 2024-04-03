@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.PostgreSql
     /// </summary>
     public partial class PostgreSqlServerData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PostgreSqlServerData"/>. </summary>
         /// <param name="location"> The location. </param>
         public PostgreSqlServerData(AzureLocation location) : base(location)
@@ -50,7 +82,8 @@ namespace Azure.ResourceManager.PostgreSql
         /// <param name="replicaCapacity"> The maximum number of replicas that a master server can have. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections on a server. </param>
-        internal PostgreSqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, PostgreSqlSku sku, string administratorLogin, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, PostgreSqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> privateEndpointConnections) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PostgreSqlServerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, PostgreSqlSku sku, string administratorLogin, PostgreSqlServerVersion? version, PostgreSqlSslEnforcementEnum? sslEnforcement, PostgreSqlMinimalTlsVersionEnum? minimalTlsVersion, string byokEnforcement, PostgreSqlInfrastructureEncryption? infrastructureEncryption, PostgreSqlServerState? userVisibleState, string fullyQualifiedDomainName, DateTimeOffset? earliestRestoreOn, PostgreSqlStorageProfile storageProfile, string replicationRole, ResourceIdentifier masterServerId, int? replicaCapacity, PostgreSqlPublicNetworkAccessEnum? publicNetworkAccess, IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> privateEndpointConnections, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -69,41 +102,64 @@ namespace Azure.ResourceManager.PostgreSql
             ReplicaCapacity = replicaCapacity;
             PublicNetworkAccess = publicNetworkAccess;
             PrivateEndpointConnections = privateEndpointConnections;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PostgreSqlServerData"/> for deserialization. </summary>
+        internal PostgreSqlServerData()
+        {
         }
 
         /// <summary> The Azure Active Directory identity of the server. Current supported identity types: SystemAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU (pricing tier) of the server. </summary>
+        [WirePath("sku")]
         public PostgreSqlSku Sku { get; set; }
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> Server version. </summary>
+        [WirePath("properties.version")]
         public PostgreSqlServerVersion? Version { get; set; }
         /// <summary> Enable ssl enforcement or not when connect to server. </summary>
+        [WirePath("properties.sslEnforcement")]
         public PostgreSqlSslEnforcementEnum? SslEnforcement { get; set; }
         /// <summary> Enforce a minimal Tls version for the server. </summary>
+        [WirePath("properties.minimalTlsVersion")]
         public PostgreSqlMinimalTlsVersionEnum? MinimalTlsVersion { get; set; }
         /// <summary> Status showing whether the server data encryption is enabled with customer-managed keys. </summary>
+        [WirePath("properties.byokEnforcement")]
         public string ByokEnforcement { get; }
         /// <summary> Status showing whether the server enabled infrastructure encryption. </summary>
+        [WirePath("properties.infrastructureEncryption")]
         public PostgreSqlInfrastructureEncryption? InfrastructureEncryption { get; set; }
         /// <summary> A state of a server that is visible to user. </summary>
+        [WirePath("properties.userVisibleState")]
         public PostgreSqlServerState? UserVisibleState { get; set; }
         /// <summary> The fully qualified domain name of a server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; set; }
         /// <summary> Earliest restore point creation time (ISO8601 format). </summary>
+        [WirePath("properties.earliestRestoreDate")]
         public DateTimeOffset? EarliestRestoreOn { get; set; }
         /// <summary> Storage profile of a server. </summary>
+        [WirePath("properties.storageProfile")]
         public PostgreSqlStorageProfile StorageProfile { get; set; }
         /// <summary> The replication role of the server. </summary>
+        [WirePath("properties.replicationRole")]
         public string ReplicationRole { get; set; }
         /// <summary> The master server id of a replica server. </summary>
+        [WirePath("properties.masterServerId")]
         public ResourceIdentifier MasterServerId { get; set; }
         /// <summary> The maximum number of replicas that a master server can have. </summary>
+        [WirePath("properties.replicaCapacity")]
         public int? ReplicaCapacity { get; set; }
         /// <summary> Whether or not public network access is allowed for this server. Value is optional but if passed in, must be 'Enabled' or 'Disabled'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public PostgreSqlPublicNetworkAccessEnum? PublicNetworkAccess { get; set; }
         /// <summary> List of private endpoint connections on a server. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<PostgreSqlServerPrivateEndpointConnection> PrivateEndpointConnections { get; }
     }
 }

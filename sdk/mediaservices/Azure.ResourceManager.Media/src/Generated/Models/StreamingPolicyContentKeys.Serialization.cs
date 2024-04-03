@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingPolicyContentKeys : IUtf8JsonSerializable
+    public partial class StreamingPolicyContentKeys : IUtf8JsonSerializable, IJsonModel<StreamingPolicyContentKeys>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingPolicyContentKeys>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingPolicyContentKeys>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultKey))
             {
                 writer.WritePropertyName("defaultKey"u8);
-                writer.WriteObjectValue(DefaultKey);
+                writer.WriteObjectValue<EncryptionSchemeDefaultKey>(DefaultKey, options);
             }
             if (Optional.IsCollectionDefined(KeyToTrackMappings))
             {
@@ -27,21 +37,52 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in KeyToTrackMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingPolicyContentKey>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StreamingPolicyContentKeys DeserializeStreamingPolicyContentKeys(JsonElement element)
+        StreamingPolicyContentKeys IJsonModel<StreamingPolicyContentKeys>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingPolicyContentKeys(document.RootElement, options);
+        }
+
+        internal static StreamingPolicyContentKeys DeserializeStreamingPolicyContentKeys(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<EncryptionSchemeDefaultKey> defaultKey = default;
-            Optional<IList<StreamingPolicyContentKey>> keyToTrackMappings = default;
+            EncryptionSchemeDefaultKey defaultKey = default;
+            IList<StreamingPolicyContentKey> keyToTrackMappings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultKey"u8))
@@ -50,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value);
+                    defaultKey = EncryptionSchemeDefaultKey.DeserializeEncryptionSchemeDefaultKey(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyToTrackMappings"u8))
@@ -62,13 +103,49 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingPolicyContentKey> array = new List<StreamingPolicyContentKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item));
+                        array.Add(StreamingPolicyContentKey.DeserializeStreamingPolicyContentKey(item, options));
                     }
                     keyToTrackMappings = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingPolicyContentKeys(defaultKey.Value, Optional.ToList(keyToTrackMappings));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StreamingPolicyContentKeys(defaultKey, keyToTrackMappings ?? new ChangeTrackingList<StreamingPolicyContentKey>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingPolicyContentKeys>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingPolicyContentKeys IPersistableModel<StreamingPolicyContentKeys>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyContentKeys>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingPolicyContentKeys(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingPolicyContentKeys)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingPolicyContentKeys>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

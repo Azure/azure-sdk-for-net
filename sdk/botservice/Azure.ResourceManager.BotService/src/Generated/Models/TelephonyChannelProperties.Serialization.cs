@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyChannelProperties : IUtf8JsonSerializable
+    public partial class TelephonyChannelProperties : IUtf8JsonSerializable, IJsonModel<TelephonyChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelephonyChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TelephonyChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(PhoneNumbers))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in PhoneNumbers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TelephonyPhoneNumbers>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -32,7 +42,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in ApiConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TelephonyChannelResourceApiConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,22 +99,53 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("isEnabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TelephonyChannelProperties DeserializeTelephonyChannelProperties(JsonElement element)
+        TelephonyChannelProperties IJsonModel<TelephonyChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelephonyChannelProperties(document.RootElement, options);
+        }
+
+        internal static TelephonyChannelProperties DeserializeTelephonyChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<TelephonyPhoneNumbers>> phoneNumbers = default;
-            Optional<IList<TelephonyChannelResourceApiConfiguration>> apiConfigurations = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> premiumSku = default;
-            Optional<bool> isEnabled = default;
+            IList<TelephonyPhoneNumbers> phoneNumbers = default;
+            IList<TelephonyChannelResourceApiConfiguration> apiConfigurations = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            string defaultLocale = default;
+            string premiumSku = default;
+            bool? isEnabled = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("phoneNumbers"u8))
@@ -116,7 +157,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyPhoneNumbers> array = new List<TelephonyPhoneNumbers>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item));
+                        array.Add(TelephonyPhoneNumbers.DeserializeTelephonyPhoneNumbers(item, options));
                     }
                     phoneNumbers = array;
                     continue;
@@ -130,7 +171,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<TelephonyChannelResourceApiConfiguration> array = new List<TelephonyChannelResourceApiConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item));
+                        array.Add(TelephonyChannelResourceApiConfiguration.DeserializeTelephonyChannelResourceApiConfiguration(item, options));
                     }
                     apiConfigurations = array;
                     continue;
@@ -184,8 +225,52 @@ namespace Azure.ResourceManager.BotService.Models
                     isEnabled = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TelephonyChannelProperties(Optional.ToList(phoneNumbers), Optional.ToList(apiConfigurations), cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, defaultLocale.Value, premiumSku.Value, Optional.ToNullable(isEnabled));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TelephonyChannelProperties(
+                phoneNumbers ?? new ChangeTrackingList<TelephonyPhoneNumbers>(),
+                apiConfigurations ?? new ChangeTrackingList<TelephonyChannelResourceApiConfiguration>(),
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                defaultLocale,
+                premiumSku,
+                isEnabled,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TelephonyChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TelephonyChannelProperties IPersistableModel<TelephonyChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTelephonyChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TelephonyChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

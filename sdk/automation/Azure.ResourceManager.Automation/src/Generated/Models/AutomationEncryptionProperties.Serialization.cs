@@ -5,20 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationEncryptionProperties : IUtf8JsonSerializable
+    public partial class AutomationEncryptionProperties : IUtf8JsonSerializable, IJsonModel<AutomationEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationEncryptionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<AutomationKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -28,20 +39,51 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<EncryptionPropertiesIdentity>(Identity, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AutomationEncryptionProperties DeserializeAutomationEncryptionProperties(JsonElement element)
+        AutomationEncryptionProperties IJsonModel<AutomationEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationEncryptionProperties(document.RootElement, options);
+        }
+
+        internal static AutomationEncryptionProperties DeserializeAutomationEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionKeySourceType> keySource = default;
-            Optional<EncryptionPropertiesIdentity> identity = default;
+            AutomationKeyVaultProperties keyVaultProperties = default;
+            EncryptionKeySourceType? keySource = default;
+            EncryptionPropertiesIdentity identity = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultProperties"u8))
@@ -50,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -68,11 +110,47 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value);
+                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), identity.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationEncryptionProperties(keyVaultProperties, keySource, identity, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationEncryptionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationEncryptionProperties IPersistableModel<AutomationEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationEncryptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

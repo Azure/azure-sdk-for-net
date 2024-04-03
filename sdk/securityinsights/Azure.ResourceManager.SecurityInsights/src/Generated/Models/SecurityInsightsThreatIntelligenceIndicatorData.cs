@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -41,6 +39,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="threatIntelligenceTags"> List of tags. </param>
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="createdOn"> Created by. </param>
         /// <param name="modified"> Modified by. </param>
         /// <param name="extensions"> Extensions map. </param>
-        internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag)
+        internal SecurityInsightsThreatIntelligenceIndicatorData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ThreatIntelligenceResourceInnerKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IList<string> threatIntelligenceTags, DateTimeOffset? lastUpdatedOn, string source, string displayName, string description, IList<string> indicatorTypes, string pattern, string patternType, string patternVersion, IList<ThreatIntelligenceKillChainPhase> killChainPhases, IList<ThreatIntelligenceParsedPattern> parsedPattern, string externalId, string createdByRef, bool? isDefanged, DateTimeOffset? externalLastUpdatedOn, IList<ThreatIntelligenceExternalReference> externalReferences, IList<ThreatIntelligenceGranularMarkingEntity> granularMarkings, IList<string> labels, bool? isRevoked, int? confidence, IList<string> objectMarkingRefs, string language, IList<string> threatTypes, DateTimeOffset? validFrom, DateTimeOffset? validUntil, DateTimeOffset? createdOn, string modified, IDictionary<string, BinaryData> extensions) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterConfigFile : IUtf8JsonSerializable
+    public partial class ClusterConfigFile : IUtf8JsonSerializable, IJsonModel<ClusterConfigFile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterConfigFile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClusterConfigFile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterConfigFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterConfigFile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("fileName"u8);
             writer.WriteStringValue(FileName);
@@ -44,20 +54,51 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ClusterConfigFile DeserializeClusterConfigFile(JsonElement element)
+        ClusterConfigFile IJsonModel<ClusterConfigFile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterConfigFile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterConfigFile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterConfigFile(document.RootElement, options);
+        }
+
+        internal static ClusterConfigFile DeserializeClusterConfigFile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string fileName = default;
-            Optional<string> content = default;
-            Optional<HDInsightContentEncoding> encoding = default;
-            Optional<string> path = default;
-            Optional<IDictionary<string, string>> values = default;
+            string content = default;
+            HDInsightContentEncoding? encoding = default;
+            string path = default;
+            IDictionary<string, string> values = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -98,8 +139,50 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     values = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterConfigFile(fileName, content.Value, Optional.ToNullable(encoding), path.Value, Optional.ToDictionary(values));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClusterConfigFile(
+                fileName,
+                content,
+                encoding,
+                path,
+                values ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterConfigFile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterConfigFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterConfigFile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterConfigFile IPersistableModel<ClusterConfigFile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterConfigFile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClusterConfigFile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterConfigFile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterConfigFile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

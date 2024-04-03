@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -24,6 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="autoDeleteSetting"> Specifies the lifecycle setting of managed data asset. </param>
         /// <param name="isAnonymous"> If the name version are system generated (anonymous registration). For types where Stage is defined, when Stage is provided it will be used to populate IsAnonymous. </param>
         /// <param name="isArchived"> Is the asset archived? For types where Stage is defined, when Stage is provided it will be used to populate IsArchived. </param>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="modelUri"> The URI path to the model contents. </param>
         /// <param name="provisioningState"> Provisioning state for the model version. </param>
         /// <param name="stage"> Stage in the model lifecycle assigned to this model. </param>
-        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, IntellectualProperty intellectualProperty, string jobName, string modelType, Uri modelUri, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, autoDeleteSetting, isAnonymous, isArchived)
+        internal MachineLearningModelVersionProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, AutoDeleteSetting autoDeleteSetting, bool? isAnonymous, bool? isArchived, IDictionary<string, MachineLearningFlavorData> flavors, IntellectualProperty intellectualProperty, string jobName, string modelType, Uri modelUri, RegistryAssetProvisioningState? provisioningState, string stage) : base(description, properties, tags, serializedAdditionalRawData, autoDeleteSetting, isAnonymous, isArchived)
         {
             Flavors = flavors;
             IntellectualProperty = intellectualProperty;

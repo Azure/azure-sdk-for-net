@@ -16,7 +16,7 @@ public class ChatWithVisionTests : OpenAITestBase
     }
 
     [RecordedTest]
-    // [TestCase(Service.Azure)]
+    [TestCase(Service.Azure)]
     [TestCase(Service.NonAzure)]
     public async Task ChatWithImages(Service serviceTarget)
     {
@@ -45,7 +45,21 @@ public class ChatWithVisionTests : OpenAITestBase
         Assert.That(response.Value.Choices.Count, Is.EqualTo(1));
         ChatChoice choice = response.Value.Choices[0];
         Assert.That(choice.Index, Is.EqualTo(0));
-        Assert.That(choice.FinishDetails, Is.InstanceOf<StopFinishDetails>());
+
+        // Check temporarily disabled for Azure
+        if (serviceTarget != Service.Azure)
+        {
+            Assert.That(choice.FinishReason != null || choice.FinishDetails != null);
+            if (choice.FinishReason == null)
+            {
+                Assert.That(choice.FinishDetails, Is.InstanceOf<StopFinishDetails>());
+            }
+            else if (choice.FinishDetails == null)
+            {
+                Assert.That(choice.FinishReason == CompletionsFinishReason.Stopped);
+            }
+        }
+
         Assert.That(choice.Message.Role, Is.EqualTo(ChatRole.Assistant));
         Assert.That(choice.Message.Content, Is.Not.Null.Or.Empty);
     }

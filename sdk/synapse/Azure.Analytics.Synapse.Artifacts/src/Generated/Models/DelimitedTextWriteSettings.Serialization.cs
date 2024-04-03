@@ -22,26 +22,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(QuoteAllText))
             {
                 writer.WritePropertyName("quoteAllText"u8);
-                writer.WriteObjectValue(QuoteAllText);
+                writer.WriteObjectValue<object>(QuoteAllText);
             }
             writer.WritePropertyName("fileExtension"u8);
-            writer.WriteObjectValue(FileExtension);
+            writer.WriteObjectValue<object>(FileExtension);
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -52,10 +52,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> quoteAllText = default;
+            object quoteAllText = default;
             object fileExtension = default;
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -101,14 +101,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextWriteSettings(type, additionalProperties, quoteAllText.Value, fileExtension, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new DelimitedTextWriteSettings(
+                type,
+                additionalProperties,
+                quoteAllText,
+                fileExtension,
+                maxRowsPerFile,
+                fileNamePrefix);
         }
 
         internal partial class DelimitedTextWriteSettingsConverter : JsonConverter<DelimitedTextWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, DelimitedTextWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DelimitedTextWriteSettings>(model);
             }
             public override DelimitedTextWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

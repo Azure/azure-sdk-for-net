@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
+using ClientModel.Tests.ClientShared;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
@@ -15,7 +16,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             Kind = "Unknown";
         }
 
-        internal UnknownBaseModel(string kind, string name, Dictionary<string, BinaryData> rawData)
+        internal UnknownBaseModel(string? kind, string? name, Dictionary<string, BinaryData> rawData)
             : base(rawData)
         {
             Kind = kind;
@@ -46,7 +47,7 @@ namespace System.ClientModel.Tests.Client.ModelReaderWriterTests.Models
             writer.WriteEndObject();
         }
 
-        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions options = default) => DeserializeBaseModel(element, options);
+        internal static BaseModel DeserializeUnknownBaseModel(JsonElement element, ModelReaderWriterOptions? options = default) => DeserializeBaseModel(element, options);
 
         BaseModel IPersistableModel<BaseModel>.Create(BinaryData data, ModelReaderWriterOptions options)
         {

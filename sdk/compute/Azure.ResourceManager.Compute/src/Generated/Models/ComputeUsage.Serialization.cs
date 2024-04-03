@@ -5,14 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeUsage
+    public partial class ComputeUsage : IUtf8JsonSerializable, IJsonModel<ComputeUsage>
     {
-        internal static ComputeUsage DeserializeComputeUsage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeUsage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComputeUsage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeUsage)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("unit"u8);
+            writer.WriteStringValue(Unit.ToString());
+            writer.WritePropertyName("currentValue"u8);
+            writer.WriteNumberValue(CurrentValue);
+            writer.WritePropertyName("limit"u8);
+            writer.WriteNumberValue(Limit);
+            writer.WritePropertyName("name"u8);
+            writer.WriteObjectValue<ComputeUsageName>(Name, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComputeUsage IJsonModel<ComputeUsage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeUsage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeUsage(document.RootElement, options);
+        }
+
+        internal static ComputeUsage DeserializeComputeUsage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -21,6 +76,8 @@ namespace Azure.ResourceManager.Compute.Models
             int currentValue = default;
             long limit = default;
             ComputeUsageName name = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("unit"u8))
@@ -40,11 +97,47 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (property.NameEquals("name"u8))
                 {
-                    name = ComputeUsageName.DeserializeComputeUsageName(property.Value);
+                    name = ComputeUsageName.DeserializeComputeUsageName(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeUsage(unit, currentValue, limit, name);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ComputeUsage(unit, currentValue, limit, name, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeUsage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeUsage IPersistableModel<ComputeUsage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComputeUsage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeUsage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

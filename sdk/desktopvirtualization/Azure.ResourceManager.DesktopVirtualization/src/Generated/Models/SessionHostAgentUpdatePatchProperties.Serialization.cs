@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class SessionHostAgentUpdatePatchProperties : IUtf8JsonSerializable
+    public partial class SessionHostAgentUpdatePatchProperties : IUtf8JsonSerializable, IJsonModel<SessionHostAgentUpdatePatchProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SessionHostAgentUpdatePatchProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SessionHostAgentUpdatePatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SessionHostAgentUpdatePatchProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UpdateType))
             {
@@ -37,23 +47,54 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindows)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceWindowPatchProperties>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SessionHostAgentUpdatePatchProperties DeserializeSessionHostAgentUpdatePatchProperties(JsonElement element)
+        SessionHostAgentUpdatePatchProperties IJsonModel<SessionHostAgentUpdatePatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SessionHostAgentUpdatePatchProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSessionHostAgentUpdatePatchProperties(document.RootElement, options);
+        }
+
+        internal static SessionHostAgentUpdatePatchProperties DeserializeSessionHostAgentUpdatePatchProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SessionHostComponentUpdateType> type = default;
-            Optional<bool> useSessionHostLocalTime = default;
-            Optional<string> maintenanceWindowTimeZone = default;
-            Optional<IList<MaintenanceWindowPatchProperties>> maintenanceWindows = default;
+            SessionHostComponentUpdateType? type = default;
+            bool? useSessionHostLocalTime = default;
+            string maintenanceWindowTimeZone = default;
+            IList<MaintenanceWindowPatchProperties> maintenanceWindows = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -88,13 +129,49 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<MaintenanceWindowPatchProperties> array = new List<MaintenanceWindowPatchProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item));
+                        array.Add(MaintenanceWindowPatchProperties.DeserializeMaintenanceWindowPatchProperties(item, options));
                     }
                     maintenanceWindows = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SessionHostAgentUpdatePatchProperties(Optional.ToNullable(type), Optional.ToNullable(useSessionHostLocalTime), maintenanceWindowTimeZone.Value, Optional.ToList(maintenanceWindows));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SessionHostAgentUpdatePatchProperties(type, useSessionHostLocalTime, maintenanceWindowTimeZone, maintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowPatchProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SessionHostAgentUpdatePatchProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SessionHostAgentUpdatePatchProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SessionHostAgentUpdatePatchProperties IPersistableModel<SessionHostAgentUpdatePatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SessionHostAgentUpdatePatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSessionHostAgentUpdatePatchProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SessionHostAgentUpdatePatchProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SessionHostAgentUpdatePatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

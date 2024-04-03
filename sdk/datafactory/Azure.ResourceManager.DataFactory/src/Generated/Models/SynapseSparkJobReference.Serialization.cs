@@ -6,38 +6,73 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class SynapseSparkJobReference : IUtf8JsonSerializable
+    public partial class SynapseSparkJobReference : IUtf8JsonSerializable, IJsonModel<SynapseSparkJobReference>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseSparkJobReference>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseSparkJobReference>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkJobReference)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SparkJobReferenceType.ToString());
             writer.WritePropertyName("referenceName"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(ReferenceName);
-#else
-            using (JsonDocument document = JsonDocument.Parse(ReferenceName))
+            JsonSerializer.Serialize(writer, ReferenceName);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                JsonSerializer.Serialize(writer, document.RootElement);
-            }
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseSparkJobReference DeserializeSynapseSparkJobReference(JsonElement element)
+        SynapseSparkJobReference IJsonModel<SynapseSparkJobReference>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobReference>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseSparkJobReference)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseSparkJobReference(document.RootElement, options);
+        }
+
+        internal static SynapseSparkJobReference DeserializeSynapseSparkJobReference(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             SparkJobReferenceType type = default;
-            BinaryData referenceName = default;
+            DataFactoryElement<string> referenceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -47,11 +82,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (property.NameEquals("referenceName"u8))
                 {
-                    referenceName = BinaryData.FromString(property.Value.GetRawText());
+                    referenceName = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseSparkJobReference(type, referenceName);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseSparkJobReference(type, referenceName, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SynapseSparkJobReference>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkJobReference)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseSparkJobReference IPersistableModel<SynapseSparkJobReference>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseSparkJobReference>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseSparkJobReference(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseSparkJobReference)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseSparkJobReference>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

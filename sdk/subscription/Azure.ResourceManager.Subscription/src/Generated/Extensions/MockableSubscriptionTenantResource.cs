@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Subscription;
 using Azure.ResourceManager.Subscription.Models;
 
 namespace Azure.ResourceManager.Subscription.Mocking
@@ -62,6 +59,14 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="aliasName"> AliasName is the name for the subscription creation request. Note that this is not the same as subscription name and this doesn’t have any other lifecycle need beyond the request for subscription creation. </param>
@@ -84,6 +89,14 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,6 +135,14 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -145,6 +166,14 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="billingAccountId"> Billing Account Id. </param>
@@ -167,6 +196,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -209,6 +242,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -250,6 +287,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="subscriptionId"> Subscription Id. </param>
@@ -284,6 +325,10 @@ namespace Azure.ResourceManager.Subscription.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// </summary>

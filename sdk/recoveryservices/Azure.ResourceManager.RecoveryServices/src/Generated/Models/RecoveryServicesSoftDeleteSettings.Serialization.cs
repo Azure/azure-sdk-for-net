@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServices.Models
 {
-    public partial class RecoveryServicesSoftDeleteSettings : IUtf8JsonSerializable
+    public partial class RecoveryServicesSoftDeleteSettings : IUtf8JsonSerializable, IJsonModel<RecoveryServicesSoftDeleteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryServicesSoftDeleteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecoveryServicesSoftDeleteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteState))
             {
@@ -25,17 +36,48 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryServicesSoftDeleteSettings DeserializeRecoveryServicesSoftDeleteSettings(JsonElement element)
+        RecoveryServicesSoftDeleteSettings IJsonModel<RecoveryServicesSoftDeleteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryServicesSoftDeleteSettings(document.RootElement, options);
+        }
+
+        internal static RecoveryServicesSoftDeleteSettings DeserializeRecoveryServicesSoftDeleteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<RecoveryServicesSoftDeleteState> softDeleteState = default;
-            Optional<int> softDeleteRetentionPeriodInDays = default;
+            RecoveryServicesSoftDeleteState? softDeleteState = default;
+            int? softDeleteRetentionPeriodInDays = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteState"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     softDeleteRetentionPeriodInDays = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryServicesSoftDeleteSettings(Optional.ToNullable(softDeleteState), Optional.ToNullable(softDeleteRetentionPeriodInDays));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryServicesSoftDeleteSettings(softDeleteState, softDeleteRetentionPeriodInDays, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RecoveryServicesSoftDeleteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryServicesSoftDeleteSettings IPersistableModel<RecoveryServicesSoftDeleteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryServicesSoftDeleteSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryServicesSoftDeleteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

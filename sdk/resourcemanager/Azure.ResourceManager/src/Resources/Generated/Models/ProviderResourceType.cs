@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
     /// <summary> Resource type managed by the resource provider. </summary>
     public partial class ProviderResourceType
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProviderResourceType"/>. </summary>
         internal ProviderResourceType()
         {
@@ -36,7 +68,8 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="apiProfiles"> The API profiles for the resource provider. </param>
         /// <param name="capabilities"> The additional capabilities offered by this resource type. </param>
         /// <param name="properties"> The properties. </param>
-        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProviderResourceType(string resourceType, IReadOnlyList<string> locations, IReadOnlyList<ProviderExtendedLocation> locationMappings, IReadOnlyList<ResourceTypeAlias> aliases, IReadOnlyList<string> apiVersions, string defaultApiVersion, IReadOnlyList<ZoneMapping> zoneMappings, IReadOnlyList<ApiProfile> apiProfiles, string capabilities, IReadOnlyDictionary<string, string> properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceType = resourceType;
             Locations = locations;
@@ -48,27 +81,38 @@ namespace Azure.ResourceManager.Resources.Models
             ApiProfiles = apiProfiles;
             Capabilities = capabilities;
             Properties = properties;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The resource type. </summary>
+        [WirePath("resourceType")]
         public string ResourceType { get; }
         /// <summary> The collection of locations where this resource type can be created. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<string> Locations { get; }
         /// <summary> The location mappings that are supported by this resource type. </summary>
+        [WirePath("locationMappings")]
         public IReadOnlyList<ProviderExtendedLocation> LocationMappings { get; }
         /// <summary> The aliases that are supported by this resource type. </summary>
+        [WirePath("aliases")]
         public IReadOnlyList<ResourceTypeAlias> Aliases { get; }
         /// <summary> The API version. </summary>
+        [WirePath("apiVersions")]
         public IReadOnlyList<string> ApiVersions { get; }
         /// <summary> The default API version. </summary>
+        [WirePath("defaultApiVersion")]
         public string DefaultApiVersion { get; }
         /// <summary> Gets the zone mappings. </summary>
+        [WirePath("zoneMappings")]
         public IReadOnlyList<ZoneMapping> ZoneMappings { get; }
         /// <summary> The API profiles for the resource provider. </summary>
+        [WirePath("apiProfiles")]
         public IReadOnlyList<ApiProfile> ApiProfiles { get; }
         /// <summary> The additional capabilities offered by this resource type. </summary>
+        [WirePath("capabilities")]
         public string Capabilities { get; }
         /// <summary> The properties. </summary>
+        [WirePath("properties")]
         public IReadOnlyDictionary<string, string> Properties { get; }
     }
 }

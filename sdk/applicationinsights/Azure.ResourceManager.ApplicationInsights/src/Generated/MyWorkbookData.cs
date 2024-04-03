@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="etag"> Resource etag. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="kind"> The kind of workbook. Choices are user and shared. </param>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="displayName"> The user-defined name of the private workbook. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="userId"> Unique user id of the specific user that owns this private workbook. </param>
         /// <param name="sourceId"> Optional resourceId for a source resource. </param>
         /// <param name="storageUri"> BYOS Storage Account URI. </param>
-        internal MyWorkbookData(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, ApplicationInsightsKind? kind, SystemData systemData, string displayName, string serializedData, string version, string timeModified, string category, string userId, string sourceId, Uri storageUri) : base(identity, id, name, resourceType, location, tags, etag)
+        internal MyWorkbookData(MyWorkbookManagedIdentity identity, string id, string name, string resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, string> etag, IDictionary<string, BinaryData> serializedAdditionalRawData, ApplicationInsightsKind? kind, SystemData systemData, string displayName, string serializedData, string version, string timeModified, string category, string userId, string sourceId, Uri storageUri) : base(identity, id, name, resourceType, location, tags, etag, serializedAdditionalRawData)
         {
             Kind = kind;
             SystemData = systemData;
@@ -57,24 +58,34 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> The kind of workbook. Choices are user and shared. </summary>
+        [WirePath("kind")]
         public ApplicationInsightsKind? Kind { get; set; }
         /// <summary> Metadata pertaining to creation and last modification of the resource. </summary>
+        [WirePath("systemData")]
         public SystemData SystemData { get; }
         /// <summary> The user-defined name of the private workbook. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular private workbook. Configuration data is a string containing valid JSON. </summary>
+        [WirePath("properties.serializedData")]
         public string SerializedData { get; set; }
         /// <summary> This instance's version of the data model. This can change as new features are added that can be marked private workbook. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this private workbook definition. </summary>
+        [WirePath("properties.timeModified")]
         public string TimeModified { get; }
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Unique user id of the specific user that owns this private workbook. </summary>
+        [WirePath("properties.userId")]
         public string UserId { get; }
         /// <summary> Optional resourceId for a source resource. </summary>
+        [WirePath("properties.sourceId")]
         public string SourceId { get; set; }
         /// <summary> BYOS Storage Account URI. </summary>
+        [WirePath("properties.storageUri")]
         public Uri StorageUri { get; set; }
     }
 }

@@ -5,19 +5,29 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class NetworkCloudStorageProfile : IUtf8JsonSerializable
+    public partial class NetworkCloudStorageProfile : IUtf8JsonSerializable, IJsonModel<NetworkCloudStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkCloudStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkCloudStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("osDisk"u8);
-            writer.WriteObjectValue(OSDisk);
+            writer.WriteObjectValue<NetworkCloudOSDisk>(OSDisk, options);
             if (Optional.IsCollectionDefined(VolumeAttachments))
             {
                 writer.WritePropertyName("volumeAttachments"u8);
@@ -33,22 +43,53 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkCloudStorageProfile DeserializeNetworkCloudStorageProfile(JsonElement element)
+        NetworkCloudStorageProfile IJsonModel<NetworkCloudStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkCloudStorageProfile(document.RootElement, options);
+        }
+
+        internal static NetworkCloudStorageProfile DeserializeNetworkCloudStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             NetworkCloudOSDisk osDisk = default;
-            Optional<IList<ResourceIdentifier>> volumeAttachments = default;
+            IList<ResourceIdentifier> volumeAttachments = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("osDisk"u8))
                 {
-                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value);
+                    osDisk = NetworkCloudOSDisk.DeserializeNetworkCloudOSDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeAttachments"u8))
@@ -72,8 +113,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     volumeAttachments = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkCloudStorageProfile(osDisk, Optional.ToList(volumeAttachments));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkCloudStorageProfile(osDisk, volumeAttachments ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkCloudStorageProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkCloudStorageProfile IPersistableModel<NetworkCloudStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkCloudStorageProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkCloudStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The collection of validation rule properties. </summary>
     public partial class WebTestPropertiesValidationRules
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="WebTestPropertiesValidationRules"/>. </summary>
         public WebTestPropertiesValidationRules()
         {
@@ -21,24 +56,31 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
         /// <param name="expectedHttpStatusCode"> Validate that the WebTest returns the http status code provided. </param>
         /// <param name="ignoreHttpStatusCode"> When set, validation will ignore the status code. </param>
-        internal WebTestPropertiesValidationRules(WebTestPropertiesValidationRulesContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal WebTestPropertiesValidationRules(WebTestPropertiesValidationRulesContentValidation contentValidation, bool? checkSsl, int? sslCertRemainingLifetimeCheck, int? expectedHttpStatusCode, bool? ignoreHttpStatusCode, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentValidation = contentValidation;
             CheckSsl = checkSsl;
             SSLCertRemainingLifetimeCheck = sslCertRemainingLifetimeCheck;
             ExpectedHttpStatusCode = expectedHttpStatusCode;
             IgnoreHttpStatusCode = ignoreHttpStatusCode;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The collection of content validation properties. </summary>
+        [WirePath("ContentValidation")]
         public WebTestPropertiesValidationRulesContentValidation ContentValidation { get; set; }
         /// <summary> Checks to see if the SSL cert is still valid. </summary>
+        [WirePath("SSLCheck")]
         public bool? CheckSsl { get; set; }
         /// <summary> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </summary>
+        [WirePath("SSLCertRemainingLifetimeCheck")]
         public int? SSLCertRemainingLifetimeCheck { get; set; }
         /// <summary> Validate that the WebTest returns the http status code provided. </summary>
+        [WirePath("ExpectedHttpStatusCode")]
         public int? ExpectedHttpStatusCode { get; set; }
         /// <summary> When set, validation will ignore the status code. </summary>
+        [WirePath("IgnoreHttpStatusCode")]
         public bool? IgnoreHttpStatusCode { get; set; }
     }
 }

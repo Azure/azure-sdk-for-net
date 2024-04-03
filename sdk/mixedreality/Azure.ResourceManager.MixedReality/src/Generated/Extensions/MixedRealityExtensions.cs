@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MixedReality.Mocking;
 using Azure.ResourceManager.MixedReality.Models;
 using Azure.ResourceManager.Resources;
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +136,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -178,6 +192,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -207,6 +229,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -238,6 +268,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -266,6 +300,10 @@ namespace Azure.ResourceManager.MixedReality
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckNameAvailabilityLocal</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -296,6 +334,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -323,6 +369,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SpatialAnchorsAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpatialAnchorsAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -352,6 +406,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -379,6 +441,14 @@ namespace Azure.ResourceManager.MixedReality
         /// <item>
         /// <term>Operation Id</term>
         /// <description>RemoteRenderingAccounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="RemoteRenderingAccountResource"/></description>
         /// </item>
         /// </list>
         /// <item>

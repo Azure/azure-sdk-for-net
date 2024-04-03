@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    public partial class AlertPropertiesDetails : IUtf8JsonSerializable
+    public partial class AlertPropertiesDetails : IUtf8JsonSerializable, IJsonModel<AlertPropertiesDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AlertPropertiesDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AlertPropertiesDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TimeGrainType))
             {
@@ -200,37 +209,68 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("invoicingThreshold"u8);
                 writer.WriteNumberValue(InvoicingThreshold.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AlertPropertiesDetails DeserializeAlertPropertiesDetails(JsonElement element)
+        AlertPropertiesDetails IJsonModel<AlertPropertiesDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAlertPropertiesDetails(document.RootElement, options);
+        }
+
+        internal static AlertPropertiesDetails DeserializeAlertPropertiesDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AlertTimeGrainType> timeGrainType = default;
-            Optional<string> periodStartDate = default;
-            Optional<string> triggeredBy = default;
-            Optional<IList<BinaryData>> resourceGroupFilter = default;
-            Optional<IList<BinaryData>> resourceFilter = default;
-            Optional<IList<BinaryData>> meterFilter = default;
-            Optional<BinaryData> tagFilter = default;
-            Optional<decimal> threshold = default;
-            Optional<CostManagementAlertOperator> @operator = default;
-            Optional<decimal> amount = default;
-            Optional<string> unit = default;
-            Optional<decimal> currentSpend = default;
-            Optional<IList<string>> contactEmails = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<IList<string>> contactRoles = default;
-            Optional<string> overridingAlert = default;
-            Optional<string> departmentName = default;
-            Optional<string> companyName = default;
-            Optional<string> enrollmentNumber = default;
-            Optional<string> enrollmentStartDate = default;
-            Optional<string> enrollmentEndDate = default;
-            Optional<decimal> invoicingThreshold = default;
+            AlertTimeGrainType? timeGrainType = default;
+            string periodStartDate = default;
+            string triggeredBy = default;
+            IList<BinaryData> resourceGroupFilter = default;
+            IList<BinaryData> resourceFilter = default;
+            IList<BinaryData> meterFilter = default;
+            BinaryData tagFilter = default;
+            decimal? threshold = default;
+            CostManagementAlertOperator? @operator = default;
+            decimal? amount = default;
+            string unit = default;
+            decimal? currentSpend = default;
+            IList<string> contactEmails = default;
+            IList<string> contactGroups = default;
+            IList<string> contactRoles = default;
+            string overridingAlert = default;
+            string departmentName = default;
+            string companyName = default;
+            string enrollmentNumber = default;
+            string enrollmentStartDate = default;
+            string enrollmentEndDate = default;
+            decimal? invoicingThreshold = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timeGrainType"u8))
@@ -446,8 +486,67 @@ namespace Azure.ResourceManager.CostManagement.Models
                     invoicingThreshold = property.Value.GetDecimal();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, Optional.ToList(resourceGroupFilter), Optional.ToList(resourceFilter), Optional.ToList(meterFilter), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), Optional.ToList(contactEmails), Optional.ToList(contactGroups), Optional.ToList(contactRoles), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AlertPropertiesDetails(
+                timeGrainType,
+                periodStartDate,
+                triggeredBy,
+                resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(),
+                resourceFilter ?? new ChangeTrackingList<BinaryData>(),
+                meterFilter ?? new ChangeTrackingList<BinaryData>(),
+                tagFilter,
+                threshold,
+                @operator,
+                amount,
+                unit,
+                currentSpend,
+                contactEmails ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                contactRoles ?? new ChangeTrackingList<string>(),
+                overridingAlert,
+                departmentName,
+                companyName,
+                enrollmentNumber,
+                enrollmentStartDate,
+                enrollmentEndDate,
+                invoicingThreshold,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AlertPropertiesDetails IPersistableModel<AlertPropertiesDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAlertPropertiesDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AlertPropertiesDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

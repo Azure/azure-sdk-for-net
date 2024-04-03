@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,6 +23,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="TableVerticalFeaturizationSettings"/>. </summary>
         /// <param name="datasetLanguage"> Dataset language, useful for the text data. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="blockedTransformers"> These transformers shall not be used in featurization. </param>
         /// <param name="columnNameAndTypes"> Dictionary of column name and its type (int, float, string, datetime etc). </param>
         /// <param name="enableDnnFeaturization"> Determines whether to use Dnn based featurizers for data featurization. </param>
@@ -32,7 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// If 'Custom' is selected then user can specify additional inputs to customize how featurization is done.
         /// </param>
         /// <param name="transformerParams"> User can specify additional transformers to be used along with the columns to which it would be applied and parameters for the transformer constructor. </param>
-        internal TableVerticalFeaturizationSettings(string datasetLanguage, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, MachineLearningFeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage)
+        internal TableVerticalFeaturizationSettings(string datasetLanguage, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<BlockedTransformer> blockedTransformers, IDictionary<string, string> columnNameAndTypes, bool? enableDnnFeaturization, MachineLearningFeaturizationMode? mode, IDictionary<string, IList<ColumnTransformer>> transformerParams) : base(datasetLanguage, serializedAdditionalRawData)
         {
             BlockedTransformers = blockedTransformers;
             ColumnNameAndTypes = columnNameAndTypes;

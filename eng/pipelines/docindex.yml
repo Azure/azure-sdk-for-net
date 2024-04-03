@@ -2,6 +2,7 @@ trigger: none
 
 variables:
   - template: /eng/pipelines/templates/variables/globals.yml
+  - template: /eng/pipelines/templates/variables/image.yml
 
   # Globals sets skipComponentGovernanceDetection by default
   - name: skipComponentGovernanceDetection
@@ -12,8 +13,7 @@ jobs:
 
   - job: UpdateDocsMsBuildConfig
     pool:
-      name: azsdk-pool-mms-ubuntu-2004-general
-      vmImage: Ubuntu20.04
+      name: $(LINUXPOOL)
     variables:
       DocRepoLocation: $(Pipeline.Workspace)/docs
       DocRepoOwner: Azure
@@ -38,7 +38,7 @@ jobs:
           Repositories:
             - Name: $(DocRepoOwner)/$(DocRepoName)
               WorkingDirectory: $(DocRepoLocation)
-      
+
       # Install the tool for toc step to use
       - task: NuGetToolInstaller@1
         inputs:

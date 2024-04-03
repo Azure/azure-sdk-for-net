@@ -24,11 +24,14 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         private const string CalicoValue = "calico";
         private const string AzureValue = "azure";
+        private const string CiliumValue = "cilium";
 
         /// <summary> Use Calico network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Calico { get; } = new ContainerServiceNetworkPolicy(CalicoValue);
         /// <summary> Use Azure network policies. See [differences between Azure and Calico policies](https://docs.microsoft.com/azure/aks/use-network-policies#differences-between-azure-and-calico-policies-and-their-capabilities) for more information. </summary>
         public static ContainerServiceNetworkPolicy Azure { get; } = new ContainerServiceNetworkPolicy(AzureValue);
+        /// <summary> Use Cilium to enforce network policies. This requires networkDataplane to be 'cilium'. </summary>
+        public static ContainerServiceNetworkPolicy Cilium { get; } = new ContainerServiceNetworkPolicy(CiliumValue);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are the same. </summary>
         public static bool operator ==(ContainerServiceNetworkPolicy left, ContainerServiceNetworkPolicy right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerServiceNetworkPolicy"/> values are not the same. </summary>

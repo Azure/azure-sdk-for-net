@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -22,7 +23,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="title"> Health Title. </param>
         /// <param name="message"> Health Message. </param>
         /// <param name="recommendations"> Health Recommended Actions. </param>
-        internal IaasVmHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations) : base(code, title, message, recommendations)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IaasVmHealthDetails(int? code, string title, string message, IReadOnlyList<string> recommendations, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(code, title, message, recommendations, serializedAdditionalRawData)
         {
         }
     }

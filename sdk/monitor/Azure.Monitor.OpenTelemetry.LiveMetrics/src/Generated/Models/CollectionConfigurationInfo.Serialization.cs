@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -19,10 +18,10 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             {
                 return null;
             }
-            Optional<string> etag = default;
-            Optional<IReadOnlyList<DerivedMetricInfo>> metrics = default;
-            Optional<IReadOnlyList<DocumentStreamInfo>> documentStreams = default;
-            Optional<QuotaConfigurationInfo> quotaInfo = default;
+            string etag = default;
+            IReadOnlyList<DerivedMetricInfo> metrics = default;
+            IReadOnlyList<DocumentStreamInfo> documentStreams = default;
+            QuotaConfigurationInfo quotaInfo = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Etag"u8))
@@ -68,7 +67,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                     continue;
                 }
             }
-            return new CollectionConfigurationInfo(etag.Value, Optional.ToList(metrics), Optional.ToList(documentStreams), quotaInfo.Value);
+            return new CollectionConfigurationInfo(etag, metrics ?? new ChangeTrackingList<DerivedMetricInfo>(), documentStreams ?? new ChangeTrackingList<DocumentStreamInfo>(), quotaInfo);
         }
     }
 }

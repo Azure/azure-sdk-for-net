@@ -6,26 +6,109 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsAvailableServiceTier
+    public partial class OperationalInsightsAvailableServiceTier : IUtf8JsonSerializable, IJsonModel<OperationalInsightsAvailableServiceTier>
     {
-        internal static OperationalInsightsAvailableServiceTier DeserializeOperationalInsightsAvailableServiceTier(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsAvailableServiceTier>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsAvailableServiceTier>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ServiceTier))
+            {
+                writer.WritePropertyName("serviceTier"u8);
+                writer.WriteStringValue(ServiceTier.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("enabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinimumRetention))
+            {
+                writer.WritePropertyName("minimumRetention"u8);
+                writer.WriteNumberValue(MinimumRetention.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaximumRetention))
+            {
+                writer.WritePropertyName("maximumRetention"u8);
+                writer.WriteNumberValue(MaximumRetention.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultRetention))
+            {
+                writer.WritePropertyName("defaultRetention"u8);
+                writer.WriteNumberValue(DefaultRetention.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CapacityReservationLevel))
+            {
+                writer.WritePropertyName("capacityReservationLevel"u8);
+                writer.WriteNumberValue(CapacityReservationLevel.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LastSkuUpdatedOn))
+            {
+                writer.WritePropertyName("lastSkuUpdate"u8);
+                writer.WriteStringValue(LastSkuUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        OperationalInsightsAvailableServiceTier IJsonModel<OperationalInsightsAvailableServiceTier>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsAvailableServiceTier(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsAvailableServiceTier DeserializeOperationalInsightsAvailableServiceTier(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<OperationalInsightsSkuName> serviceTier = default;
-            Optional<bool> enabled = default;
-            Optional<long> minimumRetention = default;
-            Optional<long> maximumRetention = default;
-            Optional<long> defaultRetention = default;
-            Optional<long> capacityReservationLevel = default;
-            Optional<DateTimeOffset> lastSkuUpdate = default;
+            OperationalInsightsSkuName? serviceTier = default;
+            bool? enabled = default;
+            long? minimumRetention = default;
+            long? maximumRetention = default;
+            long? defaultRetention = default;
+            long? capacityReservationLevel = default;
+            DateTimeOffset? lastSkuUpdate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceTier"u8))
@@ -91,8 +174,169 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     lastSkuUpdate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsAvailableServiceTier(Optional.ToNullable(serviceTier), Optional.ToNullable(enabled), Optional.ToNullable(minimumRetention), Optional.ToNullable(maximumRetention), Optional.ToNullable(defaultRetention), Optional.ToNullable(capacityReservationLevel), Optional.ToNullable(lastSkuUpdate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalInsightsAvailableServiceTier(
+                serviceTier,
+                enabled,
+                minimumRetention,
+                maximumRetention,
+                defaultRetention,
+                capacityReservationLevel,
+                lastSkuUpdate,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceTier), out propertyOverride);
+            if (Optional.IsDefined(ServiceTier) || hasPropertyOverride)
+            {
+                builder.Append("  serviceTier: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ServiceTier.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinimumRetention), out propertyOverride);
+            if (Optional.IsDefined(MinimumRetention) || hasPropertyOverride)
+            {
+                builder.Append("  minimumRetention: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MinimumRetention.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetention), out propertyOverride);
+            if (Optional.IsDefined(MaximumRetention) || hasPropertyOverride)
+            {
+                builder.Append("  maximumRetention: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{MaximumRetention.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultRetention), out propertyOverride);
+            if (Optional.IsDefined(DefaultRetention) || hasPropertyOverride)
+            {
+                builder.Append("  defaultRetention: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DefaultRetention.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapacityReservationLevel), out propertyOverride);
+            if (Optional.IsDefined(CapacityReservationLevel) || hasPropertyOverride)
+            {
+                builder.Append("  capacityReservationLevel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CapacityReservationLevel.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSkuUpdatedOn), out propertyOverride);
+            if (Optional.IsDefined(LastSkuUpdatedOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastSkuUpdate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastSkuUpdatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsAvailableServiceTier>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsAvailableServiceTier IPersistableModel<OperationalInsightsAvailableServiceTier>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsAvailableServiceTier>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsAvailableServiceTier(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsAvailableServiceTier)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsAvailableServiceTier>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

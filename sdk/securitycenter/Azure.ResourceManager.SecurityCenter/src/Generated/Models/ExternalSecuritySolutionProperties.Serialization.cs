@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class ExternalSecuritySolutionProperties : IUtf8JsonSerializable
+    public partial class ExternalSecuritySolutionProperties : IUtf8JsonSerializable, IJsonModel<ExternalSecuritySolutionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExternalSecuritySolutionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExternalSecuritySolutionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalSecuritySolutionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DeviceVendor))
             {
@@ -48,15 +57,29 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             writer.WriteEndObject();
         }
 
-        internal static ExternalSecuritySolutionProperties DeserializeExternalSecuritySolutionProperties(JsonElement element)
+        ExternalSecuritySolutionProperties IJsonModel<ExternalSecuritySolutionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExternalSecuritySolutionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExternalSecuritySolutionProperties(document.RootElement, options);
+        }
+
+        internal static ExternalSecuritySolutionProperties DeserializeExternalSecuritySolutionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> deviceVendor = default;
-            Optional<string> deviceType = default;
-            Optional<WritableSubResource> workspace = default;
+            string deviceVendor = default;
+            string deviceType = default;
+            WritableSubResource workspace = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,7 +106,38 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ExternalSecuritySolutionProperties(deviceVendor.Value, deviceType.Value, workspace, additionalProperties);
+            return new ExternalSecuritySolutionProperties(deviceVendor, deviceType, workspace, additionalProperties);
         }
+
+        BinaryData IPersistableModel<ExternalSecuritySolutionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExternalSecuritySolutionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExternalSecuritySolutionProperties IPersistableModel<ExternalSecuritySolutionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExternalSecuritySolutionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExternalSecuritySolutionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExternalSecuritySolutionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExternalSecuritySolutionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

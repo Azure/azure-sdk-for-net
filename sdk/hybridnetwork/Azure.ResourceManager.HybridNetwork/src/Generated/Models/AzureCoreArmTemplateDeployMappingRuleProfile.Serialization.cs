@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class AzureCoreArmTemplateDeployMappingRuleProfile : IUtf8JsonSerializable
+    public partial class AzureCoreArmTemplateDeployMappingRuleProfile : IUtf8JsonSerializable, IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCoreArmTemplateDeployMappingRuleProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateMappingRuleProfile))
             {
                 writer.WritePropertyName("templateMappingRuleProfile"u8);
-                writer.WriteObjectValue(TemplateMappingRuleProfile);
+                writer.WriteObjectValue<ArmTemplateMappingRuleProfile>(TemplateMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {
                 writer.WritePropertyName("applicationEnablement"u8);
                 writer.WriteStringValue(ApplicationEnablement.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureCoreArmTemplateDeployMappingRuleProfile DeserializeAzureCoreArmTemplateDeployMappingRuleProfile(JsonElement element)
+        AzureCoreArmTemplateDeployMappingRuleProfile IJsonModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureCoreArmTemplateDeployMappingRuleProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureCoreArmTemplateDeployMappingRuleProfile(document.RootElement, options);
+        }
+
+        internal static AzureCoreArmTemplateDeployMappingRuleProfile DeserializeAzureCoreArmTemplateDeployMappingRuleProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ArmTemplateMappingRuleProfile> templateMappingRuleProfile = default;
-            Optional<ApplicationEnablement> applicationEnablement = default;
+            ArmTemplateMappingRuleProfile templateMappingRuleProfile = default;
+            ApplicationEnablement? applicationEnablement = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateMappingRuleProfile"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     {
                         continue;
                     }
-                    templateMappingRuleProfile = ArmTemplateMappingRuleProfile.DeserializeArmTemplateMappingRuleProfile(property.Value);
+                    templateMappingRuleProfile = ArmTemplateMappingRuleProfile.DeserializeArmTemplateMappingRuleProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationEnablement"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     applicationEnablement = new ApplicationEnablement(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureCoreArmTemplateDeployMappingRuleProfile(Optional.ToNullable(applicationEnablement), templateMappingRuleProfile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureCoreArmTemplateDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, templateMappingRuleProfile);
         }
+
+        BinaryData IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureCoreArmTemplateDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureCoreArmTemplateDeployMappingRuleProfile IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureCoreArmTemplateDeployMappingRuleProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureCoreArmTemplateDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureCoreArmTemplateDeployMappingRuleProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

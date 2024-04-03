@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomMonitoringSignal : IUtf8JsonSerializable
+    public partial class CustomMonitoringSignal : IUtf8JsonSerializable, IJsonModel<CustomMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("componentId"u8);
             writer.WriteStringValue(ComponentId);
@@ -27,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in InputAssets)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MonitoringInputDataBase>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -45,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobInput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -58,11 +68,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CustomMetricThreshold>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("workspaceConnection"u8);
-            writer.WriteObjectValue(WorkspaceConnection);
+            writer.WriteObjectValue<MonitoringWorkspaceConnection>(WorkspaceConnection, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -88,23 +98,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element)
+        CustomMonitoringSignal IJsonModel<CustomMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomMonitoringSignal(document.RootElement, options);
+        }
+
+        internal static CustomMonitoringSignal DeserializeCustomMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string componentId = default;
-            Optional<IDictionary<string, MonitoringInputDataBase>> inputAssets = default;
-            Optional<IDictionary<string, MachineLearningJobInput>> inputs = default;
+            IDictionary<string, MonitoringInputDataBase> inputAssets = default;
+            IDictionary<string, MachineLearningJobInput> inputs = default;
             IList<CustomMetricThreshold> metricThresholds = default;
             MonitoringWorkspaceConnection workspaceConnection = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("componentId"u8))
@@ -122,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MonitoringInputDataBase> dictionary = new Dictionary<string, MonitoringInputDataBase>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value));
+                        dictionary.Add(property0.Name, MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property0.Value, options));
                     }
                     inputAssets = dictionary;
                     continue;
@@ -137,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, MachineLearningJobInput> dictionary = new Dictionary<string, MachineLearningJobInput>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value));
+                        dictionary.Add(property0.Name, MachineLearningJobInput.DeserializeMachineLearningJobInput(property0.Value, options));
                     }
                     inputs = dictionary;
                     continue;
@@ -147,14 +188,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<CustomMetricThreshold> array = new List<CustomMetricThreshold>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item));
+                        array.Add(CustomMetricThreshold.DeserializeCustomMetricThreshold(item, options));
                     }
                     metricThresholds = array;
                     continue;
                 }
                 if (property.NameEquals("workspaceConnection"u8))
                 {
-                    workspaceConnection = MonitoringWorkspaceConnection.DeserializeMonitoringWorkspaceConnection(property.Value);
+                    workspaceConnection = MonitoringWorkspaceConnection.DeserializeMonitoringWorkspaceConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -186,8 +227,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, componentId, Optional.ToDictionary(inputAssets), Optional.ToDictionary(inputs), metricThresholds, workspaceConnection);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                componentId,
+                inputAssets ?? new ChangeTrackingDictionary<string, MonitoringInputDataBase>(),
+                inputs ?? new ChangeTrackingDictionary<string, MachineLearningJobInput>(),
+                metricThresholds,
+                workspaceConnection);
         }
+
+        BinaryData IPersistableModel<CustomMonitoringSignal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomMonitoringSignal IPersistableModel<CustomMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomMonitoringSignal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomMonitoringSignal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

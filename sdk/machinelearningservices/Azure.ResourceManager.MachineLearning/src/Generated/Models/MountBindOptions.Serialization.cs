@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MountBindOptions : IUtf8JsonSerializable
+    public partial class MountBindOptions : IUtf8JsonSerializable, IJsonModel<MountBindOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MountBindOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MountBindOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MountBindOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MountBindOptions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Propagation))
             {
@@ -51,18 +62,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("selinux");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MountBindOptions DeserializeMountBindOptions(JsonElement element)
+        MountBindOptions IJsonModel<MountBindOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MountBindOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MountBindOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMountBindOptions(document.RootElement, options);
+        }
+
+        internal static MountBindOptions DeserializeMountBindOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> propagation = default;
-            Optional<bool?> createHostPath = default;
-            Optional<string> selinux = default;
+            string propagation = default;
+            bool? createHostPath = default;
+            string selinux = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("propagation"u8))
@@ -95,8 +137,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     selinux = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MountBindOptions(propagation.Value, Optional.ToNullable(createHostPath), selinux.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MountBindOptions(propagation, createHostPath, selinux, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MountBindOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MountBindOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MountBindOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MountBindOptions IPersistableModel<MountBindOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MountBindOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMountBindOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MountBindOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MountBindOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

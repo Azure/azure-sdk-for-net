@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.NetApp;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp.Mocking
@@ -64,9 +61,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -99,9 +100,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -134,9 +139,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckFilePathAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -169,9 +178,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckFilePathAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -204,9 +217,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckQuotaAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -239,9 +256,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_CheckQuotaAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -274,9 +295,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_QueryRegionInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<Response<NetAppRegionInfo>> QueryRegionInfoNetAppResourceAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -305,9 +330,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_QueryRegionInfo</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<NetAppRegionInfo> QueryRegionInfoNetAppResource(AzureLocation location, CancellationToken cancellationToken = default)
         {
@@ -336,9 +365,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_QueryNetworkSiblingSet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -371,9 +404,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_QueryNetworkSiblingSet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -406,10 +443,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -445,10 +486,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResource_UpdateNetworkSiblingSet</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
@@ -484,15 +529,19 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResourceQuotaLimits_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimitsAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(e), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -506,15 +555,19 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResourceQuotaLimits_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="NetAppSubscriptionQuotaItem"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<NetAppSubscriptionQuotaItem> GetNetAppQuotaLimits(AzureLocation location, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => NetAppResourceQuotaLimitsRestClient.CreateListRequest(Id.SubscriptionId, location);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem, NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => NetAppSubscriptionQuotaItem.DeserializeNetAppSubscriptionQuotaItem(e), NetAppResourceQuotaLimitsClientDiagnostics, Pipeline, "MockableNetAppSubscriptionResource.GetNetAppQuotaLimits", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -528,9 +581,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResourceQuotaLimits_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -564,9 +621,13 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>NetAppResourceQuotaLimits_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="quotaLimitName"> The name of the Quota Limit. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="quotaLimitName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -600,6 +661,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -621,6 +690,14 @@ namespace Azure.ResourceManager.NetApp.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Accounts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetAppAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

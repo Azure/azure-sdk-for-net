@@ -5,25 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability
+    public partial class ElasticPoolPerDatabaseMaxPerformanceLevelCapability : IUtf8JsonSerializable, IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>
     {
-        internal static ElasticPoolPerDatabaseMaxPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseMaxPerformanceLevelCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedPerDatabaseMinPerformanceLevels))
+            {
+                writer.WritePropertyName("supportedPerDatabaseMinPerformanceLevels"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
+                {
+                    writer.WriteObjectValue<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ElasticPoolPerDatabaseMaxPerformanceLevelCapability IJsonModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseMaxPerformanceLevelCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(document.RootElement, options);
+        }
+
+        internal static ElasticPoolPerDatabaseMaxPerformanceLevelCapability DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<double> limit = default;
-            Optional<PerformanceLevelUnit> unit = default;
-            Optional<IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>> supportedPerDatabaseMinPerformanceLevels = default;
-            Optional<SqlCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            double? limit = default;
+            PerformanceLevelUnit? unit = default;
+            IReadOnlyList<ElasticPoolPerDatabaseMinPerformanceLevelCapability> supportedPerDatabaseMinPerformanceLevels = default;
+            SqlCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -53,7 +132,7 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ElasticPoolPerDatabaseMinPerformanceLevelCapability> array = new List<ElasticPoolPerDatabaseMinPerformanceLevelCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item));
+                        array.Add(ElasticPoolPerDatabaseMinPerformanceLevelCapability.DeserializeElasticPoolPerDatabaseMinPerformanceLevelCapability(item, options));
                     }
                     supportedPerDatabaseMinPerformanceLevels = array;
                     continue;
@@ -72,8 +151,153 @@ namespace Azure.ResourceManager.Sql.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(Optional.ToNullable(limit), Optional.ToNullable(unit), Optional.ToList(supportedPerDatabaseMinPerformanceLevels), Optional.ToNullable(status), reason.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticPoolPerDatabaseMaxPerformanceLevelCapability(
+                limit,
+                unit,
+                supportedPerDatabaseMinPerformanceLevels ?? new ChangeTrackingList<ElasticPoolPerDatabaseMinPerformanceLevelCapability>(),
+                status,
+                reason,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Limit), out propertyOverride);
+            if (Optional.IsDefined(Limit) || hasPropertyOverride)
+            {
+                builder.Append("  limit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Limit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedPerDatabaseMinPerformanceLevels), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedPerDatabaseMinPerformanceLevels) || hasPropertyOverride)
+            {
+                if (SupportedPerDatabaseMinPerformanceLevels.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedPerDatabaseMinPerformanceLevels: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedPerDatabaseMinPerformanceLevels)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedPerDatabaseMinPerformanceLevels: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseMaxPerformanceLevelCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticPoolPerDatabaseMaxPerformanceLevelCapability IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeElasticPoolPerDatabaseMaxPerformanceLevelCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticPoolPerDatabaseMaxPerformanceLevelCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticPoolPerDatabaseMaxPerformanceLevelCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    internal partial class CatalogOptions : IUtf8JsonSerializable
+    internal partial class CatalogOptions : IUtf8JsonSerializable, IJsonModel<CatalogOptions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CatalogOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CatalogOptions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Hive))
             {
@@ -22,20 +32,51 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Hive)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HiveCatalogOption>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static CatalogOptions DeserializeCatalogOptions(JsonElement element)
+        CatalogOptions IJsonModel<CatalogOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CatalogOptions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCatalogOptions(document.RootElement, options);
+        }
+
+        internal static CatalogOptions DeserializeCatalogOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<HiveCatalogOption>> hive = default;
+            IList<HiveCatalogOption> hive = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hive"u8))
@@ -47,13 +88,49 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<HiveCatalogOption> array = new List<HiveCatalogOption>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item));
+                        array.Add(HiveCatalogOption.DeserializeHiveCatalogOption(item, options));
                     }
                     hive = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CatalogOptions(Optional.ToList(hive));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CatalogOptions(hive ?? new ChangeTrackingList<HiveCatalogOption>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CatalogOptions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CatalogOptions IPersistableModel<CatalogOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogOptions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCatalogOptions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CatalogOptions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CatalogOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

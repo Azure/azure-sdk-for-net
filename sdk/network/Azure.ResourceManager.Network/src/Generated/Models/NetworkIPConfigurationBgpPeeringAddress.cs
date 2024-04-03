@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Properties of IPConfigurationBgpPeeringAddress. </summary>
     public partial class NetworkIPConfigurationBgpPeeringAddress
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NetworkIPConfigurationBgpPeeringAddress"/>. </summary>
         public NetworkIPConfigurationBgpPeeringAddress()
         {
@@ -26,12 +58,14 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="defaultBgpIPAddresses"> The list of default BGP peering addresses which belong to IP configuration. </param>
         /// <param name="customBgpIPAddresses"> The list of custom BGP peering addresses which belong to IP configuration. </param>
         /// <param name="tunnelIPAddresses"> The list of tunnel public IP addresses which belong to IP configuration. </param>
-        internal NetworkIPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkIPConfigurationBgpPeeringAddress(string ipConfigurationId, IReadOnlyList<string> defaultBgpIPAddresses, IList<string> customBgpIPAddresses, IReadOnlyList<string> tunnelIPAddresses, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPConfigurationId = ipConfigurationId;
             DefaultBgpIPAddresses = defaultBgpIPAddresses;
             CustomBgpIPAddresses = customBgpIPAddresses;
             TunnelIPAddresses = tunnelIPAddresses;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The ID of IP configuration which belongs to gateway. </summary>

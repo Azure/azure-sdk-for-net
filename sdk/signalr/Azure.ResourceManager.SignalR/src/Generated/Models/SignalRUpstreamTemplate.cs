@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -16,6 +16,38 @@ namespace Azure.ResourceManager.SignalR.Models
     /// </summary>
     public partial class SignalRUpstreamTemplate
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="SignalRUpstreamTemplate"/>. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
@@ -56,13 +88,20 @@ namespace Azure.ResourceManager.SignalR.Models
         /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
         /// </param>
         /// <param name="auth"> Upstream auth settings. If not set, no auth is used for upstream messages. </param>
-        internal SignalRUpstreamTemplate(string hubPattern, string eventPattern, string categoryPattern, string urlTemplate, SignalRUpstreamAuthSettings auth)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SignalRUpstreamTemplate(string hubPattern, string eventPattern, string categoryPattern, string urlTemplate, SignalRUpstreamAuthSettings auth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             HubPattern = hubPattern;
             EventPattern = eventPattern;
             CategoryPattern = categoryPattern;
             UrlTemplate = urlTemplate;
             Auth = auth;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SignalRUpstreamTemplate"/> for deserialization. </summary>
+        internal SignalRUpstreamTemplate()
+        {
         }
 
         /// <summary>
@@ -72,6 +111,7 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     2. Combine multiple hubs with ",", for example "hub1,hub2", it matches "hub1" and "hub2".
         ///     3. The single hub name, for example, "hub1", it matches "hub1".
         /// </summary>
+        [WirePath("hubPattern")]
         public string HubPattern { get; set; }
         /// <summary>
         /// Gets or sets the matching pattern for event names. If not set, it matches any event.
@@ -80,6 +120,7 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     2. Combine multiple events with ",", for example "connect,disconnect", it matches event "connect" and "disconnect".
         ///     3. The single event name, for example, "connect", it matches "connect".
         /// </summary>
+        [WirePath("eventPattern")]
         public string EventPattern { get; set; }
         /// <summary>
         /// Gets or sets the matching pattern for category names. If not set, it matches any category.
@@ -88,13 +129,16 @@ namespace Azure.ResourceManager.SignalR.Models
         ///     2. Combine multiple categories with ",", for example "connections,messages", it matches category "connections" and "messages".
         ///     3. The single category name, for example, "connections", it matches the category "connections".
         /// </summary>
+        [WirePath("categoryPattern")]
         public string CategoryPattern { get; set; }
         /// <summary>
         /// Gets or sets the Upstream URL template. You can use 3 predefined parameters {hub}, {category} {event} inside the template, the value of the Upstream URL is dynamically calculated when the client request comes in.
         /// For example, if the urlTemplate is `http://example.com/{hub}/api/{event}`, with a client request from hub `chat` connects, it will first POST to this URL: `http://example.com/chat/api/connect`.
         /// </summary>
+        [WirePath("urlTemplate")]
         public string UrlTemplate { get; set; }
         /// <summary> Upstream auth settings. If not set, no auth is used for upstream messages. </summary>
+        [WirePath("auth")]
         public SignalRUpstreamAuthSettings Auth { get; set; }
     }
 }

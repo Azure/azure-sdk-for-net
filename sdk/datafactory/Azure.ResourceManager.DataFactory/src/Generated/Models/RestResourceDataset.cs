@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -50,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             AdditionalHeaders = additionalHeaders;
             PaginationRules = paginationRules;
             DatasetType = datasetType ?? "RestResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestResourceDataset"/> for deserialization. </summary>
+        internal RestResourceDataset()
+        {
         }
 
         /// <summary> The relative URL to the resource that the RESTful API provides. Type: string (or Expression with resultType string). </summary>

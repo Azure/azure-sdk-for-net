@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkAnalytics.Models
 {
-    public partial class RoleAssignmentDetail : IUtf8JsonSerializable
+    public partial class RoleAssignmentDetail : IUtf8JsonSerializable, IJsonModel<RoleAssignmentDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleAssignmentDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoleAssignmentDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentDetail)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("roleId"u8);
             writer.WriteStringValue(RoleId);
@@ -35,11 +45,40 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             writer.WriteStringValue(Role.ToString());
             writer.WritePropertyName("roleAssignmentId"u8);
             writer.WriteStringValue(RoleAssignmentId);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoleAssignmentDetail DeserializeRoleAssignmentDetail(JsonElement element)
+        RoleAssignmentDetail IJsonModel<RoleAssignmentDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleAssignmentDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleAssignmentDetail(document.RootElement, options);
+        }
+
+        internal static RoleAssignmentDetail DeserializeRoleAssignmentDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -51,6 +90,8 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
             string principalType = default;
             DataProductUserRole role = default;
             string roleAssignmentId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("roleId"u8))
@@ -93,8 +134,52 @@ namespace Azure.ResourceManager.NetworkAnalytics.Models
                     roleAssignmentId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleAssignmentDetail(roleId, principalId, userName, dataTypeScope, principalType, role, roleAssignmentId);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoleAssignmentDetail(
+                roleId,
+                principalId,
+                userName,
+                dataTypeScope,
+                principalType,
+                role,
+                roleAssignmentId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoleAssignmentDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoleAssignmentDetail IPersistableModel<RoleAssignmentDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleAssignmentDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleAssignmentDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleAssignmentDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

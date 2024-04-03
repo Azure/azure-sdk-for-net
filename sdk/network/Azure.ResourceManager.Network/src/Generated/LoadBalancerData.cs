@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -38,6 +37,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="location"> Resource location. </param>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="extendedLocation"> The extended location of the load balancer. </param>
         /// <param name="sku"> The load balancer SKU. </param>
         /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Network
         /// <param name="outboundRules"> The outbound rules. </param>
         /// <param name="resourceGuid"> The resource GUID property of the load balancer resource. </param>
         /// <param name="provisioningState"> The provisioning state of the load balancer resource. </param>
-        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags)
+        internal LoadBalancerData(ResourceIdentifier id, string name, ResourceType? resourceType, AzureLocation? location, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ExtendedLocation extendedLocation, LoadBalancerSku sku, ETag? etag, IList<FrontendIPConfigurationData> frontendIPConfigurations, IList<BackendAddressPoolData> backendAddressPools, IList<LoadBalancingRuleData> loadBalancingRules, IList<ProbeData> probes, IList<InboundNatRuleData> inboundNatRules, IList<LoadBalancerInboundNatPool> inboundNatPools, IList<OutboundRuleData> outboundRules, Guid? resourceGuid, NetworkProvisioningState? provisioningState) : base(id, name, resourceType, location, tags, serializedAdditionalRawData)
         {
             ExtendedLocation = extendedLocation;
             Sku = sku;

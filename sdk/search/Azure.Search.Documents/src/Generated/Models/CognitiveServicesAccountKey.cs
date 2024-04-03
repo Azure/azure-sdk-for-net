@@ -6,11 +6,10 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> An Azure AI service resource provisioned with a key that is attached to a skillset. </summary>
+    /// <summary> The multi-region account key of an Azure AI service resource that's attached to a skillset. </summary>
     public partial class CognitiveServicesAccountKey : CognitiveServicesAccount
     {
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesAccountKey"/>. </summary>

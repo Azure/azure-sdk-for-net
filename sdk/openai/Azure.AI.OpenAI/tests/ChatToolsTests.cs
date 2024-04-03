@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -169,12 +170,21 @@ public class ChatToolsTests : OpenAITestBase
         Assert.That(response, Is.Not.Null);
 
         Dictionary<int, ChatRole> rolesByChoiceIndex = new();
+        Dictionary<int, StringBuilder> contentBuildersByChoiceIndex = new();
         Dictionary<(int, int), string> toolCallIdsByChoiceAndCallIndices = new();
         Dictionary<(int, int), string> toolCallFunctionNamesByChoiceAndCallIndices = new();
         Dictionary<(int, int), StringBuilder> toolCallFunctionArgumentsByChoiceAndCallIndices = new();
 
         await foreach (StreamingChatCompletionsUpdate chatUpdate in response)
         {
+            if (chatUpdate.ChoiceIndex.HasValue)
+            {
+                if (!contentBuildersByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value))
+                {
+                    contentBuildersByChoiceIndex[chatUpdate.ChoiceIndex.Value] = new();
+                }
+                contentBuildersByChoiceIndex[chatUpdate.ChoiceIndex.Value].Append(chatUpdate.ContentUpdate);
+            }
             if (chatUpdate.Role.HasValue)
             {
                 Assert.That(rolesByChoiceIndex.ContainsKey(chatUpdate.ChoiceIndex.Value), Is.False);
@@ -237,6 +247,53 @@ public class ChatToolsTests : OpenAITestBase
                 string arguments = toolCallFunctionArgumentsByChoiceAndCallIndices[(choiceIndex, callIndex)].ToString();
                 using JsonDocument deserializedArguments = JsonDocument.Parse(arguments);
             }
+        }
+
+        ChatRequestAssistantMessage assistantHistoryMessage = new(contentBuildersByChoiceIndex.First().Value.ToString());
+        foreach ((int, int) choiceAndCallKey in toolCallIdsByChoiceAndCallIndices.Keys)
+        {
+            assistantHistoryMessage.ToolCalls.Add(new ChatCompletionsFunctionToolCall(
+                id: toolCallIdsByChoiceAndCallIndices[choiceAndCallKey],
+                name: toolCallFunctionNamesByChoiceAndCallIndices[choiceAndCallKey],
+                arguments: toolCallFunctionArgumentsByChoiceAndCallIndices[choiceAndCallKey].ToString()));
+        }
+        requestOptions.Messages.Add(assistantHistoryMessage);
+
+        foreach (string toolCallId in toolCallIdsByChoiceAndCallIndices.Values)
+        {
+            requestOptions.Messages.Add(new ChatRequestToolMessage(
+                "red is 1; green is 2; blue is 4; yellow is 8; chartreuse is 16",
+                toolCallId));
+        }
+
+        StreamingResponse<StreamingChatCompletionsUpdate> followupResponse
+            = await client.GetChatCompletionsStreamingAsync(requestOptions);
+        Assert.That(response, Is.Not.Null);
+
+        List<StringBuilder> followupContentBuilders = new();
+        await foreach (StreamingChatCompletionsUpdate followupUpdate in followupResponse)
+        {
+            if (followupUpdate.ChoiceIndex.HasValue)
+            {
+                Assert.That(followupUpdate.ChoiceIndex.Value, Is.GreaterThanOrEqualTo(0));
+                Assert.That(followupUpdate.ChoiceIndex.Value, Is.LessThan(requestOptions.ChoiceCount));
+                while (followupContentBuilders.Count <= followupUpdate.ChoiceIndex.Value)
+                {
+                    followupContentBuilders.Add(new());
+                }
+                followupContentBuilders[followupUpdate.ChoiceIndex.Value].Append(followupUpdate.ContentUpdate);
+
+                if (followupUpdate.Role.HasValue)
+                {
+                    Assert.That(followupUpdate.Role, Is.EqualTo(ChatRole.Assistant));
+                }
+            }
+        }
+
+        Assert.That(followupContentBuilders.Count, Is.EqualTo(requestOptions.ChoiceCount));
+        foreach (StringBuilder contentBuilder in followupContentBuilders)
+        {
+            Assert.That(contentBuilder.ToString().Contains("7"));
         }
     }
 

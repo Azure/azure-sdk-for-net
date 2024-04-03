@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,10 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="Trigger"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="BlobEventsTrigger"/>, <see cref="BlobTrigger"/>, <see cref="ChainingTrigger"/>, <see cref="CustomEventsTrigger"/>, <see cref="MultiplePipelineTrigger"/>, <see cref="RerunTumblingWindowTrigger"/>, <see cref="ScheduleTrigger"/> and <see cref="TumblingWindowTrigger"/>.
     /// </summary>
-    public partial class Trigger
+    public abstract partial class Trigger
     {
         /// <summary> Initializes a new instance of <see cref="Trigger"/>. </summary>
-        public Trigger()
+        protected Trigger()
         {
             Annotations = new ChangeTrackingList<object>();
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();

@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Peering.Models
 {
-    public partial class PeeringBgpSession : IUtf8JsonSerializable
+    public partial class PeeringBgpSession : IUtf8JsonSerializable, IJsonModel<PeeringBgpSession>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PeeringBgpSession>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PeeringBgpSession>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SessionPrefixV4))
             {
@@ -46,6 +57,16 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("peerSessionIPv6Address"u8);
                 writer.WriteStringValue(PeerSessionIPv6Address.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(SessionStateV4))
+            {
+                writer.WritePropertyName("sessionStateV4"u8);
+                writer.WriteStringValue(SessionStateV4.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(SessionStateV6))
+            {
+                writer.WritePropertyName("sessionStateV6"u8);
+                writer.WriteStringValue(SessionStateV6.Value.ToString());
+            }
             if (Optional.IsDefined(MaxPrefixesAdvertisedV4))
             {
                 writer.WritePropertyName("maxPrefixesAdvertisedV4"u8);
@@ -61,26 +82,57 @@ namespace Azure.ResourceManager.Peering.Models
                 writer.WritePropertyName("md5AuthenticationKey"u8);
                 writer.WriteStringValue(Md5AuthenticationKey);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element)
+        PeeringBgpSession IJsonModel<PeeringBgpSession>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePeeringBgpSession(document.RootElement, options);
+        }
+
+        internal static PeeringBgpSession DeserializePeeringBgpSession(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> sessionPrefixV4 = default;
-            Optional<string> sessionPrefixV6 = default;
-            Optional<IPAddress> microsoftSessionIPv4Address = default;
-            Optional<IPAddress> microsoftSessionIPv6Address = default;
-            Optional<IPAddress> peerSessionIPv4Address = default;
-            Optional<IPAddress> peerSessionIPv6Address = default;
-            Optional<PeeringSessionStateV4> sessionStateV4 = default;
-            Optional<PeeringSessionStateV6> sessionStateV6 = default;
-            Optional<int> maxPrefixesAdvertisedV4 = default;
-            Optional<int> maxPrefixesAdvertisedV6 = default;
-            Optional<string> md5AuthenticationKey = default;
+            string sessionPrefixV4 = default;
+            string sessionPrefixV6 = default;
+            IPAddress microsoftSessionIPv4Address = default;
+            IPAddress microsoftSessionIPv6Address = default;
+            IPAddress peerSessionIPv4Address = default;
+            IPAddress peerSessionIPv6Address = default;
+            PeeringSessionStateV4? sessionStateV4 = default;
+            PeeringSessionStateV6? sessionStateV6 = default;
+            int? maxPrefixesAdvertisedV4 = default;
+            int? maxPrefixesAdvertisedV6 = default;
+            string md5AuthenticationKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionPrefixV4"u8))
@@ -170,8 +222,56 @@ namespace Azure.ResourceManager.Peering.Models
                     md5AuthenticationKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PeeringBgpSession(sessionPrefixV4.Value, sessionPrefixV6.Value, microsoftSessionIPv4Address.Value, microsoftSessionIPv6Address.Value, peerSessionIPv4Address.Value, peerSessionIPv6Address.Value, Optional.ToNullable(sessionStateV4), Optional.ToNullable(sessionStateV6), Optional.ToNullable(maxPrefixesAdvertisedV4), Optional.ToNullable(maxPrefixesAdvertisedV6), md5AuthenticationKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PeeringBgpSession(
+                sessionPrefixV4,
+                sessionPrefixV6,
+                microsoftSessionIPv4Address,
+                microsoftSessionIPv6Address,
+                peerSessionIPv4Address,
+                peerSessionIPv6Address,
+                sessionStateV4,
+                sessionStateV6,
+                maxPrefixesAdvertisedV4,
+                maxPrefixesAdvertisedV6,
+                md5AuthenticationKey,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PeeringBgpSession>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PeeringBgpSession IPersistableModel<PeeringBgpSession>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PeeringBgpSession>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePeeringBgpSession(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PeeringBgpSession)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PeeringBgpSession>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

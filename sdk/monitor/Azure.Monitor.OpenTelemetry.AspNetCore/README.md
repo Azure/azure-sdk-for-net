@@ -12,17 +12,36 @@ The Azure Monitor Distro is a client library that sends telemetry data to Azure 
 
 ### What is Included in the Distro
 
-The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with internally vendored instrumentation libraries, including:
+The Azure Monitor Distro is a distribution of the .NET OpenTelemetry SDK with instrumentation libraries, including:
 
 * Traces
   * **ASP.NET Core Instrumentation**: Provides automatic tracing for incoming HTTP requests to ASP.NET Core applications.
   * **HTTP Client Instrumentation**: Provides automatic tracing for outgoing HTTP requests made using [System.Net.Http.HttpClient](https://docs.microsoft.com/dotnet/api/system.net.http.httpclient).
-  * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages.
+  * **SQL Client Instrumentation** Provides automatic tracing for SQL queries executed using the [Microsoft.Data.SqlClient](https://www.nuget.org/packages/Microsoft.Data.SqlClient) and [System.Data.SqlClient](https://www.nuget.org/packages/System.Data.SqlClient) packages. (While the OpenTelemetry SqlClient instrumentation remains in its beta phase, we have taken the step to vendor it and include it in our Distro)
 
 * Metrics
-  * Provides automatic collection of Application Insights Standard metrics.
+  * **Application Insights Standard Metrics**: Provides automatic collection of Application Insights Standard metrics.
+  * **ASP.NET Core and HTTP Client Metrics Instrumentation**: Our distro will selectively enable metrics collection based on the .NET runtime version.
+	* **.NET 8.0 and above**: Utilizes built-in Metrics `Microsoft.AspNetCore.Hosting` and `System.Net.Http` from .NET.
+      For a detailed list of metrics produced, refer to the [Microsoft.AspNetCore.Hosting](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-aspnetcore#microsoftaspnetcorehosting)
+      and [System.Net.Http](https://learn.microsoft.com/en-in/dotnet/core/diagnostics/built-in-metrics-system-net#systemnethttp) metrics documentation.
+	* **.NET 7.0 and below**: Falls back to ASP.NET Core Instrumentation and HTTP Client Instrumentation.
+      For a detailed list of metrics produced, refer to the [ASP.NET Core Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.AspNetCore/README.md#list-of-metrics-produced)
+      and [HTTP Client Instrumentation](https://github.com/open-telemetry/opentelemetry-dotnet/blob/main/src/OpenTelemetry.Instrumentation.Http/README.md#list-of-metrics-produced) documentation.
 
 * [Logs](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/logs/getting-started-console)
+  * Logs created with `Microsoft.Extensions.Logging`. See [Logging in .NET Core and ASP.NET Core](https://learn.microsoft.com/aspnet/core/fundamentals/logging) for more details on how to create and configure logging.
+  * [Azure SDK logs](https://learn.microsoft.com/dotnet/azure/sdk/logging) are recorded as a subset of `Microsoft.Extensions.Logging`
+
+* Resource Detectors
+  * **AppServiceResourceDetector**: Adds resource attributes for the applications running in Azure App Service.
+  * **AzureVMResourceDetector**: Adds resource attributes for the applications running in an Azure Virtual Machine.
+  * **AzureContainerAppsResourceDetector**: Adds resource attributes for the applications running in Azure Container Apps.
+
+   **Note**: The detectors are part of the [OpenTelemetry.ResourceDetectors.Azure](https://github.com/open-telemetry/opentelemetry-dotnet-contrib/tree/main/src/OpenTelemetry.ResourceDetectors.Azure) package. While this package is currently in its beta phase, we have chosen to vendor in the code for these detectors to include them in our Distro. Please be aware that resource attributes are only used to set the cloud role and role instance. All other resource attributes are ignored.
+
+* [Live Metrics](https://learn.microsoft.com/azure/azure-monitor/app/live-stream)
+  * Integrated support for live metrics through the [Azure.Monitor.OpenTelemetry.LiveMetrics](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics) package, enabling real-time monitoring of application performance.
 
 * [Azure Monitor Exporter](https://www.nuget.org/packages/Azure.Monitor.OpenTelemetry.Exporter/) allows sending traces, metrics, and logs data to Azure Monitor.
 
@@ -181,9 +200,94 @@ environmental variables:
 | `OTEL_RESOURCE_ATTRIBUTES` | Key-value pairs to be used as resource attributes. See the [Resource SDK specification](https://github.com/open-telemetry/opentelemetry-specification/blob/v1.5.0/specification/resource/sdk.md#specifying-resource-information-via-an-environment-variable) for more details. |
 | `OTEL_SERVICE_NAME`        | Sets the value of the `service.name` resource attribute. If `service.name` is also provided in `OTEL_RESOURCE_ATTRIBUTES`, then `OTEL_SERVICE_NAME` takes precedence. |
 
+#### Customizing Instrumentation Libraries
+
+The Azure Monitor Distro includes .NET OpenTelemetry instrumentation for [ASP.NET Core](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.AspNetCore/), [HttpClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.Http/), and [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient).
+You can customize these included instrumentations or manually add additional instrumentation on your own using the OpenTelemetry API.
+
+Here are some examples of how to customize the instrumentation:
+
+##### Customizing AspNetCoreTraceInstrumentationOptions
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<AspNetCoreTraceInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.Filter = (httpContext) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return HttpMethods.IsGet(httpContext.Request.Method);
+    };
+});
+```
+
+##### Customizing HttpClientTraceInstrumentationOptions
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.Configure<HttpClientTraceInstrumentationOptions>(options =>
+{
+    options.RecordException = true;
+    options.FilterHttpRequestMessage = (httpRequestMessage) =>
+    {
+        // only collect telemetry about HTTP GET requests
+        return HttpMethods.IsGet(httpRequestMessage.Method.Method);
+    };
+});
+```
+
+##### Customizing SqlClientInstrumentationOptions
+
+While the [SQLClient](https://www.nuget.org/packages/OpenTelemetry.Instrumentation.SqlClient) instrumentation is still in beta, we have vendored it within our package.
+Once it reaches a stable release, it will be included as a standard package reference.
+Until then, for customization of the SQLClient instrumentation, manually add the OpenTelemetry.Instrumentation.SqlClient package reference to your project and utilize its public API.
+
+```
+dotnet add package --prerelease OpenTelemetry.Instrumentation.SqlClient
+```
+
+```C#
+builder.Services.AddOpenTelemetry().UseAzureMonitor().WithTracing(builder =>
+{
+    builder.AddSqlClientInstrumentation(options =>
+    {
+        options.SetDbStatementForStoredProcedure = false;
+    });
+});
+```
+
+#### Disable Live Metrics
+
+By default, the Live Metrics feature is enabled in the Azure Monitor Distro. This feature allows for real-time monitoring of application performance, providing immediate insights into your application's operations. However, there may be scenarios where you prefer to disable this feature, such as to optimize resource usage or in environments where real-time monitoring is not a requirement.
+
+To disable Live Metrics, you can set the `EnableLiveMetrics` property to `false` in the `AzureMonitorOptions`. Here's an example of how to disable Live Metrics:
+
+```C#
+// Disable Live Metrics by setting EnableLiveMetrics to false in the UseAzureMonitor configuration.
+builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
+{
+    o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
+    o.EnableLiveMetrics = false;
+});
+```
+
+#### Drop a Metrics Instrument
+
+The Azure Monitor Distro enables metric collection and collects several metrics by default.
+If you want to exclude specific instruments from being collected in your application's telemetry use the following code snippet:
+
+```C#
+builder.Services.ConfigureOpenTelemetryMeterProvider(metrics =>
+    metrics.AddView(instrumentName: "http.server.active_requests", MetricStreamConfiguration.Drop)
+    );
+```
+
+Refer to [Drop an instrument](https://github.com/open-telemetry/opentelemetry-dotnet/tree/main/docs/metrics/customizing-the-sdk#drop-an-instrument) for more examples.
+
 ## Key concepts
 
-The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and internally vendored instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
+The Azure Monitor Distro is a distribution package that facilitates users in sending telemetry data to Azure Monitor. It encompasses the .NET OpenTelemetry SDK and instrumentation libraries for ASP.NET Core, HttpClient, and SQLClient, ensuring seamless integration and data collection.
 
 ## Examples
 

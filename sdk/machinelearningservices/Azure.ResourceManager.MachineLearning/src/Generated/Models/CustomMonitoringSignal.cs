@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -38,6 +37,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="mode"> The current notification mode for this signal. </param>
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="signalType"> [Required] Specifies the type of signal to monitor. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentId"> [Required] ARM resource ID of the component resource used to calculate the custom metrics. </param>
         /// <param name="inputAssets">
         /// Monitoring assets to take as input. Key is the component input port name, value is the data asset.
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="metricThresholds"> [Required] A list of metrics to calculate and their associated thresholds. </param>
         /// <param name="workspaceConnection"> [Required] A list of metrics to calculate and their associated thresholds. </param>
-        internal CustomMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, string componentId, IDictionary<string, MonitoringInputDataBase> inputAssets, IDictionary<string, MachineLearningJobInput> inputs, IList<CustomMetricThreshold> metricThresholds, MonitoringWorkspaceConnection workspaceConnection) : base(mode, properties, signalType)
+        internal CustomMonitoringSignal(MonitoringNotificationMode? mode, IDictionary<string, string> properties, MonitoringSignalType signalType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentId, IDictionary<string, MonitoringInputDataBase> inputAssets, IDictionary<string, MachineLearningJobInput> inputs, IList<CustomMetricThreshold> metricThresholds, MonitoringWorkspaceConnection workspaceConnection) : base(mode, properties, signalType, serializedAdditionalRawData)
         {
             ComponentId = componentId;
             InputAssets = inputAssets;
@@ -59,6 +59,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MetricThresholds = metricThresholds;
             WorkspaceConnection = workspaceConnection;
             SignalType = signalType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CustomMonitoringSignal"/> for deserialization. </summary>
+        internal CustomMonitoringSignal()
+        {
         }
 
         /// <summary> [Required] ARM resource ID of the component resource used to calculate the custom metrics. </summary>

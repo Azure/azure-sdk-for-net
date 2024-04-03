@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ResourceMover.Mocking;
 using Azure.ResourceManager.ResourceMover.Models;
 using Azure.ResourceManager.Resources;
@@ -106,6 +104,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResourceSetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -135,6 +141,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MoveCollections_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResourceSetResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -166,6 +180,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResourceSetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -194,6 +216,14 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>MoveCollections_ListMoveCollectionsBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MoverResourceSetResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -221,6 +251,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <term>Operation Id</term>
         /// <description>OperationsDiscovery_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -247,6 +281,10 @@ namespace Azure.ResourceManager.ResourceMover
         /// <item>
         /// <term>Operation Id</term>
         /// <description>OperationsDiscovery_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-08-01</description>
         /// </item>
         /// </list>
         /// <item>

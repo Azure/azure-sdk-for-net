@@ -7,8 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
-using Azure.Maps.Search;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -20,10 +19,10 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<MapsAddress> address = default;
-            Optional<string> position = default;
-            Optional<IReadOnlyList<RoadKind>> roadUse = default;
-            Optional<MapsSearchMatchType> matchType = default;
+            MapsAddress address = default;
+            string position = default;
+            IReadOnlyList<RoadKind> roadUse = default;
+            MapsSearchMatchType? matchType = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address"u8))
@@ -64,7 +63,7 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressItem(address.Value, position.Value, Optional.ToList(roadUse), Optional.ToNullable(matchType));
+            return new ReverseSearchAddressItem(address, position, roadUse ?? new ChangeTrackingList<RoadKind>(), matchType);
         }
     }
 }

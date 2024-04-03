@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.ConfidentialLedger;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ConfidentialLedger.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         /// <returns> A new <see cref="Models.ConfidentialLedgerNameAvailabilityResult"/> instance for mocking. </returns>
         public static ConfidentialLedgerNameAvailabilityResult ConfidentialLedgerNameAvailabilityResult(bool? isNameAvailable = null, ConfidentialLedgerNameUnavailableReason? reason = null, string message = null)
         {
-            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message);
+            return new ConfidentialLedgerNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ConfidentialLedgerData"/>. </summary>
@@ -40,7 +39,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ConfidentialLedgerData(id, name, resourceType, systemData, tags, location, properties);
+            return new ConfidentialLedgerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConfidentialLedgerProperties"/>. </summary>
@@ -59,7 +66,17 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             aadBasedSecurityPrincipals ??= new List<AadBasedSecurityPrincipal>();
             certBasedSecurityPrincipals ??= new List<CertBasedSecurityPrincipal>();
 
-            return new ConfidentialLedgerProperties(ledgerName, ledgerUri, identityServiceUri, ledgerInternalNamespace, runningState, ledgerType, provisioningState, aadBasedSecurityPrincipals?.ToList(), certBasedSecurityPrincipals?.ToList());
+            return new ConfidentialLedgerProperties(
+                ledgerName,
+                ledgerUri,
+                identityServiceUri,
+                ledgerInternalNamespace,
+                runningState,
+                ledgerType,
+                provisioningState,
+                aadBasedSecurityPrincipals?.ToList(),
+                certBasedSecurityPrincipals?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ConfidentialLedger.ManagedCcfData"/>. </summary>
@@ -75,7 +92,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ManagedCcfData(id, name, resourceType, systemData, tags, location, properties);
+            return new ManagedCcfData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedCcfProperties"/>. </summary>
@@ -91,7 +116,15 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
         {
             memberIdentityCertificates ??= new List<ConfidentialLedgerMemberIdentityCertificate>();
 
-            return new ManagedCcfProperties(appName, appUri, identityServiceUri, memberIdentityCertificates?.ToList(), deploymentType, provisioningState, nodeCount);
+            return new ManagedCcfProperties(
+                appName,
+                appUri,
+                identityServiceUri,
+                memberIdentityCertificates?.ToList(),
+                deploymentType,
+                provisioningState,
+                nodeCount,
+                serializedAdditionalRawData: null);
         }
     }
 }

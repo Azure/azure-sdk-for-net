@@ -5,25 +5,101 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class SecurityRuleAssociations
+    public partial class SecurityRuleAssociations : IUtf8JsonSerializable, IJsonModel<SecurityRuleAssociations>
     {
-        internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityRuleAssociations>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityRuleAssociations>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NetworkInterfaceAssociation))
+            {
+                writer.WritePropertyName("networkInterfaceAssociation"u8);
+                writer.WriteObjectValue<NetworkInterfaceAssociation>(NetworkInterfaceAssociation, options);
+            }
+            if (Optional.IsDefined(SubnetAssociation))
+            {
+                writer.WritePropertyName("subnetAssociation"u8);
+                writer.WriteObjectValue<SubnetAssociation>(SubnetAssociation, options);
+            }
+            if (Optional.IsCollectionDefined(DefaultSecurityRules))
+            {
+                writer.WritePropertyName("defaultSecurityRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in DefaultSecurityRules)
+                {
+                    writer.WriteObjectValue<SecurityRuleData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
+            {
+                writer.WritePropertyName("effectiveSecurityRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in EffectiveSecurityRules)
+                {
+                    writer.WriteObjectValue<EffectiveNetworkSecurityRule>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SecurityRuleAssociations IJsonModel<SecurityRuleAssociations>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityRuleAssociations(document.RootElement, options);
+        }
+
+        internal static SecurityRuleAssociations DeserializeSecurityRuleAssociations(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<NetworkInterfaceAssociation> networkInterfaceAssociation = default;
-            Optional<SubnetAssociation> subnetAssociation = default;
-            Optional<IReadOnlyList<SecurityRuleData>> defaultSecurityRules = default;
-            Optional<IReadOnlyList<EffectiveNetworkSecurityRule>> effectiveSecurityRules = default;
+            NetworkInterfaceAssociation networkInterfaceAssociation = default;
+            SubnetAssociation subnetAssociation = default;
+            IReadOnlyList<SecurityRuleData> defaultSecurityRules = default;
+            IReadOnlyList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkInterfaceAssociation"u8))
@@ -32,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value);
+                    networkInterfaceAssociation = NetworkInterfaceAssociation.DeserializeNetworkInterfaceAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("subnetAssociation"u8))
@@ -41,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value);
+                    subnetAssociation = SubnetAssociation.DeserializeSubnetAssociation(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultSecurityRules"u8))
@@ -53,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<SecurityRuleData> array = new List<SecurityRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item));
+                        array.Add(SecurityRuleData.DeserializeSecurityRuleData(item, options));
                     }
                     defaultSecurityRules = array;
                     continue;
@@ -67,13 +143,49 @@ namespace Azure.ResourceManager.Network.Models
                     List<EffectiveNetworkSecurityRule> array = new List<EffectiveNetworkSecurityRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item));
+                        array.Add(EffectiveNetworkSecurityRule.DeserializeEffectiveNetworkSecurityRule(item, options));
                     }
                     effectiveSecurityRules = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityRuleAssociations(networkInterfaceAssociation.Value, subnetAssociation.Value, Optional.ToList(defaultSecurityRules), Optional.ToList(effectiveSecurityRules));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityRuleAssociations(networkInterfaceAssociation, subnetAssociation, defaultSecurityRules ?? new ChangeTrackingList<SecurityRuleData>(), effectiveSecurityRules ?? new ChangeTrackingList<EffectiveNetworkSecurityRule>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityRuleAssociations>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityRuleAssociations IPersistableModel<SecurityRuleAssociations>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityRuleAssociations>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityRuleAssociations(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityRuleAssociations)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityRuleAssociations>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

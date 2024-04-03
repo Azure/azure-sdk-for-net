@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
@@ -27,11 +27,17 @@ namespace Azure.ResourceManager.Avs.Models
         /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/>. </summary>
         /// <param name="addonType"> The type of private cloud addon. </param>
         /// <param name="provisioningState"> The state of the addon provisioning. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="offer"> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </param>
-        internal AddonHcxProperties(AddonType addonType, AddonProvisioningState? provisioningState, string offer) : base(addonType, provisioningState)
+        internal AddonHcxProperties(AddonType addonType, AddonProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData, string offer) : base(addonType, provisioningState, serializedAdditionalRawData)
         {
             Offer = offer;
             AddonType = addonType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AddonHcxProperties"/> for deserialization. </summary>
+        internal AddonHcxProperties()
+        {
         }
 
         /// <summary> The HCX offer, example VMware MaaS Cloud Provider (Enterprise). </summary>

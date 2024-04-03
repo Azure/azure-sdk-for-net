@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFlowDebugPackageDebugSettings : IUtf8JsonSerializable
+    public partial class DataFlowDebugPackageDebugSettings : IUtf8JsonSerializable, IJsonModel<DataFlowDebugPackageDebugSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFlowDebugPackageDebugSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFlowDebugPackageDebugSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugPackageDebugSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugPackageDebugSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(SourceSettings))
             {
@@ -21,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSourceSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +71,133 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataFlowDebugPackageDebugSettings IJsonModel<DataFlowDebugPackageDebugSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugPackageDebugSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFlowDebugPackageDebugSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFlowDebugPackageDebugSettings(document.RootElement, options);
+        }
+
+        internal static DataFlowDebugPackageDebugSettings DeserializeDataFlowDebugPackageDebugSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<DataFlowSourceSetting> sourceSettings = default;
+            IDictionary<string, BinaryData> parameters = default;
+            BinaryData datasetParameters = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("sourceSettings"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFlowSourceSetting> array = new List<DataFlowSourceSetting>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFlowSourceSetting.DeserializeDataFlowSourceSetting(item, options));
+                    }
+                    sourceSettings = array;
+                    continue;
+                }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(property0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(property0.Name, BinaryData.FromString(property0.Value.GetRawText()));
+                        }
+                    }
+                    parameters = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("datasetParameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    datasetParameters = BinaryData.FromString(property.Value.GetRawText());
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataFlowDebugPackageDebugSettings(sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>(), parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), datasetParameters, serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DataFlowDebugPackageDebugSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugPackageDebugSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowDebugPackageDebugSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFlowDebugPackageDebugSettings IPersistableModel<DataFlowDebugPackageDebugSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFlowDebugPackageDebugSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFlowDebugPackageDebugSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFlowDebugPackageDebugSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFlowDebugPackageDebugSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

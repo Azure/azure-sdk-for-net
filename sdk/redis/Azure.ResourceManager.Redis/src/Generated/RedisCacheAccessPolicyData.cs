@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Redis.Models;
@@ -17,6 +19,38 @@ namespace Azure.ResourceManager.Redis
     /// </summary>
     public partial class RedisCacheAccessPolicyData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RedisCacheAccessPolicyData"/>. </summary>
         public RedisCacheAccessPolicyData()
         {
@@ -30,18 +64,23 @@ namespace Azure.ResourceManager.Redis
         /// <param name="provisioningState"> Provisioning state of access policy. </param>
         /// <param name="typePropertiesType"> Built-In or Custom access policy. </param>
         /// <param name="permissions"> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </param>
-        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyProvisioningState? provisioningState, AccessPolicyType? typePropertiesType, string permissions) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RedisCacheAccessPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AccessPolicyProvisioningState? provisioningState, AccessPolicyType? typePropertiesType, string permissions, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             TypePropertiesType = typePropertiesType;
             Permissions = permissions;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Provisioning state of access policy. </summary>
+        [WirePath("properties.provisioningState")]
         public AccessPolicyProvisioningState? ProvisioningState { get; }
         /// <summary> Built-In or Custom access policy. </summary>
+        [WirePath("properties.type")]
         public AccessPolicyType? TypePropertiesType { get; }
         /// <summary> Permissions for the access policy. Learn how to configure permissions at https://aka.ms/redis/AADPreRequisites. </summary>
+        [WirePath("properties.permissions")]
         public string Permissions { get; set; }
     }
 }

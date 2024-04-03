@@ -5,16 +5,76 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
-    public partial class TransliterableScript
+    public partial class TransliterableScript : IUtf8JsonSerializable, IJsonModel<TransliterableScript>
     {
-        internal static TransliterableScript DeserializeTransliterableScript(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TransliterableScript>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TransliterableScript>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("toScripts"u8);
+            writer.WriteStartArray();
+            foreach (var item in ToScripts)
+            {
+                writer.WriteObjectValue<CommonScriptModel>(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("code"u8);
+            writer.WriteStringValue(Code);
+            writer.WritePropertyName("name"u8);
+            writer.WriteStringValue(Name);
+            writer.WritePropertyName("nativeName"u8);
+            writer.WriteStringValue(NativeName);
+            writer.WritePropertyName("dir"u8);
+            writer.WriteStringValue(Dir);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TransliterableScript IJsonModel<TransliterableScript>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTransliterableScript(document.RootElement, options);
+        }
+
+        internal static TransliterableScript DeserializeTransliterableScript(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,6 +84,8 @@ namespace Azure.AI.Translation.Text
             string name = default;
             string nativeName = default;
             string dir = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("toScripts"u8))
@@ -31,7 +93,7 @@ namespace Azure.AI.Translation.Text
                     List<CommonScriptModel> array = new List<CommonScriptModel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeserializeCommonScriptModel(item));
+                        array.Add(DeserializeCommonScriptModel(item, options));
                     }
                     toScripts = array;
                     continue;
@@ -56,9 +118,51 @@ namespace Azure.AI.Translation.Text
                     dir = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TransliterableScript(code, name, nativeName, dir, toScripts);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TransliterableScript(
+                code,
+                name,
+                nativeName,
+                dir,
+                serializedAdditionalRawData,
+                toScripts);
         }
+
+        BinaryData IPersistableModel<TransliterableScript>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TransliterableScript IPersistableModel<TransliterableScript>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TransliterableScript>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTransliterableScript(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TransliterableScript)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TransliterableScript>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -66,6 +170,14 @@ namespace Azure.AI.Translation.Text
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeTransliterableScript(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TransliterableScript>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

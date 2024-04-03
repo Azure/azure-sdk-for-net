@@ -5,23 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class BatchPipelineComponentDeploymentConfiguration : IUtf8JsonSerializable
+    public partial class BatchPipelineComponentDeploymentConfiguration : IUtf8JsonSerializable, IJsonModel<BatchPipelineComponentDeploymentConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchPipelineComponentDeploymentConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchPipelineComponentDeploymentConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
                 {
                     writer.WritePropertyName("componentId"u8);
-                    writer.WriteObjectValue(ComponentId);
+                    writer.WriteObjectValue<MachineLearningIdAssetReference>(ComponentId, options);
                 }
                 else
                 {
@@ -78,20 +88,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("deploymentConfigurationType"u8);
             writer.WriteStringValue(DeploymentConfigurationType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BatchPipelineComponentDeploymentConfiguration DeserializeBatchPipelineComponentDeploymentConfiguration(JsonElement element)
+        BatchPipelineComponentDeploymentConfiguration IJsonModel<BatchPipelineComponentDeploymentConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchPipelineComponentDeploymentConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchPipelineComponentDeploymentConfiguration DeserializeBatchPipelineComponentDeploymentConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningIdAssetReference> componentId = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> settings = default;
-            Optional<IDictionary<string, string>> tags = default;
+            MachineLearningIdAssetReference componentId = default;
+            string description = default;
+            IDictionary<string, string> settings = default;
+            IDictionary<string, string> tags = default;
             BatchDeploymentConfigurationType deploymentConfigurationType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("componentId"u8))
@@ -101,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         componentId = null;
                         continue;
                     }
-                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value);
+                    componentId = MachineLearningIdAssetReference.DeserializeMachineLearningIdAssetReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("description"u8))
@@ -149,8 +190,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     deploymentConfigurationType = new BatchDeploymentConfigurationType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchPipelineComponentDeploymentConfiguration(deploymentConfigurationType, componentId.Value, description.Value, Optional.ToDictionary(settings), Optional.ToDictionary(tags));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchPipelineComponentDeploymentConfiguration(
+                deploymentConfigurationType,
+                serializedAdditionalRawData,
+                componentId,
+                description,
+                settings ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        BinaryData IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchPipelineComponentDeploymentConfiguration IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchPipelineComponentDeploymentConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchPipelineComponentDeploymentConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchPipelineComponentDeploymentConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchPipelineComponentDeploymentConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

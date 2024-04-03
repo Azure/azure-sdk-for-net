@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.BillingBenefits.Models;
 
 namespace Azure.ResourceManager.BillingBenefits
@@ -101,6 +99,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -134,6 +140,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> May be used to expand the detail information of some properties. </param>
@@ -166,6 +180,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -201,6 +223,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> Request body for patching a savings plan order alias. </param>
@@ -235,6 +265,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ValidateUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
@@ -247,7 +285,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -261,6 +299,14 @@ namespace Azure.ResourceManager.BillingBenefits
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ValidateUpdate</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating a savings plan patch request. </param>
@@ -273,7 +319,7 @@ namespace Azure.ResourceManager.BillingBenefits
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateRequest(Id.Parent.Name, Id.Name, content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _billingBenefitsSavingsPlanSavingsPlanRestClient.CreateValidateUpdateNextPageRequest(nextLink, Id.Parent.Name, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), _billingBenefitsSavingsPlanSavingsPlanClientDiagnostics, Pipeline, "BillingBenefitsSavingsPlanResource.ValidateUpdate", "benefits", "nextLink", cancellationToken);
         }
     }
 }

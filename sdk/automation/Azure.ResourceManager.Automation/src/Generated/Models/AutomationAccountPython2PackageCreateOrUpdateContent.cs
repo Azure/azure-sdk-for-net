@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
     /// <summary> The parameters supplied to the create or update module operation. </summary>
     public partial class AutomationAccountPython2PackageCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentLink"/> is null. </exception>
@@ -28,10 +59,17 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/>. </summary>
         /// <param name="tags"> Gets or sets the tags attached to the resource. </param>
         /// <param name="contentLink"> Gets or sets the module content link. </param>
-        internal AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent(IDictionary<string, string> tags, AutomationContentLink contentLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             ContentLink = contentLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AutomationAccountPython2PackageCreateOrUpdateContent"/> for deserialization. </summary>
+        internal AutomationAccountPython2PackageCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets the tags attached to the resource. </summary>

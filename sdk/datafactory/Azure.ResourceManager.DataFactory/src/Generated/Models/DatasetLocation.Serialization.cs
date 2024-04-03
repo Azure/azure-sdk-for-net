@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DatasetLocation : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownDatasetLocation))]
+    public partial class DatasetLocation : IUtf8JsonSerializable, IJsonModel<DatasetLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatasetLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatasetLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
@@ -42,8 +53,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element)
+        DatasetLocation IJsonModel<DatasetLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatasetLocation(document.RootElement, options);
+        }
+
+        internal static DatasetLocation DeserializeDatasetLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -52,23 +77,54 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AmazonS3CompatibleLocation": return AmazonS3CompatibleLocation.DeserializeAmazonS3CompatibleLocation(element);
-                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element);
-                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element);
-                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element);
-                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element);
-                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element);
-                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element);
-                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element);
-                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element);
-                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element);
-                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element);
-                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element);
-                    case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element);
-                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element);
+                    case "AmazonS3CompatibleLocation": return AmazonS3CompatibleLocation.DeserializeAmazonS3CompatibleLocation(element, options);
+                    case "AmazonS3Location": return AmazonS3Location.DeserializeAmazonS3Location(element, options);
+                    case "AzureBlobFSLocation": return AzureBlobFSLocation.DeserializeAzureBlobFSLocation(element, options);
+                    case "AzureBlobStorageLocation": return AzureBlobStorageLocation.DeserializeAzureBlobStorageLocation(element, options);
+                    case "AzureDataLakeStoreLocation": return AzureDataLakeStoreLocation.DeserializeAzureDataLakeStoreLocation(element, options);
+                    case "AzureFileStorageLocation": return AzureFileStorageLocation.DeserializeAzureFileStorageLocation(element, options);
+                    case "FileServerLocation": return FileServerLocation.DeserializeFileServerLocation(element, options);
+                    case "FtpServerLocation": return FtpServerLocation.DeserializeFtpServerLocation(element, options);
+                    case "GoogleCloudStorageLocation": return GoogleCloudStorageLocation.DeserializeGoogleCloudStorageLocation(element, options);
+                    case "HdfsLocation": return HdfsLocation.DeserializeHdfsLocation(element, options);
+                    case "HttpServerLocation": return HttpServerLocation.DeserializeHttpServerLocation(element, options);
+                    case "LakeHouseLocation": return LakeHouseLocation.DeserializeLakeHouseLocation(element, options);
+                    case "OracleCloudStorageLocation": return OracleCloudStorageLocation.DeserializeOracleCloudStorageLocation(element, options);
+                    case "SftpLocation": return SftpLocation.DeserializeSftpLocation(element, options);
                 }
             }
-            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element);
+            return UnknownDatasetLocation.DeserializeUnknownDatasetLocation(element, options);
         }
+
+        BinaryData IPersistableModel<DatasetLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatasetLocation IPersistableModel<DatasetLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatasetLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatasetLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

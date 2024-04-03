@@ -14,6 +14,38 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> The parameters supplied to the create compilation job operation. </summary>
     public partial class DscCompilationJobCreateOrUpdateContent
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/>. </summary>
         /// <param name="configuration"> Gets or sets the configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
@@ -33,7 +65,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="configuration"> Gets or sets the configuration. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="isIncrementNodeConfigurationBuildRequired"> If a new build version of NodeConfiguration is required. </param>
-        internal DscCompilationJobCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, DscConfigurationAssociationProperty configuration, IDictionary<string, string> parameters, bool? isIncrementNodeConfigurationBuildRequired)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DscCompilationJobCreateOrUpdateContent(string name, AzureLocation? location, IDictionary<string, string> tags, DscConfigurationAssociationProperty configuration, IDictionary<string, string> parameters, bool? isIncrementNodeConfigurationBuildRequired, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Location = location;
@@ -41,6 +74,12 @@ namespace Azure.ResourceManager.Automation.Models
             Configuration = configuration;
             Parameters = parameters;
             IsIncrementNodeConfigurationBuildRequired = isIncrementNodeConfigurationBuildRequired;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DscCompilationJobCreateOrUpdateContent"/> for deserialization. </summary>
+        internal DscCompilationJobCreateOrUpdateContent()
+        {
         }
 
         /// <summary> Gets or sets name of the resource. </summary>

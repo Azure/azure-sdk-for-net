@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Mocking
@@ -75,6 +72,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>Deployments_GetAtScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="deploymentName"> The name of the deployment. </param>
@@ -97,6 +102,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_GetAtScope</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-09-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -121,6 +134,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>TemplateSpecs_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="expand"> Allows for expansion of additional Template Spec details in the response. Optional. </param>
@@ -143,6 +164,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>TemplateSpecs_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="TemplateSpecResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,6 +196,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentScriptResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -188,6 +225,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DeploymentScripts_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmDeploymentScriptResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +256,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>Applications_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmApplicationResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -232,6 +285,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Applications_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ArmApplicationResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +316,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <term>Operation Id</term>
         /// <description>jitRequests_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JitRequestResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -275,6 +344,14 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>jitRequests_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2019-07-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="JitRequestResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

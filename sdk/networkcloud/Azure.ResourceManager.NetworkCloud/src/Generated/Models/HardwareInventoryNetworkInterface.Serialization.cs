@@ -5,23 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class HardwareInventoryNetworkInterface
+    public partial class HardwareInventoryNetworkInterface : IUtf8JsonSerializable, IJsonModel<HardwareInventoryNetworkInterface>
     {
-        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareInventoryNetworkInterface>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HardwareInventoryNetworkInterface>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LinkStatus))
+            {
+                writer.WritePropertyName("linkStatus"u8);
+                writer.WriteStringValue(LinkStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
+            {
+                writer.WritePropertyName("macAddress"u8);
+                writer.WriteStringValue(MacAddress);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceId))
+            {
+                writer.WritePropertyName("networkInterfaceId"u8);
+                writer.WriteStringValue(NetworkInterfaceId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HardwareInventoryNetworkInterface IJsonModel<HardwareInventoryNetworkInterface>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareInventoryNetworkInterface(document.RootElement, options);
+        }
+
+        internal static HardwareInventoryNetworkInterface DeserializeHardwareInventoryNetworkInterface(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> linkStatus = default;
-            Optional<string> macAddress = default;
-            Optional<string> name = default;
-            Optional<string> networkInterfaceId = default;
+            string linkStatus = default;
+            string macAddress = default;
+            string name = default;
+            string networkInterfaceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkStatus"u8))
@@ -44,8 +112,44 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     networkInterfaceId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HardwareInventoryNetworkInterface(linkStatus.Value, macAddress.Value, name.Value, networkInterfaceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HardwareInventoryNetworkInterface(linkStatus, macAddress, name, networkInterfaceId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HardwareInventoryNetworkInterface>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HardwareInventoryNetworkInterface IPersistableModel<HardwareInventoryNetworkInterface>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHardwareInventoryNetworkInterface(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HardwareInventoryNetworkInterface>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

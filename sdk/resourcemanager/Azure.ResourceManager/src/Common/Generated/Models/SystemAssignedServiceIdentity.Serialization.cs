@@ -6,6 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
@@ -13,24 +16,56 @@ using Azure.Core;
 namespace Azure.ResourceManager.Models
 {
     [JsonConverter(typeof(SystemAssignedServiceIdentityConverter))]
-    public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable
+    public partial class SystemAssignedServiceIdentity : IUtf8JsonSerializable, IJsonModel<SystemAssignedServiceIdentity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemAssignedServiceIdentity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SystemAssignedServiceIdentity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
+            {
+                writer.WritePropertyName("principalId"u8);
+                writer.WriteStringValue(PrincipalId.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(SystemAssignedServiceIdentityType.ToString());
             writer.WriteEndObject();
         }
 
-        internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element)
+        SystemAssignedServiceIdentity IJsonModel<SystemAssignedServiceIdentity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemAssignedServiceIdentity(document.RootElement, options);
+        }
+
+        internal static SystemAssignedServiceIdentity DeserializeSystemAssignedServiceIdentity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> principalId = default;
-            Optional<Guid> tenantId = default;
+            Guid? principalId = default;
+            Guid? tenantId = default;
             SystemAssignedServiceIdentityType type = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -58,14 +93,101 @@ namespace Azure.ResourceManager.Models
                     continue;
                 }
             }
-            return new SystemAssignedServiceIdentity(Optional.ToNullable(principalId), Optional.ToNullable(tenantId), type);
+            return new SystemAssignedServiceIdentity(principalId, tenantId, type);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
+            if (Optional.IsDefined(PrincipalId) || hasPropertyOverride)
+            {
+                builder.Append("  principalId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrincipalId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TenantId), out propertyOverride);
+            if (Optional.IsDefined(TenantId) || hasPropertyOverride)
+            {
+                builder.Append("  tenantId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TenantId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemAssignedServiceIdentityType), out propertyOverride);
+            builder.Append("  type: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{SystemAssignedServiceIdentityType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SystemAssignedServiceIdentity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SystemAssignedServiceIdentity IPersistableModel<SystemAssignedServiceIdentity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemAssignedServiceIdentity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSystemAssignedServiceIdentity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SystemAssignedServiceIdentity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SystemAssignedServiceIdentity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         internal partial class SystemAssignedServiceIdentityConverter : JsonConverter<SystemAssignedServiceIdentity>
         {
             public override void Write(Utf8JsonWriter writer, SystemAssignedServiceIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SystemAssignedServiceIdentity>(model, new ModelReaderWriterOptions("W"));
             }
             public override SystemAssignedServiceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

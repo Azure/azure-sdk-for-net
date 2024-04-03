@@ -5,32 +5,157 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentPage
+    public partial class DocumentPage : IUtf8JsonSerializable, IJsonModel<DocumentPage>
     {
-        internal static DocumentPage DeserializeDocumentPage(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentPage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentPage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("pageNumber"u8);
+            writer.WriteNumberValue(PageNumber);
+            if (Optional.IsDefined(Angle))
+            {
+                writer.WritePropertyName("angle"u8);
+                writer.WriteNumberValue(Angle.Value);
+            }
+            if (Optional.IsDefined(Width))
+            {
+                writer.WritePropertyName("width"u8);
+                writer.WriteNumberValue(Width.Value);
+            }
+            if (Optional.IsDefined(Height))
+            {
+                writer.WritePropertyName("height"u8);
+                writer.WriteNumberValue(Height.Value);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                writer.WriteObjectValue<DocumentSpan>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Words))
+            {
+                writer.WritePropertyName("words"u8);
+                writer.WriteStartArray();
+                foreach (var item in Words)
+                {
+                    writer.WriteObjectValue<DocumentWord>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SelectionMarks))
+            {
+                writer.WritePropertyName("selectionMarks"u8);
+                writer.WriteStartArray();
+                foreach (var item in SelectionMarks)
+                {
+                    writer.WriteObjectValue<DocumentSelectionMark>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Lines))
+            {
+                writer.WritePropertyName("lines"u8);
+                writer.WriteStartArray();
+                foreach (var item in Lines)
+                {
+                    writer.WriteObjectValue<DocumentLine>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Barcodes))
+            {
+                writer.WritePropertyName("barcodes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Barcodes)
+                {
+                    writer.WriteObjectValue<DocumentBarcode>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Formulas))
+            {
+                writer.WritePropertyName("formulas"u8);
+                writer.WriteStartArray();
+                foreach (var item in Formulas)
+                {
+                    writer.WriteObjectValue<DocumentFormula>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentPage IJsonModel<DocumentPage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentPage(document.RootElement, options);
+        }
+
+        internal static DocumentPage DeserializeDocumentPage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int pageNumber = default;
-            Optional<float> angle = default;
-            Optional<float> width = default;
-            Optional<float> height = default;
-            Optional<LengthUnit> unit = default;
+            float? angle = default;
+            float? width = default;
+            float? height = default;
+            LengthUnit? unit = default;
             IReadOnlyList<DocumentSpan> spans = default;
-            Optional<IReadOnlyList<DocumentWord>> words = default;
-            Optional<IReadOnlyList<DocumentSelectionMark>> selectionMarks = default;
-            Optional<IReadOnlyList<DocumentLine>> lines = default;
-            Optional<IReadOnlyList<DocumentBarcode>> barcodes = default;
-            Optional<IReadOnlyList<DocumentFormula>> formulas = default;
+            IReadOnlyList<DocumentWord> words = default;
+            IReadOnlyList<DocumentSelectionMark> selectionMarks = default;
+            IReadOnlyList<DocumentLine> lines = default;
+            IReadOnlyList<DocumentBarcode> barcodes = default;
+            IReadOnlyList<DocumentFormula> formulas = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pageNumber"u8))
@@ -79,7 +204,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -93,7 +218,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentWord> array = new List<DocumentWord>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentWord.DeserializeDocumentWord(item));
+                        array.Add(DocumentWord.DeserializeDocumentWord(item, options));
                     }
                     words = array;
                     continue;
@@ -107,7 +232,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSelectionMark> array = new List<DocumentSelectionMark>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item));
+                        array.Add(DocumentSelectionMark.DeserializeDocumentSelectionMark(item, options));
                     }
                     selectionMarks = array;
                     continue;
@@ -121,7 +246,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentLine> array = new List<DocumentLine>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentLine.DeserializeDocumentLine(item));
+                        array.Add(DocumentLine.DeserializeDocumentLine(item, options));
                     }
                     lines = array;
                     continue;
@@ -135,7 +260,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentBarcode> array = new List<DocumentBarcode>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item));
+                        array.Add(DocumentBarcode.DeserializeDocumentBarcode(item, options));
                     }
                     barcodes = array;
                     continue;
@@ -149,14 +274,62 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentFormula> array = new List<DocumentFormula>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentFormula.DeserializeDocumentFormula(item));
+                        array.Add(DocumentFormula.DeserializeDocumentFormula(item, options));
                     }
                     formulas = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentPage(pageNumber, Optional.ToNullable(angle), Optional.ToNullable(width), Optional.ToNullable(height), Optional.ToNullable(unit), spans, Optional.ToList(words), Optional.ToList(selectionMarks), Optional.ToList(lines), Optional.ToList(barcodes), Optional.ToList(formulas));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentPage(
+                pageNumber,
+                angle,
+                width,
+                height,
+                unit,
+                spans,
+                words ?? new ChangeTrackingList<DocumentWord>(),
+                selectionMarks ?? new ChangeTrackingList<DocumentSelectionMark>(),
+                lines ?? new ChangeTrackingList<DocumentLine>(),
+                barcodes ?? new ChangeTrackingList<DocumentBarcode>(),
+                formulas ?? new ChangeTrackingList<DocumentFormula>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentPage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentPage IPersistableModel<DocumentPage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentPage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentPage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -164,6 +337,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentPage(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentPage>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

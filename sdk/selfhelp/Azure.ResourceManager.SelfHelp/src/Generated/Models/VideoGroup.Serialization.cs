@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SelfHelp.Models
 {
-    public partial class VideoGroup : IUtf8JsonSerializable
+    public partial class VideoGroup : IUtf8JsonSerializable, IJsonModel<VideoGroup>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VideoGroup>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VideoGroup>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoGroup)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Videos))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WriteStartArray();
                 foreach (var item in Videos)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VideoGroupVideo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 writer.WritePropertyName("replacementKey"u8);
                 writer.WriteStringValue(ReplacementKey);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VideoGroup DeserializeVideoGroup(JsonElement element)
+        VideoGroup IJsonModel<VideoGroup>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VideoGroup)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVideoGroup(document.RootElement, options);
+        }
+
+        internal static VideoGroup DeserializeVideoGroup(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VideoGroupVideo>> videos = default;
-            Optional<string> replacementKey = default;
+            IList<VideoGroupVideo> videos = default;
+            string replacementKey = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("videos"u8))
@@ -53,7 +94,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     List<VideoGroupVideo> array = new List<VideoGroupVideo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item));
+                        array.Add(VideoGroupVideo.DeserializeVideoGroupVideo(item, options));
                     }
                     videos = array;
                     continue;
@@ -63,8 +104,44 @@ namespace Azure.ResourceManager.SelfHelp.Models
                     replacementKey = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VideoGroup(Optional.ToList(videos), replacementKey.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VideoGroup(videos ?? new ChangeTrackingList<VideoGroupVideo>(), replacementKey, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VideoGroup>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VideoGroup)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VideoGroup IPersistableModel<VideoGroup>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VideoGroup>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVideoGroup(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VideoGroup)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VideoGroup>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

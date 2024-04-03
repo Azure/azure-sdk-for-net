@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PrivateDns.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -252,6 +250,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -281,6 +287,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -312,6 +326,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -340,6 +362,14 @@ namespace Azure.ResourceManager.PrivateDns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateZones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PrivateDnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// <item>

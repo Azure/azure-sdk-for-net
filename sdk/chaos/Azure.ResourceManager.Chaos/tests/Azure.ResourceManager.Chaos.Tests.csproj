@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-
     <!-- We don't care about XML doc comments on test types and members -->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-
   <!-- Reference the Client Library -->
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.Chaos.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="SessionRecords\" />
-  </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="System.Linq.Async" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

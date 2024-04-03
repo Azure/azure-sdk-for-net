@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.SpringAppDiscovery.Models;
 
@@ -110,6 +108,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootservers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootServerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="springbootserversName"> The springbootservers name. </param>
@@ -132,6 +138,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootservers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootServerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,6 +177,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="springbootappsName"> The springbootapps name. </param>
@@ -185,6 +207,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootapps_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootAppResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +246,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>Summaries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteSummaryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="summaryName"> The name of summary. </param>
@@ -238,6 +276,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Summaries_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteSummaryResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -269,6 +315,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>ErrorSummaries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteErrorSummaryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="errorSummaryName"> The name of error summary. </param>
@@ -292,6 +346,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>ErrorSummaries_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteErrorSummaryResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="errorSummaryName"> The name of error summary. </param>
@@ -314,6 +376,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,6 +417,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -378,6 +456,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Delete</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -413,6 +499,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Delete</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -446,6 +540,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Update</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -485,6 +587,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Update</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -523,6 +633,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_TriggerRefreshSite</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -557,6 +675,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_TriggerRefreshSite</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
@@ -590,6 +716,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -645,6 +779,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
@@ -699,6 +841,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -748,6 +898,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
@@ -796,6 +954,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -848,6 +1014,14 @@ namespace Azure.ResourceManager.SpringAppDiscovery
         /// <item>
         /// <term>Operation Id</term>
         /// <description>springbootsites_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SpringBootSiteResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

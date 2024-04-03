@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="galleryImageName"> Name of the gallery image. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="GalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -106,6 +119,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalNetworkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="logicalNetworkName"> Name of the logical network. </param>
@@ -127,6 +148,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>LogicalNetworks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="LogicalNetworkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -158,6 +187,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="marketplaceGalleryImageName"> Name of the marketplace gallery image. </param>
@@ -180,6 +217,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>MarketplaceGalleryImages_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="MarketplaceGalleryImageResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -211,6 +256,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="networkInterfaceName"> Name of the network interface. </param>
@@ -233,6 +286,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>NetworkInterfaces_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkInterfaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,6 +325,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>StorageContainers_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageContainerResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="storageContainerName"> Name of the storage container. </param>
@@ -286,6 +355,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>StorageContainers_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="StorageContainerResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -317,6 +394,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHardDiskResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="virtualHardDiskName"> Name of the virtual hard disk. </param>
@@ -339,6 +424,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>VirtualHardDisks_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-09-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="VirtualHardDiskResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,6 +463,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="clusterName"> The name of the cluster. </param>
@@ -392,6 +493,14 @@ namespace Azure.ResourceManager.Hci.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Clusters_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="HciClusterResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

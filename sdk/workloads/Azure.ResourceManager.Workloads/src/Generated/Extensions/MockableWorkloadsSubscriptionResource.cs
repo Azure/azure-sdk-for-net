@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Workloads;
 using Azure.ResourceManager.Workloads.Models;
 
 namespace Azure.ResourceManager.Workloads.Mocking
@@ -64,6 +61,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPSizingRecommendations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -95,6 +96,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPSizingRecommendations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,6 +133,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPSupportedSku</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -159,6 +168,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPSupportedSku</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,6 +205,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPDiskConfigurations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -223,6 +240,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPDiskConfigurations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -256,6 +277,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPAvailabilityZoneDetails</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The name of Azure region. </param>
@@ -287,6 +312,10 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPAvailabilityZoneDetails</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,6 +349,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -341,6 +378,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SAPVirtualInstances_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapVirtualInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -364,6 +409,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -385,6 +438,14 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>monitors_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SapMonitorResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

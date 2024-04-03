@@ -42,7 +42,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkConnectionDetailedStatus"/> instance for mocking. </returns>
         public static LinkConnectionDetailedStatus LinkConnectionDetailedStatus(string id = null, string name = null, bool? isApplyingChanges = null, bool? isPartiallyFailed = null, object startTime = null, object stopTime = null, string status = null, string continuousRunId = null, object error = null, LinkConnectionRefreshStatus refreshStatus = null, DateTimeOffset? landingZoneCredentialExpireTime = null)
         {
-            return new LinkConnectionDetailedStatus(id, name, isApplyingChanges, isPartiallyFailed, startTime, stopTime, status, continuousRunId, error, refreshStatus, landingZoneCredentialExpireTime);
+            return new LinkConnectionDetailedStatus(
+                id,
+                name,
+                isApplyingChanges,
+                isPartiallyFailed,
+                startTime,
+                stopTime,
+                status,
+                continuousRunId,
+                error,
+                refreshStatus,
+                landingZoneCredentialExpireTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LinkConnectionRefreshStatus"/>. </summary>
@@ -99,7 +110,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LinkTableStatus"/> instance for mocking. </returns>
         public static LinkTableStatus LinkTableStatus(string id = null, string status = null, string errorMessage = null, object startTime = null, object stopTime = null, string linkTableId = null, string errorCode = null, DateTimeOffset? lastProcessedData = null, DateTimeOffset? lastTransactionCommitTime = null)
         {
-            return new LinkTableStatus(id, status, errorMessage, startTime, stopTime, linkTableId, errorCode, lastProcessedData, lastTransactionCommitTime);
+            return new LinkTableStatus(
+                id,
+                status,
+                errorMessage,
+                startTime,
+                stopTime,
+                linkTableId,
+                errorCode,
+                lastProcessedData,
+                lastTransactionCommitTime);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookResponse"/>. </summary>
@@ -123,7 +143,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookResult"/> instance for mocking. </returns>
         public static RunNotebookResult RunNotebookResult(string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null, object sessionDetail = null, string exitValue = null, RunNotebookError error = null)
         {
-            return new RunNotebookResult(runId, runStatus, lastCheckedOn, sessionId, sparkPool, sessionDetail, exitValue, error);
+            return new RunNotebookResult(
+                runId,
+                runStatus,
+                lastCheckedOn,
+                sessionId,
+                sparkPool,
+                sessionDetail,
+                exitValue,
+                error);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookError"/>. </summary>
@@ -158,7 +186,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.RunNotebookSnapshotResult"/> instance for mocking. </returns>
         public static RunNotebookSnapshotResult RunNotebookSnapshotResult(RunNotebookSnapshot snapshot = null, RunNotebookError error = null, string runId = null, string runStatus = null, string lastCheckedOn = null, string sessionId = null, string sparkPool = null)
         {
-            return new RunNotebookSnapshotResult(snapshot, error, runId, runStatus, lastCheckedOn, sessionId, sparkPool);
+            return new RunNotebookSnapshotResult(
+                snapshot,
+                error,
+                runId,
+                runStatus,
+                lastCheckedOn,
+                sessionId,
+                sparkPool);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RunNotebookSnapshot"/>. </summary>
@@ -176,7 +211,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             parameters ??= new Dictionary<string, RunNotebookParameter>();
 
-            return new RunNotebookSnapshot(exitValue, id, notebook, sessionOptions, honorSessionTimeToLive, sessionId, sparkPool, parameters, notebookContent);
+            return new RunNotebookSnapshot(
+                exitValue,
+                id,
+                notebook,
+                sessionOptions,
+                honorSessionTimeToLive,
+                sessionId,
+                sparkPool,
+                parameters,
+                notebookContent);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.NotebookResource"/>. </summary>
@@ -300,7 +344,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             tags ??= new Dictionary<string, string>();
             customLibraries ??= new List<LibraryInfo>();
 
-            return new BigDataPoolResourceInfo(id, name, type, tags, location, provisioningState, autoScale, creationDate, autoPause, isComputeIsolationEnabled, sessionLevelPackagesEnabled, cacheSize, dynamicExecutorAllocation, sparkEventsFolder, nodeCount, libraryRequirements, customLibraries?.ToList(), sparkConfigProperties, sparkVersion, defaultSparkLogFolder, nodeSize, nodeSizeFamily, lastSucceededTimestamp);
+            return new BigDataPoolResourceInfo(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                provisioningState,
+                autoScale,
+                creationDate,
+                autoPause,
+                isComputeIsolationEnabled,
+                sessionLevelPackagesEnabled,
+                cacheSize,
+                dynamicExecutorAllocation,
+                sparkEventsFolder,
+                nodeCount,
+                libraryRequirements,
+                customLibraries?.ToList(),
+                sparkConfigProperties,
+                sparkVersion,
+                defaultSparkLogFolder,
+                nodeSize,
+                nodeSizeFamily,
+                lastSucceededTimestamp);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryRequirements"/>. </summary>
@@ -324,7 +391,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryInfo"/> instance for mocking. </returns>
         public static LibraryInfo LibraryInfo(string name = null, string path = null, string containerName = null, DateTimeOffset? uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryInfo(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryInfo(
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrackedResource"/>. </summary>
@@ -381,7 +455,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new DataFlowDebugSessionInfo(dataFlowName, computeType, coreCount, nodeCount, integrationRuntimeName, sessionId, startTime, timeToLiveInMinutes, lastActivityTime, additionalProperties);
+            return new DataFlowDebugSessionInfo(
+                dataFlowName,
+                computeType,
+                coreCount,
+                nodeCount,
+                integrationRuntimeName,
+                sessionId,
+                startTime,
+                timeToLiveInMinutes,
+                lastActivityTime,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AddDataFlowToDebugSessionResponse"/>. </summary>
@@ -409,7 +493,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties">
         /// Dataset properties.
         /// Please note <see cref="Dataset"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonMWSObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDbMongoDbApiCollectionDataset"/>, <see cref="CosmosDbSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDbCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HttpDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDbAtlasCollectionDataset"/>, <see cref="MongoDbCollectionDataset"/>, <see cref="MongoDbV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SapBwCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/> and <see cref="ZohoObjectDataset"/>.
+        /// The available derived classes include <see cref="AmazonMWSObjectDataset"/>, <see cref="AmazonRdsForOracleTableDataset"/>, <see cref="AmazonRdsForSqlServerTableDataset"/>, <see cref="AmazonRedshiftTableDataset"/>, <see cref="AmazonS3Dataset"/>, <see cref="AvroDataset"/>, <see cref="AzureBlobDataset"/>, <see cref="AzureBlobFSDataset"/>, <see cref="AzureDatabricksDeltaLakeDataset"/>, <see cref="AzureDataExplorerTableDataset"/>, <see cref="AzureDataLakeStoreDataset"/>, <see cref="AzureMariaDBTableDataset"/>, <see cref="AzureMySqlTableDataset"/>, <see cref="AzurePostgreSqlTableDataset"/>, <see cref="AzureSearchIndexDataset"/>, <see cref="AzureSqlDWTableDataset"/>, <see cref="AzureSqlMITableDataset"/>, <see cref="AzureSqlTableDataset"/>, <see cref="AzureTableDataset"/>, <see cref="BinaryDataset"/>, <see cref="CassandraTableDataset"/>, <see cref="CommonDataServiceForAppsEntityDataset"/>, <see cref="ConcurObjectDataset"/>, <see cref="CosmosDbMongoDbApiCollectionDataset"/>, <see cref="CosmosDbSqlApiCollectionDataset"/>, <see cref="CouchbaseTableDataset"/>, <see cref="CustomDataset"/>, <see cref="Db2TableDataset"/>, <see cref="DelimitedTextDataset"/>, <see cref="DocumentDbCollectionDataset"/>, <see cref="DrillTableDataset"/>, <see cref="DynamicsAXResourceDataset"/>, <see cref="DynamicsCrmEntityDataset"/>, <see cref="DynamicsEntityDataset"/>, <see cref="EloquaObjectDataset"/>, <see cref="ExcelDataset"/>, <see cref="FileShareDataset"/>, <see cref="GoogleAdWordsObjectDataset"/>, <see cref="GoogleBigQueryObjectDataset"/>, <see cref="GreenplumTableDataset"/>, <see cref="HBaseObjectDataset"/>, <see cref="HiveObjectDataset"/>, <see cref="HttpDataset"/>, <see cref="HubspotObjectDataset"/>, <see cref="ImpalaObjectDataset"/>, <see cref="InformixTableDataset"/>, <see cref="JiraObjectDataset"/>, <see cref="JsonDataset"/>, <see cref="MagentoObjectDataset"/>, <see cref="MariaDBTableDataset"/>, <see cref="MarketoObjectDataset"/>, <see cref="MicrosoftAccessTableDataset"/>, <see cref="MongoDbAtlasCollectionDataset"/>, <see cref="MongoDbCollectionDataset"/>, <see cref="MongoDbV2CollectionDataset"/>, <see cref="MySqlTableDataset"/>, <see cref="NetezzaTableDataset"/>, <see cref="ODataResourceDataset"/>, <see cref="OdbcTableDataset"/>, <see cref="Office365Dataset"/>, <see cref="OracleServiceCloudObjectDataset"/>, <see cref="OracleTableDataset"/>, <see cref="OrcDataset"/>, <see cref="ParquetDataset"/>, <see cref="PaypalObjectDataset"/>, <see cref="PhoenixObjectDataset"/>, <see cref="PostgreSqlTableDataset"/>, <see cref="PrestoObjectDataset"/>, <see cref="QuickBooksObjectDataset"/>, <see cref="RelationalTableDataset"/>, <see cref="ResponsysObjectDataset"/>, <see cref="RestResourceDataset"/>, <see cref="SalesforceMarketingCloudObjectDataset"/>, <see cref="SalesforceObjectDataset"/>, <see cref="SalesforceServiceCloudObjectDataset"/>, <see cref="SapBwCubeDataset"/>, <see cref="SapCloudForCustomerResourceDataset"/>, <see cref="SapEccResourceDataset"/>, <see cref="SapHanaTableDataset"/>, <see cref="SapOdpResourceDataset"/>, <see cref="SapOpenHubTableDataset"/>, <see cref="SapTableResourceDataset"/>, <see cref="ServiceNowObjectDataset"/>, <see cref="SharePointOnlineListResourceDataset"/>, <see cref="ShopifyObjectDataset"/>, <see cref="SnowflakeDataset"/>, <see cref="SparkObjectDataset"/>, <see cref="SqlServerTableDataset"/>, <see cref="SquareObjectDataset"/>, <see cref="SybaseTableDataset"/>, <see cref="TeradataTableDataset"/>, <see cref="VerticaTableDataset"/>, <see cref="WebTableDataset"/>, <see cref="XeroObjectDataset"/>, <see cref="XmlDataset"/> and <see cref="ZohoObjectDataset"/>.
         /// </param>
         /// <returns> A new <see cref="Models.DatasetResource"/> instance for mocking. </returns>
         public static DatasetResource DatasetResource(string id = null, string name = null, string type = null, string etag = null, Dataset properties = null)
@@ -475,7 +559,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceProperties"/> instance for mocking. </returns>
         public static LibraryResourceProperties LibraryResourceProperties(string name = null, string path = null, string containerName = null, string uploadedTimestamp = null, string type = null, string provisioningStatus = null, string creatorId = null)
         {
-            return new LibraryResourceProperties(name, path, containerName, uploadedTimestamp, type, provisioningStatus, creatorId);
+            return new LibraryResourceProperties(
+                name,
+                path,
+                containerName,
+                uploadedTimestamp,
+                type,
+                provisioningStatus,
+                creatorId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LibraryResourceInfo"/>. </summary>
@@ -491,7 +582,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.LibraryResourceInfo"/> instance for mocking. </returns>
         public static LibraryResourceInfo LibraryResourceInfo(string id = null, int? recordId = null, string state = null, string created = null, string changed = null, string type = null, string name = null, string operationId = null, string artifactId = null)
         {
-            return new LibraryResourceInfo(id, recordId, state, created, changed, type, name, operationId, artifactId);
+            return new LibraryResourceInfo(
+                id,
+                recordId,
+                state,
+                created,
+                changed,
+                type,
+                name,
+                operationId,
+                artifactId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationResult"/>. </summary>
@@ -516,7 +616,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="properties">
         /// Properties of linked service.
         /// Please note <see cref="LinkedService"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AmazonMWSLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDbLinkedService"/>, <see cref="CosmosDbMongoDbApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDbLinkedService"/>, <see cref="MongoDbAtlasLinkedService"/>, <see cref="MongoDbV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PowerBIWorkspaceLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
+        /// The available derived classes include <see cref="AmazonMWSLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="AmazonS3LinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="AsanaLinkedService"/>, <see cref="AzureBatchLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureFileStorageLinkedService"/>, <see cref="AzureFunctionLinkedService"/>, <see cref="AzureKeyVaultLinkedService"/>, <see cref="AzureMariaDBLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="AzureMySqlLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="AzureStorageLinkedService"/>, <see cref="AzureSynapseArtifactsLinkedService"/>, <see cref="AzureTableStorageLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="CosmosDbLinkedService"/>, <see cref="CosmosDbMongoDbApiLinkedService"/>, <see cref="CouchbaseLinkedService"/>, <see cref="CustomDataSourceLinkedService"/>, <see cref="DataworldLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="DrillLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="FileServerLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="GoogleAdWordsLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="GoogleCloudStorageLinkedService"/>, <see cref="GoogleSheetsLinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="MarketoLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="MongoDbLinkedService"/>, <see cref="MongoDbAtlasLinkedService"/>, <see cref="MongoDbV2LinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="NetezzaLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PostgreSqlLinkedService"/>, <see cref="PowerBIWorkspaceLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="QuickBooksLinkedService"/>, <see cref="ResponsysLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceMarketingCloudLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapHanaLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="ShopifyLinkedService"/>, <see cref="SmartsheetLinkedService"/>, <see cref="SnowflakeLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="SquareLinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="VerticaLinkedService"/>, <see cref="WebLinkedService"/>, <see cref="XeroLinkedService"/>, <see cref="ZendeskLinkedService"/> and <see cref="ZohoLinkedService"/>.
         /// </param>
         /// <returns> A new <see cref="Models.LinkedServiceResource"/> instance for mocking. </returns>
         public static LinkedServiceResource LinkedServiceResource(string id = null, string name = null, string type = null, string etag = null, LinkedService properties = null)
@@ -533,7 +633,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="activities">
         /// List of activities in pipeline.
         /// Please note <see cref="Activity"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="SqlPoolStoredProcedureActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
+        /// The available derived classes include <see cref="AppendVariableActivity"/>, <see cref="AzureDataExplorerCommandActivity"/>, <see cref="AzureFunctionActivity"/>, <see cref="AzureMLBatchExecutionActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="AzureMLUpdateResourceActivity"/>, <see cref="ControlActivity"/>, <see cref="CopyActivity"/>, <see cref="CustomActivity"/>, <see cref="DatabricksNotebookActivity"/>, <see cref="DatabricksSparkJarActivity"/>, <see cref="DatabricksSparkPythonActivity"/>, <see cref="DataLakeAnalyticsUsqlActivity"/>, <see cref="DeleteActivity"/>, <see cref="ExecuteDataFlowActivity"/>, <see cref="ExecutePipelineActivity"/>, <see cref="ExecuteSsisPackageActivity"/>, <see cref="ExecutionActivity"/>, <see cref="FailActivity"/>, <see cref="FilterActivity"/>, <see cref="ForEachActivity"/>, <see cref="GetMetadataActivity"/>, <see cref="HDInsightHiveActivity"/>, <see cref="HDInsightMapReduceActivity"/>, <see cref="HDInsightPigActivity"/>, <see cref="HDInsightSparkActivity"/>, <see cref="HDInsightStreamingActivity"/>, <see cref="IfConditionActivity"/>, <see cref="LookupActivity"/>, <see cref="ScriptActivity"/>, <see cref="SetVariableActivity"/>, <see cref="SynapseSparkJobDefinitionActivity"/>, <see cref="SqlPoolStoredProcedureActivity"/>, <see cref="SqlServerStoredProcedureActivity"/>, <see cref="SwitchActivity"/>, <see cref="SynapseNotebookActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="WaitActivity"/>, <see cref="WebActivity"/> and <see cref="WebHookActivity"/>.
         /// </param>
         /// <param name="parameters"> List of parameters for pipeline. </param>
         /// <param name="variables"> List of variables for pipeline. </param>
@@ -552,7 +652,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             runDimensions ??= new Dictionary<string, object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new PipelineResource(id, name, type, etag, description, activities?.ToList(), parameters, variables, concurrency, annotations?.ToList(), runDimensions, folder, additionalProperties);
+            return new PipelineResource(
+                id,
+                name,
+                type,
+                etag,
+                description,
+                activities?.ToList(),
+                parameters,
+                variables,
+                concurrency,
+                annotations?.ToList(),
+                runDimensions,
+                folder,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CreateRunResponse"/>. </summary>
@@ -600,7 +713,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             parameters ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new PipelineRun(runId, runGroupId, isLatest, pipelineName, parameters, invokedBy, lastUpdated, runStart, runEnd, durationInMs, status, message, additionalProperties);
+            return new PipelineRun(
+                runId,
+                runGroupId,
+                isLatest,
+                pipelineName,
+                parameters,
+                invokedBy,
+                lastUpdated,
+                runStart,
+                runEnd,
+                durationInMs,
+                status,
+                message,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PipelineRunInvokedBy"/>. </summary>
@@ -644,7 +770,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ActivityRun(pipelineName, pipelineRunId, activityName, activityType, activityRunId, linkedServiceName, status, activityRunStart, activityRunEnd, durationInMs, input, output, error, additionalProperties);
+            return new ActivityRun(
+                pipelineName,
+                pipelineRunId,
+                activityName,
+                activityType,
+                activityRunId,
+                linkedServiceName,
+                status,
+                activityRunStart,
+                activityRunEnd,
+                durationInMs,
+                input,
+                output,
+                error,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkJobDefinitionResource"/>. </summary>
@@ -686,7 +826,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             appInfo ??= new Dictionary<string, string>();
             logLines ??= new List<string>();
 
-            return new SparkBatchJob(livyInfo, name, workspaceName, sparkPoolName, submitterName, submitterId, artifactId, jobType, result, scheduler, plugin, errors?.ToList(), tags, id, appId, appInfo, state, logLines?.ToList());
+            return new SparkBatchJob(
+                livyInfo,
+                name,
+                workspaceName,
+                sparkPoolName,
+                submitterName,
+                submitterId,
+                artifactId,
+                jobType,
+                result,
+                scheduler,
+                plugin,
+                errors?.ToList(),
+                tags,
+                id,
+                appId,
+                appInfo,
+                state,
+                logLines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkBatchJobState"/>. </summary>
@@ -702,7 +860,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkBatchJobState"/> instance for mocking. </returns>
         public static SparkBatchJobState SparkBatchJobState(DateTimeOffset? notStartedAt = null, DateTimeOffset? startingAt = null, DateTimeOffset? runningAt = null, DateTimeOffset? deadAt = null, DateTimeOffset? successAt = null, DateTimeOffset? terminatedAt = null, DateTimeOffset? recoveringAt = null, string currentState = null, SparkRequest jobCreationRequest = null)
         {
-            return new SparkBatchJobState(notStartedAt, startingAt, runningAt, deadAt, successAt, terminatedAt, recoveringAt, currentState, jobCreationRequest);
+            return new SparkBatchJobState(
+                notStartedAt,
+                startingAt,
+                runningAt,
+                deadAt,
+                successAt,
+                terminatedAt,
+                recoveringAt,
+                currentState,
+                jobCreationRequest);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkRequest"/>. </summary>
@@ -730,7 +897,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             archives ??= new List<string>();
             configuration ??= new Dictionary<string, string>();
 
-            return new SparkRequest(name, file, className, arguments?.ToList(), jars?.ToList(), pythonFiles?.ToList(), files?.ToList(), archives?.ToList(), configuration, driverMemory, driverCores, executorMemory, executorCores, executorCount);
+            return new SparkRequest(
+                name,
+                file,
+                className,
+                arguments?.ToList(),
+                jars?.ToList(),
+                pythonFiles?.ToList(),
+                files?.ToList(),
+                archives?.ToList(),
+                configuration,
+                driverMemory,
+                driverCores,
+                executorMemory,
+                executorCores,
+                executorCount);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkScheduler"/>. </summary>
@@ -755,7 +936,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.SparkServicePlugin"/> instance for mocking. </returns>
         public static SparkServicePlugin SparkServicePlugin(DateTimeOffset? preparationStartedAt = null, DateTimeOffset? resourceAcquisitionStartedAt = null, DateTimeOffset? submissionStartedAt = null, DateTimeOffset? monitoringStartedAt = null, DateTimeOffset? cleanupStartedAt = null, PluginCurrentState? currentState = null)
         {
-            return new SparkServicePlugin(preparationStartedAt, resourceAcquisitionStartedAt, submissionStartedAt, monitoringStartedAt, cleanupStartedAt, currentState);
+            return new SparkServicePlugin(
+                preparationStartedAt,
+                resourceAcquisitionStartedAt,
+                submissionStartedAt,
+                monitoringStartedAt,
+                cleanupStartedAt,
+                currentState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SparkServiceError"/>. </summary>
@@ -810,7 +997,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SqlPool(id, name, type, tags, location, sku, maxSizeBytes, collation, sourceDatabaseId, recoverableDatabaseId, provisioningState, status, restorePointInTime, createMode, creationDate);
+            return new SqlPool(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                sku,
+                maxSizeBytes,
+                collation,
+                sourceDatabaseId,
+                recoverableDatabaseId,
+                provisioningState,
+                status,
+                restorePointInTime,
+                createMode,
+                creationDate);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SqlScriptResource"/>. </summary>
@@ -853,7 +1055,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new Trigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
+            return new UnknownTrigger(type, description, runtimeState, annotations?.ToList(), additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TriggerSubscriptionOperationStatus"/>. </summary>
@@ -893,7 +1095,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             triggeredPipelines ??= new Dictionary<string, string>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new TriggerRun(triggerRunId, triggerName, triggerType, triggerRunTimestamp, status, message, properties, triggeredPipelines, additionalProperties);
+            return new TriggerRun(
+                triggerRunId,
+                triggerName,
+                triggerType,
+                triggerRunTimestamp,
+                status,
+                message,
+                properties,
+                triggeredPipelines,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.Workspace"/>. </summary>
@@ -927,7 +1138,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             privateEndpointConnections ??= new List<PrivateEndpointConnection>();
             extraProperties ??= new Dictionary<string, object>();
 
-            return new Workspace(id, name, type, tags, location, identity, defaultDataLakeStorage, sqlAdministratorLoginPassword, managedResourceGroupName, provisioningState, sqlAdministratorLogin, virtualNetworkProfile, connectivityEndpoints, managedVirtualNetwork, privateEndpointConnections?.ToList(), encryption, workspaceUID, extraProperties, managedVirtualNetworkSettings, workspaceRepositoryConfiguration, purviewConfiguration, adlaResourceId);
+            return new Workspace(
+                id,
+                name,
+                type,
+                tags,
+                location,
+                identity,
+                defaultDataLakeStorage,
+                sqlAdministratorLoginPassword,
+                managedResourceGroupName,
+                provisioningState,
+                sqlAdministratorLogin,
+                virtualNetworkProfile,
+                connectivityEndpoints,
+                managedVirtualNetwork,
+                privateEndpointConnections?.ToList(),
+                encryption,
+                workspaceUID,
+                extraProperties,
+                managedVirtualNetworkSettings,
+                workspaceRepositoryConfiguration,
+                purviewConfiguration,
+                adlaResourceId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointConnection"/>. </summary>
@@ -940,7 +1173,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <returns> A new <see cref="Models.PrivateEndpointConnection"/> instance for mocking. </returns>
         public static PrivateEndpointConnection PrivateEndpointConnection(string id = null, string name = null, string type = null, PrivateEndpoint privateEndpoint = null, PrivateLinkServiceConnectionState connectionState = null, string provisioningState = null)
         {
-            return new PrivateEndpointConnection(id, name, type, privateEndpoint, connectionState, provisioningState);
+            return new PrivateEndpointConnection(
+                id,
+                name,
+                type,
+                privateEndpoint,
+                connectionState,
+                provisioningState);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpoint"/>. </summary>
@@ -1056,7 +1295,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             annotations ??= new List<object>();
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new RerunTumblingWindowTrigger("RerunTumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, parentTrigger, requestedStartTime, requestedEndTime, rerunConcurrency);
+            return new RerunTumblingWindowTrigger(
+                "RerunTumblingWindowTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                parentTrigger,
+                requestedStartTime,
+                requestedEndTime,
+                rerunConcurrency);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MultiplePipelineTrigger"/>. </summary>
@@ -1072,7 +1320,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new MultiplePipelineTrigger("MultiplePipelineTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList());
+            return new MultiplePipelineTrigger(
+                "MultiplePipelineTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ScheduleTrigger"/>. </summary>
@@ -1089,7 +1343,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new ScheduleTrigger("ScheduleTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), recurrence);
+            return new ScheduleTrigger(
+                "ScheduleTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                recurrence);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobTrigger"/>. </summary>
@@ -1108,7 +1369,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             pipelines ??= new List<TriggerPipelineReference>();
 
-            return new BlobTrigger("BlobTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), folderPath, maxConcurrency, linkedService);
+            return new BlobTrigger(
+                "BlobTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                folderPath,
+                maxConcurrency,
+                linkedService);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BlobEventsTrigger"/>. </summary>
@@ -1130,7 +1400,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<BlobEventType>();
 
-            return new BlobEventsTrigger("BlobEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), blobPathBeginsWith, blobPathEndsWith, ignoreEmptyBlobs, events?.ToList(), scope);
+            return new BlobEventsTrigger(
+                "BlobEventsTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
+                events?.ToList(),
+                scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CustomEventsTrigger"/>. </summary>
@@ -1151,7 +1432,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             pipelines ??= new List<TriggerPipelineReference>();
             events ??= new List<object>();
 
-            return new CustomEventsTrigger("CustomEventsTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipelines?.ToList(), subjectBeginsWith, subjectEndsWith, events?.ToList(), scope);
+            return new CustomEventsTrigger(
+                "CustomEventsTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipelines?.ToList(),
+                subjectBeginsWith,
+                subjectEndsWith,
+                events?.ToList(),
+                scope);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TumblingWindowTrigger"/>. </summary>
@@ -1179,7 +1470,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<DependencyReference>();
 
-            return new TumblingWindowTrigger("TumblingWindowTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, frequency, interval, startTime, endTime, delay, maxConcurrency, retryPolicy, dependsOn?.ToList());
+            return new TumblingWindowTrigger(
+                "TumblingWindowTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipeline,
+                frequency,
+                interval,
+                startTime,
+                endTime,
+                delay,
+                maxConcurrency,
+                retryPolicy,
+                dependsOn?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ChainingTrigger"/>. </summary>
@@ -1197,7 +1502,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             additionalProperties ??= new Dictionary<string, object>();
             dependsOn ??= new List<PipelineReference>();
 
-            return new ChainingTrigger("ChainingTrigger", description, runtimeState, annotations?.ToList(), additionalProperties, pipeline, dependsOn?.ToList(), runDimension);
+            return new ChainingTrigger(
+                "ChainingTrigger",
+                description,
+                runtimeState,
+                annotations?.ToList(),
+                additionalProperties,
+                pipeline,
+                dependsOn?.ToList(),
+                runDimension);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
@@ -1213,7 +1526,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new ManagedIntegrationRuntime(type, description, additionalProperties, state, managedVirtualNetwork, computeProperties, ssisProperties);
+            return new ManagedIntegrationRuntime(
+                type,
+                description,
+                additionalProperties,
+                state,
+                managedVirtualNetwork,
+                computeProperties,
+                ssisProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ManagedVirtualNetworkReference"/>. </summary>

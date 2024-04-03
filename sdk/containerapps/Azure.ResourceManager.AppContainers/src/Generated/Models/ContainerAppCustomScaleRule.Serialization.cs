@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppCustomScaleRule : IUtf8JsonSerializable
+    public partial class ContainerAppCustomScaleRule : IUtf8JsonSerializable, IJsonModel<ContainerAppCustomScaleRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppCustomScaleRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppCustomScaleRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomScaleRule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomScaleRuleType))
             {
@@ -38,22 +48,53 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Auth)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppScaleRuleAuth>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppCustomScaleRule DeserializeContainerAppCustomScaleRule(JsonElement element)
+        ContainerAppCustomScaleRule IJsonModel<ContainerAppCustomScaleRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppCustomScaleRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppCustomScaleRule(document.RootElement, options);
+        }
+
+        internal static ContainerAppCustomScaleRule DeserializeContainerAppCustomScaleRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<IDictionary<string, string>> metadata = default;
-            Optional<IList<ContainerAppScaleRuleAuth>> auth = default;
+            string type = default;
+            IDictionary<string, string> metadata = default;
+            IList<ContainerAppScaleRuleAuth> auth = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,13 +125,49 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppScaleRuleAuth> array = new List<ContainerAppScaleRuleAuth>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item));
+                        array.Add(ContainerAppScaleRuleAuth.DeserializeContainerAppScaleRuleAuth(item, options));
                     }
                     auth = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppCustomScaleRule(type.Value, Optional.ToDictionary(metadata), Optional.ToList(auth));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppCustomScaleRule(type, metadata ?? new ChangeTrackingDictionary<string, string>(), auth ?? new ChangeTrackingList<ContainerAppScaleRuleAuth>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppCustomScaleRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomScaleRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppCustomScaleRule IPersistableModel<ContainerAppCustomScaleRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomScaleRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppCustomScaleRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppCustomScaleRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppCustomScaleRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

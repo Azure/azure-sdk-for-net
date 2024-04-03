@@ -6,13 +6,12 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.HybridContainerService.Models;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
@@ -33,11 +32,11 @@ namespace Azure.ResourceManager.HybridContainerService
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-01-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListOrchestratorsRequest(string customLocationResourceUri)
+        internal HttpMessage CreateGetKubernetesVersionsRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(customLocationResourceUri, false);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/orchestrators", false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -54,55 +53,181 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the available orchestrators in a custom location for HybridAKS. </summary>
-        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
+        /// <summary> Lists the supported kubernetes versions for the specified custom location. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public async Task<Response<OrchestratorVersionProfileListResult>> ListOrchestratorsAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<KubernetesVersionProfileData>> GetKubernetesVersionsAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
-            using var message = CreateListOrchestratorsRequest(customLocationResourceUri);
+            using var message = CreateGetKubernetesVersionsRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OrchestratorVersionProfileListResult value = default;
+                        KubernetesVersionProfileData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = OrchestratorVersionProfileListResult.DeserializeOrchestratorVersionProfileListResult(document.RootElement);
+                        value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((KubernetesVersionProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Lists the available orchestrators in a custom location for HybridAKS. </summary>
-        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
+        /// <summary> Lists the supported kubernetes versions for the specified custom location. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public Response<OrchestratorVersionProfileListResult> ListOrchestrators(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public Response<KubernetesVersionProfileData> GetKubernetesVersions(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
-            using var message = CreateListOrchestratorsRequest(customLocationResourceUri);
+            using var message = CreateGetKubernetesVersionsRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        OrchestratorVersionProfileListResult value = default;
+                        KubernetesVersionProfileData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = OrchestratorVersionProfileListResult.DeserializeOrchestratorVersionProfileListResult(document.RootElement);
+                        value = KubernetesVersionProfileData.DeserializeKubernetesVersionProfileData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((KubernetesVersionProfileData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal HttpMessage CreateListVmSkusRequest(string customLocationResourceUri)
+        internal HttpMessage CreatePutKubernetesVersionsRequest(string customLocationResourceUri, KubernetesVersionProfileData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<KubernetesVersionProfileData>(data, new ModelReaderWriterOptions("W"));
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Puts the default kubernetes version resource type (one time operation, before listing the kubernetes versions). </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="data"> Kubernetes Versions resource definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response> PutKubernetesVersionsAsync(string customLocationResourceUri, KubernetesVersionProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutKubernetesVersionsRequest(customLocationResourceUri, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Puts the default kubernetes version resource type (one time operation, before listing the kubernetes versions). </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="data"> Kubernetes Versions resource definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public Response PutKubernetesVersions(string customLocationResourceUri, KubernetesVersionProfileData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutKubernetesVersionsRequest(customLocationResourceUri, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteKubernetesVersionsRequest(string customLocationResourceUri)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/kubernetesVersions/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Delete the default kubernetes versions resource type. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
+        public async Task<Response> DeleteKubernetesVersionsAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+
+            using var message = CreateDeleteKubernetesVersionsRequest(customLocationResourceUri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Delete the default kubernetes versions resource type. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
+        public Response DeleteKubernetesVersions(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+
+            using var message = CreateDeleteKubernetesVersionsRequest(customLocationResourceUri);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetVmSkusRequest(string customLocationResourceUri)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -111,7 +236,7 @@ namespace Azure.ResourceManager.HybridContainerService
             uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(customLocationResourceUri, false);
-            uri.AppendPath("/providers/Microsoft.HybridContainerService/vmSkus", false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -119,49 +244,175 @@ namespace Azure.ResourceManager.HybridContainerService
             return message;
         }
 
-        /// <summary> Lists the available VM SKUs in a custom location for HybridAKS. </summary>
-        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
+        /// <summary> Lists the supported VM skus for the specified custom location. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public async Task<Response<VmSkuListResult>> ListVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public async Task<Response<HybridContainerServiceVmSkuData>> GetVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
-            using var message = CreateListVmSkusRequest(customLocationResourceUri);
+            using var message = CreateGetVmSkusRequest(customLocationResourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmSkuListResult value = default;
+                        HybridContainerServiceVmSkuData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = VmSkuListResult.DeserializeVmSkuListResult(document.RootElement);
+                        value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((HybridContainerServiceVmSkuData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Lists the available VM SKUs in a custom location for HybridAKS. </summary>
-        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource manager identifier of the custom location resource. </param>
+        /// <summary> Lists the supported VM skus for the specified custom location. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
-        public Response<VmSkuListResult> ListVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        public Response<HybridContainerServiceVmSkuData> GetVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
 
-            using var message = CreateListVmSkusRequest(customLocationResourceUri);
+            using var message = CreateGetVmSkusRequest(customLocationResourceUri);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        VmSkuListResult value = default;
+                        HybridContainerServiceVmSkuData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = VmSkuListResult.DeserializeVmSkuListResult(document.RootElement);
+                        value = HybridContainerServiceVmSkuData.DeserializeHybridContainerServiceVmSkuData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
+                case 404:
+                    return Response.FromValue((HybridContainerServiceVmSkuData)null, message.Response);
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreatePutVmSkusRequest(string customLocationResourceUri, HybridContainerServiceVmSkuData data)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Put;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HybridContainerServiceVmSkuData>(data, new ModelReaderWriterOptions("W"));
+            request.Content = content;
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Puts the default VM skus resource type (one time operation, before listing the VM skus). </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="data"> VM SKUs resource definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public async Task<Response> PutVmSkusAsync(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutVmSkusRequest(customLocationResourceUri, data);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Puts the default VM skus resource type (one time operation, before listing the VM skus). </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="data"> VM SKUs resource definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> or <paramref name="data"/> is null. </exception>
+        public Response PutVmSkus(string customLocationResourceUri, HybridContainerServiceVmSkuData data, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+            Argument.AssertNotNull(data, nameof(data));
+
+            using var message = CreatePutVmSkusRequest(customLocationResourceUri, data);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                case 201:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteVmSkusRequest(string customLocationResourceUri)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(customLocationResourceUri, false);
+            uri.AppendPath("/providers/Microsoft.HybridContainerService/skus/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            _userAgent.Apply(message);
+            return message;
+        }
+
+        /// <summary> Deletes the default VM skus resource type. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
+        public async Task<Response> DeleteVmSkusAsync(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+
+            using var message = CreateDeleteVmSkusRequest(customLocationResourceUri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes the default VM skus resource type. </summary>
+        /// <param name="customLocationResourceUri"> The fully qualified Azure Resource Manager identifier of the custom location resource. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="customLocationResourceUri"/> is null. </exception>
+        public Response DeleteVmSkus(string customLocationResourceUri, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(customLocationResourceUri, nameof(customLocationResourceUri));
+
+            using var message = CreateDeleteVmSkusRequest(customLocationResourceUri);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                case 204:
+                    return message.Response;
                 default:
                     throw new RequestFailedException(message.Response);
             }

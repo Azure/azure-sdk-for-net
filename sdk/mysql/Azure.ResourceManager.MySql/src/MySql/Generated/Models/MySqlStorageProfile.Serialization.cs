@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlStorageProfile : IUtf8JsonSerializable
+    public partial class MySqlStorageProfile : IUtf8JsonSerializable, IJsonModel<MySqlStorageProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlStorageProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlStorageProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BackupRetentionDays))
             {
@@ -35,19 +46,50 @@ namespace Azure.ResourceManager.MySql.Models
                 writer.WritePropertyName("storageAutogrow"u8);
                 writer.WriteStringValue(StorageAutogrow.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MySqlStorageProfile DeserializeMySqlStorageProfile(JsonElement element)
+        MySqlStorageProfile IJsonModel<MySqlStorageProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlStorageProfile(document.RootElement, options);
+        }
+
+        internal static MySqlStorageProfile DeserializeMySqlStorageProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> backupRetentionDays = default;
-            Optional<MySqlGeoRedundantBackup> geoRedundantBackup = default;
-            Optional<int> storageMB = default;
-            Optional<MySqlStorageAutogrow> storageAutogrow = default;
+            int? backupRetentionDays = default;
+            MySqlGeoRedundantBackup? geoRedundantBackup = default;
+            int? storageMB = default;
+            MySqlStorageAutogrow? storageAutogrow = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("backupRetentionDays"u8))
@@ -86,8 +128,44 @@ namespace Azure.ResourceManager.MySql.Models
                     storageAutogrow = new MySqlStorageAutogrow(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlStorageProfile(Optional.ToNullable(backupRetentionDays), Optional.ToNullable(geoRedundantBackup), Optional.ToNullable(storageMB), Optional.ToNullable(storageAutogrow));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlStorageProfile(backupRetentionDays, geoRedundantBackup, storageMB, storageAutogrow, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlStorageProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlStorageProfile IPersistableModel<MySqlStorageProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlStorageProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlStorageProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlStorageProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

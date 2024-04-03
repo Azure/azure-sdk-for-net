@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningFeatureSetVersionProperties : IUtf8JsonSerializable
+    public partial class MachineLearningFeatureSetVersionProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningFeatureSetVersionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningFeatureSetVersionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningFeatureSetVersionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Entities))
             {
@@ -38,19 +48,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (MaterializationSettings != null)
                 {
                     writer.WritePropertyName("materializationSettings"u8);
-                    writer.WriteObjectValue(MaterializationSettings);
+                    writer.WriteObjectValue<MaterializationSettings>(MaterializationSettings, options);
                 }
                 else
                 {
                     writer.WriteNull("materializationSettings");
                 }
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(Specification))
             {
                 if (Specification != null)
                 {
                     writer.WritePropertyName("specification"u8);
-                    writer.WriteObjectValue(Specification);
+                    writer.WriteObjectValue<FeaturesetSpecification>(Specification, options);
                 }
                 else
                 {
@@ -74,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
                 }
                 else
                 {
@@ -139,26 +154,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("tags");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningFeatureSetVersionProperties DeserializeMachineLearningFeatureSetVersionProperties(JsonElement element)
+        MachineLearningFeatureSetVersionProperties IJsonModel<MachineLearningFeatureSetVersionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningFeatureSetVersionProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningFeatureSetVersionProperties DeserializeMachineLearningFeatureSetVersionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> entities = default;
-            Optional<MaterializationSettings> materializationSettings = default;
-            Optional<RegistryAssetProvisioningState> provisioningState = default;
-            Optional<FeaturesetSpecification> specification = default;
-            Optional<string> stage = default;
-            Optional<AutoDeleteSetting> autoDeleteSetting = default;
-            Optional<bool> isAnonymous = default;
-            Optional<bool> isArchived = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IList<string> entities = default;
+            MaterializationSettings materializationSettings = default;
+            RegistryAssetProvisioningState? provisioningState = default;
+            FeaturesetSpecification specification = default;
+            string stage = default;
+            AutoDeleteSetting autoDeleteSetting = default;
+            bool? isAnonymous = default;
+            bool? isArchived = default;
+            string description = default;
+            IDictionary<string, string> properties = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -183,7 +229,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         materializationSettings = null;
                         continue;
                     }
-                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value);
+                    materializationSettings = MaterializationSettings.DeserializeMaterializationSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -202,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         specification = null;
                         continue;
                     }
-                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value);
+                    specification = FeaturesetSpecification.DeserializeFeaturesetSpecification(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stage"u8))
@@ -222,7 +268,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         autoDeleteSetting = null;
                         continue;
                     }
-                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value);
+                    autoDeleteSetting = AutoDeleteSetting.DeserializeAutoDeleteSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isAnonymous"u8))
@@ -283,8 +329,56 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     tags = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningFeatureSetVersionProperties(description.Value, Optional.ToDictionary(properties), Optional.ToDictionary(tags), autoDeleteSetting.Value, Optional.ToNullable(isAnonymous), Optional.ToNullable(isArchived), Optional.ToList(entities), materializationSettings.Value, Optional.ToNullable(provisioningState), specification.Value, stage.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningFeatureSetVersionProperties(
+                description,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                autoDeleteSetting,
+                isAnonymous,
+                isArchived,
+                entities ?? new ChangeTrackingList<string>(),
+                materializationSettings,
+                provisioningState,
+                specification,
+                stage);
         }
+
+        BinaryData IPersistableModel<MachineLearningFeatureSetVersionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningFeatureSetVersionProperties IPersistableModel<MachineLearningFeatureSetVersionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFeatureSetVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningFeatureSetVersionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFeatureSetVersionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningFeatureSetVersionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

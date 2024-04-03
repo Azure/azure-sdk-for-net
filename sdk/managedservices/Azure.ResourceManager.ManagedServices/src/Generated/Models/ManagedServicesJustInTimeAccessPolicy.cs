@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
     /// <summary> Just-in-time access policy setting. </summary>
     public partial class ManagedServicesJustInTimeAccessPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ManagedServicesJustInTimeAccessPolicy"/>. </summary>
         /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
         public ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider)
@@ -26,11 +57,18 @@ namespace Azure.ResourceManager.ManagedServices.Models
         /// <param name="multiFactorAuthProvider"> The multi-factor authorization provider to be used for just-in-time access requests. </param>
         /// <param name="maximumActivationDuration"> The maximum access duration in ISO 8601 format for just-in-time access requests. </param>
         /// <param name="managedByTenantApprovers"> The list of managedByTenant approvers for the eligible authorization. </param>
-        internal ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider, TimeSpan? maximumActivationDuration, IList<ManagedServicesEligibleApprover> managedByTenantApprovers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ManagedServicesJustInTimeAccessPolicy(MultiFactorAuthProvider multiFactorAuthProvider, TimeSpan? maximumActivationDuration, IList<ManagedServicesEligibleApprover> managedByTenantApprovers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MultiFactorAuthProvider = multiFactorAuthProvider;
             MaximumActivationDuration = maximumActivationDuration;
             ManagedByTenantApprovers = managedByTenantApprovers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ManagedServicesJustInTimeAccessPolicy"/> for deserialization. </summary>
+        internal ManagedServicesJustInTimeAccessPolicy()
+        {
         }
 
         /// <summary> The multi-factor authorization provider to be used for just-in-time access requests. </summary>

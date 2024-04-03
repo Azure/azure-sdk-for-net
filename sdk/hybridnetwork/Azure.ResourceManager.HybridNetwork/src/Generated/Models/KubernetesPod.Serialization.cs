@@ -6,27 +6,113 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class KubernetesPod
+    public partial class KubernetesPod : IUtf8JsonSerializable, IJsonModel<KubernetesPod>
     {
-        internal static KubernetesPod DeserializeKubernetesPod(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesPod>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesPod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesPod)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            if (Optional.IsDefined(DesiredNumberOfContainers))
+            {
+                writer.WritePropertyName("desired"u8);
+                writer.WriteNumberValue(DesiredNumberOfContainers.Value);
+            }
+            if (Optional.IsDefined(ReadyNumberOfContainers))
+            {
+                writer.WritePropertyName("ready"u8);
+                writer.WriteNumberValue(ReadyNumberOfContainers.Value);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsCollectionDefined(Events))
+            {
+                writer.WritePropertyName("events"u8);
+                writer.WriteStartArray();
+                foreach (var item in Events)
+                {
+                    writer.WriteObjectValue<PodEvent>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        KubernetesPod IJsonModel<KubernetesPod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesPod)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesPod(document.RootElement, options);
+        }
+
+        internal static KubernetesPod DeserializeKubernetesPod(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> @namespace = default;
-            Optional<int> desired = default;
-            Optional<int> ready = default;
-            Optional<PodStatus> status = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<IReadOnlyList<PodEvent>> events = default;
+            string name = default;
+            string @namespace = default;
+            int? desired = default;
+            int? ready = default;
+            PodStatus? status = default;
+            DateTimeOffset? creationTime = default;
+            IReadOnlyList<PodEvent> events = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -84,13 +170,57 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<PodEvent> array = new List<PodEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PodEvent.DeserializePodEvent(item));
+                        array.Add(PodEvent.DeserializePodEvent(item, options));
                     }
                     events = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesPod(name.Value, @namespace.Value, Optional.ToNullable(desired), Optional.ToNullable(ready), Optional.ToNullable(status), Optional.ToNullable(creationTime), Optional.ToList(events));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesPod(
+                name,
+                @namespace,
+                desired,
+                ready,
+                status,
+                creationTime,
+                events ?? new ChangeTrackingList<PodEvent>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesPod>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesPod IPersistableModel<KubernetesPod>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesPod>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesPod(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesPod)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesPod>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

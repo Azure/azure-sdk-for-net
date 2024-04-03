@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,28 +64,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("command"u8);
-            writer.WriteObjectValue(Command);
+            writer.WriteObjectValue<object>(Command);
             if (Optional.IsDefined(ResourceLinkedService))
             {
                 writer.WritePropertyName("resourceLinkedService"u8);
-                writer.WriteObjectValue(ResourceLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(ResourceLinkedService);
             }
             if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
-                writer.WriteObjectValue(FolderPath);
+                writer.WriteObjectValue<object>(FolderPath);
             }
             if (Optional.IsDefined(ReferenceObjects))
             {
                 writer.WritePropertyName("referenceObjects"u8);
-                writer.WriteObjectValue(ReferenceObjects);
+                writer.WriteObjectValue<CustomActivityReferenceObject>(ReferenceObjects);
             }
             if (Optional.IsCollectionDefined(ExtendedProperties))
             {
@@ -99,25 +99,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(RetentionTimeInDays))
             {
                 writer.WritePropertyName("retentionTimeInDays"u8);
-                writer.WriteObjectValue(RetentionTimeInDays);
+                writer.WriteObjectValue<object>(RetentionTimeInDays);
             }
             if (Optional.IsDefined(AutoUserSpecification))
             {
                 writer.WritePropertyName("autoUserSpecification"u8);
-                writer.WriteObjectValue(AutoUserSpecification);
+                writer.WriteObjectValue<object>(AutoUserSpecification);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -128,22 +128,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
             object command = default;
-            Optional<LinkedServiceReference> resourceLinkedService = default;
-            Optional<object> folderPath = default;
-            Optional<CustomActivityReferenceObject> referenceObjects = default;
-            Optional<IDictionary<string, object>> extendedProperties = default;
-            Optional<object> retentionTimeInDays = default;
-            Optional<object> autoUserSpecification = default;
+            LinkedServiceReference resourceLinkedService = default;
+            object folderPath = default;
+            CustomActivityReferenceObject referenceObjects = default;
+            IDictionary<string, object> extendedProperties = default;
+            object retentionTimeInDays = default;
+            object autoUserSpecification = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -313,14 +313,31 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, command, resourceLinkedService.Value, folderPath.Value, referenceObjects.Value, Optional.ToDictionary(extendedProperties), retentionTimeInDays.Value, autoUserSpecification.Value);
+            return new CustomActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                command,
+                resourceLinkedService,
+                folderPath,
+                referenceObjects,
+                extendedProperties ?? new ChangeTrackingDictionary<string, object>(),
+                retentionTimeInDays,
+                autoUserSpecification);
         }
 
         internal partial class CustomActivityConverter : JsonConverter<CustomActivity>
         {
             public override void Write(Utf8JsonWriter writer, CustomActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CustomActivity>(model);
             }
             public override CustomActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

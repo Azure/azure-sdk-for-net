@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.BillingBenefits;
 using Azure.ResourceManager.BillingBenefits.Models;
 
 namespace Azure.ResourceManager.BillingBenefits.Mocking
@@ -67,6 +64,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderAliasName"> Name of the savings plan order alias. </param>
@@ -89,6 +94,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrderAlias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderAliasResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -120,6 +133,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="savingsPlanOrderId"> Order ID of the savings plan. </param>
@@ -143,6 +164,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlanOrder_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanOrderResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -175,6 +204,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -198,6 +235,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ReservationOrderAlias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsReservationOrderAliasResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="reservationOrderAliasName"> Name of the reservation order alias. </param>
@@ -220,6 +265,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ListAll</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -246,6 +299,14 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>SavingsPlan_ListAll</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingBenefitsSavingsPlanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="options"> A property bag which contains all the parameters of this method except the LRO qualifier and request context parameter. </param>
@@ -271,6 +332,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ValidatePurchase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
@@ -283,7 +348,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -297,6 +362,10 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
         /// <term>Operation Id</term>
         /// <description>ValidatePurchase</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="content"> Request body for validating the purchase of a savings plan. </param>
@@ -309,7 +378,7 @@ namespace Azure.ResourceManager.BillingBenefits.Mocking
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => DefaultRestClient.CreateValidatePurchaseRequest(content);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DefaultRestClient.CreateValidatePurchaseNextPageRequest(nextLink, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult, DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavingsPlanValidateResult.DeserializeSavingsPlanValidateResult(e), DefaultClientDiagnostics, Pipeline, "MockableBillingBenefitsTenantResource.ValidatePurchase", "benefits", "nextLink", cancellationToken);
         }
     }
 }

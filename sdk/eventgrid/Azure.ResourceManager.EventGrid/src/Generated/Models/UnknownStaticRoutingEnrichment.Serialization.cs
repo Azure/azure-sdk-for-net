@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    internal partial class UnknownStaticRoutingEnrichment : IUtf8JsonSerializable
+    internal partial class UnknownStaticRoutingEnrichment : IUtf8JsonSerializable, IJsonModel<StaticRoutingEnrichment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StaticRoutingEnrichment>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StaticRoutingEnrichment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
@@ -22,17 +33,48 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("valueType"u8);
             writer.WriteStringValue(ValueType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownStaticRoutingEnrichment DeserializeUnknownStaticRoutingEnrichment(JsonElement element)
+        StaticRoutingEnrichment IJsonModel<StaticRoutingEnrichment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStaticRoutingEnrichment(document.RootElement, options);
+        }
+
+        internal static UnknownStaticRoutingEnrichment DeserializeUnknownStaticRoutingEnrichment(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> key = default;
+            string key = default;
             StaticRoutingEnrichmentType valueType = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("key"u8))
@@ -45,8 +87,44 @@ namespace Azure.ResourceManager.EventGrid.Models
                     valueType = new StaticRoutingEnrichmentType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownStaticRoutingEnrichment(key.Value, valueType);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownStaticRoutingEnrichment(key, valueType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StaticRoutingEnrichment>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StaticRoutingEnrichment IPersistableModel<StaticRoutingEnrichment>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StaticRoutingEnrichment>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStaticRoutingEnrichment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StaticRoutingEnrichment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StaticRoutingEnrichment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,17 +5,32 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformGatewayRouteConfigProperties : IUtf8JsonSerializable
+    public partial class AppPlatformGatewayRouteConfigProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformGatewayRouteConfigProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformGatewayRouteConfigProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformGatewayRouteConfigProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayRouteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayRouteConfigProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(AppResourceId))
             {
                 writer.WritePropertyName("appResourceId"u8);
@@ -24,7 +39,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(OpenApi))
             {
                 writer.WritePropertyName("openApi"u8);
-                writer.WriteObjectValue(OpenApi);
+                writer.WriteObjectValue<GatewayRouteConfigOpenApiProperties>(OpenApi, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -37,24 +52,55 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformGatewayApiRoute>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformGatewayRouteConfigProperties DeserializeAppPlatformGatewayRouteConfigProperties(JsonElement element)
+        AppPlatformGatewayRouteConfigProperties IJsonModel<AppPlatformGatewayRouteConfigProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayRouteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformGatewayRouteConfigProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformGatewayRouteConfigProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformGatewayRouteConfigProperties DeserializeAppPlatformGatewayRouteConfigProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AppPlatformGatewayProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> appResourceId = default;
-            Optional<GatewayRouteConfigOpenApiProperties> openApi = default;
-            Optional<AppPlatformGatewayRouteConfigProtocol> protocol = default;
-            Optional<IList<AppPlatformGatewayApiRoute>> routes = default;
+            AppPlatformGatewayProvisioningState? provisioningState = default;
+            ResourceIdentifier appResourceId = default;
+            GatewayRouteConfigOpenApiProperties openApi = default;
+            AppPlatformGatewayRouteConfigProtocol? protocol = default;
+            IList<AppPlatformGatewayApiRoute> routes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("provisioningState"u8))
@@ -81,7 +127,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value);
+                    openApi = GatewayRouteConfigOpenApiProperties.DeserializeGatewayRouteConfigOpenApiProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("protocol"u8))
@@ -102,13 +148,55 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformGatewayApiRoute> array = new List<AppPlatformGatewayApiRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item));
+                        array.Add(AppPlatformGatewayApiRoute.DeserializeAppPlatformGatewayApiRoute(item, options));
                     }
                     routes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformGatewayRouteConfigProperties(Optional.ToNullable(provisioningState), appResourceId.Value, openApi.Value, Optional.ToNullable(protocol), Optional.ToList(routes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformGatewayRouteConfigProperties(
+                provisioningState,
+                appResourceId,
+                openApi,
+                protocol,
+                routes ?? new ChangeTrackingList<AppPlatformGatewayApiRoute>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformGatewayRouteConfigProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayRouteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayRouteConfigProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformGatewayRouteConfigProperties IPersistableModel<AppPlatformGatewayRouteConfigProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayRouteConfigProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformGatewayRouteConfigProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayRouteConfigProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformGatewayRouteConfigProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.EnergyServices.Mocking;
 using Azure.ResourceManager.EnergyServices.Models;
 using Azure.ResourceManager.Resources;
@@ -82,6 +80,14 @@ namespace Azure.ResourceManager.EnergyServices
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -111,6 +117,14 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -142,6 +156,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -169,6 +187,10 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Locations_CheckNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -198,6 +220,14 @@ namespace Azure.ResourceManager.EnergyServices
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -225,6 +255,14 @@ namespace Azure.ResourceManager.EnergyServices
         /// <item>
         /// <term>Operation Id</term>
         /// <description>EnergyServices_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-04-04-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="EnergyServiceResource"/></description>
         /// </item>
         /// </list>
         /// <item>

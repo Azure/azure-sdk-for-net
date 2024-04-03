@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class ConnectivityConfigurationListResult
+    internal partial class ConnectivityConfigurationListResult : IUtf8JsonSerializable, IJsonModel<ConnectivityConfigurationListResult>
     {
-        internal static ConnectivityConfigurationListResult DeserializeConnectivityConfigurationListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityConfigurationListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityConfigurationListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityConfigurationListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<ConnectivityConfigurationData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityConfigurationListResult IJsonModel<ConnectivityConfigurationListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityConfigurationListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityConfigurationListResult(document.RootElement, options);
+        }
+
+        internal static ConnectivityConfigurationListResult DeserializeConnectivityConfigurationListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityConfigurationData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConnectivityConfigurationData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityConfigurationData> array = new List<ConnectivityConfigurationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(item));
+                        array.Add(ConnectivityConfigurationData.DeserializeConnectivityConfigurationData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.Network.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityConfigurationListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectivityConfigurationListResult(value ?? new ChangeTrackingList<ConnectivityConfigurationData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityConfigurationListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityConfigurationListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityConfigurationListResult IPersistableModel<ConnectivityConfigurationListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityConfigurationListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityConfigurationListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityConfigurationListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

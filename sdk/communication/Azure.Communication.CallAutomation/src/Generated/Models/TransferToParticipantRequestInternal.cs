@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -33,13 +31,15 @@ namespace Azure.Communication.CallAutomation
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </param>
-        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomCallingContextInternal customCallingContext, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri)
+        /// <param name="sourceCallerIdNumber"> The source caller Id, a phone number, that's will be used as the transferor's(Contoso) caller id when transfering a call a pstn target. </param>
+        internal TransferToParticipantRequestInternal(CommunicationIdentifierModel targetParticipant, CustomCallingContextInternal customCallingContext, string operationContext, CommunicationIdentifierModel transferee, string operationCallbackUri, PhoneNumberIdentifierModel sourceCallerIdNumber)
         {
             TargetParticipant = targetParticipant;
             CustomCallingContext = customCallingContext;
             OperationContext = operationContext;
             Transferee = transferee;
             OperationCallbackUri = operationCallbackUri;
+            SourceCallerIdNumber = sourceCallerIdNumber;
         }
 
         /// <summary> The identity of the target where call should be transferred to. </summary>
@@ -55,5 +55,7 @@ namespace Azure.Communication.CallAutomation
         /// This setup is per-action. If this is not set, the default callback URI set by CreateCall/AnswerCall will be used.
         /// </summary>
         public string OperationCallbackUri { get; set; }
+        /// <summary> The source caller Id, a phone number, that's will be used as the transferor's(Contoso) caller id when transfering a call a pstn target. </summary>
+        public PhoneNumberIdentifierModel SourceCallerIdNumber { get; set; }
     }
 }

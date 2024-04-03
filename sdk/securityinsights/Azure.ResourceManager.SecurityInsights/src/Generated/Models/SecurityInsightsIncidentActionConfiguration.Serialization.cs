@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable
+    public partial class SecurityInsightsIncidentActionConfiguration : IUtf8JsonSerializable, IJsonModel<SecurityInsightsIncidentActionConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsIncidentActionConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsIncidentActionConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Severity))
             {
@@ -44,7 +54,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
-                writer.WriteObjectValue(Owner);
+                writer.WriteObjectValue<SecurityInsightsIncidentOwnerInfo>(Owner, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -52,26 +62,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Labels)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityInsightsIncidentLabel>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsIncidentActionConfiguration DeserializeSecurityInsightsIncidentActionConfiguration(JsonElement element)
+        SecurityInsightsIncidentActionConfiguration IJsonModel<SecurityInsightsIncidentActionConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsIncidentActionConfiguration(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsIncidentActionConfiguration DeserializeSecurityInsightsIncidentActionConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SecurityInsightsIncidentSeverity> severity = default;
-            Optional<SecurityInsightsIncidentStatus> status = default;
-            Optional<SecurityInsightsIncidentClassification> classification = default;
-            Optional<SecurityInsightsIncidentClassificationReason> classificationReason = default;
-            Optional<string> classificationComment = default;
-            Optional<SecurityInsightsIncidentOwnerInfo> owner = default;
-            Optional<IList<SecurityInsightsIncidentLabel>> labels = default;
+            SecurityInsightsIncidentSeverity? severity = default;
+            SecurityInsightsIncidentStatus? status = default;
+            SecurityInsightsIncidentClassification? classification = default;
+            SecurityInsightsIncidentClassificationReason? classificationReason = default;
+            string classificationComment = default;
+            SecurityInsightsIncidentOwnerInfo owner = default;
+            IList<SecurityInsightsIncidentLabel> labels = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("severity"u8))
@@ -121,7 +162,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value);
+                    owner = SecurityInsightsIncidentOwnerInfo.DeserializeSecurityInsightsIncidentOwnerInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("labels"u8))
@@ -133,13 +174,57 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     List<SecurityInsightsIncidentLabel> array = new List<SecurityInsightsIncidentLabel>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item));
+                        array.Add(SecurityInsightsIncidentLabel.DeserializeSecurityInsightsIncidentLabel(item, options));
                     }
                     labels = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInsightsIncidentActionConfiguration(Optional.ToNullable(severity), Optional.ToNullable(status), Optional.ToNullable(classification), Optional.ToNullable(classificationReason), classificationComment.Value, owner.Value, Optional.ToList(labels));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityInsightsIncidentActionConfiguration(
+                severity,
+                status,
+                classification,
+                classificationReason,
+                classificationComment,
+                owner,
+                labels ?? new ChangeTrackingList<SecurityInsightsIncidentLabel>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsIncidentActionConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsIncidentActionConfiguration IPersistableModel<SecurityInsightsIncidentActionConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIncidentActionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsIncidentActionConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsIncidentActionConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsIncidentActionConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PackageInputPathVersion : IUtf8JsonSerializable
+    public partial class PackageInputPathVersion : IUtf8JsonSerializable, IJsonModel<PackageInputPathVersion>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PackageInputPathVersion>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PackageInputPathVersion>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceName))
             {
@@ -41,18 +52,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("inputPathType"u8);
             writer.WriteStringValue(InputPathType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PackageInputPathVersion DeserializePackageInputPathVersion(JsonElement element)
+        PackageInputPathVersion IJsonModel<PackageInputPathVersion>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePackageInputPathVersion(document.RootElement, options);
+        }
+
+        internal static PackageInputPathVersion DeserializePackageInputPathVersion(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceName = default;
-            Optional<string> resourceVersion = default;
+            string resourceName = default;
+            string resourceVersion = default;
             InputPathType inputPathType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceName"u8))
@@ -80,8 +122,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     inputPathType = new InputPathType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PackageInputPathVersion(inputPathType, resourceName.Value, resourceVersion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PackageInputPathVersion(inputPathType, serializedAdditionalRawData, resourceName, resourceVersion);
         }
+
+        BinaryData IPersistableModel<PackageInputPathVersion>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PackageInputPathVersion IPersistableModel<PackageInputPathVersion>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PackageInputPathVersion>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePackageInputPathVersion(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PackageInputPathVersion)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PackageInputPathVersion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

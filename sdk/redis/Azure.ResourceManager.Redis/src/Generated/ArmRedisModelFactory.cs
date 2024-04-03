@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Redis;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Redis.Models
@@ -29,7 +28,53 @@ namespace Azure.ResourceManager.Redis.Models
         {
             upsellNotification ??= new Dictionary<string, string>();
 
-            return new RedisUpgradeNotification(name, timestamp, upsellNotification);
+            return new RedisUpgradeNotification(name, timestamp, upsellNotification, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RedisCreateOrUpdateContent"/>. </summary>
+        /// <param name="zones"> A list of availability zones denoting where the resource needs to come from. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the resource. </param>
+        /// <param name="redisConfiguration"> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </param>
+        /// <param name="redisVersion"> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </param>
+        /// <param name="enableNonSslPort"> Specifies whether the non-ssl Redis server port (6379) is enabled. </param>
+        /// <param name="replicasPerMaster"> The number of replicas to be created per primary. </param>
+        /// <param name="replicasPerPrimary"> The number of replicas to be created per primary. </param>
+        /// <param name="tenantSettings"> A dictionary of tenant settings. </param>
+        /// <param name="shardCount"> The number of shards to be created on a Premium Cluster Cache. </param>
+        /// <param name="minimumTlsVersion"> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </param>
+        /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </param>
+        /// <param name="updateChannel"> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </param>
+        /// <param name="sku"> The SKU of the Redis cache to deploy. </param>
+        /// <param name="subnetId"> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </param>
+        /// <param name="staticIP"> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </param>
+        /// <returns> A new <see cref="Models.RedisCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static RedisCreateOrUpdateContent RedisCreateOrUpdateContent(IEnumerable<string> zones = null, AzureLocation location = default, IDictionary<string, string> tags = null, ManagedServiceIdentity identity = null, RedisCommonConfiguration redisConfiguration = null, string redisVersion = null, bool? enableNonSslPort = null, int? replicasPerMaster = null, int? replicasPerPrimary = null, IDictionary<string, string> tenantSettings = null, int? shardCount = null, RedisTlsVersion? minimumTlsVersion = null, RedisPublicNetworkAccess? publicNetworkAccess = null, UpdateChannel? updateChannel = null, RedisSku sku = null, ResourceIdentifier subnetId = null, IPAddress staticIP = null)
+        {
+            zones ??= new List<string>();
+            tags ??= new Dictionary<string, string>();
+            tenantSettings ??= new Dictionary<string, string>();
+
+            return new RedisCreateOrUpdateContent(
+                zones?.ToList(),
+                location,
+                tags,
+                identity,
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
+                tenantSettings,
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
+                sku,
+                subnetId,
+                staticIP,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisCommonConfiguration"/>. </summary>
@@ -57,7 +102,26 @@ namespace Azure.ResourceManager.Redis.Models
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
-            return new RedisCommonConfiguration(isRdbBackupEnabled, rdbBackupFrequency, rdbBackupMaxSnapshotCount, rdbStorageConnectionString, isAofBackupEnabled, aofStorageConnectionString0, aofStorageConnectionString1, maxFragmentationMemoryReserved, maxMemoryPolicy, maxMemoryReserved, maxMemoryDelta, maxClients, preferredDataArchiveAuthMethod, preferredDataPersistenceAuthMethod, zonalConfiguration, authNotRequired, storageSubscriptionId, isAadEnabled, additionalProperties);
+            return new RedisCommonConfiguration(
+                isRdbBackupEnabled,
+                rdbBackupFrequency,
+                rdbBackupMaxSnapshotCount,
+                rdbStorageConnectionString,
+                isAofBackupEnabled,
+                aofStorageConnectionString0,
+                aofStorageConnectionString1,
+                maxFragmentationMemoryReserved,
+                maxMemoryPolicy,
+                maxMemoryReserved,
+                maxMemoryDelta,
+                maxClients,
+                preferredDataArchiveAuthMethod,
+                preferredDataPersistenceAuthMethod,
+                zonalConfiguration,
+                authNotRequired,
+                storageSubscriptionId,
+                isAadEnabled,
+                additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisData"/>. </summary>
@@ -100,7 +164,37 @@ namespace Azure.ResourceManager.Redis.Models
             instances ??= new List<RedisInstanceDetails>();
             privateEndpointConnections ??= new List<RedisPrivateEndpointConnectionData>();
 
-            return new RedisData(id, name, resourceType, systemData, tags, location, zones?.ToList(), identity, redisConfiguration, redisVersion, enableNonSslPort, replicasPerMaster, replicasPerPrimary, tenantSettings, shardCount, minimumTlsVersion, publicNetworkAccess, updateChannel, sku, subnetId, staticIP, provisioningState, hostName, port, sslPort, accessKeys, linkedServers?.ToList(), instances?.ToList(), privateEndpointConnections?.ToList());
+            return new RedisData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                zones?.ToList(),
+                identity,
+                redisConfiguration,
+                redisVersion,
+                enableNonSslPort,
+                replicasPerMaster,
+                replicasPerPrimary,
+                tenantSettings,
+                shardCount,
+                minimumTlsVersion,
+                publicNetworkAccess,
+                updateChannel,
+                sku,
+                subnetId,
+                staticIP,
+                provisioningState,
+                hostName,
+                port,
+                sslPort,
+                accessKeys,
+                linkedServers?.ToList(),
+                instances?.ToList(),
+                privateEndpointConnections?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisAccessKeys"/>. </summary>
@@ -109,7 +203,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Models.RedisAccessKeys"/> instance for mocking. </returns>
         public static RedisAccessKeys RedisAccessKeys(string primaryKey = null, string secondaryKey = null)
         {
-            return new RedisAccessKeys(primaryKey, secondaryKey);
+            return new RedisAccessKeys(primaryKey, secondaryKey, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisInstanceDetails"/>. </summary>
@@ -122,7 +216,14 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Models.RedisInstanceDetails"/> instance for mocking. </returns>
         public static RedisInstanceDetails RedisInstanceDetails(int? sslPort = null, int? nonSslPort = null, string zone = null, int? shardId = null, bool? isMaster = null, bool? isPrimary = null)
         {
-            return new RedisInstanceDetails(sslPort, nonSslPort, zone, shardId, isMaster, isPrimary);
+            return new RedisInstanceDetails(
+                sslPort,
+                nonSslPort,
+                zone,
+                shardId,
+                isMaster,
+                isPrimary,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisPrivateEndpointConnectionData"/>. </summary>
@@ -136,7 +237,15 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisPrivateEndpointConnectionData"/> instance for mocking. </returns>
         public static RedisPrivateEndpointConnectionData RedisPrivateEndpointConnectionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier privateEndpointId = null, RedisPrivateLinkServiceConnectionState redisPrivateLinkServiceConnectionState = null, RedisPrivateEndpointConnectionProvisioningState? redisProvisioningState = null)
         {
-            return new RedisPrivateEndpointConnectionData(id, name, resourceType, systemData, privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null, redisPrivateLinkServiceConnectionState, redisProvisioningState);
+            return new RedisPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                privateEndpointId != null ? ResourceManagerModelFactory.SubResource(privateEndpointId) : null,
+                redisPrivateLinkServiceConnectionState,
+                redisProvisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisForceRebootResult"/>. </summary>
@@ -144,7 +253,25 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Models.RedisForceRebootResult"/> instance for mocking. </returns>
         public static RedisForceRebootResult RedisForceRebootResult(string message = null)
         {
-            return new RedisForceRebootResult(message);
+            return new RedisForceRebootResult(message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ExportRdbContent"/>. </summary>
+        /// <param name="format"> File format. </param>
+        /// <param name="prefix"> Prefix to use for exported files. </param>
+        /// <param name="container"> Container name to export to. </param>
+        /// <param name="preferredDataArchiveAuthMethod"> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </param>
+        /// <param name="storageSubscriptionId"> Subscription id of the storage container for data to be exported using ManagedIdentity. </param>
+        /// <returns> A new <see cref="Models.ExportRdbContent"/> instance for mocking. </returns>
+        public static ExportRdbContent ExportRdbContent(string format = null, string prefix = null, string container = null, string preferredDataArchiveAuthMethod = null, string storageSubscriptionId = null)
+        {
+            return new ExportRdbContent(
+                format,
+                prefix,
+                container,
+                preferredDataArchiveAuthMethod,
+                storageSubscriptionId,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisFirewallRuleData"/>. </summary>
@@ -157,7 +284,14 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisFirewallRuleData"/> instance for mocking. </returns>
         public static RedisFirewallRuleData RedisFirewallRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IPAddress startIP = null, IPAddress endIP = null)
         {
-            return new RedisFirewallRuleData(id, name, resourceType, systemData, startIP, endIP);
+            return new RedisFirewallRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                startIP,
+                endIP,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisPatchScheduleData"/>. </summary>
@@ -172,7 +306,32 @@ namespace Azure.ResourceManager.Redis.Models
         {
             scheduleEntries ??= new List<RedisPatchScheduleSetting>();
 
-            return new RedisPatchScheduleData(id, name, resourceType, systemData, location, scheduleEntries?.ToList());
+            return new RedisPatchScheduleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                scheduleEntries?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RedisLinkedServerWithPropertyCreateOrUpdateContent"/>. </summary>
+        /// <param name="linkedRedisCacheId"> Fully qualified resourceId of the linked redis cache. </param>
+        /// <param name="linkedRedisCacheLocation"> Location of the linked redis cache. </param>
+        /// <param name="serverRole"> Role of the linked server. </param>
+        /// <param name="geoReplicatedPrimaryHostName"> The unchanging DNS name which will always point to current geo-primary cache among the linked redis caches for seamless Geo Failover experience. </param>
+        /// <param name="primaryHostName"> The changing DNS name that resolves to the current geo-primary cache among the linked redis caches before or after the Geo Failover. </param>
+        /// <returns> A new <see cref="Models.RedisLinkedServerWithPropertyCreateOrUpdateContent"/> instance for mocking. </returns>
+        public static RedisLinkedServerWithPropertyCreateOrUpdateContent RedisLinkedServerWithPropertyCreateOrUpdateContent(ResourceIdentifier linkedRedisCacheId = null, AzureLocation linkedRedisCacheLocation = default, RedisLinkedServerRole serverRole = default, string geoReplicatedPrimaryHostName = null, string primaryHostName = null)
+        {
+            return new RedisLinkedServerWithPropertyCreateOrUpdateContent(
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisLinkedServerWithPropertyData"/>. </summary>
@@ -189,7 +348,18 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisLinkedServerWithPropertyData"/> instance for mocking. </returns>
         public static RedisLinkedServerWithPropertyData RedisLinkedServerWithPropertyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ResourceIdentifier linkedRedisCacheId = null, AzureLocation? linkedRedisCacheLocation = null, RedisLinkedServerRole? serverRole = null, string geoReplicatedPrimaryHostName = null, string primaryHostName = null, string provisioningState = null)
         {
-            return new RedisLinkedServerWithPropertyData(id, name, resourceType, systemData, linkedRedisCacheId, linkedRedisCacheLocation, serverRole, geoReplicatedPrimaryHostName, primaryHostName, provisioningState);
+            return new RedisLinkedServerWithPropertyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                linkedRedisCacheId,
+                linkedRedisCacheLocation,
+                serverRole,
+                geoReplicatedPrimaryHostName,
+                primaryHostName,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisPrivateLinkResource"/>. </summary>
@@ -206,7 +376,15 @@ namespace Azure.ResourceManager.Redis.Models
             requiredMembers ??= new List<string>();
             requiredZoneNames ??= new List<string>();
 
-            return new RedisPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList());
+            return new RedisPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RedisOperationStatus"/>. </summary>
@@ -225,7 +403,17 @@ namespace Azure.ResourceManager.Redis.Models
             operations ??= new List<OperationStatusResult>();
             properties ??= new Dictionary<string, BinaryData>();
 
-            return new RedisOperationStatus(id, name, status, percentComplete, startOn, endOn, operations?.ToList(), error, properties);
+            return new RedisOperationStatus(
+                id,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                properties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisCacheAccessPolicyData"/>. </summary>
@@ -239,7 +427,15 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisCacheAccessPolicyData"/> instance for mocking. </returns>
         public static RedisCacheAccessPolicyData RedisCacheAccessPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyProvisioningState? provisioningState = null, AccessPolicyType? typePropertiesType = null, string permissions = null)
         {
-            return new RedisCacheAccessPolicyData(id, name, resourceType, systemData, provisioningState, typePropertiesType, permissions);
+            return new RedisCacheAccessPolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                typePropertiesType,
+                permissions,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Redis.RedisCacheAccessPolicyAssignmentData"/>. </summary>
@@ -254,7 +450,16 @@ namespace Azure.ResourceManager.Redis.Models
         /// <returns> A new <see cref="Redis.RedisCacheAccessPolicyAssignmentData"/> instance for mocking. </returns>
         public static RedisCacheAccessPolicyAssignmentData RedisCacheAccessPolicyAssignmentData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, AccessPolicyAssignmentProvisioningState? provisioningState = null, Guid? objectId = null, string objectIdAlias = null, string accessPolicyName = null)
         {
-            return new RedisCacheAccessPolicyAssignmentData(id, name, resourceType, systemData, provisioningState, objectId, objectIdAlias, accessPolicyName);
+            return new RedisCacheAccessPolicyAssignmentData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                objectId,
+                objectIdAlias,
+                accessPolicyName,
+                serializedAdditionalRawData: null);
         }
     }
 }

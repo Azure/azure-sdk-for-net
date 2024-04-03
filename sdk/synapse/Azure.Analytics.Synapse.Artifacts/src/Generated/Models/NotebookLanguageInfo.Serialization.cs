@@ -29,7 +29,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -41,7 +41,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string name = default;
-            Optional<string> codemirrorMode = default;
+            string codemirrorMode = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -59,14 +59,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookLanguageInfo(name, codemirrorMode.Value, additionalProperties);
+            return new NotebookLanguageInfo(name, codemirrorMode, additionalProperties);
         }
 
         internal partial class NotebookLanguageInfoConverter : JsonConverter<NotebookLanguageInfo>
         {
             public override void Write(Utf8JsonWriter writer, NotebookLanguageInfo model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<NotebookLanguageInfo>(model);
             }
             public override NotebookLanguageInfo Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

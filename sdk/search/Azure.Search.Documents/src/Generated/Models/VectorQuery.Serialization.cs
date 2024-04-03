@@ -32,6 +32,11 @@ namespace Azure.Search.Documents.Models
                 writer.WritePropertyName("exhaustive"u8);
                 writer.WriteBooleanValue(Exhaustive.Value);
             }
+            if (Optional.IsDefined(Oversampling))
+            {
+                writer.WritePropertyName("oversampling"u8);
+                writer.WriteNumberValue(Oversampling.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -45,6 +50,7 @@ namespace Azure.Search.Documents.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "text": return VectorizableTextQuery.DeserializeVectorizableTextQuery(element);
                     case "vector": return VectorizedQuery.DeserializeVectorizedQuery(element);
                 }
             }

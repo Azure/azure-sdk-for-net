@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.Tracing;
 using System.Runtime.CompilerServices;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 {
@@ -43,7 +44,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         private bool IsEnabled(EventLevel eventLevel) => IsEnabled(eventLevel, EventKeywords.All);
 
         [NonEvent]
-        public void FailedToParseConnectionString(Exception ex)
+        public void FailedToParseConnectionString(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Error))
             {
@@ -55,7 +56,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void FailedToParseConnectionString(string exceptionMessage) => WriteEvent(1, exceptionMessage);
 
         [NonEvent]
-        public void FailedToReadEnvironmentVariables(Exception ex)
+        public void FailedToReadEnvironmentVariables(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -67,7 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void FailedToReadEnvironmentVariables(string errorMessage) => WriteEvent(2, errorMessage);
 
         [NonEvent]
-        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, Exception ex)
+        public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -79,7 +80,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void AccessingEnvironmentVariableFailedWarning(string environmentVariable, string exceptionMessage) => WriteEvent(3, environmentVariable, exceptionMessage);
 
         [NonEvent]
-        public void SdkVersionCreateFailed(Exception ex)
+        public void SdkVersionCreateFailed(System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -94,7 +95,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
         public void VersionStringUnexpectedLength(string typeName, string value) => WriteEvent(5, typeName, value);
 
         [NonEvent]
-        public void ErrorInitializingPartOfSdkVersion(string typeName, Exception ex)
+        public void ErrorInitializingPartOfSdkVersion(string typeName, System.Exception ex)
         {
             if (IsEnabled(EventLevel.Warning))
             {
@@ -107,5 +108,101 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(7, Message = "HttpPipelineBuilder is built with AAD Credentials. TokenCredential: {0} Scope: {1}", Level = EventLevel.Informational)]
         public void SetAADCredentialsToPipeline(string credentialTypeName, string scope) => WriteEvent(7, credentialTypeName, scope);
+
+        [NonEvent]
+        public void PingFailed(Response response)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailed(name: "Ping", response.Status, response.ReasonPhrase);
+            }
+        }
+
+        [NonEvent]
+        public void PostFailed(Response response)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailed(name: "Post", response.Status, response.ReasonPhrase);
+            }
+        }
+
+        [NonEvent]
+        public void PingFailedWithUnknownException(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailedWithUnknownException(name: "Ping", ex.ToInvariantString());
+            }
+        }
+
+        [NonEvent]
+        public void PostFailedWithUnknownException(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailedWithUnknownException(name: "Post", ex.ToInvariantString());
+            }
+        }
+
+        [NonEvent]
+        public void PingFailedWithServiceError(int statusCode, ServiceError serviceError)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailedWithServiceError(name: "Ping", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+            }
+        }
+
+        [NonEvent]
+        public void PostFailedWithServiceError(int statusCode, ServiceError serviceError)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                ServiceCallFailedWithServiceError(name: "Post", statusCode, serviceError.Code, serviceError.Exception, serviceError.Message);
+            }
+        }
+
+        [Event(8, Message = "Service call failed. Name: {0}. Status Code: {1} Reason: {2}.", Level = EventLevel.Error)]
+        public void ServiceCallFailed(string name, int statusCode, string reasonPhrase) => WriteEvent(8, name, statusCode, reasonPhrase);
+
+        [Event(9, Message = "Service call failed with exception. Name: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithUnknownException(string name, string exceptionMessage) => WriteEvent(9, name, exceptionMessage);
+
+        [Event(10, Message = "Service call failed. Name: {0}. Status Code: {1}. Code: {2}. Message: {3}. Exception: {4}.", Level = EventLevel.Error)]
+        public void ServiceCallFailedWithServiceError(string name, int statusCode, string code, string message, string exception) => WriteEvent(10, name, statusCode, code, message, exception);
+
+        [NonEvent]
+        public void StateMachineFailedWithUnknownException(System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                StateMachineFailedWithUnknownException(ex.ToInvariantString());
+            }
+        }
+
+        [Event(11, Message = "LiveMetrics State Machine failed with exception: {0}", Level = EventLevel.Error)]
+        public void StateMachineFailedWithUnknownException(string exceptionMessage) => WriteEvent(11, exceptionMessage);
+
+        [NonEvent]
+        public void DroppedDocument(DocumentIngressDocumentType documentType)
+        {
+            if (IsEnabled(EventLevel.Warning))
+            {
+                DroppedDocument(documentType.ToString());
+            }
+        }
+
+        [Event(12, Message = "Document was dropped. DocumentType: {0}. Not user actionable.", Level = EventLevel.Warning)]
+        public void DroppedDocument(string documentType) => WriteEvent(12, documentType);
+
+        [Event(13, Message = "Failure to calculate CPU Counter. Unexpected negative timespan: PreviousCollectedTime: {0}. RecentCollectedTime: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeTimeSpan(long previousCollectedTime, long recentCollectedTime) => WriteEvent(13, previousCollectedTime, recentCollectedTime);
+
+        [Event(14, Message = "Failure to calculate CPU Counter. Unexpected negative value: PreviousCollectedValue: {0}. RecentCollectedValue: {0}. Not user actionable.", Level = EventLevel.Error)]
+        public void ProcessCountersUnexpectedNegativeValue(long previousCollectedValue, long recentCollectedValue) => WriteEvent(14, previousCollectedValue, recentCollectedValue);
+
+        [Event(15, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
+        public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(15, period, diffValue, calculatedValue, processorCount, normalizedValue);
     }
 }

@@ -30,8 +30,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             WorkspaceIdentityType type = default;
-            Optional<string> principalId = default;
-            Optional<string> tenantId = default;
+            string principalId = default;
+            string tenantId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -50,14 +50,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WorkspaceIdentity(type, principalId.Value, tenantId.Value);
+            return new WorkspaceIdentity(type, principalId, tenantId);
         }
 
         internal partial class WorkspaceIdentityConverter : JsonConverter<WorkspaceIdentity>
         {
             public override void Write(Utf8JsonWriter writer, WorkspaceIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WorkspaceIdentity>(model);
             }
             public override WorkspaceIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

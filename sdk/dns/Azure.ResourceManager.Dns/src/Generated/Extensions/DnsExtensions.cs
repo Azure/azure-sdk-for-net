@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Dns.Mocking;
 using Azure.ResourceManager.Dns.Models;
 using Azure.ResourceManager.Resources;
@@ -272,6 +270,14 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -301,6 +307,14 @@ namespace Azure.ResourceManager.Dns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Zones_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -332,6 +346,14 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -360,6 +382,14 @@ namespace Azure.ResourceManager.Dns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -390,6 +420,10 @@ namespace Azure.ResourceManager.Dns
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -417,6 +451,10 @@ namespace Azure.ResourceManager.Dns
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
         /// </item>
         /// </list>
         /// <item>

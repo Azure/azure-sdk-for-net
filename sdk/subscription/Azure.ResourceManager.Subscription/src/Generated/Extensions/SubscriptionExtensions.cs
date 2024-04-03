@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Mocking;
 using Azure.ResourceManager.Subscription.Models;
@@ -103,6 +101,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -130,6 +132,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Cancel</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -156,6 +162,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -185,6 +195,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Rename</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -213,6 +227,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -239,6 +257,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_Enable</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -284,6 +306,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -313,6 +343,14 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Alias_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="SubscriptionAliasResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -378,6 +416,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -408,6 +454,14 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>BillingAccount_GetPolicy</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="BillingAccountPolicyResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -437,6 +491,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>
@@ -469,6 +527,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnership</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -500,6 +562,10 @@ namespace Azure.ResourceManager.Subscription
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -528,6 +594,10 @@ namespace Azure.ResourceManager.Subscription
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Subscription_AcceptOwnershipStatus</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-10-01</description>
         /// </item>
         /// </list>
         /// <item>

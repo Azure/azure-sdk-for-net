@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Nginx
@@ -55,7 +53,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx deployment
+        /// Create or update the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -63,12 +61,20 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Create</description>
+        /// <description>Deployments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="data"> The <see cref="NginxDeploymentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -82,8 +88,8 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = await _nginxDeploymentDeploymentsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _nginxDeploymentDeploymentsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -96,7 +102,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Create or update the Nginx deployment
+        /// Create or update the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -104,12 +110,20 @@ namespace Azure.ResourceManager.Nginx
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Deployments_Create</description>
+        /// <description>Deployments_CreateOrUpdate</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="data"> The <see cref="NginxDeploymentData"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -123,8 +137,8 @@ namespace Azure.ResourceManager.Nginx
             scope.Start();
             try
             {
-                var response = _nginxDeploymentDeploymentsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken);
-                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _nginxDeploymentDeploymentsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data, cancellationToken);
+                var operation = new NginxArmOperation<NginxDeploymentResource>(new NginxDeploymentOperationSource(Client), _nginxDeploymentDeploymentsClientDiagnostics, Pipeline, _nginxDeploymentDeploymentsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, deploymentName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -137,7 +151,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -147,9 +161,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
@@ -174,7 +196,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// Get the Nginx deployment
+        /// Get the NGINX deployment
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -184,9 +206,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
@@ -211,7 +241,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List all Nginx deployments under the specified resource group.
+        /// List all NGINX deployments under the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -220,6 +250,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +271,7 @@ namespace Azure.ResourceManager.Nginx
         }
 
         /// <summary>
-        /// List all Nginx deployments under the specified resource group.
+        /// List all NGINX deployments under the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -242,6 +280,14 @@ namespace Azure.ResourceManager.Nginx
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Deployments_ListByResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,9 +311,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
@@ -300,9 +354,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
@@ -335,9 +397,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
@@ -372,9 +442,17 @@ namespace Azure.ResourceManager.Nginx
         /// <term>Operation Id</term>
         /// <description>Deployments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NginxDeploymentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
-        /// <param name="deploymentName"> The name of targeted Nginx deployment. </param>
+        /// <param name="deploymentName"> The name of targeted NGINX deployment. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>

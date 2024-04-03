@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
-    public partial class DatabaseServerFullResourceNames : IUtf8JsonSerializable
+    public partial class DatabaseServerFullResourceNames : IUtf8JsonSerializable, IJsonModel<DatabaseServerFullResourceNames>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DatabaseServerFullResourceNames>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DatabaseServerFullResourceNames>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(VirtualMachines))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineResourceNames>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -34,20 +44,51 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(LoadBalancer))
             {
                 writer.WritePropertyName("loadBalancer"u8);
-                writer.WriteObjectValue(LoadBalancer);
+                writer.WriteObjectValue<LoadBalancerResourceNames>(LoadBalancer, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DatabaseServerFullResourceNames DeserializeDatabaseServerFullResourceNames(JsonElement element)
+        DatabaseServerFullResourceNames IJsonModel<DatabaseServerFullResourceNames>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDatabaseServerFullResourceNames(document.RootElement, options);
+        }
+
+        internal static DatabaseServerFullResourceNames DeserializeDatabaseServerFullResourceNames(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<VirtualMachineResourceNames>> virtualMachines = default;
-            Optional<string> availabilitySetName = default;
-            Optional<LoadBalancerResourceNames> loadBalancer = default;
+            IList<VirtualMachineResourceNames> virtualMachines = default;
+            string availabilitySetName = default;
+            LoadBalancerResourceNames loadBalancer = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))
@@ -59,7 +100,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     List<VirtualMachineResourceNames> array = new List<VirtualMachineResourceNames>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item));
+                        array.Add(VirtualMachineResourceNames.DeserializeVirtualMachineResourceNames(item, options));
                     }
                     virtualMachines = array;
                     continue;
@@ -75,11 +116,47 @@ namespace Azure.ResourceManager.Workloads.Models
                     {
                         continue;
                     }
-                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value);
+                    loadBalancer = LoadBalancerResourceNames.DeserializeLoadBalancerResourceNames(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DatabaseServerFullResourceNames(Optional.ToList(virtualMachines), availabilitySetName.Value, loadBalancer.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DatabaseServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName, loadBalancer, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DatabaseServerFullResourceNames>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DatabaseServerFullResourceNames IPersistableModel<DatabaseServerFullResourceNames>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDatabaseServerFullResourceNames(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DatabaseServerFullResourceNames>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

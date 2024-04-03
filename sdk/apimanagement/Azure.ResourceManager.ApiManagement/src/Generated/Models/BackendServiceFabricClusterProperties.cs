@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Properties of the Service Fabric Type Backend. </summary>
     public partial class BackendServiceFabricClusterProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/>. </summary>
         /// <param name="managementEndpoints"> The cluster management endpoint. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="managementEndpoints"/> is null. </exception>
@@ -34,7 +65,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="managementEndpoints"> The cluster management endpoint. </param>
         /// <param name="serverCertificateThumbprints"> Thumbprints of certificates cluster management service uses for tls communication. </param>
         /// <param name="serverX509Names"> Server X509 Certificate Names Collection. </param>
-        internal BackendServiceFabricClusterProperties(string clientCertificateId, string clientCertificatethumbprint, int? maxPartitionResolutionRetries, IList<string> managementEndpoints, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackendServiceFabricClusterProperties(string clientCertificateId, string clientCertificatethumbprint, int? maxPartitionResolutionRetries, IList<string> managementEndpoints, IList<string> serverCertificateThumbprints, IList<X509CertificateName> serverX509Names, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClientCertificateId = clientCertificateId;
             ClientCertificatethumbprint = clientCertificatethumbprint;
@@ -42,6 +74,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ManagementEndpoints = managementEndpoints;
             ServerCertificateThumbprints = serverCertificateThumbprints;
             ServerX509Names = serverX509Names;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackendServiceFabricClusterProperties"/> for deserialization. </summary>
+        internal BackendServiceFabricClusterProperties()
+        {
         }
 
         /// <summary> The client certificate id for the management endpoint. </summary>

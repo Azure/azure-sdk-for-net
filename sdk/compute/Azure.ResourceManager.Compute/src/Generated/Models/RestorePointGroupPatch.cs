@@ -5,9 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -22,11 +21,12 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RestorePointGroupPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The properties of the source resource that this restore point collection is created from. </param>
         /// <param name="provisioningState"> The provisioning state of the restore point collection. </param>
         /// <param name="restorePointGroupId"> The unique id of the restore point collection. </param>
         /// <param name="restorePoints"> A list containing all restore points created under this restore point collection. </param>
-        internal RestorePointGroupPatch(IDictionary<string, string> tags, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints) : base(tags)
+        internal RestorePointGroupPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, RestorePointGroupSource source, string provisioningState, string restorePointGroupId, IReadOnlyList<RestorePointData> restorePoints) : base(tags, serializedAdditionalRawData)
         {
             Source = source;
             ProvisioningState = provisioningState;

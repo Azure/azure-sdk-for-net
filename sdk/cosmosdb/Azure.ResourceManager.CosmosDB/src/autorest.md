@@ -9,8 +9,8 @@ azure-arm: true
 csharp: true
 library-name: CosmosDB
 namespace: Azure.ResourceManager.CosmosDB
-require: https://github.com/Azure/azure-rest-api-specs/blob/fa285f544fa37cd839c4befe1109db3547b016ab/specification/cosmos-db/resource-manager/readme.md
-#tag: package-preview-2023-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/b4506c0467cf68eeb9b0e966a3db1c9bedcd84c7/specification/cosmos-db/resource-manager/readme.md
+#tag: package-preview-2024-02
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,9 +20,11 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
   lenient-model-deduplication: true
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/databaseAccounts/{accountName}/cassandraKeyspaces/{keyspaceName}/throughputSettings/default: CassandraKeyspaceThroughputSetting
@@ -231,7 +233,8 @@ rename-mapping:
   ClusterResourceProperties.cassandraAuditLoggingEnabled: IsCassandraAuditLoggingEnabled
   ClusterResourceProperties.deallocated : IsDeallocated
   ClusterResourceProperties.repairEnabled: IsRepairEnabled
-  CommandPostBody.readwrite: AllowWrite
+  ClusterResourceProperties.privateLinkResourceId: -|arm-id
+  CommandPostBody.readWrite: AllowWrite
   IndexingPolicy.automatic: IsAutomatic
   ManagedCassandraReaperStatus.healthy: IsHealthy
   MongoIndexOptions.unique: IsUnique
@@ -308,6 +311,15 @@ rename-mapping:
   CheckNameAvailabilityReason: CosmosDBNameUnavailableReason
   NodeGroupProperties.diskSizeGB: DiskSizeInGB
   IpAddressOrRange: CosmosDBIPAddressOrRange
+  CommandPublicResource: CassandraClusterCommand
+  CommandStatus: CassandraClusterCommandStatus
+  ThroughputPoolAccountResource: CosmosDBThroughputPoolAccount
+  ThroughputPoolAccountResource.properties.accountLocation: -|azure-location
+  ThroughputPoolAccountResource.properties.accountResourceIdentifier: -|arm-id
+  ThroughputPoolResource: CosmosDBThroughputPool
+  AutoReplicate: CassandraAutoReplicateForm
+  AzureConnectionType: ServiceConnectionType
+  RestoreParametersBase.restoreWithTtlDisabled: IsRestoreWithTtlDisabled
 
 prepend-rp-prefix:
 - UniqueKey
@@ -348,6 +360,9 @@ prepend-rp-prefix:
 
 models-to-treat-empty-string-as-null:
   - CosmosDBAccountData
+
+suppress-abstract-base-class:
+- CosmosDBServiceProperties
 
 directive:
 # The notebook is offline due to security issues
@@ -421,6 +436,25 @@ directive:
   transform: >
     $.restoreLocationParameter['x-ms-format'] = 'azure-location';
     $.instanceIdParameter['format'] = 'uuid';
+# Managed Cassandra
+- from: managedCassandra.json
+  where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.DocumentDB/cassandraClusters/{clusterName}/invokeCommandAsync']
+  transform: >
+    for (var path in $)
+    {
+        delete $[path];
+    }
+- from: managedCassandra.json
+  where: $.definitions.CommandPostBody
+  transform: >
+    $.properties.arguments['additionalProperties'] = {
+        'type':'string'
+    };
+- from: managedCassandra.json
+  where: $.definitions
+  transform: >
+    $.CommandPublicResource.properties.cassandraStopStart["x-ms-client-name"] = "shouldStopCassandraBeforeStart";
+    $.CommandPublicResource.properties.readWrite["x-ms-client-name"] = "isReadWrite";
 # Below is a workaround for ADO 6196
 - remove-operation:
   - DatabaseAccounts_GetReadOnlyKeys

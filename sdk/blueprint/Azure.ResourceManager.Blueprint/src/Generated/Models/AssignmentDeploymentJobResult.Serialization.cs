@@ -5,21 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Blueprint.Models
 {
-    public partial class AssignmentDeploymentJobResult : IUtf8JsonSerializable
+    public partial class AssignmentDeploymentJobResult : IUtf8JsonSerializable, IJsonModel<AssignmentDeploymentJobResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AssignmentDeploymentJobResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AssignmentDeploymentJobResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentDeploymentJobResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<AzureResourceManagerError>(Error, options);
             }
             if (Optional.IsCollectionDefined(Resources))
             {
@@ -27,21 +37,52 @@ namespace Azure.ResourceManager.Blueprint.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AssignmentJobCreatedResult>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AssignmentDeploymentJobResult DeserializeAssignmentDeploymentJobResult(JsonElement element)
+        AssignmentDeploymentJobResult IJsonModel<AssignmentDeploymentJobResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJobResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AssignmentDeploymentJobResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAssignmentDeploymentJobResult(document.RootElement, options);
+        }
+
+        internal static AssignmentDeploymentJobResult DeserializeAssignmentDeploymentJobResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureResourceManagerError> error = default;
-            Optional<IList<AssignmentJobCreatedResult>> resources = default;
+            AzureResourceManagerError error = default;
+            IList<AssignmentJobCreatedResult> resources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -50,7 +91,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                     {
                         continue;
                     }
-                    error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value);
+                    error = AzureResourceManagerError.DeserializeAzureResourceManagerError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resources"u8))
@@ -62,13 +103,49 @@ namespace Azure.ResourceManager.Blueprint.Models
                     List<AssignmentJobCreatedResult> array = new List<AssignmentJobCreatedResult>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item));
+                        array.Add(AssignmentJobCreatedResult.DeserializeAssignmentJobCreatedResult(item, options));
                     }
                     resources = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AssignmentDeploymentJobResult(error.Value, Optional.ToList(resources));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AssignmentDeploymentJobResult(error, resources ?? new ChangeTrackingList<AssignmentJobCreatedResult>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AssignmentDeploymentJobResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJobResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentDeploymentJobResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AssignmentDeploymentJobResult IPersistableModel<AssignmentDeploymentJobResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AssignmentDeploymentJobResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAssignmentDeploymentJobResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AssignmentDeploymentJobResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AssignmentDeploymentJobResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

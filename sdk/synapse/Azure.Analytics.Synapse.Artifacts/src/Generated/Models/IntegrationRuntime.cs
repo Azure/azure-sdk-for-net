@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,10 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="IntegrationRuntime"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ManagedIntegrationRuntime"/> and <see cref="SelfHostedIntegrationRuntime"/>.
     /// </summary>
-    public partial class IntegrationRuntime
+    public abstract partial class IntegrationRuntime
     {
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntime"/>. </summary>
-        public IntegrationRuntime()
+        protected IntegrationRuntime()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }

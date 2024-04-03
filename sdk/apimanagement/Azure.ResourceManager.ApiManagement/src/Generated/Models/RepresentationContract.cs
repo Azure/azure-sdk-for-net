@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Operation request/response representation details. </summary>
     public partial class RepresentationContract
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RepresentationContract"/>. </summary>
         /// <param name="contentType"> Specifies a registered or custom content type for this representation, e.g. application/xml. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="contentType"/> is null. </exception>
@@ -32,13 +63,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="typeName"> Type name defined by the schema. Applicable only if 'contentType' value is neither 'application/x-www-form-urlencoded' nor 'multipart/form-data'. </param>
         /// <param name="formParameters"> Collection of form parameters. Required if 'contentType' value is either 'application/x-www-form-urlencoded' or 'multipart/form-data'.. </param>
         /// <param name="examples"> Exampled defined for the representation. </param>
-        internal RepresentationContract(string contentType, string schemaId, string typeName, IList<ParameterContract> formParameters, IDictionary<string, ParameterExampleContract> examples)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RepresentationContract(string contentType, string schemaId, string typeName, IList<ParameterContract> formParameters, IDictionary<string, ParameterExampleContract> examples, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ContentType = contentType;
             SchemaId = schemaId;
             TypeName = typeName;
             FormParameters = formParameters;
             Examples = examples;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RepresentationContract"/> for deserialization. </summary>
+        internal RepresentationContract()
+        {
         }
 
         /// <summary> Specifies a registered or custom content type for this representation, e.g. application/xml. </summary>

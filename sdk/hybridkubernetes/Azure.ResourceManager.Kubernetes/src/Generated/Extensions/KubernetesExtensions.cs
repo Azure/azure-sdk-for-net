@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Kubernetes.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -81,6 +79,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -110,6 +116,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>
@@ -141,6 +155,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_ListBySubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
+        /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
@@ -168,6 +190,14 @@ namespace Azure.ResourceManager.Kubernetes
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConnectedCluster_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ConnectedClusterResource"/></description>
         /// </item>
         /// </list>
         /// <item>

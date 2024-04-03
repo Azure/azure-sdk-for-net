@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 
 namespace Azure.ResourceManager.ElasticSan.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="elasticSanName"> The name of the ElasticSan. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

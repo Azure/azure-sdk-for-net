@@ -5,15 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
     /// <summary> The updatable properties of the FirewallResource. </summary>
     public partial class FirewallUpdateProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FirewallUpdateProperties"/>. </summary>
         public FirewallUpdateProperties()
         {
@@ -30,7 +61,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <param name="frontEndSettings"> Frontend settings for Firewall. </param>
         /// <param name="planData"> Billing plan information. </param>
         /// <param name="marketplaceDetails"> Marketplace details. </param>
-        internal FirewallUpdateProperties(ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FirewallUpdateProperties(ETag? panETag, FirewallNetworkProfile networkProfile, FirewallBooleanType? isPanoramaManaged, FirewallPanoramaConfiguration panoramaConfig, RulestackDetails associatedRulestack, FirewallDnsSettings dnsSettings, IList<FirewallFrontendSetting> frontEndSettings, FirewallBillingPlanInfo planData, PanFirewallMarketplaceDetails marketplaceDetails, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PanETag = panETag;
             NetworkProfile = networkProfile;
@@ -41,6 +73,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             FrontEndSettings = frontEndSettings;
             PlanData = planData;
             MarketplaceDetails = marketplaceDetails;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> panEtag info. </summary>

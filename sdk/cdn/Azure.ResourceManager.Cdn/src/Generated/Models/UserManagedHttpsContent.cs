@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -29,11 +29,17 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="certificateSource"> Defines the source of the SSL certificate. </param>
         /// <param name="protocolType"> Defines the TLS extension protocol that is used for secure delivery. </param>
         /// <param name="minimumTlsVersion"> TLS protocol version that will be used for Https. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="certificateSourceParameters"> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </param>
-        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion)
+        internal UserManagedHttpsContent(CertificateSource certificateSource, SecureDeliveryProtocolType protocolType, CdnMinimumTlsVersion? minimumTlsVersion, IDictionary<string, BinaryData> serializedAdditionalRawData, KeyVaultCertificateSource certificateSourceParameters) : base(certificateSource, protocolType, minimumTlsVersion, serializedAdditionalRawData)
         {
             CertificateSourceParameters = certificateSourceParameters;
             CertificateSource = certificateSource;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UserManagedHttpsContent"/> for deserialization. </summary>
+        internal UserManagedHttpsContent()
+        {
         }
 
         /// <summary> Defines the certificate source parameters using user's keyvault certificate for enabling SSL. </summary>

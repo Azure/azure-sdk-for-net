@@ -5,30 +5,40 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class PredictionDriftMonitoringSignal : IUtf8JsonSerializable
+    public partial class PredictionDriftMonitoringSignal : IUtf8JsonSerializable, IJsonModel<PredictionDriftMonitoringSignal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PredictionDriftMonitoringSignal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PredictionDriftMonitoringSignal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("metricThresholds"u8);
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PredictionDriftMetricThresholdBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("modelType"u8);
             writer.WriteStringValue(ModelType.ToString());
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -54,11 +64,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("signalType"u8);
             writer.WriteStringValue(SignalType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PredictionDriftMonitoringSignal DeserializePredictionDriftMonitoringSignal(JsonElement element)
+        PredictionDriftMonitoringSignal IJsonModel<PredictionDriftMonitoringSignal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePredictionDriftMonitoringSignal(document.RootElement, options);
+        }
+
+        internal static PredictionDriftMonitoringSignal DeserializePredictionDriftMonitoringSignal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -67,9 +106,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MonitoringModelType modelType = default;
             MonitoringInputDataBase productionData = default;
             MonitoringInputDataBase referenceData = default;
-            Optional<MonitoringNotificationMode> mode = default;
-            Optional<IDictionary<string, string>> properties = default;
+            MonitoringNotificationMode? mode = default;
+            IDictionary<string, string> properties = default;
             MonitoringSignalType signalType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricThresholds"u8))
@@ -77,7 +118,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<PredictionDriftMetricThresholdBase> array = new List<PredictionDriftMetricThresholdBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item));
+                        array.Add(PredictionDriftMetricThresholdBase.DeserializePredictionDriftMetricThresholdBase(item, options));
                     }
                     metricThresholds = array;
                     continue;
@@ -89,12 +130,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (property.NameEquals("productionData"u8))
                 {
-                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    productionData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("referenceData"u8))
                 {
-                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value);
+                    referenceData = MonitoringInputDataBase.DeserializeMonitoringInputDataBase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("mode"u8))
@@ -126,8 +167,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     signalType = new MonitoringSignalType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PredictionDriftMonitoringSignal(Optional.ToNullable(mode), Optional.ToDictionary(properties), signalType, metricThresholds, modelType, productionData, referenceData);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PredictionDriftMonitoringSignal(
+                mode,
+                properties ?? new ChangeTrackingDictionary<string, string>(),
+                signalType,
+                serializedAdditionalRawData,
+                metricThresholds,
+                modelType,
+                productionData,
+                referenceData);
         }
+
+        BinaryData IPersistableModel<PredictionDriftMonitoringSignal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PredictionDriftMonitoringSignal IPersistableModel<PredictionDriftMonitoringSignal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PredictionDriftMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePredictionDriftMonitoringSignal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PredictionDriftMonitoringSignal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PredictionDriftMonitoringSignal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

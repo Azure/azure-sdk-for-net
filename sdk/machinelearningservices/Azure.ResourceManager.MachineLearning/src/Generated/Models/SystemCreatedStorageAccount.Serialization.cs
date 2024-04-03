@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class SystemCreatedStorageAccount : IUtf8JsonSerializable
+    public partial class SystemCreatedStorageAccount : IUtf8JsonSerializable, IJsonModel<SystemCreatedStorageAccount>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SystemCreatedStorageAccount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SystemCreatedStorageAccount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SystemCreatedStorageAccount)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AllowBlobPublicAccess))
             {
@@ -25,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
                 }
                 else
                 {
@@ -61,20 +72,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("storageAccountType");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SystemCreatedStorageAccount DeserializeSystemCreatedStorageAccount(JsonElement element)
+        SystemCreatedStorageAccount IJsonModel<SystemCreatedStorageAccount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SystemCreatedStorageAccount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSystemCreatedStorageAccount(document.RootElement, options);
+        }
+
+        internal static SystemCreatedStorageAccount DeserializeSystemCreatedStorageAccount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> allowBlobPublicAccess = default;
-            Optional<ArmResourceId> armResourceId = default;
-            Optional<bool> storageAccountHnsEnabled = default;
-            Optional<string> storageAccountName = default;
-            Optional<string> storageAccountType = default;
+            bool? allowBlobPublicAccess = default;
+            ArmResourceId armResourceId = default;
+            bool? storageAccountHnsEnabled = default;
+            string storageAccountName = default;
+            string storageAccountType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowBlobPublicAccess"u8))
@@ -93,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         armResourceId = null;
                         continue;
                     }
-                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value);
+                    armResourceId = Models.ArmResourceId.DeserializeArmResourceId(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageAccountHnsEnabled"u8))
@@ -125,8 +167,50 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     storageAccountType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SystemCreatedStorageAccount(Optional.ToNullable(allowBlobPublicAccess), armResourceId.Value, Optional.ToNullable(storageAccountHnsEnabled), storageAccountName.Value, storageAccountType.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SystemCreatedStorageAccount(
+                allowBlobPublicAccess,
+                armResourceId,
+                storageAccountHnsEnabled,
+                storageAccountName,
+                storageAccountType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SystemCreatedStorageAccount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SystemCreatedStorageAccount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SystemCreatedStorageAccount IPersistableModel<SystemCreatedStorageAccount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedStorageAccount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSystemCreatedStorageAccount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SystemCreatedStorageAccount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SystemCreatedStorageAccount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

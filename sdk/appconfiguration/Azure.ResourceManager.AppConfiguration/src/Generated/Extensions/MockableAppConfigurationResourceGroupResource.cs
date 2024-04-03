@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="configStoreName"> The name of the configuration store. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

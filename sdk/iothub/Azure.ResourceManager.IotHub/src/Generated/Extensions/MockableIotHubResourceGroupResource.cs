@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Mocking
 {
@@ -54,6 +51,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="resourceName"> The name of the IoT hub. </param>
@@ -76,6 +81,14 @@ namespace Azure.ResourceManager.IotHub.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>IotHubResource_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-06-30</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IotHubDescriptionResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

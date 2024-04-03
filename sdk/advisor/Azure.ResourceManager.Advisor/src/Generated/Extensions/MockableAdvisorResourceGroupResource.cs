@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Advisor;
 using Azure.ResourceManager.Advisor.Models;
 
 namespace Azure.ResourceManager.Advisor.Mocking
@@ -56,6 +53,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Configurations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -63,7 +64,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual AsyncPageable<ConfigData> GetConfigurationsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -77,6 +78,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <term>Operation Id</term>
         /// <description>Configurations_ListByResourceGroup</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -84,7 +89,7 @@ namespace Azure.ResourceManager.Advisor.Mocking
         public virtual Pageable<ConfigData> GetConfigurations(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ConfigurationsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ConfigData.DeserializeConfigData, ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ConfigData.DeserializeConfigData(e), ConfigurationsClientDiagnostics, Pipeline, "MockableAdvisorResourceGroupResource.GetConfigurations", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -97,6 +102,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -132,6 +141,10 @@ namespace Azure.ResourceManager.Advisor.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Configurations_CreateInResourceGroup</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-01-01</description>
         /// </item>
         /// </list>
         /// </summary>

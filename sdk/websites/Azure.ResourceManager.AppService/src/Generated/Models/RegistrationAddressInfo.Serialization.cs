@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class RegistrationAddressInfo : IUtf8JsonSerializable
+    public partial class RegistrationAddressInfo : IUtf8JsonSerializable, IJsonModel<RegistrationAddressInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RegistrationAddressInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RegistrationAddressInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("address1"u8);
             writer.WriteStringValue(Address1);
@@ -30,21 +42,52 @@ namespace Azure.ResourceManager.AppService.Models
             writer.WriteStringValue(PostalCode);
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RegistrationAddressInfo DeserializeRegistrationAddressInfo(JsonElement element)
+        RegistrationAddressInfo IJsonModel<RegistrationAddressInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRegistrationAddressInfo(document.RootElement, options);
+        }
+
+        internal static RegistrationAddressInfo DeserializeRegistrationAddressInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string address1 = default;
-            Optional<string> address2 = default;
+            string address2 = default;
             string city = default;
             string country = default;
             string postalCode = default;
             string state = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("address1"u8))
@@ -77,8 +120,200 @@ namespace Azure.ResourceManager.AppService.Models
                     state = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RegistrationAddressInfo(address1, address2.Value, city, country, postalCode, state);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RegistrationAddressInfo(
+                address1,
+                address2,
+                city,
+                country,
+                postalCode,
+                state,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address1), out propertyOverride);
+            if (Optional.IsDefined(Address1) || hasPropertyOverride)
+            {
+                builder.Append("  address1: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Address1.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Address1}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Address1}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Address2), out propertyOverride);
+            if (Optional.IsDefined(Address2) || hasPropertyOverride)
+            {
+                builder.Append("  address2: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Address2.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Address2}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Address2}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(City), out propertyOverride);
+            if (Optional.IsDefined(City) || hasPropertyOverride)
+            {
+                builder.Append("  city: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (City.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{City}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{City}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Country), out propertyOverride);
+            if (Optional.IsDefined(Country) || hasPropertyOverride)
+            {
+                builder.Append("  country: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Country.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Country}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Country}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PostalCode), out propertyOverride);
+            if (Optional.IsDefined(PostalCode) || hasPropertyOverride)
+            {
+                builder.Append("  postalCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PostalCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PostalCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PostalCode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("  state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (State.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{State}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{State}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<RegistrationAddressInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RegistrationAddressInfo IPersistableModel<RegistrationAddressInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RegistrationAddressInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRegistrationAddressInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RegistrationAddressInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RegistrationAddressInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

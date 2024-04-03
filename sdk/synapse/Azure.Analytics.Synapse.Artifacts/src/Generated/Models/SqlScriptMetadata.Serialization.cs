@@ -27,7 +27,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> language = default;
+            string language = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -51,14 +51,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SqlScriptMetadata(language.Value, additionalProperties);
+            return new SqlScriptMetadata(language, additionalProperties);
         }
 
         internal partial class SqlScriptMetadataConverter : JsonConverter<SqlScriptMetadata>
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptMetadata model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlScriptMetadata>(model);
             }
             public override SqlScriptMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

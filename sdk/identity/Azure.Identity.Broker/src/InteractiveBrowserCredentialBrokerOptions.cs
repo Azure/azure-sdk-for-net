@@ -21,6 +21,11 @@ namespace Azure.Identity.Broker
         public bool? IsLegacyMsaPassthroughEnabled { get; set; }
 
         /// <summary>
+        /// Gets or sets whether to authenticate with the currently signed in user instead of prompting the user with a login dialog.
+        /// </summary>
+        public bool UseDefaultBrokerAccount { get; set; }
+
+        /// <summary>
         /// Creates a new instance of <see cref="InteractiveBrowserCredentialBrokerOptions"/> to configure a <see cref="InteractiveBrowserCredential"/>.
         /// </summary>
         /// <param name="parentWindowHandle">Handle of the parent window the system authentication broker should be docked to.</param>

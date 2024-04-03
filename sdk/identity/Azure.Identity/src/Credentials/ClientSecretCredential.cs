@@ -12,8 +12,8 @@ namespace Azure.Identity
 {
     /// <summary>
     /// Enables authentication to Microsoft Entra ID using a client secret that was generated for an App Registration. More information on how
-    /// to configure a client secret can be found here:
-    /// https://docs.microsoft.com/azure/active-directory/develop/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application
+    /// to configure a client secret can be found at
+    /// <see href="https://learn.microsoft.com/entra/identity-platform/quickstart-configure-app-access-web-apis#add-credentials-to-your-web-application"/>.
     /// </summary>
     public class ClientSecretCredential : TokenCredential
     {

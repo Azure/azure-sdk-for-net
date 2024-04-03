@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DesktopVirtualization;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    internal partial class PrivateEndpointConnectionListResultWithSystemData
+    internal partial class PrivateEndpointConnectionListResultWithSystemData : IUtf8JsonSerializable, IJsonModel<PrivateEndpointConnectionListResultWithSystemData>
     {
-        internal static PrivateEndpointConnectionListResultWithSystemData DeserializePrivateEndpointConnectionListResultWithSystemData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateEndpointConnectionListResultWithSystemData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateEndpointConnectionListResultWithSystemData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionListResultWithSystemData)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<DesktopVirtualizationPrivateEndpointConnectionDataData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PrivateEndpointConnectionListResultWithSystemData IJsonModel<PrivateEndpointConnectionListResultWithSystemData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionListResultWithSystemData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateEndpointConnectionListResultWithSystemData(document.RootElement, options);
+        }
+
+        internal static PrivateEndpointConnectionListResultWithSystemData DeserializePrivateEndpointConnectionListResultWithSystemData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DesktopVirtualizationPrivateEndpointConnectionDataData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<DesktopVirtualizationPrivateEndpointConnectionDataData> array = new List<DesktopVirtualizationPrivateEndpointConnectionDataData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(item));
+                        array.Add(DesktopVirtualizationPrivateEndpointConnectionDataData.DeserializeDesktopVirtualizationPrivateEndpointConnectionDataData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateEndpointConnectionListResultWithSystemData(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateEndpointConnectionListResultWithSystemData(value ?? new ChangeTrackingList<DesktopVirtualizationPrivateEndpointConnectionDataData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionListResultWithSystemData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateEndpointConnectionListResultWithSystemData IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateEndpointConnectionListResultWithSystemData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionListResultWithSystemData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateEndpointConnectionListResultWithSystemData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

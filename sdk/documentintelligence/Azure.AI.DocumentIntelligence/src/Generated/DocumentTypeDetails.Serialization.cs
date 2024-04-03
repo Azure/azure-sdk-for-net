@@ -5,25 +5,100 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentTypeDetails
+    public partial class DocumentTypeDetails : IUtf8JsonSerializable, IJsonModel<DocumentTypeDetails>
     {
-        internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentTypeDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentTypeDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(BuildMode))
+            {
+                writer.WritePropertyName("buildMode"u8);
+                writer.WriteStringValue(BuildMode.Value.ToString());
+            }
+            writer.WritePropertyName("fieldSchema"u8);
+            writer.WriteStartObject();
+            foreach (var item in FieldSchema)
+            {
+                writer.WritePropertyName(item.Key);
+                writer.WriteObjectValue<DocumentFieldSchema>(item.Value, options);
+            }
+            writer.WriteEndObject();
+            if (Optional.IsCollectionDefined(FieldConfidence))
+            {
+                writer.WritePropertyName("fieldConfidence"u8);
+                writer.WriteStartObject();
+                foreach (var item in FieldConfidence)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentTypeDetails IJsonModel<DocumentTypeDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentTypeDetails(document.RootElement, options);
+        }
+
+        internal static DocumentTypeDetails DeserializeDocumentTypeDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<DocumentBuildMode> buildMode = default;
+            string description = default;
+            DocumentBuildMode? buildMode = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> fieldSchema = default;
-            Optional<IReadOnlyDictionary<string, float>> fieldConfidence = default;
+            IReadOnlyDictionary<string, float> fieldConfidence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -45,7 +120,7 @@ namespace Azure.AI.DocumentIntelligence
                     Dictionary<string, DocumentFieldSchema> dictionary = new Dictionary<string, DocumentFieldSchema>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, DocumentFieldSchema.DeserializeDocumentFieldSchema(property0.Value));
+                        dictionary.Add(property0.Name, DocumentFieldSchema.DeserializeDocumentFieldSchema(property0.Value, options));
                     }
                     fieldSchema = dictionary;
                     continue;
@@ -64,9 +139,45 @@ namespace Azure.AI.DocumentIntelligence
                     fieldConfidence = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentTypeDetails(description.Value, Optional.ToNullable(buildMode), fieldSchema, Optional.ToDictionary(fieldConfidence));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentTypeDetails(description, buildMode, fieldSchema, fieldConfidence ?? new ChangeTrackingDictionary<string, float>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentTypeDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentTypeDetails IPersistableModel<DocumentTypeDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentTypeDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentTypeDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentTypeDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentTypeDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -74,6 +185,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentTypeDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentTypeDetails>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

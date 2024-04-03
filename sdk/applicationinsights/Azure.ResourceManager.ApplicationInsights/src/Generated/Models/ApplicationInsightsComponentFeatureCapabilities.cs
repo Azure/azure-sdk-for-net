@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> An Application Insights component feature capabilities. </summary>
     public partial class ApplicationInsightsComponentFeatureCapabilities
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentFeatureCapabilities"/>. </summary>
         internal ApplicationInsightsComponentFeatureCapabilities()
         {
@@ -32,7 +67,8 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="dailyCap"> Daily data volume cap in GB. </param>
         /// <param name="dailyCapResetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="throttleRate"> Reserved, not used now. </param>
-        internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentFeatureCapabilities(bool? supportExportData, string burstThrottlePolicy, string metadataClass, bool? liveStreamMetrics, bool? applicationMap, bool? workItemIntegration, bool? powerBIIntegration, bool? openSchema, bool? proactiveDetection, bool? analyticsIntegration, bool? multipleStepWebTest, string apiAccessLevel, string trackingType, float? dailyCap, float? dailyCapResetTime, float? throttleRate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             SupportExportData = supportExportData;
             BurstThrottlePolicy = burstThrottlePolicy;
@@ -50,39 +86,56 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             DailyCap = dailyCap;
             DailyCapResetTime = dailyCapResetTime;
             ThrottleRate = throttleRate;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Whether allow to use continuous export feature. </summary>
+        [WirePath("SupportExportData")]
         public bool? SupportExportData { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("BurstThrottlePolicy")]
         public string BurstThrottlePolicy { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("MetadataClass")]
         public string MetadataClass { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("LiveStreamMetrics")]
         public bool? LiveStreamMetrics { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("ApplicationMap")]
         public bool? ApplicationMap { get; }
         /// <summary> Whether allow to use work item integration feature. </summary>
+        [WirePath("WorkItemIntegration")]
         public bool? WorkItemIntegration { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("PowerBIIntegration")]
         public bool? PowerBIIntegration { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("OpenSchema")]
         public bool? OpenSchema { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("ProactiveDetection")]
         public bool? ProactiveDetection { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("AnalyticsIntegration")]
         public bool? AnalyticsIntegration { get; }
         /// <summary> Whether allow to use multiple steps web test feature. </summary>
+        [WirePath("MultipleStepWebTest")]
         public bool? MultipleStepWebTest { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("ApiAccessLevel")]
         public string ApiAccessLevel { get; }
         /// <summary> The application insights component used tracking type. </summary>
+        [WirePath("TrackingType")]
         public string TrackingType { get; }
         /// <summary> Daily data volume cap in GB. </summary>
+        [WirePath("DailyCap")]
         public float? DailyCap { get; }
         /// <summary> Daily data volume cap UTC reset hour. </summary>
+        [WirePath("DailyCapResetTime")]
         public float? DailyCapResetTime { get; }
         /// <summary> Reserved, not used now. </summary>
+        [WirePath("ThrottleRate")]
         public float? ThrottleRate { get; }
     }
 }

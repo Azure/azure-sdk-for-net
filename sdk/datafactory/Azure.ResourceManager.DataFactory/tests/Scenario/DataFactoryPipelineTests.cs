@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureDatabricksDeltaLake);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureDatabricksDeltaLakeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureDatabricksDeltaLakeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkDataMongoDbAtlas);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBAtlasCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "TestCollection"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBAtlasCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "TestCollection"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCosmosDbMongoDb);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CosmosDBMongoDBApiCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "TestCollection"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new CosmosDBMongoDBApiCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "TestCollection"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMongoDb2 = new DataFactoryLinkedServiceData(new MongoDBV2LinkedService(DataFactoryElement<string>.FromSecretString("mongodb+srv://myDatabaseUser:@server.example.com"), "TestDB"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMongoDb2);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBV2CollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "TestCollection"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBV2CollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "TestCollection"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMongoDb2 = new DataFactoryLinkedServiceData(new MongoDBLinkedService(DataFactoryElement<string>.FromSecretString("mongodb+srv://myDatabaseUser:@server.example.com"), "TestDB"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMongoDb2);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "TestCollection"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MongoDBCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "TestCollection"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             if (string.IsNullOrEmpty(datasetName))
                 return null;
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSqlDW = new DataFactoryLinkedServiceData(new AzureSqlDWLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlDW);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlDWTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             if (string.IsNullOrEmpty(datasetName))
                 return null;
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new WebLinkedService(new WebAnonymousAuthentication("https://www.bing.com/")));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new WebTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), 1));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new WebTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), 1));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new AmazonRedshiftLinkedService("server", "database"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new AmazonRedshiftTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new AmazonRedshiftTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new AzureDataExplorerLinkedService("endpoint", "database"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new AzureDataExplorerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new AzureDataExplorerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -277,17 +277,20 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, data);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new OdbcTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new OdbcTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
 
         private async Task<DataFactoryDatasetResource> CreateDefaultMySqlTableDataset(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
-            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService("server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"));
+            DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new MySqlLinkedService()
+            {
+                ConnectionString = "server=10.0.0.122;port=3306;database=db;user=https:\\\\test.com;sslmode=1;usesystemtruststore=0"
+            });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new MySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -297,7 +300,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new SybaseLinkedService("server", "database"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new SybaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new SybaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -307,7 +310,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new ODataLinkedService("http:\\test.com"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new ODataResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new ODataResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -317,7 +320,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkWebSource = new DataFactoryLinkedServiceData(new OracleLinkedService("host=test123.com;port=232;sid=12321231;user id=https:\\\\test.com"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkWebSource);
 
-            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new OracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData dsWebSource = new DataFactoryDatasetData(new OracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, dsWebSource);
             return result.Value;
         }
@@ -327,7 +330,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSqlSource = new DataFactoryLinkedServiceData(new AzureSqlDatabaseLinkedService("Server=tcp:myServerAddress.database.windows.net,1433;Database=myDataBase;User ID=myUsername;Password=myPassword;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlSource);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -337,7 +340,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkAmazonRdsForSqlServer = new DataFactoryLinkedServiceData(new AmazonRdsForSqlServerLinkedService("integrated security=False;data source=TestServer;initial catalog=TestDB;user id=ais;Password=myPassword;"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAmazonRdsForSqlServer);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForSqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForSqlServerTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -347,7 +350,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkFileSystem = new DataFactoryLinkedServiceData(new FileServerLinkedService("\\testmachine\\testfolder"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkFileSystem);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -360,7 +363,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             if (string.IsNullOrEmpty(datasetName))
                 return null;
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureDataLakeStoreDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureDataLakeStoreDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -370,7 +373,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHttp = new DataFactoryLinkedServiceData(new HttpLinkedService("https://www.bing.com/"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHttp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -380,7 +383,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkAzureSearch = new DataFactoryLinkedServiceData(new AzureSearchLinkedService("https://test-test.search.windows.net"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureSearch);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSearchIndexDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "testindenx"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSearchIndexDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "testindenx"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -394,7 +397,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 return null;
             }
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -409,7 +412,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         private async Task<DataFactoryDatasetResource> CreateDefaultAzureBatchLinkedService(DataFactoryResource dataFactory, string linkedServiceName, string datasetName)
         {
             await CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(dataFactory, "linkedService_AzureBlobStorage", null);
-            DataFactoryLinkedServiceData lkAzureBatch = new DataFactoryLinkedServiceData(new AzureBatchLinkedService("test", "https://testaccount.westus.batch.azure.com", "testpool", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, "linkedService_AzureBlobStorage")));
+            DataFactoryLinkedServiceData lkAzureBatch = new DataFactoryLinkedServiceData(new AzureBatchLinkedService("test", "https://testaccount.westus.batch.azure.com", "testpool", new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, "linkedService_AzureBlobStorage")));
             var result = await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureBatch);
             return null;
         }
@@ -440,7 +443,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkAzureBatch = new DataFactoryLinkedServiceData(new AzureMySqlLinkedService("server=test.mysql.database.azure.com;port=3306;database=TestDB;uid=admin;pwd=fakePassword;sslmode=1;usesystemtruststore=0"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureBatch);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMySqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -457,7 +460,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSalesforce);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -473,7 +476,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkDynamics365);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -487,7 +490,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSapCloudForCustomer);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapCloudForCustomerResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakePath"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapCloudForCustomerResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakePath"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -497,7 +500,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSapCloudForCustomer = new DataFactoryLinkedServiceData(new SapBWLinkedService("fakeServer", "123456", "fakeClientId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSapCloudForCustomer);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapBWCubeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapBWCubeDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -507,7 +510,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkAmazonMWS = new DataFactoryLinkedServiceData(new AmazonMwsLinkedService("mws.amazonservice.com", "fakeMarketplaceId", "fakeSellerId", "fakeAccessKeyId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAmazonMWS);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonMwsObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonMwsObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -520,7 +523,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzurePostgreSql);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzurePostgreSqlTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -533,7 +536,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAmazonRds);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForOracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AmazonRdsForOracleTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -543,7 +546,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkConcur = new DataFactoryLinkedServiceData(new ConcurLinkedService("fakeClientId", "fakeUsername"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkConcur);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ConcurObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ConcurObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -556,7 +559,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCouchbase);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CouchbaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)) { TableName = "fakeTableName" });
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new CouchbaseTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)) { TableName = "fakeTableName" });
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -569,7 +572,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkDrill);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DrillTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DrillTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -582,7 +585,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkEloqua);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new EloquaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new EloquaObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -597,7 +600,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkGoogleBigQuery);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new GoogleBigQueryObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new GoogleBigQueryObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -610,7 +613,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkGreenplum);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new GreenplumTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new GreenplumTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -620,7 +623,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHbase = new DataFactoryLinkedServiceData(new HBaseLinkedService("192.168.222.160", "Anonymous"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHbase);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new HBaseObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new HBaseObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -630,7 +633,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHive = new DataFactoryLinkedServiceData(new HiveLinkedService("192.168.222.160", "Anonymous"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHive);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new HiveObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new HiveObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -640,7 +643,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHubspot = new DataFactoryLinkedServiceData(new HubspotLinkedService("fakeClientId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHubspot);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new HubspotObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new HubspotObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -650,7 +653,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkImpala = new DataFactoryLinkedServiceData(new ImpalaLinkedService("192.168.222.160", "Anonymous"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkImpala);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new HubspotObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new HubspotObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -660,7 +663,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkJira = new DataFactoryLinkedServiceData(new JiraLinkedService("jira.example.com", "skroob"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkJira);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new JiraObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new JiraObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -670,7 +673,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMagento = new DataFactoryLinkedServiceData(new MagentoLinkedService("192.168.222.110/magento3"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMagento);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MagentoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MagentoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -683,7 +686,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMaria);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -696,7 +699,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureMaria);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureMariaDBTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -706,7 +709,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMarketo = new DataFactoryLinkedServiceData(new MarketoLinkedService("123-ABC-321.mktorest.com", "fakeClientId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMarketo);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MarketoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MarketoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -716,7 +719,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkPaypal = new DataFactoryLinkedServiceData(new PaypalLinkedService("api.sandbox.paypal.com", "fakeClientId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkPaypal);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PaypalObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new PaypalObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -726,7 +729,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkPhoenix = new DataFactoryLinkedServiceData(new PhoenixLinkedService("192.168.222.160", "Anonymous"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkPhoenix);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new PhoenixObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -736,7 +739,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkPresto = new DataFactoryLinkedServiceData(new PrestoLinkedService("192.168.222.160", "0.148-t", "test", "Anonymous"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkPresto);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new PrestoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -754,7 +757,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkQuickBooks);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new QuickBooksObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new QuickBooksObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -768,7 +771,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkQuickBooks);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ServiceNowObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ServiceNowObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -781,7 +784,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkShopify);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ShopifyObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ShopifyObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -795,7 +798,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSpark);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SparkObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -811,7 +814,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSquare);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SquareObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SquareObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -826,7 +829,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkXero);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XeroObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new XeroObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -840,7 +843,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkZoho);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -854,7 +857,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkZoho);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ZohoObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -864,7 +867,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkZoho = new DataFactoryLinkedServiceData(new DynamicsAXLinkedService("https://testorganization.ax.dynamics.com/data", "fakeServicePrincipalId", new DataFactorySecretString("fakeServicePrincipalKey"), "fakeTenantId", "fakeAddResourceId"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkZoho);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DynamicsAXResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeTestPath"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DynamicsAXResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeTestPath"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -877,7 +880,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkNetezza);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new NetezzaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -890,7 +893,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkVertica);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new VerticaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -913,7 +916,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSapOpenHub);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapOpenHubTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeName"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapOpenHubTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeName"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -930,7 +933,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSapOpenHub);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapTableResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeName"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapTableResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeName"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -943,7 +946,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkDb2);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new Db2TableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new Db2TableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -952,7 +955,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AvroDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -961,7 +964,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new ExcelDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -970,7 +973,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new OrcDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -979,7 +982,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -988,7 +991,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -998,7 +1001,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkFileSystem = new DataFactoryLinkedServiceData(new FileServerLinkedService("\\testmachine\\testfolder"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkFileSystem);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1011,7 +1014,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkFTP);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1028,7 +1031,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAzureBlobFS);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobFSDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobFSDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1038,7 +1041,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHdfs = new DataFactoryLinkedServiceData(new HdfsLinkedService("10.10.10.10"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHdfs);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1048,7 +1051,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkHttp = new DataFactoryLinkedServiceData(new HttpLinkedService("https://www.bing.com/"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkHttp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1064,7 +1067,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkAmazonS3);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1074,7 +1077,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSftp = new DataFactoryLinkedServiceData(new SftpServerLinkedService("10.10.10.10"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSftp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1089,7 +1092,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSftp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1104,7 +1107,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSftp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1119,7 +1122,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSftp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1132,7 +1135,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSftp);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new DelimitedTextDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1145,7 +1148,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCosmosDb);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CosmosDBSqlApiCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeCollectionName"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new CosmosDBSqlApiCollectionDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeCollectionName"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1154,7 +1157,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1163,7 +1166,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new JsonDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1172,7 +1175,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new XmlDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1181,7 +1184,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureDataLakeStoreDataset(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1190,7 +1193,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await CreateDefaultAzureBlobStorageLinkedServiceOrDatasets(dataFactory, linkedServiceName, null);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1207,7 +1210,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBinary);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1217,7 +1220,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkBinary = new DataFactoryLinkedServiceData(new FileServerLinkedService("\\testmachine\\testfolder"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBinary);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1227,7 +1230,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkBinary = new DataFactoryLinkedServiceData(new SftpServerLinkedService("10.10.10.10"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkBinary);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new BinaryDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1240,7 +1243,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkTeradata);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new TeradataTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new TeradataTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1250,7 +1253,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkSqlMI = new DataFactoryLinkedServiceData(new AzureSqlMILinkedService("integrated security=False;encrypt=True;connection timeout=30;data source=test-sqlmi.public.123456789012.database.windows.net,3342;initial catalog=TestDB;user id=fakekey"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlMI);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlMITableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureSqlMITableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1264,7 +1267,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSqlMI);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapHanaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SapHanaTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1280,7 +1283,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkSalesforceServiceCloud);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceServiceCloudObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SalesforceServiceCloudObjectDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1296,7 +1299,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCommonDataServiceForApps);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CommonDataServiceForAppsEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new CommonDataServiceForAppsEntityDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1306,7 +1309,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkInformix = new DataFactoryLinkedServiceData(new InformixLinkedService("Database=TestDB;Host=192.168.10.10;Server=db_engine_tcp;Service=1492;Protocol=onsoctcp;UID=fakeUsername;Password=fakePassword;"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkInformix);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new InformixTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new InformixTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1316,7 +1319,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMicrosoftAccess = new DataFactoryLinkedServiceData(new MicrosoftAccessLinkedService("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\myFolder\\myAccessFile.accdb;Persist Security Info=False;"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMicrosoftAccess);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new MicrosoftAccessTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new MicrosoftAccessTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1326,7 +1329,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMicrosoftAccess = new DataFactoryLinkedServiceData(new SharePointOnlineListLinkedService("10.10.10.10", "fakeTenantId", "fakeServicePrincipalId", new DataFactorySecretString("fakeServicePrincipalKey")));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMicrosoftAccess);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new SharePointOnlineListResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new SharePointOnlineListResourceDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1336,7 +1339,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkMicrosoftAccess = new DataFactoryLinkedServiceData(new Office365LinkedService("fakeTenantId", "fakeServicePrincipalTenantId", "fakeServicePrincipalId", new DataFactorySecretString("fakeServicePrincipalKey")));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkMicrosoftAccess);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new Office365Dataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeTableName"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new Office365Dataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeTableName"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1346,7 +1349,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             DataFactoryLinkedServiceData lkCassandraSource = new DataFactoryLinkedServiceData(new CassandraLinkedService("10.10.10.10"));
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCassandraSource);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new CassandraTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new CassandraTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1359,7 +1362,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             });
             await dataFactory.GetDataFactoryLinkedServices().CreateOrUpdateAsync(WaitUntil.Completed, linkedServiceName, lkCassandraSource);
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName), "fakeTable"));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureTableDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName), "fakeTable"));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -1424,9 +1427,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AzureDatabricksDeltaLakeSource()
+                        new CopyActivity(taskName, new AzureDatabricksDeltaLakeSource()
                             {
                                 Query = "abc",
                                 ExportSettings = new AzureDatabricksDeltaLakeExportCommand()
@@ -1434,8 +1435,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     DateFormat = "xxx",
                                     TimestampFormat = "xxx"
                                 }
-                            },
-                            Sink = new AzureDatabricksDeltaLakeSink()
+                            }, new AzureDatabricksDeltaLakeSink()
                             {
                                 PreCopyScript = "abc",
                                 ImportSettings = new AzureDatabricksDeltaLakeImportCommand()
@@ -1443,7 +1443,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     DateFormat = "xxx",
                                     TimestampFormat = "xxx"
                                 }
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1469,9 +1470,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new MongoDBAtlasSource()
+                        new CopyActivity(taskName, new MongoDBAtlasSource()
                             {
                                 Filter = DataFactoryElement<string>.FromExpression("@dataset().MyFilter"),
                                 CursorMethods = new MongoDBCursorMethodsProperties()
@@ -1482,12 +1481,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     Project = DataFactoryElement<string>.FromExpression("@dataset().MyProject")
                                 },
                                 BatchSize = 5
-                            },
-                            Sink = new CosmosDBMongoDBApiSink()
+                            }, new CosmosDBMongoDBApiSink()
                             {
                                 WriteBehavior = "upsert",
                                 WriteBatchSize = 5000
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1518,9 +1517,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new MongoDBAtlasSource()
+                        new CopyActivity(taskName, new MongoDBAtlasSource()
                             {
                                 Filter = DataFactoryElement<string>.FromExpression("@dataset().MyFilter"),
                                 CursorMethods = new MongoDBCursorMethodsProperties()
@@ -1531,12 +1528,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                     Project = DataFactoryElement<string>.FromExpression("@dataset().MyProject")
                                 },
                                 BatchSize = 5
-                            },
-                            Sink = new MongoDBV2Sink()
+                            }, new MongoDBV2Sink()
                             {
                                 WriteBehavior = "upsert",
                                 WriteBatchSize = 5000
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1569,17 +1566,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new SqlSource()
-                            {
-                            },
-                            Sink = new SqlDWSink()
+                        new CopyActivity(taskName, new SqlSource(), new SqlDWSink()
                             {
                                 AllowPolyBase = true,
                                 WriteBatchSize = 5,
                                 WriteBatchTimeout = "PT0S"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1589,7 +1582,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
                             EnableStaging = true,
-                            StagingSettings = new StagingSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceStagingName))
+                            StagingSettings = new StagingSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceStagingName))
                         }
                     }
                 };
@@ -1610,7 +1603,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new HDInsightHiveActivity(taskName)
                         {
                             ScriptPath = "testing",
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -1628,14 +1621,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName, new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1645,14 +1632,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             }
                         },
-                        new CopyActivity(taskName + "1",new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1666,14 +1647,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new PipelineActivityDependency(taskName,new List<DependencyCondition>() { DependencyCondition.Succeeded})
                             }
                         },
-                        new CopyActivity(taskName + "1",new DataFactoryBlobSource(),new DataFactoryBlobSink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1713,14 +1688,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName, new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1736,14 +1705,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 }
                             }
                         },
-                        new CopyActivity(taskName + "1",new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1769,14 +1732,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new PipelineActivityDependency(taskName,new List<DependencyCondition>() { DependencyCondition.Succeeded})
                             }
                         },
-                        new CopyActivity(taskName + "1",new CopyActivitySource(),new CopySink())
+                        new CopyActivity(taskName + "1", new DataFactoryBlobSource(), new DataFactoryBlobSink())
                         {
-                            Source = new DataFactoryBlobSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
-                            {
-                            },
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1828,16 +1785,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new WebSource()
-                            {
-                            },
-                            Sink = new DataFactoryBlobSink()
+                        new CopyActivity(taskName, new WebSource(), new DataFactoryBlobSink()
                             {
                                 WriteBatchSize = 1000000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -1871,7 +1824,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new SqlServerStoredProcedureActivity(taskName,"testStoredProcedure")
                         {
                             StoredProcedureParameters = BinaryData.FromString("{\"para1\" : \"test\"}"),
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -1889,19 +1842,23 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AzureSqlSource()
+                        new CopyActivity(taskName, new AzureSqlSource()
                             {
                                 SqlReaderQuery = "SELECT TOP 1 * FROM DBO.TestTable",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "partitionColumnName",
                                     PartitionUpperBound = "10",
                                     PartitionLowerBound = "1"
                                 }
-                            },
+                            }, new DataFactoryBlobSink()
+                            {
+                                WriteBatchSize = 1000000,
+                                WriteBatchTimeout = "01:00:00",
+                                BlobWriterAddHeader = true
+                            })
+                        {
                             Sink = new DataFactoryBlobSink()
                             {
                                 WriteBatchSize = 1000000,
@@ -1917,7 +1874,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 2,
@@ -1940,9 +1897,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new SqlSource()
+                        new CopyActivity(taskName, new SqlSource()
                             {
                                 SourceRetryCount = 2,
                                 SourceRetryWait = "00:00:01",
@@ -1950,13 +1905,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 SqlReaderStoredProcedureName = "CopyTestSrcStoredProcedureWithParameters",
                                 StoredProcedureParameters = BinaryData.FromString("{\"stringData\": {\"value\": \"test\",\"type\": \"String\"},\"id\": {\"value\": \"3\",\"type\": \"Int\"}}"),
                                 IsolationLevel = "ReadCommitted"
-                            },
-                            Sink = new DataFactoryBlobSink()
+                            }, new DataFactoryBlobSink()
                             {
                                 BlobWriterAddHeader = true,
                                 WriteBatchSize = 100000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Translator = BinaryData.FromString("{\"type\": \"TabularTranslator\",\"columnMappings\": \"PartitionKey:PartitionKey\"}"),
                             Inputs =
                             {
@@ -1966,7 +1921,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -1989,9 +1944,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(),new CopySink())
-                        {
-                            Source = new AmazonRdsForSqlServerSource()
+                        new CopyActivity(taskName, new AmazonRdsForSqlServerSource()
                             {
                                 SourceRetryCount = 2,
                                 SourceRetryWait = "00:00:01",
@@ -1999,13 +1952,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 SqlReaderStoredProcedureName = "CopyTestSrcStoredProcedureWithParameters",
                                 StoredProcedureParameters = BinaryData.FromString("{\"stringData\": {\"value\": \"test\",\"type\": \"String\"},\"id\": {\"value\": \"3\",\"type\": \"Int\"}}"),
                                 IsolationLevel = "ReadCommitted"
-                            },
-                            Sink = new DataFactoryBlobSink()
+                            }, new DataFactoryBlobSink()
                             {
                                 BlobWriterAddHeader = true,
                                 WriteBatchSize = 100000,
                                 WriteBatchTimeout = "01:00:00"
-                            },
+                            })
+                        {
                             Translator = BinaryData.FromString("{\"type\": \"TabularTranslator\",\"columnMappings\": \"PartitionKey:PartitionKey\"}"),
                             Inputs =
                             {
@@ -2015,7 +1968,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -2083,10 +2036,10 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new HDInsightPigActivity(taskName)
                         {
                             ScriptPath = "scripts/script.pig",
-                            ScriptLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            ScriptLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             StorageLinkedServices =
                             {
-                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             Defines =
                             {
@@ -2112,12 +2065,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new HDInsightHiveActivity(taskName)
                         {
                             ScriptPath = "scripts/script.hql",
-                            ScriptLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            ScriptLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             StorageLinkedServices =
                             {
-                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                         }
                     }
                 };
@@ -2137,7 +2090,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         new HDInsightMapReduceActivity(taskName,"MYClass","TestData/hadoop-mapreduce-examples.jar")
                         {
-                            JarLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName),
+                            JarLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName),
                             Arguments =
                             {
                                 BinaryData.FromString("\"wasb:///example/data/gutenberg/davinci.txt\"")
@@ -2148,13 +2101,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             },
                             StorageLinkedServices =
                             {
-                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             Defines =
                             {
                                 new KeyValuePair<string, BinaryData>("PropertyBagPropertyName1",BinaryData.FromString("\"PropertyBagValue1\""))
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                         }
                     }
                 };
@@ -2174,7 +2127,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         new HDInsightSparkActivity(taskName,"release\\1.0","main.py")
                         {
-                            SparkJobLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            SparkJobLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             ClassName = "main",
                             Arguments =
                             {
@@ -2203,18 +2156,16 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new CopyActivitySource(), new AzureTableSink())
-                        {
-                            Source = new CassandraSource()
+                        new CopyActivity(taskName, new CassandraSource()
                             {
                                 Query = "select * from table",
                                 ConsistencyLevel = "TWO"
-                            },
-                            Sink = new AzureTableSink()
+                            }, new AzureTableSink()
                             {
                                 WriteBatchSize = 100000,
                                 AzureTableDefaultPartitionKeyValue = "defaultParitionKey"
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -2309,7 +2260,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -2350,7 +2301,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference, datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceSourceName)
                         }
                     }
                 };
@@ -2502,7 +2453,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 WebActivityAuthenticationType = "Basic",
                                 Username = "testuser",
-                                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),"testsecret")
+                                Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),"testsecret")
                             }
                         }
                     }
@@ -2527,12 +2478,12 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         new CustomActivity(taskName,"Echo Hello World!")
                         {
                             FolderPath = "TestFolder",
-                            ResourceLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName),
+                            ResourceLinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName),
                             ReferenceObjects = new CustomActivityReferenceObject()
                             {
                                 LinkedServices =
                                 {
-                                    new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceSinkName1)
+                                    new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceSinkName1)
                                 },
                                 Datasets =
                                 {
@@ -2548,7 +2499,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             },
                             RetentionTimeInDays = BinaryData.FromString("35"),
                             AutoUserSpecification = "pooladmin",
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceSourceName)
                         }
                     }
                 };
@@ -2690,9 +2641,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new AzureMLUpdateResourceActivity(taskName,"Training Exp for ADF ML TiP tests[trained model]",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName),"azuremltesting/testInput.ilearner")
+                        new AzureMLUpdateResourceActivity(taskName,"Training Exp for ADF ML TiP tests[trained model]",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName),"azuremltesting/testInput.ilearner")
                         {
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -2714,13 +2665,13 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                         {
                             WebServiceInputs =
                             {
-                                new KeyValuePair<string, AzureMLWebServiceFile>("input1",new AzureMLWebServiceFile("azuremltesting/IrisInput/Two Class Data.1.arff",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)))
+                                new KeyValuePair<string, AzureMLWebServiceFile>("input1",new AzureMLWebServiceFile("azuremltesting/IrisInput/Two Class Data.1.arff",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)))
                             },
                             WebServiceOutputs =
                             {
-                                new KeyValuePair<string, AzureMLWebServiceFile>("output1",new AzureMLWebServiceFile("azuremltesting/categorized/##folderPath##/result.csv",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)))
+                                new KeyValuePair<string, AzureMLWebServiceFile>("output1",new AzureMLWebServiceFile("azuremltesting/categorized/##folderPath##/result.csv",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)))
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -2738,7 +2689,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new DataLakeAnalyticsUsqlActivity(taskName,"fakepath",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName))
+                        new DataLakeAnalyticsUsqlActivity(taskName,"fakepath",new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName))
                     }
                 };
             });
@@ -2881,7 +2832,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -3841,7 +3792,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -3883,7 +3834,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -3980,7 +3931,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new KeyValuePair<string, BinaryData>("test",BinaryData.FromString("\"test\""))
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName)
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName)
                         }
                     }
                 };
@@ -4092,7 +4043,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -4120,7 +4071,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Authentication = new WebActivityAuthentication()
                             {
                                 Username = "testuser",
-                                Password = new DataFactoryKeyVaultSecretReference(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName),"pfxpwd")
+                                Password = new DataFactoryKeyVaultSecret(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName),"pfxpwd")
                             }
                         }
                     }
@@ -4179,7 +4130,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -4387,8 +4338,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
                             ValidateDataConsistency = true,
-                            SkipErrorFile = new SkipErrorFile(true,true),
-                            LogStorageSettings = new LogStorageSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName))
+                            SkipErrorFile = new SkipErrorFile(true,true, null),
+                            LogStorageSettings = new LogStorageSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName))
                             {
                                 Path = "test",
                                 LogLevel = "exampleLogLevel",
@@ -4457,8 +4408,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
                             ValidateDataConsistency = true,
-                            SkipErrorFile = new SkipErrorFile(true,true),
-                            LogSettings = new DataFactoryLogSettings(new LogLocationSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName))
+                            SkipErrorFile = new SkipErrorFile(true,true, null),
+                            LogSettings = new DataFactoryLogSettings(new LogLocationSettings(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName))
                             {
                                 Path = "test"
                             })
@@ -5650,7 +5601,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,
@@ -6233,7 +6184,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Staging = new DataFlowStagingInfo()
                             {
                                 FolderPath = "adfjobs/staging",
-                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             Compute = new ExecuteDataFlowActivityComputeType()
                             {
@@ -6278,7 +6229,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Staging = new DataFlowStagingInfo()
                             {
                                 FolderPath = "adfjobs/staging",
-                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             Compute = new ExecuteDataFlowActivityComputeType()
                             {
@@ -6303,9 +6254,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                 {
                     Activities =
                     {
-                        new CopyActivity(taskName,new DelimitedTextSource(),new DelimitedTextSink())
-                        {
-                            Source = new DelimitedTextSource()
+                        new CopyActivity(taskName, new DelimitedTextSource()
                             {
                                 StoreSettings = new GoogleCloudStorageReadSettings()
                                 {
@@ -6324,10 +6273,9 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         new KeyValuePair<string, BinaryData>("additionalNullValues",BinaryData.FromString("[ \"\\\\N\", \"NULL\" ]"))
                                     }
                                 }
-                            },
-                            Sink = new DelimitedTextSink()
+                            }, new DelimitedTextSink()
                             {
-                                StoreSettings = new StoreWriteSettings()
+                                StoreSettings = new AzureBlobStorageWriteSettings()
                                 {
                                     MaxConcurrentConnections = 3,
                                     CopyBehavior = "PreserveHierarchy"
@@ -6336,7 +6284,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 {
                                     QuoteAllText = true,
                                 }
-                            },
+                            })
+                        {
                             Inputs =
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSourceName)
@@ -6612,14 +6561,14 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 {
                                     DefaultValues =
                                     {
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_string\""),BinaryData.FromString("\"Cincinnati\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_binary\""),BinaryData.FromString("\"0xAE\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_datetime\""),BinaryData.FromString("\"December 5, 1985\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_integer\""),BinaryData.FromString("\"1894\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_decimal\""),BinaryData.FromString("\"12.345000000\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_float\""),BinaryData.FromString("\"0.5E-2\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_money\""),BinaryData.FromString("\"$542023.14\"")),
-                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_uniqueidentifier1\""),BinaryData.FromString("\"6F9619FF-8B86-D011-B42D-00C04FC964FF\""))
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_string\""),BinaryData.FromString("\"Cincinnati\"") , null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_binary\""),BinaryData.FromString("\"0xAE\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_datetime\""),BinaryData.FromString("\"December 5, 1985\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_integer\""),BinaryData.FromString("\"1894\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_decimal\""),BinaryData.FromString("\"12.345000000\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_float\""),BinaryData.FromString("\"0.5E-2\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_money\""),BinaryData.FromString("\"$542023.14\""), null),
+                                        new DWCopyCommandDefaultValue(BinaryData.FromString("\"col_uniqueidentifier1\""),BinaryData.FromString("\"6F9619FF-8B86-D011-B42D-00C04FC964FF\""), null)
                                     }
                                 },
                                 AdditionalProperties =
@@ -6688,7 +6637,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     },
                     Parameters =
                     {
-                        new KeyValuePair<string, EntityParameterSpecification>("parallelOption",new EntityParameterSpecification(EntityParameterType.String,BinaryData.FromString("\"fakeValue\"")))
+                        new KeyValuePair<string, EntityParameterSpecification>("parallelOption",new EntityParameterSpecification(EntityParameterType.String,BinaryData.FromString("\"fakeValue\"") ,null))
                     }
                 };
             });
@@ -6844,7 +6793,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Source = new SqlMISource()
                             {
                                 SqlReaderQuery = "select * from my_table",
-                                PartitionOption = BinaryData.FromString("\"DynamicRange\""),
+                                PartitionOption = "DynamicRange",
                                 PartitionSettings = new SqlPartitionSettings()
                                 {
                                     PartitionColumnName = "column",
@@ -6856,7 +6805,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 SqlWriterTableType = "MarketingType",
                                 SqlWriterUseTableLock = true,
-                                WriteBehavior = BinaryData.FromString("\"Upsert\""),
+                                WriteBehavior = "Upsert",
                                 UpsertSettings = new SqlUpsertSettings()
                                 {
                                     UseTempDB = true,
@@ -6903,7 +6852,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Staging = new DataFlowStagingInfo()
                             {
                                 FolderPath = "adfjobs/staging",
-                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             IntegrationRuntime = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName),
                             Queries =
@@ -6915,7 +6864,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName),
                                         Script = "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tSampleId as string,\n\t\tSampleDetail as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryDSAzureSqlDatabase2"
                                     }
-                                })
+                                }, null)
                             },
                             Sinks =
                             {
@@ -6949,7 +6898,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             Staging = new DataFlowStagingInfo()
                             {
                                 FolderPath = "adfjobs/staging",
-                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSinkName)
+                                LinkedService = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSinkName)
                             },
                             IntegrationRuntime = new IntegrationRuntimeReference(IntegrationRuntimeReferenceType.IntegrationRuntimeReference,integrationRuntimeName),
                             Queries =
@@ -6961,7 +6910,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                         Dataset = new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName),
                                         Script = "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tSampleId as string,\n\t\tSampleDetail as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryDSAzureSqlDatabase2"
                                     }
-                                })
+                                }, null)
                             }
                         }
                     }
@@ -6983,7 +6932,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                     {
                         new DataFactoryScriptActivity(taskName)
                         {
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             ScriptBlockExecutionTimeout = "12:00:00",
                             Scripts =
                             {
@@ -7026,8 +6975,8 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                                 EndOn = "2019-05-05T16:00:00.000Z",
                                 OutputColumns = new List<Office365TableOutputColumn>()
                                 {
-                                    new Office365TableOutputColumn("Id"),
-                                    new Office365TableOutputColumn("CreatedDateTime"),
+                                    new Office365TableOutputColumn("Id", null),
+                                    new Office365TableOutputColumn("CreatedDateTime", null),
                                 }
                             },
                             Sink = new AzureDataLakeStoreSink()
@@ -7042,7 +6991,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
                             {
                                 new DatasetReference(DatasetReferenceType.DatasetReference,datasetSinkName)
                             },
-                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference,linkedServiceSourceName),
+                            LinkedServiceName = new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference,linkedServiceSourceName),
                             Policy = new PipelineActivityPolicy()
                             {
                                 Retry = 3,

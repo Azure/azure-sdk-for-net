@@ -5,21 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class CustomDocumentModelsDetails
+    public partial class CustomDocumentModelsDetails : IUtf8JsonSerializable, IJsonModel<CustomDocumentModelsDetails>
     {
-        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomDocumentModelsDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomDocumentModelsDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDocumentModelsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("count"u8);
+            writer.WriteNumberValue(Count);
+            writer.WritePropertyName("limit"u8);
+            writer.WriteNumberValue(Limit);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CustomDocumentModelsDetails IJsonModel<CustomDocumentModelsDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDocumentModelsDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomDocumentModelsDetails(document.RootElement, options);
+        }
+
+        internal static CustomDocumentModelsDetails DeserializeCustomDocumentModelsDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int count = default;
             int limit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("count"u8))
@@ -32,9 +84,45 @@ namespace Azure.AI.DocumentIntelligence
                     limit = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CustomDocumentModelsDetails(count, limit);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CustomDocumentModelsDetails(count, limit, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CustomDocumentModelsDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDocumentModelsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomDocumentModelsDetails IPersistableModel<CustomDocumentModelsDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomDocumentModelsDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomDocumentModelsDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomDocumentModelsDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomDocumentModelsDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -42,6 +130,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeCustomDocumentModelsDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomDocumentModelsDetails>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

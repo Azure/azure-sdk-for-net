@@ -56,7 +56,7 @@ namespace Azure.AI.OpenAI.Tests
         public async Task ChatCompletionsContentFilterCategories(Service serviceTarget)
         {
             OpenAIClient client = GetTestClient(serviceTarget);
-            string deploymentOrModelName = OpenAITestBase.GetDeploymentOrModelName(serviceTarget, Scenario.ChatCompletions);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
             var requestOptions = new ChatCompletionsOptions()
             {
                 DeploymentName = deploymentOrModelName,
@@ -79,6 +79,41 @@ namespace Azure.AI.OpenAI.Tests
                 serviceTarget,
                 expectedCount: (requestOptions.ChoiceCount ?? 1));
             AssertExpectedContentFilterResponseResults(firstChoice.ContentFilterResults, serviceTarget);
+        }
+
+        [RecordedTest]
+        [TestCase(Service.Azure, Ignore = "logprobs is not yet supported on azure endpoint")]
+        [TestCase(Service.NonAzure)]
+        public async Task ChatCompletionsLogProbabilities(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget, Scenario.ChatCompletions);
+
+            int topLogprobs = 3;
+            ChatCompletionsOptions requestOptions = new()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestUserMessage("Say this is a test!"),
+                },
+                EnableLogProbabilities = true,
+                LogProbabilitiesPerToken = topLogprobs
+            };
+            Response<ChatCompletions> response = await client.GetChatCompletionsAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.Not.Null);
+            Assert.That(response.Value.Choices, Is.Not.Null.Or.Empty);
+            var probResults = response.Value.Choices[0].LogProbabilityInfo?.TokenLogProbabilityResults;
+
+            Assert.That(probResults, Is.Not.Null.Or.Empty);
+
+            foreach (ChatTokenLogProbabilityResult result in probResults)
+            {
+                Assert.That(result.TopLogProbabilityEntries, Is.Not.Null.Or.Empty);
+                Assert.That(result.TopLogProbabilityEntries, Has.Count.EqualTo(topLogprobs));
+            }
         }
 
         [RecordedTest]
@@ -156,6 +191,58 @@ namespace Azure.AI.OpenAI.Tests
                 Assert.IsTrue(gotRequestContentFilterResults);
                 Assert.IsTrue(gotResponseContentFilterResults);
             }
+        }
+
+        [RecordedTest]
+        [LiveOnly] // pending timed recording playback integration, this must be live
+        [TestCase(Service.NonAzure)] // Azure OpenAI's default RAI behavior introduces timing confounds
+        public async Task StreamingChatDoesNotBlockEnumerator(Service serviceTarget)
+        {
+            OpenAIClient client = GetTestClient(serviceTarget);
+            string deploymentOrModelName = GetDeploymentOrModelName(serviceTarget);
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                DeploymentName = deploymentOrModelName,
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant."),
+                    new ChatRequestUserMessage("Can you help me?"),
+                    new ChatRequestAssistantMessage("Of course! What do you need help with?"),
+                    new ChatRequestUserMessage("What temperature should I bake pizza at?"),
+                },
+            };
+
+            StreamingResponse<StreamingChatCompletionsUpdate> response
+                = await client.GetChatCompletionsStreamingAsync(requestOptions);
+            Assert.That(response, Is.Not.Null);
+
+            IAsyncEnumerable<StreamingChatCompletionsUpdate> updateEnumerable = response.EnumerateValues();
+            IAsyncEnumerator<StreamingChatCompletionsUpdate> updateEnumerator = updateEnumerable.GetAsyncEnumerator();
+
+            int tasksAlreadyComplete = 0;
+            int tasksNotYetComplete = 0;
+
+            while (true)
+            {
+                ValueTask<bool> hasNextTask = updateEnumerator.MoveNextAsync();
+                if (hasNextTask.IsCompleted)
+                {
+                    tasksAlreadyComplete++;
+                }
+                else
+                {
+                    tasksNotYetComplete++;
+                }
+                if (!await hasNextTask)
+                {
+                    break;
+                }
+            }
+            Assert.That(
+                tasksNotYetComplete,
+                Is.GreaterThan(tasksAlreadyComplete / 5),
+                "Live streaming is expected to encounter a significant proportion of not yet buffered reads");
         }
     }
 }

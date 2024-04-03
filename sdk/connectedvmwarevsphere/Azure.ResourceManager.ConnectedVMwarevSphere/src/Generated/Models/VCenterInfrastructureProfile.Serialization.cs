@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VCenterInfrastructureProfile : IUtf8JsonSerializable
+    public partial class VCenterInfrastructureProfile : IUtf8JsonSerializable, IJsonModel<VCenterInfrastructureProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VCenterInfrastructureProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VCenterInfrastructureProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(TemplateId))
             {
@@ -25,10 +36,30 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
+            if (options.Format != "W" && Optional.IsDefined(MoRefId))
+            {
+                writer.WritePropertyName("moRefId"u8);
+                writer.WriteStringValue(MoRefId);
+            }
             if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MoName))
+            {
+                writer.WritePropertyName("moName"u8);
+                writer.WriteStringValue(MoName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FolderPath))
+            {
+                writer.WritePropertyName("folderPath"u8);
+                writer.WriteStringValue(FolderPath);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InstanceUuid))
+            {
+                writer.WritePropertyName("instanceUuid"u8);
+                writer.WriteStringValue(InstanceUuid);
             }
             if (Optional.IsDefined(SmbiosUuid))
             {
@@ -40,25 +71,61 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 writer.WritePropertyName("firmwareType"u8);
                 writer.WriteStringValue(FirmwareType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
+            {
+                writer.WritePropertyName("customResourceName"u8);
+                writer.WriteStringValue(CustomResourceName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VCenterInfrastructureProfile DeserializeVCenterInfrastructureProfile(JsonElement element)
+        VCenterInfrastructureProfile IJsonModel<VCenterInfrastructureProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVCenterInfrastructureProfile(document.RootElement, options);
+        }
+
+        internal static VCenterInfrastructureProfile DeserializeVCenterInfrastructureProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> templateId = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<string> folderPath = default;
-            Optional<string> instanceUuid = default;
-            Optional<string> smbiosUuid = default;
-            Optional<VMwareFirmwareType> firmwareType = default;
-            Optional<string> customResourceName = default;
+            string templateId = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            string folderPath = default;
+            string instanceUuid = default;
+            string smbiosUuid = default;
+            VMwareFirmwareType? firmwareType = default;
+            string customResourceName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("templateId"u8))
@@ -115,8 +182,55 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     customResourceName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VCenterInfrastructureProfile(
+                templateId,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                folderPath,
+                instanceUuid,
+                smbiosUuid,
+                firmwareType,
+                customResourceName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VCenterInfrastructureProfile IPersistableModel<VCenterInfrastructureProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVCenterInfrastructureProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VCenterInfrastructureProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

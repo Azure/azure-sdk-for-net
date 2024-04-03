@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Dns.Models;
 
 namespace Azure.ResourceManager.Dns.Mocking
@@ -60,6 +57,14 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -83,6 +88,14 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <term>Operation Id</term>
         /// <description>Zones_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DnsZoneResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="top"> The maximum number of DNS zones to return. If not specified, returns up to 100 zones. </param>
@@ -105,6 +118,10 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,6 +156,10 @@ namespace Azure.ResourceManager.Dns.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DnsResourceReference_GetByTargetResources</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2018-05-01</description>
         /// </item>
         /// </list>
         /// </summary>

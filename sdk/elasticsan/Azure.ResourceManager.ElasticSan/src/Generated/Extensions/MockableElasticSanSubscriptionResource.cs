@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ElasticSan;
 using Azure.ResourceManager.ElasticSan.Models;
 
 namespace Azure.ResourceManager.ElasticSan.Mocking
@@ -58,6 +55,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         public virtual AsyncPageable<ElasticSanSkuInformation> GetSkusAsync(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "MockableElasticSanSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => ElasticSanSkuInformation.DeserializeElasticSanSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableElasticSanSubscriptionResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -80,6 +81,10 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <term>Operation Id</term>
         /// <description>Skus_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="filter"> Specify $filter='location eq &lt;location&gt;' to filter on location. </param>
@@ -88,7 +93,7 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         public virtual Pageable<ElasticSanSkuInformation> GetSkus(string filter = null, CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, ElasticSanSkuInformation.DeserializeElasticSanSkuInformation, SkusClientDiagnostics, Pipeline, "MockableElasticSanSubscriptionResource.GetSkus", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => ElasticSanSkuInformation.DeserializeElasticSanSkuInformation(e), SkusClientDiagnostics, Pipeline, "MockableElasticSanSubscriptionResource.GetSkus", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -101,6 +106,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,6 +136,14 @@ namespace Azure.ResourceManager.ElasticSan.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ElasticSans_ListBySubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-01-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ElasticSanResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

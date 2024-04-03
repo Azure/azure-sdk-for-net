@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Storage.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.Storage
     /// </summary>
     public partial class BlobContainerData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BlobContainerData"/>. </summary>
         public BlobContainerData()
         {
@@ -51,7 +82,8 @@ namespace Azure.ResourceManager.Storage
         /// <param name="enableNfsV3RootSquash"> Enable NFSv3 root squash on blob container. </param>
         /// <param name="enableNfsV3AllSquash"> Enable NFSv3 all squash on blob container. </param>
         /// <param name="etag"> Resource Etag. </param>
-        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BlobContainerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string version, bool? isDeleted, DateTimeOffset? deletedOn, int? remainingRetentionDays, string defaultEncryptionScope, bool? preventEncryptionScopeOverride, StoragePublicAccessType? publicAccess, DateTimeOffset? lastModifiedOn, StorageLeaseStatus? leaseStatus, StorageLeaseState? leaseState, StorageLeaseDurationType? leaseDuration, IDictionary<string, string> metadata, BlobContainerImmutabilityPolicy immutabilityPolicy, LegalHoldProperties legalHold, bool? hasLegalHold, bool? hasImmutabilityPolicy, ImmutableStorageWithVersioning immutableStorageWithVersioning, bool? enableNfsV3RootSquash, bool? enableNfsV3AllSquash, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Version = version;
             IsDeleted = isDeleted;
@@ -73,47 +105,68 @@ namespace Azure.ResourceManager.Storage
             EnableNfsV3RootSquash = enableNfsV3RootSquash;
             EnableNfsV3AllSquash = enableNfsV3AllSquash;
             ETag = etag;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The version of the deleted blob container. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> Indicates whether the blob container was deleted. </summary>
+        [WirePath("properties.deleted")]
         public bool? IsDeleted { get; }
         /// <summary> Blob container deletion time. </summary>
+        [WirePath("properties.deletedTime")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> Remaining retention days for soft deleted blob container. </summary>
+        [WirePath("properties.remainingRetentionDays")]
         public int? RemainingRetentionDays { get; }
         /// <summary> Default the container to use specified encryption scope for all writes. </summary>
+        [WirePath("properties.defaultEncryptionScope")]
         public string DefaultEncryptionScope { get; set; }
         /// <summary> Block override of encryption scope from the container default. </summary>
+        [WirePath("properties.denyEncryptionScopeOverride")]
         public bool? PreventEncryptionScopeOverride { get; set; }
         /// <summary> Specifies whether data in the container may be accessed publicly and the level of access. </summary>
+        [WirePath("properties.publicAccess")]
         public StoragePublicAccessType? PublicAccess { get; set; }
         /// <summary> Returns the date and time the container was last modified. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public DateTimeOffset? LastModifiedOn { get; }
         /// <summary> The lease status of the container. </summary>
+        [WirePath("properties.leaseStatus")]
         public StorageLeaseStatus? LeaseStatus { get; }
         /// <summary> Lease state of the container. </summary>
+        [WirePath("properties.leaseState")]
         public StorageLeaseState? LeaseState { get; }
         /// <summary> Specifies whether the lease on a container is of infinite or fixed duration, only when the container is leased. </summary>
+        [WirePath("properties.leaseDuration")]
         public StorageLeaseDurationType? LeaseDuration { get; }
         /// <summary> A name-value pair to associate with the container as metadata. </summary>
+        [WirePath("properties.metadata")]
         public IDictionary<string, string> Metadata { get; }
         /// <summary> The ImmutabilityPolicy property of the container. </summary>
+        [WirePath("properties.immutabilityPolicy")]
         public BlobContainerImmutabilityPolicy ImmutabilityPolicy { get; }
         /// <summary> The LegalHold property of the container. </summary>
+        [WirePath("properties.legalHold")]
         public LegalHoldProperties LegalHold { get; }
         /// <summary> The hasLegalHold public property is set to true by SRP if there are at least one existing tag. The hasLegalHold public property is set to false by SRP if all existing legal hold tags are cleared out. There can be a maximum of 1000 blob containers with hasLegalHold=true for a given account. </summary>
+        [WirePath("properties.hasLegalHold")]
         public bool? HasLegalHold { get; }
         /// <summary> The hasImmutabilityPolicy public property is set to true by SRP if ImmutabilityPolicy has been created for this container. The hasImmutabilityPolicy public property is set to false by SRP if ImmutabilityPolicy has not been created for this container. </summary>
+        [WirePath("properties.hasImmutabilityPolicy")]
         public bool? HasImmutabilityPolicy { get; }
         /// <summary> The object level immutability property of the container. The property is immutable and can only be set to true at the container creation time. Existing containers must undergo a migration process. </summary>
+        [WirePath("properties.immutableStorageWithVersioning")]
         public ImmutableStorageWithVersioning ImmutableStorageWithVersioning { get; set; }
         /// <summary> Enable NFSv3 root squash on blob container. </summary>
+        [WirePath("properties.enableNfsV3RootSquash")]
         public bool? EnableNfsV3RootSquash { get; set; }
         /// <summary> Enable NFSv3 all squash on blob container. </summary>
+        [WirePath("properties.enableNfsV3AllSquash")]
         public bool? EnableNfsV3AllSquash { get; set; }
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

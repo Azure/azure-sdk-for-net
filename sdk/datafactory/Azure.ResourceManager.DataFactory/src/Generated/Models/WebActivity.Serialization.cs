@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WebActivity : IUtf8JsonSerializable
+    public partial class WebActivity : IUtf8JsonSerializable, IJsonModel<WebActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WebActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WebActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedServiceName))
             {
@@ -26,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -53,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +72,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,10 +82,21 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStringValue(Method.ToString());
             writer.WritePropertyName("url"u8);
             JsonSerializer.Serialize(writer, Uri);
-            if (Optional.IsDefined(Headers))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
-                JsonSerializer.Serialize(writer, Headers);
+                writer.WriteStartObject();
+                foreach (var item in Headers)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    JsonSerializer.Serialize(writer, item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(Body))
             {
@@ -86,12 +106,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<WebActivityAuthentication>(Authentication, options);
             }
             if (Optional.IsDefined(DisableCertValidation))
             {
                 writer.WritePropertyName("disableCertValidation"u8);
                 writer.WriteBooleanValue(DisableCertValidation.Value);
+            }
+            if (Optional.IsDefined(HttpRequestTimeout))
+            {
+                writer.WritePropertyName("httpRequestTimeout"u8);
+                JsonSerializer.Serialize(writer, HttpRequestTimeout);
+            }
+            if (Optional.IsDefined(TurnOffAsync))
+            {
+                writer.WritePropertyName("turnOffAsync"u8);
+                writer.WriteBooleanValue(TurnOffAsync.Value);
             }
             if (Optional.IsCollectionDefined(Datasets))
             {
@@ -99,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Datasets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatasetReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +146,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -134,30 +164,46 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static WebActivity DeserializeWebActivity(JsonElement element)
+        WebActivity IJsonModel<WebActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WebActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWebActivity(document.RootElement, options);
+        }
+
+        internal static WebActivity DeserializeWebActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedServiceName = default;
-            Optional<PipelineActivityPolicy> policy = default;
+            DataFactoryLinkedServiceReference linkedServiceName = default;
+            PipelineActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             WebActivityMethod method = default;
             DataFactoryElement<string> url = default;
-            Optional<DataFactoryElement<string>> headers = default;
-            Optional<DataFactoryElement<string>> body = default;
-            Optional<WebActivityAuthentication> authentication = default;
-            Optional<bool> disableCertValidation = default;
-            Optional<IList<DatasetReference>> datasets = default;
-            Optional<IList<DataFactoryLinkedServiceReference>> linkedServices = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
+            IDictionary<string, DataFactoryElement<string>> headers = default;
+            DataFactoryElement<string> body = default;
+            WebActivityAuthentication authentication = default;
+            bool? disableCertValidation = default;
+            DataFactoryElement<string> httpRequestTimeout = default;
+            bool? turnOffAsync = default;
+            IList<DatasetReference> datasets = default;
+            IList<DataFactoryLinkedServiceReference> linkedServices = default;
+            IntegrationRuntimeReference connectVia = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value);
+                    policy = PipelineActivityPolicy.DeserializePipelineActivityPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -222,7 +268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -236,7 +282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -266,7 +312,19 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            headers = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            Dictionary<string, DataFactoryElement<string>> dictionary = new Dictionary<string, DataFactoryElement<string>>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                if (property1.Value.ValueKind == JsonValueKind.Null)
+                                {
+                                    dictionary.Add(property1.Name, null);
+                                }
+                                else
+                                {
+                                    dictionary.Add(property1.Name, JsonSerializer.Deserialize<DataFactoryElement<string>>(property1.Value.GetRawText()));
+                                }
+                            }
+                            headers = dictionary;
                             continue;
                         }
                         if (property0.NameEquals("body"u8))
@@ -284,7 +342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value);
+                            authentication = WebActivityAuthentication.DeserializeWebActivityAuthentication(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disableCertValidation"u8))
@@ -296,6 +354,24 @@ namespace Azure.ResourceManager.DataFactory.Models
                             disableCertValidation = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("httpRequestTimeout"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            httpRequestTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property0.Value.GetRawText());
+                            continue;
+                        }
+                        if (property0.NameEquals("turnOffAsync"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            turnOffAsync = property0.Value.GetBoolean();
+                            continue;
+                        }
                         if (property0.NameEquals("datasets"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -305,7 +381,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<DatasetReference> array = new List<DatasetReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DatasetReference.DeserializeDatasetReference(item));
+                                array.Add(DatasetReference.DeserializeDatasetReference(item, options));
                             }
                             datasets = array;
                             continue;
@@ -330,7 +406,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value);
+                            connectVia = IntegrationRuntimeReference.DeserializeIntegrationRuntimeReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -339,7 +415,59 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new WebActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName, policy.Value, method, url, headers.Value, body.Value, authentication.Value, Optional.ToNullable(disableCertValidation), Optional.ToList(datasets), Optional.ToList(linkedServices), connectVia.Value);
+            return new WebActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                method,
+                url,
+                headers ?? new ChangeTrackingDictionary<string, DataFactoryElement<string>>(),
+                body,
+                authentication,
+                disableCertValidation,
+                httpRequestTimeout,
+                turnOffAsync,
+                datasets ?? new ChangeTrackingList<DatasetReference>(),
+                linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(),
+                connectVia);
         }
+
+        BinaryData IPersistableModel<WebActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WebActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WebActivity IPersistableModel<WebActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WebActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWebActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WebActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WebActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

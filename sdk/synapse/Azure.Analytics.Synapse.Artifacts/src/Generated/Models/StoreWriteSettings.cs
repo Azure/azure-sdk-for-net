@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -15,10 +14,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// Please note <see cref="StoreWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="AzureBlobFSWriteSettings"/>, <see cref="AzureBlobStorageWriteSettings"/>, <see cref="AzureDataLakeStoreWriteSettings"/>, <see cref="AzureFileStorageWriteSettings"/>, <see cref="FileServerWriteSettings"/> and <see cref="SftpWriteSettings"/>.
     /// </summary>
-    public partial class StoreWriteSettings
+    public abstract partial class StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="StoreWriteSettings"/>. </summary>
-        public StoreWriteSettings()
+        protected StoreWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }

@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService.Mocking
@@ -78,6 +75,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="sourceControlType"> Type of source control. </param>
@@ -100,6 +105,14 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>GetSourceControl</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppServiceSourceControlResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,6 +137,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>CertificateRegistrationProvider_ListOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -132,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRegistrationProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -146,6 +163,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>CertificateRegistrationProvider_ListOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -154,7 +175,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CertificateRegistrationProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CertificateRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), CertificateRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsCertificateRegistrationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -167,6 +188,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DomainRegistrationProvider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +201,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainRegistrationProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -190,6 +215,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>DomainRegistrationProvider_ListOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -198,7 +227,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => DomainRegistrationProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => DomainRegistrationProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), DomainRegistrationProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsDomainRegistrationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -211,6 +240,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -221,7 +254,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksRequest(osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksNextPageRequest(nextLink, osTypeSelected);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -235,6 +268,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetAvailableStacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="osTypeSelected"> The <see cref="ProviderOSTypeSelected"/>? to use. </param>
@@ -244,7 +281,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetAvailableStacksRequest(osTypeSelected);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetAvailableStacksNextPageRequest(nextLink, osTypeSelected);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ApplicationStackResource.DeserializeApplicationStackResource, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ApplicationStackResource.DeserializeApplicationStackResource(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetAvailableStacksProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -257,6 +294,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetFunctionAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -267,7 +308,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksRequest(stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FunctionAppStack.DeserializeFunctionAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -281,6 +322,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetFunctionAppStacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -290,7 +335,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksRequest(stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FunctionAppStack.DeserializeFunctionAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -303,6 +348,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetFunctionAppStacksForLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -314,7 +363,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, FunctionAppStack.DeserializeFunctionAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -328,6 +377,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetFunctionAppStacksForLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Function App stack location. </param>
@@ -338,7 +391,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetFunctionAppStacksForLocationRequest(location, stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetFunctionAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, FunctionAppStack.DeserializeFunctionAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => FunctionAppStack.DeserializeFunctionAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -351,6 +404,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetWebAppStacksForLocation</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -362,7 +419,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksForLocationRequest(location, stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebAppStack.DeserializeWebAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -376,6 +433,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetWebAppStacksForLocation</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> Web App stack location. </param>
@@ -386,7 +447,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksForLocationRequest(location, stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksForLocationNextPageRequest(nextLink, location, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebAppStack.DeserializeWebAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksByLocation", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -399,6 +460,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_ListOperations</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -408,7 +473,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -422,6 +487,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_ListOperations</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -430,7 +499,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateListOperationsRequest();
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateListOperationsNextPageRequest(nextLink);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, CsmOperationDescription.DeserializeCsmOperationDescription, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CsmOperationDescription.DeserializeCsmOperationDescription(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetOperationsProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -443,6 +512,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>Provider_GetWebAppStacks</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -453,7 +526,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksRequest(stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, WebAppStack.DeserializeWebAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -467,6 +540,10 @@ namespace Azure.ResourceManager.AppService.Mocking
         /// <term>Operation Id</term>
         /// <description>Provider_GetWebAppStacks</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-02-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="stackOSType"> Stack OS Type. </param>
@@ -476,7 +553,7 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => ProviderRestClient.CreateGetWebAppStacksRequest(stackOSType);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ProviderRestClient.CreateGetWebAppStacksNextPageRequest(nextLink, stackOSType);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, WebAppStack.DeserializeWebAppStack, ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => WebAppStack.DeserializeWebAppStack(e), ProviderClientDiagnostics, Pipeline, "MockableAppServiceTenantResource.GetWebAppStacksProviders", "value", "nextLink", cancellationToken);
         }
     }
 }

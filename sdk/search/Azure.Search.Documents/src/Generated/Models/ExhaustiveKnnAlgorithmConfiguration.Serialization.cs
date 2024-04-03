@@ -18,7 +18,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<ExhaustiveKnnParameters>(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -33,7 +33,7 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<ExhaustiveKnnParameters> exhaustiveKnnParameters = default;
+            ExhaustiveKnnParameters exhaustiveKnnParameters = default;
             string name = default;
             VectorSearchAlgorithmKind kind = default;
             foreach (var property in element.EnumerateObject())
@@ -58,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters.Value);
+            return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
         }
     }
 }

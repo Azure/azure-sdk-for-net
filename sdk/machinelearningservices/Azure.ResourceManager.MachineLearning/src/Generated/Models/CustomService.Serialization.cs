@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class CustomService : IUtf8JsonSerializable
+    public partial class CustomService : IUtf8JsonSerializable, IJsonModel<CustomService>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CustomService>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CustomService>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomService)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<ImageSetting>(Image, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -34,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EnvironmentVariable>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -43,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Docker != null)
                 {
                     writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue(Docker);
+                    writer.WriteObjectValue<DockerSetting>(Docker, options);
                 }
                 else
                 {
@@ -56,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VolumeDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,18 +94,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteEndObject();
         }
 
-        internal static CustomService DeserializeCustomService(JsonElement element)
+        CustomService IJsonModel<CustomService>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CustomService)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCustomService(document.RootElement, options);
+        }
+
+        internal static CustomService DeserializeCustomService(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ImageSetting> image = default;
-            Optional<IDictionary<string, EnvironmentVariable>> environmentVariables = default;
-            Optional<DockerSetting> docker = default;
-            Optional<IList<ContainerEndpoint>> endpoints = default;
-            Optional<IList<VolumeDefinition>> volumes = default;
+            string name = default;
+            ImageSetting image = default;
+            IDictionary<string, EnvironmentVariable> environmentVariables = default;
+            DockerSetting docker = default;
+            IList<ContainerEndpoint> endpoints = default;
+            IList<VolumeDefinition> volumes = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -112,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    image = ImageSetting.DeserializeImageSetting(property.Value);
+                    image = ImageSetting.DeserializeImageSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -124,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Dictionary<string, EnvironmentVariable> dictionary = new Dictionary<string, EnvironmentVariable>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value));
+                        dictionary.Add(property0.Name, EnvironmentVariable.DeserializeEnvironmentVariable(property0.Value, options));
                     }
                     environmentVariables = dictionary;
                     continue;
@@ -136,7 +159,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         docker = null;
                         continue;
                     }
-                    docker = DockerSetting.DeserializeDockerSetting(property.Value);
+                    docker = DockerSetting.DeserializeDockerSetting(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endpoints"u8))
@@ -148,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<ContainerEndpoint> array = new List<ContainerEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item));
+                        array.Add(ContainerEndpoint.DeserializeContainerEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -162,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<VolumeDefinition> array = new List<VolumeDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item));
+                        array.Add(VolumeDefinition.DeserializeVolumeDefinition(item, options));
                     }
                     volumes = array;
                     continue;
@@ -170,7 +193,45 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CustomService(name.Value, image.Value, Optional.ToDictionary(environmentVariables), docker.Value, Optional.ToList(endpoints), Optional.ToList(volumes), additionalProperties);
+            return new CustomService(
+                name,
+                image,
+                environmentVariables ?? new ChangeTrackingDictionary<string, EnvironmentVariable>(),
+                docker,
+                endpoints ?? new ChangeTrackingList<ContainerEndpoint>(),
+                volumes ?? new ChangeTrackingList<VolumeDefinition>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<CustomService>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CustomService)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CustomService IPersistableModel<CustomService>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCustomService(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CustomService)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CustomService>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

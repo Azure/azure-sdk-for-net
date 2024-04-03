@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
-    public partial class ApplianceUpgradeGraphProperties
+    public partial class ApplianceUpgradeGraphProperties : IUtf8JsonSerializable, IJsonModel<ApplianceUpgradeGraphProperties>
     {
-        internal static ApplianceUpgradeGraphProperties DeserializeApplianceUpgradeGraphProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplianceUpgradeGraphProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplianceUpgradeGraphProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ApplianceVersion))
+            {
+                writer.WritePropertyName("applianceVersion"u8);
+                writer.WriteStringValue(ApplianceVersion);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
+            {
+                writer.WritePropertyName("supportedVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedVersions)
+                {
+                    writer.WriteObjectValue<ApplianceSupportedVersion>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ApplianceUpgradeGraphProperties IJsonModel<ApplianceUpgradeGraphProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
+        }
+
+        internal static ApplianceUpgradeGraphProperties DeserializeApplianceUpgradeGraphProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> applianceVersion = default;
-            Optional<IReadOnlyList<ApplianceSupportedVersion>> supportedVersions = default;
+            string applianceVersion = default;
+            IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applianceVersion"u8))
@@ -37,13 +99,49 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                     List<ApplianceSupportedVersion> array = new List<ApplianceSupportedVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item));
+                        array.Add(ApplianceSupportedVersion.DeserializeApplianceSupportedVersion(item, options));
                     }
                     supportedVersions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplianceUpgradeGraphProperties(applianceVersion.Value, Optional.ToList(supportedVersions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ApplianceUpgradeGraphProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplianceUpgradeGraphProperties IPersistableModel<ApplianceUpgradeGraphProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplianceUpgradeGraphProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -12,6 +12,7 @@ using Azure.Core.TestFramework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2024_03_01_Preview), ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2024_03_01_Preview)]
     public partial class SemanticSearch : SearchTestBase
     {
         public SemanticSearch(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -44,7 +45,76 @@ namespace Azure.Search.Documents.Tests.Samples
                             QueryCaption = new(QueryCaptionType.Extractive),
                             QueryAnswer = new(QueryAnswerType.Extractive)
                         },
+                        QueryLanguage = QueryLanguage.EnUs,
                         QueryType = SearchQueryType.Semantic
+                    });
+
+                int count = 0;
+                Console.WriteLine($"Semantic Search Results:");
+
+                Console.WriteLine($"\nQuery Answer:");
+                foreach (QueryAnswerResult result in response.SemanticSearch.Answers)
+                {
+                    Console.WriteLine($"Answer Highlights: {result.Highlights}");
+                    Console.WriteLine($"Answer Text: {result.Text}");
+                }
+
+                await foreach (SearchResult<Hotel> result in response.GetResultsAsync())
+                {
+                    count++;
+                    Hotel doc = result.Document;
+                    Console.WriteLine($"{doc.HotelId}: {doc.HotelName}");
+
+                    if (result.SemanticSearch.Captions != null)
+                    {
+                        var caption = result.SemanticSearch.Captions.FirstOrDefault();
+                        if (caption.Highlights != null && caption.Highlights != "")
+                        {
+                            Console.WriteLine($"Caption Highlights: {caption.Highlights}");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Caption Text: {caption.Text}");
+                        }
+                    }
+                }
+                Console.WriteLine($"Total number of search results:{count}");
+                #endregion
+                Assert.GreaterOrEqual(count, 1);
+            }
+            finally
+            {
+                await indexClient.DeleteIndexAsync(indexName);
+            }
+        }
+
+        [Test]
+        [PlaybackOnly("The availability of Semantic Search is limited to specific regions, as indicated in the list provided here: https://azure.microsoft.com/explore/global-infrastructure/products-by-region/?products=search. Due to this limitation, the deployment of resources for weekly test pipeline for setting the \"semanticSearch\": \"free\" fails in the UsGov and China cloud regions.")]
+        public async Task SearchUsingSemanticQuery()
+        {
+            await using SearchResources resources = SearchResources.CreateWithNoIndexes(this);
+            SearchIndexClient indexClient = null;
+            string indexName = Recording.Random.GetName();
+            try
+            {
+                indexClient = await CreateIndex(resources, indexName);
+
+                SearchClient searchClient = await UploadDocuments(resources, indexName);
+                await Task.Delay(TimeSpan.FromSeconds(1));
+
+                #region Snippet:Azure_Search_Documents_Tests_Samples_Sample08_Semantic_Query
+                SearchResults<Hotel> response = await searchClient.SearchAsync<Hotel>(
+                    "Luxury hotel",
+                    new SearchOptions
+                    {
+                        SemanticSearch = new()
+                        {
+                            SemanticConfigurationName = "my-semantic-config",
+                            QueryCaption = new(QueryCaptionType.Extractive),
+                            QueryAnswer = new(QueryAnswerType.Extractive),
+                            SemanticQuery = "Is there any hotel located on the main commercial artery of the city in the heart of New York?"
+                        },
+                        QueryLanguage = QueryLanguage.EnUs,
                     });
 
                 int count = 0;

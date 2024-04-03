@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> File share information with Path, Username, and Password. </summary>
     public partial class FileShare
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="FileShare"/>. </summary>
         /// <param name="path"> The folder path for this share. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
@@ -27,11 +59,18 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="userName"> User name credential to connect to the share location. </param>
         /// <param name="password"> Password credential used to connect to the share location. </param>
         /// <param name="path"> The folder path for this share. </param>
-        internal FileShare(string userName, string password, string path)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FileShare(string userName, string password, string path, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             UserName = userName;
             Password = password;
             Path = path;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FileShare"/> for deserialization. </summary>
+        internal FileShare()
+        {
         }
 
         /// <summary> User name credential to connect to the share location. </summary>

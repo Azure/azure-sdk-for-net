@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkTapRuleMatchConfiguration : IUtf8JsonSerializable
+    public partial class NetworkTapRuleMatchConfiguration : IUtf8JsonSerializable, IJsonModel<NetworkTapRuleMatchConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkTapRuleMatchConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkTapRuleMatchConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MatchConfigurationName))
             {
@@ -37,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in MatchConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkTapRuleMatchCondition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,24 +57,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in Actions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkTapRuleAction>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NetworkTapRuleMatchConfiguration DeserializeNetworkTapRuleMatchConfiguration(JsonElement element)
+        NetworkTapRuleMatchConfiguration IJsonModel<NetworkTapRuleMatchConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkTapRuleMatchConfiguration(document.RootElement, options);
+        }
+
+        internal static NetworkTapRuleMatchConfiguration DeserializeNetworkTapRuleMatchConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> matchConfigurationName = default;
-            Optional<long> sequenceNumber = default;
-            Optional<NetworkFabricIPAddressType> ipAddressType = default;
-            Optional<IList<NetworkTapRuleMatchCondition>> matchConditions = default;
-            Optional<IList<NetworkTapRuleAction>> actions = default;
+            string matchConfigurationName = default;
+            long? sequenceNumber = default;
+            NetworkFabricIPAddressType? ipAddressType = default;
+            IList<NetworkTapRuleMatchCondition> matchConditions = default;
+            IList<NetworkTapRuleAction> actions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("matchConfigurationName"u8))
@@ -99,7 +140,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleMatchCondition> array = new List<NetworkTapRuleMatchCondition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item));
+                        array.Add(NetworkTapRuleMatchCondition.DeserializeNetworkTapRuleMatchCondition(item, options));
                     }
                     matchConditions = array;
                     continue;
@@ -113,13 +154,55 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkTapRuleAction> array = new List<NetworkTapRuleAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item));
+                        array.Add(NetworkTapRuleAction.DeserializeNetworkTapRuleAction(item, options));
                     }
                     actions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkTapRuleMatchConfiguration(matchConfigurationName.Value, Optional.ToNullable(sequenceNumber), Optional.ToNullable(ipAddressType), Optional.ToList(matchConditions), Optional.ToList(actions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkTapRuleMatchConfiguration(
+                matchConfigurationName,
+                sequenceNumber,
+                ipAddressType,
+                matchConditions ?? new ChangeTrackingList<NetworkTapRuleMatchCondition>(),
+                actions ?? new ChangeTrackingList<NetworkTapRuleAction>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkTapRuleMatchConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkTapRuleMatchConfiguration IPersistableModel<NetworkTapRuleMatchConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkTapRuleMatchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkTapRuleMatchConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkTapRuleMatchConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkTapRuleMatchConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

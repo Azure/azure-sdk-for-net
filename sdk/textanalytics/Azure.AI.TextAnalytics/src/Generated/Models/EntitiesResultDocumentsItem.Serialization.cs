@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -21,7 +20,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Entities)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<Entity>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("id"u8);
@@ -30,13 +29,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Warnings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentWarning>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentStatistics?>(Statistics);
             }
             writer.WriteEndObject();
         }
@@ -50,7 +49,7 @@ namespace Azure.AI.TextAnalytics.Models
             IList<Entity> entities = default;
             string id = default;
             IList<DocumentWarning> warnings = default;
-            Optional<TextDocumentStatistics> statistics = default;
+            TextDocumentStatistics? statistics = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("entities"u8))
@@ -88,7 +87,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new EntitiesResultDocumentsItem(id, warnings, Optional.ToNullable(statistics), entities);
+            return new EntitiesResultDocumentsItem(id, warnings, statistics, entities);
         }
     }
 }

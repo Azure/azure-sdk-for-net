@@ -5,38 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class DataProtectionBackupVaultProperties : IUtf8JsonSerializable
+    public partial class DataProtectionBackupVaultProperties : IUtf8JsonSerializable, IJsonModel<DataProtectionBackupVaultProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataProtectionBackupVaultProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataProtectionBackupVaultProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MonitoringSettings))
             {
                 writer.WritePropertyName("monitoringSettings"u8);
-                writer.WriteObjectValue(MonitoringSettings);
+                writer.WriteObjectValue<MonitoringSettings>(MonitoringSettings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceMoveState))
+            {
+                writer.WritePropertyName("resourceMoveState"u8);
+                writer.WriteStringValue(ResourceMoveState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceMoveDetails))
+            {
+                writer.WritePropertyName("resourceMoveDetails"u8);
+                writer.WriteObjectValue<BackupVaultResourceMoveDetails>(ResourceMoveDetails, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                writer.WriteObjectValue<BackupVaultSecuritySettings>(SecuritySettings, options);
             }
             writer.WritePropertyName("storageSettings"u8);
             writer.WriteStartArray();
             foreach (var item in StorageSettings)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProtectionBackupStorageSetting>(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
+            {
+                writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
+                writer.WriteBooleanValue(IsVaultProtectedByResourceGuard.Value);
+            }
             if (Optional.IsDefined(FeatureSettings))
             {
                 writer.WritePropertyName("featureSettings"u8);
-                writer.WriteObjectValue(FeatureSettings);
+                writer.WriteObjectValue<BackupVaultFeatureSettings>(FeatureSettings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecureScore))
+            {
+                writer.WritePropertyName("secureScore"u8);
+                writer.WriteStringValue(SecureScore.Value.ToString());
             }
             if (Optional.IsCollectionDefined(ReplicatedRegions))
             {
@@ -48,25 +83,56 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element)
+        DataProtectionBackupVaultProperties IJsonModel<DataProtectionBackupVaultProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataProtectionBackupVaultProperties(document.RootElement, options);
+        }
+
+        internal static DataProtectionBackupVaultProperties DeserializeDataProtectionBackupVaultProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MonitoringSettings> monitoringSettings = default;
-            Optional<DataProtectionBackupProvisioningState> provisioningState = default;
-            Optional<BackupVaultResourceMoveState> resourceMoveState = default;
-            Optional<BackupVaultResourceMoveDetails> resourceMoveDetails = default;
-            Optional<BackupVaultSecuritySettings> securitySettings = default;
+            MonitoringSettings monitoringSettings = default;
+            DataProtectionBackupProvisioningState? provisioningState = default;
+            BackupVaultResourceMoveState? resourceMoveState = default;
+            BackupVaultResourceMoveDetails resourceMoveDetails = default;
+            BackupVaultSecuritySettings securitySettings = default;
             IList<DataProtectionBackupStorageSetting> storageSettings = default;
-            Optional<bool> isVaultProtectedByResourceGuard = default;
-            Optional<BackupVaultFeatureSettings> featureSettings = default;
-            Optional<BackupVaultSecureScoreLevel> secureScore = default;
-            Optional<IList<AzureLocation>> replicatedRegions = default;
+            bool? isVaultProtectedByResourceGuard = default;
+            BackupVaultFeatureSettings featureSettings = default;
+            BackupVaultSecureScoreLevel? secureScore = default;
+            IList<AzureLocation> replicatedRegions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("monitoringSettings"u8))
@@ -75,7 +141,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value);
+                    monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -102,7 +168,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(property.Value);
+                    resourceMoveDetails = BackupVaultResourceMoveDetails.DeserializeBackupVaultResourceMoveDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("securitySettings"u8))
@@ -111,7 +177,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value);
+                    securitySettings = BackupVaultSecuritySettings.DeserializeBackupVaultSecuritySettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("storageSettings"u8))
@@ -119,7 +185,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataProtectionBackupStorageSetting> array = new List<DataProtectionBackupStorageSetting>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataProtectionBackupStorageSetting.DeserializeDataProtectionBackupStorageSetting(item));
+                        array.Add(DataProtectionBackupStorageSetting.DeserializeDataProtectionBackupStorageSetting(item, options));
                     }
                     storageSettings = array;
                     continue;
@@ -139,7 +205,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value);
+                    featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secureScore"u8))
@@ -165,8 +231,55 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     replicatedRegions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataProtectionBackupVaultProperties(monitoringSettings.Value, Optional.ToNullable(provisioningState), Optional.ToNullable(resourceMoveState), resourceMoveDetails.Value, securitySettings.Value, storageSettings, Optional.ToNullable(isVaultProtectedByResourceGuard), featureSettings.Value, Optional.ToNullable(secureScore), Optional.ToList(replicatedRegions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataProtectionBackupVaultProperties(
+                monitoringSettings,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
+                storageSettings,
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
+                replicatedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataProtectionBackupVaultProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataProtectionBackupVaultProperties IPersistableModel<DataProtectionBackupVaultProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataProtectionBackupVaultProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataProtectionBackupVaultProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataProtectionBackupVaultProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

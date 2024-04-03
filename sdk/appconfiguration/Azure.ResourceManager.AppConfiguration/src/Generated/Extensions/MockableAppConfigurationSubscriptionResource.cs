@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.AppConfiguration;
 using Azure.ResourceManager.AppConfiguration.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Mocking
@@ -67,6 +64,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The location in which uniqueness will be verified. </param>
@@ -90,6 +95,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_GetDeleted</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DeletedAppConfigurationStoreResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,6 +128,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -138,6 +159,14 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <term>Operation Id</term>
         /// <description>ConfigurationStores_List</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AppConfigurationStoreResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="skipToken"> A skip token is used to continue retrieving items after an operation returns a partial result. If a previous response contains a nextLink element, the value of the nextLink element will include a skipToken parameter that specifies a starting point to use for subsequent calls. </param>
@@ -160,6 +189,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckAppConfigurationNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -194,6 +227,10 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>CheckAppConfigurationNameAvailability</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-03-01</description>
         /// </item>
         /// </list>
         /// </summary>

@@ -5,49 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ContainerServiceMaintenanceSchedule : IUtf8JsonSerializable
+    public partial class ContainerServiceMaintenanceSchedule : IUtf8JsonSerializable, IJsonModel<ContainerServiceMaintenanceSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerServiceMaintenanceSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerServiceMaintenanceSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceSchedule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Daily))
             {
                 writer.WritePropertyName("daily"u8);
-                writer.WriteObjectValue(Daily);
+                writer.WriteObjectValue<DailySchedule>(Daily, options);
             }
             if (Optional.IsDefined(Weekly))
             {
                 writer.WritePropertyName("weekly"u8);
-                writer.WriteObjectValue(Weekly);
+                writer.WriteObjectValue<ContainerServiceMaintenanceWeeklySchedule>(Weekly, options);
             }
             if (Optional.IsDefined(AbsoluteMonthly))
             {
                 writer.WritePropertyName("absoluteMonthly"u8);
-                writer.WriteObjectValue(AbsoluteMonthly);
+                writer.WriteObjectValue<ContainerServiceMaintenanceAbsoluteMonthlySchedule>(AbsoluteMonthly, options);
             }
             if (Optional.IsDefined(RelativeMonthly))
             {
                 writer.WritePropertyName("relativeMonthly"u8);
-                writer.WriteObjectValue(RelativeMonthly);
+                writer.WriteObjectValue<ContainerServiceMaintenanceRelativeMonthlySchedule>(RelativeMonthly, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerServiceMaintenanceSchedule DeserializeContainerServiceMaintenanceSchedule(JsonElement element)
+        ContainerServiceMaintenanceSchedule IJsonModel<ContainerServiceMaintenanceSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerServiceMaintenanceSchedule(document.RootElement, options);
+        }
+
+        internal static ContainerServiceMaintenanceSchedule DeserializeContainerServiceMaintenanceSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DailySchedule> daily = default;
-            Optional<ContainerServiceMaintenanceWeeklySchedule> weekly = default;
-            Optional<ContainerServiceMaintenanceAbsoluteMonthlySchedule> absoluteMonthly = default;
-            Optional<ContainerServiceMaintenanceRelativeMonthlySchedule> relativeMonthly = default;
+            DailySchedule daily = default;
+            ContainerServiceMaintenanceWeeklySchedule weekly = default;
+            ContainerServiceMaintenanceAbsoluteMonthlySchedule absoluteMonthly = default;
+            ContainerServiceMaintenanceRelativeMonthlySchedule relativeMonthly = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("daily"u8))
@@ -56,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    daily = DailySchedule.DeserializeDailySchedule(property.Value);
+                    daily = DailySchedule.DeserializeDailySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("weekly"u8))
@@ -65,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value);
+                    weekly = ContainerServiceMaintenanceWeeklySchedule.DeserializeContainerServiceMaintenanceWeeklySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("absoluteMonthly"u8))
@@ -74,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value);
+                    absoluteMonthly = ContainerServiceMaintenanceAbsoluteMonthlySchedule.DeserializeContainerServiceMaintenanceAbsoluteMonthlySchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("relativeMonthly"u8))
@@ -83,11 +125,47 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value);
+                    relativeMonthly = ContainerServiceMaintenanceRelativeMonthlySchedule.DeserializeContainerServiceMaintenanceRelativeMonthlySchedule(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerServiceMaintenanceSchedule(daily.Value, weekly.Value, absoluteMonthly.Value, relativeMonthly.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerServiceMaintenanceSchedule(daily, weekly, absoluteMonthly, relativeMonthly, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerServiceMaintenanceSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerServiceMaintenanceSchedule IPersistableModel<ContainerServiceMaintenanceSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerServiceMaintenanceSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerServiceMaintenanceSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

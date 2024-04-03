@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -26,11 +26,17 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/>. </summary>
         /// <param name="name"> The name of the action for the delivery rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Defines the parameters for the action. </param>
-        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, CacheExpirationActionProperties properties) : base(name)
+        internal DeliveryRuleCacheExpirationAction(DeliveryRuleActionType name, IDictionary<string, BinaryData> serializedAdditionalRawData, CacheExpirationActionProperties properties) : base(name, serializedAdditionalRawData)
         {
             Properties = properties;
             Name = name;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DeliveryRuleCacheExpirationAction"/> for deserialization. </summary>
+        internal DeliveryRuleCacheExpirationAction()
+        {
         }
 
         /// <summary> Defines the parameters for the action. </summary>

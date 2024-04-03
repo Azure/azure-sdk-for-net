@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Models
 {
-    public partial class SpringBootAppProperties : IUtf8JsonSerializable
+    public partial class SpringBootAppProperties : IUtf8JsonSerializable, IJsonModel<SpringBootAppProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpringBootAppProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SpringBootAppProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AppName))
             {
@@ -43,7 +52,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ApplicationConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppApplicationConfigurationsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -128,7 +137,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Miscs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppMiscsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +147,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootAppInstancesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -223,47 +232,78 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element)
+        SpringBootAppProperties IJsonModel<SpringBootAppProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSpringBootAppProperties(document.RootElement, options);
+        }
+
+        internal static SpringBootAppProperties DeserializeSpringBootAppProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> appName = default;
-            Optional<string> artifactName = default;
-            Optional<int> appPort = default;
-            Optional<string> appType = default;
-            Optional<IList<SpringBootAppApplicationConfigurationsItem>> applicationConfigurations = default;
-            Optional<IList<int>> bindingPorts = default;
-            Optional<string> buildJdkVersion = default;
-            Optional<IList<string>> certificates = default;
-            Optional<string> checksum = default;
-            Optional<IList<string>> dependencies = default;
-            Optional<IList<string>> environments = default;
-            Optional<int> instanceCount = default;
-            Optional<string> jarFileLocation = default;
-            Optional<int> jvmMemoryInMB = default;
-            Optional<IList<string>> jvmOptions = default;
-            Optional<IList<SpringBootAppMiscsItem>> miscs = default;
-            Optional<IList<SpringBootAppInstancesItem>> instances = default;
-            Optional<string> runtimeJdkVersion = default;
-            Optional<IList<string>> servers = default;
-            Optional<IList<ResourceIdentifier>> machineArmIds = default;
-            Optional<string> siteName = default;
-            Optional<string> springBootVersion = default;
-            Optional<IList<string>> staticContentLocations = default;
-            Optional<IList<string>> connectionStrings = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset> lastUpdatedTime = default;
-            Optional<SpringAppDiscoveryProvisioningState> provisioningState = default;
-            Optional<IList<SpringBootSiteError>> errors = default;
+            string appName = default;
+            string artifactName = default;
+            int? appPort = default;
+            string appType = default;
+            IList<SpringBootAppApplicationConfigurationsItem> applicationConfigurations = default;
+            IList<int> bindingPorts = default;
+            string buildJdkVersion = default;
+            IList<string> certificates = default;
+            string checksum = default;
+            IList<string> dependencies = default;
+            IList<string> environments = default;
+            int? instanceCount = default;
+            string jarFileLocation = default;
+            int? jvmMemoryInMB = default;
+            IList<string> jvmOptions = default;
+            IList<SpringBootAppMiscsItem> miscs = default;
+            IList<SpringBootAppInstancesItem> instances = default;
+            string runtimeJdkVersion = default;
+            IList<string> servers = default;
+            IList<ResourceIdentifier> machineArmIds = default;
+            string siteName = default;
+            string springBootVersion = default;
+            IList<string> staticContentLocations = default;
+            IList<string> connectionStrings = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? lastUpdatedTime = default;
+            SpringAppDiscoveryProvisioningState? provisioningState = default;
+            IList<SpringBootSiteError> errors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appName"u8))
@@ -299,7 +339,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppApplicationConfigurationsItem> array = new List<SpringBootAppApplicationConfigurationsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item));
+                        array.Add(SpringBootAppApplicationConfigurationsItem.DeserializeSpringBootAppApplicationConfigurationsItem(item, options));
                     }
                     applicationConfigurations = array;
                     continue;
@@ -416,7 +456,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppMiscsItem> array = new List<SpringBootAppMiscsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item));
+                        array.Add(SpringBootAppMiscsItem.DeserializeSpringBootAppMiscsItem(item, options));
                     }
                     miscs = array;
                     continue;
@@ -430,7 +470,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootAppInstancesItem> array = new List<SpringBootAppInstancesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item));
+                        array.Add(SpringBootAppInstancesItem.DeserializeSpringBootAppInstancesItem(item, options));
                     }
                     instances = array;
                     continue;
@@ -549,13 +589,78 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                     List<SpringBootSiteError> array = new List<SpringBootSiteError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item));
+                        array.Add(SpringBootSiteError.DeserializeSpringBootSiteError(item, options));
                     }
                     errors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SpringBootAppProperties(appName.Value, artifactName.Value, Optional.ToNullable(appPort), appType.Value, Optional.ToList(applicationConfigurations), Optional.ToList(bindingPorts), buildJdkVersion.Value, Optional.ToList(certificates), checksum.Value, Optional.ToList(dependencies), Optional.ToList(environments), Optional.ToNullable(instanceCount), jarFileLocation.Value, Optional.ToNullable(jvmMemoryInMB), Optional.ToList(jvmOptions), Optional.ToList(miscs), Optional.ToList(instances), runtimeJdkVersion.Value, Optional.ToList(servers), Optional.ToList(machineArmIds), siteName.Value, springBootVersion.Value, Optional.ToList(staticContentLocations), Optional.ToList(connectionStrings), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(lastUpdatedTime), Optional.ToNullable(provisioningState), Optional.ToList(errors));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SpringBootAppProperties(
+                appName,
+                artifactName,
+                appPort,
+                appType,
+                applicationConfigurations ?? new ChangeTrackingList<SpringBootAppApplicationConfigurationsItem>(),
+                bindingPorts ?? new ChangeTrackingList<int>(),
+                buildJdkVersion,
+                certificates ?? new ChangeTrackingList<string>(),
+                checksum,
+                dependencies ?? new ChangeTrackingList<string>(),
+                environments ?? new ChangeTrackingList<string>(),
+                instanceCount,
+                jarFileLocation,
+                jvmMemoryInMB,
+                jvmOptions ?? new ChangeTrackingList<string>(),
+                miscs ?? new ChangeTrackingList<SpringBootAppMiscsItem>(),
+                instances ?? new ChangeTrackingList<SpringBootAppInstancesItem>(),
+                runtimeJdkVersion,
+                servers ?? new ChangeTrackingList<string>(),
+                machineArmIds ?? new ChangeTrackingList<ResourceIdentifier>(),
+                siteName,
+                springBootVersion,
+                staticContentLocations ?? new ChangeTrackingList<string>(),
+                connectionStrings ?? new ChangeTrackingList<string>(),
+                lastModifiedTime,
+                lastUpdatedTime,
+                provisioningState,
+                errors ?? new ChangeTrackingList<SpringBootSiteError>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SpringBootAppProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SpringBootAppProperties IPersistableModel<SpringBootAppProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSpringBootAppProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SpringBootAppProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SpringBootAppProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,14 +8,44 @@
 
 ### Bugs Fixed
 
+- Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
+
 ### Other Changes
+
+## 7.17.4 (2024-03-05)
+
+### Bugs Fixed
+
+- When creating a new `ServiceBusMessage` from an existing `ServiceBusReceivedMessage`, diagnostic properties will now be properly reset.  Previously, they were incorrectly retained which led to the new message being indistinguishable from the old in traces.
+
+### Other Changes
+
+- Updated the `Microsoft.Azure.Amqp` dependency to 2.6.5, which includes several bug fixes.  One notable fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
+## 7.17.3 (2024-02-14)
+
+### Bugs Fixed
+
+- Fixed draining of credits when prefetch is enabled.
+- No longer drain credits when using the `ServiceBusSessionProcessor` as it is not necessary unless the `ServiceBusSessionProcessorOptions.SessionIds` property is set.
+
+### Other Changes
+
+- Loosened validation for the fully qualified namespace name passed to the `ServiceBusClient` constructor.  A URI is now also accepted as a valid format.  This is intended to improve the experience when using the management library, CLI, Bicep, or ARM template to create the namespace, as they return only an endpoint for the namespace.  Previously, callers were responsible for parsing the endpoint and extracting the host name for use with the client.
+
+## 7.17.2 (2024-01-16)
+
+### Bugs Fixed
+
+- Fixed the logic used to set the TimeToLive value of the AmqpMessageHeader for received messages to be based on the difference of the AbsoluteExpiryTime and CreationTime properties of the AmqpMessageProperties.
+- Prevent `NullReferenceException` from being thrown when the `ReceiveMessagesAsync` method is called using a high degree of concurrency.
 
 ## 7.17.1 (2023-12-04)
 
 ### Bugs Fixed
 
 - Adjusted retries to consider an unreachable host address as terminal.  Previously, all socket-based errors were considered transient and would be retried.
-- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the 
+- Updated the `ServiceBusMessage` constructor that takes a `ServiceBusReceivedMessage` to no longer copy over the
   `x-opt-partition-id` key as this is meant to apply only to the original message.
 - Drain excess credits when attempting to receive using sessions to ensure FIFO ordering.
 
@@ -36,7 +66,7 @@ The following breaking changes were made for the experimental support of Open Te
 
 ### Bugs Fixed
 
-- Fixed issue where `ActivitySource` activities were not being created even when the experimental 
+- Fixed issue where `ActivitySource` activities were not being created even when the experimental
   flag was set.
 
 ### Other Changes
@@ -58,7 +88,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Features Added
 
-- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in 
+- `ProcessMessageEventArgs` provides a `MessageLockLostAsync` event that can be subscribed to in
   order to be notified when the message lock is lost.
 - `ProcessSessionMessageEventArgs` provides a `SessionLockLostAsync` event that can be subscribed to in
   order to be notified when the session lock is lost.
@@ -66,7 +96,7 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
-- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session 
+- The `CancellationTokenSource` used by the `ServiceBusSessionProcessor` in order to renew session
   locks is now disposed when the session is no longer being processed, thereby preventing a memory leak.
 
 ## 7.15.0 (2023-06-06)

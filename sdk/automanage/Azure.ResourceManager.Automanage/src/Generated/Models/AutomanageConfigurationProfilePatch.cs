@@ -20,8 +20,9 @@ namespace Azure.ResourceManager.Automanage.Models
 
         /// <summary> Initializes a new instance of <see cref="AutomanageConfigurationProfilePatch"/>. </summary>
         /// <param name="tags"> The tags of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the configuration profile. </param>
-        internal AutomanageConfigurationProfilePatch(IDictionary<string, string> tags, ConfigurationProfileProperties properties) : base(tags)
+        internal AutomanageConfigurationProfilePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, ConfigurationProfileProperties properties) : base(tags, serializedAdditionalRawData)
         {
             Properties = properties;
         }

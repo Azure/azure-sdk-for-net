@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class IfConditionActivity : IUtf8JsonSerializable
+    public partial class IfConditionActivity : IUtf8JsonSerializable, IJsonModel<IfConditionActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IfConditionActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IfConditionActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -42,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,21 +61,21 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression);
+            writer.WriteObjectValue<DataFactoryExpression>(Expression, options);
             if (Optional.IsCollectionDefined(IfTrueActivities))
             {
                 writer.WritePropertyName("ifTrueActivities"u8);
                 writer.WriteStartArray();
                 foreach (var item in IfTrueActivities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +85,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in IfFalseActivities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,22 +105,36 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element)
+        IfConditionActivity IJsonModel<IfConditionActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIfConditionActivity(document.RootElement, options);
+        }
+
+        internal static IfConditionActivity DeserializeIfConditionActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryExpression expression = default;
-            Optional<IList<PipelineActivity>> ifTrueActivities = default;
-            Optional<IList<PipelineActivity>> ifFalseActivities = default;
+            IList<PipelineActivity> ifTrueActivities = default;
+            IList<PipelineActivity> ifFalseActivities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -158,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -172,7 +195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -188,7 +211,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value);
+                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("ifTrueActivities"u8))
@@ -200,7 +223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item, options));
                             }
                             ifTrueActivities = array;
                             continue;
@@ -214,7 +237,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item, options));
                             }
                             ifFalseActivities = array;
                             continue;
@@ -225,7 +248,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new IfConditionActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, expression, Optional.ToList(ifTrueActivities), Optional.ToList(ifFalseActivities));
+            return new IfConditionActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                expression,
+                ifTrueActivities ?? new ChangeTrackingList<PipelineActivity>(),
+                ifFalseActivities ?? new ChangeTrackingList<PipelineActivity>());
         }
+
+        BinaryData IPersistableModel<IfConditionActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IfConditionActivity IPersistableModel<IfConditionActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IfConditionActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIfConditionActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IfConditionActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IfConditionActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

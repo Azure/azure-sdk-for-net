@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class ScalingSchedule : IUtf8JsonSerializable
+    public partial class ScalingSchedule : IUtf8JsonSerializable, IJsonModel<ScalingSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScalingSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ScalingSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -34,7 +44,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -54,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -64,7 +74,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -104,40 +114,71 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
                 writer.WritePropertyName("offPeakLoadBalancingAlgorithm"u8);
                 writer.WriteStringValue(OffPeakLoadBalancingAlgorithm.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element)
+        ScalingSchedule IJsonModel<ScalingSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ScalingSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeScalingSchedule(document.RootElement, options);
+        }
+
+        internal static ScalingSchedule DeserializeScalingSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<ScalingScheduleDaysOfWeekItem>> daysOfWeek = default;
-            Optional<ScalingActionTime> rampUpStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampUpLoadBalancingAlgorithm = default;
-            Optional<int> rampUpMinimumHostsPct = default;
-            Optional<int> rampUpCapacityThresholdPct = default;
-            Optional<ScalingActionTime> peakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> peakLoadBalancingAlgorithm = default;
-            Optional<ScalingActionTime> rampDownStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampDownLoadBalancingAlgorithm = default;
-            Optional<int> rampDownMinimumHostsPct = default;
-            Optional<int> rampDownCapacityThresholdPct = default;
-            Optional<bool> rampDownForceLogoffUsers = default;
-            Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
-            Optional<int> rampDownWaitTimeMinutes = default;
-            Optional<string> rampDownNotificationMessage = default;
-            Optional<ScalingActionTime> offPeakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
+            string name = default;
+            IList<ScalingScheduleDaysOfWeekItem> daysOfWeek = default;
+            ScalingActionTime rampUpStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
+            int? rampUpMinimumHostsPct = default;
+            int? rampUpCapacityThresholdPct = default;
+            ScalingActionTime peakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default;
+            ScalingActionTime rampDownStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default;
+            int? rampDownMinimumHostsPct = default;
+            int? rampDownCapacityThresholdPct = default;
+            bool? rampDownForceLogoffUsers = default;
+            DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default;
+            int? rampDownWaitTimeMinutes = default;
+            string rampDownNotificationMessage = default;
+            ScalingActionTime offPeakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -165,7 +206,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -201,7 +242,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -219,7 +260,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -287,7 +328,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value);
+                    offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offPeakLoadBalancingAlgorithm"u8))
@@ -299,8 +340,63 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     offPeakLoadBalancingAlgorithm = new SessionHostLoadBalancingAlgorithm(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ScalingSchedule(name.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ScalingSchedule(
+                name,
+                daysOfWeek ?? new ChangeTrackingList<ScalingScheduleDaysOfWeekItem>(),
+                rampUpStartTime,
+                rampUpLoadBalancingAlgorithm,
+                rampUpMinimumHostsPct,
+                rampUpCapacityThresholdPct,
+                peakStartTime,
+                peakLoadBalancingAlgorithm,
+                rampDownStartTime,
+                rampDownLoadBalancingAlgorithm,
+                rampDownMinimumHostsPct,
+                rampDownCapacityThresholdPct,
+                rampDownForceLogoffUsers,
+                rampDownStopHostsWhen,
+                rampDownWaitTimeMinutes,
+                rampDownNotificationMessage,
+                offPeakStartTime,
+                offPeakLoadBalancingAlgorithm,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ScalingSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ScalingSchedule IPersistableModel<ScalingSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ScalingSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeScalingSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScalingSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ScalingSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

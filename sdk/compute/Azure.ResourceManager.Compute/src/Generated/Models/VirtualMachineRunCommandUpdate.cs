@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,6 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineRunCommandUpdate"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="source"> The source of the run command script. </param>
         /// <param name="parameters"> The parameters used by the script. </param>
         /// <param name="protectedParameters"> The parameters used by the script. </param>
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. If treatFailureAsDeploymentFailure set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If treatFailureAsDeploymentFailure set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
         /// <param name="instanceView"> The virtual machine run command instance view. </param>
         /// <param name="treatFailureAsDeploymentFailure"> Optional. If set to true, any failure in the script will fail the deployment and ProvisioningState will be marked as Failed. If set to false, ProvisioningState would only reflect whether the run command was run or not by the extensions platform, it would not indicate whether script failed in case of script failures. See instance view of run command in case of script failures to see executionMessage, output, error: https://aka.ms/runcommandmanaged#get-execution-status-and-results. </param>
-        internal VirtualMachineRunCommandUpdate(IDictionary<string, string> tags, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, VirtualMachineRunCommandInstanceView instanceView, bool? treatFailureAsDeploymentFailure) : base(tags)
+        internal VirtualMachineRunCommandUpdate(IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, VirtualMachineRunCommandScriptSource source, IList<RunCommandInputParameter> parameters, IList<RunCommandInputParameter> protectedParameters, bool? asyncExecution, string runAsUser, string runAsPassword, int? timeoutInSeconds, Uri outputBlobUri, Uri errorBlobUri, RunCommandManagedIdentity outputBlobManagedIdentity, RunCommandManagedIdentity errorBlobManagedIdentity, string provisioningState, VirtualMachineRunCommandInstanceView instanceView, bool? treatFailureAsDeploymentFailure) : base(tags, serializedAdditionalRawData)
         {
             Source = source;
             Parameters = parameters;

@@ -5,25 +5,122 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    public partial class ComponentKubernetesResources
+    public partial class ComponentKubernetesResources : IUtf8JsonSerializable, IJsonModel<ComponentKubernetesResources>
     {
-        internal static ComponentKubernetesResources DeserializeComponentKubernetesResources(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentKubernetesResources>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComponentKubernetesResources>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentKubernetesResources>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Deployments))
+            {
+                writer.WritePropertyName("deployments"u8);
+                writer.WriteStartArray();
+                foreach (var item in Deployments)
+                {
+                    writer.WriteObjectValue<KubernetesDeployment>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Pods))
+            {
+                writer.WritePropertyName("pods"u8);
+                writer.WriteStartArray();
+                foreach (var item in Pods)
+                {
+                    writer.WriteObjectValue<KubernetesPod>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(ReplicaSets))
+            {
+                writer.WritePropertyName("replicaSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in ReplicaSets)
+                {
+                    writer.WriteObjectValue<KubernetesReplicaSet>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(StatefulSets))
+            {
+                writer.WritePropertyName("statefulSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in StatefulSets)
+                {
+                    writer.WriteObjectValue<KubernetesStatefulSet>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DaemonSets))
+            {
+                writer.WritePropertyName("daemonSets"u8);
+                writer.WriteStartArray();
+                foreach (var item in DaemonSets)
+                {
+                    writer.WriteObjectValue<KubernetesDaemonSet>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComponentKubernetesResources IJsonModel<ComponentKubernetesResources>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentKubernetesResources>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComponentKubernetesResources(document.RootElement, options);
+        }
+
+        internal static ComponentKubernetesResources DeserializeComponentKubernetesResources(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<KubernetesDeployment>> deployments = default;
-            Optional<IReadOnlyList<KubernetesPod>> pods = default;
-            Optional<IReadOnlyList<KubernetesReplicaSet>> replicaSets = default;
-            Optional<IReadOnlyList<KubernetesStatefulSet>> statefulSets = default;
-            Optional<IReadOnlyList<KubernetesDaemonSet>> daemonSets = default;
+            IReadOnlyList<KubernetesDeployment> deployments = default;
+            IReadOnlyList<KubernetesPod> pods = default;
+            IReadOnlyList<KubernetesReplicaSet> replicaSets = default;
+            IReadOnlyList<KubernetesStatefulSet> statefulSets = default;
+            IReadOnlyList<KubernetesDaemonSet> daemonSets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("deployments"u8))
@@ -35,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDeployment> array = new List<KubernetesDeployment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item));
+                        array.Add(KubernetesDeployment.DeserializeKubernetesDeployment(item, options));
                     }
                     deployments = array;
                     continue;
@@ -49,7 +146,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesPod> array = new List<KubernetesPod>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesPod.DeserializeKubernetesPod(item));
+                        array.Add(KubernetesPod.DeserializeKubernetesPod(item, options));
                     }
                     pods = array;
                     continue;
@@ -63,7 +160,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesReplicaSet> array = new List<KubernetesReplicaSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item));
+                        array.Add(KubernetesReplicaSet.DeserializeKubernetesReplicaSet(item, options));
                     }
                     replicaSets = array;
                     continue;
@@ -77,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesStatefulSet> array = new List<KubernetesStatefulSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item));
+                        array.Add(KubernetesStatefulSet.DeserializeKubernetesStatefulSet(item, options));
                     }
                     statefulSets = array;
                     continue;
@@ -91,13 +188,55 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                     List<KubernetesDaemonSet> array = new List<KubernetesDaemonSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item));
+                        array.Add(KubernetesDaemonSet.DeserializeKubernetesDaemonSet(item, options));
                     }
                     daemonSets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComponentKubernetesResources(Optional.ToList(deployments), Optional.ToList(pods), Optional.ToList(replicaSets), Optional.ToList(statefulSets), Optional.ToList(daemonSets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ComponentKubernetesResources(
+                deployments ?? new ChangeTrackingList<KubernetesDeployment>(),
+                pods ?? new ChangeTrackingList<KubernetesPod>(),
+                replicaSets ?? new ChangeTrackingList<KubernetesReplicaSet>(),
+                statefulSets ?? new ChangeTrackingList<KubernetesStatefulSet>(),
+                daemonSets ?? new ChangeTrackingList<KubernetesDaemonSet>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComponentKubernetesResources>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentKubernetesResources>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComponentKubernetesResources IPersistableModel<ComponentKubernetesResources>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentKubernetesResources>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComponentKubernetesResources(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComponentKubernetesResources)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComponentKubernetesResources>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Purview.Models
 {
-    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable
+    public partial class DefaultPurviewAccountPayload : IUtf8JsonSerializable, IJsonModel<DefaultPurviewAccountPayload>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultPurviewAccountPayload>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefaultPurviewAccountPayload>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AccountName))
             {
@@ -46,21 +56,52 @@ namespace Azure.ResourceManager.Purview.Models
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DefaultPurviewAccountPayload DeserializeDefaultPurviewAccountPayload(JsonElement element)
+        DefaultPurviewAccountPayload IJsonModel<DefaultPurviewAccountPayload>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefaultPurviewAccountPayload(document.RootElement, options);
+        }
+
+        internal static DefaultPurviewAccountPayload DeserializeDefaultPurviewAccountPayload(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> accountName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> scope = default;
-            Optional<Guid> scopeTenantId = default;
-            Optional<PurviewAccountScopeType> scopeType = default;
-            Optional<string> subscriptionId = default;
+            string accountName = default;
+            string resourceGroupName = default;
+            string scope = default;
+            Guid? scopeTenantId = default;
+            PurviewAccountScopeType? scopeType = default;
+            string subscriptionId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountName"u8))
@@ -101,8 +142,51 @@ namespace Azure.ResourceManager.Purview.Models
                     subscriptionId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefaultPurviewAccountPayload(accountName.Value, resourceGroupName.Value, scope.Value, Optional.ToNullable(scopeTenantId), Optional.ToNullable(scopeType), subscriptionId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefaultPurviewAccountPayload(
+                accountName,
+                resourceGroupName,
+                scope,
+                scopeTenantId,
+                scopeType,
+                subscriptionId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DefaultPurviewAccountPayload>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefaultPurviewAccountPayload IPersistableModel<DefaultPurviewAccountPayload>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultPurviewAccountPayload>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefaultPurviewAccountPayload(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultPurviewAccountPayload)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefaultPurviewAccountPayload>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

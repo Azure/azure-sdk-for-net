@@ -22,54 +22,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowedGroups))
             {
                 writer.WritePropertyName("allowedGroups"u8);
-                writer.WriteObjectValue(AllowedGroups);
+                writer.WriteObjectValue<object>(AllowedGroups);
             }
             if (Optional.IsDefined(UserScopeFilterUri))
             {
                 writer.WritePropertyName("userScopeFilterUri"u8);
-                writer.WriteObjectValue(UserScopeFilterUri);
+                writer.WriteObjectValue<object>(UserScopeFilterUri);
             }
             if (Optional.IsDefined(DateFilterColumn))
             {
                 writer.WritePropertyName("dateFilterColumn"u8);
-                writer.WriteObjectValue(DateFilterColumn);
+                writer.WriteObjectValue<object>(DateFilterColumn);
             }
             if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteObjectValue(StartTime);
+                writer.WriteObjectValue<object>(StartTime);
             }
             if (Optional.IsDefined(EndTime))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteObjectValue(EndTime);
+                writer.WriteObjectValue<object>(EndTime);
             }
             if (Optional.IsDefined(OutputColumns))
             {
                 writer.WritePropertyName("outputColumns"u8);
-                writer.WriteObjectValue(OutputColumns);
+                writer.WriteObjectValue<object>(OutputColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -80,16 +80,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> allowedGroups = default;
-            Optional<object> userScopeFilterUri = default;
-            Optional<object> dateFilterColumn = default;
-            Optional<object> startTime = default;
-            Optional<object> endTime = default;
-            Optional<object> outputColumns = default;
+            object allowedGroups = default;
+            object userScopeFilterUri = default;
+            object dateFilterColumn = default;
+            object startTime = default;
+            object endTime = default;
+            object outputColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -183,14 +183,25 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new Office365Source(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, allowedGroups.Value, userScopeFilterUri.Value, dateFilterColumn.Value, startTime.Value, endTime.Value, outputColumns.Value);
+            return new Office365Source(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                allowedGroups,
+                userScopeFilterUri,
+                dateFilterColumn,
+                startTime,
+                endTime,
+                outputColumns);
         }
 
         internal partial class Office365SourceConverter : JsonConverter<Office365Source>
         {
             public override void Write(Utf8JsonWriter writer, Office365Source model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Office365Source>(model);
             }
             public override Office365Source Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -6,67 +6,232 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionEventSummary : IUtf8JsonSerializable
+    public partial class ConsumptionEventSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionEventSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionEventSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionEventSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
+            {
+                writer.WritePropertyName("transactionDate"u8);
+                writer.WriteStringValue(TransactOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewCredit))
+            {
+                writer.WritePropertyName("newCredit"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(NewCredit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Adjustments))
+            {
+                writer.WritePropertyName("adjustments"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(Adjustments, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditExpired))
+            {
+                writer.WritePropertyName("creditExpired"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(CreditExpired, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Charges))
+            {
+                writer.WritePropertyName("charges"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(Charges, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
+            {
+                writer.WritePropertyName("closedBalance"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
+            }
             if (Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(InvoiceNumber))
+            {
+                writer.WritePropertyName("invoiceNumber"u8);
+                writer.WriteStringValue(InvoiceNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileId))
+            {
+                writer.WritePropertyName("billingProfileId"u8);
+                writer.WriteStringValue(BillingProfileId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingProfileDisplayName))
+            {
+                writer.WritePropertyName("billingProfileDisplayName"u8);
+                writer.WriteStringValue(BillingProfileDisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LotId))
+            {
+                writer.WritePropertyName("lotId"u8);
+                writer.WriteStringValue(LotId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LotSource))
+            {
+                writer.WritePropertyName("lotSource"u8);
+                writer.WriteStringValue(LotSource);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CanceledCredit))
+            {
+                writer.WritePropertyName("canceledCredit"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(CanceledCredit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
+            {
+                writer.WritePropertyName("creditCurrency"u8);
+                writer.WriteStringValue(CreditCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
+            {
+                writer.WritePropertyName("billingCurrency"u8);
+                writer.WriteStringValue(BillingCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
+            {
+                writer.WritePropertyName("reseller"u8);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditExpiredInBillingCurrency))
+            {
+                writer.WritePropertyName("creditExpiredInBillingCurrency"u8);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(CreditExpiredInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NewCreditInBillingCurrency))
+            {
+                writer.WritePropertyName("newCreditInBillingCurrency"u8);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(NewCreditInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AdjustmentsInBillingCurrency))
+            {
+                writer.WritePropertyName("adjustmentsInBillingCurrency"u8);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(AdjustmentsInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ChargesInBillingCurrency))
+            {
+                writer.WritePropertyName("chargesInBillingCurrency"u8);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ChargesInBillingCurrency, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
+            {
+                writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element)
+        ConsumptionEventSummary IJsonModel<ConsumptionEventSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionEventSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionEventSummary DeserializeConsumptionEventSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> transactionDate = default;
-            Optional<string> description = default;
-            Optional<ConsumptionAmount> newCredit = default;
-            Optional<ConsumptionAmount> adjustments = default;
-            Optional<ConsumptionAmount> creditExpired = default;
-            Optional<ConsumptionAmount> charges = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionEventType> eventType = default;
-            Optional<string> invoiceNumber = default;
-            Optional<ResourceIdentifier> billingProfileId = default;
-            Optional<string> billingProfileDisplayName = default;
-            Optional<ResourceIdentifier> lotId = default;
-            Optional<string> lotSource = default;
-            Optional<ConsumptionAmount> canceledCredit = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
-            Optional<ConsumptionAmountWithExchangeRate> creditExpiredInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> newCreditInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> adjustmentsInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> chargesInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
+            SystemData systemData = default;
+            DateTimeOffset? transactionDate = default;
+            string description = default;
+            ConsumptionAmount newCredit = default;
+            ConsumptionAmount adjustments = default;
+            ConsumptionAmount creditExpired = default;
+            ConsumptionAmount charges = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionEventType? eventType = default;
+            string invoiceNumber = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileDisplayName = default;
+            ResourceIdentifier lotId = default;
+            string lotSource = default;
+            ConsumptionAmount canceledCredit = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
+            ConsumptionAmountWithExchangeRate creditExpiredInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate newCreditInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate adjustmentsInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate chargesInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -131,7 +296,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            newCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adjustments"u8))
@@ -140,7 +305,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            adjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditExpired"u8))
@@ -149,7 +314,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            creditExpired = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("charges"u8))
@@ -158,7 +323,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            charges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalance"u8))
@@ -167,7 +332,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("eventType"u8))
@@ -218,7 +383,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            canceledCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditCurrency"u8))
@@ -237,7 +402,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
+                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditExpiredInBillingCurrency"u8))
@@ -246,7 +411,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            creditExpiredInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("newCreditInBillingCurrency"u8))
@@ -255,7 +420,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            newCreditInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("adjustmentsInBillingCurrency"u8))
@@ -264,7 +429,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            adjustmentsInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("chargesInBillingCurrency"u8))
@@ -273,7 +438,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            chargesInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
@@ -282,14 +447,78 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionEventSummary(id, name, type, systemData.Value, Optional.ToNullable(transactionDate), description.Value, newCredit.Value, adjustments.Value, creditExpired.Value, charges.Value, closedBalance.Value, Optional.ToNullable(eventType), invoiceNumber.Value, billingProfileId.Value, billingProfileDisplayName.Value, lotId.Value, lotSource.Value, canceledCredit.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, creditExpiredInBillingCurrency.Value, newCreditInBillingCurrency.Value, adjustmentsInBillingCurrency.Value, chargesInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionEventSummary(
+                id,
+                name,
+                type,
+                systemData,
+                transactionDate,
+                description,
+                newCredit,
+                adjustments,
+                creditExpired,
+                charges,
+                closedBalance,
+                eventType,
+                invoiceNumber,
+                billingProfileId,
+                billingProfileDisplayName,
+                lotId,
+                lotSource,
+                canceledCredit,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                creditExpiredInBillingCurrency,
+                newCreditInBillingCurrency,
+                adjustmentsInBillingCurrency,
+                chargesInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                eTag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionEventSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionEventSummary IPersistableModel<ConsumptionEventSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionEventSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionEventSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionEventSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionEventSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

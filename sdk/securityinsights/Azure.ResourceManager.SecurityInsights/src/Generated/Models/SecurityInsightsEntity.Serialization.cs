@@ -5,24 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    public partial class SecurityInsightsEntity : IUtf8JsonSerializable
+    public partial class SecurityInsightsEntity : IUtf8JsonSerializable, IJsonModel<SecurityInsightsEntity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInsightsEntity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInsightsEntity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInsightsEntity DeserializeSecurityInsightsEntity(JsonElement element)
+        SecurityInsightsEntity IJsonModel<SecurityInsightsEntity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInsightsEntity(document.RootElement, options);
+        }
+
+        internal static SecurityInsightsEntity DeserializeSecurityInsightsEntity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -31,67 +89,61 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Account": return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element);
-                    case "AzureResource": return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element);
-                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element);
-                    case "CloudApplication": return SecurityInsightsCloudApplicationEntity.DeserializeSecurityInsightsCloudApplicationEntity(element);
-                    case "DnsResolution": return SecurityInsightsDnsEntity.DeserializeSecurityInsightsDnsEntity(element);
-                    case "File": return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element);
-                    case "FileHash": return SecurityInsightsFileHashEntity.DeserializeSecurityInsightsFileHashEntity(element);
-                    case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element);
-                    case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element);
-                    case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element);
-                    case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element);
-                    case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element);
-                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element);
-                    case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element);
-                    case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element);
-                    case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element);
-                    case "RegistryValue": return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element);
-                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element);
-                    case "SecurityGroup": return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element);
-                    case "SubmissionMail": return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element);
-                    case "Url": return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element);
+                    case "Account": return SecurityInsightsAccountEntity.DeserializeSecurityInsightsAccountEntity(element, options);
+                    case "AzureResource": return SecurityInsightsAzureResourceEntity.DeserializeSecurityInsightsAzureResourceEntity(element, options);
+                    case "Bookmark": return SecurityInsightsHuntingBookmark.DeserializeSecurityInsightsHuntingBookmark(element, options);
+                    case "CloudApplication": return SecurityInsightsCloudApplicationEntity.DeserializeSecurityInsightsCloudApplicationEntity(element, options);
+                    case "DnsResolution": return SecurityInsightsDnsEntity.DeserializeSecurityInsightsDnsEntity(element, options);
+                    case "File": return SecurityInsightsFileEntity.DeserializeSecurityInsightsFileEntity(element, options);
+                    case "FileHash": return SecurityInsightsFileHashEntity.DeserializeSecurityInsightsFileHashEntity(element, options);
+                    case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element, options);
+                    case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
+                    case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element, options);
+                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
+                    case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element, options);
+                    case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element, options);
+                    case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element, options);
+                    case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element, options);
+                    case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);
+                    case "RegistryValue": return SecurityInsightsRegistryValueEntity.DeserializeSecurityInsightsRegistryValueEntity(element, options);
+                    case "SecurityAlert": return SecurityInsightsAlert.DeserializeSecurityInsightsAlert(element, options);
+                    case "SecurityGroup": return SecurityInsightsGroupEntity.DeserializeSecurityInsightsGroupEntity(element, options);
+                    case "SubmissionMail": return SecurityInsightsSubmissionMailEntity.DeserializeSecurityInsightsSubmissionMailEntity(element, options);
+                    case "Url": return SecurityInsightsUriEntity.DeserializeSecurityInsightsUriEntity(element, options);
                 }
             }
-            SecurityInsightsEntityKind kind = default;
-            ResourceIdentifier id = default;
-            string name = default;
-            ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("kind"u8))
-                {
-                    kind = new SecurityInsightsEntityKind(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("id"u8))
-                {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
-                    continue;
-                }
-            }
-            return new SecurityInsightsEntity(id, name, type, systemData.Value, kind);
+            return UnknownEntity.DeserializeUnknownEntity(element, options);
         }
+
+        BinaryData IPersistableModel<SecurityInsightsEntity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInsightsEntity IPersistableModel<SecurityInsightsEntity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInsightsEntity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInsightsEntity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

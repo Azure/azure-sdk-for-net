@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Authorization.Models;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,38 @@ namespace Azure.ResourceManager.Authorization
     /// </summary>
     public partial class RoleEligibilityScheduleRequestData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestData"/>. </summary>
         public RoleEligibilityScheduleRequestData()
         {
@@ -48,7 +81,8 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="expirationType"> Type of the role eligibility schedule expiration. </param>
         /// <param name="endOn"> End DateTime of the role eligibility schedule. </param>
         /// <param name="duration"> Duration of the role eligibility schedule in TimeSpan. </param>
-        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, ResourceIdentifier targetRoleEligibilityScheduleId, ResourceIdentifier targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RoleEligibilityScheduleRequestData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, RoleManagementScheduleRequestType? requestType, RoleManagementScheduleStatus? status, string approvalId, ResourceIdentifier targetRoleEligibilityScheduleId, ResourceIdentifier targetRoleEligibilityScheduleInstanceId, string justification, RoleEligibilityScheduleRequestPropertiesTicketInfo ticketInfo, string condition, string conditionVersion, DateTimeOffset? createdOn, Guid? requestorId, RoleManagementExpandedProperties expandedProperties, DateTimeOffset? startOn, RoleManagementScheduleExpirationType? expirationType, DateTimeOffset? endOn, TimeSpan? duration, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -70,47 +104,68 @@ namespace Azure.ResourceManager.Authorization
             ExpirationType = expirationType;
             EndOn = endOn;
             Duration = duration;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The role eligibility schedule request scope. </summary>
+        [WirePath("properties.scope")]
         public string Scope { get; }
         /// <summary> The role definition ID. </summary>
+        [WirePath("properties.roleDefinitionId")]
         public ResourceIdentifier RoleDefinitionId { get; set; }
         /// <summary> The principal ID. </summary>
+        [WirePath("properties.principalId")]
         public Guid? PrincipalId { get; set; }
         /// <summary> The principal type of the assigned principal ID. </summary>
+        [WirePath("properties.principalType")]
         public RoleManagementPrincipalType? PrincipalType { get; }
         /// <summary> The type of the role assignment schedule request. Eg: SelfActivate, AdminAssign etc. </summary>
+        [WirePath("properties.requestType")]
         public RoleManagementScheduleRequestType? RequestType { get; set; }
         /// <summary> The status of the role eligibility schedule request. </summary>
+        [WirePath("properties.status")]
         public RoleManagementScheduleStatus? Status { get; }
         /// <summary> The approvalId of the role eligibility schedule request. </summary>
+        [WirePath("properties.approvalId")]
         public string ApprovalId { get; }
         /// <summary> The resultant role eligibility schedule id or the role eligibility schedule id being updated. </summary>
+        [WirePath("properties.targetRoleEligibilityScheduleId")]
         public ResourceIdentifier TargetRoleEligibilityScheduleId { get; set; }
         /// <summary> The role eligibility schedule instance id being updated. </summary>
+        [WirePath("properties.targetRoleEligibilityScheduleInstanceId")]
         public ResourceIdentifier TargetRoleEligibilityScheduleInstanceId { get; set; }
         /// <summary> Justification for the role eligibility. </summary>
+        [WirePath("properties.justification")]
         public string Justification { get; set; }
         /// <summary> Ticket Info of the role eligibility. </summary>
+        [WirePath("properties.ticketInfo")]
         public RoleEligibilityScheduleRequestPropertiesTicketInfo TicketInfo { get; set; }
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
+        [WirePath("properties.condition")]
         public string Condition { get; set; }
         /// <summary> Version of the condition. Currently accepted value is '2.0'. </summary>
+        [WirePath("properties.conditionVersion")]
         public string ConditionVersion { get; set; }
         /// <summary> DateTime when role eligibility schedule request was created. </summary>
+        [WirePath("properties.createdOn")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Id of the user who created this request. </summary>
+        [WirePath("properties.requestorId")]
         public Guid? RequestorId { get; }
         /// <summary> Additional properties of principal, scope and role definition. </summary>
+        [WirePath("properties.expandedProperties")]
         public RoleManagementExpandedProperties ExpandedProperties { get; }
         /// <summary> Start DateTime of the role eligibility schedule. </summary>
+        [WirePath("properties.startDateTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Type of the role eligibility schedule expiration. </summary>
+        [WirePath("properties.type")]
         public RoleManagementScheduleExpirationType? ExpirationType { get; set; }
         /// <summary> End DateTime of the role eligibility schedule. </summary>
+        [WirePath("properties.endDateTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Duration of the role eligibility schedule in TimeSpan. </summary>
+        [WirePath("properties.duration")]
         public TimeSpan? Duration { get; set; }
     }
 }

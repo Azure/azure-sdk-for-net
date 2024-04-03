@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<KqlScript>(Properties);
             }
             writer.WriteEndObject();
         }
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<KqlScript> properties = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            KqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -78,14 +78,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new KqlScriptResource(id.Value, name.Value, type.Value, properties.Value);
+            return new KqlScriptResource(id, name, type, properties);
         }
 
         internal partial class KqlScriptResourceConverter : JsonConverter<KqlScriptResource>
         {
             public override void Write(Utf8JsonWriter writer, KqlScriptResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<KqlScriptResource>(model);
             }
             public override KqlScriptResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

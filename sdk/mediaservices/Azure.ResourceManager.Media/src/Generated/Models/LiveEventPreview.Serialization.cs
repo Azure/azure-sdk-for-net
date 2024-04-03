@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class LiveEventPreview : IUtf8JsonSerializable
+    public partial class LiveEventPreview : IUtf8JsonSerializable, IJsonModel<LiveEventPreview>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LiveEventPreview>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LiveEventPreview>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Endpoints))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LiveEventEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -31,7 +41,7 @@ namespace Azure.ResourceManager.Media.Models
                 if (AccessControl != null)
                 {
                     writer.WritePropertyName("accessControl"u8);
-                    writer.WriteObjectValue(AccessControl);
+                    writer.WriteObjectValue<LiveEventPreviewAccessControl>(AccessControl, options);
                 }
                 else
                 {
@@ -53,20 +63,51 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("alternativeMediaId"u8);
                 writer.WriteStringValue(AlternativeMediaId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element)
+        LiveEventPreview IJsonModel<LiveEventPreview>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLiveEventPreview(document.RootElement, options);
+        }
+
+        internal static LiveEventPreview DeserializeLiveEventPreview(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<LiveEventEndpoint>> endpoints = default;
-            Optional<LiveEventPreviewAccessControl> accessControl = default;
-            Optional<string> previewLocator = default;
-            Optional<string> streamingPolicyName = default;
-            Optional<string> alternativeMediaId = default;
+            IList<LiveEventEndpoint> endpoints = default;
+            LiveEventPreviewAccessControl accessControl = default;
+            string previewLocator = default;
+            string streamingPolicyName = default;
+            string alternativeMediaId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoints"u8))
@@ -78,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<LiveEventEndpoint> array = new List<LiveEventEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item));
+                        array.Add(LiveEventEndpoint.DeserializeLiveEventEndpoint(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -90,7 +131,7 @@ namespace Azure.ResourceManager.Media.Models
                         accessControl = null;
                         continue;
                     }
-                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value);
+                    accessControl = LiveEventPreviewAccessControl.DeserializeLiveEventPreviewAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("previewLocator"u8))
@@ -108,8 +149,50 @@ namespace Azure.ResourceManager.Media.Models
                     alternativeMediaId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LiveEventPreview(Optional.ToList(endpoints), accessControl.Value, previewLocator.Value, streamingPolicyName.Value, alternativeMediaId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LiveEventPreview(
+                endpoints ?? new ChangeTrackingList<LiveEventEndpoint>(),
+                accessControl,
+                previewLocator,
+                streamingPolicyName,
+                alternativeMediaId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LiveEventPreview>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LiveEventPreview IPersistableModel<LiveEventPreview>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LiveEventPreview>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLiveEventPreview(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LiveEventPreview)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LiveEventPreview>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -32,6 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="scoringUri"> Endpoint URI. </param>
         /// <param name="swaggerUri"> Endpoint Swagger URI. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="compute">
         /// ARM resource ID of the compute if it exists.
         /// optional
@@ -40,13 +40,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="provisioningState"> Provisioning state for the endpoint. </param>
         /// <param name="publicNetworkAccess"> Set to "Enabled" for endpoints that should allow public access when Private Link is enabled. </param>
         /// <param name="traffic"> Percentage of traffic from endpoint to divert to each deployment. Traffic values need to sum to 100. </param>
-        internal MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, string compute, IDictionary<string, int> mirrorTraffic, MachineLearningEndpointProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri)
+        internal MachineLearningOnlineEndpointProperties(MachineLearningEndpointAuthMode authMode, string description, MachineLearningEndpointAuthKeys keys, IDictionary<string, string> properties, Uri scoringUri, Uri swaggerUri, IDictionary<string, BinaryData> serializedAdditionalRawData, string compute, IDictionary<string, int> mirrorTraffic, MachineLearningEndpointProvisioningState? provisioningState, MachineLearningPublicNetworkAccessType? publicNetworkAccess, IDictionary<string, int> traffic) : base(authMode, description, keys, properties, scoringUri, swaggerUri, serializedAdditionalRawData)
         {
             Compute = compute;
             MirrorTraffic = mirrorTraffic;
             ProvisioningState = provisioningState;
             PublicNetworkAccess = publicNetworkAccess;
             Traffic = traffic;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningOnlineEndpointProperties"/> for deserialization. </summary>
+        internal MachineLearningOnlineEndpointProperties()
+        {
         }
 
         /// <summary>

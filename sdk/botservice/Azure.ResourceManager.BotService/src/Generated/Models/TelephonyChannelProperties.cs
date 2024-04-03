@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
     /// <summary> The parameters to provide for the Direct Line channel. </summary>
     public partial class TelephonyChannelProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="TelephonyChannelProperties"/>. </summary>
         public TelephonyChannelProperties()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.BotService.Models
         /// <param name="defaultLocale"> The default locale of the channel. </param>
         /// <param name="premiumSku"> The premium SKU applied to the channel. </param>
         /// <param name="isEnabled"> Whether the channel is enabled. </param>
-        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSku, bool? isEnabled)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TelephonyChannelProperties(IList<TelephonyPhoneNumbers> phoneNumbers, IList<TelephonyChannelResourceApiConfiguration> apiConfigurations, string cognitiveServiceSubscriptionKey, string cognitiveServiceRegion, string defaultLocale, string premiumSku, bool? isEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PhoneNumbers = phoneNumbers;
             ApiConfigurations = apiConfigurations;
@@ -37,6 +70,7 @@ namespace Azure.ResourceManager.BotService.Models
             DefaultLocale = defaultLocale;
             PremiumSku = premiumSku;
             IsEnabled = isEnabled;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of Telephony phone numbers. </summary>

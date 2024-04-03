@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable
+    public partial class MongoDBConnectionInfo : IUtf8JsonSerializable, IJsonModel<MongoDBConnectionInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MongoDBConnectionInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MongoDBConnectionInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("connectionString"u8);
             writer.WriteStringValue(ConnectionString);
@@ -79,29 +90,60 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element)
+        MongoDBConnectionInfo IJsonModel<MongoDBConnectionInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMongoDBConnectionInfo(document.RootElement, options);
+        }
+
+        internal static MongoDBConnectionInfo DeserializeMongoDBConnectionInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string connectionString = default;
-            Optional<string> dataSource = default;
-            Optional<bool> encryptConnection = default;
-            Optional<string> serverBrandVersion = default;
-            Optional<string> serverVersion = default;
-            Optional<string> serverName = default;
-            Optional<bool> trustServerCertificate = default;
-            Optional<bool> enforceSSL = default;
-            Optional<int> port = default;
-            Optional<string> additionalSettings = default;
-            Optional<AuthenticationType> authentication = default;
+            string dataSource = default;
+            bool? encryptConnection = default;
+            string serverBrandVersion = default;
+            string serverVersion = default;
+            string serverName = default;
+            bool? trustServerCertificate = default;
+            bool? enforceSSL = default;
+            int? port = default;
+            string additionalSettings = default;
+            AuthenticationType? authentication = default;
             string type = default;
-            Optional<string> userName = default;
-            Optional<string> password = default;
+            string userName = default;
+            string password = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionString"u8))
@@ -194,8 +236,59 @@ namespace Azure.ResourceManager.DataMigration.Models
                     password = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MongoDBConnectionInfo(type, userName.Value, password.Value, connectionString, dataSource.Value, Optional.ToNullable(encryptConnection), serverBrandVersion.Value, serverVersion.Value, serverName.Value, Optional.ToNullable(trustServerCertificate), Optional.ToNullable(enforceSSL), Optional.ToNullable(port), additionalSettings.Value, Optional.ToNullable(authentication));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MongoDBConnectionInfo(
+                type,
+                userName,
+                password,
+                serializedAdditionalRawData,
+                connectionString,
+                dataSource,
+                encryptConnection,
+                serverBrandVersion,
+                serverVersion,
+                serverName,
+                trustServerCertificate,
+                enforceSSL,
+                port,
+                additionalSettings,
+                authentication);
         }
+
+        BinaryData IPersistableModel<MongoDBConnectionInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MongoDBConnectionInfo IPersistableModel<MongoDBConnectionInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MongoDBConnectionInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMongoDBConnectionInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MongoDBConnectionInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MongoDBConnectionInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

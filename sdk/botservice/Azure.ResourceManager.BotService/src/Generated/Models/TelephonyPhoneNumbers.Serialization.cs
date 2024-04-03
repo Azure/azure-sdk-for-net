@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class TelephonyPhoneNumbers : IUtf8JsonSerializable
+    public partial class TelephonyPhoneNumbers : IUtf8JsonSerializable, IJsonModel<TelephonyPhoneNumbers>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TelephonyPhoneNumbers>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TelephonyPhoneNumbers>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -121,25 +132,56 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("offerType");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static TelephonyPhoneNumbers DeserializeTelephonyPhoneNumbers(JsonElement element)
+        TelephonyPhoneNumbers IJsonModel<TelephonyPhoneNumbers>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTelephonyPhoneNumbers(document.RootElement, options);
+        }
+
+        internal static TelephonyPhoneNumbers DeserializeTelephonyPhoneNumbers(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> phoneNumber = default;
-            Optional<string> acsEndpoint = default;
-            Optional<string> acsSecret = default;
-            Optional<ResourceIdentifier> acsResourceId = default;
-            Optional<string> cognitiveServiceSubscriptionKey = default;
-            Optional<string> cognitiveServiceRegion = default;
-            Optional<ResourceIdentifier> cognitiveServiceResourceId = default;
-            Optional<string> defaultLocale = default;
-            Optional<string> offerType = default;
+            string id = default;
+            string phoneNumber = default;
+            string acsEndpoint = default;
+            string acsSecret = default;
+            ResourceIdentifier acsResourceId = default;
+            string cognitiveServiceSubscriptionKey = default;
+            string cognitiveServiceRegion = default;
+            ResourceIdentifier cognitiveServiceResourceId = default;
+            string defaultLocale = default;
+            string offerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -232,8 +274,55 @@ namespace Azure.ResourceManager.BotService.Models
                     offerType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TelephonyPhoneNumbers(id.Value, phoneNumber.Value, acsEndpoint.Value, acsSecret.Value, acsResourceId.Value, cognitiveServiceSubscriptionKey.Value, cognitiveServiceRegion.Value, cognitiveServiceResourceId.Value, defaultLocale.Value, offerType.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TelephonyPhoneNumbers(
+                id,
+                phoneNumber,
+                acsEndpoint,
+                acsSecret,
+                acsResourceId,
+                cognitiveServiceSubscriptionKey,
+                cognitiveServiceRegion,
+                cognitiveServiceResourceId,
+                defaultLocale,
+                offerType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TelephonyPhoneNumbers>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TelephonyPhoneNumbers IPersistableModel<TelephonyPhoneNumbers>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TelephonyPhoneNumbers>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTelephonyPhoneNumbers(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TelephonyPhoneNumbers)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TelephonyPhoneNumbers>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

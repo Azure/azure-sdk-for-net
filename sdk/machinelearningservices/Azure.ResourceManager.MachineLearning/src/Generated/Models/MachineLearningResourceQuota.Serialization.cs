@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningResourceQuota
+    public partial class MachineLearningResourceQuota : IUtf8JsonSerializable, IJsonModel<MachineLearningResourceQuota>
     {
-        internal static MachineLearningResourceQuota DeserializeMachineLearningResourceQuota(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningResourceQuota>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningResourceQuota>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(AmlWorkspaceLocation))
+            {
+                writer.WritePropertyName("amlWorkspaceLocation"u8);
+                writer.WriteStringValue(AmlWorkspaceLocation);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceQuotaType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceQuotaType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteObjectValue<MachineLearningResourceName>(Name, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Limit))
+            {
+                writer.WritePropertyName("limit"u8);
+                writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningResourceQuota IJsonModel<MachineLearningResourceQuota>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningResourceQuota(document.RootElement, options);
+        }
+
+        internal static MachineLearningResourceQuota DeserializeMachineLearningResourceQuota(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> amlWorkspaceLocation = default;
-            Optional<string> type = default;
-            Optional<MachineLearningResourceName> name = default;
-            Optional<long> limit = default;
-            Optional<MachineLearningQuotaUnit> unit = default;
+            string id = default;
+            string amlWorkspaceLocation = default;
+            string type = default;
+            MachineLearningResourceName name = default;
+            long? limit = default;
+            MachineLearningQuotaUnit? unit = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -47,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value);
+                    name = MachineLearningResourceName.DeserializeMachineLearningResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("limit"u8))
@@ -68,8 +146,51 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     unit = new MachineLearningQuotaUnit(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningResourceQuota(id.Value, amlWorkspaceLocation.Value, type.Value, name.Value, Optional.ToNullable(limit), Optional.ToNullable(unit));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningResourceQuota(
+                id,
+                amlWorkspaceLocation,
+                type,
+                name,
+                limit,
+                unit,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningResourceQuota>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningResourceQuota IPersistableModel<MachineLearningResourceQuota>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningResourceQuota>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningResourceQuota(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningResourceQuota)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningResourceQuota>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

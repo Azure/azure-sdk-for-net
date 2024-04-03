@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable
+    public partial class ThirdPartyProviderAuthorization : IUtf8JsonSerializable, IJsonModel<ThirdPartyProviderAuthorization>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThirdPartyProviderAuthorization>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ThirdPartyProviderAuthorization>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Authorizations))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LightHouseAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -31,17 +41,48 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("managedByTenantId"u8);
                 writer.WriteStringValue(ManagedByTenantId);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element)
+        ThirdPartyProviderAuthorization IJsonModel<ThirdPartyProviderAuthorization>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeThirdPartyProviderAuthorization(document.RootElement, options);
+        }
+
+        internal static ThirdPartyProviderAuthorization DeserializeThirdPartyProviderAuthorization(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<LightHouseAuthorization>> authorizations = default;
-            Optional<string> managedByTenantId = default;
+            IList<LightHouseAuthorization> authorizations = default;
+            string managedByTenantId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("authorizations"u8))
@@ -53,7 +94,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<LightHouseAuthorization> array = new List<LightHouseAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item));
+                        array.Add(LightHouseAuthorization.DeserializeLightHouseAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -63,8 +104,44 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     managedByTenantId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ThirdPartyProviderAuthorization(Optional.ToList(authorizations), managedByTenantId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ThirdPartyProviderAuthorization(authorizations ?? new ChangeTrackingList<LightHouseAuthorization>(), managedByTenantId, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ThirdPartyProviderAuthorization>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ThirdPartyProviderAuthorization IPersistableModel<ThirdPartyProviderAuthorization>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ThirdPartyProviderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeThirdPartyProviderAuthorization(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ThirdPartyProviderAuthorization)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ThirdPartyProviderAuthorization>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

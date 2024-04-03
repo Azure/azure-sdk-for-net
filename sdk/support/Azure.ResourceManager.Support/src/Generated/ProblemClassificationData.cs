@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -18,10 +19,43 @@ namespace Azure.ResourceManager.Support
     /// </summary>
     public partial class ProblemClassificationData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
         internal ProblemClassificationData()
         {
             SecondaryConsentEnabled = new ChangeTrackingList<SecondaryConsentEnabled>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ProblemClassificationData"/>. </summary>
@@ -31,15 +65,25 @@ namespace Azure.ResourceManager.Support
         /// <param name="systemData"> The systemData. </param>
         /// <param name="displayName"> Localized name of problem classification. </param>
         /// <param name="secondaryConsentEnabled"> This property indicates whether secondary consent is present for problem classification. </param>
-        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled) : base(id, name, resourceType, systemData)
+        /// <param name="metadata"> String-to-string dictionary for additional metadata. </param>
+        /// <param name="parentProblemClassification"> Reference to the parent problem classification which has same structure as problem classification. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProblemClassificationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string displayName, IReadOnlyList<SecondaryConsentEnabled> secondaryConsentEnabled, IReadOnlyDictionary<string, string> metadata, ProblemClassificationData parentProblemClassification, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             DisplayName = displayName;
             SecondaryConsentEnabled = secondaryConsentEnabled;
+            Metadata = metadata;
+            ParentProblemClassification = parentProblemClassification;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Localized name of problem classification. </summary>
         public string DisplayName { get; }
         /// <summary> This property indicates whether secondary consent is present for problem classification. </summary>
         public IReadOnlyList<SecondaryConsentEnabled> SecondaryConsentEnabled { get; }
+        /// <summary> String-to-string dictionary for additional metadata. </summary>
+        public IReadOnlyDictionary<string, string> Metadata { get; }
+        /// <summary> Reference to the parent problem classification which has same structure as problem classification. </summary>
+        public ProblemClassificationData ParentProblemClassification { get; }
     }
 }

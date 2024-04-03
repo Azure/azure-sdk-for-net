@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -20,12 +19,8 @@ namespace Azure.Containers.ContainerRegistry
         /// <param name="lastUpdatedOn"> Image last update time. </param>
         /// <param name="manifestCount"> Number of the manifests. </param>
         /// <param name="tagCount"> Number of the tags. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="registryLoginServer"/> or <paramref name="name"/> is null. </exception>
         internal ContainerRepositoryProperties(string registryLoginServer, string name, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, int manifestCount, int tagCount)
         {
-            Argument.AssertNotNull(registryLoginServer, nameof(registryLoginServer));
-            Argument.AssertNotNull(name, nameof(name));
-
             RegistryLoginServer = registryLoginServer;
             Name = name;
             CreatedOn = createdOn;

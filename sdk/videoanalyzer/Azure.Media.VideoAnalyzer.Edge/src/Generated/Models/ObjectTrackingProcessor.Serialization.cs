@@ -29,7 +29,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -41,7 +41,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<ObjectTrackingAccuracy> accuracy = default;
+            ObjectTrackingAccuracy? accuracy = default;
             string type = default;
             string name = default;
             IList<NodeInput> inputs = default;
@@ -77,7 +77,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new ObjectTrackingProcessor(type, name, inputs, Optional.ToNullable(accuracy));
+            return new ObjectTrackingProcessor(type, name, inputs, accuracy);
         }
     }
 }

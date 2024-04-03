@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataProtectionBackup;
 using Azure.ResourceManager.DataProtectionBackup.Models;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Mocking
@@ -64,6 +61,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupVaults_GetInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -86,6 +91,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>BackupVaults_GetInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="DataProtectionBackupVaultResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -107,6 +120,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>DataProtection_CheckFeatureSupport</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -143,6 +160,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>DataProtection_CheckFeatureSupport</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="location"> The <see cref="AzureLocation"/> to use. </param>
@@ -178,6 +199,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInSubscription</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -199,6 +228,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Mocking
         /// <item>
         /// <term>Operation Id</term>
         /// <description>ResourceGuards_GetResourcesInSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ResourceGuardResource"/></description>
         /// </item>
         /// </list>
         /// </summary>

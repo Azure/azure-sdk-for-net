@@ -5,20 +5,70 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
+using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class MaxTokensFinishDetails
+    public partial class MaxTokensFinishDetails : IUtf8JsonSerializable, IJsonModel<MaxTokensFinishDetails>
     {
-        internal static MaxTokensFinishDetails DeserializeMaxTokensFinishDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaxTokensFinishDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MaxTokensFinishDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MaxTokensFinishDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaxTokensFinishDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("type"u8);
+            writer.WriteStringValue(Type);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MaxTokensFinishDetails IJsonModel<MaxTokensFinishDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaxTokensFinishDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MaxTokensFinishDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMaxTokensFinishDetails(document.RootElement, options);
+        }
+
+        internal static MaxTokensFinishDetails DeserializeMaxTokensFinishDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -26,9 +76,45 @@ namespace Azure.AI.OpenAI
                     type = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MaxTokensFinishDetails(type);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MaxTokensFinishDetails(type, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MaxTokensFinishDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaxTokensFinishDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MaxTokensFinishDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MaxTokensFinishDetails IPersistableModel<MaxTokensFinishDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MaxTokensFinishDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMaxTokensFinishDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MaxTokensFinishDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MaxTokensFinishDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -36,6 +122,14 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeMaxTokensFinishDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MaxTokensFinishDetails>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

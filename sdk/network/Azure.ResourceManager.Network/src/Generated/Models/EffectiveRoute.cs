@@ -5,14 +5,46 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Effective Route. </summary>
     public partial class EffectiveRoute
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EffectiveRoute"/>. </summary>
         internal EffectiveRoute()
         {
@@ -28,7 +60,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="addressPrefix"> The address prefixes of the effective routes in CIDR notation. </param>
         /// <param name="nextHopIPAddress"> The IP address of the next hop of the effective route. </param>
         /// <param name="nextHopType"> The type of Azure hop the packet should be sent to. </param>
-        internal EffectiveRoute(string name, bool? disableBgpRoutePropagation, EffectiveRouteSource? source, EffectiveRouteState? state, IReadOnlyList<string> addressPrefix, IReadOnlyList<string> nextHopIPAddress, RouteNextHopType? nextHopType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EffectiveRoute(string name, bool? disableBgpRoutePropagation, EffectiveRouteSource? source, EffectiveRouteState? state, IReadOnlyList<string> addressPrefix, IReadOnlyList<string> nextHopIPAddress, RouteNextHopType? nextHopType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DisableBgpRoutePropagation = disableBgpRoutePropagation;
@@ -37,6 +70,7 @@ namespace Azure.ResourceManager.Network.Models
             AddressPrefix = addressPrefix;
             NextHopIPAddress = nextHopIPAddress;
             NextHopType = nextHopType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the user defined route. This is optional. </summary>

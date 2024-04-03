@@ -5,29 +5,114 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class DocumentStyle
+    public partial class DocumentStyle : IUtf8JsonSerializable, IJsonModel<DocumentStyle>
     {
-        internal static DocumentStyle DeserializeDocumentStyle(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DocumentStyle>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DocumentStyle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentStyle)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(IsHandwritten))
+            {
+                writer.WritePropertyName("isHandwritten"u8);
+                writer.WriteBooleanValue(IsHandwritten.Value);
+            }
+            if (Optional.IsDefined(SimilarFontFamily))
+            {
+                writer.WritePropertyName("similarFontFamily"u8);
+                writer.WriteStringValue(SimilarFontFamily);
+            }
+            if (Optional.IsDefined(FontStyle))
+            {
+                writer.WritePropertyName("fontStyle"u8);
+                writer.WriteStringValue(FontStyle.Value.ToString());
+            }
+            if (Optional.IsDefined(FontWeight))
+            {
+                writer.WritePropertyName("fontWeight"u8);
+                writer.WriteStringValue(FontWeight.Value.ToString());
+            }
+            if (Optional.IsDefined(Color))
+            {
+                writer.WritePropertyName("color"u8);
+                writer.WriteStringValue(Color);
+            }
+            if (Optional.IsDefined(BackgroundColor))
+            {
+                writer.WritePropertyName("backgroundColor"u8);
+                writer.WriteStringValue(BackgroundColor);
+            }
+            writer.WritePropertyName("spans"u8);
+            writer.WriteStartArray();
+            foreach (var item in Spans)
+            {
+                writer.WriteObjectValue<DocumentSpan>(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("confidence"u8);
+            writer.WriteNumberValue(Confidence);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DocumentStyle IJsonModel<DocumentStyle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DocumentStyle)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDocumentStyle(document.RootElement, options);
+        }
+
+        internal static DocumentStyle DeserializeDocumentStyle(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> isHandwritten = default;
-            Optional<string> similarFontFamily = default;
-            Optional<FontStyle> fontStyle = default;
-            Optional<FontWeight> fontWeight = default;
-            Optional<string> color = default;
-            Optional<string> backgroundColor = default;
+            bool? isHandwritten = default;
+            string similarFontFamily = default;
+            DocumentFontStyle? fontStyle = default;
+            DocumentFontWeight? fontWeight = default;
+            string color = default;
+            string backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("isHandwritten"u8))
@@ -50,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontStyle = new FontStyle(property.Value.GetString());
+                    fontStyle = new DocumentFontStyle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -59,7 +144,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontWeight = new FontWeight(property.Value.GetString());
+                    fontWeight = new DocumentFontWeight(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("color"u8))
@@ -77,7 +162,7 @@ namespace Azure.AI.DocumentIntelligence
                     List<DocumentSpan> array = new List<DocumentSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DocumentSpan.DeserializeDocumentSpan(item));
+                        array.Add(DocumentSpan.DeserializeDocumentSpan(item, options));
                     }
                     spans = array;
                     continue;
@@ -87,9 +172,54 @@ namespace Azure.AI.DocumentIntelligence
                     confidence = property.Value.GetSingle();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DocumentStyle(
+                isHandwritten,
+                similarFontFamily,
+                fontStyle,
+                fontWeight,
+                color,
+                backgroundColor,
+                spans,
+                confidence,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DocumentStyle>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DocumentStyle IPersistableModel<DocumentStyle>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDocumentStyle(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DocumentStyle>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -97,6 +227,14 @@ namespace Azure.AI.DocumentIntelligence
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeDocumentStyle(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DocumentStyle>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

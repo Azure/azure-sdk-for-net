@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable
+    public partial class WindowsServerFailoverClusterDomainProfile : IUtf8JsonSerializable, IJsonModel<WindowsServerFailoverClusterDomainProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WindowsServerFailoverClusterDomainProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<WindowsServerFailoverClusterDomainProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DomainFqdn))
             {
@@ -61,24 +71,55 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("clusterSubnetType"u8);
                 writer.WriteStringValue(ClusterSubnetType.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element)
+        WindowsServerFailoverClusterDomainProfile IJsonModel<WindowsServerFailoverClusterDomainProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
+        }
+
+        internal static WindowsServerFailoverClusterDomainProfile DeserializeWindowsServerFailoverClusterDomainProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> domainFqdn = default;
-            Optional<string> ouPath = default;
-            Optional<string> clusterBootstrapAccount = default;
-            Optional<string> clusterOperatorAccount = default;
-            Optional<string> sqlServiceAccount = default;
-            Optional<string> fileShareWitnessPath = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> storageAccountPrimaryKey = default;
-            Optional<SqlVmClusterSubnetType> clusterSubnetType = default;
+            string domainFqdn = default;
+            string ouPath = default;
+            string clusterBootstrapAccount = default;
+            string clusterOperatorAccount = default;
+            string sqlServiceAccount = default;
+            string fileShareWitnessPath = default;
+            Uri storageAccountUrl = default;
+            string storageAccountPrimaryKey = default;
+            SqlVmClusterSubnetType? clusterSubnetType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainFqdn"u8))
@@ -134,8 +175,54 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     clusterSubnetType = new SqlVmClusterSubnetType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new WindowsServerFailoverClusterDomainProfile(domainFqdn.Value, ouPath.Value, clusterBootstrapAccount.Value, clusterOperatorAccount.Value, sqlServiceAccount.Value, fileShareWitnessPath.Value, storageAccountUrl.Value, storageAccountPrimaryKey.Value, Optional.ToNullable(clusterSubnetType));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new WindowsServerFailoverClusterDomainProfile(
+                domainFqdn,
+                ouPath,
+                clusterBootstrapAccount,
+                clusterOperatorAccount,
+                sqlServiceAccount,
+                fileShareWitnessPath,
+                storageAccountUrl,
+                storageAccountPrimaryKey,
+                clusterSubnetType,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        WindowsServerFailoverClusterDomainProfile IPersistableModel<WindowsServerFailoverClusterDomainProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<WindowsServerFailoverClusterDomainProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeWindowsServerFailoverClusterDomainProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WindowsServerFailoverClusterDomainProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<WindowsServerFailoverClusterDomainProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

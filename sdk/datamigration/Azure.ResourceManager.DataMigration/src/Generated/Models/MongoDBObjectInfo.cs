@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary> Describes a database or collection within a MongoDB data source. </summary>
     public partial class MongoDBObjectInfo
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/>. </summary>
         /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
         /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
@@ -30,6 +62,28 @@ namespace Azure.ResourceManager.DataMigration.Models
             DocumentCount = documentCount;
             Name = name;
             QualifiedName = qualifiedName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/>. </summary>
+        /// <param name="averageDocumentSize"> The average document size, or -1 if the average size is unknown. </param>
+        /// <param name="dataSize"> The estimated total data size, in bytes, or -1 if the size is unknown. </param>
+        /// <param name="documentCount"> The estimated total number of documents, or -1 if the document count is unknown. </param>
+        /// <param name="name"> The unqualified name of the database or collection. </param>
+        /// <param name="qualifiedName"> The qualified name of the database or collection. For a collection, this is the database-qualified name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MongoDBObjectInfo(long averageDocumentSize, long dataSize, long documentCount, string name, string qualifiedName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            AverageDocumentSize = averageDocumentSize;
+            DataSize = dataSize;
+            DocumentCount = documentCount;
+            Name = name;
+            QualifiedName = qualifiedName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MongoDBObjectInfo"/> for deserialization. </summary>
+        internal MongoDBObjectInfo()
+        {
         }
 
         /// <summary> The average document size, or -1 if the average size is unknown. </summary>

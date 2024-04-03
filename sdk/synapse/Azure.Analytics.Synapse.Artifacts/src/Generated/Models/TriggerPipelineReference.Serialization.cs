@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PipelineReference))
             {
                 writer.WritePropertyName("pipelineReference"u8);
-                writer.WriteObjectValue(PipelineReference);
+                writer.WriteObjectValue<PipelineReference>(PipelineReference);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<PipelineReference> pipelineReference = default;
-            Optional<IDictionary<string, object>> parameters = default;
+            PipelineReference pipelineReference = default;
+            IDictionary<string, object> parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("pipelineReference"u8))
@@ -84,14 +84,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new TriggerPipelineReference(pipelineReference.Value, Optional.ToDictionary(parameters));
+            return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class TriggerPipelineReferenceConverter : JsonConverter<TriggerPipelineReference>
         {
             public override void Write(Utf8JsonWriter writer, TriggerPipelineReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TriggerPipelineReference>(model);
             }
             public override TriggerPipelineReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

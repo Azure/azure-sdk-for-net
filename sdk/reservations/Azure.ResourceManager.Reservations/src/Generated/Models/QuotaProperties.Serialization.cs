@@ -6,20 +6,35 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class QuotaProperties : IUtf8JsonSerializable
+    public partial class QuotaProperties : IUtf8JsonSerializable, IJsonModel<QuotaProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuotaProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QuotaProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CurrentValue))
+            {
+                writer.WritePropertyName("currentValue"u8);
+                writer.WriteNumberValue(CurrentValue.Value);
             }
             if (Optional.IsDefined(Unit))
             {
@@ -29,12 +44,17 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(ResourceName))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(ResourceName);
+                writer.WriteObjectValue<ReservationResourceName>(ResourceName, options);
             }
             if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
+            {
+                writer.WritePropertyName("quotaPeriod"u8);
+                writer.WriteStringValue(QuotaPeriod);
             }
             if (Optional.IsDefined(Properties))
             {
@@ -48,22 +68,53 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
 #endif
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static QuotaProperties DeserializeQuotaProperties(JsonElement element)
+        QuotaProperties IJsonModel<QuotaProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QuotaProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaProperties(document.RootElement, options);
+        }
+
+        internal static QuotaProperties DeserializeQuotaProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> limit = default;
-            Optional<int> currentValue = default;
-            Optional<string> unit = default;
-            Optional<ReservationResourceName> name = default;
-            Optional<ResourceTypeName> resourceType = default;
-            Optional<string> quotaPeriod = default;
-            Optional<BinaryData> properties = default;
+            int? limit = default;
+            int? currentValue = default;
+            string unit = default;
+            ReservationResourceName name = default;
+            ResourceTypeName? resourceType = default;
+            string quotaPeriod = default;
+            BinaryData properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("limit"u8))
@@ -95,7 +146,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value);
+                    name = ReservationResourceName.DeserializeReservationResourceName(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resourceType"u8))
@@ -121,8 +172,52 @@ namespace Azure.ResourceManager.Reservations.Models
                     properties = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QuotaProperties(Optional.ToNullable(limit), Optional.ToNullable(currentValue), unit.Value, name.Value, Optional.ToNullable(resourceType), quotaPeriod.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QuotaProperties(
+                limit,
+                currentValue,
+                unit,
+                name,
+                resourceType,
+                quotaPeriod,
+                properties,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QuotaProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QuotaProperties IPersistableModel<QuotaProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQuotaProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuotaProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuotaProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

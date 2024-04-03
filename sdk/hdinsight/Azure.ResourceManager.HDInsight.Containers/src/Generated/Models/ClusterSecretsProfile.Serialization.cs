@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
-    public partial class ClusterSecretsProfile : IUtf8JsonSerializable
+    public partial class ClusterSecretsProfile : IUtf8JsonSerializable, IJsonModel<ClusterSecretsProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterSecretsProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ClusterSecretsProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("keyVaultResourceId"u8);
             writer.WriteStringValue(KeyVaultResourceId);
@@ -24,21 +34,52 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterSecretReference>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ClusterSecretsProfile DeserializeClusterSecretsProfile(JsonElement element)
+        ClusterSecretsProfile IJsonModel<ClusterSecretsProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeClusterSecretsProfile(document.RootElement, options);
+        }
+
+        internal static ClusterSecretsProfile DeserializeClusterSecretsProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier keyVaultResourceId = default;
-            Optional<IList<ClusterSecretReference>> secrets = default;
+            IList<ClusterSecretReference> secrets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyVaultResourceId"u8))
@@ -55,13 +96,49 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     List<ClusterSecretReference> array = new List<ClusterSecretReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item));
+                        array.Add(ClusterSecretReference.DeserializeClusterSecretReference(item, options));
                     }
                     secrets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ClusterSecretsProfile(keyVaultResourceId, Optional.ToList(secrets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ClusterSecretsProfile(keyVaultResourceId, secrets ?? new ChangeTrackingList<ClusterSecretReference>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ClusterSecretsProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ClusterSecretsProfile IPersistableModel<ClusterSecretsProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ClusterSecretsProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeClusterSecretsProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterSecretsProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ClusterSecretsProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

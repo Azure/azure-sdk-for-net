@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    internal partial class MySqlFlexibleServerFirewallRuleListResult
+    internal partial class MySqlFlexibleServerFirewallRuleListResult : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerFirewallRuleListResult>
     {
-        internal static MySqlFlexibleServerFirewallRuleListResult DeserializeMySqlFlexibleServerFirewallRuleListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerFirewallRuleListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlFlexibleServerFirewallRuleListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<MySqlFlexibleServerFirewallRuleData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlFlexibleServerFirewallRuleListResult IJsonModel<MySqlFlexibleServerFirewallRuleListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerFirewallRuleListResult(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerFirewallRuleListResult DeserializeMySqlFlexibleServerFirewallRuleListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlFlexibleServerFirewallRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MySqlFlexibleServerFirewallRuleData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     List<MySqlFlexibleServerFirewallRuleData> array = new List<MySqlFlexibleServerFirewallRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(item));
+                        array.Add(MySqlFlexibleServerFirewallRuleData.DeserializeMySqlFlexibleServerFirewallRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerFirewallRuleListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlFlexibleServerFirewallRuleListResult(value ?? new ChangeTrackingList<MySqlFlexibleServerFirewallRuleData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerFirewallRuleListResult IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerFirewallRuleListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerFirewallRuleListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerFirewallRuleListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

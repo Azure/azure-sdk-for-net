@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Avs.Models
@@ -14,11 +14,44 @@ namespace Azure.ResourceManager.Avs.Models
     /// <summary> An update to a private cloud resource. </summary>
     public partial class AvsPrivateCloudPatch
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
         public AvsPrivateCloudPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
             IdentitySources = new ChangeTrackingList<SingleSignOnIdentitySource>();
+            ExtendedNetworkBlocks = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AvsPrivateCloudPatch"/>. </summary>
@@ -29,7 +62,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="identitySources"> vCenter Single Sign On Identity Sources. </param>
         /// <param name="availability"> Properties describing how the cloud is distributed across availability zones. </param>
         /// <param name="encryption"> Customer managed key encryption, can be enabled or disabled. </param>
-        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption)
+        /// <param name="extendedNetworkBlocks"> Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X). </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AvsPrivateCloudPatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, AvsManagementCluster managementCluster, InternetConnectivityState? internet, IList<SingleSignOnIdentitySource> identitySources, PrivateCloudAvailabilityProperties availability, CustomerManagedEncryption encryption, IList<string> extendedNetworkBlocks, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             Identity = identity;
@@ -38,6 +73,8 @@ namespace Azure.ResourceManager.Avs.Models
             IdentitySources = identitySources;
             Availability = availability;
             Encryption = encryption;
+            ExtendedNetworkBlocks = extendedNetworkBlocks;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
@@ -54,5 +91,7 @@ namespace Azure.ResourceManager.Avs.Models
         public PrivateCloudAvailabilityProperties Availability { get; set; }
         /// <summary> Customer managed key encryption, can be enabled or disabled. </summary>
         public CustomerManagedEncryption Encryption { get; set; }
+        /// <summary> Array of additional networks noncontiguous with networkBlock. Networks must be unique and non-overlapping across VNet in your subscription, on-premise, and this privateCloud networkBlock attribute. Make sure the CIDR format conforms to (A.B.C.D/X). </summary>
+        public IList<string> ExtendedNetworkBlocks { get; }
     }
 }

@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Hci;
 
 namespace Azure.ResourceManager.Hci.Models
 {
-    internal partial class VirtualHardDisksListResult
+    internal partial class VirtualHardDisksListResult : IUtf8JsonSerializable, IJsonModel<VirtualHardDisksListResult>
     {
-        internal static VirtualHardDisksListResult DeserializeVirtualHardDisksListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualHardDisksListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualHardDisksListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDisksListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHardDisksListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<VirtualHardDiskData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VirtualHardDisksListResult IJsonModel<VirtualHardDisksListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDisksListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualHardDisksListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualHardDisksListResult(document.RootElement, options);
+        }
+
+        internal static VirtualHardDisksListResult DeserializeVirtualHardDisksListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<VirtualHardDiskData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<VirtualHardDiskData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.Hci.Models
                     List<VirtualHardDiskData> array = new List<VirtualHardDiskData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualHardDiskData.DeserializeVirtualHardDiskData(item));
+                        array.Add(VirtualHardDiskData.DeserializeVirtualHardDiskData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.Hci.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualHardDisksListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualHardDisksListResult(value ?? new ChangeTrackingList<VirtualHardDiskData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualHardDisksListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDisksListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHardDisksListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualHardDisksListResult IPersistableModel<VirtualHardDisksListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDisksListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualHardDisksListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualHardDisksListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualHardDisksListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

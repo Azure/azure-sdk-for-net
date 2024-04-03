@@ -5,22 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MySql;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    internal partial class MySqlDatabaseListResult
+    internal partial class MySqlDatabaseListResult : IUtf8JsonSerializable, IJsonModel<MySqlDatabaseListResult>
     {
-        internal static MySqlDatabaseListResult DeserializeMySqlDatabaseListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlDatabaseListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlDatabaseListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlDatabaseListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlDatabaseListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<MySqlDatabaseData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlDatabaseListResult IJsonModel<MySqlDatabaseListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlDatabaseListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlDatabaseListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlDatabaseListResult(document.RootElement, options);
+        }
+
+        internal static MySqlDatabaseListResult DeserializeMySqlDatabaseListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MySqlDatabaseData>> value = default;
+            IReadOnlyList<MySqlDatabaseData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,13 +88,49 @@ namespace Azure.ResourceManager.MySql.Models
                     List<MySqlDatabaseData> array = new List<MySqlDatabaseData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MySqlDatabaseData.DeserializeMySqlDatabaseData(item));
+                        array.Add(MySqlDatabaseData.DeserializeMySqlDatabaseData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlDatabaseListResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlDatabaseListResult(value ?? new ChangeTrackingList<MySqlDatabaseData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlDatabaseListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlDatabaseListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlDatabaseListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlDatabaseListResult IPersistableModel<MySqlDatabaseListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlDatabaseListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlDatabaseListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlDatabaseListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlDatabaseListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

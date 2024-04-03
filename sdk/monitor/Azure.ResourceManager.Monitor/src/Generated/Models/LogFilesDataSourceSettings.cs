@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Monitor.Models
 {
     /// <summary> The log files specific settings. </summary>
@@ -17,7 +20,8 @@ namespace Azure.ResourceManager.Monitor.Models
 
         /// <summary> Initializes a new instance of <see cref="LogFilesDataSourceSettings"/>. </summary>
         /// <param name="text"> Text settings. </param>
-        internal LogFilesDataSourceSettings(LogFileSettingsText text) : base(text)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LogFilesDataSourceSettings(LogFileSettingsText text, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(text, serializedAdditionalRawData)
         {
         }
     }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    public partial class LabPatch : IUtf8JsonSerializable
+    public partial class LabPatch : IUtf8JsonSerializable, IJsonModel<LabPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LabPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LabPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabPatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -30,27 +41,27 @@ namespace Azure.ResourceManager.LabServices.Models
             if (Optional.IsDefined(AutoShutdownProfile))
             {
                 writer.WritePropertyName("autoShutdownProfile"u8);
-                writer.WriteObjectValue(AutoShutdownProfile);
+                writer.WriteObjectValue<LabAutoShutdownProfile>(AutoShutdownProfile, options);
             }
             if (Optional.IsDefined(ConnectionProfile))
             {
                 writer.WritePropertyName("connectionProfile"u8);
-                writer.WriteObjectValue(ConnectionProfile);
+                writer.WriteObjectValue<LabConnectionProfile>(ConnectionProfile, options);
             }
             if (Optional.IsDefined(VirtualMachineProfile))
             {
                 writer.WritePropertyName("virtualMachineProfile"u8);
-                writer.WriteObjectValue(VirtualMachineProfile);
+                writer.WriteObjectValue<LabVirtualMachineProfile>(VirtualMachineProfile, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<LabSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(RosterProfile))
             {
                 writer.WritePropertyName("rosterProfile"u8);
-                writer.WriteObjectValue(RosterProfile);
+                writer.WriteObjectValue<LabRosterProfile>(RosterProfile, options);
             }
             if (Optional.IsDefined(LabPlanId))
             {
@@ -68,7 +79,195 @@ namespace Azure.ResourceManager.LabServices.Models
                 writer.WriteStringValue(Description);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        LabPatch IJsonModel<LabPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LabPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLabPatch(document.RootElement, options);
+        }
+
+        internal static LabPatch DeserializeLabPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> tags = default;
+            LabAutoShutdownProfile autoShutdownProfile = default;
+            LabConnectionProfile connectionProfile = default;
+            LabVirtualMachineProfile virtualMachineProfile = default;
+            LabSecurityProfile securityProfile = default;
+            LabRosterProfile rosterProfile = default;
+            ResourceIdentifier labPlanId = default;
+            string title = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    tags = array;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("autoShutdownProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            autoShutdownProfile = LabAutoShutdownProfile.DeserializeLabAutoShutdownProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("connectionProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            connectionProfile = LabConnectionProfile.DeserializeLabConnectionProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("virtualMachineProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            virtualMachineProfile = LabVirtualMachineProfile.DeserializeLabVirtualMachineProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("securityProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            securityProfile = LabSecurityProfile.DeserializeLabSecurityProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("rosterProfile"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            rosterProfile = LabRosterProfile.DeserializeLabRosterProfile(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("labPlanId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            labPlanId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("title"u8))
+                        {
+                            title = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("description"u8))
+                        {
+                            description = property0.Value.GetString();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LabPatch(
+                tags ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData,
+                autoShutdownProfile,
+                connectionProfile,
+                virtualMachineProfile,
+                securityProfile,
+                rosterProfile,
+                labPlanId,
+                title,
+                description);
+        }
+
+        BinaryData IPersistableModel<LabPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LabPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LabPatch IPersistableModel<LabPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LabPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLabPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LabPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LabPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
