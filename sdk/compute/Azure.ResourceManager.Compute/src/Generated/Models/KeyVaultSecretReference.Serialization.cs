@@ -133,6 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 writer.WriteObjectValue<KeyVaultSecretReference>(model, new ModelReaderWriterOptions("W"));
             }
+
             public override KeyVaultSecretReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
