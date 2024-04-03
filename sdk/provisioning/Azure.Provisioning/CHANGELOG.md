@@ -1,14 +1,16 @@
 # Release History
 
-## 0.1.0-beta.2 (Unreleased)
+## 0.1.0-beta.3 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
+- Split the Azure.Provisioning package into separate packages for each supported Azure service.
 
-### Bugs Fixed
+## 0.1.0-beta.2 (2024-03-28)
 
-### Other Changes
+### Features Added
+
+- Added `storageSizeInGB` paramater to `PostgreSqlFlexibleServerData` constructor.
 
 ## 0.1.0-beta.1 (2024-03-26)
 

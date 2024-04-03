@@ -363,7 +363,7 @@ CollectionNames =
                     SourceBackupLocation = "westus",
                     RestoreSource = "/subscriptions/subid/providers/Microsoft.DocumentDB/locations/westus/restorableDatabaseAccounts/1a97b4bb-f6a0-430e-ade1-638d781830cc",
                     RestoreTimestampInUtc = DateTimeOffset.Parse("2021-03-11T22:05:09Z"),
-                    RestoreWithTtlDisabled = false,
+                    IsRestoreWithTtlDisabled = false,
                 },
                 EnableMaterializedViews = false,
                 MinimalTlsVersion = CosmosDBMinimalTlsVersion.Tls,
