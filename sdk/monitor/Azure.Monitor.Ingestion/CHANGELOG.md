@@ -1,9 +1,9 @@
 # Release History
 
-## 1.1.2 (2024-04-09)
+## 1.1.2 (2024-04-03)
 
 ### Bugs Fixed
-- Fix batching for large logs.
+- Prevent logs from being dropped when the last entry is greater than 1 Mb.
 
 ## 1.1.1 (2023-10-16)
 
