@@ -1,14 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.2 (2024-04-09)
 
 ### Bugs Fixed
-
-### Other Changes
+- Fix batching for large logs.
 
 ## 1.1.1 (2023-10-16)
 
