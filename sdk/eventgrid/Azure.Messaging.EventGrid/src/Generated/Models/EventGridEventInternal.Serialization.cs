@@ -112,6 +112,7 @@ namespace Azure.Messaging.EventGrid.Models
             {
                 writer.WriteObjectValue<EventGridEventInternal>(model);
             }
+
             public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
