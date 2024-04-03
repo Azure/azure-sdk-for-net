@@ -40,7 +40,7 @@ namespace Microsoft.WCF.Azure
         }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// Gets or sets the audience to use for authentication with Microsoft Entra ID. The audience isn't considered when using a shared key.
         /// </summary>
         public QueueAudience Audience { get; set; }
 

@@ -175,7 +175,7 @@ namespace Microsoft.CoreWCF.Azure.StorageQueues.Channels
         }
 
         /// <summary>
-        /// Gets or sets the queue polling interval. See &lt;a href="https://learn.microsoft.com/en-us/azure/storage/queues/storage-performance-checklist#queue-polling-interval"&gt;Performance and scalability checklist for Queue Storage.&lt;/a&gt;
+        /// Gets or sets the queue polling interval. See &lt;a href="https://learn.microsoft.com/azure/storage/queues/storage-performance-checklist#queue-polling-interval"&gt;Performance and scalability checklist for Queue Storage.&lt;/a&gt;
         /// The default value is 1 second;
         /// </summary>
         public TimeSpan PollingInterval

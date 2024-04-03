@@ -9,6 +9,8 @@ trigger:
   paths:
     include:
     - sdk/extensions/
+    exclude:
+    - sdk/extensions/wcf/
 
 pr:
   branches:
@@ -20,6 +22,8 @@ pr:
   paths:
     include:
     - sdk/extensions/
+    exclude:
+    - sdk/extensions/wcf/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -37,13 +41,7 @@ extends:
       safeName: AzureExtensionsAspNetCoreConfigurationSecrets
     - name: Microsoft.Azure.WebJobs.Extensions.Clients
       safeName: MicrosoftAzureWebJobsExtensionsClients
-    - name: Microsoft.CoreWCF.Azure.StorageQueues
-      safeName: MicrosoftCoreWCFAzureStorageQueues
-    - name: Microsoft.WCF.Azure.StorageQueues
-      safeName: MicrosoftWCFAzureStorageQueues
     CheckAOTCompat: true
     AOTTestInputs:
     - ArtifactName: Microsoft.Extensions.Azure
       ExpectedWarningsFilepath: /Microsoft.Extensions.Azure/tests/compatibility/ExpectedAotWarnings.txt
-    TestSetupSteps:
-    - template: /sdk/extensions/tests-install-azurite.yml

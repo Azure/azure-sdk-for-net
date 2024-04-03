@@ -37,7 +37,7 @@ namespace Microsoft.CoreWCF.Azure
         }
 
         /// <summary>
-        /// Gets or sets the Audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.
+        /// Gets or sets the audience to use for authentication with Microsoft Entra ID. The audience isn't considered when using a shared key.
         /// </summary>
         public QueueAudience Audience { get; set; }
 
@@ -67,7 +67,7 @@ namespace Microsoft.CoreWCF.Azure
         public TokenCredential Token { get; set; }
 
         /// <summary>
-        /// Gets or sets the connection string containing credentials. See how to <see href="https://learn.microsoft.com/en-us/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
+        /// Gets or sets the connection string containing credentials. See how to <see href="https://learn.microsoft.com/azure/storage/common/storage-configure-connection-string">Configure Azure Storage connection strings</see>.
         /// </summary>
         public string ConnectionString { get; set; }
 

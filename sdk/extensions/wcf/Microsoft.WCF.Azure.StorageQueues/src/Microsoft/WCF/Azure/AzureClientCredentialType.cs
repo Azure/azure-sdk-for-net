@@ -9,22 +9,22 @@ namespace Microsoft.WCF.Azure
     public enum AzureClientCredentialType
     {
         /// <summary>
-        /// Use the <see href="https://learn.microsoft.com/en-us/dotnet/api/azure.identity.defaultazurecredential">Azure.Identity.DefaultAzureCredential</see> credential
+        /// Use the <see href="https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential">Azure.Identity.DefaultAzureCredential</see> credential
         /// </summary>
         Default,
 
         /// <summary>
-        /// Use a <see href="https://learn.microsoft.com/en-us/dotnet/api/azure.azuresascredential">Azure.AzureSasCredential</see> credential
+        /// Use a <see href="https://learn.microsoft.com/dotnet/api/azure.azuresascredential">Azure.AzureSasCredential</see> credential
         /// </summary>
         Sas,
 
         /// <summary>
-        /// Use a <see href="https://learn.microsoft.com/en-us/dotnet/api/azure.storage.storagesharedkeycredential">Azure.Storage.StorageSharedKeyCredential</see> credential
+        /// Use a <see href="https://learn.microsoft.com/dotnet/api/azure.storage.storagesharedkeycredential">Azure.Storage.StorageSharedKeyCredential</see> credential
         /// </summary>
         StorageSharedKey,
 
         /// <summary>
-        /// Use a <see href="https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential">Azure.Core.TokenCredential</see> credential
+        /// Use a <see href="https://learn.microsoft.com/dotnet/api/azure.core.tokencredential">Azure.Core.TokenCredential</see> credential
         /// </summary>
         Token,
 

@@ -369,18 +369,16 @@
     <PackageReference Update="System.ServiceModel.Primitives" Version="6.2.0" />
     <PackageReference Update="Azure.Storage.Files.Shares" Version="12.17.1" />
     <PackageReference Update="Azure.Storage.Queues" Version="12.17.1" />
+    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
   </ItemGroup>
   <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND ($(TargetFramework.StartsWith('net4')))">
     <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.Http" Version="2.1.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
   </ItemGroup>
-  <ItemGroup Condition="('$(IsWcfLibrary)' == 'true') AND (!$(TargetFramework.StartsWith('net4')))">
-    <PackageReference Update="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
-    <PackageReference Update="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="2.1.1" />
-  </ItemGroup>
-
+  
   <PropertyGroup>
     <TestProxyVersion>1.0.0-dev.20240410.2</TestProxyVersion>
   </PropertyGroup>

@@ -5,7 +5,7 @@
     <RequiredTargetFrameworks>net6.0</RequiredTargetFrameworks>
     <TargetFrameworks>net6.0</TargetFrameworks>
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
-    <Version>1.0.0-preview</Version>
+    <Version>1.0.0-beta.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 

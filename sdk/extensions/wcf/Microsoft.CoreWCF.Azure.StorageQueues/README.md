@@ -17,17 +17,17 @@ dotnet add package Microsoft.CoreWCF.Azure.StorageQueues
 You need an [Azure subscription][azure_sub] and a
 [Storage Account][storage_account_docs] to use this package.
 
-To create a new Storage Account, you can use the [Azure Portal][storage_account_create_portal],
+To create a new Storage Account, you can use the [Azure portal][storage_account_create_portal],
 [Azure PowerShell][storage_account_create_ps], or the [Azure CLI][storage_account_create_cli].
 Here's an example using the Azure CLI:
 
-```Powershell
+```azurecli
 az storage account create --name MyStorageAccount --resource-group MyResourceGroup --location westus --sku Standard_LRS
 ```
 
 ### Authenticate the service to Azure
 
-In order to receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Azure Active Directory support for authenticating with Azure services.
+In order to receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
 
 ```C# Snippet:CoreWCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
 app.UseServiceModel(services =>
@@ -42,7 +42,7 @@ app.UseServiceModel(services =>
     services.AddServiceEndpoint<Service, IServiceContract>(aqsBinding, queueEndpointString);
 });
 ```
-Learn more about enabling Azure Active Directory for authentication with Azure Storage in [our documentation][storage_ad].  
+Learn more about enabling Microsoft Entra ID for authentication with Azure Storage in [our documentation][storage_ad].  
 
 If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you can configure the appropriate `ClientCredentialType` and set the credential on an `AzureServiceCredential` instance via an extension method.
 ```C# Snippet:CoreWCF_Azure_Storage_Queus_Sample_StorageSharedKey
@@ -69,11 +69,11 @@ CoreWCF is an implementation of the service side features of Windows Communicati
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-account-create?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[storage_ad]: https://docs.microsoft.com/azure/storage/common/storage-auth-aad
+[storage_ad]: https://learn.microsoft.com/azure/storage/blobs/authorize-access-azure-active-directory

@@ -4,7 +4,6 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateRuntimeConfigDevFile>true</GenerateRuntimeConfigDevFile>
     <IsPackable>false</IsPackable>
-    <UserSecretsId>7d774a2c-019d-4f91-87ed-06aeedf5fd0d</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">

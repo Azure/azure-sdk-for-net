@@ -7,7 +7,7 @@
     <PackageId>Microsoft.CoreWCF.Azure.StorageQueues</PackageId>
     <RootNamespace />
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
-    <Version>1.0.0-preview</Version>
+    <Version>1.0.0-beta.1</Version>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
