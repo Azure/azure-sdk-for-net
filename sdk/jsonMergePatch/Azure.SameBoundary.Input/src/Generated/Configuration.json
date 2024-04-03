@@ -1,0 +1,12 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.SameBoundary.Input",
+  "library-name": "Azure.SameBoundary.Input",
+  "shared-source-folders": [
+    "../../../../../artifacts/bin/AutoRest.CSharp/Debug/net7.0/Generator.Shared",
+    "../../../../../artifacts/bin/AutoRest.CSharp/Debug/net7.0/Azure.Core.Shared"
+  ],
+  "model-namespace": false,
+  "flavor": "azure",
+  "use-model-reader-writer": true
+}

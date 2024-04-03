@@ -1,0 +1,5 @@
+{
+    "baseProperty1": "stringProperty",
+    "extendedProperty": "extendedProperty",
+    "anotherLevelProperty": "anotherLevelProperty"
+}

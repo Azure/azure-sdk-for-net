@@ -1,0 +1,6 @@
+{
+    "requiredString": "required",
+    "requiredInt": 5,
+    "optionalInt": null,
+    "optionalString":  null
+}
