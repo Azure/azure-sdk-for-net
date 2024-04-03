@@ -1,6 +1,6 @@
 # Migrate from Purview Catalog to Purview DataMap
 
-This guide is intended to assist in the migration to Azure Purview DataMap client library [`Azure.Analytics.Purview.DataMa`](https://www.nuget.org/packages/Azure.Analytics.Purview.DataMap) from [`Azure.Analytics.Purview.Catalog`](https://www.nuget.org/packages/Azure.Analytics.Purview.Catalog). It will focus on side-by-side comparisons for similar operations between the two packages.
+This guide is intended to assist in the migration to Azure Purview DataMap client library [`Azure.Analytics.Purview.DataMap`](https://www.nuget.org/packages/Azure.Analytics.Purview.DataMap) from [`Azure.Analytics.Purview.Catalog`](https://www.nuget.org/packages/Azure.Analytics.Purview.Catalog). It will focus on side-by-side comparisons for similar operations between the two packages.
 
 For those new to the Purview DataMAP library for .NET, please refer to the [`Azure.Analytics.Purview.DataMap` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/README.md) and [`Azure.Analytics.Purview.DataMap` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.DataMap/samples) for the `Azure.Analytics.Purview.DataMap` library rather than this guide.
 
