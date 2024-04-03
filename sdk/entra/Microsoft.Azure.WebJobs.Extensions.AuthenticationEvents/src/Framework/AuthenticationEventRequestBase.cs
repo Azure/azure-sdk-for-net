@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>The base class for all typed event requests.</summary>
     public abstract class AuthenticationEventRequestBase

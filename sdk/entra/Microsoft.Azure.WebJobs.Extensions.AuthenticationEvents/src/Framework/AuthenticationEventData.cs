@@ -6,7 +6,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Or Data class that represents the inbound Json payload, also has helper functions for serialization.</summary>
     public abstract class AuthenticationEventData

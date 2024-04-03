@@ -3,10 +3,10 @@
 
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Abstract class for response actions.</summary>
-    public abstract class AuthenticationEventAction
+    public abstract class WebJobsAuthenticationEventsAction
     {
         /// <summary>Gets the type of the action.
         /// This will be used as the name of the action in the response Json.</summary>
@@ -14,8 +14,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
         [JsonPropertyName("actionType")]
         internal abstract string ActionType { get; }
         internal virtual string TypeProperty => "@odata.type";
-        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventAction" /> class.</summary>
-        public AuthenticationEventAction() { }
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventsAction" /> class.</summary>
+        public WebJobsAuthenticationEventsAction() { }
 
         /// <summary>Builds the action body.</summary>
         /// <returns>The return will be the json of the action.</returns>

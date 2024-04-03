@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using System;
 using System.Threading;

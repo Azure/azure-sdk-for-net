@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Net.Http;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {

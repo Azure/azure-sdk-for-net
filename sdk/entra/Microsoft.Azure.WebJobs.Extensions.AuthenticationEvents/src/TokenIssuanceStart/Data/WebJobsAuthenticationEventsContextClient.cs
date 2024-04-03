@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
 {
     /// <summary>Represents the Client Data Model Object.</summary>
-    public class AuthenticationEventContextClient
+    public class WebJobsAuthenticationEventsContextClient
     {
         /// <summary>Gets the ip.</summary>
         /// <value>The ip.</value>

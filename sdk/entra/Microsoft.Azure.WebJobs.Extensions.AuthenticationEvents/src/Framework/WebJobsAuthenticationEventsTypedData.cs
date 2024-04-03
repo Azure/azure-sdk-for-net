@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Abstract class that handles payload strongly typed payloads conversions.</summary>
-    public abstract class CloudEventData : AuthenticationEventData
+    public abstract class WebJobsAuthenticationEventsTypedData : AuthenticationEventData
     {
         /// <summary>De-serializes the json the its associated typed object.</summary>
         /// <param name="cloudEvent">The json containing the typed structure.</param>

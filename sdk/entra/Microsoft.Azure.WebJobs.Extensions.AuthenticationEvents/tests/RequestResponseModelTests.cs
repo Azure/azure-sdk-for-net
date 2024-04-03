@@ -51,8 +51,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                 {
                     request.Response.Actions.Add(
                         new ProvideClaimsForToken(
-                            new TokenClaim("DateOfBirth", "01/01/2000"),
-                            new TokenClaim("CustomRoles", "Writer", "Editor")
+                            new WebjobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
+                            new WebjobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
                             ));
 
                     await eventsResponseHandler.SetValueAsync(request.Completed(), CancellationToken.None);

@@ -13,16 +13,13 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
 using Microsoft.Azure.WebJobs.Host.Bindings;
 using Microsoft.Azure.WebJobs.Host.Listeners;
 using Microsoft.Azure.WebJobs.Host.Protocols;
 using Microsoft.Azure.WebJobs.Host.Triggers;
 using Microsoft.Extensions.Logging;
 
-using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.EmptyResponse;
-
-using AuthenticationEventMetadata = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventMetadata;
+using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.EmptyResponse;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {

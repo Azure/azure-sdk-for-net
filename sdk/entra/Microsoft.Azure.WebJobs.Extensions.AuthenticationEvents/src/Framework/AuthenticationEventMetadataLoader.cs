@@ -8,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Lazy loader and caching for events and the event's related event.</summary>
     internal class AuthenticationEventMetadataLoader
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
             return GetEventMetadata(Helpers.GetEventDefintionFromPayload(payload));
         }
 
-        internal static AuthenticationEventMetadata GetEventMetadata(EventDefinition eventDef)
+        internal static AuthenticationEventMetadata GetEventMetadata(AuthenticationEventDefinition eventDef)
         {
             var eventMetadataAttr = eventDef.GetAttribute<AuthenticationEventMetadataAttribute>();
             if (eventMetadataAttr == null)

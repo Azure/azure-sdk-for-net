@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Reflection;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Represents event meta-data.</summary>
     internal class AuthenticationEventMetadata
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         /// <summary>Gets or sets the identifier.</summary>
         /// <value>The identifier.</value>
-        internal EventDefinition Id { get; set; }
+        internal AuthenticationEventDefinition Id { get; set; }
 
         /// <summary>Gets or sets the response template content.</summary>
         /// <value>The response template content.</value>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal static AuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, Type type, params object[] args)
         {
-            foreach (EventDefinition eventDefinition in Enum.GetValues(typeof(EventDefinition)))
+            foreach (AuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(AuthenticationEventDefinition)))
             {
                 AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
                 if (eventMetadata.RequestType == type)

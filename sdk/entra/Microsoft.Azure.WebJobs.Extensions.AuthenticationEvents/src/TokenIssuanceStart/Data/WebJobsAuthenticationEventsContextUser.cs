@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
 {
     /// <summary>Represents the User Data Model Object.</summary>
-    public partial class AuthenticationEventContextUser
+    public partial class WebJobsAuthenticationEventsContextUser
     {
         /// <summary>Gets the name of the company.</summary>
         /// <value>The name of the company.</value>

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {

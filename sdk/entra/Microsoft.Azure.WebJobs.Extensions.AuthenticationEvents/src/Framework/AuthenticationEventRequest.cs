@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>The base class for all typed event requests and its related response and data model.</summary>
     /// <typeparam name="TResponse">The EventResponse related to the request.</typeparam>

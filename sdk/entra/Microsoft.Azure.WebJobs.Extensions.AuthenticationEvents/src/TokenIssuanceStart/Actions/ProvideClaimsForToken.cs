@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>A representation of the ProvideClaimsForToken action.</summary>
     public partial class ProvideClaimsForToken : TokenIssuanceAction
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <value>The claims.</value>
         [JsonPropertyName("claims")]
         [Required]
-        public List<TokenClaim> Claims { get; } = new List<TokenClaim>();
+        public List<WebjobsAuthenticationEventsTokenClaim> Claims { get; } = new List<WebjobsAuthenticationEventsTokenClaim>();
 
         /// <summary>Gets the type of the action of ProvideClaimsForToken.</summary>
         /// <value>The type of the action.</value>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         public ProvideClaimsForToken() { }
         /// <summary>Initializes a new instance of the <see cref="ProvideClaimsForToken" /> class.</summary>
         /// <param name="claim">A collection of claims to add.</param>
-        public ProvideClaimsForToken(params TokenClaim[] claim)
+        public ProvideClaimsForToken(params WebjobsAuthenticationEventsTokenClaim[] claim)
         {
             if (claim != null)
             {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         /// <param name="Values">The claim values.</param>
         public void AddClaim(string Id, params string[] Values)
         {
-            Claims.Add(new TokenClaim(Id, Values));
+            Claims.Add(new WebjobsAuthenticationEventsTokenClaim(Id, Values));
         }
 
         /// <summary>Builds the action body.</summary>

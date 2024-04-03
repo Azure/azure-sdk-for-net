@@ -3,7 +3,7 @@
 
 using System.Net.Http;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     internal class EmptyResponse : AuthenticationEventResponse
     {

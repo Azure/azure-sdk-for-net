@@ -11,7 +11,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
         };
 
-        internal static EventDefinition GetEventDefintionFromPayload(string payload)
+        internal static AuthenticationEventDefinition GetEventDefintionFromPayload(string payload)
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     comparable = jPayload.GetPropertyValue("type");
                 }
 
-                foreach (EventDefinition eventDefinition in Enum.GetValues(typeof(EventDefinition)))
+                foreach (AuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(AuthenticationEventDefinition)))
                 {
                     AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
                     if (eventMetadata.EventIdentifier.Equals(comparable, StringComparison.OrdinalIgnoreCase))
@@ -128,10 +128,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             using var _ = JsonDocument.Parse(input);
         }
 
-        internal static AuthenticationEventAction GetEventActionForActionType(string actionType)
+        internal static WebJobsAuthenticationEventsAction GetEventActionForActionType(string actionType)
         {
             return actionType != null && _actionMapping.ContainsKey(actionType.ToLower(CultureInfo.CurrentCulture))
-                 ? (AuthenticationEventAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
+                 ? (WebJobsAuthenticationEventsAction)Activator.CreateInstance(_actionMapping[actionType.ToLower(CultureInfo.CurrentCulture)])
                  : throw new Exception(String.Format(CultureInfo.CurrentCulture, AuthenticationEventResource.Ex_Invalid_Action, actionType, String.Join("', '", _actionMapping.Select(x => x.Key))));
         }
 
