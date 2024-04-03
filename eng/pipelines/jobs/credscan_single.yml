@@ -1,0 +1,52 @@
+trigger:
+  tags:
+    include:
+    - '*'
+
+parameters:
+- name: Tag
+  type: string
+  default: 'self'
+
+jobs:
+  - job: Compliance
+    pool:
+      name: $(WINDOWSPOOL)
+      image: $(WINDOWSVMIMAGE)
+      os: windows
+
+    variables:
+    - template: /eng/pipelines/variables/image.yml
+
+    steps:
+      - checkout: none
+
+      - ${{ if and(ne(parameters.Tag, 'self'), ne(parameters.Tag, '')) }}:
+        - pwsh: |
+            git clone --no-checkout --filter=tree:0 https://github.com/azure/azure-sdk-assets.git $(Build.SourcesDirectory)
+            git fetch origin refs/tags/${{ parameters.Tag }}
+            git checkout ${{ parameters.Tag }}
+          displayName: Checkout target tag to sources directory
+      - ${{ else }}:
+        - pwsh: |
+            git clone --no-checkout --filter=tree:0 https://github.com/azure/azure-sdk-assets.git $(Build.SourcesDirectory)
+            git fetch origin $(Build.SourceBranch)
+            git checkout ("$(Build.SourceBranch)" -replace "refs/heads/", "")
+          displayName: Checkout $(Build.SourceBranchName) to sources directory
+
+      - pwsh: |
+          $ErrorActionPreference = 'Stop'
+
+          $destinationFolder = Join-Path -Path "$(Build.SourcesDirectory)" -ChildPath "eng"
+          if (-not (Test-Path $destinationFolder)) {
+            New-Item -Path $destinationFolder -ItemType Directory
+          }
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure/azure-sdk-assets/main/eng/CredScanSuppression.json" `
+            -OutFile (Join-Path -Path "$destinationFolder" -ChildPath CredScanSuppression.json)
+        displayName: Get Suppressions File
+
+      - template: /eng/pipelines/steps/run-credscan.yml
+        parameters:
+          Tag: ${{ parameters.Tag }}
+          ScanFolder: '$(Build.SourcesDirectory)'
+          SuppressionsFile: '$(Build.SourcesDirectory)/eng/CredScanSuppression.json'

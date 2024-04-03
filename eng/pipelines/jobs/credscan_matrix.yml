@@ -1,0 +1,64 @@
+parameters:
+  - name: Matrix
+    type: string
+  - name: DependsOn
+    type: object
+    default: []
+jobs:
+  - job:
+    displayName: 'CredScan'
+    condition: |
+      and(
+        succeededOrFailed(),
+        ne(${{ parameters.Matrix }}, '{}'),
+        ne(${{ parameters.Matrix}}, '{"":{"Tag":null}}')
+      )
+
+    strategy:
+      matrix: $[ ${{ parameters.Matrix }} ]
+      maxParallel: 5
+
+    dependsOn:
+      - ${{ parameters.DependsOn }}
+
+    pool:
+      name: $(WINDOWSPOOL)
+      image: $(WINDOWSVMIMAGE)
+      os: windows
+
+    steps:
+      - checkout: none
+
+      - pwsh: |
+          Write-Host '${{ parameters.Matrix }}'
+        displayName: Dump Matrix
+
+      - pwsh: |
+          Write-Host '$[ ${{ parameters.Matrix }} ]'
+        displayName: Dump Matrix RunTime
+
+      - pwsh: |
+          git clone --no-checkout --filter=tree:0 https://github.com/azure/azure-sdk-assets.git .
+          git checkout $(Tag)
+        displayName: Checkout $(Tag)
+
+      - pwsh: |
+          $ErrorActionPreference = 'Stop'
+
+          $destinationFolder = Join-Path -Path "$(Build.SourcesDirectory)" -ChildPath "eng"
+          if (-not (Test-Path $destinationFolder)) {
+            New-Item -Path $destinationFolder -ItemType Directory
+          }
+          Invoke-WebRequest -Uri "https://raw.githubusercontent.com/Azure/azure-sdk-assets/main/eng/CredScanSuppression.json" `
+            -OutFile (Join-Path -Path "$destinationFolder" -ChildPath CredScanSuppression.json)
+        displayName: Get Suppressions File
+
+      - pwsh: |
+          Get-ChildItem -Recurse $(Build.SourcesDirectory) | % { Write-Host $_.FullName }
+        displayName: Dump Visible Files
+
+      - template: /eng/pipelines/steps/run-credscan.yml
+        parameters:
+          Tag: $(Tag)
+          ScanFolder: '$(Build.SourcesDirectory)'
+          SuppressionsFile: '$(Build.SourcesDirectory)/eng/CredScanSuppression.json'
