@@ -325,11 +325,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("termsOfServiceUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            termsOfServiceUri = new Uri(property0.Value.GetString());
+                            DeserializetermsOfServiceUrlValue(property0, ref termsOfServiceUri);
                             continue;
                         }
                         if (property0.NameEquals("contact"u8))
@@ -366,11 +362,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         }
                         if (property0.NameEquals("serviceUrl"u8))
                         {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            serviceUri = new Uri(property0.Value.GetString());
+                            DeserializeServiceUriValue(property0, ref serviceUri);
                             continue;
                         }
                         if (property0.NameEquals("path"u8))
