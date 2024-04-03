@@ -12,10 +12,10 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     public class BatchLiveTestEnvironment:  TestEnvironment
     {
-        public string BatchAccountName => GetVariable("BATCH_ACCOUNT_NAME");
+        public string BatchAccountName => GetRecordedVariable("batch_account_name");
 
-        public string BatchAccountURI => GetVariable("BATCH_ACCOUNT_URI");
+        public string BatchAccountURI => GetRecordedVariable("batch_account_uri");
 
-        public string BatchAccountKey => GetVariable("BATCH_ACCOUNT_KEY");
+        public string BatchAccountKey => GetRecordedVariable("batch_account_key");
     }
 }

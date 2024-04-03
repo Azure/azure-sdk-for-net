@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,10 +34,9 @@ namespace Azure.Compute.Batch.Tests.Integration
         [RecordedTest]
         public async Task CreatePool_WithBlobFuseMountConfiguration()
         {
-            var client = CreateBatchClient(false);
+            var client = CreateBatchClient();
             string poolId = TestUtilities.GenerateResourceId();
-
-            await client.GetJobAsync("test");
+            await client.GetJobAsync(jobId:"test");
         }
     }
 }

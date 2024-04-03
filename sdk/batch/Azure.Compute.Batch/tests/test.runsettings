@@ -7,6 +7,7 @@
             <AZURE_TEST_MODE>record</AZURE_TEST_MODE>
             <BATCHACCOUNT_NAME>https://sanitized.azure-api.net/</BATCHACCOUNT_NAME>
             <BATCHACCOUNT_KEY>000000000000000000000000</BATCHACCOUNT_KEY>
+            <BATCH_ACCOUNT_URI>https://batchaccount.uksouth.batch.azure.com</BATCH_ACCOUNT_URI>
         </EnvironmentVariables>
     </RunConfiguration>
 </RunSettings>

@@ -18,6 +18,13 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 {
     public class BatchLiveTestBase : RecordedTestBase<BatchLiveTestEnvironment>
     {
+        public enum TestAuthMethods
+        {
+            Default,
+            ClientSecret,
+            NamedKey
+        };
+
         public BatchLiveTestBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
         {
             UseDefaultGuidFormatForClientRequestId = true;
@@ -35,32 +42,42 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="BatchClient" />.</returns>
-        public BatchClient CreateBatchClient(bool useTokenCredential = true, bool skipInstrumenting = false)
+        public BatchClient CreateBatchClient(TestAuthMethods testAuthMethod = TestAuthMethods.Default, bool skipInstrumenting = false)
         {
             var options = InstrumentClientOptions(new BatchClientOptions());
             BatchClient client;
             Uri uri = new Uri("https://" + TestEnvironment.BatchAccountURI);
 
             var authorityHost = TestEnvironment.AuthorityHostUrl;
-            if (useTokenCredential)
+            switch (testAuthMethod)
             {
-                var credential = new ClientSecretCredential(
-                    TestEnvironment.TenantId,
-                    TestEnvironment.ClientId,
-                    TestEnvironment.ClientSecret,
-                    new ClientSecretCredentialOptions()
+                case TestAuthMethods.ClientSecret:
                     {
-                        AuthorityHost = new Uri(authorityHost)
-                    });
+                        var credential = new ClientSecretCredential(
+                        TestEnvironment.TenantId,
+                        TestEnvironment.ClientId,
+                        TestEnvironment.ClientSecret,
+                        new ClientSecretCredentialOptions()
+                        {
+                            AuthorityHost = new Uri(authorityHost)
+                        });
 
-                client = new BatchClient(uri,credential, options);
+                        client = new BatchClient(uri, credential, options);
+                    }
+                    break;
+                case TestAuthMethods.NamedKey:
+                    {
+                        var credential = new AzureNamedKeyCredential(TestEnvironment.BatchAccountName, TestEnvironment.BatchAccountKey);
+                        client = new BatchClient(uri, credential, options);
+                    }
+                    break;
+                default:
+                    {
+                        var credential = new DefaultAzureCredential();
+                        client = new BatchClient(uri, credential, options);
+                    }
+                    break;
             }
-            else
-            {
-                var credential = new AzureNamedKeyCredential(TestEnvironment.BatchAccountName, TestEnvironment.BatchAccountKey);
-                client = new BatchClient(uri, credential, options);
-            }
-
             return skipInstrumenting ? client : InstrumentClient(client);
         }
     }
