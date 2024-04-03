@@ -45,25 +45,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
-        public UserInitiatedRedeploy()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
-        /// <param name="automaticallyApprove"> Specifies Redeploy Scheduled Event related configurations. </param>
-        /// <param name="dummyProperty"> This is a dummy property to prevent flattening. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UserInitiatedRedeploy(bool? automaticallyApprove, string dummyProperty, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            AutomaticallyApprove = automaticallyApprove;
-            DummyProperty = dummyProperty;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
         public bool? AutomaticallyApprove { get; set; }
-        /// <summary> This is a dummy property to prevent flattening. </summary>
-        public string DummyProperty { get; set; }
     }
 }

@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings);
+                writer.WriteObjectValue<DiffDiskSettings>(DiffDiskSettings, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {

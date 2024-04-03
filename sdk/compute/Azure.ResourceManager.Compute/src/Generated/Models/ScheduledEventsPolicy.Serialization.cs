@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(UserInitiatedRedeploy))
             {
                 writer.WritePropertyName("userInitiatedRedeploy"u8);
-                writer.WriteObjectValue(UserInitiatedRedeploy);
+                writer.WriteObjectValue<UserInitiatedRedeploy>(UserInitiatedRedeploy, options);
             }
             if (Optional.IsDefined(UserInitiatedReboot))
             {
                 writer.WritePropertyName("userInitiatedReboot"u8);
-                writer.WriteObjectValue(UserInitiatedReboot);
+                writer.WriteObjectValue<UserInitiatedReboot>(UserInitiatedReboot, options);
             }
             if (Optional.IsDefined(ScheduledEventsAdditionalPublishingTargets))
             {
                 writer.WritePropertyName("scheduledEventsAdditionalPublishingTargets"u8);
-                writer.WriteObjectValue(ScheduledEventsAdditionalPublishingTargets);
+                writer.WriteObjectValue<ScheduledEventsAdditionalPublishingTargets>(ScheduledEventsAdditionalPublishingTargets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledEventsPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             UserInitiatedReboot userInitiatedReboot = default;
             ScheduledEventsAdditionalPublishingTargets scheduledEventsAdditionalPublishingTargets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userInitiatedRedeploy"u8))
@@ -116,10 +115,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ScheduledEventsPolicy(userInitiatedRedeploy, userInitiatedReboot, scheduledEventsAdditionalPublishingTargets, serializedAdditionalRawData);
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeScheduledEventsPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledEventsPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ScheduledEventsPolicy))
             {
                 writer.WritePropertyName("scheduledEventsPolicy"u8);
-                writer.WriteObjectValue(ScheduledEventsPolicy);
+                writer.WriteObjectValue<ScheduledEventsPolicy>(ScheduledEventsPolicy, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,12 +37,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Vhd))
             {
                 writer.WritePropertyName("vhd"u8);
-                writer.WriteObjectValue(Vhd);
+                writer.WriteObjectValue<VirtualHardDisk>(Vhd, options);
             }
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<VirtualHardDisk>(Image, options);
             }
             if (Optional.IsDefined(Caching))
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue<VirtualMachineManagedDisk>(ManagedDisk, options);
             }
             if (Optional.IsDefined(SourceResource))
             {
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDataDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Compute.Models
             DiskDetachOptionType? detachOption = default;
             DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lun"u8))
@@ -279,10 +278,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineDataDisk(
                 lun,
                 name,
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -327,7 +326,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineDataDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineDataDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

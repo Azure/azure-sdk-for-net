@@ -7,10 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInitiatedRedeploy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,48 +58,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UserInitiatedRedeploy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUserInitiatedRedeploy(document.RootElement, options);
-        }
-
-        internal static UserInitiatedRedeploy DeserializeUserInitiatedRedeploy(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= new ModelReaderWriterOptions("W");
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            bool? automaticallyApprove = default;
-            string dummyProperty = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("automaticallyApprove"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    automaticallyApprove = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("dummyProperty"u8))
-                {
-                    dummyProperty = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UserInitiatedRedeploy(automaticallyApprove, dummyProperty, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInitiatedRedeploy>.Write(ModelReaderWriterOptions options)
@@ -113,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +90,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUserInitiatedRedeploy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UserInitiatedRedeploy)} does not support reading '{options.Format}' format.");
             }
         }
 
