@@ -42,7 +42,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="BatchClient" />.</returns>
-        public BatchClient CreateBatchClient(TestAuthMethods testAuthMethod = TestAuthMethods.Default, bool skipInstrumenting = false)
+        public BatchClient CreateBatchClient(TestAuthMethods testAuthMethod = TestAuthMethods.ClientSecret, bool skipInstrumenting = false)
         {
             var options = InstrumentClientOptions(new BatchClientOptions());
             BatchClient client;
@@ -53,16 +53,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             {
                 case TestAuthMethods.ClientSecret:
                     {
-                        var credential = new ClientSecretCredential(
-                        TestEnvironment.TenantId,
-                        TestEnvironment.ClientId,
-                        TestEnvironment.ClientSecret,
-                        new ClientSecretCredentialOptions()
-                        {
-                            AuthorityHost = new Uri(authorityHost)
-                        });
-
-                        client = new BatchClient(uri, credential, options);
+                        client = new BatchClient(uri, TestEnvironment.Credential, options);
                     }
                     break;
                 case TestAuthMethods.NamedKey:

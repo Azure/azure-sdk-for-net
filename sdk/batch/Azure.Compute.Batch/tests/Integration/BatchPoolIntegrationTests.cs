@@ -32,6 +32,24 @@ namespace Azure.Compute.Batch.Tests.Integration
         }
 
         [RecordedTest]
+        public async Task GetPoolNodeCounts()
+        {
+            var client = CreateBatchClient();
+
+            // create a pool to verify we have something to query for
+
+            //IaasLinuxPoolFixture iaasWindowsPoolFixture = new IaasLinuxPoolFixture(client);
+            //BatchPool pool = await iaasWindowsPoolFixture.CreatePoolAsync();
+
+            int count = 0;
+            await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync())
+            {
+                count++;
+                var id = item.PoolId;
+            }
+        }
+
+        [RecordedTest]
         public async Task CreatePool_WithBlobFuseMountConfiguration()
         {
             var client = CreateBatchClient();
