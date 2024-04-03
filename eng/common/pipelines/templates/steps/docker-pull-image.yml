@@ -6,7 +6,7 @@ parameters:
     type: string
 steps:
   - task: AzureCLI@2
-    displayName: Authenticate to Container Registry
+    displayName: Docker Auth and Pull
     inputs:
       azureSubscription: ${{ parameters.ServiceConnectionName }}
       scriptType: pscore
