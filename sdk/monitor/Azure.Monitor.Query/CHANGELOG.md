@@ -7,6 +7,8 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fix bug in `LogsQueryClient` constructor if `LogsQueryClientOptions` is null.
+- Fix bug in `MetricsQueryClient` constructor if `MetricsQueryClientOptions` is null.
 
 ### Other Changes
 
