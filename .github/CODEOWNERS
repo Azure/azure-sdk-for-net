@@ -175,6 +175,12 @@
 # ServiceLabel: %Bot Service
 # ServiceOwners:                                                   @sgellock
 
+# PRLabel: %CDK
+/sdk/provisioning/                                                 @JoshLove-msft @tg-msft
+
+# ServiceLabel: %CDK
+# AzureSdkOwners:                                                  @JoshLove-msft
+
 # ServiceLabel: %Cloud Shell
 # ServiceOwners:                                                   @maertendMSFT
 
@@ -236,6 +242,12 @@
 
 # ServiceLabel: %Cognitive - Health Insights
 # ServiceOwners:                                                   @asaflevi-ms
+
+# PRLabel: %Cognitive - Personalizer
+/sdk/personalizer/                                                 @orenmichaely @tyclintw
+
+# ServiceLabel: %Cognitive - Personalizer
+# ServiceOwners:                                                   @orenmichaely @tyclintw
 
 # PRLabel: %Cognitive - QnA Maker
 /sdk/cognitiveservices/Knowledge.QnAMaker/                         @bingisbestest @nerajput1607
@@ -530,10 +542,10 @@
 /sdk/iot*/                                                         @ethanann-ms @vighatke
 
 # PRLabel: %Iot
-/sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+/sdk/modelsrepository/                                             @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft @rido-min
 
 # ServiceLabel: %IoT
-# ServiceOwners:                                                   @ethanann-ms @vighatke @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft
+# ServiceOwners:                                                   @ethanann-ms @vighatke @timtay-microsoft @abhipsaMisra @digimaun @brycewang-microsoft @andyk-ms @tmahmood-microsoft @rido-min
 
 # ServiceLabel: %IoT - CLI
 # ServiceOwners:                                                   @Azure/azure-iot-cli-triage
@@ -733,6 +745,12 @@
 # ServiceLabel: %Image Analysis
 # ServiceOwners:                                                   @rhurey @dargilco
 
+# PRLabel: %Playwright
+/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
+
+# ServiceLabel: %Playwright
+# ServiceOwners:                                                   @shreyaanand @mjmadhu
+
 # ServiceLabel: %Policy
 # ServiceOwners:                                                   @aperezcloud @kenieva
 
@@ -895,18 +913,6 @@
 
 # ServiceLabel: %WebPubSub
 # ServiceOwners:                                                   @vicancy @JialinXin
-
-# PRLabel: %Cognitive - Personalizer
-/sdk/personalizer/                                                 @orenmichaely @tyclintw
-
-# ServiceLabel: %Cognitive - Personalizer
-# ServiceOwners:                                                   @orenmichaely @tyclintw
-
-# PRLabel: %Playwright
-/sdk/playwrighttesting/                                            @shreyaanand @mjmadhu
-
-# ServiceLabel: %Playwright
-# ServiceOwners:                                                   @shreyaanand @mjmadhu
 
 # ######## Management Plane ########
 

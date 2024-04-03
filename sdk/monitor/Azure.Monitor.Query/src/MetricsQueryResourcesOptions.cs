@@ -28,7 +28,7 @@ namespace Azure.Monitor.Query
         /// See <see href="https://learn.microsoft.com/dotnet/csharp/programming-guide/classes-and-structs/object-and-collection-initializers#object-initializers-with-collection-read-only-property-initialization">Object initializers with collection read-only property initialization</see>.
         /// </para>
         /// </summary>
-        public IList<string> Aggregations = new List<string>();
+        public IList<string> Aggregations { get; } = new List<string>();
 
         /// <summary>
         /// Gets or sets the maximum number of records to retrieve. Valid only when <see cref="Filter"/> is specified. Defaults to <c>null</c>.
