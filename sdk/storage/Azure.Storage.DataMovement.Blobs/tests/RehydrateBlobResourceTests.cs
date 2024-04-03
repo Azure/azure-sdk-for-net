@@ -17,6 +17,11 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class RehydrateBlobResourceTests
     {
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
         public RehydrateBlobResourceTests()
         { }
 
@@ -47,27 +52,28 @@ namespace Azure.Storage.DataMovement.Tests
         private static BlobDestinationCheckpointData GetPopulatedDestinationCheckpointData(
             BlobType blobType,
             AccessTier? accessTier = default)
-        {
-            BlobHttpHeaders headers = new()
-            {
-                ContentType = "text/plain",
-                ContentEncoding = "gzip",
-                ContentLanguage = "en-US",
-                ContentDisposition = "inline",
-                CacheControl = "no-cache",
-            };
-            return new BlobDestinationCheckpointData(
-                blobType,
-                headers,
-                accessTier,
-                DataProvider.BuildMetadata(),
-                DataProvider.BuildTags());
-        }
+        => new BlobDestinationCheckpointData(
+                blobType: blobType,
+                contentType: new(DefaultContentType),
+                contentEncoding: new(DefaultContentEncoding),
+                contentLanguage: new(DefaultContentLanguage),
+                contentDisposition: new(DefaultContentDisposition),
+                cacheControl: new(DefaultCacheControl),
+                accessTier: new(accessTier),
+                metadata: new(DataProvider.BuildMetadata()),
+                tags: new(DataProvider.BuildTags()));
 
         private static BlobDestinationCheckpointData GetDefaultDestinationCheckpointData(BlobType blobType)
-        {
-            return new BlobDestinationCheckpointData(blobType, default, default, default, default);
-        }
+        => new BlobDestinationCheckpointData(
+            blobType,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default,
+            default);
 
         private static byte[] GetBytes(BlobCheckpointData checkpointData)
         {
@@ -155,14 +161,20 @@ namespace Azure.Storage.DataMovement.Tests
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
-            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
-            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
+            Assert.AreEqual(checkpointData.AccessTier.Preserve, storageResource._options.AccessTier.Preserve);
+            Assert.AreEqual(checkpointData.AccessTier.Value, storageResource._options.AccessTier.Value);
+            Assert.AreEqual(checkpointData.Metadata.Preserve, storageResource._options.Metadata.Preserve);
+            Assert.AreEqual(checkpointData.Metadata.Value, storageResource._options.Metadata.Value);
+            Assert.AreEqual(checkpointData.CacheControl.Preserve, storageResource._options.CacheControl.Preserve);
+            Assert.AreEqual(checkpointData.CacheControl.Value, storageResource._options.CacheControl.Value);
+            Assert.AreEqual(checkpointData.ContentDisposition.Preserve, storageResource._options.ContentDisposition.Preserve);
+            Assert.AreEqual(checkpointData.ContentDisposition.Value, storageResource._options.ContentDisposition.Value);
+            Assert.AreEqual(checkpointData.ContentEncoding.Preserve, storageResource._options.ContentEncoding.Preserve);
+            Assert.AreEqual(checkpointData.ContentEncoding.Value, storageResource._options.ContentEncoding.Value);
+            Assert.AreEqual(checkpointData.ContentLanguage.Preserve, storageResource._options.ContentLanguage.Preserve);
+            Assert.AreEqual(checkpointData.ContentLanguage.Value, storageResource._options.ContentLanguage.Value);
+            Assert.AreEqual(checkpointData.ContentType.Preserve, storageResource._options.ContentType.Preserve);
+            Assert.AreEqual(checkpointData.ContentType.Value, storageResource._options.ContentType.Value);
         }
 
         [Test]
@@ -220,14 +232,18 @@ namespace Azure.Storage.DataMovement.Tests
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
-            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
-            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
+            Assert.AreEqual(checkpointData.Metadata.Preserve, storageResource._options.Metadata.Preserve);
+            Assert.AreEqual(checkpointData.Metadata.Value, storageResource._options.Metadata.Value);
+            Assert.AreEqual(checkpointData.CacheControl.Preserve, storageResource._options.CacheControl.Preserve);
+            Assert.AreEqual(checkpointData.CacheControl.Value, storageResource._options.CacheControl.Value);
+            Assert.AreEqual(checkpointData.ContentDisposition.Preserve, storageResource._options.ContentDisposition.Preserve);
+            Assert.AreEqual(checkpointData.ContentDisposition.Value, storageResource._options.ContentDisposition.Value);
+            Assert.AreEqual(checkpointData.ContentEncoding.Preserve, storageResource._options.ContentEncoding.Preserve);
+            Assert.AreEqual(checkpointData.ContentEncoding.Value, storageResource._options.ContentEncoding.Value);
+            Assert.AreEqual(checkpointData.ContentLanguage.Preserve, storageResource._options.ContentLanguage.Preserve);
+            Assert.AreEqual(checkpointData.ContentLanguage.Value, storageResource._options.ContentLanguage.Value);
+            Assert.AreEqual(checkpointData.ContentType.Preserve, storageResource._options.ContentType.Preserve);
+            Assert.AreEqual(checkpointData.ContentType.Value, storageResource._options.ContentType.Value);
         }
 
         [Test]
@@ -285,14 +301,18 @@ namespace Azure.Storage.DataMovement.Tests
                 .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
-            Assert.AreEqual(checkpointData.AccessTier, storageResource._options.AccessTier);
-            Assert.AreEqual(checkpointData.Metadata, storageResource._options.Metadata);
-            Assert.AreEqual(checkpointData.Tags, storageResource._options.Tags);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentType, storageResource._options.HttpHeaders.ContentType);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentEncoding, storageResource._options.HttpHeaders.ContentEncoding);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentLanguage, storageResource._options.HttpHeaders.ContentLanguage);
-            Assert.AreEqual(checkpointData.ContentHeaders.ContentDisposition, storageResource._options.HttpHeaders.ContentDisposition);
-            Assert.AreEqual(checkpointData.ContentHeaders.CacheControl, storageResource._options.HttpHeaders.CacheControl);
+            Assert.AreEqual(checkpointData.Metadata.Preserve, storageResource._options.Metadata.Preserve);
+            Assert.AreEqual(checkpointData.Metadata.Value, storageResource._options.Metadata.Value);
+            Assert.AreEqual(checkpointData.CacheControl.Preserve, storageResource._options.CacheControl.Preserve);
+            Assert.AreEqual(checkpointData.CacheControl.Value, storageResource._options.CacheControl.Value);
+            Assert.AreEqual(checkpointData.ContentDisposition.Preserve, storageResource._options.ContentDisposition.Preserve);
+            Assert.AreEqual(checkpointData.ContentDisposition.Value, storageResource._options.ContentDisposition.Value);
+            Assert.AreEqual(checkpointData.ContentEncoding.Preserve, storageResource._options.ContentEncoding.Preserve);
+            Assert.AreEqual(checkpointData.ContentEncoding.Value, storageResource._options.ContentEncoding.Value);
+            Assert.AreEqual(checkpointData.ContentLanguage.Preserve, storageResource._options.ContentLanguage.Preserve);
+            Assert.AreEqual(checkpointData.ContentLanguage.Value, storageResource._options.ContentLanguage.Value);
+            Assert.AreEqual(checkpointData.ContentType.Preserve, storageResource._options.ContentType.Preserve);
+            Assert.AreEqual(checkpointData.ContentType.Value, storageResource._options.ContentType.Value);
         }
 
         [Test]

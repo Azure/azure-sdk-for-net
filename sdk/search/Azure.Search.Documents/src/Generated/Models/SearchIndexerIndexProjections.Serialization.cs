@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -21,13 +20,13 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Selectors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerIndexProjectionSelector>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<SearchIndexerIndexProjectionsParameters>(Parameters);
             }
             writer.WriteEndObject();
         }

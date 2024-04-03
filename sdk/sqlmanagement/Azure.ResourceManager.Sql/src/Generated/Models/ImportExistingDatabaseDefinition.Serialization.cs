@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportExistingDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(NetworkIsolation))
             {
                 writer.WritePropertyName("networkIsolation"u8);
-                writer.WriteObjectValue(NetworkIsolation);
+                writer.WriteObjectValue<NetworkIsolationSettings>(NetworkIsolation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImportExistingDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Sql.Models
             string authenticationType = default;
             NetworkIsolationSettings networkIsolation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageKeyType"u8))
@@ -137,10 +136,10 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ImportExistingDatabaseDefinition(
                 storageKeyType,
                 storageKey,
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeImportExistingDatabaseDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImportExistingDatabaseDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

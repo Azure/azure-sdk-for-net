@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The list of metric availabilities for the account. </summary>
+        [WirePath("metricAvailabilities")]
         public IReadOnlyList<CosmosDBMetricAvailability> MetricAvailabilities { get; }
         /// <summary> The primary aggregation type of the metric. </summary>
+        [WirePath("primaryAggregationType")]
         public CosmosDBMetricPrimaryAggregationType? PrimaryAggregationType { get; }
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public CosmosDBMetricUnitType? Unit { get; }
         /// <summary> The resource uri of the database. </summary>
+        [WirePath("resourceUri")]
         public ResourceIdentifier ResourceId { get; }
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public CosmosDBMetricName Name { get; }
     }
 }

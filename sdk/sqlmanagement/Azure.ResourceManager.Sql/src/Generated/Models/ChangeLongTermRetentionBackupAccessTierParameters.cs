@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The long term retention backup storage access tier. </summary>
+        [WirePath("backupStorageAccessTier")]
         public string BackupStorageAccessTier { get; }
         /// <summary> The operation mode when updating ltr backup storage access tier. </summary>
+        [WirePath("operationMode")]
         public string OperationMode { get; }
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -86,16 +87,15 @@ namespace Azure.Data.AppConfiguration.Tests
             return CreateSetting($"{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
-        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
+        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents, [CallerMemberName] string batchKey = null)
         {
             string key = GenerateKeyId("key-");
 
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
-             * If not set, create the {expectedEvents} data points and the "BatchKey"
+             * If not set, create the {expectedEvents} data points and the "batchKey"
             */
-            const string batchKey = "BatchKey";
 
             try
             {

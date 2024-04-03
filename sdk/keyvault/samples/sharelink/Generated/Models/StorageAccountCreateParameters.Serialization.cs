@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Security.KeyVault.Storage;
 
 namespace Azure.Security.KeyVault.Storage.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                writer.WriteObjectValue<StorageAccountAttributes>(StorageAccountAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

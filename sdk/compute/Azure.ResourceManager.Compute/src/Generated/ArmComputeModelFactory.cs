@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -23,26 +22,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue(Tag);
+            writer.WriteObjectValue<AssociatedTagProperties>(Tag, options);
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api);
+                writer.WriteObjectValue<AssociatedApiProperties>(Api, options);
             }
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
-                writer.WriteObjectValue(Operation);
+                writer.WriteObjectValue<AssociatedOperationProperties>(Operation, options);
             }
             if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
-                writer.WriteObjectValue(Product);
+                writer.WriteObjectValue<AssociatedProductProperties>(Product, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<TagResourceContractDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             AssociatedOperationProperties operation = default;
             AssociatedProductProperties product = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tag"u8))
@@ -124,10 +123,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new TagResourceContractDetails(tag, api, operation, product, serializedAdditionalRawData);
         }
 
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeTagResourceContractDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TagResourceContractDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

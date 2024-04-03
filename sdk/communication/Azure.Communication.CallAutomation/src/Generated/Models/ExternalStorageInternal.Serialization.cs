@@ -20,7 +20,7 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(BlobStorage))
             {
                 writer.WritePropertyName("blobStorage"u8);
-                writer.WriteObjectValue(BlobStorage);
+                writer.WriteObjectValue<BlobStorageInternal>(BlobStorage);
             }
             writer.WriteEndObject();
         }

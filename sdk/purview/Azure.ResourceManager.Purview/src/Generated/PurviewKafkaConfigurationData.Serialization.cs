@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<PurviewCredentials>(Credentials, options);
             }
             if (Optional.IsDefined(EventHubPartitionId))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Purview
             PurviewEventStreamingState? eventStreamingState = default;
             PurviewEventStreamingType? eventStreamingType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.Purview
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PurviewKafkaConfigurationData(
                 id,
                 name,
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Purview
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Purview
                         return DeserializePurviewKafkaConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

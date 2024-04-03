@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
-                writer.WriteObjectValue(Payload);
+                writer.WriteObjectValue<object>(Payload);
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {

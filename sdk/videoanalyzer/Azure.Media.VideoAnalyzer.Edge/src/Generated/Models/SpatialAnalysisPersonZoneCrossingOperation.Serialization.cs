@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Zones)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SpatialAnalysisPersonZoneCrossingZoneEvents>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Debug))

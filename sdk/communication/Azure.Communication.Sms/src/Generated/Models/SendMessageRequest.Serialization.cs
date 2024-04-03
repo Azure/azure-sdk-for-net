@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.Sms;
 using Azure.Core;
 
 namespace Azure.Communication.Sms.Models
@@ -22,7 +21,7 @@ namespace Azure.Communication.Sms.Models
             writer.WriteStartArray();
             foreach (var item in SmsRecipients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SmsRecipient>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
@@ -30,7 +29,7 @@ namespace Azure.Communication.Sms.Models
             if (Optional.IsDefined(SmsSendOptions))
             {
                 writer.WritePropertyName("smsSendOptions"u8);
-                writer.WriteObjectValue(SmsSendOptions);
+                writer.WriteObjectValue<SmsSendOptions>(SmsSendOptions);
             }
             writer.WriteEndObject();
         }

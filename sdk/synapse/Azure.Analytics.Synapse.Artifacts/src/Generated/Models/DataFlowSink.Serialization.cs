@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
-                writer.WriteObjectValue(SchemaLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(SchemaLinkedService);
             }
             if (Optional.IsDefined(RejectedDataLinkedService))
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
-                writer.WriteObjectValue(RejectedDataLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -39,17 +38,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset);
+                writer.WriteObjectValue<DatasetReference>(Dataset);
             }
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet);
+                writer.WriteObjectValue<DataFlowReference>(Flowlet);
             }
             writer.WriteEndObject();
         }
@@ -139,7 +138,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowSink>(model);
             }
             public override DataFlowSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

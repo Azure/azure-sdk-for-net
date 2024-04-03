@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Instance type for the service. </summary>
+        [WirePath("properties.instanceSize")]
         public CosmosDBServiceSize? InstanceSize { get; set; }
         /// <summary> Instance count for the service. </summary>
+        [WirePath("properties.instanceCount")]
         public int? InstanceCount { get; set; }
         /// <summary> ServiceType for the service. </summary>
+        [WirePath("properties.serviceType")]
         public CosmosDBServiceType? ServiceType { get; set; }
     }
 }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Cells)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentTableCell>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(BoundingRegions))
@@ -44,7 +43,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -52,13 +51,13 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Caption))
             {
                 writer.WritePropertyName("caption"u8);
-                writer.WriteObjectValue(Caption);
+                writer.WriteObjectValue<DocumentCaption>(Caption, options);
             }
             if (Optional.IsCollectionDefined(Footnotes))
             {
@@ -66,7 +65,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteStartArray();
                 foreach (var item in Footnotes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFootnote>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +115,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentCaption caption = default;
             IReadOnlyList<DocumentFootnote> footnotes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rowCount"u8))
@@ -188,10 +187,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentTable(
                 rowCount,
                 columnCount,
@@ -212,7 +211,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +227,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentTable)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -246,7 +245,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentTable>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

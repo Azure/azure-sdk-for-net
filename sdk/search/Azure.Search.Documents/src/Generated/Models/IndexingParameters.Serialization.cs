@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -55,7 +54,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(IndexingParametersConfiguration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(IndexingParametersConfiguration);
+                writer.WriteObjectValue<IndexingParametersConfiguration>(IndexingParametersConfiguration);
             }
             writer.WriteEndObject();
         }

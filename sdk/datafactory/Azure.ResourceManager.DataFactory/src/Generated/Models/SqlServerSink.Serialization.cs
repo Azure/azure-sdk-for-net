@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(UpsertSettings))
             {
                 writer.WritePropertyName("upsertSettings"u8);
-                writer.WriteObjectValue(UpsertSettings);
+                writer.WriteObjectValue<SqlUpsertSettings>(UpsertSettings, options);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(CopySinkType);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -339,7 +338,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -355,7 +354,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSqlServerSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerSink)} does not support reading '{options.Format}' format.");
             }
         }
 

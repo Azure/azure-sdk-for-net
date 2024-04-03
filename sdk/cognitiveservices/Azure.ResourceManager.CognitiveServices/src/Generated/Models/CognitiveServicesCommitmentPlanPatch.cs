@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The resource model definition representing SKU. </summary>
+        [WirePath("sku")]
         public CognitiveServicesSku Sku { get; set; }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -77,8 +76,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Table from which to purge data. </summary>
+        [WirePath("table")]
         public string Table { get; }
         /// <summary> The set of columns and filters (queries) to run over them to purge the resulting data. </summary>
+        [WirePath("filters")]
         public IList<ComponentPurgeBodyFilters> Filters { get; }
     }
 }

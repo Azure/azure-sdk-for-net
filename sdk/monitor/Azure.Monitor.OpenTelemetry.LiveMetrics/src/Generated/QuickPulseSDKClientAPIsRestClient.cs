@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
@@ -84,7 +83,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(monitoringDataPoint);
+                content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(monitoringDataPoint);
                 request.Content = content;
             }
             return message;
@@ -218,7 +217,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 content.JsonWriter.WriteStartArray();
                 foreach (var item in monitoringDataPoints)
                 {
-                    content.JsonWriter.WriteObjectValue(item);
+                    content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(item);
                 }
                 content.JsonWriter.WriteEndArray();
                 request.Content = content;

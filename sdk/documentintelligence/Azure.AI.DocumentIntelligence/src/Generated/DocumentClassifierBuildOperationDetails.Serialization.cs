@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,14 +22,14 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Result))
             {
                 writer.WritePropertyName("result"u8);
-                writer.WriteObjectValue(Result);
+                writer.WriteObjectValue<DocumentClassifierDetails>(Result, options);
             }
             writer.WritePropertyName("operationId"u8);
             writer.WriteStringValue(OperationId);
@@ -68,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<DocumentIntelligenceError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -93,7 +92,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentClassifierBuildOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +119,7 @@ namespace Azure.AI.DocumentIntelligence
             IReadOnlyDictionary<string, string> tags = default;
             DocumentIntelligenceError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -201,10 +200,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentClassifierBuildOperationDetails(
                 operationId,
                 status,
@@ -229,7 +228,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +244,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentClassifierBuildOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentClassifierBuildOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -263,7 +262,7 @@ namespace Azure.AI.DocumentIntelligence
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentClassifierBuildOperationDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

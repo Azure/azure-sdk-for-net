@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -20,7 +19,7 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(TitleField))
             {
                 writer.WritePropertyName("titleField"u8);
-                writer.WriteObjectValue(TitleField);
+                writer.WriteObjectValue<SemanticField>(TitleField);
             }
             if (Optional.IsCollectionDefined(ContentFields))
             {
@@ -28,7 +27,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ContentFields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in KeywordsFields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SemanticField>(item);
                 }
                 writer.WriteEndArray();
             }

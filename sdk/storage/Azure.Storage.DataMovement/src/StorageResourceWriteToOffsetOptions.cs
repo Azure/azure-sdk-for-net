@@ -23,5 +23,10 @@ namespace Azure.Storage.DataMovement
         /// Optional. Specifies the position to write to. Will default to 0 if not specified.
         /// </summary>
         public long? Position { get; set; }
+
+        /// <summary>
+        /// Optional. Specifies the source properties to set in the destination.
+        /// </summary>
+        public StorageResourceItemProperties SourceProperties { get; set; }
     }
 }

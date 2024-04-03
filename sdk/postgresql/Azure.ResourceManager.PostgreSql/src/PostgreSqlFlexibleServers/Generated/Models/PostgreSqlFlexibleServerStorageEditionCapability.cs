@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -35,10 +34,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Storage edition name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Default storage size in MB for storage edition. </summary>
+        [WirePath("defaultStorageSizeMb")]
         public long? DefaultStorageSizeMb { get; }
         /// <summary> Flexible server supported storage range in MB. </summary>
+        [WirePath("supportedStorageMb")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageCapability> SupportedStorageCapabilities { get; }
     }
 }

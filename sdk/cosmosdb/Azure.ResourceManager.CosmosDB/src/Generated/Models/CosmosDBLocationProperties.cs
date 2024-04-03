@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Flag indicating whether the location supports availability zones or not. </summary>
+        [WirePath("supportsAvailabilityZone")]
         public bool? DoesSupportAvailabilityZone { get; }
         /// <summary> Flag indicating whether the location is residency sensitive. </summary>
+        [WirePath("isResidencyRestricted")]
         public bool? IsResidencyRestricted { get; }
         /// <summary> The properties of available backup storage redundancies. </summary>
+        [WirePath("backupStorageRedundancies")]
         public IReadOnlyList<CosmosDBBackupStorageRedundancy> BackupStorageRedundancies { get; }
         /// <summary> Flag indicating whether the subscription have access in region for Non-Availability Zones. </summary>
+        [WirePath("isSubscriptionRegionAccessAllowedForRegular")]
         public bool? IsSubscriptionRegionAccessAllowedForRegular { get; }
         /// <summary> Flag indicating whether the subscription have access in region for Availability Zones(Az). </summary>
+        [WirePath("isSubscriptionRegionAccessAllowedForAz")]
         public bool? IsSubscriptionRegionAccessAllowedForAz { get; }
         /// <summary> Enum to indicate current buildout status of the region. </summary>
+        [WirePath("status")]
         public CosmosDBStatus? Status { get; }
     }
 }

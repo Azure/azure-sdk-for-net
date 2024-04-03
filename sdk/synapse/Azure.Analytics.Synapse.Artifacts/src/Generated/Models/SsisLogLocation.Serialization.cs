@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -20,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("logPath"u8);
-            writer.WriteObjectValue(LogPath);
+            writer.WriteObjectValue<object>(LogPath);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("typeProperties"u8);
@@ -28,12 +27,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential);
             }
             if (Optional.IsDefined(LogRefreshInterval))
             {
                 writer.WritePropertyName("logRefreshInterval"u8);
-                writer.WriteObjectValue(LogRefreshInterval);
+                writer.WriteObjectValue<object>(LogRefreshInterval);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -99,7 +98,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SsisLogLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisLogLocation>(model);
             }
             public override SsisLogLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

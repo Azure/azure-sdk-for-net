@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcelSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(StoreSettings))
             {
                 writer.WritePropertyName("storeSettings"u8);
-                writer.WriteObjectValue(StoreSettings);
+                writer.WriteObjectValue<StoreReadSettings>(StoreSettings, options);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcelSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcelSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcelSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExcelSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExcelSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExcelSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcelSource)} does not support reading '{options.Format}' format.");
             }
         }
 

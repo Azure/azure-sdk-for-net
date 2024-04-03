@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.KeyVault
         }
 
         /// <summary> Properties of the managed HSM. </summary>
+        [WirePath("properties")]
         public ManagedHsmProperties Properties { get; set; }
         /// <summary> SKU details. </summary>
+        [WirePath("sku")]
         public ManagedHsmSku Sku { get; set; }
     }
 }

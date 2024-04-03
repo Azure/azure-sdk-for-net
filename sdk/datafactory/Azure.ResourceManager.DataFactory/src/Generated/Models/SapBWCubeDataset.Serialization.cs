@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapBWCubeDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DatasetFolder>(Folder, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapBWCubeDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -233,7 +232,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -249,7 +248,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSapBWCubeDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapBWCubeDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

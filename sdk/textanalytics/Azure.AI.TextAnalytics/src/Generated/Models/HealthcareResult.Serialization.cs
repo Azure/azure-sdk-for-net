@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -21,20 +20,20 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HealthcareResultDocumentsItem>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentError>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentBatchStatistics>(Statistics);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);

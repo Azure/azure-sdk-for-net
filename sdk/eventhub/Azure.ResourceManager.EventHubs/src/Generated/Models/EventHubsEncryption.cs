@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Properties of KeyVault. </summary>
+        [WirePath("keyVaultProperties")]
         public IList<EventHubsKeyVaultProperties> KeyVaultProperties { get; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
+        [WirePath("keySource")]
         public EventHubsKeySource? KeySource { get; set; }
         /// <summary> Enable Infrastructure Encryption (Double Encryption). </summary>
+        [WirePath("requireInfrastructureEncryption")]
         public bool? RequireInfrastructureEncryption { get; set; }
     }
 }

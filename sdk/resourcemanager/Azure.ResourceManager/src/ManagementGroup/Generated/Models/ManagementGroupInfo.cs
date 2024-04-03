@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ManagementGroups.Models
 {
@@ -76,18 +75,25 @@ namespace Azure.ResourceManager.ManagementGroups.Models
         }
 
         /// <summary> The version number of the object. </summary>
+        [WirePath("version")]
         public int? Version { get; }
         /// <summary> The date and time when this object was last updated. </summary>
+        [WirePath("updatedTime")]
         public DateTimeOffset? UpdatedOn { get; }
         /// <summary> The identity of the principal or process that updated the object. </summary>
+        [WirePath("updatedBy")]
         public string UpdatedBy { get; }
         /// <summary> (Optional) The ID of the parent management group. </summary>
+        [WirePath("parent")]
         public ParentManagementGroupInfo Parent { get; }
         /// <summary> The path from the root to the current group. </summary>
+        [WirePath("path")]
         public IReadOnlyList<ManagementGroupPathElement> Path { get; }
         /// <summary> The ancestors of the management group. </summary>
+        [WirePath("managementGroupAncestors")]
         public IReadOnlyList<string> ManagementGroupAncestors { get; }
         /// <summary> The ancestors of the management group displayed in reversed order, from immediate parent to the root. </summary>
+        [WirePath("managementGroupAncestorsChain")]
         public IReadOnlyList<ManagementGroupPathElement> ManagementGroupAncestorChain { get; }
     }
 }
