@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
-using Azure.Identity.Tests.Mock;
 using NUnit.Framework;
 
 namespace Azure.Identity.Tests
@@ -70,14 +68,12 @@ namespace Azure.Identity.Tests
             int callCount = 0;
             List<TimeSpan?> networkTimeouts = new();
 
-            // the mock transport succeeds on the 2nd request to avoid long exponential back-offs,
-            // but is sufficient to validate the initial timeout and retry behavior
             var mockTransport = MockTransport.FromMessageCallback(msg =>
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
                 return callCount > 1 ?
-                 CreateMockResponse(500, "token").WithHeader("Content-Type", "application/json") :
+                 CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json") :
                  CreateMockResponse(400, "Error").WithHeader("Content-Type", "application/json");
             });
             var credOptions = new DefaultAzureCredentialOptions
@@ -93,7 +89,6 @@ namespace Azure.Identity.Tests
                 Transport = mockTransport,
                 RetryPolicy = new RetryPolicy(7, DelayStrategy.CreateFixedDelayStrategy(TimeSpan.Zero))
             };
-            // credOptions.Retry.MaxDelay = TimeSpan.Zero;
 
             var cred = new DefaultAzureCredential(credOptions);
 
@@ -109,8 +104,6 @@ namespace Azure.Identity.Tests
             int callCount = 0;
             List<TimeSpan?> networkTimeouts = new();
 
-            // the mock transport succeeds on the 2nd request to avoid long exponential back-offs,
-            // but is sufficient to validate the initial timeout and retry behavior
             var mockTransport = MockTransport.FromMessageCallback(msg =>
             {
                 callCount++;
