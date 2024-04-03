@@ -115,7 +115,53 @@ namespace Azure.Messaging.EventHubs.Tests
                 return false;
             }
 
-            return instance.Properties.OrderBy(kvp => kvp.Key).SequenceEqual(other.Properties.OrderBy(kvp => kvp.Key));
+            foreach (var key in instance.Properties.Keys)
+            {
+                if (!other.Properties.TryGetValue(key, out object otherValue))
+                {
+                    return false;
+                }
+
+                // Properties can contain byte[] or ArraySegment<byte> values, which need to be compared
+                // as a sequence rather than by strict equality.
+
+                if (instance.Properties[key] is byte[] instanceByteArray)
+                {
+                    var otherByteArray = otherValue switch
+                    {
+                        byte[] byteArray => byteArray,
+                        ArraySegment<byte> arraySegment => arraySegment.ToArray(),
+                        _ => Array.Empty<byte>()
+                    };
+
+                    if (!Enumerable.SequenceEqual(instanceByteArray, otherByteArray))
+                    {
+                        return false;
+                    }
+                }
+                else if (instance.Properties[key] is ArraySegment<byte> instanceArraySegment)
+                {
+                    var otherArraySegment = otherValue switch
+                    {
+                        ArraySegment<byte> arraySegment => arraySegment,
+                        byte[] byteArray => new ArraySegment<byte>(byteArray),
+                        _ => new ArraySegment<byte>()
+                    };
+
+                    if (!Enumerable.SequenceEqual(instanceArraySegment, otherArraySegment))
+                    {
+                        return false;
+                    }
+                }
+                else if (!instance.Properties[key].Equals(otherValue))
+                {
+                    return false;
+                }
+            }
+
+            // No inequalities were found, so the events are equal.
+
+            return true;
         }
     }
 }

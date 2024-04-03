@@ -533,7 +533,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 using var cancellationSource = new CancellationTokenSource();
                 cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
 
                 var sourceEvents = EventGenerator.CreateEvents(5)
                     .Select(current =>
@@ -557,19 +557,6 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     foreach (var sourceEvent in sourceEvents)
                     {
-                        // When being read from the service, an ArraySegment<byte> is converted to a byte[],
-                        // as a distinction between the types cannot be made.  To ensure that the comparison
-                        // is correct, translate the array segment property.
-
-                        foreach (var propertyName in sourceEvent.Properties.Keys)
-                        {
-                            sourceEvent.Properties[propertyName] = sourceEvent.Properties[propertyName] switch
-                            {
-                               ArraySegment<byte> arraySegment => arraySegment.ToArray(),
-                               object value => value
-                            };
-                        }
-
                         var sourceId = sourceEvent.MessageId;
                         Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
                         Assert.That(sourceEvent.IsEquivalentTo(readEvent.Data), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
