@@ -1,16 +1,10 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.3.1 (2024-04-03)
 
 ### Bugs Fixed
 - Fix bug in `LogsQueryClient` constructor if `LogsQueryClientOptions` is null.
 - Fix bug in `MetricsQueryClient` constructor if `MetricsQueryClientOptions` is null.
-
-### Other Changes
 
 ## 1.3.0 (2024-03-28)
 
