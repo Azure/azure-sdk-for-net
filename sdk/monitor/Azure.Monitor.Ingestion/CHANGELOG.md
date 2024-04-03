@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.2 (2024-04-09)
+## 1.1.2 (2024-04-03)
 
 ### Bugs Fixed
 - Fix batching for large logs.
