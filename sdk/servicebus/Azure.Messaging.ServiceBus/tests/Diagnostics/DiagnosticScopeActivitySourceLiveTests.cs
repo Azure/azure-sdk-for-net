@@ -269,6 +269,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Diagnostics
                     {
                         Assert.IsTrue(MessagingClientDiagnostics.TryExtractTraceContext(messages[messageProcessedCt].ApplicationProperties, out var traceparent, out var tracestate));
                         Assert.AreEqual(traceparent, activity.ParentId);
+                        Assert.AreEqual(1, activity.Links);
+                        Assert.AreEqual(activity.ParentSpanId, activity.Links.Single().Context.SpanId);
                         Assert.AreEqual(tracestate, activity.TraceStateString);
                         Assert.AreEqual(DiagnosticProperty.DiagnosticNamespace + ".ServiceBusProcessor", activity.Source.Name);
                         callbackExecuted = true;

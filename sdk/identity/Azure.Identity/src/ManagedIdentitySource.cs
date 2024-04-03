@@ -68,6 +68,11 @@ namespace Azure.Identity
             {
                 throw new CredentialUnavailableException(UnexpectedResponse, jex);
             }
+            catch (Exception e) when (response.Status == 200)
+            {
+                // This is a rare case where the request times out but the response was successful.
+                throw new RequestFailedException("Response from Managed Identity was successful, but the operation timed out prior to completion.", e);
+            }
             catch (Exception e)
             {
                 exception = e;

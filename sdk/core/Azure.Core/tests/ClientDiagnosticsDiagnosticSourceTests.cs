@@ -213,13 +213,14 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
-            var expectedTags = new Dictionary<string, string>()
+            var expectedTags = new Dictionary<string, object>()
             {
                 {"key1", "value1"},
                 {"key2", "value2"}
             };
 
-            scope.AddLink("id", null, expectedTags);
+            string id = "00-0123456789abcdef0123456789abcdef-0123456789abcdef-01";
+            scope.AddLink(id, null, expectedTags);
             scope.Start();
 
             (string Key, object Value, DiagnosticListener) startEvent = testListener.Events.Dequeue();
@@ -236,7 +237,7 @@ namespace Azure.Core.Tests
             Activity linkedActivity = activities.Single();
 
             Assert.AreEqual(ActivityIdFormat.W3C, linkedActivity.IdFormat);
-            Assert.AreEqual("id", linkedActivity.ParentId);
+            Assert.AreEqual(id, linkedActivity.ParentId);
 
             CollectionAssert.AreEquivalent(expectedTags, linkedActivity.Tags);
         }
