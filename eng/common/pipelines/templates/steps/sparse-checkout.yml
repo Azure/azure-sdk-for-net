@@ -30,7 +30,24 @@ steps:
         # 7.2 behavior for command argument passing. Newer behaviors will result
         # in errors from git.exe.
         $PSNativeCommandArgumentPassing = 'Legacy'
-        
+
+        function RetryNativeCommand()
+        {
+            $attempt = 0
+            $sleep = 5
+            $command, $arguments = $args
+
+            while ($true) {
+                $attempt++
+                & $command $arguments
+                if (!$LASTEXITCODE) { return }
+                if ($attempt -gt 3) { exit $LASTEXITCODE }
+                Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
+                Start-Sleep -Seconds $sleep
+                $sleep *= 2
+            }
+        }
+
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
             $dir = $repository.WorkingDirectory
@@ -48,10 +65,10 @@ steps:
 
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
                 Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
-                git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+                RetryNativeCommand git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
               } else {
                 Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-                git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+                RetryNativeCommand git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
               }
 
               # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
@@ -85,7 +102,7 @@ steps:
               Write-Host "git -c advice.detachedHead=false checkout $commitish --"
 
               # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $commitish --
+              RetryNativeCommand git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }
