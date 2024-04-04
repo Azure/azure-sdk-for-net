@@ -12,6 +12,8 @@
 
 ### Other Changes
 
+- It is now possible to set `byte[]` values as [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
+
 ## 5.11.1 (2024-03-05)
 
 ### Other Changes

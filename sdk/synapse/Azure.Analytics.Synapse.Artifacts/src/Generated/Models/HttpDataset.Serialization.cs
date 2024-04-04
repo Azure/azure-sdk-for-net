@@ -298,12 +298,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 compression);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HttpDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHttpDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HttpDataset>(this);
+            return content;
+        }
+
         internal partial class HttpDatasetConverter : JsonConverter<HttpDataset>
         {
             public override void Write(Utf8JsonWriter writer, HttpDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HttpDataset>(model);
             }
+
             public override HttpDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

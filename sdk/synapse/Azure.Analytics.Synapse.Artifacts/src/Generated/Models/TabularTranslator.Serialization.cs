@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 typeConversionSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TabularTranslator FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTabularTranslator(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TabularTranslator>(this);
+            return content;
+        }
+
         internal partial class TabularTranslatorConverter : JsonConverter<TabularTranslator>
         {
             public override void Write(Utf8JsonWriter writer, TabularTranslator model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<TabularTranslator>(model);
             }
+
             public override TabularTranslator Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

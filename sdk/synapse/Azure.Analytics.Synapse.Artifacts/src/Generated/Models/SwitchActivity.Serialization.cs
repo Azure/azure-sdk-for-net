@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 defaultActivities ?? new ChangeTrackingList<Activity>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SwitchActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSwitchActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SwitchActivity>(this);
+            return content;
+        }
+
         internal partial class SwitchActivityConverter : JsonConverter<SwitchActivity>
         {
             public override void Write(Utf8JsonWriter writer, SwitchActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SwitchActivity>(model);
             }
+
             public override SwitchActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -250,12 +250,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 schema0);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new NetezzaTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNetezzaTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NetezzaTableDataset>(this);
+            return content;
+        }
+
         internal partial class NetezzaTableDatasetConverter : JsonConverter<NetezzaTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, NetezzaTableDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<NetezzaTableDataset>(model);
             }
+
             public override NetezzaTableDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

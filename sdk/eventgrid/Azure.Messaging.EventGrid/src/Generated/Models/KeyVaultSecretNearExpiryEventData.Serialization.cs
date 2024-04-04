@@ -83,12 +83,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 exp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultSecretNearExpiryEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultSecretNearExpiryEventData(document.RootElement);
+        }
+
         internal partial class KeyVaultSecretNearExpiryEventDataConverter : JsonConverter<KeyVaultSecretNearExpiryEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretNearExpiryEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override KeyVaultSecretNearExpiryEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

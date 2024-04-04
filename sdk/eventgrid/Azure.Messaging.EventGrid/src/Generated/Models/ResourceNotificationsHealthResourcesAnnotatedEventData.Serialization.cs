@@ -52,12 +52,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ResourceNotificationsHealthResourcesAnnotatedEventData(resourceInfo, operationalInfo, apiVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ResourceNotificationsHealthResourcesAnnotatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsHealthResourcesAnnotatedEventData(document.RootElement);
+        }
+
         internal partial class ResourceNotificationsHealthResourcesAnnotatedEventDataConverter : JsonConverter<ResourceNotificationsHealthResourcesAnnotatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceNotificationsHealthResourcesAnnotatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override ResourceNotificationsHealthResourcesAnnotatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

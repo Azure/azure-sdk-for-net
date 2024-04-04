@@ -42,5 +42,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new DeviceTwinProperties(metadata, version);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTwinProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceTwinProperties(document.RootElement);
+        }
     }
 }

@@ -282,12 +282,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 paginationRules);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RestResourceDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRestResourceDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RestResourceDataset>(this);
+            return content;
+        }
+
         internal partial class RestResourceDatasetConverter : JsonConverter<RestResourceDataset>
         {
             public override void Write(Utf8JsonWriter writer, RestResourceDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<RestResourceDataset>(model);
             }
+
             public override RestResourceDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
