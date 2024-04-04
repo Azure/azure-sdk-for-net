@@ -25,7 +25,6 @@ namespace Azure.Storage.DataMovement.Tests
     {
         private static AccessTier DefaultAccessTier = AccessTier.Cold;
         private const string DefaultContentType = "text/plain";
-        private const string DefaultContentEncoding = "gzip";
         private const string DefaultContentLanguage = "en-US";
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";

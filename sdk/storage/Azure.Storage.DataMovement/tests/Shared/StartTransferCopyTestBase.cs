@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using System.IO;
 using NUnit.Framework;
 using System.Threading;
-using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -40,6 +39,14 @@ namespace Azure.Storage.DataMovement.Tests
 
         public ClientBuilder<TSourceServiceClient, TSourceClientOptions> SourceClientBuilder { get; protected set; }
         public ClientBuilder<TDestinationServiceClient, TDestinationClientOptions> DestinationClientBuilder { get; protected set; }
+
+        public enum TransferPropertiesTestType
+        {
+            Default = 0,
+            Preserve = 1,
+            NoPreserve = 2,
+            NewProperties = 3,
+        }
 
         /// <summary>
         /// Constructor for TransferManager.StartTransferAsync tests
@@ -150,8 +157,11 @@ namespace Azure.Storage.DataMovement.Tests
         /// e.g. ShareFileClient to a ShareFileStorageResource, TSourceObjectClient to a BlockBlobStorageResource.
         /// </summary>
         /// <param name="objectClient">The object client to create the storage resource object.</param>
+        /// <param name="propertiesTestType">This defines what properties to preserve or set.</param>
         /// <returns></returns>
-        protected abstract StorageResourceItem GetDestinationStorageResourceItem(TDestinationObjectClient objectClient);
+        protected abstract StorageResourceItem GetDestinationStorageResourceItem(
+            TDestinationObjectClient objectClient,
+            TransferPropertiesTestType propertiesTestType = TransferPropertiesTestType.Default);
 
         /// <summary>
         /// Calls the OpenRead method on the TDestinationObjectClient.
@@ -168,6 +178,21 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="objectClient">Object Client to call exists on.</param>
         /// <returns></returns>
         protected abstract Task<bool> DestinationExistsAsync(TDestinationObjectClient objectClient);
+
+        /// <summary>
+        /// Verifies resource transfer properties.
+        /// </summary>
+        /// <param name="transfer">The transfer.</param>
+        /// <param name="testEventsRaised">Event Arguements to check.</param>
+        /// <param name="sourceClient">The source resource to check the contents and properties.</param>
+        /// <param name="destinationClient">The destination resource to check the contents and properties.</param>
+        /// <returns></returns>
+        protected abstract Task VerifyPropertiesCopyAsync(
+            DataTransfer transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            TSourceObjectClient sourceClient,
+            TDestinationObjectClient destinationClient);
         #endregion
 
         protected string GetNewObjectName()
@@ -653,7 +678,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Create source local file for checking, and source object
             string sourceName = GetNewObjectName();
             string destinationName = GetNewObjectName();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
                 container: destinationContainer,
                 createResource: createFailedCondition,
@@ -661,7 +685,6 @@ namespace Azure.Storage.DataMovement.Tests
                 objectLength: size);
 
             // Create new source object.
-            string newSourceFile = Path.Combine(testDirectory.DirectoryPath, sourceName);
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
                 objectName: sourceName,
@@ -892,6 +915,103 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(transfer.HasCompleted);
             Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
             Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
+        }
+
+        private async Task CopyRemoteObjects_VerifyProperties(
+            TSourceContainerClient sourceContainer,
+            TDestinationContainerClient destinationContainer,
+            TransferPropertiesTestType propertiesType)
+        {
+            // Create blob with properties
+            TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
+                container: sourceContainer,
+                objectLength: 0,
+                createResource: true);
+            // Set preserve properties
+            StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
+
+            // Destination client - Set Properties
+            TDestinationObjectClient destinationClient = await GetDestinationObjectClientAsync(
+                container: destinationContainer,
+                createResource: false);
+            StorageResourceItem destinationResource = GetDestinationStorageResourceItem(
+                destinationClient,
+                propertiesTestType: propertiesType);
+
+            DataTransferOptions options = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
+            TransferManager transferManager = new TransferManager();
+
+            // Act - Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                options);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Assert
+            await VerifyPropertiesCopyAsync(
+                transfer,
+                propertiesType,
+                testEventsRaised,
+                sourceClient,
+                destinationClient);
+        }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_DefaultProperties()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Default);
+        }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_PreserveProperties()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Preserve);
+        }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_NoPreserveProperties()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.NoPreserve);
+        }
+
+        [RecordedTest]
+        public virtual async Task SourceObjectToDestinationObject_NewProperties()
+        {
+            // Arrange
+            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
+            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
+
+            await CopyRemoteObjects_VerifyProperties(
+                source.Container,
+                destination.Container,
+                TransferPropertiesTestType.Preserve);
         }
     }
 }

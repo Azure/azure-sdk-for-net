@@ -6,14 +6,18 @@ extern alias BaseBlobs;
 
 using System;
 using System.Threading.Tasks;
+using Azure.Storage.Test;
 using Azure.Storage.Test.Shared;
 using Azure.Storage.DataMovement.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using BaseBlobs::Azure.Storage.Blobs;
 using BaseBlobs::Azure.Storage.Blobs.Specialized;
+using BaseBlobs::Azure.Storage.Blobs.Models;
 using System.IO;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
+using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -29,6 +33,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         BlobClientOptions,
         StorageTestEnvironment>
     {
+        private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
+        private const string _defaultContentType = "text/plain";
+        private const string _defaultContentLanguage = "en-US";
+        private const string _defaultContentDisposition = "inline";
+        private const string _defaultCacheControl = "no-cache";
+        private readonly Metadata _defaultMetadata = DataProvider.BuildMetadata();
         private const int MaxReliabilityRetries = 5;
         private const string _blobResourcePrefix = "test-blob-";
         private const string _expectedOverwriteExceptionMessage = "BlobAlreadyExists";
@@ -123,11 +133,104 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 options,
                 contents);
 
-        protected override StorageResourceItem GetDestinationStorageResourceItem(BlockBlobClient objectClient)
-            => new BlockBlobStorageResource(objectClient);
+        protected override StorageResourceItem GetDestinationStorageResourceItem(
+            BlockBlobClient objectClient,
+            TransferPropertiesTestType type = TransferPropertiesTestType.Default)
+        {
+            BlockBlobStorageResourceOptions options = default;
+            if (type == TransferPropertiesTestType.NewProperties)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    AccessTier = new(_defaultAccessTier),
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguage),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType)
+                };
+            }
+            else if (type == TransferPropertiesTestType.NoPreserve)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    AccessTier = new(false),
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    ContentType = new(false)
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    AccessTier = new(true),
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true),
+                    ContentType = new(true)
+                };
+            }
+            return new BlockBlobStorageResource(objectClient, options);
+        }
 
         protected override Task<Stream> DestinationOpenReadAsync(BlockBlobClient objectClient)
             => objectClient.OpenReadAsync();
+
+        protected override async Task VerifyPropertiesCopyAsync(
+            DataTransfer transfer,
+            TransferPropertiesTestType transferPropertiesTestType,
+            TestEventsRaised testEventsRaised,
+            BlockBlobClient sourceClient,
+            BlockBlobClient destinationClient)
+        {
+            // Verify completion
+            Assert.NotNull(transfer);
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            // Verify Copy - using original source File and Copying the destination
+            await testEventsRaised.AssertSingleCompletedCheck();
+            using Stream sourceStream = await sourceClient.OpenReadAsync();
+            using Stream destinationStream = await destinationClient.OpenReadAsync();
+            Assert.AreEqual(sourceStream, destinationStream);
+
+            if (transferPropertiesTestType == TransferPropertiesTestType.NoPreserve)
+            {
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.IsNull(destinationProperties.ContentDisposition);
+                Assert.IsNull(destinationProperties.ContentLanguage);
+                Assert.IsNull(destinationProperties.CacheControl);
+
+                GetBlobTagResult destinationTags = await destinationClient.GetTagsAsync();
+                Assert.IsEmpty(destinationTags.Tags);
+            }
+            else if (transferPropertiesTestType == TransferPropertiesTestType.NewProperties)
+            {
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(_defaultMetadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(_defaultAccessTier.ToString(), destinationProperties.AccessTier);
+                Assert.AreEqual(_defaultContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(_defaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(_defaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(_defaultContentType, destinationProperties.ContentType);
+            }
+            else //(transferPropertiesTestType == TransferPropertiesTestType.Default ||
+                 //transferPropertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                BlobProperties sourceProperties = await sourceClient.GetPropertiesAsync();
+                BlobProperties destinationProperties = await destinationClient.GetPropertiesAsync();
+
+                Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                Assert.AreEqual(sourceProperties.AccessTier, destinationProperties.AccessTier);
+                Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(sourceProperties.ContentType, destinationProperties.ContentType);
+            }
+        }
 
         public BlobClientOptions GetOptions()
         {
