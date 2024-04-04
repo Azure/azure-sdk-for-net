@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
 using NUnit.Framework;
 using static Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.TestHelper;
 using Payload = Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests.Payloads.TokenIssuanceStart;

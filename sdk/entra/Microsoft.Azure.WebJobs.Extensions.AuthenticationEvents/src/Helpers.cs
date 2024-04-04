@@ -10,9 +10,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
-
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Actions;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {

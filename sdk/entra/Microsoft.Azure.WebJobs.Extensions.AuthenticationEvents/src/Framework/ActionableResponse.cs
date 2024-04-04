@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
