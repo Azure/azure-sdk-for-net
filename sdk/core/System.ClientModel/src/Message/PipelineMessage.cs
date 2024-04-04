@@ -107,7 +107,8 @@ public class PipelineMessage : IDisposable
     /// this <see cref="PipelineMessage"/> instance.
     /// </summary>
     /// <param name="options">The <see cref="RequestOptions"/> to apply to this
-    /// <see cref="PipelineMessage"/> instance.</param>
+    /// <see cref="PipelineMessage"/> instance.  If <c>null</c> is passed,
+    /// no changes will be made to this message instance.</param>
     /// <remarks> This method is intended to be called after the creation of
     /// the <see cref="PipelineMessage"/> and its <see cref="Request"/> is
     /// complete, and prior to the call to
