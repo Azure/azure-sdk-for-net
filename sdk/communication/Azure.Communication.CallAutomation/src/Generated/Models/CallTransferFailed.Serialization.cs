@@ -56,5 +56,13 @@ namespace Azure.Communication.CallAutomation
             }
             return new CallTransferFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallTransferFailed FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCallTransferFailed(document.RootElement);
+        }
     }
 }
