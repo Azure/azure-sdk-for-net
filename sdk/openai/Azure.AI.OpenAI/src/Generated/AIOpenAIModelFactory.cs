@@ -50,6 +50,29 @@ namespace Azure.AI.OpenAI
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscription"/>. </summary>
+        /// <param name="text"> The transcribed text for the provided audio data. </param>
+        /// <param name="internalAudioTaskLabel"> The label that describes which operation type generated the accompanying response data. </param>
+        /// <param name="language">
+        /// The spoken language that was detected in the transcribed audio data.
+        /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.
+        /// </param>
+        /// <param name="duration"> The total duration of the audio processed to produce accompanying transcription information. </param>
+        /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranscription"/> instance for mocking. </returns>
+        public static AudioTranscription AudioTranscription(string text = null, AudioTaskLabel? internalAudioTaskLabel = null, string language = null, TimeSpan? duration = null, IEnumerable<AudioTranscriptionSegment> segments = null)
+        {
+            segments ??= new List<AudioTranscriptionSegment>();
+
+            return new AudioTranscription(
+                text,
+                internalAudioTaskLabel,
+                language,
+                duration,
+                segments?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
@@ -113,6 +136,29 @@ namespace Azure.AI.OpenAI
                 prompt,
                 temperature,
                 deploymentName,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslation"/>. </summary>
+        /// <param name="text"> The translated text for the provided audio data. </param>
+        /// <param name="internalAudioTaskLabel"> The label that describes which operation type generated the accompanying response data. </param>
+        /// <param name="language">
+        /// The spoken language that was detected in the translated audio data.
+        /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.
+        /// </param>
+        /// <param name="duration"> The total duration of the audio processed to produce accompanying translation information. </param>
+        /// <param name="segments"> A collection of information about the timing, probabilities, and other detail of each processed audio segment. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranslation"/> instance for mocking. </returns>
+        public static AudioTranslation AudioTranslation(string text = null, AudioTaskLabel? internalAudioTaskLabel = null, string language = null, TimeSpan? duration = null, IEnumerable<AudioTranslationSegment> segments = null)
+        {
+            segments ??= new List<AudioTranslationSegment>();
+
+            return new AudioTranslation(
+                text,
+                internalAudioTaskLabel,
+                language,
+                duration,
+                segments?.ToList(),
                 serializedAdditionalRawData: null);
         }
 

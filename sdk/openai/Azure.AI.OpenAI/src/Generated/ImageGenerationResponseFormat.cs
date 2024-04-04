@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI
 {
     /// <summary> The format in which the generated images are returned. </summary>
-    internal readonly partial struct ImageGenerationResponseFormat : IEquatable<ImageGenerationResponseFormat>
+    public readonly partial struct ImageGenerationResponseFormat : IEquatable<ImageGenerationResponseFormat>
     {
         private readonly string _value;
 
