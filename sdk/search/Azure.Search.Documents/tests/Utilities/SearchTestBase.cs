@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
+using Azure.Core.TestFramework.Models;
 using Azure.Search.Documents.Indexes;
 using Azure.Search.Documents.Indexes.Models;
 using Azure.Search.Documents.Models;
@@ -60,6 +61,7 @@ namespace Azure.Search.Documents.Tests
             JsonPathSanitizers.Add("$..applicationSecret");
             SanitizedHeaders.Add("api-key");
             CompareBodies = false;
+            BodyKeySanitizers.Add(new BodyKeySanitizer("apiKey") { JsonPath = "vectorSearch.vectorizers[0].azureOpenAIParameters.apiKey" });
         }
 
         /// <summary>

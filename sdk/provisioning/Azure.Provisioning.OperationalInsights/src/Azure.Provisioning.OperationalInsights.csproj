@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Azure.Provisioning.OperationalInsights simplifies declarative resource provisioning in .NET for Azure Operational Insights.</Description>
+    <Version>0.1.0-beta.1</Version>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <NoWarn>$(NoWarn);AZC0001</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Azure.Provisioning\src\Azure.Provisioning.csproj" />
+  </ItemGroup>
+
+</Project>

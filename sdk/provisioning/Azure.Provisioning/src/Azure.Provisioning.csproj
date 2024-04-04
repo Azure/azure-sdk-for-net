@@ -10,22 +10,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.ResourceManager" />
-    <PackageReference Include="Azure.ResourceManager.Resources" />
-    <PackageReference Include="Azure.ResourceManager.KeyVault" />
-    <PackageReference Include="Azure.ResourceManager.Sql" />
-    <PackageReference Include="Azure.ResourceManager.Storage" />
-    <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
     <PackageReference Include="Azure.ResourceManager.Authorization" />
-    <PackageReference Include="Azure.ResourceManager.Redis" />
-    <PackageReference Include="Azure.ResourceManager.PostgreSql" />
-    <PackageReference Include="Azure.ResourceManager.CosmosDB" />
-    <PackageReference Include="Azure.ResourceManager.CognitiveServices" />
-    <PackageReference Include="Azure.ResourceManager.ServiceBus" />
-    <PackageReference Include="Azure.ResourceManager.Search" />
-    <PackageReference Include="Azure.ResourceManager.EventHubs" />
-    <PackageReference Include="Azure.ResourceManager.SignalR" />
-    <PackageReference Include="Azure.ResourceManager.ApplicationInsights" />
-    <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
     <PackageReference Include="Azure.ResourceManager.ManagedServiceIdentities" />
   </ItemGroup>
 

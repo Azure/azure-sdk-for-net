@@ -1,14 +1,9 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.1.2 (2024-04-03)
 
 ### Bugs Fixed
-
-### Other Changes
+- Prevent logs from being dropped when the last entry is greater than 1 Mb.
 
 ## 1.1.1 (2023-10-16)
 
