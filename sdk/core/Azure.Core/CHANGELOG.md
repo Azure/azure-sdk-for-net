@@ -1,6 +1,6 @@
 # Release History
 
-## 1.39.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,8 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+- Moved Azure.Core types to use functionality implemented in System.ClientModel library.
 
 ## 1.38.0 (2024-02-26)
 

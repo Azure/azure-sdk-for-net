@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -12,108 +13,101 @@ namespace Azure.Core
     /// <summary>
     /// Represents a context flowing through the <see cref="HttpPipeline"/>.
     /// </summary>
-    public sealed class HttpMessage : IDisposable
+    public sealed class HttpMessage : PipelineMessage
     {
-        private ArrayBackedPropertyBag<ulong, object> _propertyBag;
-        private Response? _response;
-
         /// <summary>
         /// Creates a new instance of <see cref="HttpMessage"/>.
         /// </summary>
         /// <param name="request">The request.</param>
         /// <param name="responseClassifier">The response classifier.</param>
         public HttpMessage(Request request, ResponseClassifier responseClassifier)
+            : base(request)
         {
-            Argument.AssertNotNull(request, nameof(Request));
-            Request = request;
+            Argument.AssertNotNull(request, nameof(request));
+
             ResponseClassifier = responseClassifier;
-            BufferResponse = true;
-            _propertyBag = new ArrayBackedPropertyBag<ulong, object>();
+            NetworkTimeout = request.NetworkTimeout ?? ClientOptions.DefaultNetworkTimeout;
         }
 
         /// <summary>
         /// Gets the <see cref="Request"/> associated with this message.
         /// </summary>
-        public Request Request { get; }
+        public new Request Request { get => (Request)base.Request; }
 
         /// <summary>
         /// Gets the <see cref="Response"/> associated with this message. Throws an exception if it wasn't set yet.
         /// To avoid the exception use <see cref="HasResponse"/> property to check.
         /// </summary>
-        public Response Response
+        public new Response Response
         {
             get
             {
-                if (_response == null)
+                if (base.Response is null)
                 {
 #pragma warning disable CA1065 // Do not raise exceptions in unexpected locations
-                    throw new InvalidOperationException("Response was not set, make sure SendAsync was called");
+                    throw new InvalidOperationException($"""
+                        {nameof(Response)} is not set on this message.  This
+                        may be because the message was not sent via
+                        pipeline.Send, the pipeline transport did not populate
+                        the response, or because {nameof(ExtractResponse)} was
+                        called. You can check the {nameof(HasResponse)}
+                        property to test whether the message has a response
+                        value before accessing the {nameof(Response)} property.
+                        """);
 #pragma warning restore CA1065 // Do not raise exceptions in unexpected locations
                 }
-                return _response;
+                return (Response)base.Response;
             }
-            set => _response = value;
+
+            set => base.Response = value;
         }
 
         /// <summary>
         /// Gets the value indicating if the response is set on this message.
         /// </summary>
-        public bool HasResponse => _response != null;
+        public bool HasResponse => base.Response is not null;
 
-        internal void ClearResponse() => _response = null;
-
-        /// <summary>
-        /// The <see cref="System.Threading.CancellationToken"/> to be used during the <see cref="HttpMessage"/> processing.
-        /// </summary>
-        public CancellationToken CancellationToken { get; internal set; }
+        internal void ClearResponse() => Response = null!;
 
         /// <summary>
         /// The <see cref="ResponseClassifier"/> instance to use for response classification during pipeline invocation.
         /// </summary>
-        public ResponseClassifier ResponseClassifier { get; set; }
+        public new ResponseClassifier ResponseClassifier
+        {
+            get => base.ResponseClassifier switch
+            {
+                ResponseClassifier responseClassifier => responseClassifier,
+                PipelineMessageClassifier messageClassifier => new ResponseClassifier.PipelineMessageClassifierAdapter(messageClassifier)
+            };
 
-        /// <summary>
-        /// Gets or sets the value indicating if response would be buffered as part of the pipeline. Defaults to true.
-        /// </summary>
-        public bool BufferResponse { get; set; }
-
-        /// <summary>
-        /// Gets or sets the network timeout value for this message. If <c>null</c> the value provided in <see cref="RetryOptions.NetworkTimeout"/> would be used instead.
-        /// Defaults to <c>null</c>.
-        /// </summary>
-        public TimeSpan? NetworkTimeout { get; set; }
+            set => base.ResponseClassifier = value;
+        }
 
         internal int RetryNumber { get; set; }
 
         internal DateTimeOffset ProcessingStartTime { get; set; }
+
+        internal void SetCancellationToken(CancellationToken cancellationToken)
+            => CancellationToken = cancellationToken;
 
         /// <summary>
         /// The processing context for the message.
         /// </summary>
         public MessageProcessingContext ProcessingContext => new(this);
 
-        internal void ApplyRequestContext(RequestContext? context, ResponseClassifier? classifier)
+        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+
+        internal static HttpMessage GetHttpMessage(PipelineMessage message, string? errorMessage = default)
         {
-            if (context == null)
+            if (message is not HttpMessage httpMessage)
             {
-                return;
+                throw new InvalidOperationException($"Invalid type for PipelineMessage: '{message?.GetType()}'. {errorMessage}");
             }
 
-            context.Freeze();
-
-            if (context.Policies?.Count > 0)
-            {
-                Policies ??= new(context.Policies.Count);
-                Policies.AddRange(context.Policies);
-            }
-
-            if (classifier != null)
-            {
-                ResponseClassifier = context.Apply(classifier);
-            }
+            return httpMessage;
         }
 
-        internal List<(HttpPipelinePosition Position, HttpPipelinePolicy Policy)>? Policies { get; set; }
+        #region Message Properties
 
         /// <summary>
         /// Gets a property that modifies the pipeline behavior. Please refer to individual policies documentation on what properties it supports.
@@ -124,7 +118,7 @@ namespace Azure.Core
         public bool TryGetProperty(string name, out object? value)
         {
             value = null;
-            if (_propertyBag.IsEmpty || !_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            if (!TryGetProperty(typeof(MessagePropertyKey), out var rawValue))
             {
                 return false;
             }
@@ -140,10 +134,10 @@ namespace Azure.Core
         public void SetProperty(string name, object value)
         {
             Dictionary<string, object> properties;
-            if (!_propertyBag.TryGetValue((ulong)typeof(MessagePropertyKey).TypeHandle.Value, out var rawValue))
+            if (!TryGetProperty(typeof(MessagePropertyKey), out var rawValue))
             {
                 properties = new Dictionary<string, object>();
-                _propertyBag.Set((ulong)typeof(MessagePropertyKey).TypeHandle.Value, properties);
+                SetProperty(typeof(MessagePropertyKey), properties);
             }
             else
             {
@@ -153,41 +147,28 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Gets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
+        /// Exists as a private key entry into the property bag for stashing string keyed entries in the Type keyed dictionary.
         /// </summary>
-        /// <param name="type">The property type.</param>
-        /// <param name="value">The property value.</param>
-        /// <remarks>
-        /// The key value is of type <c>Type</c> for a couple of reasons. Primarily, it allows values to be stored such that though the accessor methods
-        /// are public, storing values keyed by internal types make them inaccessible to other assemblies. This protects internal values from being overwritten
-        /// by external code. See the <see cref="TelemetryDetails"/> and <see cref="UserAgentValueKey"/> types for an example of this usage. Secondly, <c>Type</c>
-        /// comparisons are faster than string comparisons.
-        /// </remarks>
-        /// <returns><c>true</c> if property exists, otherwise. <c>false</c>.</returns>
-        public bool TryGetProperty(Type type, out object? value) =>
-            _propertyBag.TryGetValue((ulong)type.TypeHandle.Value, out value);
+        private class MessagePropertyKey { }
+        #endregion
 
         /// <summary>
-        /// Sets a property that is stored with this <see cref="HttpMessage"/> instance and can be used for modifying pipeline behavior.
-        /// Internal properties can be keyed with internal types to prevent external code from overwriting these values.
+        /// Returns the response content stream and releases its ownership to the caller.
+        /// After this method has been called, any use of the
+        /// <see cref="PipelineResponse.ContentStream"/> or <see cref="Response.Content"/>
+        /// properties on this message will result in an <see cref="InvalidOperationException"/>
+        /// being thrown.
         /// </summary>
-        /// <param name="type">The key for the value.</param>
-        /// <param name="value">The property value.</param>
-        public void SetProperty(Type type, object value) =>
-            _propertyBag.Set((ulong)type.TypeHandle.Value, value);
-
-        /// <summary>
-        /// Returns the response content stream and releases it ownership to the caller. After calling this methods using <see cref="Azure.Response.ContentStream"/> or <see cref="Azure.Response.Content"/> would result in exception.
-        /// </summary>
-        /// <returns>The content stream or null if response didn't have any.</returns>
+        /// <returns>The content stream, or <code>null</code> if <see cref="Response"/>
+        /// did not have content set.</returns>
         public Stream? ExtractResponseContent()
         {
-            switch (_response?.ContentStream)
+            switch (Response?.ContentStream)
             {
                 case ResponseShouldNotBeUsedStream responseContent:
                     return responseContent.Original;
                 case Stream stream:
-                    _response.ContentStream = new ResponseShouldNotBeUsedStream(_response.ContentStream);
+                    Response.ContentStream = new ResponseShouldNotBeUsedStream(Response.ContentStream);
                     return stream;
                 default:
                     return null;
@@ -195,20 +176,14 @@ namespace Azure.Core
         }
 
         /// <summary>
-        /// Disposes the request and response.
+        /// Returns the value of the <see cref="Response"/> property and
+        /// transfers dispose ownership of the response to the caller. After
+        /// calling this method, the <see cref="Response"/> property will be
+        /// null and the caller will be responsible for disposing the returned
+        /// value, which may hold a live network stream.
         /// </summary>
-        public void Dispose()
-        {
-            Request.Dispose();
-            _propertyBag.Dispose();
-
-            var response = _response;
-            if (response != null)
-            {
-                _response = null;
-                response.Dispose();
-            }
-        }
+        public new Response? ExtractResponse()
+            => (Response?)base.ExtractResponse();
 
         private class ResponseShouldNotBeUsedStream : Stream
         {
@@ -260,10 +235,5 @@ namespace Azure.Core
                 set => throw CreateException();
             }
         }
-
-        /// <summary>
-        /// Exists as a private key entry into the <see cref="_propertyBag"/> dictionary for stashing string keyed entries in the Type keyed dictionary.
-        /// </summary>
-        private class MessagePropertyKey { }
     }
 }

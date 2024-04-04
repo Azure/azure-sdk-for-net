@@ -2,8 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Runtime.InteropServices;
@@ -14,12 +15,11 @@ using System.Threading.Tasks;
 namespace Azure.Core.Pipeline
 {
     /// <summary>
-    /// An <see cref="HttpPipelineTransport"/> implementation that uses <see cref="HttpClient"/> as the transport.
+    /// An <see cref="HttpPipelineTransport"/> implementation that uses
+    /// <see cref="HttpClient"/> as the transport.
     /// </summary>
     public partial class HttpClientTransport : HttpPipelineTransport, IDisposable
     {
-        internal const string MessageForServerCertificateCallback = "MessageForServerCertificateCallback";
-
         /// <summary>
         /// A shared instance of <see cref="HttpClientTransport"/> with default parameters.
         /// </summary>
@@ -28,26 +28,22 @@ namespace Azure.Core.Pipeline
         // The transport's private HttpClient is internal because it is used by tests.
         internal HttpClient Client { get; }
 
-        /// <summary>
-        /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
-        /// </summary>
-        public HttpClientTransport() : this(CreateDefaultClient())
-        { }
+        private readonly AzureCoreHttpPipelineTransport _transport;
 
         /// <summary>
         /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
         /// </summary>
-        /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
-        internal HttpClientTransport(HttpPipelineTransportOptions? options = null) : this(CreateDefaultClient(options))
-        { }
+        public HttpClientTransport() : this(CreateDefaultClient())
+        {
+        }
 
         /// <summary>
         /// Creates a new instance of <see cref="HttpClientTransport"/> using the provided client instance.
         /// </summary>
         /// <param name="messageHandler">The instance of <see cref="HttpMessageHandler"/> to use.</param>
         public HttpClientTransport(HttpMessageHandler messageHandler)
+            : this(new HttpClient(messageHandler))
         {
-            Client = new HttpClient(messageHandler) ?? throw new ArgumentNullException(nameof(messageHandler));
         }
 
         /// <summary>
@@ -57,88 +53,61 @@ namespace Azure.Core.Pipeline
         public HttpClientTransport(HttpClient client)
         {
             Client = client ?? throw new ArgumentNullException(nameof(client));
+
+            _transport = new AzureCoreHttpPipelineTransport(client);
+        }
+
+        /// <summary>
+        /// Creates a new <see cref="HttpClientTransport"/> instance using default configuration.
+        /// </summary>
+        /// <param name="options">The <see cref="HttpPipelineTransportOptions"/> that to configure the behavior of the transport.</param>
+        internal HttpClientTransport(HttpPipelineTransportOptions? options = null)
+            : this(CreateDefaultClient(options))
+        {
         }
 
         /// <inheritdoc />
         public sealed override Request CreateRequest()
-            => new HttpClientTransportRequest();
+            => ((HttpMessage)_transport.CreateMessage()).Request;
 
         /// <inheritdoc />
         public override void Process(HttpMessage message)
         {
-#if NET5_0_OR_GREATER
-            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
-#else
-            // Intentionally blocking here
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
-            ProcessAsync(message).AsTask().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
-#endif
+            try
+            {
+                _transport.Process(message);
+            }
+            catch (ClientResultException e)
+            {
+                if (message.HasResponse)
+                {
+                    throw new RequestFailedException(message.Response, e.InnerException);
+                }
+                else
+                {
+                    throw new RequestFailedException(e.Message, e.InnerException);
+                }
+            }
         }
 
         /// <inheritdoc />
-        public override ValueTask ProcessAsync(HttpMessage message)
-            => ProcessSyncOrAsync(message, async: true);
-
-#pragma warning disable CA1801 // async parameter unused on netstandard
-        private async ValueTask ProcessSyncOrAsync(HttpMessage message, bool async)
-#pragma warning restore CA1801
+        public override async ValueTask ProcessAsync(HttpMessage message)
         {
-            using HttpRequestMessage httpRequest = BuildRequestMessage(message);
-            SetPropertiesOrOptions<HttpMessage>(httpRequest, MessageForServerCertificateCallback, message);
-            HttpResponseMessage responseMessage;
-            Stream? contentStream = null;
-            message.ClearResponse();
             try
             {
-#if NET5_0_OR_GREATER
-                if (!async)
+                await _transport.ProcessAsync(message).ConfigureAwait(false);
+            }
+            catch (ClientResultException e)
+            {
+                if (message.HasResponse)
                 {
-                    // Sync HttpClient.Send is not supported on browser but neither is the sync-over-async
-                    // HttpClient.Send would throw a NotSupported exception instead of GetAwaiter().GetResult()
-                    // throwing a System.Threading.SynchronizationLockException: Cannot wait on monitors on this runtime.
-#pragma warning disable CA1416 // 'HttpClient.Send(HttpRequestMessage, HttpCompletionOption, CancellationToken)' is unsupported on 'browser'
-                    responseMessage = Client.Send(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken);
-#pragma warning restore CA1416
+                    throw await RequestFailedException.CreateAsync(message.Response, innerException: e.InnerException).ConfigureAwait(false);
                 }
                 else
-#endif
                 {
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    responseMessage = await Client.SendAsync(httpRequest, HttpCompletionOption.ResponseHeadersRead, message.CancellationToken)
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                        .ConfigureAwait(false);
-                }
-
-                if (responseMessage.Content != null)
-                {
-#if NET5_0_OR_GREATER
-                    if (async)
-                    {
-                        contentStream = await responseMessage.Content.ReadAsStreamAsync(message.CancellationToken).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        contentStream = responseMessage.Content.ReadAsStream(message.CancellationToken);
-                    }
-#else
-#pragma warning disable AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-                    contentStream = await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
-#pragma warning restore AZC0110 // DO NOT use await keyword in possibly synchronous scope.
-#endif
+                    throw new RequestFailedException(e.Message, innerException: e.InnerException);
                 }
             }
-            // HttpClient on NET5 throws OperationCanceledException from sync call sites, normalize to TaskCanceledException
-            catch (OperationCanceledException e) when (CancellationHelper.ShouldWrapInOperationCanceledException(e, message.CancellationToken))
-            {
-                throw CancellationHelper.CreateOperationCanceledException(e, message.CancellationToken);
-            }
-            catch (HttpRequestException e)
-            {
-                throw new RequestFailedException(e.Message, e);
-            }
-
-            message.Response = new HttpClientTransportResponse(message.Request.ClientRequestId, responseMessage, contentStream);
         }
 
         private static HttpClient CreateDefaultClient(HttpPipelineTransportOptions? options = null)
@@ -249,6 +218,11 @@ namespace Azure.Core.Pipeline
             return httpHandler;
         }
 #endif
+
+        private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
+            "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
+            "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
+
         /// <summary>
         /// Disposes the underlying <see cref="HttpClient"/>.
         /// </summary>
@@ -262,17 +236,47 @@ namespace Azure.Core.Pipeline
             GC.SuppressFinalize(this);
         }
 
-        private static void SetPropertiesOrOptions<T>(HttpRequestMessage httpRequest, string name, T value)
+        /// <summary>
+        /// Adds Azure.Core features to the System.ClientModel HttpClient-based
+        /// transport.
+        ///
+        /// This type inherits from System.ClientModel's
+        /// <see cref="HttpClientPipelineTransport"/> and overrides its
+        /// extensibility points for
+        /// <see cref="OnSendingRequest(PipelineMessage, HttpRequestMessage)"/>
+        /// and <see cref="OnReceivedResponse(PipelineMessage, HttpResponseMessage)"/>
+        /// to add features specific to Azure, such as
+        /// <see cref="Request.ClientRequestId"/>.
+        /// </summary>
+        private class AzureCoreHttpPipelineTransport : HttpClientPipelineTransport
         {
-#if NET5_0_OR_GREATER
-            httpRequest.Options.Set(new HttpRequestOptionsKey<T>(name), value);
-#else
-            httpRequest.Properties[name] = value;
-#endif
-        }
+            public AzureCoreHttpPipelineTransport(HttpClient client) : base(client)
+            {
+            }
 
-        private static bool UseCookies() => AppContextSwitchHelper.GetConfigValue(
-            "Azure.Core.Pipeline.HttpClientTransport.EnableCookies",
-            "AZURE_CORE_HTTPCLIENT_ENABLE_COOKIES");
+            protected override PipelineMessage CreateMessageCore()
+            {
+                PipelineMessage message = base.CreateMessageCore();
+                HttpClientTransportRequest request = new(message.Request);
+                return new HttpMessage(request, ResponseClassifier.Shared);
+            }
+
+            /// <inheritdoc />
+            protected override void OnSendingRequest(PipelineMessage message, HttpRequestMessage httpRequest)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+                HttpClientTransportRequest.AddAzureProperties(httpMessage, httpRequest);
+                httpMessage.ClearResponse();
+            }
+
+            /// <inheritdoc />
+            protected override void OnReceivedResponse(PipelineMessage message, HttpResponseMessage httpResponse)
+            {
+                HttpMessage httpMessage = HttpMessage.GetHttpMessage(message, "The provided message was created by a different transport.");
+                string clientRequestId = httpMessage.Request.ClientRequestId;
+                PipelineResponse pipelineResponse = message.Response!;
+                httpMessage.Response = new HttpClientTransportResponse(clientRequestId, pipelineResponse);
+            }
+        }
     }
 }

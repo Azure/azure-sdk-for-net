@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
@@ -24,22 +25,20 @@ namespace Azure.Core.Pipeline
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            await _transport.ProcessAsync(message).ConfigureAwait(false);
+            await _transport.ProcessAsync(message as PipelineMessage).ConfigureAwait(false);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
-            message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
         {
             Debug.Assert(pipeline.IsEmpty);
 
-            _transport.Process(message);
+            _transport.Process(message as PipelineMessage);
 
             message.Response.RequestFailedDetailsParser = _errorParser;
             message.Response.Sanitizer = _sanitizer;
-            message.Response.IsError = message.ResponseClassifier.IsErrorResponse(message);
         }
     }
 }
