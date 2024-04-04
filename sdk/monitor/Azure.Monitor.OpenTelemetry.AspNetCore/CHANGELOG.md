@@ -14,8 +14,7 @@
   ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
   - OpenTelemetry 1.8.0
   - OpenTelemetry.Extensions.Hosting 1.8.0
-  - OpenTelemetry.Exporter.InMemory 1.8.0
-  
+
 * Removed the necessity for custom resource attributes configuration in
   OpenTelemetry logging setup, as the OpenTelemetry .NET SDK's enhancements to
   the builder.ConfigureResource method now uniformly set resource attributes
