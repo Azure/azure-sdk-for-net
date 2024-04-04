@@ -31,17 +31,23 @@ steps:
         # in errors from git.exe.
         $PSNativeCommandArgumentPassing = 'Legacy'
 
-        function RetryNativeCommand()
+        function Retry()
         {
+            $command, $arguments = $args
+            Run $command $arguments 3
+        }
+
+        function Run($command, $arguments, $retries = 0)
+        {
+            Write-Host $args
             $attempt = 0
             $sleep = 5
-            $command, $arguments = $args
 
             while ($true) {
                 $attempt++
                 & $command $arguments
                 if (!$LASTEXITCODE) { return }
-                if ($attempt -gt 3) { exit $LASTEXITCODE }
+                if ($attempt -gt $retries) { exit $LASTEXITCODE }
                 Write-Warning "Attempt $attempt failed: $_. Trying again in $sleep seconds..."
                 Start-Sleep -Seconds $sleep
                 $sleep *= 2
@@ -64,23 +70,18 @@ steps:
               Write-Host "Repository $($repository.Name) is being initialized."
 
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
-                Write-Host "git clone --no-checkout --filter=tree:0 -c remote.origin.fetch='+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)' https://github.com/$($repository.Name) ."
-                RetryNativeCommand git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://github.com/$($repository.Name) .
               } else {
-                Write-Host "git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) ."
-                RetryNativeCommand git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
+                Retry git clone --no-checkout --filter=tree:0 https://github.com/$($repository.Name) .
               }
 
               # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
-              Write-Host "git config gc.auto 0"
-              git config gc.auto 0
+              Run git config gc.auto 0
 
-              Write-Host "git sparse-checkout init"
-              git sparse-checkout init
+              Run git sparse-checkout init
 
               # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
               # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
-              Write-Host "git sparse-checkout set --no-cone '/*' '!/*/' '/eng'"
               git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
             }
 
@@ -99,10 +100,8 @@ steps:
               $commitish = $repository.Commitish -replace '^refs/heads/', ''
 
               # use -- to prevent git from interpreting the commitish as a path
-              Write-Host "git -c advice.detachedHead=false checkout $commitish --"
-
               # This will use the default branch if repo.Commitish is empty
-              RetryNativeCommand git -c advice.detachedHead=false checkout $commitish --
+              Retry git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }
