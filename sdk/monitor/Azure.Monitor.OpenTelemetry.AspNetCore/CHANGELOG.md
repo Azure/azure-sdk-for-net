@@ -11,8 +11,16 @@
 ### Other Changes
 
 * Update OpenTelemetry dependencies
-  ([#](https://github.com/Azure/azure-sdk-for-net/pull/))
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
   - OpenTelemetry 1.8.0
+  - OpenTelemetry.Extensions.Hosting 1.8.0
+  - OpenTelemetry.Exporter.InMemory 1.8.0
+  
+* Removed the necessity for custom resource attributes configuration in
+  OpenTelemetry logging setup, as the OpenTelemetry .NET SDK's enhancements to
+  the builder.ConfigureResource method now uniformly set resource attributes
+  across logs, metrics, and traces.
+  ([#43197](https://github.com/Azure/azure-sdk-for-net/pull/43197))
 
 ## 1.2.0-beta.2 (2024-03-12)
 
@@ -29,7 +37,7 @@
     documentation.
   ([#42307](https://github.com/Azure/azure-sdk-for-net/pull/42307))
 
-- Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
+* Enabled support for log collection from Azure SDKs via `Microsoft.Extensions.Logging`. See [Logging with the Azure SDK for .NET](https://learn.microsoft.com/dotnet/azure/sdk/logging)
   for the details.
   ([#42374](https://github.com/Azure/azure-sdk-for-net/pull/42374))
 
@@ -68,7 +76,7 @@
   property can be set to `false` to disable live metrics.
   ([#41872](https://github.com/Azure/azure-sdk-for-net/pull/41872))
 
-- Added an experimental feature for logs emitted within an active tracing
+* Added an experimental feature for logs emitted within an active tracing
   context to follow the Activity's sampling decision. The feature can be enabled
   by setting `OTEL_DOTNET_AZURE_MONITOR_EXPERIMENTAL_ENABLE_LOG_SAMPLING`
   environment variable to `true`.
