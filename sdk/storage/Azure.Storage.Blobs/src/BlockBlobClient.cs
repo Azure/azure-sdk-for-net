@@ -879,21 +879,21 @@ namespace Azure.Storage.Blobs.Specialized
                     long contentLength = (content?.Length - content?.Position) ?? 0;
                     long? structuredContentLength = default;
                     string structuredBodyType = null;
-                    if (validationOptions != null &&
+                    if (content != null &&
+                        validationOptions != null &&
                         validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
                         validationOptions.PrecalculatedChecksum.IsEmpty &&
                         ClientSideEncryption == null) // don't allow feature combination
                     {
                         // report progress in terms of caller bytes, not encoded bytes
                         structuredContentLength = contentLength;
-                        contentLength = (content?.Length - content?.Position) ?? 0;
                         structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
                         content = content.WithNoDispose().WithProgress(progressHandler);
                         content = new StructuredMessageEncodingStream(
                             content,
                             Constants.StructuredMessage.DefaultSegmentContentLength,
                             StructuredMessage.Flags.StorageCrc64);
-                        contentLength = (content?.Length - content?.Position) ?? 0;
+                        contentLength = content.Length - content.Position;
                     }
                     else
                     {
