@@ -170,6 +170,7 @@ namespace Azure.ResourceManager.Models
             {
                 writer.WriteObjectValue<UserAssignedIdentity>(model, new ModelReaderWriterOptions("W"));
             }
+
             public override UserAssignedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

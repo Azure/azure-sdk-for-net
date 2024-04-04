@@ -213,6 +213,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue<SqlPoolStoredProcedureActivity>(model);
             }
+
             public override SqlPoolStoredProcedureActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

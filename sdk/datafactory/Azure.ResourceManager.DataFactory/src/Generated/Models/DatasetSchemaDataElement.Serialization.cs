@@ -141,6 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WriteObjectValue<DatasetSchemaDataElement>(model, new ModelReaderWriterOptions("W"));
             }
+
             public override DatasetSchemaDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

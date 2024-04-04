@@ -236,6 +236,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 writer.WriteObjectValue<AzureDataExplorerCommandActivity>(model);
             }
+
             public override AzureDataExplorerCommandActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
