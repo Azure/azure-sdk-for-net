@@ -10,6 +10,7 @@
 
 - Removed `[Serializable]` attribute and serialization constructor from `ClientResultException`.
 - Made `value` parameter nullable in `PipelineMessage.SetProperty` method.
+- Made `options` parameter to `PipelineMessage.Apply` nullable.
 
 ### Bugs Fixed
 

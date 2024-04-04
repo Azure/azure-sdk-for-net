@@ -113,14 +113,13 @@ public class PipelineMessage : IDisposable
     /// complete, and prior to the call to
     /// <see cref="ClientPipeline.Send(PipelineMessage)"/>.
     /// </remarks>
-    public void Apply(RequestOptions options)
+    public void Apply(RequestOptions? options)
     {
-        Argument.AssertNotNull(options, nameof(options));
-
         // This design moves the client-author API (options.Apply) off the
         // client-user type RequestOptions. Its only purpose is to call through to
-        // the internal options.Apply method.
-        options.Apply(this);
+        // the internal options.Apply method.  If null options are passed this
+        // method is a no-op.
+        options?.Apply(this);
     }
 
     /// <summary>
