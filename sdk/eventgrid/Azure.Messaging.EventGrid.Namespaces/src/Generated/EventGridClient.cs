@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -97,7 +96,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<PublishResult>> PublishCloudEventAsync(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventAsync(string,CloudEvent,CancellationToken)']/*" />
+        public virtual async Task<Response<PublishResult>> PublishCloudEventAsync(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -114,7 +114,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="event"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<PublishResult> PublishCloudEvent(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvent(string,CloudEvent,CancellationToken)']/*" />
+        public virtual Response<PublishResult> PublishCloudEvent(string topicName, CloudEvent @event, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(@event, nameof(@event));
@@ -147,7 +148,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -188,7 +190,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvent(string,RequestContent,RequestContext)']/*" />
+        public virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -213,7 +216,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual async Task<Response<PublishResult>> PublishCloudEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventsAsync(string,IEnumerable{CloudEvent},CancellationToken)']/*" />
+        public virtual async Task<Response<PublishResult>> PublishCloudEventsAsync(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(events, nameof(events));
@@ -230,7 +234,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="events"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal virtual Response<PublishResult> PublishCloudEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvents(string,IEnumerable{CloudEvent},CancellationToken)']/*" />
+        public virtual Response<PublishResult> PublishCloudEvents(string topicName, IEnumerable<CloudEvent> events, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(events, nameof(events));
@@ -263,7 +268,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventsAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));
@@ -304,7 +310,8 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvents(string,RequestContent,RequestContext)']/*" />
+        public virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
             Argument.AssertNotNull(content, nameof(content));

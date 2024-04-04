@@ -8,10 +8,8 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Messaging.EventGrid.Namespaces;
 using NUnit.Framework;
 
 namespace Azure.Messaging.EventGrid.Namespaces.Samples
@@ -20,7 +18,479 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AcknowledgeCloudEvents_ShortVersion()
+        public void Example_EventGrid_PublishCloudEvent_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                id = "<id>",
+                source = "<source>",
+                type = "<type>",
+                specversion = "<specversion>",
+            });
+            Response response = client.PublishCloudEvent("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvent_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                id = "<id>",
+                source = "<source>",
+                type = "<type>",
+                specversion = "<specversion>",
+            });
+            Response response = await client.PublishCloudEventAsync("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvent_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            CloudEvent @event = new CloudEvent("<id>", "<source>", "<type>", "<specversion>");
+            Response<PublishResult> response = client.PublishCloudEvent("<topicName>", @event);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvent_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            CloudEvent @event = new CloudEvent("<id>", "<source>", "<type>", "<specversion>");
+            Response<PublishResult> response = await client.PublishCloudEventAsync("<topicName>", @event);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvent_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                id = "<id>",
+                source = "<source>",
+                data = new object(),
+                data_base64 = new object(),
+                type = "<type>",
+                time = "2022-05-10T14:57:31.2311892-04:00",
+                specversion = "<specversion>",
+                dataschema = "<dataschema>",
+                datacontenttype = "<datacontenttype>",
+                subject = "<subject>",
+            });
+            Response response = client.PublishCloudEvent("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvent_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                id = "<id>",
+                source = "<source>",
+                data = new object(),
+                data_base64 = new object(),
+                type = "<type>",
+                time = "2022-05-10T14:57:31.2311892-04:00",
+                specversion = "<specversion>",
+                dataschema = "<dataschema>",
+                datacontenttype = "<datacontenttype>",
+                subject = "<subject>",
+            });
+            Response response = await client.PublishCloudEventAsync("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvent_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            CloudEvent @event = new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+            {
+                Data = BinaryData.FromObjectAsJson(new object()),
+                DataBase64 = BinaryData.FromObjectAsJson(new object()),
+                Time = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Dataschema = "<dataschema>",
+                Datacontenttype = "<datacontenttype>",
+                Subject = "<subject>",
+            };
+            Response<PublishResult> response = client.PublishCloudEvent("<topicName>", @event);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvent_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            CloudEvent @event = new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+            {
+                Data = BinaryData.FromObjectAsJson(new object()),
+                DataBase64 = BinaryData.FromObjectAsJson(new object()),
+                Time = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+                Dataschema = "<dataschema>",
+                Datacontenttype = "<datacontenttype>",
+                Subject = "<subject>",
+            };
+            Response<PublishResult> response = await client.PublishCloudEventAsync("<topicName>", @event);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvents_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+id = "<id>",
+source = "<source>",
+type = "<type>",
+specversion = "<specversion>",
+}
+            });
+            Response response = client.PublishCloudEvents("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvents_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+id = "<id>",
+source = "<source>",
+type = "<type>",
+specversion = "<specversion>",
+}
+            });
+            Response response = await client.PublishCloudEventsAsync("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvents_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<PublishResult> response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            {
+new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvents_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<PublishResult> response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            {
+new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvents_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+id = "<id>",
+source = "<source>",
+data = new object(),
+data_base64 = new object(),
+type = "<type>",
+time = "2022-05-10T14:57:31.2311892-04:00",
+specversion = "<specversion>",
+dataschema = "<dataschema>",
+datacontenttype = "<datacontenttype>",
+subject = "<subject>",
+}
+            });
+            Response response = client.PublishCloudEvents("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvents_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new object[]
+            {
+new
+{
+id = "<id>",
+source = "<source>",
+data = new object(),
+data_base64 = new object(),
+type = "<type>",
+time = "2022-05-10T14:57:31.2311892-04:00",
+specversion = "<specversion>",
+dataschema = "<dataschema>",
+datacontenttype = "<datacontenttype>",
+subject = "<subject>",
+}
+            });
+            Response response = await client.PublishCloudEventsAsync("<topicName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_PublishCloudEvents_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<PublishResult> response = client.PublishCloudEvents("<topicName>", new CloudEvent[]
+            {
+new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+{
+Data = BinaryData.FromObjectAsJson(new object()),
+DataBase64 = BinaryData.FromObjectAsJson(new object()),
+Time = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Dataschema = "<dataschema>",
+Datacontenttype = "<datacontenttype>",
+Subject = "<subject>",
+}
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_PublishCloudEvents_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<PublishResult> response = await client.PublishCloudEventsAsync("<topicName>", new CloudEvent[]
+            {
+new CloudEvent("<id>", "<source>", "<type>", "<specversion>")
+{
+Data = BinaryData.FromObjectAsJson(new object()),
+DataBase64 = BinaryData.FromObjectAsJson(new object()),
+Time = DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"),
+Dataschema = "<dataschema>",
+Datacontenttype = "<datacontenttype>",
+Subject = "<subject>",
+}
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_ReceiveCloudEvents_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", (int?)null, (TimeSpan?)null, (RequestContext)null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_ReceiveCloudEvents_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", (int?)null, (TimeSpan?)null, (RequestContext)null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_ReceiveCloudEvents_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<ReceiveResultInternal> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_ReceiveCloudEvents_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<ReceiveResultInternal> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_ReceiveCloudEvents_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", 1234, TimeSpan.FromSeconds(10), (RequestContext)null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("dataschema").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("datacontenttype").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("subject").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_ReceiveCloudEvents_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", 1234, TimeSpan.FromSeconds(10), (RequestContext)null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("lockToken").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("brokerProperties").GetProperty("deliveryCount").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("id").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("source").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("data_base64").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("type").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("time").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("specversion").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("dataschema").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("datacontenttype").ToString());
+            Console.WriteLine(result.GetProperty("value")[0].GetProperty("event").GetProperty("subject").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_ReceiveCloudEvents_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<ReceiveResultInternal> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_EventGrid_ReceiveCloudEvents_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            EventGridClient client = new EventGridClient(endpoint, credential);
+
+            Response<ReceiveResultInternal> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_EventGrid_AcknowledgeCloudEvents_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -44,7 +514,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AcknowledgeCloudEvents_ShortVersion_Async()
+        public async Task Example_EventGrid_AcknowledgeCloudEvents_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -68,7 +538,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AcknowledgeCloudEvents_ShortVersion_Convenience()
+        public void Example_EventGrid_AcknowledgeCloudEvents_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -80,7 +550,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AcknowledgeCloudEvents_ShortVersion_Convenience_Async()
+        public async Task Example_EventGrid_AcknowledgeCloudEvents_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -92,7 +562,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AcknowledgeCloudEvents_AllParameters()
+        public void Example_EventGrid_AcknowledgeCloudEvents_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -118,7 +588,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AcknowledgeCloudEvents_AllParameters_Async()
+        public async Task Example_EventGrid_AcknowledgeCloudEvents_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -144,7 +614,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AcknowledgeCloudEvents_AllParameters_Convenience()
+        public void Example_EventGrid_AcknowledgeCloudEvents_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -156,7 +626,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_AcknowledgeCloudEvents_AllParameters_Convenience_Async()
+        public async Task Example_EventGrid_AcknowledgeCloudEvents_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -168,7 +638,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReleaseCloudEvents_ShortVersion()
+        public void Example_EventGrid_ReleaseCloudEvents_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -192,7 +662,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReleaseCloudEvents_ShortVersion_Async()
+        public async Task Example_EventGrid_ReleaseCloudEvents_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -216,7 +686,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReleaseCloudEvents_ShortVersion_Convenience()
+        public void Example_EventGrid_ReleaseCloudEvents_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -228,7 +698,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReleaseCloudEvents_ShortVersion_Convenience_Async()
+        public async Task Example_EventGrid_ReleaseCloudEvents_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -240,7 +710,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReleaseCloudEvents_AllParameters()
+        public void Example_EventGrid_ReleaseCloudEvents_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -266,7 +736,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReleaseCloudEvents_AllParameters_Async()
+        public async Task Example_EventGrid_ReleaseCloudEvents_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -292,7 +762,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ReleaseCloudEvents_AllParameters_Convenience()
+        public void Example_EventGrid_ReleaseCloudEvents_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -304,7 +774,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ReleaseCloudEvents_AllParameters_Convenience_Async()
+        public async Task Example_EventGrid_ReleaseCloudEvents_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -316,7 +786,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RejectCloudEvents_ShortVersion()
+        public void Example_EventGrid_RejectCloudEvents_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -340,7 +810,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectCloudEvents_ShortVersion_Async()
+        public async Task Example_EventGrid_RejectCloudEvents_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -364,7 +834,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RejectCloudEvents_ShortVersion_Convenience()
+        public void Example_EventGrid_RejectCloudEvents_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -376,7 +846,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectCloudEvents_ShortVersion_Convenience_Async()
+        public async Task Example_EventGrid_RejectCloudEvents_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -388,7 +858,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RejectCloudEvents_AllParameters()
+        public void Example_EventGrid_RejectCloudEvents_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -414,7 +884,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectCloudEvents_AllParameters_Async()
+        public async Task Example_EventGrid_RejectCloudEvents_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -440,7 +910,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RejectCloudEvents_AllParameters_Convenience()
+        public void Example_EventGrid_RejectCloudEvents_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -452,7 +922,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RejectCloudEvents_AllParameters_Convenience_Async()
+        public async Task Example_EventGrid_RejectCloudEvents_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -464,7 +934,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RenewCloudEventLocks_ShortVersion()
+        public void Example_EventGrid_RenewCloudEventLocks_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -488,7 +958,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RenewCloudEventLocks_ShortVersion_Async()
+        public async Task Example_EventGrid_RenewCloudEventLocks_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -512,7 +982,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RenewCloudEventLocks_ShortVersion_Convenience()
+        public void Example_EventGrid_RenewCloudEventLocks_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -524,7 +994,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RenewCloudEventLocks_ShortVersion_Convenience_Async()
+        public async Task Example_EventGrid_RenewCloudEventLocks_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -536,7 +1006,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RenewCloudEventLocks_AllParameters()
+        public void Example_EventGrid_RenewCloudEventLocks_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -562,7 +1032,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RenewCloudEventLocks_AllParameters_Async()
+        public async Task Example_EventGrid_RenewCloudEventLocks_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -588,7 +1058,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_RenewCloudEventLocks_AllParameters_Convenience()
+        public void Example_EventGrid_RenewCloudEventLocks_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -600,7 +1070,7 @@ namespace Azure.Messaging.EventGrid.Namespaces.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_RenewCloudEventLocks_AllParameters_Convenience_Async()
+        public async Task Example_EventGrid_RenewCloudEventLocks_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");

@@ -5,32 +5,24 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Model factory for models. </summary>
     public static partial class MessagingEventGridNamespacesModelFactory
     {
-        /// <summary> Initializes a new instance of BrokerProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> is null. </exception>
         /// <returns> A new <see cref="Namespaces.BrokerProperties"/> instance for mocking. </returns>
         public static BrokerProperties BrokerProperties(string lockToken = null, int deliveryCount = default)
         {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-
-            return new BrokerProperties(lockToken, deliveryCount);
+            return new BrokerProperties(lockToken, deliveryCount, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of AcknowledgeResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.AcknowledgeResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully acknowledged cloud events. </param>
         /// <returns> A new <see cref="Namespaces.AcknowledgeResult"/> instance for mocking. </returns>
@@ -39,29 +31,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new List<FailedLockToken>();
             succeededLockTokens ??= new List<string>();
 
-            return new AcknowledgeResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList());
+            return new AcknowledgeResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of FailedLockToken. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.FailedLockToken"/>. </summary>
         /// <param name="lockToken"> The lock token of an entry in the request. </param>
         /// <param name="error"> Error information of the failed operation result for the lock token in the request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="lockToken"/> or <paramref name="error"/> is null. </exception>
         /// <returns> A new <see cref="Namespaces.FailedLockToken"/> instance for mocking. </returns>
         public static FailedLockToken FailedLockToken(string lockToken = null, ResponseError error = null)
         {
-            if (lockToken == null)
-            {
-                throw new ArgumentNullException(nameof(lockToken));
-            }
-            if (error == null)
-            {
-                throw new ArgumentNullException(nameof(error));
-            }
-
-            return new FailedLockToken(lockToken, error);
+            return new FailedLockToken(lockToken, error, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of ReleaseResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.ReleaseResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully released cloud events. </param>
         /// <returns> A new <see cref="Namespaces.ReleaseResult"/> instance for mocking. </returns>
@@ -70,10 +52,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new List<FailedLockToken>();
             succeededLockTokens ??= new List<string>();
 
-            return new ReleaseResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList());
+            return new ReleaseResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RejectResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.RejectResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully rejected cloud events. </param>
         /// <returns> A new <see cref="Namespaces.RejectResult"/> instance for mocking. </returns>
@@ -82,10 +64,10 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new List<FailedLockToken>();
             succeededLockTokens ??= new List<string>();
 
-            return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList());
+            return new RejectResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of RenewCloudEventLocksResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="Namespaces.RenewCloudEventLocksResult"/>. </summary>
         /// <param name="failedLockTokens"> Array of FailedLockToken for failed cloud events. Each FailedLockToken includes the lock token along with the related error information (namely, the error code and description). </param>
         /// <param name="succeededLockTokens"> Array of lock tokens for the successfully renewed locks. </param>
         /// <returns> A new <see cref="Namespaces.RenewCloudEventLocksResult"/> instance for mocking. </returns>
@@ -94,7 +76,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             failedLockTokens ??= new List<FailedLockToken>();
             succeededLockTokens ??= new List<string>();
 
-            return new RenewCloudEventLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList());
+            return new RenewCloudEventLocksResult(failedLockTokens?.ToList(), succeededLockTokens?.ToList(), serializedAdditionalRawData: null);
         }
     }
 }

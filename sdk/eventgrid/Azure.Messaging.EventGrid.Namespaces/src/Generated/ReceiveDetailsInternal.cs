@@ -6,14 +6,46 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Receive operation details per Cloud Event. </summary>
     internal partial class ReceiveDetailsInternal
     {
-        /// <summary> Initializes a new instance of ReceiveDetailsInternal. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetailsInternal"/>. </summary>
         /// <param name="brokerProperties"> The Event Broker details. </param>
         /// <param name="event"> Cloud Event details. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="brokerProperties"/> or <paramref name="event"/> is null. </exception>
@@ -24,6 +56,22 @@ namespace Azure.Messaging.EventGrid.Namespaces
 
             BrokerProperties = brokerProperties;
             Event = @event;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetailsInternal"/>. </summary>
+        /// <param name="brokerProperties"> The Event Broker details. </param>
+        /// <param name="event"> Cloud Event details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ReceiveDetailsInternal(BrokerProperties brokerProperties, CloudEvent @event, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            BrokerProperties = brokerProperties;
+            Event = @event;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetailsInternal"/> for deserialization. </summary>
+        internal ReceiveDetailsInternal()
+        {
         }
 
         /// <summary> The Event Broker details. </summary>
