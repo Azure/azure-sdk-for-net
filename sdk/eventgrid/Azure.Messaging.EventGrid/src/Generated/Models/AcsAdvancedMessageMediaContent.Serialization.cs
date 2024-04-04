@@ -46,5 +46,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsAdvancedMessageMediaContent(mimeType, id, fileName, caption);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsAdvancedMessageMediaContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsAdvancedMessageMediaContent(document.RootElement);
+        }
     }
 }

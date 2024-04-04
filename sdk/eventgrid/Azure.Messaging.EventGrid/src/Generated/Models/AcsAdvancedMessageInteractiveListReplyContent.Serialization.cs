@@ -40,5 +40,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsAdvancedMessageInteractiveListReplyContent(id, title, description);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsAdvancedMessageInteractiveListReplyContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsAdvancedMessageInteractiveListReplyContent(document.RootElement);
+        }
     }
 }

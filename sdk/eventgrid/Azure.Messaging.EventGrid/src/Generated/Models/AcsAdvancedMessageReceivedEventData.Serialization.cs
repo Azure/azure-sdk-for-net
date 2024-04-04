@@ -124,12 +124,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 interactive);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsAdvancedMessageReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsAdvancedMessageReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsAdvancedMessageReceivedEventDataConverter : JsonConverter<AcsAdvancedMessageReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsAdvancedMessageReceivedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsAdvancedMessageReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

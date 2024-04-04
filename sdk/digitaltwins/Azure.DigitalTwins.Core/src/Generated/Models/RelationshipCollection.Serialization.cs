@@ -5,9 +5,18 @@
 
 #nullable disable
 
+using System.Text.Json;
+
 namespace Azure.DigitalTwins.Core
 {
     internal partial class RelationshipCollection
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RelationshipCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRelationshipCollection(document.RootElement);
+        }
     }
 }
