@@ -86,12 +86,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlAlwaysEncryptedProperties(alwaysEncryptedAkvAuthType, servicePrincipalId, servicePrincipalKey, credential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlAlwaysEncryptedProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlAlwaysEncryptedProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SqlAlwaysEncryptedProperties>(this);
+            return content;
+        }
+
         internal partial class SqlAlwaysEncryptedPropertiesConverter : JsonConverter<SqlAlwaysEncryptedProperties>
         {
             public override void Write(Utf8JsonWriter writer, SqlAlwaysEncryptedProperties model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SqlAlwaysEncryptedProperties>(model);
             }
+
             public override SqlAlwaysEncryptedProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
