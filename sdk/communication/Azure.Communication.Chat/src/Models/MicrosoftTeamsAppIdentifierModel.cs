@@ -8,8 +8,8 @@ namespace Azure.Communication
 {
     // Excluded internal shared code. Model does not apply to ACS chat
     [ExcludeFromCodeCoverage]
-    [CodeGenModel("MicrosoftTeamsAppIdentifier")]
-    internal partial class MicrosoftTeamsAppIdentifier
+    [CodeGenModel("MicrosoftTeamsAppIdentifierModel")]
+    internal partial class MicrosoftTeamsAppIdentifierModel
     {
     }
 }

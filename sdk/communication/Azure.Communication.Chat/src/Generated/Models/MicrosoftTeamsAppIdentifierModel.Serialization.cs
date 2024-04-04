@@ -6,18 +6,19 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.Chat;
 using Azure.Core;
 
-namespace Azure.Communication.Chat
+namespace Azure.Communication
 {
-    public partial class MicrosoftTeamsAppIdentifierModel : IUtf8JsonSerializable
+    internal partial class MicrosoftTeamsAppIdentifierModel : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
             writer.WritePropertyName("appId"u8);
             writer.WriteStringValue(AppId);
-            if (Optional.IsDefined(Cloud))
+            if (Chat.Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());

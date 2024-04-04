@@ -6,11 +6,12 @@
 #nullable disable
 
 using System;
+using Azure.Communication.Chat;
 
-namespace Azure.Communication.Chat
+namespace Azure.Communication
 {
     /// <summary> A Microsoft Teams application. </summary>
-    public partial class MicrosoftTeamsAppIdentifierModel
+    internal partial class MicrosoftTeamsAppIdentifierModel
     {
         /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifierModel"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
