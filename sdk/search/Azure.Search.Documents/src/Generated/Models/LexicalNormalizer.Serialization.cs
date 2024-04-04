@@ -38,5 +38,21 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return UnknownLexicalNormalizer.DeserializeUnknownLexicalNormalizer(element);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LexicalNormalizer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLexicalNormalizer(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LexicalNormalizer>(this);
+            return content;
+        }
     }
 }
