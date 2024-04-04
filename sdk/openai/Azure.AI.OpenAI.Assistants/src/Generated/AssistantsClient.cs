@@ -1090,24 +1090,18 @@ namespace Azure.AI.OpenAI.Assistants
         }
 
         /// <summary> Gets the list of all existing threads. </summary>
-        /// <param name="threadId"> The ID of the thread to retrieve information about. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IEnumerable<AssistantThread>> GetAllThreadsAsync(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAllThreadsAsync(threadId, context).ConfigureAwait(false);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
         }
 
         /// <summary> Gets the list of all existing threads. </summary>
-        /// <param name="threadId"> The ID of the thread to retrieve information about. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual Response<IEnumerable<AssistantThread>> GetAllThreads(CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetAllThreads(threadId, context);
             return Response.FromValue(AssistantThread.FromResponse(response), response);
