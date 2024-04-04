@@ -63,12 +63,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SkipErrorFile(fileMissing, dataInconsistency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SkipErrorFile FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSkipErrorFile(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SkipErrorFile>(this);
+            return content;
+        }
+
         internal partial class SkipErrorFileConverter : JsonConverter<SkipErrorFile>
         {
             public override void Write(Utf8JsonWriter writer, SkipErrorFile model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SkipErrorFile>(model);
             }
+
             public override SkipErrorFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

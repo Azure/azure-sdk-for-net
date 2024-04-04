@@ -392,12 +392,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SynapseNotebookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSynapseNotebookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SynapseNotebookActivity>(this);
+            return content;
+        }
+
         internal partial class SynapseNotebookActivityConverter : JsonConverter<SynapseNotebookActivity>
         {
             public override void Write(Utf8JsonWriter writer, SynapseNotebookActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SynapseNotebookActivity>(model);
             }
+
             public override SynapseNotebookActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

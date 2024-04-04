@@ -211,12 +211,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 collection);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MongoDbV2CollectionDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMongoDbV2CollectionDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MongoDbV2CollectionDataset>(this);
+            return content;
+        }
+
         internal partial class MongoDbV2CollectionDatasetConverter : JsonConverter<MongoDbV2CollectionDataset>
         {
             public override void Write(Utf8JsonWriter writer, MongoDbV2CollectionDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<MongoDbV2CollectionDataset>(model);
             }
+
             public override MongoDbV2CollectionDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

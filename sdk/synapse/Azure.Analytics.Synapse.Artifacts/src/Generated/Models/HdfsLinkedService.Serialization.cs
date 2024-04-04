@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 password);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HdfsLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHdfsLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HdfsLinkedService>(this);
+            return content;
+        }
+
         internal partial class HdfsLinkedServiceConverter : JsonConverter<HdfsLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, HdfsLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HdfsLinkedService>(model);
             }
+
             public override HdfsLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

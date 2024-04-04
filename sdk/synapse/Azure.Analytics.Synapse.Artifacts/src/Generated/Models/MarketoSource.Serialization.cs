@@ -149,12 +149,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MarketoSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMarketoSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MarketoSource>(this);
+            return content;
+        }
+
         internal partial class MarketoSourceConverter : JsonConverter<MarketoSource>
         {
             public override void Write(Utf8JsonWriter writer, MarketoSource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<MarketoSource>(model);
             }
+
             public override MarketoSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

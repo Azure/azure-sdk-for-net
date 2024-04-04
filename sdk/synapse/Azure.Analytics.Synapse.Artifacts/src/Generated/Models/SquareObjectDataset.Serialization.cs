@@ -218,12 +218,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tableName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SquareObjectDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSquareObjectDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SquareObjectDataset>(this);
+            return content;
+        }
+
         internal partial class SquareObjectDatasetConverter : JsonConverter<SquareObjectDataset>
         {
             public override void Write(Utf8JsonWriter writer, SquareObjectDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SquareObjectDataset>(model);
             }
+
             public override SquareObjectDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

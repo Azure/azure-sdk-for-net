@@ -154,12 +154,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownCopySource.DeserializeUnknownCopySource(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopySource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopySource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CopySource>(this);
+            return content;
+        }
+
         internal partial class CopySourceConverter : JsonConverter<CopySource>
         {
             public override void Write(Utf8JsonWriter writer, CopySource model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<CopySource>(model);
             }
+
             public override CopySource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
