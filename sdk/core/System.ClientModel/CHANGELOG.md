@@ -1,20 +1,17 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2024-04-04)
 
 ### Features Added
 
 - Added protected `Apply(PipelineMessage)` method to `RequestOptions` so that derived types can extend its functionality.
+- Added `Create(Stream)` overload to `BinaryContent`.
 
 ### Breaking Changes
 
 - Removed `[Serializable]` attribute and serialization constructor from `ClientResultException`.
 - Made `value` parameter nullable in `PipelineMessage.SetProperty` method.
 - Made `options` parameter to `PipelineMessage.Apply` nullable.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.1.0-beta.2 (2024-02-29)
 
