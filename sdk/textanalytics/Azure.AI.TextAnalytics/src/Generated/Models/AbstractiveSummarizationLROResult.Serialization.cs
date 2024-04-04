@@ -73,5 +73,21 @@ namespace Azure.AI.TextAnalytics.Models
             }
             return new AbstractiveSummarizationLROResult(lastUpdateDateTime, status, kind, taskName, results);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AbstractiveSummarizationLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AbstractiveSummarizationLROResult>(this);
+            return content;
+        }
     }
 }

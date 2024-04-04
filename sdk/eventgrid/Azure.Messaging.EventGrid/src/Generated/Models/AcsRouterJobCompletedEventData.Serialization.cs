@@ -101,12 +101,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 workerId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobCompletedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobCompletedEventDataConverter : JsonConverter<AcsRouterJobCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobCompletedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterJobCompletedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

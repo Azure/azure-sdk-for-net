@@ -34,5 +34,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsAdvancedMessageChannelEventError(channelCode, channelMessage);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsAdvancedMessageChannelEventError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsAdvancedMessageChannelEventError(document.RootElement);
+        }
     }
 }

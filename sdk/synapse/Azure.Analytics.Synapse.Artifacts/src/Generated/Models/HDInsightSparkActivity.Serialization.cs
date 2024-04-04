@@ -360,12 +360,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sparkConfig ?? new ChangeTrackingDictionary<string, object>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HDInsightSparkActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHDInsightSparkActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HDInsightSparkActivity>(this);
+            return content;
+        }
+
         internal partial class HDInsightSparkActivityConverter : JsonConverter<HDInsightSparkActivity>
         {
             public override void Write(Utf8JsonWriter writer, HDInsightSparkActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HDInsightSparkActivity>(model);
             }
+
             public override HDInsightSparkActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

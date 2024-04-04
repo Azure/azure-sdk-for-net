@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureFileStorageWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureFileStorageWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureFileStorageWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureFileStorageWriteSettings>(this);
+            return content;
+        }
+
         internal partial class AzureFileStorageWriteSettingsConverter : JsonConverter<AzureFileStorageWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureFileStorageWriteSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureFileStorageWriteSettings>(model);
             }
+
             public override AzureFileStorageWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
