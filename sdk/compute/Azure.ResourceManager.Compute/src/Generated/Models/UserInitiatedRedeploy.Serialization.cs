@@ -7,6 +7,7 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -63,6 +64,43 @@ namespace Azure.ResourceManager.Compute.Models
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeUserInitiatedRedeploy(document.RootElement, options);
+        }
+
+        internal static UserInitiatedRedeploy DeserializeUserInitiatedRedeploy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            bool? automaticallyApprove = default;
+            string dummyProperty = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("automaticallyApprove"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    automaticallyApprove = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("dummyProperty"u8))
+                {
+                    dummyProperty = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UserInitiatedRedeploy(automaticallyApprove, dummyProperty, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserInitiatedRedeploy>.Write(ModelReaderWriterOptions options)

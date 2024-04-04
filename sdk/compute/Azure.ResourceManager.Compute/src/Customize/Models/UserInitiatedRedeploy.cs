@@ -18,7 +18,6 @@ namespace Azure.ResourceManager.Compute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        [Obsolete("This is a dummy property to prevent flattening.")]
         private string DummyProperty { get; }
     }
 }

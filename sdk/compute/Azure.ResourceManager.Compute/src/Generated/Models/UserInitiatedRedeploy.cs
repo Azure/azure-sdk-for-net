@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+        /// <summary> Initializes a new instance of <see cref="UserInitiatedRedeploy"/>. </summary>
+        public UserInitiatedRedeploy()
+        {
+        }
+
         /// <summary> Specifies Redeploy Scheduled Event related configurations. </summary>
         public bool? AutomaticallyApprove { get; set; }
     }
