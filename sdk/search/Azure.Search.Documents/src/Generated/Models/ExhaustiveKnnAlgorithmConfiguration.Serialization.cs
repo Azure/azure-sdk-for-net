@@ -60,5 +60,21 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new ExhaustiveKnnAlgorithmConfiguration(name, kind, exhaustiveKnnParameters);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExhaustiveKnnAlgorithmConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExhaustiveKnnAlgorithmConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExhaustiveKnnAlgorithmConfiguration>(this);
+            return content;
+        }
     }
 }
