@@ -33,13 +33,17 @@ steps:
 
         function Retry()
         {
-            $command, $arguments = $args
-            Run $command $arguments 3
+            Run 3 @args
         }
 
-        function Run($command, $arguments, $retries = 0)
+        function Run()
         {
-            Write-Host $args
+            $retries, $command, $arguments = $args
+            if ($retries -isnot [int]) {
+                $command, $arguments = $args
+                $retries = 0
+            }
+            Write-Host "==>" $command $arguments
             $attempt = 0
             $sleep = 5
 
