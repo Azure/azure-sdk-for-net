@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 formatSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvroSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvroSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AvroSink>(this);
+            return content;
+        }
+
         internal partial class AvroSinkConverter : JsonConverter<AvroSink>
         {
             public override void Write(Utf8JsonWriter writer, AvroSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AvroSink>(model);
             }
+
             public override AvroSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

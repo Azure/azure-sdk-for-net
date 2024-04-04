@@ -138,12 +138,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 credential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebActivityAuthentication FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebActivityAuthentication(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WebActivityAuthentication>(this);
+            return content;
+        }
+
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>
         {
             public override void Write(Utf8JsonWriter writer, WebActivityAuthentication model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<WebActivityAuthentication>(model);
             }
+
             public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
