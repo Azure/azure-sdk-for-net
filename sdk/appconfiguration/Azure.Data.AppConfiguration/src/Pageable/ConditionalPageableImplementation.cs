@@ -73,7 +73,7 @@ namespace Azure.Data.AppConfiguration
             string nextLink = null;
             do
             {
-                var response = GetNextResponse(null, null, nextLink);
+                var response = GetNextResponse(conditions: null, pageSizeHint: null, nextLink);
                 if (!TryGetItemsFromResponse(response, out nextLink, out var items))
                 {
                     continue;
