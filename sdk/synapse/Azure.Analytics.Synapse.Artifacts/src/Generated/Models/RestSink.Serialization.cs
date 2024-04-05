@@ -213,12 +213,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 httpCompressionType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RestSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRestSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RestSink>(this);
+            return content;
+        }
+
         internal partial class RestSinkConverter : JsonConverter<RestSink>
         {
             public override void Write(Utf8JsonWriter writer, RestSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<RestSink>(model);
             }
+
             public override RestSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

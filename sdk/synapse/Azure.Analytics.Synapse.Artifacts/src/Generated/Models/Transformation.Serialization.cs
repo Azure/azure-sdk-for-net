@@ -97,12 +97,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new Transformation(name, description, dataset, linkedService, flowlet);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Transformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTransformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Transformation>(this);
+            return content;
+        }
+
         internal partial class TransformationConverter : JsonConverter<Transformation>
         {
             public override void Write(Utf8JsonWriter writer, Transformation model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<Transformation>(model);
             }
+
             public override Transformation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

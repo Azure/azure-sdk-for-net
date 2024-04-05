@@ -233,12 +233,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 setSystemVariable);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SetVariableActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSetVariableActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SetVariableActivity>(this);
+            return content;
+        }
+
         internal partial class SetVariableActivityConverter : JsonConverter<SetVariableActivity>
         {
             public override void Write(Utf8JsonWriter writer, SetVariableActivity model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SetVariableActivity>(model);
             }
+
             public override SetVariableActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

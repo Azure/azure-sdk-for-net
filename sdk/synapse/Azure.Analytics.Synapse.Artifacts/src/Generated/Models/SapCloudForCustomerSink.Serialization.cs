@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapCloudForCustomerSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapCloudForCustomerSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapCloudForCustomerSink>(this);
+            return content;
+        }
+
         internal partial class SapCloudForCustomerSinkConverter : JsonConverter<SapCloudForCustomerSink>
         {
             public override void Write(Utf8JsonWriter writer, SapCloudForCustomerSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SapCloudForCustomerSink>(model);
             }
+
             public override SapCloudForCustomerSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
