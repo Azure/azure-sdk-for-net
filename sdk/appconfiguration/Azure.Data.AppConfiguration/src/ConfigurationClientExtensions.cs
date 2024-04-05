@@ -8,9 +8,9 @@ using System.Threading;
 namespace Azure.Data.AppConfiguration
 {
     /// <summary>
-    /// Extension methods to support <see cref="Pageable{T}"/> and <see cref="AsyncPageable{T}"/> features.
+    /// Extension methods for <see cref="ConfigurationClient"/> and its related models.
     /// </summary>
-    public static class ConfigurationSettingPageableExtensions
+    public static class ConfigurationClientExtensions
     {
         /// <summary>
         /// Enumerate the values a <see cref="Page{T}"/> at a time. This may make multiple service requests.
@@ -28,7 +28,7 @@ namespace Azure.Data.AppConfiguration
         /// <see cref="ConfigurationClient.GetConfigurationSettingsAsync(SettingSelector, CancellationToken)"/>
         /// support it.
         /// </exception>
-        public static IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(this AsyncPageable<ConfigurationSetting> pageable, IList<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
+        public static IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(this AsyncPageable<ConfigurationSetting> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
         {
             var conditionalPageable = pageable as AsyncConditionalPageable;
 
@@ -56,7 +56,7 @@ namespace Azure.Data.AppConfiguration
         /// <see cref="ConfigurationClient.GetConfigurationSettings(SettingSelector, CancellationToken)"/>
         /// support it.
         /// </exception>
-        public static IEnumerable<Page<ConfigurationSetting>> AsPages(this Pageable<ConfigurationSetting> pageable, IList<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
+        public static IEnumerable<Page<ConfigurationSetting>> AsPages(this Pageable<ConfigurationSetting> pageable, IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null)
         {
             var conditionalPageable = pageable as ConditionalPageable;
 

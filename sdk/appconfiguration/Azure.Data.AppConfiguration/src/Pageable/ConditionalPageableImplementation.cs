@@ -52,13 +52,13 @@ namespace Azure.Data.AppConfiguration
             } while (!string.IsNullOrEmpty(nextLink));
         }
 
-        public async IAsyncEnumerable<Page<ConfigurationSetting>> AsPagesAsync(IList<MatchConditions> conditionsList, string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
+        public async IAsyncEnumerable<Page<ConfigurationSetting>> AsPagesAsync(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint, [EnumeratorCancellation] CancellationToken cancellationToken)
         {
+            var enumerator = conditionsEnumerable.GetEnumerator();
             string nextLink = continuationToken;
-            int nextConditionsIndex = 0;
             do
             {
-                var conditions = (nextConditionsIndex < conditionsList.Count) ? conditionsList[nextConditionsIndex++] : null;
+                var conditions = enumerator.MoveNext() ? enumerator.Current : null;
                 var response = await GetNextResponseAsync(conditions, pageSizeHint, nextLink, cancellationToken).ConfigureAwait(false);
                 if (response is null)
                 {
@@ -86,13 +86,13 @@ namespace Azure.Data.AppConfiguration
             } while (!string.IsNullOrEmpty(nextLink));
         }
 
-        public IEnumerable<Page<ConfigurationSetting>> AsPages(IList<MatchConditions> conditionsList, string continuationToken, int? pageSizeHint)
+        public IEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditionsEnumerable, string continuationToken, int? pageSizeHint)
         {
+            var enumerator = conditionsEnumerable.GetEnumerator();
             string nextLink = continuationToken;
-            int nextConditionsIndex = 0;
             do
             {
-                var conditions = (nextConditionsIndex < conditionsList.Count) ? conditionsList[nextConditionsIndex++] : null;
+                var conditions = enumerator.MoveNext() ? enumerator.Current : null;
                 var response = GetNextResponse(conditions, pageSizeHint, nextLink);
                 if (response is null)
                 {

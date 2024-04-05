@@ -16,7 +16,7 @@ namespace Azure.Data.AppConfiguration
         }
 
         public override IAsyncEnumerator<ConfigurationSetting> GetAsyncEnumerator(CancellationToken cancellationToken = default) => _implementation.GetAsyncEnumerator(cancellationToken);
-        public override IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync([], continuationToken, pageSizeHint, default);
-        public IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(IList<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(conditions, continuationToken, pageSizeHint, default);
+        public override IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(new List<MatchConditions>(), continuationToken, pageSizeHint, default);
+        public IAsyncEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPagesAsync(conditions, continuationToken, pageSizeHint, default);
     }
 }

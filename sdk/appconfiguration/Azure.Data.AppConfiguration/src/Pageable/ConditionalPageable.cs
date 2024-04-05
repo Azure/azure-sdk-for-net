@@ -15,6 +15,6 @@ namespace Azure.Data.AppConfiguration
         }
 
         public override IEnumerable<Page<ConfigurationSetting>> AsPages(string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(new List<MatchConditions>(), continuationToken, pageSizeHint);
-        public IEnumerable<Page<ConfigurationSetting>> AsPages(IList<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(conditions, continuationToken, pageSizeHint);
+        public IEnumerable<Page<ConfigurationSetting>> AsPages(IEnumerable<MatchConditions> conditions, string continuationToken = null, int? pageSizeHint = null) => _implementation.AsPages(conditions, continuationToken, pageSizeHint);
     }
 }
