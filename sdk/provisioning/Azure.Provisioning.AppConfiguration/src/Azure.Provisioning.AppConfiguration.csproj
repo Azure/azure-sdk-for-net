@@ -12,8 +12,4 @@
     <PackageReference Include="Azure.ResourceManager.AppConfiguration" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Provisioning\src\Azure.Provisioning.csproj" />
-  </ItemGroup>
-
 </Project>
