@@ -75,27 +75,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (!_disposed)
-            {
-                if (disposing)
-                {
-                    try
-                    {
-                        _manager.Dispose();
-                    }
-                    catch (System.Exception)
-                    {
-                    }
-                }
-
-                _disposed = true;
-            }
-
-            base.Dispose(disposing);
-        }
-
         private void AddExceptionDocument(string exceptionType, string exceptionMessage)
         {
             var exceptionDocumentIngress = DocumentHelper.CreateException(exceptionType, exceptionMessage);
