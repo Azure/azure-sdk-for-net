@@ -601,7 +601,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Hold participant from the call.
         /// </summary>
-        /// <param name="targetParticipant">The options.</param>
+        /// <param name="targetParticipant">The target participant.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<Response> HoldAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
@@ -625,7 +625,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Hold participant from the call.
         /// </summary>
-        /// <param name="targetParticipant">The options.</param>
+        /// <param name="targetParticipant">The target participant.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Response Hold(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
@@ -649,7 +649,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Remove hold from participant.
         /// </summary>
-        /// <param name="targetParticipant">The options.</param>
+        /// <param name="targetParticipant">The target participant.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual async Task<Response> UnholdAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
@@ -672,7 +672,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Remove hold from participant.
         /// </summary>
-        /// <param name="targetParticipant">The options.</param>
+        /// <param name="targetParticipant">The target participant.</param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public virtual Response Unhold(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
