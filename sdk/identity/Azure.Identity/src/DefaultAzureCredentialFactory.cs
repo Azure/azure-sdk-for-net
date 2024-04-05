@@ -122,7 +122,7 @@ namespace Azure.Identity
         {
             var options = Options.Clone<DefaultAzureCredentialOptions>();
             // Set the custom retry policy
-            options.Retry.MaxRetries = 4;
+            options.Retry.MaxRetries = 5;
             options.RetryPolicy ??= new DefaultAzureCredentialImdsRetryPolicy(options.Retry);
             options.IsChainedCredential = true;
 
