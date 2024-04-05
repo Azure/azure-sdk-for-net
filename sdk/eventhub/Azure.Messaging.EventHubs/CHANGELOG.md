@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fixed a warning for "too many parameters" that was written to logs when the processor attempted to log load balancing messages due to improper ETW attribute use.
+
 ### Other Changes
 
 - It is now possible to set `byte[]` values as [application properties](https://docs.oasis-open.org/amqp/core/v1.0/os/amqp-core-messaging-v1.0-os.html#type-application-properties) in the `EventData.Properties` collection.
