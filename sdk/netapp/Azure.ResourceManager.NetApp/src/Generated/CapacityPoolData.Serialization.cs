@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<CapacityPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<CapacityPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.NetApp
             bool? coolAccess = default;
             CapacityPoolEncryptionType? encryptionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -309,10 +309,10 @@ namespace Azure.ResourceManager.NetApp
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CapacityPoolData(
                 id,
                 name,
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.NetApp
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.NetApp
                         return DeserializeCapacityPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

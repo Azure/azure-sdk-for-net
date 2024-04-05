@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (Optional.IsDefined(DownloadStatus))
             {
                 writer.WritePropertyName("downloadStatus"u8);
-                writer.WriteObjectValue(DownloadStatus);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatusDownloadStatus>(DownloadStatus, options);
             }
             if (Optional.IsDefined(ProgressPercentage))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Hci.Models
             MarketplaceGalleryImageStatusDownloadStatus downloadStatus = default;
             long? progressPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorCode"u8))
@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MarketplaceGalleryImageStatus(
                 errorCode,
                 errorMessage,
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeMarketplaceGalleryImageStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

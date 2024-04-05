@@ -25,12 +25,12 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<ApiManagementServiceSkuProperties>(Sku, options);
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HostnameConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                writer.WriteObjectValue<VirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AdditionalLocations))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CertificateConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.ApiManagement
             if (Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
-                writer.WriteObjectValue(ApiVersionConstraint);
+                writer.WriteObjectValue<ApiVersionConstraint>(ApiVersionConstraint, options);
             }
             if (Optional.IsDefined(Restore))
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RemotePrivateEndpointConnectionWrapper>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.ApiManagement
             string publisherEmail = default;
             string publisherName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -722,10 +722,10 @@ namespace Azure.ResourceManager.ApiManagement
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiManagementServiceData(
                 id,
                 name,
@@ -777,7 +777,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

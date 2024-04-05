@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(VhdImageMappingRuleProfile))
             {
                 writer.WritePropertyName("vhdImageMappingRuleProfile"u8);
-                writer.WriteObjectValue(VhdImageMappingRuleProfile);
+                writer.WriteObjectValue<VhdImageMappingRuleProfile>(VhdImageMappingRuleProfile, options);
             }
             if (Optional.IsDefined(ApplicationEnablement))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureCoreVhdImageDeployMappingRuleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             VhdImageMappingRuleProfile vhdImageMappingRuleProfile = default;
             ApplicationEnablement? applicationEnablement = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vhdImageMappingRuleProfile"u8))
@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureCoreVhdImageDeployMappingRuleProfile(applicationEnablement, serializedAdditionalRawData, vhdImageMappingRuleProfile);
         }
 
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureCoreVhdImageDeployMappingRuleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureCoreVhdImageDeployMappingRuleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ItemPathBasedRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IList<string> subItemPathPrefix = default;
             string objectType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("itemPath"u8))
@@ -119,10 +119,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ItemPathBasedRestoreCriteria(objectType, serializedAdditionalRawData, itemPath, isPathRelativeToBackupItem, subItemPathPrefix ?? new ChangeTrackingList<string>());
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeItemPathBasedRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ItemPathBasedRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

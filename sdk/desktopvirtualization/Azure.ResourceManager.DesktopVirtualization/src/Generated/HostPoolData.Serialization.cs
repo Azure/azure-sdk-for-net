@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DesktopVirtualizationSku>(Sku, options);
             }
             if (Optional.IsDefined(Plan))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(RegistrationInfo))
             {
                 writer.WritePropertyName("registrationInfo"u8);
-                writer.WriteObjectValue(RegistrationInfo);
+                writer.WriteObjectValue<HostPoolRegistrationInfo>(RegistrationInfo, options);
             }
             if (Optional.IsDefined(VmTemplate))
             {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             if (Optional.IsDefined(AgentUpdate))
             {
                 writer.WritePropertyName("agentUpdate"u8);
-                writer.WriteObjectValue(AgentUpdate);
+                writer.WriteObjectValue<SessionHostAgentUpdateProperties>(AgentUpdate, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DesktopVirtualizationPrivateEndpointConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             var format = options.Format == "W" ? ((IPersistableModel<HostPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HostPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HostPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
             SessionHostAgentUpdateProperties agentUpdate = default;
             IReadOnlyList<DesktopVirtualizationPrivateEndpointConnection> privateEndpointConnections = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedBy"u8))
@@ -567,10 +567,10 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HostPoolData(
                 id,
                 name,
@@ -619,7 +619,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -635,7 +635,7 @@ namespace Azure.ResourceManager.DesktopVirtualization
                         return DeserializeHostPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HostPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HostPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -34,7 +34,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InputFieldMappingEntry>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -84,6 +84,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
             }
             return new InputFieldMappingEntry(name, source, sourceContext, inputs ?? new ChangeTrackingList<InputFieldMappingEntry>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static InputFieldMappingEntry FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeInputFieldMappingEntry(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<InputFieldMappingEntry>(this);
+            return content;
         }
     }
 }

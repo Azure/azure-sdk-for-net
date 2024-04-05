@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeModelConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.Health.Insights.CancerProfiling
             var format = options.Format == "W" ? ((IPersistableModel<OncoPhenotypeModelConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.Health.Insights.CancerProfiling
             IList<OncoPhenotypeInferenceType> inferenceTypes = default;
             bool? checkForCancerCase = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("verbose"u8))
@@ -140,10 +140,10 @@ namespace Azure.Health.Insights.CancerProfiling
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new OncoPhenotypeModelConfiguration(verbose, includeEvidence, inferenceTypes ?? new ChangeTrackingList<OncoPhenotypeInferenceType>(), checkForCancerCase, serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.Health.Insights.CancerProfiling
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Health.Insights.CancerProfiling
                         return DeserializeOncoPhenotypeModelConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OncoPhenotypeModelConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.Health.Insights.CancerProfiling
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OncoPhenotypeModelConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

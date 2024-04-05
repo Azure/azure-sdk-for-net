@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationStates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("Domain"u8);
-                writer.WriteObjectValue(Domain);
+                writer.WriteObjectValue<DomainVerificationStatusRecord>(Domain, options);
             }
             if (Optional.IsDefined(Spf))
             {
                 writer.WritePropertyName("SPF"u8);
-                writer.WriteObjectValue(Spf);
+                writer.WriteObjectValue<DomainVerificationStatusRecord>(Spf, options);
             }
             if (Optional.IsDefined(Dkim))
             {
                 writer.WritePropertyName("DKIM"u8);
-                writer.WriteObjectValue(Dkim);
+                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dkim, options);
             }
             if (Optional.IsDefined(Dkim2))
             {
                 writer.WritePropertyName("DKIM2"u8);
-                writer.WriteObjectValue(Dkim2);
+                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dkim2, options);
             }
             if (Optional.IsDefined(Dmarc))
             {
                 writer.WritePropertyName("DMARC"u8);
-                writer.WriteObjectValue(Dmarc);
+                writer.WriteObjectValue<DomainVerificationStatusRecord>(Dmarc, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPropertiesVerificationStates>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Communication.Models
             DomainVerificationStatusRecord dkiM2 = default;
             DomainVerificationStatusRecord dmarc = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("Domain"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Communication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DomainPropertiesVerificationStates(
                 domain,
                 spf,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeDomainPropertiesVerificationStates(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPropertiesVerificationStates)} does not support reading '{options.Format}' format.");
             }
         }
 

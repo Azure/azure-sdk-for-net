@@ -67,12 +67,16 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Location of database server. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Version for database engine. </summary>
+        [WirePath("version")]
         public string Version { get; }
         /// <summary> Storage size in MB for database server. </summary>
+        [WirePath("storageMb")]
         public int? StorageMb { get; }
         /// <summary> SKU for the database server. </summary>
+        [WirePath("sku")]
         public ServerSku Sku { get; }
     }
 }

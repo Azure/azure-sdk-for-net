@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(EndpointConfiguration))
             {
                 writer.WritePropertyName("endpointConfiguration"u8);
-                writer.WriteObjectValue(EndpointConfiguration);
+                writer.WriteObjectValue<PoolEndpointConfiguration>(EndpointConfiguration, options);
             }
             if (Optional.IsDefined(PublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("publicIPAddressConfiguration"u8);
-                writer.WriteObjectValue(PublicIPAddressConfiguration);
+                writer.WriteObjectValue<BatchPublicIPAddressConfiguration>(PublicIPAddressConfiguration, options);
             }
             if (Optional.IsDefined(EnableAcceleratedNetworking))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchPublicIPAddressConfiguration publicIPAddressConfiguration = default;
             bool? enableAcceleratedNetworking = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("subnetId"u8))
@@ -145,10 +145,10 @@ namespace Azure.ResourceManager.Batch.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchNetworkConfiguration(
                 subnetId,
                 dynamicVnetAssignmentScope,
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,12 +81,12 @@ namespace Azure.ResourceManager.HDInsight.Containers
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
             }
             if (Optional.IsDefined(ClusterProfile))
             {
                 writer.WritePropertyName("clusterProfile"u8);
-                writer.WriteObjectValue(ClusterProfile);
+                writer.WriteObjectValue<ClusterProfile>(ClusterProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
             ClusterProfile clusterProfile = default;
             string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -247,10 +247,10 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HDInsightClusterData(
                 id,
                 name,
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
                         return DeserializeHDInsightClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

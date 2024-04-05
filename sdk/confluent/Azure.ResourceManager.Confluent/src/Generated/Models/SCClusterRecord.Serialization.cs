@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SCClusterRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SCClusterRecord)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.Confluent.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<SCMetadataEntity>(Metadata, options);
             }
             if (Optional.IsDefined(Spec))
             {
                 writer.WritePropertyName("spec"u8);
-                writer.WriteObjectValue(Spec);
+                writer.WriteObjectValue<SCClusterSpecEntity>(Spec, options);
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ClusterStatusEntity>(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<SCClusterRecord>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterRecord)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SCClusterRecord)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Confluent.Models
             SCClusterSpecEntity spec = default;
             ClusterStatusEntity status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -163,10 +163,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SCClusterRecord(
                 kind,
                 id,
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SCClusterRecord)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeSCClusterRecord(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterRecord)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SCClusterRecord)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,12 +22,12 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("function"u8);
-            writer.WriteObjectValue(Function);
+            writer.WriteObjectValue<FunctionDefinition>(Function, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -53,7 +53,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsFunctionToolDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.AI.OpenAI
             FunctionDefinition function = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("function"u8))
@@ -86,10 +86,10 @@ namespace Azure.AI.OpenAI
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ChatCompletionsFunctionToolDefinition(type, serializedAdditionalRawData, function);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeChatCompletionsFunctionToolDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatCompletionsFunctionToolDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatCompletionsFunctionToolDefinition>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

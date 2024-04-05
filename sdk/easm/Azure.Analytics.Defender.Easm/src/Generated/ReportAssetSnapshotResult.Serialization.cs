@@ -22,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Defender.Easm
             if (Optional.IsDefined(Assets))
             {
                 writer.WritePropertyName("assets"u8);
-                writer.WriteObjectValue(Assets);
+                writer.WriteObjectValue<AssetPageResult>(Assets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ReportAssetSnapshotResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.Analytics.Defender.Easm
             string description = default;
             AssetPageResult assets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -144,10 +144,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReportAssetSnapshotResult(
                 displayName,
                 metric,
@@ -167,7 +167,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeReportAssetSnapshotResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportAssetSnapshotResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ReportAssetSnapshotResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -136,6 +136,8 @@ public class RequestOptions
     /// options to.</param>
     protected internal virtual void Apply(PipelineMessage message)
     {
+        Argument.AssertNotNull(message, nameof(message));
+
         Freeze();
 
         // Set the cancellation token on the message so pipeline policies

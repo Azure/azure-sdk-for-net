@@ -24,19 +24,19 @@ namespace Azure.ResourceManager.ManagedServices
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ManagedServicesMarketplaceRegistrationProperties>(Properties, options);
             }
             if (Optional.IsDefined(Plan))
             {
                 writer.WritePropertyName("plan"u8);
-                writer.WriteObjectValue(Plan);
+                writer.WriteObjectValue<ManagedServicesPlan>(Plan, options);
             }
             if (options.Format != "W")
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ManagedServices
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ManagedServices
             ResourceType type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -150,10 +150,10 @@ namespace Azure.ResourceManager.ManagedServices
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedServicesMarketplaceRegistrationData(
                 id,
                 name,
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ManagedServices
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ManagedServices
                         return DeserializeManagedServicesMarketplaceRegistrationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationData)} does not support reading '{options.Format}' format.");
             }
         }
 

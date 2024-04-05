@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,27 +101,27 @@ namespace Azure.ResourceManager.Logic
             if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
             }
             if (Optional.IsDefined(AccessControl))
             {
                 writer.WritePropertyName("accessControl"u8);
-                writer.WriteObjectValue(AccessControl);
+                writer.WriteObjectValue<FlowAccessControlConfiguration>(AccessControl, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<LogicSku>(Sku, options);
             }
             if (Optional.IsDefined(IntegrationAccount))
             {
                 writer.WritePropertyName("integrationAccount"u8);
-                writer.WriteObjectValue(IntegrationAccount);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationAccount, options);
             }
             if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
             }
             if (Optional.IsDefined(Definition))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Logic
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<LogicWorkflowParameterInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Logic
             BinaryData definition = default;
             IDictionary<string, LogicWorkflowParameterInfo> parameters = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -389,10 +389,10 @@ namespace Azure.ResourceManager.Logic
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LogicWorkflowData(
                 id,
                 name,
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeLogicWorkflowData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowData)} does not support reading '{options.Format}' format.");
             }
         }
 

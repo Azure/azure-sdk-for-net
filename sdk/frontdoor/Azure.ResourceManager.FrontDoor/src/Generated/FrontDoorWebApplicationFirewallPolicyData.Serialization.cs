@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<FrontDoorSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,17 +77,17 @@ namespace Azure.ResourceManager.FrontDoor
             if (Optional.IsDefined(PolicySettings))
             {
                 writer.WritePropertyName("policySettings"u8);
-                writer.WriteObjectValue(PolicySettings);
+                writer.WriteObjectValue<FrontDoorWebApplicationFirewallPolicySettings>(PolicySettings, options);
             }
             if (Optional.IsDefined(CustomRuleList))
             {
                 writer.WritePropertyName("customRules"u8);
-                writer.WriteObjectValue(CustomRuleList);
+                writer.WriteObjectValue<CustomRuleList>(CustomRuleList, options);
             }
             if (Optional.IsDefined(ManagedRules))
             {
                 writer.WritePropertyName("managedRules"u8);
-                writer.WriteObjectValue(ManagedRules);
+                writer.WriteObjectValue<ManagedRuleSetList>(ManagedRules, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(FrontendEndpointLinks))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorWebApplicationFirewallPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.FrontDoor
             string provisioningState = default;
             FrontDoorWebApplicationFirewallPolicyResourceState? resourceState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -346,10 +346,10 @@ namespace Azure.ResourceManager.FrontDoor
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new FrontDoorWebApplicationFirewallPolicyData(
                 id,
                 name,
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.FrontDoor
                         return DeserializeFrontDoorWebApplicationFirewallPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorWebApplicationFirewallPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

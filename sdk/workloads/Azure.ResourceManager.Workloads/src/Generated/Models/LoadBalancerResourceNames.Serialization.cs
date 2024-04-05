@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
             IList<string> backendPoolNames = default;
             IList<string> healthProbeNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("loadBalancerName"u8))
@@ -156,10 +156,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LoadBalancerResourceNames(loadBalancerName, frontendIPConfigurationNames ?? new ChangeTrackingList<string>(), backendPoolNames ?? new ChangeTrackingList<string>(), healthProbeNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeLoadBalancerResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePath))
             {
                 writer.WritePropertyName("packagePath"u8);
-                writer.WriteObjectValue(PackagePath);
+                writer.WriteObjectValue<object>(PackagePath);
             }
             if (Optional.IsDefined(Type))
             {
@@ -34,22 +34,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackagePassword))
             {
                 writer.WritePropertyName("packagePassword"u8);
-                writer.WriteObjectValue(PackagePassword);
+                writer.WriteObjectValue<SecretBase>(PackagePassword);
             }
             if (Optional.IsDefined(AccessCredential))
             {
                 writer.WritePropertyName("accessCredential"u8);
-                writer.WriteObjectValue(AccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(AccessCredential);
             }
             if (Optional.IsDefined(ConfigurationPath))
             {
                 writer.WritePropertyName("configurationPath"u8);
-                writer.WriteObjectValue(ConfigurationPath);
+                writer.WriteObjectValue<object>(ConfigurationPath);
             }
             if (Optional.IsDefined(ConfigurationAccessCredential))
             {
                 writer.WritePropertyName("configurationAccessCredential"u8);
-                writer.WriteObjectValue(ConfigurationAccessCredential);
+                writer.WriteObjectValue<SsisAccessCredential>(ConfigurationAccessCredential);
             }
             if (Optional.IsDefined(PackageName))
             {
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(PackageContent))
             {
                 writer.WritePropertyName("packageContent"u8);
-                writer.WriteObjectValue(PackageContent);
+                writer.WriteObjectValue<object>(PackageContent);
             }
             if (Optional.IsDefined(PackageLastModifiedDate))
             {
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ChildPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SsisChildPackage>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -211,12 +211,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 childPackages ?? new ChangeTrackingList<SsisChildPackage>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisPackageLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisPackageLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisPackageLocation>(this);
+            return content;
+        }
+
         internal partial class SsisPackageLocationConverter : JsonConverter<SsisPackageLocation>
         {
             public override void Write(Utf8JsonWriter writer, SsisPackageLocation model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SsisPackageLocation>(model);
             }
+
             public override SsisPackageLocation Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

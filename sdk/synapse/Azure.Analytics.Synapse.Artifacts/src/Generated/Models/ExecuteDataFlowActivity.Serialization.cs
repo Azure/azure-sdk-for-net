@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,54 +64,54 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataflow"u8);
-            writer.WriteObjectValue(Dataflow);
+            writer.WriteObjectValue<DataFlowReference>(Dataflow);
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<DataFlowStagingInfo>(Staging);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(IntegrationRuntime);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                writer.WriteObjectValue<ExecuteDataFlowActivityTypePropertiesCompute>(Compute);
             }
             if (Optional.IsDefined(TraceLevel))
             {
                 writer.WritePropertyName("traceLevel"u8);
-                writer.WriteObjectValue(TraceLevel);
+                writer.WriteObjectValue<object>(TraceLevel);
             }
             if (Optional.IsDefined(ContinueOnError))
             {
                 writer.WritePropertyName("continueOnError"u8);
-                writer.WriteObjectValue(ContinueOnError);
+                writer.WriteObjectValue<object>(ContinueOnError);
             }
             if (Optional.IsDefined(RunConcurrently))
             {
                 writer.WritePropertyName("runConcurrently"u8);
-                writer.WriteObjectValue(RunConcurrently);
+                writer.WriteObjectValue<object>(RunConcurrently);
             }
             if (Optional.IsDefined(SourceStagingConcurrency))
             {
                 writer.WritePropertyName("sourceStagingConcurrency"u8);
-                writer.WriteObjectValue(SourceStagingConcurrency);
+                writer.WriteObjectValue<object>(SourceStagingConcurrency);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -326,12 +326,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 sourceStagingConcurrency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExecuteDataFlowActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExecuteDataFlowActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExecuteDataFlowActivity>(this);
+            return content;
+        }
+
         internal partial class ExecuteDataFlowActivityConverter : JsonConverter<ExecuteDataFlowActivity>
         {
             public override void Write(Utf8JsonWriter writer, ExecuteDataFlowActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ExecuteDataFlowActivity>(model);
             }
+
             public override ExecuteDataFlowActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

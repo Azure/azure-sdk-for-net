@@ -22,7 +22,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<InputTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InputTextItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InputTextItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.AI.Translation.Text
             var format = options.Format == "W" ? ((IPersistableModel<InputTextItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InputTextItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InputTextItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -68,7 +68,7 @@ namespace Azure.AI.Translation.Text
             }
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("text"u8))
@@ -78,10 +78,10 @@ namespace Azure.AI.Translation.Text
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new InputTextItem(text, serializedAdditionalRawData);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.AI.Translation.Text
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InputTextItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InputTextItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.AI.Translation.Text
                         return DeserializeInputTextItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InputTextItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InputTextItem)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.AI.Translation.Text
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InputTextItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

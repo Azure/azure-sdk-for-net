@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Marketplace
                 writer.WriteStartArray();
                 foreach (var item in PlansDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateStorePlanDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Marketplace
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceApprovalRequestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Marketplace
             bool? isClosed = default;
             long? messageCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -223,10 +223,10 @@ namespace Azure.ResourceManager.Marketplace
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MarketplaceApprovalRequestData(
                 id,
                 name,
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Marketplace
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Marketplace
                         return DeserializeMarketplaceApprovalRequestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceApprovalRequestData)} does not support reading '{options.Format}' format.");
             }
         }
 

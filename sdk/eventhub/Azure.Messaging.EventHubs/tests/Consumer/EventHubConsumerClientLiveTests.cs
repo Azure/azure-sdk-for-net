@@ -526,6 +526,52 @@ namespace Azure.Messaging.EventHubs.Tests
         ///   connect to the Event Hubs service and perform operations.
         /// </summary>
         ///
+        [Test]public async Task ConsumerCanReadEventsWithBinaryProperties()
+        {
+            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
+            {
+                using var cancellationSource = new CancellationTokenSource();
+                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
+
+            var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
+
+                var sourceEvents = EventGenerator.CreateEvents(5)
+                    .Select(current =>
+                    {
+                        current.Properties["TestByteArray"] = new byte[] { 0x12, 0x34, 0x56, 0x78 };
+                        current.Properties["TestArraySegment"] = new ArraySegment<byte>(new byte[] { 0x23, 0x45, 0x67, 0x89 });
+
+                        return current;
+                    })
+                    .ToList();
+
+                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
+                {
+                    var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
+                    await SendEventsAsync(connectionString, sourceEvents, new CreateBatchOptions { PartitionId = partition }, cancellationSource.Token);
+
+                    // Read the events and validate the resulting state.
+
+                    var readState = await ReadEventsFromPartitionAsync(consumer, partition,sourceEvents.Select(evt => evt.MessageId), cancellationSource.Token);
+                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
+
+                    foreach (var sourceEvent in sourceEvents)
+                    {
+                        var sourceId = sourceEvent.MessageId;
+                        Assert.That(readState.Events.TryGetValue(sourceId, out var readEvent), Is.True, $"The event with custom identifier [{ sourceId }] was not processed.");
+                        Assert.That(sourceEvent.IsEquivalentTo(readEvent.Data), $"The event with custom identifier [{ sourceId }] did not match the corresponding processed event.");
+                    }
+                }
+
+                cancellationSource.Cancel();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
+        ///   connect to the Event Hubs service and perform operations.
+        /// </summary>
+        ///
         [Test]
         public async Task ConsumerCanReadEventsUsingAnIdentityCredential()
         {
@@ -1453,7 +1499,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerSupercedesNonExclusiveActiveReader()
+        public async Task ExclusiveConsumerSupersedesNonExclusiveActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1517,7 +1563,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerWithHigherOwnerLevelSupercedesActiveReader()
+        public async Task ConsumerWithHigherOwnerLevelSupersedesActiveReader()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
             {
@@ -1583,7 +1629,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerDoesNotSupercedNonExclusiveActiveReaderOnAnotherPartition()
+        public async Task ExclusiveConsumerDoesNotSupersedeNonExclusiveActiveReaderOnAnotherPartition()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {
@@ -1648,7 +1694,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExclusiveConsumerDoesNotSupercedNonExclusiveActiveReaderOnAnotherConsumerGroup()
+        public async Task ExclusiveConsumerDoesNotSupersedeNonExclusiveActiveReaderOnAnotherConsumerGroup()
         {
             var consumerGroups = new[] { "customGroup", "customTwo" };
 
@@ -1752,7 +1798,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerIsNotCompromisedByBeingSupercededByAnotherReaderWithHigherLevel()
+        public async Task ConsumerIsNotCompromisedByBeingSupersededByAnotherReaderWithHigherLevel()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(2))
             {

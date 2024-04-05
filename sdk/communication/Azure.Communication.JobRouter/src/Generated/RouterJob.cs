@@ -65,7 +65,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="channelId"> The channel identifier. eg. voice, chat, etc. </param>
         /// <param name="classificationPolicyId"> Id of a classification policy used for classifying this job. </param>
         /// <param name="queueId"> Id of a queue that this job is queued to. </param>
-        /// <param name="priority"> Priority of this job. </param>
+        /// <param name="priority"> Priority of this job. Value must be between -100 to 100. </param>
         /// <param name="dispositionCode"> Reason code for cancelled or closed jobs. </param>
         /// <param name="requestedWorkerSelectors"> A collection of manually specified worker selectors, which a worker must satisfy in order to process this job. </param>
         /// <param name="attachedWorkerSelectors"> A collection of worker selectors attached by a classification policy, which a worker must satisfy in order to process this job. </param>

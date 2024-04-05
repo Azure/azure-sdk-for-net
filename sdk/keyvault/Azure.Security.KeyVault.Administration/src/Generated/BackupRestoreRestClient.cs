@@ -50,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(azureStorageBlobContainerUri);
+                content.JsonWriter.WriteObjectValue<SASTokenParameter>(azureStorageBlobContainerUri);
                 request.Content = content;
             }
             return message;
@@ -199,7 +199,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(restoreBlobDetails);
+                content.JsonWriter.WriteObjectValue<RestoreOperationParameters>(restoreBlobDetails);
                 request.Content = content;
             }
             return message;
@@ -350,7 +350,7 @@ namespace Azure.Security.KeyVault.Administration
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(restoreBlobDetails);
+                content.JsonWriter.WriteObjectValue<SelectiveKeyRestoreOperationParameters>(restoreBlobDetails);
                 request.Content = content;
             }
             return message;

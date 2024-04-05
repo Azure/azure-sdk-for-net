@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePairInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePairInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier primaryManagedInstanceId = default;
             ResourceIdentifier partnerManagedInstanceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primaryManagedInstanceId"u8))
@@ -100,11 +101,54 @@ namespace Azure.ResourceManager.Sql.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ManagedInstancePairInfo(primaryManagedInstanceId, partnerManagedInstanceId, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryManagedInstanceId), out propertyOverride);
+            if (Optional.IsDefined(PrimaryManagedInstanceId) || hasPropertyOverride)
+            {
+                builder.Append("  primaryManagedInstanceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PrimaryManagedInstanceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PartnerManagedInstanceId), out propertyOverride);
+            if (Optional.IsDefined(PartnerManagedInstanceId) || hasPropertyOverride)
+            {
+                builder.Append("  partnerManagedInstanceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PartnerManagedInstanceId.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ManagedInstancePairInfo>.Write(ModelReaderWriterOptions options)
@@ -115,8 +159,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +178,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstancePairInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePairInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

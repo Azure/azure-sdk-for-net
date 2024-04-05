@@ -18,19 +18,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
-                writer.WriteObjectValue(TrustedCertificates);
+                writer.WriteObjectValue<CertificateSource>(TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
-                writer.WriteObjectValue(ValidationOptions);
+                writer.WriteObjectValue<TlsValidationOptions>(ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<CredentialsBase>(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);
@@ -89,6 +89,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new TlsEndpoint(type, credentials, url, trustedCertificates, validationOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TlsEndpoint FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTlsEndpoint(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TlsEndpoint>(this);
+            return content;
         }
     }
 }

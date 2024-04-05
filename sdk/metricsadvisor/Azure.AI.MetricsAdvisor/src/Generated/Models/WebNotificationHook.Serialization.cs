@@ -18,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue(HookParameter);
+            writer.WriteObjectValue<WebhookHookParameter>(HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);
@@ -114,6 +114,22 @@ namespace Azure.AI.MetricsAdvisor.Administration
                 externalLink,
                 admins ?? new ChangeTrackingList<string>(),
                 hookParameter);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebNotificationHook FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebNotificationHook(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WebNotificationHook>(this);
+            return content;
         }
     }
 }

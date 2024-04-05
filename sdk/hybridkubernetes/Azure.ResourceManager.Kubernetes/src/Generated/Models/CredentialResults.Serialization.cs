@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Kubernetes.Models
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(HybridConnectionConfig))
             {
                 writer.WritePropertyName("hybridConnectionConfig"u8);
-                writer.WriteObjectValue(HybridConnectionConfig);
+                writer.WriteObjectValue<HybridConnectionConfig>(HybridConnectionConfig, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Kubeconfigs))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 writer.WriteStartArray();
                 foreach (var item in Kubeconfigs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CredentialResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             HybridConnectionConfig hybridConnectionConfig = default;
             IReadOnlyList<CredentialResult> kubeconfigs = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hybridConnectionConfig"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CredentialResults(hybridConnectionConfig, kubeconfigs ?? new ChangeTrackingList<CredentialResult>(), serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                         return DeserializeCredentialResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResults)} does not support reading '{options.Format}' format.");
             }
         }
 

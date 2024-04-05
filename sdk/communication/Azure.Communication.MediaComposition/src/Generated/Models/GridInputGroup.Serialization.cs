@@ -43,7 +43,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue<InputPosition>(Position);
             }
             if (Optional.IsDefined(Width))
             {
@@ -166,6 +166,22 @@ namespace Azure.Communication.MediaComposition
                 inputIds,
                 rows,
                 columns);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GridInputGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGridInputGroup(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GridInputGroup>(this);
+            return content;
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<AutomationContentSource>(Source, options);
             }
             if (Optional.IsDefined(State))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Automation
             int? nodeConfigurationCount = default;
             string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -341,10 +341,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DscConfigurationData(
                 id,
                 name,
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeDscConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

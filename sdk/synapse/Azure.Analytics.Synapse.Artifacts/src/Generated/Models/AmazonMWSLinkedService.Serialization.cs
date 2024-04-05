@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -53,55 +53,55 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<object>(Endpoint);
             writer.WritePropertyName("marketplaceID"u8);
-            writer.WriteObjectValue(MarketplaceID);
+            writer.WriteObjectValue<object>(MarketplaceID);
             writer.WritePropertyName("sellerID"u8);
-            writer.WriteObjectValue(SellerID);
+            writer.WriteObjectValue<object>(SellerID);
             if (Optional.IsDefined(MwsAuthToken))
             {
                 writer.WritePropertyName("mwsAuthToken"u8);
-                writer.WriteObjectValue(MwsAuthToken);
+                writer.WriteObjectValue<SecretBase>(MwsAuthToken);
             }
             writer.WritePropertyName("accessKeyId"u8);
-            writer.WriteObjectValue(AccessKeyId);
+            writer.WriteObjectValue<object>(AccessKeyId);
             if (Optional.IsDefined(SecretKey))
             {
                 writer.WritePropertyName("secretKey"u8);
-                writer.WriteObjectValue(SecretKey);
+                writer.WriteObjectValue<SecretBase>(SecretKey);
             }
             if (Optional.IsDefined(UseEncryptedEndpoints))
             {
                 writer.WritePropertyName("useEncryptedEndpoints"u8);
-                writer.WriteObjectValue(UseEncryptedEndpoints);
+                writer.WriteObjectValue<object>(UseEncryptedEndpoints);
             }
             if (Optional.IsDefined(UseHostVerification))
             {
                 writer.WritePropertyName("useHostVerification"u8);
-                writer.WriteObjectValue(UseHostVerification);
+                writer.WriteObjectValue<object>(UseHostVerification);
             }
             if (Optional.IsDefined(UsePeerVerification))
             {
                 writer.WritePropertyName("usePeerVerification"u8);
-                writer.WriteObjectValue(UsePeerVerification);
+                writer.WriteObjectValue<object>(UsePeerVerification);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -293,12 +293,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonMWSLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonMWSLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AmazonMWSLinkedService>(this);
+            return content;
+        }
+
         internal partial class AmazonMWSLinkedServiceConverter : JsonConverter<AmazonMWSLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AmazonMWSLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AmazonMWSLinkedService>(model);
             }
+
             public override AmazonMWSLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

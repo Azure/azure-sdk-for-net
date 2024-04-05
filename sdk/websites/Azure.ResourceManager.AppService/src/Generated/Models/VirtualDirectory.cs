@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Path to virtual application. </summary>
+        [WirePath("virtualPath")]
         public string VirtualPath { get; set; }
         /// <summary> Physical path. </summary>
+        [WirePath("physicalPath")]
         public string PhysicalPath { get; set; }
     }
 }

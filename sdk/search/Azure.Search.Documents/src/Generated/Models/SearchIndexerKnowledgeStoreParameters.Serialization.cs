@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -53,6 +53,22 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             additionalProperties = additionalPropertiesDictionary;
             return new SearchIndexerKnowledgeStoreParameters(synthesizeGeneratedKeyName, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerKnowledgeStoreParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerKnowledgeStoreParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchIndexerKnowledgeStoreParameters>(this);
+            return content;
         }
     }
 }

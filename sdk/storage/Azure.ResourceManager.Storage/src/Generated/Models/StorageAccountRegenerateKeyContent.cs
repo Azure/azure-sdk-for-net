@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The name of storage keys that want to be regenerated, possible values are key1, key2, kerb1, kerb2. </summary>
+        [WirePath("keyName")]
         public string KeyName { get; }
     }
 }

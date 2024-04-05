@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of criterion. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Description of criterion. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

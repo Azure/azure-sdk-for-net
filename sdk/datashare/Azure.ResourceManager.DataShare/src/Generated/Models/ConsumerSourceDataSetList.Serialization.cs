@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataShare.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ConsumerSourceDataSet>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSetList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataShare.Models
             string nextLink = default;
             IReadOnlyList<ConsumerSourceDataSet> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumerSourceDataSetList(nextLink, value, serializedAdditionalRawData);
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeConsumerSourceDataSetList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSetList)} does not support reading '{options.Format}' format.");
             }
         }
 

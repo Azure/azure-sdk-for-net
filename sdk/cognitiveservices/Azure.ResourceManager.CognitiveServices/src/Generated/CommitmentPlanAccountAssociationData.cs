@@ -71,8 +71,10 @@ namespace Azure.ResourceManager.CognitiveServices
         }
 
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
         /// <summary> The Azure resource id of the account. </summary>
+        [WirePath("properties.accountId")]
         public string AccountId { get; set; }
     }
 }

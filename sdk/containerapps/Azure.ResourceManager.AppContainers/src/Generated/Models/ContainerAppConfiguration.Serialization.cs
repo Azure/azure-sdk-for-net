@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppWritableSecret>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Ingress))
             {
                 writer.WritePropertyName("ingress"u8);
-                writer.WriteObjectValue(Ingress);
+                writer.WriteObjectValue<ContainerAppIngressConfiguration>(Ingress, options);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -52,14 +52,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppRegistryCredentials>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dapr))
             {
                 writer.WritePropertyName("dapr"u8);
-                writer.WriteObjectValue(Dapr);
+                writer.WriteObjectValue<ContainerAppDaprConfiguration>(Dapr, options);
             }
             if (Optional.IsDefined(MaxInactiveRevisions))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Service))
             {
                 writer.WritePropertyName("service"u8);
-                writer.WriteObjectValue(Service);
+                writer.WriteObjectValue<Service>(Service, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             int? maxInactiveRevisions = default;
             Service service = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerAppConfiguration(
                 secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
                 activeRevisionsMode,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,17 +74,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
                 writer.WritePropertyName("azureCharges"u8);
-                writer.WriteObjectValue(AzureCharges);
+                writer.WriteObjectValue<ConsumptionAmount>(AzureCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ChargesBilledSeparately))
             {
                 writer.WritePropertyName("chargesBilledSeparately"u8);
-                writer.WriteObjectValue(ChargesBilledSeparately);
+                writer.WriteObjectValue<ConsumptionAmount>(ChargesBilledSeparately, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MarketplaceCharges))
             {
                 writer.WritePropertyName("marketplaceCharges"u8);
-                writer.WriteObjectValue(MarketplaceCharges);
+                writer.WriteObjectValue<ConsumptionAmount>(MarketplaceCharges, options);
             }
             if (options.Format != "W" && Optional.IsDefined(BillingAccountId))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionModernChargeSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Consumption.Models
             string customerId = default;
             bool? isInvoiced = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConsumptionModernChargeSummary(
                 id,
                 name,
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionModernChargeSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionModernChargeSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

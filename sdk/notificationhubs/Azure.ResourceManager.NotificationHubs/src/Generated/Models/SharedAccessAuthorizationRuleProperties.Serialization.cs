@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessAuthorizationRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             DateTimeOffset? createdTime = default;
             int? revision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rights"u8))
@@ -195,10 +195,10 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SharedAccessAuthorizationRuleProperties(
                 rights ?? new ChangeTrackingList<AuthorizationRuleAccessRight>(),
                 primaryKey,
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeSharedAccessAuthorizationRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessAuthorizationRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

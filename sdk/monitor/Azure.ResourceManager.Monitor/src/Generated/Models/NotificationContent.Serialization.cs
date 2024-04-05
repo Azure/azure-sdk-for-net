@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EmailReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorEmailReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in SmsReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorSmsReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in WebhookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorWebhookReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ItsmReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorItsmReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureAppPushReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorAzureAppPushReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AutomationRunbookReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorAutomationRunbookReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in VoiceReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorVoiceReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogicAppReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorLogicAppReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureFunctionReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorAzureFunctionReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in ArmRoleReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorArmRoleReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubReceivers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorEventHubReceiver>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<MonitorArmRoleReceiver> armRoleReceivers = default;
             IList<MonitorEventHubReceiver> eventHubReceivers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("alertType"u8))
@@ -353,10 +353,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NotificationContent(
                 alertType,
                 emailReceivers ?? new ChangeTrackingList<MonitorEmailReceiver>(),
@@ -382,7 +382,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeNotificationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

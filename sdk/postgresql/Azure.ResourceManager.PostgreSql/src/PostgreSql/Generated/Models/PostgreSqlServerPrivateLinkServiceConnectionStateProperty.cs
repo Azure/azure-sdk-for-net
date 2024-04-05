@@ -76,10 +76,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public PostgreSqlPrivateLinkServiceConnectionStateStatus Status { get; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The actions required for private link service connection. </summary>
+        [WirePath("actionsRequired")]
         public PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? ActionsRequired { get; }
     }
 }

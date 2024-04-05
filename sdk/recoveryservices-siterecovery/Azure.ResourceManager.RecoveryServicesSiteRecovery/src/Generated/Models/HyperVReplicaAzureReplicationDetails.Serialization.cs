@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryVmDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails);
+                writer.WriteObjectValue<InitialReplicationDetails>(InitialReplicationDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                writer.WriteObjectValue<SiteRecoveryOSDetails>(OSDetails, options);
             }
             if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVReplicaAzureManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OSUpgradeSupportedVersions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             IReadOnlyList<OSUpgradeSupportedVersions> allAvailableOSUpgradeConfigurations = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureVmDiskDetails"u8))
@@ -620,10 +620,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HyperVReplicaAzureReplicationDetails(
                 instanceType,
                 serializedAdditionalRawData,
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

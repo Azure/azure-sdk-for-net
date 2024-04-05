@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StorageCacheSkuInfo>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
-                writer.WriteObjectValue(Health);
+                writer.WriteObjectValue<StorageCacheHealth>(Health, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(MountAddresses))
             {
@@ -112,32 +112,32 @@ namespace Azure.ResourceManager.StorageCache
             if (options.Format != "W" && Optional.IsDefined(UpgradeStatus))
             {
                 writer.WritePropertyName("upgradeStatus"u8);
-                writer.WriteObjectValue(UpgradeStatus);
+                writer.WriteObjectValue<StorageCacheUpgradeStatus>(UpgradeStatus, options);
             }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                writer.WriteObjectValue<StorageCacheUpgradeSettings>(UpgradeSettings, options);
             }
             if (Optional.IsDefined(NetworkSettings))
             {
                 writer.WritePropertyName("networkSettings"u8);
-                writer.WriteObjectValue(NetworkSettings);
+                writer.WriteObjectValue<StorageCacheNetworkSettings>(NetworkSettings, options);
             }
             if (Optional.IsDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
-                writer.WriteObjectValue(EncryptionSettings);
+                writer.WriteObjectValue<StorageCacheEncryptionSettings>(EncryptionSettings, options);
             }
             if (Optional.IsDefined(SecuritySettings))
             {
                 writer.WritePropertyName("securitySettings"u8);
-                writer.WriteObjectValue(SecuritySettings);
+                writer.WriteObjectValue<StorageCacheSecuritySettings>(SecuritySettings, options);
             }
             if (Optional.IsDefined(DirectoryServicesSettings))
             {
                 writer.WritePropertyName("directoryServicesSettings"u8);
-                writer.WriteObjectValue(DirectoryServicesSettings);
+                writer.WriteObjectValue<StorageCacheDirectorySettings>(DirectoryServicesSettings, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in PrimingJobs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrimingJob>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in SpaceAllocation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageTargetSpaceAllocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageCache
             IReadOnlyList<PrimingJob> primingJobs = default;
             IReadOnlyList<StorageTargetSpaceAllocation> spaceAllocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -462,10 +462,10 @@ namespace Azure.ResourceManager.StorageCache
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageCacheData(
                 id,
                 name,
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.StorageCache
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.StorageCache
                         return DeserializeStorageCacheData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheData)} does not support reading '{options.Format}' format.");
             }
         }
 

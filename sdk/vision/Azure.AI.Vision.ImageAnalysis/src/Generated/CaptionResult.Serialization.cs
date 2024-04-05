@@ -22,7 +22,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<CaptionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<CaptionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             float confidence = default;
             string text = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("confidence"u8))
@@ -86,10 +86,10 @@ namespace Azure.AI.Vision.ImageAnalysis
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CaptionResult(confidence, text, serializedAdditionalRawData);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CaptionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeCaptionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CaptionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CaptionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

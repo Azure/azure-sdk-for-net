@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             AlertProcessingRuleOperator? @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("field"u8))
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AlertProcessingRuleCondition(field, @operator, values ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

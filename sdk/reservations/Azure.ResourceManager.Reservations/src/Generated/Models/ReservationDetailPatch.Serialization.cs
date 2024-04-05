@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(AppliedScopeProperties))
             {
                 writer.WritePropertyName("appliedScopeProperties"u8);
-                writer.WriteObjectValue(AppliedScopeProperties);
+                writer.WriteObjectValue<AppliedScopeProperties>(AppliedScopeProperties, options);
             }
             if (Optional.IsDefined(InstanceFlexibility))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(RenewProperties))
             {
                 writer.WritePropertyName("renewProperties"u8);
-                writer.WriteObjectValue(RenewProperties);
+                writer.WriteObjectValue<PatchPropertiesRenewProperties>(RenewProperties, options);
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationDetailPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Reservations.Models
             PatchPropertiesRenewProperties renewProperties = default;
             DateTimeOffset? reviewDateTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -211,10 +211,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationDetailPatch(
                 appliedScopeType,
                 appliedScopes ?? new ChangeTrackingList<string>(),
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationDetailPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationDetailPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

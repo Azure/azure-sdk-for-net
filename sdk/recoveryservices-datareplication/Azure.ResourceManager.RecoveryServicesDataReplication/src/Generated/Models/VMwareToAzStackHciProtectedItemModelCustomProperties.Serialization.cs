@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStartArray();
             foreach (var item in DisksToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<VMwareToAzStackHciDiskInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("nicsToInclude"u8);
             writer.WriteStartArray();
             foreach (var item in NicsToInclude)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<VMwareToAzStackHciNicInput>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedDisks))
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareToAzStackHciProtectedDiskProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareToAzStackHciProtectedNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             if (Optional.IsDefined(DynamicMemoryConfig))
             {
                 writer.WritePropertyName("dynamicMemoryConfig"u8);
-                writer.WriteObjectValue(DynamicMemoryConfig);
+                writer.WriteObjectValue<ProtectedItemDynamicMemoryConfig>(DynamicMemoryConfig, options);
             }
             if (Optional.IsDefined(TargetMemoryInMegaBytes))
             {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciProtectedItemModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             DateTimeOffset? lastReplicationUpdateTime = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("activeLocation"u8))
@@ -668,10 +668,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VMwareToAzStackHciProtectedItemModelCustomProperties(
                 instanceType,
                 serializedAdditionalRawData,
@@ -732,7 +732,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeVMwareToAzStackHciProtectedItemModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciProtectedItemModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultHealthProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,24 +32,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VaultErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ProtectedItemsHealth))
             {
                 writer.WritePropertyName("protectedItemsHealth"u8);
-                writer.WriteObjectValue(ProtectedItemsHealth);
+                writer.WriteObjectValue<ResourceHealthSummary>(ProtectedItemsHealth, options);
             }
             if (Optional.IsDefined(FabricsHealth))
             {
                 writer.WritePropertyName("fabricsHealth"u8);
-                writer.WriteObjectValue(FabricsHealth);
+                writer.WriteObjectValue<ResourceHealthSummary>(FabricsHealth, options);
             }
             if (Optional.IsDefined(ContainersHealth))
             {
                 writer.WritePropertyName("containersHealth"u8);
-                writer.WriteObjectValue(ContainersHealth);
+                writer.WriteObjectValue<ResourceHealthSummary>(ContainersHealth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultHealthProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceHealthSummary fabricsHealth = default;
             ResourceHealthSummary containersHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vaultErrors"u8))
@@ -140,10 +140,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VaultHealthProperties(vaultErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(), protectedItemsHealth, fabricsHealth, containersHealth, serializedAdditionalRawData);
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVaultHealthProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultHealthProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

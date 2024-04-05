@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<KubernetesClusterExtensionScope>(Scope, options);
             }
             if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                     writer.WriteStartArray();
                     foreach (var item in Statuses)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<KubernetesClusterExtensionStatus>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
             ManagedServiceIdentity aksAssignedIdentity = default;
             bool? isSystemExtension = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -489,10 +489,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new KubernetesClusterExtensionData(
                 id,
                 name,
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration
                         return DeserializeKubernetesClusterExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

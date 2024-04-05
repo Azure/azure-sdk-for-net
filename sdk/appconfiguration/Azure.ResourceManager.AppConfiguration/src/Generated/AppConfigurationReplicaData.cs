@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.AppConfiguration
         }
 
         /// <summary> The location of the replica. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The URI of the replica where the replica API will be available. </summary>
+        [WirePath("properties.endpoint")]
         public string Endpoint { get; }
         /// <summary> The provisioning state of the replica. </summary>
+        [WirePath("properties.provisioningState")]
         public AppConfigurationReplicaProvisioningState? ProvisioningState { get; }
     }
 }

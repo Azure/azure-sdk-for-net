@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(PolicyInfo))
             {
                 writer.WritePropertyName("policyInfo"u8);
-                writer.WriteObjectValue(PolicyInfo);
+                writer.WriteObjectValue<PolicyReference>(PolicyInfo, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EvaluationResult))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(EvaluationDetails))
             {
                 writer.WritePropertyName("evaluationDetails"u8);
-                writer.WriteObjectValue(EvaluationDetails);
+                writer.WriteObjectValue<PolicyEvaluationDetails>(EvaluationDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyEvaluationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string evaluationResult = default;
             PolicyEvaluationDetails evaluationDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyInfo"u8))
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PolicyEvaluationResult(policyInfo, evaluationResult, evaluationDetails, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyEvaluationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyEvaluationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

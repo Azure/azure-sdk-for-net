@@ -34,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ManagedPrivateEndpointConnectionState>(ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {
@@ -141,6 +141,22 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                 isReserved,
                 fqdns ?? new ChangeTrackingList<string>(),
                 isCompliant);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedPrivateEndpointProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedPrivateEndpointProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ManagedPrivateEndpointProperties>(this);
+            return content;
         }
     }
 }

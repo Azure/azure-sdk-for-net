@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<IPCommunityIdList>(Delete, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set);
+                writer.WriteObjectValue<IPCommunityIdList>(Set, options);
             }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                writer.WriteObjectValue<IPCommunityIdList>(Add, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IPCommunityIdList @set = default;
             IPCommunityIdList @add = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("delete"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ActionIPCommunityProperties(@add, serializedAdditionalRawData, delete, @set);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeActionIPCommunityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

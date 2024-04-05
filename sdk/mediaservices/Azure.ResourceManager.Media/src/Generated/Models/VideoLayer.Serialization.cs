@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoLayer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<VideoLayer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VideoLayer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VideoLayer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
             string height = default;
             string label = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bitrate"u8))
@@ -182,10 +182,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VideoLayer(
                 width,
                 height,
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VideoLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoLayer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeVideoLayer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VideoLayer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VideoLayer)} does not support reading '{options.Format}' format.");
             }
         }
 

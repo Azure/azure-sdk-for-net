@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> Deployment scripts logs. </summary>
+        [WirePath("value")]
         public IReadOnlyList<ScriptLogData> Value { get; }
     }
 }

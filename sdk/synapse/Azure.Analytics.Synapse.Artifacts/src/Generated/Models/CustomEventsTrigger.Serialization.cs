@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TriggerPipelineReference>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<object>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("scope"u8);
@@ -81,7 +81,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -219,12 +219,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 scope);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomEventsTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEventsTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomEventsTrigger>(this);
+            return content;
+        }
+
         internal partial class CustomEventsTriggerConverter : JsonConverter<CustomEventsTrigger>
         {
             public override void Write(Utf8JsonWriter writer, CustomEventsTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CustomEventsTrigger>(model);
             }
+
             public override CustomEventsTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

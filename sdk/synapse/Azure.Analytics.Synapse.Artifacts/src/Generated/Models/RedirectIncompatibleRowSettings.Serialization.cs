@@ -20,16 +20,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            writer.WriteObjectValue<object>(LinkedServiceName);
             if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
-                writer.WriteObjectValue(Path);
+                writer.WriteObjectValue<object>(Path);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -66,12 +66,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new RedirectIncompatibleRowSettings(linkedServiceName, path, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RedirectIncompatibleRowSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRedirectIncompatibleRowSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RedirectIncompatibleRowSettings>(this);
+            return content;
+        }
+
         internal partial class RedirectIncompatibleRowSettingsConverter : JsonConverter<RedirectIncompatibleRowSettings>
         {
             public override void Write(Utf8JsonWriter writer, RedirectIncompatibleRowSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RedirectIncompatibleRowSettings>(model);
             }
+
             public override RedirectIncompatibleRowSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

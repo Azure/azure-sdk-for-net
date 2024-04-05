@@ -143,7 +143,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Fields)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchField>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -355,6 +355,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 vectorSearchProfile,
                 synonymMaps ?? new ChangeTrackingList<string>(),
                 fields ?? new ChangeTrackingList<SearchField>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchField FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchField(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchField>(this);
+            return content;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DataCollector != null)
                 {
                     writer.WritePropertyName("dataCollector"u8);
-                    writer.WriteObjectValue(DataCollector);
+                    writer.WriteObjectValue<DataCollector>(DataCollector, options);
                 }
                 else
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessProbe != null)
                 {
                     writer.WritePropertyName("livenessProbe"u8);
-                    writer.WriteObjectValue(LivenessProbe);
+                    writer.WriteObjectValue<MachineLearningProbeSettings>(LivenessProbe, options);
                 }
                 else
                 {
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessProbe != null)
                 {
                     writer.WritePropertyName("readinessProbe"u8);
-                    writer.WriteObjectValue(ReadinessProbe);
+                    writer.WriteObjectValue<MachineLearningProbeSettings>(ReadinessProbe, options);
                 }
                 else
                 {
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RequestSettings != null)
                 {
                     writer.WritePropertyName("requestSettings"u8);
-                    writer.WriteObjectValue(RequestSettings);
+                    writer.WriteObjectValue<MachineLearningOnlineRequestSettings>(RequestSettings, options);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScaleSettings != null)
                 {
                     writer.WritePropertyName("scaleSettings"u8);
-                    writer.WriteObjectValue(ScaleSettings);
+                    writer.WriteObjectValue<MachineLearningOnlineScaleSettings>(ScaleSettings, options);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOnlineDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IDictionary<string, string> environmentVariables = default;
             IDictionary<string, string> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appInsightsEnabled"u8))
@@ -444,10 +444,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnknownOnlineDeployment(
                 codeConfiguration,
                 description,
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningOnlineDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOnlineDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -27,23 +27,23 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerSkill>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
-                writer.WriteObjectValue(CognitiveServicesAccount);
+                writer.WriteObjectValue<CognitiveServicesAccount>(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
-                writer.WriteObjectValue(KnowledgeStore);
+                writer.WriteObjectValue<KnowledgeStore>(KnowledgeStore);
             }
             if (Optional.IsDefined(IndexProjections))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue(IndexProjections);
+                writer.WriteObjectValue<SearchIndexerIndexProjections>(IndexProjections);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -55,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -153,6 +153,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 indexProjections,
                 odataEtag,
                 encryptionKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerSkillset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerSkillset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchIndexerSkillset>(this);
+            return content;
         }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetSchemaDataElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDatasetSchemaDataElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetSchemaDataElement)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -139,8 +139,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             public override void Write(Utf8JsonWriter writer, DatasetSchemaDataElement model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DatasetSchemaDataElement>(model, new ModelReaderWriterOptions("W"));
             }
+
             public override DatasetSchemaDataElement Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                writer.WriteObjectValue<SqlConnection>(CurrentConnection);
             }
             if (Optional.IsDefined(ResultLimit))
             {
@@ -34,12 +34,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<SqlScriptMetadata>(Metadata);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -96,12 +96,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlScriptContent(query, currentConnection, resultLimit, metadata, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlScriptContent FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlScriptContent(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SqlScriptContent>(this);
+            return content;
+        }
+
         internal partial class SqlScriptContentConverter : JsonConverter<SqlScriptContent>
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptContent model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlScriptContent>(model);
             }
+
             public override SqlScriptContent Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

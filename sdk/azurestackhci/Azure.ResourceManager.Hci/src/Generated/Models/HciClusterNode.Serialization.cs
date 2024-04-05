@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterNode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
             float? memoryInGiB = default;
             DateTimeOffset? lastLicensingTimestamp = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -248,10 +248,10 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new HciClusterNode(
                 name,
                 id,
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterNode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterNode)} does not support reading '{options.Format}' format.");
             }
         }
 

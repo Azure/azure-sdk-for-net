@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyInterpretation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.AI.AnomalyDetector
             if (Optional.IsDefined(CorrelationChanges))
             {
                 writer.WritePropertyName("correlationChanges"u8);
-                writer.WriteObjectValue(CorrelationChanges);
+                writer.WriteObjectValue<CorrelationChanges>(CorrelationChanges, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<AnomalyInterpretation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.AI.AnomalyDetector
             float? contributionScore = default;
             CorrelationChanges correlationChanges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("variable"u8))
@@ -111,10 +111,10 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AnomalyInterpretation(variable, contributionScore, correlationChanges, serializedAdditionalRawData);
         }
 
@@ -127,7 +127,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeAnomalyInterpretation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnomalyInterpretation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnomalyInterpretation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

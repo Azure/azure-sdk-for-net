@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkSecurityPerimeterProfileAccessRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityPerimeterConfigurationProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             string diagnosticSettingsVersion = default;
             IList<string> enabledLogCategories = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.EventGrid.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new NetworkSecurityPerimeterConfigurationProfile(
                 name,
                 accessRulesVersion,
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeNetworkSecurityPerimeterConfigurationProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityPerimeterConfigurationProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

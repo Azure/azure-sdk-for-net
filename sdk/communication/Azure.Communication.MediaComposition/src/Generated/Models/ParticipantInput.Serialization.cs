@@ -16,7 +16,7 @@ namespace Azure.Communication.MediaComposition.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
-            writer.WriteObjectValue(ServiceId);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(ServiceId);
             writer.WritePropertyName("call"u8);
             writer.WriteStringValue(Call);
             writer.WritePropertyName("kind"u8);
@@ -63,6 +63,22 @@ namespace Azure.Communication.MediaComposition.Models
                 }
             }
             return new ParticipantInput(kind, placeholderImageUri, id, call);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ParticipantInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeParticipantInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ParticipantInput>(this);
+            return content;
         }
     }
 }

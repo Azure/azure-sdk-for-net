@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("cell_type"u8);
             writer.WriteStringValue(CellType);
             writer.WritePropertyName("metadata"u8);
-            writer.WriteObjectValue(Metadata);
+            writer.WriteObjectValue<object>(Metadata);
             writer.WritePropertyName("source"u8);
             writer.WriteStartArray();
             foreach (var item in Source)
@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Attachments))
             {
                 writer.WritePropertyName("attachments"u8);
-                writer.WriteObjectValue(Attachments);
+                writer.WriteObjectValue<object>(Attachments);
             }
             if (Optional.IsCollectionDefined(Outputs))
             {
@@ -41,14 +41,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Outputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotebookCellOutputItem>(item);
                 }
                 writer.WriteEndArray();
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -123,12 +123,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookCell FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookCell(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotebookCell>(this);
+            return content;
+        }
+
         internal partial class NotebookCellConverter : JsonConverter<NotebookCell>
         {
             public override void Write(Utf8JsonWriter writer, NotebookCell model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<NotebookCell>(model);
             }
+
             public override NotebookCell Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

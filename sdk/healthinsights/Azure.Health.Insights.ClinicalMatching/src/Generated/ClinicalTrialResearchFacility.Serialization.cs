@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialResearchFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrialResearchFacility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             string state = default;
             string countryOrRegion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -108,10 +108,10 @@ namespace Azure.Health.Insights.ClinicalMatching
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ClinicalTrialResearchFacility(name, city, state, countryOrRegion, serializedAdditionalRawData);
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeClinicalTrialResearchFacility(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrialResearchFacility)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ClinicalTrialResearchFacility>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

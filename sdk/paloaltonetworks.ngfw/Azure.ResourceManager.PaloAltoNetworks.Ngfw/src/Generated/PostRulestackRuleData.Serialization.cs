@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<SourceAddressInfo>(Source, options);
             }
             if (Optional.IsDefined(NegateSource))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<DestinationAddressInfo>(Destination, options);
             }
             if (Optional.IsDefined(NegateDestination))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
-                writer.WriteObjectValue(Category);
+                writer.WriteObjectValue<EdlMatchCategory>(Category, options);
             }
             if (Optional.IsDefined(Protocol))
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 writer.WriteStartArray();
                 foreach (var item in Tags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RulestackTagInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             var format = options.Format == "W" ? ((IPersistableModel<PostRulestackRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             IList<RulestackTagInfo> tags = default;
             FirewallProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -442,10 +442,10 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostRulestackRuleData(
                 id,
                 name,
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                         return DeserializePostRulestackRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostRulestackRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

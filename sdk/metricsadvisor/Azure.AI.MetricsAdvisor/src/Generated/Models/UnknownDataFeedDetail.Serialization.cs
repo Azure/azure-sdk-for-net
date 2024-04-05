@@ -44,7 +44,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataFeedMetric>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -53,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFeedDimension>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -480,6 +480,22 @@ namespace Azure.AI.MetricsAdvisor.Models
                 actionLinkTemplate,
                 authenticationType,
                 credentialId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownDataFeedDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownDataFeedDetail(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UnknownDataFeedDetail>(this);
+            return content;
         }
     }
 }

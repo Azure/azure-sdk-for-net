@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             if (Optional.IsDefined(SecretParameters))
             {
                 writer.WritePropertyName("secretParameters"u8);
-                writer.WriteObjectValue(SecretParameters);
+                writer.WriteObjectValue<PostgreSqlMigrationSecretParameters>(SecretParameters, options);
             }
             if (Optional.IsCollectionDefined(DbsToMigrate))
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             IList<string> dbsToCancelMigrationOn = default;
             PostgreSqlMigrationMode? migrationMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -343,10 +343,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlMigrationPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 sourceDbServerResourceId,
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlMigrationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

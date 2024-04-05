@@ -22,7 +22,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
             if (Optional.IsDefined(Items))
             {
                 writer.WritePropertyName("items"u8);
-                writer.WriteObjectValue(Items);
+                writer.WriteObjectValue<DocumentFieldSchema>(Items, options);
             }
             if (Optional.IsCollectionDefined(Properties))
             {
@@ -50,7 +50,7 @@ namespace Azure.AI.DocumentIntelligence
                 foreach (var item in Properties)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DocumentFieldSchema>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFieldSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,7 +98,7 @@ namespace Azure.AI.DocumentIntelligence
             DocumentFieldSchema items = default;
             IReadOnlyDictionary<string, DocumentFieldSchema> properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -141,10 +141,10 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DocumentFieldSchema(
                 type,
                 description,
@@ -163,7 +163,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentFieldSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFieldSchema)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentFieldSchema>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

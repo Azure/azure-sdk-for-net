@@ -31,7 +31,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SessionOptions))
             {
                 writer.WritePropertyName("sessionOptions"u8);
-                writer.WriteObjectValue(SessionOptions);
+                writer.WriteObjectValue<RunNotebookSparkSessionOptions>(SessionOptions);
             }
             if (Optional.IsDefined(HonorSessionTimeToLive))
             {
@@ -45,19 +45,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RunNotebookParameter>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RunNotebookRequest>(this);
+            return content;
+        }
+
         internal partial class RunNotebookRequestConverter : JsonConverter<RunNotebookRequest>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunNotebookRequest>(model);
             }
+
             public override RunNotebookRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

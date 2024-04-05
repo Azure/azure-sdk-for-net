@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             if (options.Format != "W" && Optional.IsDefined(ReportProperties))
             {
                 writer.WritePropertyName("reportProperties"u8);
-                writer.WriteObjectValue(ReportProperties);
+                writer.WriteObjectValue<ReportProperties>(ReportProperties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReportSystemData))
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 writer.WriteStartArray();
                 foreach (var item in ComplianceResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             SystemData reportSystemData = default;
             IReadOnlyList<ComplianceResult> complianceResults = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SnapshotProperties(
                 id,
                 snapshotName,
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeSnapshotProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

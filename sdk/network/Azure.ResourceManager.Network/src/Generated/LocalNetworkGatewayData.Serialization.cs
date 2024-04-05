@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<LocalNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LocalNetworkAddressSpace))
             {
                 writer.WritePropertyName("localNetworkAddressSpace"u8);
-                writer.WriteObjectValue(LocalNetworkAddressSpace);
+                writer.WriteObjectValue<AddressSpace>(LocalNetworkAddressSpace, options);
             }
             if (Optional.IsDefined(GatewayIPAddress))
             {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpSettings))
             {
                 writer.WritePropertyName("bgpSettings"u8);
-                writer.WriteObjectValue(BgpSettings);
+                writer.WriteObjectValue<BgpSettings>(BgpSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<LocalNetworkGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new LocalNetworkGatewayData(
                 id,
                 name,
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeLocalNetworkGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LocalNetworkGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

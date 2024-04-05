@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(DeploymentConfiguration))
             {
                 writer.WritePropertyName("deploymentConfiguration"u8);
-                writer.WriteObjectValue(DeploymentConfiguration);
+                writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentDedicatedNodes))
             {
@@ -118,12 +118,12 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(ScaleSettings))
             {
                 writer.WritePropertyName("scaleSettings"u8);
-                writer.WriteObjectValue(ScaleSettings);
+                writer.WriteObjectValue<BatchAccountPoolScaleSettings>(ScaleSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AutoScaleRun))
             {
                 writer.WritePropertyName("autoScaleRun"u8);
-                writer.WriteObjectValue(AutoScaleRun);
+                writer.WriteObjectValue<BatchAccountPoolAutoScaleRun>(AutoScaleRun, options);
             }
             if (Optional.IsDefined(InterNodeCommunication))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<BatchNetworkConfiguration>(NetworkConfiguration, options);
             }
             if (Optional.IsDefined(TaskSlotsPerNode))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(TaskSchedulingPolicy))
             {
                 writer.WritePropertyName("taskSchedulingPolicy"u8);
-                writer.WriteObjectValue(TaskSchedulingPolicy);
+                writer.WriteObjectValue<TaskSchedulingPolicy>(TaskSchedulingPolicy, options);
             }
             if (Optional.IsCollectionDefined(UserAccounts))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in UserAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchUserAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,14 +161,14 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Metadata)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchAccountPoolMetadataItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);
-                writer.WriteObjectValue(StartTask);
+                writer.WriteObjectValue<BatchAccountPoolStartTask>(StartTask, options);
             }
             if (Optional.IsCollectionDefined(Certificates))
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchCertificateReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in ApplicationPackages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchApplicationPackageReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Batch
             if (options.Format != "W" && Optional.IsDefined(ResizeOperationStatus))
             {
                 writer.WritePropertyName("resizeOperationStatus"u8);
-                writer.WriteObjectValue(ResizeOperationStatus);
+                writer.WriteObjectValue<BatchResizeOperationStatus>(ResizeOperationStatus, options);
             }
             if (Optional.IsCollectionDefined(MountConfiguration))
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Batch
                 writer.WriteStartArray();
                 foreach (var item in MountConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchMountConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Batch
             if (Optional.IsDefined(UpgradePolicy))
             {
                 writer.WritePropertyName("upgradePolicy"u8);
-                writer.WriteObjectValue(UpgradePolicy);
+                writer.WriteObjectValue<UpgradePolicy>(UpgradePolicy, options);
             }
             if (Optional.IsCollectionDefined(ResourceTags))
             {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Batch
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Batch
             UpgradePolicy upgradePolicy = default;
             IDictionary<string, string> resourceTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -671,10 +671,10 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BatchAccountPoolData(
                 id,
                 name,
@@ -723,7 +723,7 @@ namespace Azure.ResourceManager.Batch
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.Batch
                         return DeserializeBatchAccountPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

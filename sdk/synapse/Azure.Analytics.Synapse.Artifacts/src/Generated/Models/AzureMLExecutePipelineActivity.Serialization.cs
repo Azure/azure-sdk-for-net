@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,39 +64,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("mlPipelineId"u8);
-            writer.WriteObjectValue(MlPipelineId);
+            writer.WriteObjectValue<object>(MlPipelineId);
             if (Optional.IsDefined(ExperimentName))
             {
                 writer.WritePropertyName("experimentName"u8);
-                writer.WriteObjectValue(ExperimentName);
+                writer.WriteObjectValue<object>(ExperimentName);
             }
             if (Optional.IsDefined(MlPipelineParameters))
             {
                 writer.WritePropertyName("mlPipelineParameters"u8);
-                writer.WriteObjectValue(MlPipelineParameters);
+                writer.WriteObjectValue<object>(MlPipelineParameters);
             }
             if (Optional.IsDefined(MlParentRunId))
             {
                 writer.WritePropertyName("mlParentRunId"u8);
-                writer.WriteObjectValue(MlParentRunId);
+                writer.WriteObjectValue<object>(MlParentRunId);
             }
             if (Optional.IsDefined(ContinueOnStepFailure))
             {
                 writer.WritePropertyName("continueOnStepFailure"u8);
-                writer.WriteObjectValue(ContinueOnStepFailure);
+                writer.WriteObjectValue<object>(ContinueOnStepFailure);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -278,12 +278,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 continueOnStepFailure);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLExecutePipelineActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLExecutePipelineActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureMLExecutePipelineActivity>(this);
+            return content;
+        }
+
         internal partial class AzureMLExecutePipelineActivityConverter : JsonConverter<AzureMLExecutePipelineActivity>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLExecutePipelineActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureMLExecutePipelineActivity>(model);
             }
+
             public override AzureMLExecutePipelineActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -22,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PatientDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientDocument)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Authors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentAuthor>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,10 +63,10 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(AdministrativeMetadata))
             {
                 writer.WritePropertyName("administrativeMetadata"u8);
-                writer.WriteObjectValue(AdministrativeMetadata);
+                writer.WriteObjectValue<DocumentAdministrativeMetadata>(AdministrativeMetadata, options);
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<DocumentContent>(Content, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -90,7 +90,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<PatientDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatientDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PatientDocument)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             DocumentAdministrativeMetadata administrativeMetadata = default;
             DocumentContent content = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -190,10 +190,10 @@ namespace Azure.Health.Insights.RadiologyInsights
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PatientDocument(
                 type,
                 clinicalType,
@@ -216,7 +216,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PatientDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializePatientDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatientDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PatientDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -250,7 +250,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<PatientDocument>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

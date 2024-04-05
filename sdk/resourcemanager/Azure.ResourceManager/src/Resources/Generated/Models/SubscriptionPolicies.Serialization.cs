@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionPolicies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +84,7 @@ namespace Azure.ResourceManager.Resources.Models
             string quotaId = default;
             SpendingLimit? spendingLimit = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("locationPlacementId"u8))
@@ -107,11 +108,84 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SubscriptionPolicies(locationPlacementId, quotaId, spendingLimit, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LocationPlacementId), out propertyOverride);
+            if (Optional.IsDefined(LocationPlacementId) || hasPropertyOverride)
+            {
+                builder.Append("  locationPlacementId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LocationPlacementId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LocationPlacementId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LocationPlacementId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QuotaId), out propertyOverride);
+            if (Optional.IsDefined(QuotaId) || hasPropertyOverride)
+            {
+                builder.Append("  quotaId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (QuotaId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{QuotaId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{QuotaId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpendingLimit), out propertyOverride);
+            if (Optional.IsDefined(SpendingLimit) || hasPropertyOverride)
+            {
+                builder.Append("  spendingLimit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SpendingLimit.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SubscriptionPolicies>.Write(ModelReaderWriterOptions options)
@@ -122,8 +196,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +215,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeSubscriptionPolicies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionPolicies)} does not support reading '{options.Format}' format.");
             }
         }
 

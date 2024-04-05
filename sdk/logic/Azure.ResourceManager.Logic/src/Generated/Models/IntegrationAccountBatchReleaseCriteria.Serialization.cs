@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchReleaseCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<LogicWorkflowTriggerRecurrence>(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchReleaseCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Logic.Models
             int? batchSize = default;
             LogicWorkflowTriggerRecurrence recurrence = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messageCount"u8))
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IntegrationAccountBatchReleaseCriteria(messageCount, batchSize, recurrence, serializedAdditionalRawData);
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountBatchReleaseCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchReleaseCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

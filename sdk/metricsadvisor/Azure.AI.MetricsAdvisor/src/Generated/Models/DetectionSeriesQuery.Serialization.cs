@@ -23,10 +23,18 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SeriesIdentity>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DetectionSeriesQuery>(this);
+            return content;
         }
     }
 }

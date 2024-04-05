@@ -53,6 +53,14 @@ public class PipelineMessageTests : SyncAsyncTestBase
     }
 
     [Test]
+    public void NullOptionsIsNoOp()
+    {
+        ClientPipeline pipeline = ClientPipeline.Create();
+        PipelineMessage message = pipeline.CreateMessage();
+        Assert.DoesNotThrow(() => message.Apply(null));
+    }
+
+    [Test]
     public void CanSetAndGetMessageProperties()
     {
         ClientPipeline pipeline = ClientPipeline.Create();

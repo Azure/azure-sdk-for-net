@@ -20,9 +20,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
 
         internal abstract string DataTypeIdentifier { get; }
 
-        /// <summary>Invalidates this instance.
-        /// Subsequently invalidates the actions.</summary>
-        internal override void Invalidate()
+        /// <summary>Removes any null actions. Sets the parent level odata.type.</summary>
+        internal override void BuildJsonElement()
         {
             Actions.RemoveAll(a => a == null);
             AuthenticationEventJsonElement eventJsonElement = new AuthenticationEventJsonElement(Body);
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework
                 Body = eventJsonElement.ToString();
             }
 
-            base.Invalidate();
+            base.BuildJsonElement();
         }
     }
 }

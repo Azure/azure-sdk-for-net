@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<SandboxCustomImagesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SandboxCustomImageData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<SandboxCustomImagesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kusto.Models
             string nextLink = default;
             IReadOnlyList<SandboxCustomImageData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Kusto.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SandboxCustomImagesListResult(nextLink, value ?? new ChangeTrackingList<SandboxCustomImageData>(), serializedAdditionalRawData);
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeSandboxCustomImagesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxCustomImagesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

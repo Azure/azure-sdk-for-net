@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<VirtualMachineRunCommandScriptSource>(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineRunCommandInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(TreatFailureAsDeploymentFailure))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
             VirtualMachineRunCommandInstanceView instanceView = default;
             bool? treatFailureAsDeploymentFailure = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -329,10 +329,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VirtualMachineRunCommandUpdate(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData,
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineRunCommandUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

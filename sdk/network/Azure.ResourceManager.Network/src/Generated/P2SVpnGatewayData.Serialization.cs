@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in P2SConnectionConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<P2SConnectionConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(VpnClientConnectionHealth))
             {
                 writer.WritePropertyName("vpnClientConnectionHealth"u8);
-                writer.WriteObjectValue(VpnClientConnectionHealth);
+                writer.WriteObjectValue<VpnClientConnectionHealth>(VpnClientConnectionHealth, options);
             }
             if (Optional.IsCollectionDefined(CustomDnsServers))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<P2SVpnGatewayData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Network
             IList<string> customDnsServers = default;
             bool? isRoutingPreferenceInternet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -324,10 +324,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new P2SVpnGatewayData(
                 id,
                 name,
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeP2SVpnGatewayData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(P2SVpnGatewayData)} does not support reading '{options.Format}' format.");
             }
         }
 

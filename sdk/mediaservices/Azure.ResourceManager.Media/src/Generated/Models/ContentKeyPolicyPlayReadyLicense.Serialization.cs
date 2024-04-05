@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,12 +61,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(PlayRight))
             {
                 writer.WritePropertyName("playRight"u8);
-                writer.WriteObjectValue(PlayRight);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyPlayRight>(PlayRight, options);
             }
             writer.WritePropertyName("licenseType"u8);
             writer.WriteStringValue(LicenseType.ToString());
             writer.WritePropertyName("contentKeyLocation"u8);
-            writer.WriteObjectValue(ContentKeyLocation);
+            writer.WriteObjectValue<ContentKeyPolicyPlayReadyContentKeyLocation>(ContentKeyLocation, options);
             writer.WritePropertyName("contentType"u8);
             writer.WriteStringValue(ContentType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyLicense>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
             ContentKeyPolicyPlayReadyContentKeyLocation contentKeyLocation = default;
             ContentKeyPolicyPlayReadyContentType contentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("allowTestDevices"u8))
@@ -207,10 +207,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContentKeyPolicyPlayReadyLicense(
                 allowTestDevices,
                 securityLevel,
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyPlayReadyLicense(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyLicense)} does not support reading '{options.Format}' format.");
             }
         }
 

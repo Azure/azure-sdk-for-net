@@ -22,19 +22,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ParquetWriteSettings(type, additionalProperties, maxRowsPerFile, fileNamePrefix);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ParquetWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeParquetWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ParquetWriteSettings>(this);
+            return content;
+        }
+
         internal partial class ParquetWriteSettingsConverter : JsonConverter<ParquetWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, ParquetWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ParquetWriteSettings>(model);
             }
+
             public override ParquetWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

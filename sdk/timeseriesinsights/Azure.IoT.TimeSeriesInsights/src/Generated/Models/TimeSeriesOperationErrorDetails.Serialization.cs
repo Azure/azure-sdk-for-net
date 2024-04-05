@@ -39,5 +39,13 @@ namespace Azure.IoT.TimeSeriesInsights
             additionalProperties = additionalPropertiesDictionary;
             return new TimeSeriesOperationErrorDetails(code, message, additionalProperties);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesOperationErrorDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesOperationErrorDetails(document.RootElement);
+        }
     }
 }

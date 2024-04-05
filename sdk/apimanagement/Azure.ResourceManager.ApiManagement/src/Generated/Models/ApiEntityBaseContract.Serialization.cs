@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiEntityBaseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiEntityBaseContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ApiContactInformation contact = default;
             ApiLicenseInformation license = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -275,10 +275,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApiEntityBaseContract(
                 description,
                 authenticationSettings,
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiEntityBaseContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiEntityBaseContract)} does not support reading '{options.Format}' format.");
             }
         }
 

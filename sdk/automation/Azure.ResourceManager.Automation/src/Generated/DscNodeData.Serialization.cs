@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Automation
                 writer.WriteStartArray();
                 foreach (var item in ExtensionHandler)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscNodeExtensionHandlerAssociationProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automation
             IList<DscNodeExtensionHandlerAssociationProperty> extensionHandler = default;
             string name0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -302,10 +302,10 @@ namespace Azure.ResourceManager.Automation
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DscNodeData(
                 id,
                 name,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeDscNodeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeData)} does not support reading '{options.Format}' format.");
             }
         }
 

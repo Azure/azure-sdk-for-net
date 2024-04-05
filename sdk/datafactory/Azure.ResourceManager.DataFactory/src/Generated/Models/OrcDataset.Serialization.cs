@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrcDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrcDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrcDataset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DatasetFolder>(Folder, options);
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(DataLocation))
             {
                 writer.WritePropertyName("location"u8);
-                writer.WriteObjectValue(DataLocation);
+                writer.WriteObjectValue<DatasetLocation>(DataLocation, options);
             }
             if (Optional.IsDefined(OrcCompressionCodec))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrcDataset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrcDataset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrcDataset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrcDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrcDataset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeOrcDataset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrcDataset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrcDataset)} does not support reading '{options.Format}' format.");
             }
         }
 

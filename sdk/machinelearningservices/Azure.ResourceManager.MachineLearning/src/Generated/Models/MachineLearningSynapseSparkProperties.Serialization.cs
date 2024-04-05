@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AutoScaleProperties))
             {
                 writer.WritePropertyName("autoScaleProperties"u8);
-                writer.WriteObjectValue(AutoScaleProperties);
+                writer.WriteObjectValue<MachineLearningAutoScaleProperties>(AutoScaleProperties, options);
             }
             if (Optional.IsDefined(AutoPauseProperties))
             {
                 writer.WritePropertyName("autoPauseProperties"u8);
-                writer.WriteObjectValue(AutoPauseProperties);
+                writer.WriteObjectValue<MachineLearningAutoPauseProperties>(AutoPauseProperties, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSynapseSparkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string workspaceName = default;
             string poolName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("autoScaleProperties"u8))
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MachineLearningSynapseSparkProperties(
                 autoScaleProperties,
                 autoPauseProperties,
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningSynapseSparkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSynapseSparkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

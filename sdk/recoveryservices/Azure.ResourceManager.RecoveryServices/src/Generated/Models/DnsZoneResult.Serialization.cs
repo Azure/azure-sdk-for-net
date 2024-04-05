@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsZoneResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             IList<string> requiredZoneNames = default;
             VaultSubResourceType? subResource = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("requiredZoneNames"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DnsZoneResult(subResource, serializedAdditionalRawData, requiredZoneNames ?? new ChangeTrackingList<string>());
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeDnsZoneResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsZoneResult)} does not support reading '{options.Format}' format.");
             }
         }
 

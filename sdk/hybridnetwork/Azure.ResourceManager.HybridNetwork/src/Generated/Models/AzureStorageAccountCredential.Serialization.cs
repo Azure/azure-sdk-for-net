@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureStorageAccountCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerCredentials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureStorageAccountContainerCredential>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureStorageAccountCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             DateTimeOffset? expiry = default;
             CredentialType credentialType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageAccountId"u8))
@@ -133,10 +133,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AzureStorageAccountCredential(credentialType, serializedAdditionalRawData, storageAccountId, containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>(), expiry);
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeAzureStorageAccountCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureStorageAccountCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -71,7 +71,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricPoint>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Documents)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentIngress>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in TopCpuProcesses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProcessCpuData>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -101,11 +101,19 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in CollectionConfigurationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CollectionConfigurationError>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MonitoringDataPoint>(this);
+            return content;
         }
     }
 }

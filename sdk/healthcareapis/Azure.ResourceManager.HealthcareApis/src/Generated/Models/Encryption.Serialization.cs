@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Encryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(CustomerManagedKeyEncryption))
             {
                 writer.WritePropertyName("customerManagedKeyEncryption"u8);
-                writer.WriteObjectValue(CustomerManagedKeyEncryption);
+                writer.WriteObjectValue<EncryptionCustomerManagedKeyEncryption>(CustomerManagedKeyEncryption, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<Encryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Encryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Encryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             }
             EncryptionCustomerManagedKeyEncryption customerManagedKeyEncryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("customerManagedKeyEncryption"u8))
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new Encryption(customerManagedKeyEncryption, serializedAdditionalRawData);
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Encryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Encryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Encryption)} does not support reading '{options.Format}' format.");
             }
         }
 

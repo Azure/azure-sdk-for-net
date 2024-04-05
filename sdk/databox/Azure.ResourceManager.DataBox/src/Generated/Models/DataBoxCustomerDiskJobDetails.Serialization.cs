@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxCustomerDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 foreach (var item in ImportDiskDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ImportDiskDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 foreach (var item in ExportDiskDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ExportDiskDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -54,17 +54,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyProgress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxCustomerDiskCopyProgress>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(DeliverToDataCenterPackageDetails))
             {
                 writer.WritePropertyName("deliverToDcPackageDetails"u8);
-                writer.WriteObjectValue(DeliverToDataCenterPackageDetails);
+                writer.WriteObjectValue<PackageCarrierInfo>(DeliverToDataCenterPackageDetails, options);
             }
             writer.WritePropertyName("returnToCustomerPackageDetails"u8);
-            writer.WriteObjectValue(ReturnToCustomerPackageDetails);
+            writer.WriteObjectValue<PackageCarrierDetails>(ReturnToCustomerPackageDetails, options);
             if (Optional.IsDefined(EnableManifestBackup))
             {
                 writer.WritePropertyName("enableManifestBackup"u8);
@@ -76,26 +76,26 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in JobStages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxJobStage>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
+            writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage);
+                writer.WriteObjectValue<PackageShippingDetails>(DeliveryPackage, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage);
+                writer.WriteObjectValue<PackageShippingDetails>(ReturnPackage, options);
             }
             if (Optional.IsCollectionDefined(DataImportDetails))
             {
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataImportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataExportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
             }
             if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in CopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CopyLogDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -152,12 +152,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails);
+                writer.WriteObjectValue<DeviceErasureDetails>(DeviceErasureDetails, options);
             }
             if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
             }
             if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
@@ -177,12 +177,12 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob);
+                writer.WriteObjectValue<LastMitigationActionOnJob>(LastMitigationActionOnJob, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress);
+                writer.WriteObjectValue<DataCenterAddressResult>(DataCenterAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxCustomerDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataCenterAddressResult dataCenterAddress = default;
             DataCenterCode? dataCenterCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("importDiskDetailsCollection"u8))
@@ -513,10 +513,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxCustomerDiskJobDetails(
                 jobStages ?? new ChangeTrackingList<DataBoxJobStage>(),
                 contactDetails,
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxCustomerDiskJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxCustomerDiskJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

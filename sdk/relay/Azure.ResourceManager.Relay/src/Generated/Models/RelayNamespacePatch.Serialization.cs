@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RelaySku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RelayPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNamespacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Relay.Models
             IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
             RelayPublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sku"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.Relay.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RelayNamespacePatch(
                 id,
                 name,
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Relay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Relay.Models
                         return DeserializeRelayNamespacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNamespacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

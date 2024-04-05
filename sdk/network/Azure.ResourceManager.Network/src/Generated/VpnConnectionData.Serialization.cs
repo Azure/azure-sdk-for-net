@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPsecPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPsecPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in TrafficSelectorPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrafficSelectorPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -151,14 +151,14 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VpnLinkConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnSiteLinkConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Network
             IList<VpnSiteLinkConnectionData> vpnLinkConnections = default;
             RoutingConfiguration routingConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("etag"u8))
@@ -454,10 +454,10 @@ namespace Azure.ResourceManager.Network
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new VpnConnectionData(
                 id,
                 name,
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVpnConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

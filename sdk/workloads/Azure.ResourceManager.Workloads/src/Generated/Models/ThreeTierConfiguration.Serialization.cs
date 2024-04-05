@@ -22,35 +22,35 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<NetworkConfiguration>(NetworkConfiguration, options);
             }
             writer.WritePropertyName("centralServer"u8);
-            writer.WriteObjectValue(CentralServer);
+            writer.WriteObjectValue<CentralServerConfiguration>(CentralServer, options);
             writer.WritePropertyName("applicationServer"u8);
-            writer.WriteObjectValue(ApplicationServer);
+            writer.WriteObjectValue<ApplicationServerConfiguration>(ApplicationServer, options);
             writer.WritePropertyName("databaseServer"u8);
-            writer.WriteObjectValue(DatabaseServer);
+            writer.WriteObjectValue<DatabaseConfiguration>(DatabaseServer, options);
             if (Optional.IsDefined(HighAvailabilityConfig))
             {
                 writer.WritePropertyName("highAvailabilityConfig"u8);
-                writer.WriteObjectValue(HighAvailabilityConfig);
+                writer.WriteObjectValue<HighAvailabilityConfiguration>(HighAvailabilityConfig, options);
             }
             if (Optional.IsDefined(StorageConfiguration))
             {
                 writer.WritePropertyName("storageConfiguration"u8);
-                writer.WriteObjectValue(StorageConfiguration);
+                writer.WriteObjectValue<SapStorageConfiguration>(StorageConfiguration, options);
             }
             if (Optional.IsDefined(CustomResourceNames))
             {
                 writer.WritePropertyName("customResourceNames"u8);
-                writer.WriteObjectValue(CustomResourceNames);
+                writer.WriteObjectValue<ThreeTierCustomResourceNames>(CustomResourceNames, options);
             }
             writer.WritePropertyName("deploymentType"u8);
             writer.WriteStringValue(DeploymentType.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreeTierConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Workloads.Models
             SapDeploymentType deploymentType = default;
             string appResourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("networkConfiguration"u8))
@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ThreeTierConfiguration(
                 deploymentType,
                 appResourceGroup,
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeThreeTierConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreeTierConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

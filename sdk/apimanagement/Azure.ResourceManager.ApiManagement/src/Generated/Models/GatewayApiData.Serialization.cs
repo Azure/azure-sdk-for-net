@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayApiData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(AuthenticationSettings))
             {
                 writer.WritePropertyName("authenticationSettings"u8);
-                writer.WriteObjectValue(AuthenticationSettings);
+                writer.WriteObjectValue<AuthenticationSettingsContract>(AuthenticationSettings, options);
             }
             if (Optional.IsDefined(SubscriptionKeyParameterNames))
             {
                 writer.WritePropertyName("subscriptionKeyParameterNames"u8);
-                writer.WriteObjectValue(SubscriptionKeyParameterNames);
+                writer.WriteObjectValue<SubscriptionKeyParameterNamesContract>(SubscriptionKeyParameterNames, options);
             }
             if (Optional.IsDefined(ApiType))
             {
@@ -117,12 +117,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(Contact))
             {
                 writer.WritePropertyName("contact"u8);
-                writer.WriteObjectValue(Contact);
+                writer.WriteObjectValue<ApiContactInformation>(Contact, options);
             }
             if (Optional.IsDefined(License))
             {
                 writer.WritePropertyName("license"u8);
-                writer.WriteObjectValue(License);
+                writer.WriteObjectValue<ApiLicenseInformation>(License, options);
             }
             if (Optional.IsDefined(SourceApiId))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ApiVersionSet))
             {
                 writer.WritePropertyName("apiVersionSet"u8);
-                writer.WriteObjectValue(ApiVersionSet);
+                writer.WriteObjectValue<ApiVersionSetContractDetails>(ApiVersionSet, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayApiData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             IList<ApiOperationInvokableProtocol> protocols = default;
             ApiVersionSetContractDetails apiVersionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new GatewayApiData(
                 id,
                 name,
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayApiData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGatewayApiData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayApiData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
             if (Optional.IsDefined(PlaySourceInfo))
             {
                 writer.WritePropertyName("playSourceInfo"u8);
-                writer.WriteObjectValue(PlaySourceInfo);
+                writer.WriteObjectValue<PlaySourceInternal>(PlaySourceInfo);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -33,6 +33,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HoldRequestInternal>(this);
+            return content;
         }
     }
 }

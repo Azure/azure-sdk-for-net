@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerCpuUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             long? kernelModeUsage = default;
             long? userModeUsage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("totalUsage"u8))
@@ -140,11 +142,90 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContainerCpuUsage(totalUsage, perCpuUsage ?? new ChangeTrackingList<long>(), kernelModeUsage, userModeUsage, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalUsage), out propertyOverride);
+            if (Optional.IsDefined(TotalUsage) || hasPropertyOverride)
+            {
+                builder.Append("  totalUsage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TotalUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerCpuUsage), out propertyOverride);
+            if (Optional.IsCollectionDefined(PerCpuUsage) || hasPropertyOverride)
+            {
+                if (PerCpuUsage.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  perCpuUsage: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PerCpuUsage)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KernelModeUsage), out propertyOverride);
+            if (Optional.IsDefined(KernelModeUsage) || hasPropertyOverride)
+            {
+                builder.Append("  kernelModeUsage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{KernelModeUsage.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserModeUsage), out propertyOverride);
+            if (Optional.IsDefined(UserModeUsage) || hasPropertyOverride)
+            {
+                builder.Append("  userModeUsage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{UserModeUsage.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ContainerCpuUsage>.Write(ModelReaderWriterOptions options)
@@ -155,8 +236,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +255,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeContainerCpuUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerCpuUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

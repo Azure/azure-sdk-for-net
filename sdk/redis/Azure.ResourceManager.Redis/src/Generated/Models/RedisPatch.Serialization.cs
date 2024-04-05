@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(RedisConfiguration))
             {
                 writer.WritePropertyName("redisConfiguration"u8);
-                writer.WriteObjectValue(RedisConfiguration);
+                writer.WriteObjectValue<RedisCommonConfiguration>(RedisConfiguration, options);
             }
             if (Optional.IsDefined(RedisVersion))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Redis.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<RedisSku>(Sku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Redis.Models
             UpdateChannel? updateChannel = default;
             RedisSku sku = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -299,10 +299,10 @@ namespace Azure.ResourceManager.Redis.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RedisPatch(
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 identity,
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

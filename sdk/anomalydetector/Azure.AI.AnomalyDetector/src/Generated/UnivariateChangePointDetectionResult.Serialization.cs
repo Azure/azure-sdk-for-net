@@ -22,7 +22,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,7 +93,7 @@ namespace Azure.AI.AnomalyDetector
             IReadOnlyList<bool> isChangePoint = default;
             IReadOnlyList<float> confidenceScores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("period"u8))
@@ -135,10 +135,10 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new UnivariateChangePointDetectionResult(period, isChangePoint ?? new ChangeTrackingList<bool>(), confidenceScores ?? new ChangeTrackingList<float>(), serializedAdditionalRawData);
         }
 
@@ -151,7 +151,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateChangePointDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

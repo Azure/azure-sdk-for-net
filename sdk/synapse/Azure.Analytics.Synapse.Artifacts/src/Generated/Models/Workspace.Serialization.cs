@@ -22,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -42,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue(DefaultDataLakeStorage);
+                writer.WriteObjectValue<DataLakeStorageAccountDetails>(DefaultDataLakeStorage);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -62,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                writer.WriteObjectValue<VirtualNetworkProfile>(VirtualNetworkProfile);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -86,29 +86,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointConnection>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionDetails>(Encryption);
             }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+                writer.WriteObjectValue<ManagedVirtualNetworkSettings>(ManagedVirtualNetworkSettings);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+                writer.WriteObjectValue<WorkspaceRepositoryConfiguration>(WorkspaceRepositoryConfiguration);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                writer.WriteObjectValue<PurviewConfiguration>(PurviewConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -367,12 +367,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 adlaResourceId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Workspace FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWorkspace(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Workspace>(this);
+            return content;
+        }
+
         internal partial class WorkspaceConverter : JsonConverter<Workspace>
         {
             public override void Write(Utf8JsonWriter writer, Workspace model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Workspace>(model);
             }
+
             public override Workspace Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

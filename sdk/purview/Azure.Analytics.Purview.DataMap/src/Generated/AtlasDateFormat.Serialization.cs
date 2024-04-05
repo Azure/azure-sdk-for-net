@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,17 +44,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(DateInstance))
             {
                 writer.WritePropertyName("dateInstance"u8);
-                writer.WriteObjectValue(DateInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(DateInstance, options);
             }
             if (Optional.IsDefined(DateTimeInstance))
             {
                 writer.WritePropertyName("dateTimeInstance"u8);
-                writer.WriteObjectValue(DateTimeInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(DateTimeInstance, options);
             }
             if (Optional.IsDefined(Instance))
             {
                 writer.WritePropertyName("instance"u8);
-                writer.WriteObjectValue(Instance);
+                writer.WriteObjectValue<AtlasDateFormat>(Instance, options);
             }
             if (Optional.IsDefined(Lenient))
             {
@@ -64,17 +64,17 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(NumberFormat))
             {
                 writer.WritePropertyName("numberFormat"u8);
-                writer.WriteObjectValue(NumberFormat);
+                writer.WriteObjectValue<AtlasNumberFormat>(NumberFormat, options);
             }
             if (Optional.IsDefined(TimeInstance))
             {
                 writer.WritePropertyName("timeInstance"u8);
-                writer.WriteObjectValue(TimeInstance);
+                writer.WriteObjectValue<AtlasDateFormat>(TimeInstance, options);
             }
             if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
-                writer.WriteObjectValue(TimeZone);
+                writer.WriteObjectValue<AtlasTimeZone>(TimeZone, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<AtlasDateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.Analytics.Purview.DataMap
             AtlasDateFormat timeInstance = default;
             AtlasTimeZone timeZone = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("availableLocales"u8))
@@ -215,10 +215,10 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AtlasDateFormat(
                 availableLocales ?? new ChangeTrackingList<string>(),
                 calendar,
@@ -241,7 +241,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeAtlasDateFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AtlasDateFormat)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AtlasDateFormat>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressValidationOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxShippingAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AddressValidationOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataBox.Models
             AddressValidationStatus? validationStatus = default;
             IReadOnlyList<DataBoxShippingAddress> alternateAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new AddressValidationOutput(validationType, error, validationStatus, alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>(), serializedAdditionalRawData);
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeAddressValidationOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AddressValidationOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

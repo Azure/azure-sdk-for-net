@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEventHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotHub.Models
             string subscriptionId = default;
             string resourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -178,10 +178,10 @@ namespace Azure.ResourceManager.IotHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RoutingEventHubProperties(
                 id,
                 connectionString,
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingEventHubProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEventHubProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

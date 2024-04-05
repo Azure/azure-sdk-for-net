@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.StorageMover
             if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
-                writer.WriteObjectValue(ErrorDetails);
+                writer.WriteObjectValue<StorageMoverAgentPropertiesErrorDetails>(ErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<StorageMoverAgentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.StorageMover
             StorageMoverAgentPropertiesErrorDetails errorDetails = default;
             StorageMoverProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -289,10 +289,10 @@ namespace Azure.ResourceManager.StorageMover
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StorageMoverAgentData(
                 id,
                 name,
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StorageMover
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.StorageMover
                         return DeserializeStorageMoverAgentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageMoverAgentData)} does not support reading '{options.Format}' format.");
             }
         }
 

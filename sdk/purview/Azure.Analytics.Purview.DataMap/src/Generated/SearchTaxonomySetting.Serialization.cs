@@ -22,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchTaxonomySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Facet))
             {
                 writer.WritePropertyName("facet"u8);
-                writer.WriteObjectValue(Facet);
+                writer.WriteObjectValue<SearchFacetItem>(Facet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchTaxonomySetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +82,7 @@ namespace Azure.Analytics.Purview.DataMap
             IList<string> assetTypes = default;
             SearchFacetItem facet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("assetTypes"u8))
@@ -110,10 +110,10 @@ namespace Azure.Analytics.Purview.DataMap
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SearchTaxonomySetting(assetTypes ?? new ChangeTrackingList<string>(), facet, serializedAdditionalRawData);
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeSearchTaxonomySetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchTaxonomySetting)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SearchTaxonomySetting>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

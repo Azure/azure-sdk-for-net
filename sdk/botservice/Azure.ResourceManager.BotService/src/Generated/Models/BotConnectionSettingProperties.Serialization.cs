@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BotConnectionSettingParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotConnectionSettingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BotService.Models
             IList<BotConnectionSettingParameter> parameters = default;
             string provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -172,10 +172,10 @@ namespace Azure.ResourceManager.BotService.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BotConnectionSettingProperties(
                 clientId,
                 settingId,
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotConnectionSettingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotConnectionSettingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

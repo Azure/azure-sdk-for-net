@@ -22,19 +22,19 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("resultId"u8);
             writer.WriteStringValue(ResultId);
             writer.WritePropertyName("summary"u8);
-            writer.WriteObjectValue(Summary);
+            writer.WriteObjectValue<MultivariateBatchDetectionResultSummary>(Summary, options);
             writer.WritePropertyName("results"u8);
             writer.WriteStartArray();
             foreach (var item in Results)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AnomalyState>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -60,7 +60,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<MultivariateDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.AI.AnomalyDetector
             MultivariateBatchDetectionResultSummary summary = default;
             IReadOnlyList<AnomalyState> results = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resultId"u8))
@@ -104,10 +104,10 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MultivariateDetectionResult(resultId, summary, results, serializedAdditionalRawData);
         }
 
@@ -120,7 +120,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeMultivariateDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultivariateDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MultivariateDetectionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

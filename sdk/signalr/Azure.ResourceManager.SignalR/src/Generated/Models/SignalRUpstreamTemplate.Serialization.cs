@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +47,7 @@ namespace Azure.ResourceManager.SignalR.Models
             if (Optional.IsDefined(Auth))
             {
                 writer.WritePropertyName("auth"u8);
-                writer.WriteObjectValue(Auth);
+                writer.WriteObjectValue<SignalRUpstreamAuthSettings>(Auth, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRUpstreamTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.SignalR.Models
             string urlTemplate = default;
             SignalRUpstreamAuthSettings auth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("hubPattern"u8))
@@ -126,10 +127,10 @@ namespace Azure.ResourceManager.SignalR.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SignalRUpstreamTemplate(
                 hubPattern,
                 eventPattern,
@@ -137,6 +138,123 @@ namespace Azure.ResourceManager.SignalR.Models
                 urlTemplate,
                 auth,
                 serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HubPattern), out propertyOverride);
+            if (Optional.IsDefined(HubPattern) || hasPropertyOverride)
+            {
+                builder.Append("  hubPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HubPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HubPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HubPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventPattern), out propertyOverride);
+            if (Optional.IsDefined(EventPattern) || hasPropertyOverride)
+            {
+                builder.Append("  eventPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (EventPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{EventPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{EventPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CategoryPattern), out propertyOverride);
+            if (Optional.IsDefined(CategoryPattern) || hasPropertyOverride)
+            {
+                builder.Append("  categoryPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CategoryPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CategoryPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CategoryPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UrlTemplate), out propertyOverride);
+            if (Optional.IsDefined(UrlTemplate) || hasPropertyOverride)
+            {
+                builder.Append("  urlTemplate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (UrlTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{UrlTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{UrlTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Auth), out propertyOverride);
+            if (Optional.IsDefined(Auth) || hasPropertyOverride)
+            {
+                builder.Append("  auth: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Auth, options, 2, false, "  auth: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<SignalRUpstreamTemplate>.Write(ModelReaderWriterOptions options)
@@ -147,8 +265,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +284,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRUpstreamTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRUpstreamTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

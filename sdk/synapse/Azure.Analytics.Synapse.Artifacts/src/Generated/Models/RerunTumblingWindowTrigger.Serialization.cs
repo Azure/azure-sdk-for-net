@@ -37,14 +37,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("parentTrigger"u8);
-            writer.WriteObjectValue(ParentTrigger);
+            writer.WriteObjectValue<object>(ParentTrigger);
             writer.WritePropertyName("requestedStartTime"u8);
             writer.WriteStringValue(RequestedStartTime, "O");
             writer.WritePropertyName("requestedEndTime"u8);
@@ -55,7 +55,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -165,12 +165,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 rerunConcurrency);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RerunTumblingWindowTrigger FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRerunTumblingWindowTrigger(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RerunTumblingWindowTrigger>(this);
+            return content;
+        }
+
         internal partial class RerunTumblingWindowTriggerConverter : JsonConverter<RerunTumblingWindowTrigger>
         {
             public override void Write(Utf8JsonWriter writer, RerunTumblingWindowTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RerunTumblingWindowTrigger>(model);
             }
+
             public override RerunTumblingWindowTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

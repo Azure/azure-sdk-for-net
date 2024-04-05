@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RolloutStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RolloutStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("completedRegions"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new RolloutStatusBase(completedRegions ?? new ChangeTrackingList<AzureLocation>(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), serializedAdditionalRawData);
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeRolloutStatusBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RolloutStatusBase)} does not support reading '{options.Format}' format.");
             }
         }
 

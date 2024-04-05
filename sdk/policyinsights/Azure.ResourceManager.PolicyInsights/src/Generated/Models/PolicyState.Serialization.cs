@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (Optional.IsDefined(PolicyEvaluationDetails))
             {
                 writer.WritePropertyName("policyEvaluationDetails"u8);
-                writer.WriteObjectValue(PolicyEvaluationDetails);
+                writer.WriteObjectValue<PolicyEvaluationDetails>(PolicyEvaluationDetails, options);
             }
             if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Components)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComponentStateDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyState)} does not support reading '{options.Format}' format.");
             }
         }
 

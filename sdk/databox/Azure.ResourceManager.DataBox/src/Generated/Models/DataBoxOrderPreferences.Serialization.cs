@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.DataBox.Models
             if (Optional.IsDefined(TransportPreferences))
             {
                 writer.WritePropertyName("transportPreferences"u8);
-                writer.WriteObjectValue(TransportPreferences);
+                writer.WriteObjectValue<TransportPreferences>(TransportPreferences, options);
             }
             if (Optional.IsDefined(ReverseTransportPreferences))
             {
                 writer.WritePropertyName("reverseTransportPreferences"u8);
-                writer.WriteObjectValue(ReverseTransportPreferences);
+                writer.WriteObjectValue<TransportPreferences>(ReverseTransportPreferences, options);
             }
             if (Optional.IsDefined(EncryptionPreferences))
             {
                 writer.WritePropertyName("encryptionPreferences"u8);
-                writer.WriteObjectValue(EncryptionPreferences);
+                writer.WriteObjectValue<DataBoxEncryptionPreferences>(EncryptionPreferences, options);
             }
             if (Optional.IsCollectionDefined(StorageAccountAccessTierPreferences))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxOrderPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DataBoxEncryptionPreferences encryptionPreferences = default;
             IList<string> storageAccountAccessTierPreferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preferredDataCenterRegion"u8))
@@ -165,10 +165,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DataBoxOrderPreferences(
                 preferredDataCenterRegion ?? new ChangeTrackingList<string>(),
                 transportPreferences,
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxOrderPreferences(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxOrderPreferences)} does not support reading '{options.Format}' format.");
             }
         }
 

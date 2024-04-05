@@ -133,60 +133,85 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Description of a SKU for a scalable resource. </summary>
+        [WirePath("sku")]
         public AppServiceSkuDescription Sku { get; set; }
         /// <summary> Extended Location. </summary>
+        [WirePath("extendedLocation")]
         public ExtendedLocation ExtendedLocation { get; set; }
         /// <summary> Target worker tier assigned to the App Service plan. </summary>
+        [WirePath("properties.workerTierName")]
         public string WorkerTierName { get; set; }
         /// <summary> App Service plan status. </summary>
+        [WirePath("properties.status")]
         public AppServicePlanStatus? Status { get; }
         /// <summary> App Service plan subscription. </summary>
+        [WirePath("properties.subscription")]
         public string Subscription { get; }
         /// <summary> Specification for the App Service Environment to use for the App Service plan. </summary>
+        [WirePath("properties.hostingEnvironmentProfile")]
         public HostingEnvironmentProfile HostingEnvironmentProfile { get; set; }
         /// <summary> Maximum number of instances that can be assigned to this App Service plan. </summary>
+        [WirePath("properties.maximumNumberOfWorkers")]
         public int? MaximumNumberOfWorkers { get; }
         /// <summary> Geographical location for the App Service plan. </summary>
+        [WirePath("properties.geoRegion")]
         public string GeoRegion { get; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
         /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </summary>
+        [WirePath("properties.perSiteScaling")]
         public bool? IsPerSiteScaling { get; set; }
         /// <summary> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </summary>
+        [WirePath("properties.elasticScaleEnabled")]
         public bool? IsElasticScaleEnabled { get; set; }
         /// <summary> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </summary>
+        [WirePath("properties.maximumElasticWorkerCount")]
         public int? MaximumElasticWorkerCount { get; set; }
         /// <summary> Number of apps assigned to this App Service plan. </summary>
+        [WirePath("properties.numberOfSites")]
         public int? NumberOfSites { get; }
         /// <summary> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </summary>
+        [WirePath("properties.isSpot")]
         public bool? IsSpot { get; set; }
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
+        [WirePath("properties.spotExpirationTime")]
         public DateTimeOffset? SpotExpireOn { get; set; }
         /// <summary> The time when the server farm free offer expires. </summary>
+        [WirePath("properties.freeOfferExpirationTime")]
         public DateTimeOffset? FreeOfferExpireOn { get; set; }
         /// <summary> Resource group of the App Service plan. </summary>
+        [WirePath("properties.resourceGroup")]
         public string ResourceGroup { get; }
         /// <summary> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.reserved")]
         public bool? IsReserved { get; set; }
         /// <summary> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.isXenon")]
         public bool? IsXenon { get; set; }
         /// <summary> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </summary>
+        [WirePath("properties.hyperV")]
         public bool? IsHyperV { get; set; }
         /// <summary> Scaling worker count. </summary>
+        [WirePath("properties.targetWorkerCount")]
         public int? TargetWorkerCount { get; set; }
         /// <summary> Scaling worker size ID. </summary>
+        [WirePath("properties.targetWorkerSizeId")]
         public int? TargetWorkerSizeId { get; set; }
         /// <summary> Provisioning state of the App Service Plan. </summary>
+        [WirePath("properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; }
         /// <summary> Specification for the Kubernetes Environment to use for the App Service plan. </summary>
+        [WirePath("properties.kubeEnvironmentProfile")]
         public KubeEnvironmentProfile KubeEnvironmentProfile { get; set; }
         /// <summary>
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
         /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </summary>
+        [WirePath("properties.zoneRedundant")]
         public bool? IsZoneRedundant { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

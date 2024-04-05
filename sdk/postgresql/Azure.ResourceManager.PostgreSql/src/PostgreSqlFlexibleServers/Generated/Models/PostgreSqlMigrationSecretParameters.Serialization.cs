@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,12 +23,12 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("adminCredentials"u8);
-            writer.WriteObjectValue(AdminCredentials);
+            writer.WriteObjectValue<PostgreSqlMigrationAdminCredentials>(AdminCredentials, options);
             if (Optional.IsDefined(SourceServerUsername))
             {
                 writer.WritePropertyName("sourceServerUsername"u8);
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlMigrationSecretParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             string sourceServerUsername = default;
             string targetServerUsername = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("adminCredentials"u8))
@@ -100,11 +101,84 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new PostgreSqlMigrationSecretParameters(adminCredentials, sourceServerUsername, targetServerUsername, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdminCredentials), out propertyOverride);
+            if (Optional.IsDefined(AdminCredentials) || hasPropertyOverride)
+            {
+                builder.Append("  adminCredentials: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AdminCredentials, options, 2, false, "  adminCredentials: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceServerUsername), out propertyOverride);
+            if (Optional.IsDefined(SourceServerUsername) || hasPropertyOverride)
+            {
+                builder.Append("  sourceServerUsername: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceServerUsername.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceServerUsername}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceServerUsername}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetServerUsername), out propertyOverride);
+            if (Optional.IsDefined(TargetServerUsername) || hasPropertyOverride)
+            {
+                builder.Append("  targetServerUsername: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TargetServerUsername.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetServerUsername}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetServerUsername}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<PostgreSqlMigrationSecretParameters>.Write(ModelReaderWriterOptions options)
@@ -115,8 +189,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +208,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                         return DeserializePostgreSqlMigrationSecretParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PostgreSqlMigrationSecretParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

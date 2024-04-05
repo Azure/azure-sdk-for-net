@@ -28,12 +28,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(CloudToDeviceMethod))
             {
                 writer.WritePropertyName("cloudToDeviceMethod"u8);
-                writer.WriteObjectValue(CloudToDeviceMethod);
+                writer.WriteObjectValue<CloudToDeviceMethodRequest>(CloudToDeviceMethod);
             }
             if (Optional.IsDefined(UpdateTwin))
             {
                 writer.WritePropertyName("updateTwin"u8);
-                writer.WriteObjectValue(UpdateTwin);
+                writer.WriteObjectValue<TwinData>(UpdateTwin);
             }
             if (Optional.IsDefined(QueryCondition))
             {
@@ -51,6 +51,14 @@ namespace Azure.IoT.Hub.Service.Models
                 writer.WriteNumberValue(MaxExecutionTimeInSeconds.Value);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JobRequest>(this);
+            return content;
         }
     }
 }

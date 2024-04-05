@@ -19,7 +19,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in PlaySources)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PlaySourceInternal>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(PlayTo))
@@ -28,14 +28,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStartArray();
                 foreach (var item in PlayTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CommunicationIdentifierModel>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlayOptions))
             {
                 writer.WritePropertyName("playOptions"u8);
-                writer.WriteObjectValue(PlayOptions);
+                writer.WriteObjectValue<PlayOptionsInternal>(PlayOptions);
             }
             if (Optional.IsDefined(OperationContext))
             {
@@ -48,6 +48,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(OperationCallbackUri);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(this);
+            return content;
         }
     }
 }
