@@ -28,7 +28,7 @@ namespace Azure.Identity.Tests
 
         [TestCase(true)]
         [TestCase(false)]
-        public async Task AuthnenticateWithAssertionCallback(bool useAsyncCallback)
+        public async Task AuthenticateWithAssertionCallback(bool useAsyncCallback)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
