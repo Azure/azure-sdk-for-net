@@ -152,15 +152,10 @@ namespace Azure.Data.AppConfiguration
             }
         }
 
-        private HttpMessage CreateMessage(MatchConditions conditions, int? pageSizeHint, string nextLink)
-        {
-            if (!string.IsNullOrEmpty(nextLink))
-            {
-                return _createNextPageRequest(conditions, pageSizeHint, nextLink);
-            }
-
-            return _createFirstPageRequest(conditions, pageSizeHint);
-        }
+        private HttpMessage CreateMessage(MatchConditions conditions, int? pageSizeHint, string nextLink) =>
+            string.IsNullOrEmpty(nextLink) ?
+                _createFirstPageRequest(conditions, pageSizeHint) :
+                _createNextPageRequest(conditions, pageSizeHint, nextLink);
 
         private Response GetResponse(HttpMessage message)
         {
