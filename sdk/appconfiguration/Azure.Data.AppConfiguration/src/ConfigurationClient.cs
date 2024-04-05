@@ -650,26 +650,8 @@ namespace Azure.Data.AppConfiguration
         public virtual AsyncPageable<ConfigurationSetting> GetConfigurationSettingsAsync(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
-            var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
-            var key = selector.KeyFilter;
-            var label = selector.LabelFilter;
 
-            RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
-            IEnumerable<string> fieldsString = selector.Fields.Split();
-
-            context.AddClassifier(304, false);
-
-            HttpMessage FirstPageRequest(MatchConditions conditions, int? pageSizeHint)
-            {
-                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
-            };
-
-            HttpMessage NextPageRequest(MatchConditions conditions, int? pageSizeHint, string nextLink)
-            {
-                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
-            }
-
-            var pageableImplementation = new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
+            var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
 
             return new AsyncConditionalPageable(pageableImplementation);
         }
@@ -682,6 +664,14 @@ namespace Azure.Data.AppConfiguration
         public virtual Pageable<ConfigurationSetting> GetConfigurationSettings(SettingSelector selector, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(selector, nameof(selector));
+
+            var pageableImplementation = GetConfigurationSettingsPageableImplementation(selector, cancellationToken);
+
+            return new ConditionalPageable(pageableImplementation);
+        }
+
+        private ConditionalPageableImplementation GetConfigurationSettingsPageableImplementation(SettingSelector selector, CancellationToken cancellationToken)
+        {
             var key = selector.KeyFilter;
             var label = selector.LabelFilter;
             var dateTime = selector.AcceptDateTime?.UtcDateTime.ToString(AcceptDateTimeFormat, CultureInfo.InvariantCulture);
@@ -701,9 +691,7 @@ namespace Azure.Data.AppConfiguration
                 return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
             }
 
-            var pageableImplementation = new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
-
-            return new ConditionalPageable(pageableImplementation);
+            return new ConditionalPageableImplementation(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, _pipeline, ClientDiagnostics, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>

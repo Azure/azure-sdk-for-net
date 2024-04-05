@@ -153,9 +153,9 @@ namespace Azure.Data.AppConfiguration
         }
 
         private HttpMessage CreateMessage(MatchConditions conditions, int? pageSizeHint, string nextLink) =>
-            string.IsNullOrEmpty(nextLink) ?
-                _createFirstPageRequest(conditions, pageSizeHint) :
-                _createNextPageRequest(conditions, pageSizeHint, nextLink);
+            string.IsNullOrEmpty(nextLink)
+                ? _createFirstPageRequest(conditions, pageSizeHint)
+                : _createNextPageRequest(conditions, pageSizeHint, nextLink);
 
         private Response GetResponse(HttpMessage message)
         {
@@ -175,21 +175,18 @@ namespace Azure.Data.AppConfiguration
                 items = default;
                 return false;
             }
-
-            var parsedResponse = _responseParser(response);
-            items = parsedResponse.Values;
-            nextLink = parsedResponse.NextLink;
-            return items is not null;
-        }
-
-        private Page<ConfigurationSetting> CreatePage(Response response, out string nextLink)
-        {
-            if (!TryGetItemsFromResponse(response, out nextLink, out var items))
+            else
             {
-                return Page<ConfigurationSetting>.FromValues(Array.Empty<ConfigurationSetting>(), nextLink, response);
+                var parsedResponse = _responseParser(response);
+                items = parsedResponse.Values;
+                nextLink = parsedResponse.NextLink;
+                return items is not null;
             }
-
-            return Page<ConfigurationSetting>.FromValues(items, nextLink, response);
         }
+
+        private Page<ConfigurationSetting> CreatePage(Response response, out string nextLink) =>
+            TryGetItemsFromResponse(response, out nextLink, out var items)
+                ? Page<ConfigurationSetting>.FromValues(items, nextLink, response)
+                : Page<ConfigurationSetting>.FromValues(Array.Empty<ConfigurationSetting>(), nextLink, response);
     }
 }
