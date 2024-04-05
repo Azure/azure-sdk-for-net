@@ -8,25 +8,19 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
 
-[CodeGenSuppress("global::System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Write", typeof(Utf8JsonWriter), typeof(ModelReaderWriterOptions))]
 [CodeGenSuppress("DeserializeChatMessageImageUrl", typeof(JsonElement), typeof(ModelReaderWriterOptions))]
-public partial class ChatMessageImageUrl : IUtf8JsonSerializable, IJsonModel<ChatMessageImageUrl>
+[CodeGenSerialization(nameof(Url), SerializationValueHook = nameof(SerializeUrl))]
+public partial class ChatMessageImageUrl
 {
-    void IJsonModel<ChatMessageImageUrl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    private void SerializeUrl(Utf8JsonWriter writer)
     {
-        var format = options.Format == "W" ? ((IPersistableModel<ChatMessageImageUrl>)this).GetFormatFromOptions(options) : options.Format;
-        if (format != "J")
-        {
-            throw new FormatException($"The model {nameof(ChatMessageImageUrl)} does not support writing '{format}' format.");
-        }
-
-        writer.WriteStartObject();
-        writer.WritePropertyName("url"u8);
         if (!string.IsNullOrWhiteSpace(DataUri))
         {
             writer.WriteStringValue(DataUri);
@@ -35,27 +29,6 @@ public partial class ChatMessageImageUrl : IUtf8JsonSerializable, IJsonModel<Cha
         {
             writer.WriteStringValue(Url.AbsoluteUri);
         }
-        if (Optional.IsDefined(Detail))
-        {
-            writer.WritePropertyName("detail"u8);
-            writer.WriteStringValue(Detail.Value.ToString());
-        }
-        if (options.Format != "W" && _serializedAdditionalRawData != null)
-        {
-            foreach (var item in _serializedAdditionalRawData)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
-            }
-        }
-        writer.WriteEndObject();
     }
 
     internal static ChatMessageImageUrl DeserializeChatMessageImageUrl(JsonElement element, ModelReaderWriterOptions options = null)
