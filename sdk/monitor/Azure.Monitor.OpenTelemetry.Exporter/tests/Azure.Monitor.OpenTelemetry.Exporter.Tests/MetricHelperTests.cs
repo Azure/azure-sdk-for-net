@@ -32,11 +32,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             doubleCounter.Add(123.45);
             provider.ForceFlush();
 
-            var metricResource = new AzureMonitorResource()
-            {
-                RoleName = "testRoleName",
-                RoleInstance = "testRoleInstance"
-            };
+            var metricResource = new AzureMonitorResource(
+                roleName: "testRoleName",
+                roleInstance: "testRoleInstance",
+                serviceVersion: null,
+                monitorBaseData: null);
             var telemetryItems = MetricHelper.OtelToAzureMonitorMetrics(new Batch<Metric>(metrics.ToArray(), 1), metricResource, "00000000-0000-0000-0000-000000000000");
             Assert.Single(telemetryItems);
             Assert.Equal("MetricData", telemetryItems[0].Data.BaseType);

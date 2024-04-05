@@ -7,6 +7,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal sealed class AzureMonitorResource
     {
+        public AzureMonitorResource()
+        {
+        }
+
         public AzureMonitorResource(
             string? roleName,
             string? roleInstance,
