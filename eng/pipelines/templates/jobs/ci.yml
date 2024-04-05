@@ -85,7 +85,7 @@ jobs:
         displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
         parameters:
-          ServiceDirectory ${{parameters.ServiceDirectory}}
+          ServiceDirectory: ${{parameters.ServiceDirectory}}
       - pwsh: |
           echo "##vso[task.setvariable variable=SkipDevBuildNumber]false"
         displayName: "Reset SkipDevBuildNumber env variable"
