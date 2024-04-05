@@ -1,5 +1,15 @@
 # Release History
 
+## 0.1.0-preview.34 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 0.1.0-preview.33 (2024-04-04)
 
 - Added `IsProofOfPossessionEnabled` property to `PopTokenRequestContext` to support Proof of Possession tokens.
