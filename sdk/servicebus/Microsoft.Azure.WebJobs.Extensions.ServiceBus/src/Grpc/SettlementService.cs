@@ -127,6 +127,46 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException (new Status(StatusCode.FailedPrecondition, $"LockToken {request.Locktoken} not found."));
         }
 
+        public override async Task<GetResponse> Get(GetRequest request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
+                {
+                    var sessionState = await actions.GetSessionStateAsync(context.CancellationToken).ConfigureAwait(false);
+                    return new GetResponse
+                    {
+                        SessionState = ByteString.CopyFrom(sessionState)
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
+        }
+
+        public override async Task<Empty> Set(SetRequest request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
+                {
+                    await actions.SetSessionStateAsync(BinaryData.FromString(request.SessionState.ToStringUtf8()),
+                                                       context.CancellationToken).ConfigureAwait(false);
+                    return new Empty();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
+        }
+
         private static Dictionary<string, object> DeserializeAmqpMap(ByteString mapBytes)
         {
             if (mapBytes == null || mapBytes == ByteString.Empty)

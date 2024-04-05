@@ -384,6 +384,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
             {
                 var actions = new ServiceBusSessionMessageActions(args);
                 _messagingProvider.ActionsCache.TryAdd(args.Message.LockToken, (args.Message, actions));
+                _messagingProvider.SessionActionsCache.TryAdd(args.Message.SessionId, actions);
 
                 if (!await _sessionMessageProcessor.Value.BeginProcessingMessageAsync(actions, args.Message, linkedCts.Token)
                     .ConfigureAwait(false))
@@ -411,6 +412,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 {
                     receiveActions.EndExecutionScope();
                     _messagingProvider.ActionsCache.TryRemove(args.Message.LockToken, out _);
+                    _messagingProvider.SessionActionsCache.TryRemove(args.Message.SessionId, out _);
                 }
             }
         }
@@ -496,6 +498,10 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                         foreach (var message in messages)
                         {
                             _messagingProvider.ActionsCache.TryAdd(message.LockToken, (message, messageActions));
+                            if (_isSessionsEnabled)
+                            {
+                                _messagingProvider.SessionActionsCache.TryAdd(message.SessionId, (ServiceBusSessionMessageActions)messageActions);
+                            }
                         }
 
                         var receiveActions = new ServiceBusReceiveActions(receiver);
@@ -720,6 +726,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.Listeners
                 foreach (var message in input.Messages)
                 {
                     _messagingProvider.ActionsCache.TryRemove(message.LockToken, out _);
+                    _messagingProvider.ActionsCache.TryRemove(message.SessionId, out _);
                 }
             }
         }

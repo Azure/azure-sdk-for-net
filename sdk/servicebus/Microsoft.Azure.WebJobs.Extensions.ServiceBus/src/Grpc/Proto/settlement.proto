@@ -19,6 +19,20 @@ service Settlement {
 
   // Defers a message
   rpc Defer (DeferRequest) returns (google.protobuf.Empty) {}
+
+  // Get
+  rpc Get (GetRequest) returns (GetResponse) {}
+
+  // Set
+  rpc Set (SetRequest) returns (google.protobuf.Empty) {}
+
+  // Release
+  rpc Release (ReleaseSession) returns (google.protobuf.Empty) {}
+
+  // Renew
+  rpc Renew (RenewSessionLock) returns (google.protobuf.Empty) {}
+
+
 }
 
 // The complete message request containing the locktoken.
@@ -44,4 +58,27 @@ message DeadletterRequest {
 message DeferRequest {
   string locktoken = 1;
   bytes propertiesToModify = 2;
+}
+
+// The get message request.
+message GetRequest {
+  string sessionId = 1;
+}
+
+// The set message request.
+message SetRequest {
+  string sessionId = 1;
+  bytes sessionState = 2;
+}
+
+message GetResponse {
+	bytes sessionState = 1;
+}
+
+// Release session.
+message ReleaseSession {
+}
+
+// Renew session lock.
+message RenewSessionLock {
 }

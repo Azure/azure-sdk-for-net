@@ -140,6 +140,26 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             Assert.IsEmpty(provider.ActionsCache);
         }
 
+        [Test]
+        public async Task BindToSessionMessageAndGet()
+        {
+            var host = BuildHost<ServiceBusBindToSessionMessageAndGet>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToSessionMessageAndGet.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar") { SessionId = "sessionId" };
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
         public class ServiceBusBindToSessionMessageAndComplete
         {
             internal static SettlementService SettlementService { get; set; }
@@ -210,6 +230,24 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
                     new[] { message.SequenceNumber })).Single();
                 Assert.AreEqual("foobar", deferredMessage.Body.ToString());
                 Assert.IsTrue((bool)deferredMessage.ApplicationProperties["key"]);
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToSessionMessageAndGet
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Get(
+                    new GetRequest
+                    {
+                        SessionId = message.SessionId,
+                    },
+                    new MockServerCallContext());
+                Assert.AreEqual("foobar", message.Body.ToString());
                 _waitHandle1.Set();
             }
         }
