@@ -133,6 +133,8 @@ known_content_issues:
   - ['sdk/storage/Azure.Storage.Files.DataLake/README.md', 'Storage: #11492: Needs auth section']
   - ['sdk/storage/Azure.Storage.Files.Shares/README.md', 'Storage: #11492: Needs auth section']
 
+  - ['sdk/extensions/wcf/Microsoft.CoreWCF.Azure.StorageQueues/README.md', 'https://github.com/Azure/azure-sdk-tools/issues/404', 'Missing section: Azure .+ client library for .NET']
+
 # .net climbs upwards. placing these to prevent assigning readmes to the wrong project
 package_indexing_exclusion_list:
   - 'AutoRest-AzureDotNetSDK'

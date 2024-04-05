@@ -1,4 +1,4 @@
-# WCF Azure Queue Storage client library
+# WCF Azure Queue Storage client library for .NET
 
 WCF Azure Queue Storage client is the client side library that will enable WCF clients to be able to send requests to a CoreWCF service which uses Azure Queue Storage as a transport. 
 
@@ -75,18 +75,11 @@ await using(var factory = new ChannelFactory<IServiceContract>(aqsBinding, new E
 
 ## Troubleshooting
 
-Queue send operations will throw a `RequestFailedException` if the operation fails.
+Queue send operations will throw an exception if the operation fails.
 
-```C# Snippet:SampleSnippetsBlob_Troubleshooting
-// Get a connection string to our Azure Storage account.
-string connectionString = "<connection_string>";
-string containerName = "sample-container";
+```C# Snippet: WCF_Azure_Storage_Queues_Sample_SendMessage_TryCatch
 
-// Try to delete a container named "sample-container" and avoid any potential race conditions
-// that might arise by checking if the container is already deleted or is in the process
-// of being deleted.
-BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
-
+// Try to send a message to the queue.
 try
 {
     ArraySegment<byte> messageBuffer = EncodeMessage(message);
@@ -102,6 +95,11 @@ catch (Exception e)
 ## Key concepts
 
 The goal of this project is to enable migrating existing WCF clients to .NET that are currently using MSMQ and wish to deploy their service to Azure, replacing MSMQ with Azure Queue Storage.
+
+## Examples
+
+Get started with a sample of CoreWCF https://github.com/CoreWCF/samples
+
 
 ## Next steps
 
