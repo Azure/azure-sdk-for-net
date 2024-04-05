@@ -322,14 +322,16 @@ namespace Azure.Developer.DevCenter.Tests
                 "schedule-default");
 
             Assert.AreEqual((int)HttpStatusCode.NoContent, skipActionResponse.Status);
+        }
 
-            Operation devBoxDeleteOperation = await _devBoxesClient.DeleteDevBoxAsync(
+        [OneTimeTearDown]
+        public async Task TearDownAsync()
+        {
+            await _devBoxesClient.DeleteDevBoxAsync(
                WaitUntil.Completed,
                TestEnvironment.ProjectName,
                TestEnvironment.MeUserId,
                DevBoxName);
-
-            CheckLROSucceeded(devBoxDeleteOperation);
         }
 
         private async Task SetUpDevBoxAsync()

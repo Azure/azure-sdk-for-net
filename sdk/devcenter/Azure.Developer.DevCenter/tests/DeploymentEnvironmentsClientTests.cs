@@ -146,13 +146,6 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [Test]
-        public async Task CreateAndDeleteEnvironmentSucceeds()
-        {
-            await SetUpEnvironmentAsync();
-            await DeleteEnvironmentAsync();
-        }
-
-        [Test]
         public async Task GetEnvironmentSucceeds()
         {
             DevCenterEnvironment environment = await GetEnvironmentAsync();
@@ -216,6 +209,16 @@ namespace Azure.Developer.DevCenter.Tests
             Assert.IsTrue(EnvName.Equals(envName, StringComparison.OrdinalIgnoreCase));
         }
 
+        [OneTimeTearDown]
+        public async Task TearDownAsync()
+        {
+             await _environmentsClient.DeleteEnvironmentAsync(
+                WaitUntil.Completed,
+                TestEnvironment.ProjectName,
+                TestEnvironment.MeUserId,
+                EnvName);
+        }
+
         private async Task<DevCenterEnvironment> GetEnvironmentAsync()
         {
             try
@@ -263,17 +266,6 @@ namespace Azure.Developer.DevCenter.Tests
 
             EnvironmentProvisioningState? provisioningState = environmentCreateOperation.Value.ProvisioningState;
             Assert.IsTrue(provisioningState.Equals(EnvironmentProvisioningState.Succeeded));
-        }
-
-        private async Task DeleteEnvironmentAsync()
-        {
-            Operation environmentDeleteOperation = await _environmentsClient.DeleteEnvironmentAsync(
-                WaitUntil.Completed,
-                TestEnvironment.ProjectName,
-                TestEnvironment.MeUserId,
-                EnvName);
-
-            CheckLROSucceeded(environmentDeleteOperation);
         }
 
         private void CheckLROSucceeded(Operation finalOperationResponse)
