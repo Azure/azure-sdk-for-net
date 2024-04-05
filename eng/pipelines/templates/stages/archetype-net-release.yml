@@ -167,6 +167,14 @@ stages:
                                 /p:MSPublicSymbolsPAT=$(azuresdk-microsoftpublicsymbols-devops-pat)
                                 /p:MSSymbolsPAT=$(azuresdk-microsoft-devops-pat)
                                 /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
+                          - template: /eng/common/pipelines/templates/steps/create-apireview.yml
+                            parameters:
+                              ArtifactPath: $(Pipeline.Workspace)
+                              Artifacts: ${{parameters.Artifacts}}
+                              ConfigFileDir: $(Pipeline.Workspace)/PackageInfo
+                              MarkPackageAsShipped: true
+                              ArtifactName: ${{parameters.ArtifactName}}
+                              PackageName: ${{artifact.name}}
 
               - ${{if ne(artifact.skipPublishDocMs, 'true')}}:
                 - deployment: PublicDocsMS
