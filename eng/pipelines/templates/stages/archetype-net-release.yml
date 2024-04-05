@@ -169,9 +169,9 @@ stages:
                                 /p:AzureSDKSymbolsPAT=$(azuresdk-azure-sdk-devops-pat)
                           - template: /eng/common/pipelines/templates/steps/create-apireview.yml
                             parameters:
-                              ArtifactPath: $(Pipeline.Workspace)
+                              ArtifactPath: $(Pipeline.Workspace)/packages
                               Artifacts: ${{parameters.Artifacts}}
-                              ConfigFileDir: $(Pipeline.Workspace)/PackageInfo
+                              ConfigFileDir: $(Pipeline.Workspace)/packages/PackageInfo
                               MarkPackageAsShipped: true
                               ArtifactName: ${{parameters.ArtifactName}}
                               PackageName: ${{artifact.name}}
