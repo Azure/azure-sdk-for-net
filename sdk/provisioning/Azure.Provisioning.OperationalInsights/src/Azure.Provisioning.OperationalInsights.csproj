@@ -11,8 +11,4 @@
     <PackageReference Include="Azure.ResourceManager.OperationalInsights" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Provisioning\src\Azure.Provisioning.csproj" />
-  </ItemGroup>
-
 </Project>
