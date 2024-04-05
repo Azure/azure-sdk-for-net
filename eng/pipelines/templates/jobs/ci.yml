@@ -89,6 +89,7 @@ jobs:
       - pwsh: |
           # Reset SkipDevBuildNumber as empty
           echo "##vso[task.setvariable variable=SkipDevBuildNumber]"
+          Write-Host "SkipDevBuildNumber: [$(SkipDevBuildNumber)]"
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
           # the SetDevVersion property isn't set to true. All other cases should contain dev version numbers.
