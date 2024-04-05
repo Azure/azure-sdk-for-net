@@ -314,12 +314,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 nullValue);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ExcelDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeExcelDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ExcelDataset>(this);
+            return content;
+        }
+
         internal partial class ExcelDatasetConverter : JsonConverter<ExcelDataset>
         {
             public override void Write(Utf8JsonWriter writer, ExcelDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<ExcelDataset>(model);
             }
+
             public override ExcelDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

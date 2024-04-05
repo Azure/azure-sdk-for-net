@@ -94,12 +94,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 endTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MachineLearningServicesDatasetDriftDetectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMachineLearningServicesDatasetDriftDetectedEventData(document.RootElement);
+        }
+
         internal partial class MachineLearningServicesDatasetDriftDetectedEventDataConverter : JsonConverter<MachineLearningServicesDatasetDriftDetectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MachineLearningServicesDatasetDriftDetectedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MachineLearningServicesDatasetDriftDetectedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

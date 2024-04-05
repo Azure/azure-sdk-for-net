@@ -237,12 +237,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureStorageLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureStorageLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureStorageLinkedService>(this);
+            return content;
+        }
+
         internal partial class AzureStorageLinkedServiceConverter : JsonConverter<AzureStorageLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AzureStorageLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureStorageLinkedService>(model);
             }
+
             public override AzureStorageLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

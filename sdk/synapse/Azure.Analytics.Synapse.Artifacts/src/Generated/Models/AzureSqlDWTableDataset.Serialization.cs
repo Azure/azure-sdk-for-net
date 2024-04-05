@@ -250,12 +250,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureSqlDWTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureSqlDWTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureSqlDWTableDataset>(this);
+            return content;
+        }
+
         internal partial class AzureSqlDWTableDatasetConverter : JsonConverter<AzureSqlDWTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, AzureSqlDWTableDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureSqlDWTableDataset>(model);
             }
+
             public override AzureSqlDWTableDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -240,12 +240,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 scriptLines ?? new ChangeTrackingList<string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MappingDataFlow FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMappingDataFlow(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MappingDataFlow>(this);
+            return content;
+        }
+
         internal partial class MappingDataFlowConverter : JsonConverter<MappingDataFlow>
         {
             public override void Write(Utf8JsonWriter writer, MappingDataFlow model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<MappingDataFlow>(model);
             }
+
             public override MappingDataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

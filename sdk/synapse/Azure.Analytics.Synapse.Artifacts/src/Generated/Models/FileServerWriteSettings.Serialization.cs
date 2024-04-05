@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new FileServerWriteSettings(type, maxConcurrentConnections, copyBehavior, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FileServerWriteSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFileServerWriteSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<FileServerWriteSettings>(this);
+            return content;
+        }
+
         internal partial class FileServerWriteSettingsConverter : JsonConverter<FileServerWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, FileServerWriteSettings model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<FileServerWriteSettings>(model);
             }
+
             public override FileServerWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

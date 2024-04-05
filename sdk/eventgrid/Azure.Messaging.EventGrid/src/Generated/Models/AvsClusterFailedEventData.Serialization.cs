@@ -84,12 +84,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsClusterFailedEventData(operationId, addedHostNames ?? new ChangeTrackingList<string>(), removedHostNames ?? new ChangeTrackingList<string>(), inMaintenanceHostNames ?? new ChangeTrackingList<string>(), failureMessage);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsClusterFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsClusterFailedEventData(document.RootElement);
+        }
+
         internal partial class AvsClusterFailedEventDataConverter : JsonConverter<AvsClusterFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsClusterFailedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AvsClusterFailedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
