@@ -78,7 +78,7 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
-      # Set env variable to Skip Dev build to generate package properties with non dev version
+      # Set env variable SkipDevBuildNumber to generate package properties with non alpha version
       # Package version is used to create or update package work item from CI pipeline
       - pwsh: |
           $skipDevBuildNumber = "true"
