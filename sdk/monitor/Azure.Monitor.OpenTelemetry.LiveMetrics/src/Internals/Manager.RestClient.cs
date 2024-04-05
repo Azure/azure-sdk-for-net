@@ -132,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 {
                     _collectionConfigurationInfo = response.CollectionConfigurationInfo;
                     CollectionConfigurationError[] error;
-                    _collectionConfiguration = new CollectionConfiguration(_collectionConfigurationInfo, out error);
+                    _collectionConfiguration = new CollectionConfiguration(_collectionConfigurationInfo, out error, _collectionConfiguration.DocumentStreams);
                 }
             }
         }

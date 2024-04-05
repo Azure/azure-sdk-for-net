@@ -91,6 +91,46 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
             this.info = filterInfo;
 
+            if (typeof(TTelemetry) == typeof(Request))
+            {
+                if (filterInfo.FieldName == "Success")
+                {
+                    filterInfo = new FilterInfo("Extension_IsSuccess", filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(RemoteDependency))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Type" || fieldName == "Target")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Success")
+                {
+                    filterInfo = new FilterInfo("Extension_IsSuccess", filterInfo.Predicate, filterInfo.Comparand);
+                }
+                else if (fieldName == "Data")
+                {
+                    filterInfo = new FilterInfo("CommandName", filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+            else if (typeof(TTelemetry) == typeof(Models.Exception))
+            {
+                var fieldName = filterInfo.FieldName;
+                if (fieldName == "Exception.StackTrace")
+                {
+                    Expression<Func<TTelemetry, bool>> lambdaExpression = Expression.Lambda<Func<TTelemetry, bool>>(Expression.Constant(true), Expression.Variable(typeof(TTelemetry)));
+                    this.filterLambda = lambdaExpression.Compile();
+                    return;
+                }
+                else if (fieldName == "Exception.Message")
+                {
+                    filterInfo = new FilterInfo("ExceptionMessage", filterInfo.Predicate, filterInfo.Comparand);
+                }
+            }
+
             this.fieldName = filterInfo.FieldName;
             this.predicate = (Predicate)FilterInfoPredicateUtility.ToPredicate(filterInfo.Predicate);
             this.comparand = filterInfo.Comparand;

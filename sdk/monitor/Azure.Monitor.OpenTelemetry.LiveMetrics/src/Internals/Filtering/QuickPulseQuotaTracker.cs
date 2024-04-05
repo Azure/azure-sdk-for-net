@@ -1,4 +1,7 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.Helpers
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Threading;
@@ -12,20 +15,17 @@
 
         private readonly DateTimeOffset startedTrackingTime;
 
-        private readonly Clock timeProvider;
-
         private float currentQuota;
 
         private float maxQuota;
 
         private long lastQuotaAccrualFullSeconds;
-        
-        public QuickPulseQuotaTracker(Clock timeProvider, float maxQuota, float startQuota, float? quotaAccrualRatePerSec = null)
+
+        public QuickPulseQuotaTracker(float maxQuota, float startQuota, float? quotaAccrualRatePerSec = null)
         {
-            this.timeProvider = timeProvider;
             this.maxQuota = maxQuota;
             this.quotaAccrualRatePerSec = quotaAccrualRatePerSec ?? (this.maxQuota / 60); // should not be calculated from maxQuota - Should be passed from the service
-            this.startedTrackingTime = timeProvider.UtcNow;
+            this.startedTrackingTime = DateTimeOffset.UtcNow;
             this.lastQuotaAccrualFullSeconds = 0;
             this.currentQuota = startQuota;
         }
@@ -42,7 +42,7 @@
         /// <returns><b>true</b> if there's still quota left, <b>false</b> otherwise.</returns>
         public bool ApplyQuota()
         {
-            var currentTimeFullSeconds = (long)(this.timeProvider.UtcNow - this.startedTrackingTime).TotalSeconds;
+            var currentTimeFullSeconds = (long)(DateTimeOffset.UtcNow - this.startedTrackingTime).TotalSeconds;
 
             this.AccrueQuota(currentTimeFullSeconds);
 
@@ -56,7 +56,7 @@
             while (true)
             {
                 float originalValue = Interlocked.CompareExchange(ref this.currentQuota, 0, 0);
-                
+
                 if (originalValue < 1f)
                 {
                     return false;
@@ -132,7 +132,7 @@
             while (true)
             {
                 float originalValue = Interlocked.CompareExchange(ref this.currentQuota, 0, 0);
-                
+
                 float delta = Math.Min(this.quotaAccrualRatePerSec * seconds, this.maxQuota - originalValue);
 
                 if (Interlocked.CompareExchange(ref this.currentQuota, originalValue + delta, originalValue) == originalValue)

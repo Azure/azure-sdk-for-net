@@ -1,15 +1,17 @@
-﻿namespace Microsoft.ApplicationInsights.Extensibility.Filtering
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Microsoft.ApplicationInsights.Common;
-    using Microsoft.ApplicationInsights.DataContracts;
-    using Microsoft.ApplicationInsights.Extensibility.PerfCounterCollector.Implementation.QuickPulse.Helpers;
+    using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+    using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
     /// <summary>
-    /// Represents a concept of a uniquely identifiable set of full telemetry documents that are being reported by the SDK. 
-    /// The notion of a stream is needed since multiple UX sessions might be querying for full telemetry documents with 
+    /// Represents a concept of a uniquely identifiable set of full telemetry documents that are being reported by the SDK.
+    /// The notion of a stream is needed since multiple UX sessions might be querying for full telemetry documents with
     /// different filtering criteria simultaneously.
     /// </summary>
     internal class DocumentStream
@@ -20,20 +22,17 @@
 
         private readonly DocumentStreamInfo info;
 
-        private readonly List<FilterConjunctionGroup<RequestTelemetry>> requestFilterGroups = new List<FilterConjunctionGroup<RequestTelemetry>>();
+        private readonly List<FilterConjunctionGroup<Request>> requestFilterGroups = new List<FilterConjunctionGroup<Request>>();
 
-        private readonly List<FilterConjunctionGroup<DependencyTelemetry>> dependencyFilterGroups = new List<FilterConjunctionGroup<DependencyTelemetry>>();
+        private readonly List<FilterConjunctionGroup<RemoteDependency>> dependencyFilterGroups = new List<FilterConjunctionGroup<RemoteDependency>>();
 
-        private readonly List<FilterConjunctionGroup<ExceptionTelemetry>> exceptionFilterGroups = new List<FilterConjunctionGroup<ExceptionTelemetry>>();
+        private readonly List<FilterConjunctionGroup<ExceptionDocument>> exceptionFilterGroups = new List<FilterConjunctionGroup<ExceptionDocument>>();
 
-        private readonly List<FilterConjunctionGroup<EventTelemetry>> eventFilterGroups = new List<FilterConjunctionGroup<EventTelemetry>>();
+        private readonly List<FilterConjunctionGroup<Trace>> traceFilterGroups = new List<FilterConjunctionGroup<Trace>>();
 
-        private readonly List<FilterConjunctionGroup<TraceTelemetry>> traceFilterGroups = new List<FilterConjunctionGroup<TraceTelemetry>>();
-        
         public DocumentStream(
             DocumentStreamInfo info,
             out CollectionConfigurationError[] errors,
-            Clock timeProvider,
             float? initialRequestQuota = null,
             float? initialDependencyQuota = null,
             float? initialExceptionQuota = null,
@@ -50,11 +49,11 @@
 
             this.CreateFilters(out errors);
 
-            this.RequestQuotaTracker = new QuickPulseQuotaTracker(timeProvider, maxRequestQuota ?? DefaultMaxTelemetryQuota, initialRequestQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.DependencyQuotaTracker = new QuickPulseQuotaTracker(timeProvider, maxDependencyQuota ?? DefaultMaxTelemetryQuota, initialDependencyQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.ExceptionQuotaTracker = new QuickPulseQuotaTracker(timeProvider, maxExceptionQuota ?? DefaultMaxTelemetryQuota, initialExceptionQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.EventQuotaTracker = new QuickPulseQuotaTracker(timeProvider, maxEventQuota ?? DefaultMaxTelemetryQuota, initialEventQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
-            this.TraceQuotaTracker = new QuickPulseQuotaTracker(timeProvider, maxTraceQuota ?? DefaultMaxTelemetryQuota, initialTraceQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            this.RequestQuotaTracker = new QuickPulseQuotaTracker(maxRequestQuota ?? DefaultMaxTelemetryQuota, initialRequestQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            this.DependencyQuotaTracker = new QuickPulseQuotaTracker(maxDependencyQuota ?? DefaultMaxTelemetryQuota, initialDependencyQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            this.ExceptionQuotaTracker = new QuickPulseQuotaTracker(maxExceptionQuota ?? DefaultMaxTelemetryQuota, initialExceptionQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            this.EventQuotaTracker = new QuickPulseQuotaTracker(maxEventQuota ?? DefaultMaxTelemetryQuota, initialEventQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
+            this.TraceQuotaTracker = new QuickPulseQuotaTracker(maxTraceQuota ?? DefaultMaxTelemetryQuota, initialTraceQuota ?? InitialTelemetryQuota, quotaAccrualRatePerSec);
         }
 
         public QuickPulseQuotaTracker RequestQuotaTracker { get; }
@@ -69,27 +68,22 @@
 
         public string Id => this.info.Id;
 
-        public bool CheckFilters(RequestTelemetry document, out CollectionConfigurationError[] errors)
+        public bool CheckFilters(Request document, out CollectionConfigurationError[] errors)
         {
             return DocumentStream.CheckFilters(this.requestFilterGroups, document, out errors);
         }
-        
-        public bool CheckFilters(DependencyTelemetry document, out CollectionConfigurationError[] errors)
+
+        public bool CheckFilters(RemoteDependency document, out CollectionConfigurationError[] errors)
         {
             return DocumentStream.CheckFilters(this.dependencyFilterGroups, document, out errors);
         }
 
-        public bool CheckFilters(ExceptionTelemetry document, out CollectionConfigurationError[] errors)
+        public bool CheckFilters(ExceptionDocument document, out CollectionConfigurationError[] errors)
         {
             return DocumentStream.CheckFilters(this.exceptionFilterGroups, document, out errors);
         }
 
-        public bool CheckFilters(EventTelemetry document, out CollectionConfigurationError[] errors)
-        {
-            return DocumentStream.CheckFilters(this.eventFilterGroups, document, out errors);
-        }
-
-        public bool CheckFilters(TraceTelemetry document, out CollectionConfigurationError[] errors)
+        public bool CheckFilters(Trace document, out CollectionConfigurationError[] errors)
         {
             return DocumentStream.CheckFilters(this.traceFilterGroups, document, out errors);
         }
@@ -104,7 +98,7 @@
 
             if (filterGroups.Count == 0)
             {
-                errors = ArrayExtensions.Empty<CollectionConfigurationError>();
+                errors = Array.Empty<CollectionConfigurationError>();
 
                 // no filters for the telemetry type - filter out, we're not interested
                 return false;
@@ -125,7 +119,7 @@
 
             return leastOneConjunctionGroupPassed;
         }
-        
+
         private static bool CheckFiltersGeneric<TTelemetry>(TTelemetry document, FilterConjunctionGroup<TTelemetry> filterGroup, List<CollectionConfigurationError> errorList)
         {
             bool filterPassed = false;
@@ -138,7 +132,7 @@
                     filterPassed = true;
                 }
             }
-            catch (Exception)
+            catch (System.Exception)
             {
                 // the filters have failed to run (possibly incompatible field value in telemetry), consider the telemetry item filtered out by this conjunction group
                 ////!!!
@@ -162,22 +156,19 @@
                     try
                     {
                         CollectionConfigurationError[] groupErrors;
-                        switch (documentFilterConjunctionGroupInfo.TelemetryType)
+                        switch (documentFilterConjunctionGroupInfo.TelemetryType?.ToString())
                         {
                             case TelemetryType.Request:
-                                this.requestFilterGroups.Add(new FilterConjunctionGroup<RequestTelemetry>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                this.requestFilterGroups.Add(new FilterConjunctionGroup<Request>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Dependency:
-                                this.dependencyFilterGroups.Add(new FilterConjunctionGroup<DependencyTelemetry>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                this.dependencyFilterGroups.Add(new FilterConjunctionGroup<RemoteDependency>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Exception:
-                                this.exceptionFilterGroups.Add(new FilterConjunctionGroup<ExceptionTelemetry>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
-                                break;
-                            case TelemetryType.Event:
-                                this.eventFilterGroups.Add(new FilterConjunctionGroup<EventTelemetry>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                this.exceptionFilterGroups.Add(new FilterConjunctionGroup<ExceptionDocument>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             case TelemetryType.Trace:
-                                this.traceFilterGroups.Add(new FilterConjunctionGroup<TraceTelemetry>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
+                                this.traceFilterGroups.Add(new FilterConjunctionGroup<Trace>(documentFilterConjunctionGroupInfo.Filters, out groupErrors));
                                 break;
                             default:
                                 throw new ArgumentOutOfRangeException(string.Format(CultureInfo.InvariantCulture, "Unsupported TelemetryType: '{0}'", documentFilterConjunctionGroupInfo.TelemetryType));
@@ -185,7 +176,7 @@
 
                         errorList.AddRange(groupErrors);
                     }
-                    catch (Exception e)
+                    catch (System.Exception e)
                     {
                         errorList.Add(
                             CollectionConfigurationError.CreateError(
