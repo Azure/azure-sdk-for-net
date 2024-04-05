@@ -20,7 +20,7 @@ namespace Azure.Data.AppConfiguration
         private readonly Func<Response, (List<ConfigurationSetting> Values, string NextLink)> _responseParser;
         private readonly string _scopeName;
         private readonly CancellationToken _cancellationToken;
-        private readonly ErrorOptions? _errorOptions;
+        private readonly ErrorOptions _errorOptions;
 
         public ConditionalPageableImplementation(Func<MatchConditions, int?, HttpMessage> createFirstPageRequest, Func<MatchConditions, int?, string, HttpMessage> createNextPageRequest, Func<Response, (List<ConfigurationSetting> Values, string NextLink)> responseParser, HttpPipeline pipeline, ClientDiagnostics clientDiagnostics, string scopeName, RequestContext requestContext)
         {
@@ -127,10 +127,6 @@ namespace Azure.Data.AppConfiguration
         private async ValueTask<Response> GetNextResponseAsync(MatchConditions conditions, int? pageSizeHint, string nextLink, CancellationToken cancellationToken)
         {
             var message = CreateMessage(conditions, pageSizeHint, nextLink);
-            if (message == null)
-            {
-                return null;
-            }
 
             using DiagnosticScope scope = _clientDiagnostics.CreateScope(_scopeName);
             scope.Start();
@@ -168,7 +164,7 @@ namespace Azure.Data.AppConfiguration
 
         private Response GetResponse(HttpMessage message)
         {
-            if (message.Response.IsError && _errorOptions != ErrorOptions.NoThrow)
+            if (message.Response.IsError && !_errorOptions.HasFlag(ErrorOptions.NoThrow))
             {
                 throw new RequestFailedException(message.Response);
             }
