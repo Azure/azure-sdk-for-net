@@ -7,7 +7,7 @@ using Azure.Messaging.EventGrid.SystemEvents;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
-    public partial class AcsAdvancedMessageEventData
+    public partial class AcsMessageEventData
     {
         [CodeGenMember("Error")]
         internal AcsAdvancedMessageChannelEventError ErrorInternal { get; }

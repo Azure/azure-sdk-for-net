@@ -11,10 +11,10 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsAdvancedMessageReceivedEventDataConverter))]
-    public partial class AcsAdvancedMessageReceivedEventData
+    [JsonConverter(typeof(AcsMessageReceivedEventDataConverter))]
+    public partial class AcsMessageReceivedEventData
     {
-        internal static AcsAdvancedMessageReceivedEventData DeserializeAcsAdvancedMessageReceivedEventData(JsonElement element)
+        internal static AcsMessageReceivedEventData DeserializeAcsMessageReceivedEventData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -22,10 +22,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             string content = default;
             AcsMessageChannelKind? channelType = default;
-            AcsAdvancedMessageMediaContent media = default;
+            AcsMessageMediaContent media = default;
             AcsAdvancedMessageContext context = default;
-            AcsAdvancedMessageButtonContent button = default;
-            AcsAdvancedMessageInteractiveContent interactive = default;
+            AcsMessageButtonContent button = default;
+            AcsMessageInteractiveContent interactive = default;
             string @from = default;
             string to = default;
             DateTimeOffset? receivedTimestamp = default;
@@ -52,7 +52,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    media = AcsAdvancedMessageMediaContent.DeserializeAcsAdvancedMessageMediaContent(property.Value);
+                    media = AcsMessageMediaContent.DeserializeAcsMessageMediaContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("context"u8))
@@ -70,7 +70,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    button = AcsAdvancedMessageButtonContent.DeserializeAcsAdvancedMessageButtonContent(property.Value);
+                    button = AcsMessageButtonContent.DeserializeAcsMessageButtonContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("interactive"u8))
@@ -79,7 +79,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    interactive = AcsAdvancedMessageInteractiveContent.DeserializeAcsAdvancedMessageInteractiveContent(property.Value);
+                    interactive = AcsMessageInteractiveContent.DeserializeAcsMessageInteractiveContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("from"u8))
@@ -111,7 +111,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsAdvancedMessageReceivedEventData(
+            return new AcsMessageReceivedEventData(
                 @from,
                 to,
                 receivedTimestamp,
@@ -126,23 +126,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsAdvancedMessageReceivedEventData FromResponse(Response response)
+        internal static new AcsMessageReceivedEventData FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageReceivedEventData(document.RootElement);
+            return DeserializeAcsMessageReceivedEventData(document.RootElement);
         }
 
-        internal partial class AcsAdvancedMessageReceivedEventDataConverter : JsonConverter<AcsAdvancedMessageReceivedEventData>
+        internal partial class AcsMessageReceivedEventDataConverter : JsonConverter<AcsMessageReceivedEventData>
         {
-            public override void Write(Utf8JsonWriter writer, AcsAdvancedMessageReceivedEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AcsMessageReceivedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            public override AcsAdvancedMessageReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AcsMessageReceivedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsAdvancedMessageReceivedEventData(document.RootElement);
+                return DeserializeAcsMessageReceivedEventData(document.RootElement);
             }
         }
     }

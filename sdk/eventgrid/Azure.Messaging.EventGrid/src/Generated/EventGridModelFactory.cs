@@ -3476,15 +3476,15 @@ namespace Azure.Messaging.EventGrid
                 engagement);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageMediaContent AcsAdvancedMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageMediaContent"/> instance for mocking. </returns>
+        public static AcsMessageMediaContent AcsMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
         {
-            return new AcsAdvancedMessageMediaContent(mimeType, mediaId, fileName, caption);
+            return new AcsMessageMediaContent(mimeType, mediaId, fileName, caption);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageContext"/>. </summary>
@@ -3496,42 +3496,42 @@ namespace Azure.Messaging.EventGrid
             return new AcsAdvancedMessageContext(@from, messageId);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageButtonContent"/>. </summary>
         /// <param name="text"> The Text of the button. </param>
         /// <param name="payload"> The Payload of the button which was clicked by the user, setup by the business. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageButtonContent AcsAdvancedMessageButtonContent(string text = null, string payload = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageButtonContent"/> instance for mocking. </returns>
+        public static AcsMessageButtonContent AcsMessageButtonContent(string text = null, string payload = null)
         {
-            return new AcsAdvancedMessageButtonContent(text, payload);
+            return new AcsMessageButtonContent(text, payload);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveContent"/>. </summary>
         /// <param name="replyKind"> The Message interactive reply type. </param>
         /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
         /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveContent AcsAdvancedMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsAdvancedMessageInteractiveButtonReplyContent buttonReply = null, AcsAdvancedMessageInteractiveListReplyContent listReply = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveContent AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsMessageInteractiveButtonReplyContent buttonReply = null, AcsMessageInteractiveListReplyContent listReply = null)
         {
-            return new AcsAdvancedMessageInteractiveContent(replyKind, buttonReply, listReply);
+            return new AcsMessageInteractiveContent(replyKind, buttonReply, listReply);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/>. </summary>
         /// <param name="buttonId"> The ID of the button. </param>
         /// <param name="title"> The title of the button. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveButtonReplyContent AcsAdvancedMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveButtonReplyContent AcsMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
         {
-            return new AcsAdvancedMessageInteractiveButtonReplyContent(buttonId, title);
+            return new AcsMessageInteractiveButtonReplyContent(buttonId, title);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
         /// <param name="description"> The sescription of the selected row. </param>
-        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/> instance for mocking. </returns>
-        public static AcsAdvancedMessageInteractiveListReplyContent AcsAdvancedMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMessageInteractiveListReplyContent"/> instance for mocking. </returns>
+        public static AcsMessageInteractiveListReplyContent AcsMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
         {
-            return new AcsAdvancedMessageInteractiveListReplyContent(listItemId, title, description);
+            return new AcsMessageInteractiveListReplyContent(listItemId, title, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>

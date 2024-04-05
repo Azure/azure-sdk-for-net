@@ -11,17 +11,17 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsAdvancedMessageDeliveryStatusUpdatedEventDataConverter))]
-    public partial class AcsAdvancedMessageDeliveryStatusUpdatedEventData
+    [JsonConverter(typeof(AcsMessageDeliveryStatusUpdatedEventDataConverter))]
+    public partial class AcsMessageDeliveryStatusUpdatedEventData
     {
-        internal static AcsAdvancedMessageDeliveryStatusUpdatedEventData DeserializeAcsAdvancedMessageDeliveryStatusUpdatedEventData(JsonElement element)
+        internal static AcsMessageDeliveryStatusUpdatedEventData DeserializeAcsMessageDeliveryStatusUpdatedEventData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string messageId = default;
-            AcsAdvanceMessageDeliveryStatus? status = default;
+            AcsMessageDeliveryStatus? status = default;
             AcsMessageChannelKind? channelType = default;
             string @from = default;
             string to = default;
@@ -40,7 +40,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    status = new AcsAdvanceMessageDeliveryStatus(property.Value.GetString());
+                    status = new AcsMessageDeliveryStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("channelType"u8))
@@ -81,7 +81,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsAdvancedMessageDeliveryStatusUpdatedEventData(
+            return new AcsMessageDeliveryStatusUpdatedEventData(
                 @from,
                 to,
                 receivedTimestamp,
@@ -93,23 +93,23 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new AcsAdvancedMessageDeliveryStatusUpdatedEventData FromResponse(Response response)
+        internal static new AcsMessageDeliveryStatusUpdatedEventData FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageDeliveryStatusUpdatedEventData(document.RootElement);
+            return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement);
         }
 
-        internal partial class AcsAdvancedMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsAdvancedMessageDeliveryStatusUpdatedEventData>
+        internal partial class AcsMessageDeliveryStatusUpdatedEventDataConverter : JsonConverter<AcsMessageDeliveryStatusUpdatedEventData>
         {
-            public override void Write(Utf8JsonWriter writer, AcsAdvancedMessageDeliveryStatusUpdatedEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AcsMessageDeliveryStatusUpdatedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            public override AcsAdvancedMessageDeliveryStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AcsMessageDeliveryStatusUpdatedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsAdvancedMessageDeliveryStatusUpdatedEventData(document.RootElement);
+                return DeserializeAcsMessageDeliveryStatusUpdatedEventData(document.RootElement);
             }
         }
     }

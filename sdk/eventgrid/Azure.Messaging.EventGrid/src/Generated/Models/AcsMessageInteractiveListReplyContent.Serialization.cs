@@ -9,50 +9,44 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsAdvancedMessageMediaContent
+    public partial class AcsMessageInteractiveListReplyContent
     {
-        internal static AcsAdvancedMessageMediaContent DeserializeAcsAdvancedMessageMediaContent(JsonElement element)
+        internal static AcsMessageInteractiveListReplyContent DeserializeAcsMessageInteractiveListReplyContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string mimeType = default;
             string id = default;
-            string fileName = default;
-            string caption = default;
+            string title = default;
+            string description = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("mimeType"u8))
-                {
-                    mimeType = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("id"u8))
                 {
                     id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("fileName"u8))
+                if (property.NameEquals("title"u8))
                 {
-                    fileName = property.Value.GetString();
+                    title = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("caption"u8))
+                if (property.NameEquals("description"u8))
                 {
-                    caption = property.Value.GetString();
+                    description = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsAdvancedMessageMediaContent(mimeType, id, fileName, caption);
+            return new AcsMessageInteractiveListReplyContent(id, title, description);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageMediaContent FromResponse(Response response)
+        internal static AcsMessageInteractiveListReplyContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageMediaContent(document.RootElement);
+            return DeserializeAcsMessageInteractiveListReplyContent(document.RootElement);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> The The messaged received channel Kind. </summary>
+    /// <summary> The received message channel Kind. </summary>
     public readonly partial struct AcsMessageChannelKind : IEquatable<AcsMessageChannelKind>
     {
         private readonly string _value;
@@ -24,7 +24,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 
         private const string WhatsappValue = "whatsapp";
 
-        /// <summary> Updated messaged channel type is Whatsapp. </summary>
+        /// <summary> Updated message channel type is Whatsapp. </summary>
         public static AcsMessageChannelKind Whatsapp { get; } = new AcsMessageChannelKind(WhatsappValue);
         /// <summary> Determines if two <see cref="AcsMessageChannelKind"/> values are the same. </summary>
         public static bool operator ==(AcsMessageChannelKind left, AcsMessageChannelKind right) => left.Equals(right);

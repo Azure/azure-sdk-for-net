@@ -8,19 +8,19 @@
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Advanced Message Media Content. </summary>
-    public partial class AcsAdvancedMessageMediaContent
+    public partial class AcsMessageMediaContent
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageMediaContent"/>. </summary>
-        internal AcsAdvancedMessageMediaContent()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageMediaContent"/>. </summary>
+        internal AcsMessageMediaContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageMediaContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageMediaContent"/>. </summary>
         /// <param name="mimeType"> The MIME type of the file this media represents. </param>
         /// <param name="mediaId"> The media identifier. </param>
         /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
         /// <param name="caption"> The caption for the media object, if supported and provided. </param>
-        internal AcsAdvancedMessageMediaContent(string mimeType, string mediaId, string fileName, string caption)
+        internal AcsMessageMediaContent(string mimeType, string mediaId, string fileName, string caption)
         {
             MimeType = mimeType;
             MediaId = mediaId;

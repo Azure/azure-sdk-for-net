@@ -9,38 +9,38 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsAdvancedMessageButtonContent
+    public partial class AcsMessageInteractiveButtonReplyContent
     {
-        internal static AcsAdvancedMessageButtonContent DeserializeAcsAdvancedMessageButtonContent(JsonElement element)
+        internal static AcsMessageInteractiveButtonReplyContent DeserializeAcsMessageInteractiveButtonReplyContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string text = default;
-            string payload = default;
+            string id = default;
+            string title = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("text"u8))
+                if (property.NameEquals("id"u8))
                 {
-                    text = property.Value.GetString();
+                    id = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("payload"u8))
+                if (property.NameEquals("title"u8))
                 {
-                    payload = property.Value.GetString();
+                    title = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsAdvancedMessageButtonContent(text, payload);
+            return new AcsMessageInteractiveButtonReplyContent(id, title);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageButtonContent FromResponse(Response response)
+        internal static AcsMessageInteractiveButtonReplyContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageButtonContent(document.RootElement);
+            return DeserializeAcsMessageInteractiveButtonReplyContent(document.RootElement);
         }
     }
 }

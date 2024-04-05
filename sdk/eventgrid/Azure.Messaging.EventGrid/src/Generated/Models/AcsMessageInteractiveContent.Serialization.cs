@@ -9,17 +9,17 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsAdvancedMessageInteractiveContent
+    public partial class AcsMessageInteractiveContent
     {
-        internal static AcsAdvancedMessageInteractiveContent DeserializeAcsAdvancedMessageInteractiveContent(JsonElement element)
+        internal static AcsMessageInteractiveContent DeserializeAcsMessageInteractiveContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AcsInteractiveReplyKind? type = default;
-            AcsAdvancedMessageInteractiveButtonReplyContent buttonReply = default;
-            AcsAdvancedMessageInteractiveListReplyContent listReply = default;
+            AcsMessageInteractiveButtonReplyContent buttonReply = default;
+            AcsMessageInteractiveListReplyContent listReply = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -37,7 +37,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    buttonReply = AcsAdvancedMessageInteractiveButtonReplyContent.DeserializeAcsAdvancedMessageInteractiveButtonReplyContent(property.Value);
+                    buttonReply = AcsMessageInteractiveButtonReplyContent.DeserializeAcsMessageInteractiveButtonReplyContent(property.Value);
                     continue;
                 }
                 if (property.NameEquals("listReply"u8))
@@ -46,19 +46,19 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     {
                         continue;
                     }
-                    listReply = AcsAdvancedMessageInteractiveListReplyContent.DeserializeAcsAdvancedMessageInteractiveListReplyContent(property.Value);
+                    listReply = AcsMessageInteractiveListReplyContent.DeserializeAcsMessageInteractiveListReplyContent(property.Value);
                     continue;
                 }
             }
-            return new AcsAdvancedMessageInteractiveContent(type, buttonReply, listReply);
+            return new AcsMessageInteractiveContent(type, buttonReply, listReply);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageInteractiveContent FromResponse(Response response)
+        internal static AcsMessageInteractiveContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageInteractiveContent(document.RootElement);
+            return DeserializeAcsMessageInteractiveContent(document.RootElement);
         }
     }
 }

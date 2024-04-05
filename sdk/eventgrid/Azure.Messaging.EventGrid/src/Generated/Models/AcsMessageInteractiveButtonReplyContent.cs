@@ -8,17 +8,17 @@
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Advanced Message Interactive button reply content for a user to business message. </summary>
-    public partial class AcsAdvancedMessageInteractiveButtonReplyContent
+    public partial class AcsMessageInteractiveButtonReplyContent
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveButtonReplyContent"/>. </summary>
-        internal AcsAdvancedMessageInteractiveButtonReplyContent()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveButtonReplyContent"/>. </summary>
+        internal AcsMessageInteractiveButtonReplyContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveButtonReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveButtonReplyContent"/>. </summary>
         /// <param name="buttonId"> The ID of the button. </param>
         /// <param name="title"> The title of the button. </param>
-        internal AcsAdvancedMessageInteractiveButtonReplyContent(string buttonId, string title)
+        internal AcsMessageInteractiveButtonReplyContent(string buttonId, string title)
         {
             ButtonId = buttonId;
             Title = title;

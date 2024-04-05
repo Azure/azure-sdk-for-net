@@ -4,7 +4,7 @@ Run `dotnet build /t:GenerateCode` to generate code.
 
 ``` yaml
 title: EventGridClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/ca560e400087f54b306f3a21df582c8a5bbd0abc/specification/eventgrid/data-plane/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/84ed0268ebf01863df4d7195886c26b454ef4032/specification/eventgrid/data-plane/readme.md
 generation1-convenience-client: true
 model-factory-for-hlc:
 - MediaJobOutputAsset
@@ -180,6 +180,36 @@ directive:
       if (path.includes("AcsAdvancedMessageInteractiveContent"))
       {
           $[path]["properties"]["type"]["x-namespace"] = namespace;
+          $[path]["x-ms-client-name"] = "AcsMessageInteractiveContent";
+      }
+      if (path.includes("AcsAdvancedMessageButtonContent"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageButtonContent";
+      }
+      if (path.includes("AcsAdvancedMessageDeliveryStatusUpdatedEventData"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageDeliveryStatusUpdatedEventData";
+          $[path]["properties"]["status"]["x-ms-enum"]["name"] = "AcsMessageDeliveryStatus";
+      }
+      if (path.includes("AcsAdvancedMessageEventData"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageEventData";
+      }
+      if (path.includes("AcsAdvancedMessageInteractiveButtonReplyContent"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageInteractiveButtonReplyContent";
+      }
+      if (path.includes("AcsAdvancedMessageInteractiveListReplyContent"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageInteractiveListReplyContent";
+      }
+      if (path.includes("AcsAdvancedMessageMediaContent"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageMediaContent";
+      }
+      if (path.includes("AcsAdvancedMessageReceivedEventData"))
+      {
+          $[path]["x-ms-client-name"] = "AcsMessageReceivedEventData";
       }
     }
 ```

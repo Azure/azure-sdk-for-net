@@ -11,10 +11,10 @@ using System.Text.Json.Serialization;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    [JsonConverter(typeof(AcsAdvancedMessageEventDataConverter))]
-    public partial class AcsAdvancedMessageEventData
+    [JsonConverter(typeof(AcsMessageEventDataConverter))]
+    public partial class AcsMessageEventData
     {
-        internal static AcsAdvancedMessageEventData DeserializeAcsAdvancedMessageEventData(JsonElement element)
+        internal static AcsMessageEventData DeserializeAcsMessageEventData(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -55,28 +55,28 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsAdvancedMessageEventData(@from, to, receivedTimestamp, error);
+            return new AcsMessageEventData(@from, to, receivedTimestamp, error);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageEventData FromResponse(Response response)
+        internal static AcsMessageEventData FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageEventData(document.RootElement);
+            return DeserializeAcsMessageEventData(document.RootElement);
         }
 
-        internal partial class AcsAdvancedMessageEventDataConverter : JsonConverter<AcsAdvancedMessageEventData>
+        internal partial class AcsMessageEventDataConverter : JsonConverter<AcsMessageEventData>
         {
-            public override void Write(Utf8JsonWriter writer, AcsAdvancedMessageEventData model, JsonSerializerOptions options)
+            public override void Write(Utf8JsonWriter writer, AcsMessageEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
 
-            public override AcsAdvancedMessageEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            public override AcsMessageEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
-                return DeserializeAcsAdvancedMessageEventData(document.RootElement);
+                return DeserializeAcsMessageEventData(document.RootElement);
             }
         }
     }
