@@ -78,11 +78,15 @@ jobs:
           echo "##vso[build.addbuildtag]Scheduled"
         displayName: "Tag scheduled builds"
         condition: and(eq(variables['Build.SourceBranchName'],variables['DefaultBranch']),eq(variables['Build.Reason'],'Schedule'))
-      # Both 'Dump property properties' and 'Update package properties with dev version' serve the same purpose of generating package json.
-      # We decided to only run the later one (update properties) in all pipelines for the following reasons:
-      # 1. 'Update properties' happens after 'build', we will have more information at the 'update properties' step.
-      # 2. We did not find any usage of package json before 'update properties' in .NET, so it is safe to skip the 'dump properties' for now.
+      # Set env variable to Skip Dev build to generate package properties with non dev version
+      # Package version is used to create or update package work item from CI pipeline
+      - pwsh: |
+          $skipDevBuildNumber = "true"
+          echo "##vso[task.setvariable variable=SkipDevBuildNumber]$skipDevBuildNumber"
+        displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
+        parameters:
+          ServiceDirectory ${{parameters.ServiceDirectory}}
       - pwsh: |
           $skipDevBuildNumber = "false"
           # For .NET builds the only case we want to not have dev build numbers on our packages is when it is manually queued and
