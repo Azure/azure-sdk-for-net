@@ -4,7 +4,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data
+namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>Represents the TokenIssuanceStartData (Root Element) Data Model Object.</summary>
     public class TokenIssuanceStartData : WebJobsAuthenticationEventsTypedData

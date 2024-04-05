@@ -2,8 +2,7 @@
 // Licensed under the MIT License.using System;
 
 using System;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart.Data;
+using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
