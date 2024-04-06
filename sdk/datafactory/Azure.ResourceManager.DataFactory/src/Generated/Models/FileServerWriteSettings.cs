@@ -14,19 +14,20 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> File server write settings. </summary>
     public partial class FileServerWriteSettings : StoreWriteSettings
     {
-        /// <summary> Initializes a new instance of FileServerWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerWriteSettings"/>. </summary>
         public FileServerWriteSettings()
         {
             StoreWriteSettingsType = "FileServerWriteSettings";
         }
 
-        /// <summary> Initializes a new instance of FileServerWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FileServerWriteSettings"/>. </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
+        /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FileServerWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, BinaryData copyBehavior, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, additionalProperties)
+        internal FileServerWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
             StoreWriteSettingsType = storeWriteSettingsType ?? "FileServerWriteSettings";
         }

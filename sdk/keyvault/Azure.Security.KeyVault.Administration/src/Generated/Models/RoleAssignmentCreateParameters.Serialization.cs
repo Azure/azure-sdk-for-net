@@ -16,8 +16,16 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<KeyVaultRoleAssignmentPropertiesInternal>(Properties);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RoleAssignmentCreateParameters>(this);
+            return content;
         }
     }
 }

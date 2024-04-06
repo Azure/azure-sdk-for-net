@@ -6,39 +6,214 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class DscNodeReport
+    public partial class DscNodeReport : IUtf8JsonSerializable, IJsonModel<DscNodeReport>
     {
-        internal static DscNodeReport DeserializeDscNodeReport(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscNodeReport>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DscNodeReport>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EndOn))
+            {
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (Optional.IsDefined(LastModifiedOn))
+            {
+                writer.WritePropertyName("lastModifiedTime"u8);
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
+            }
+            if (Optional.IsDefined(StartOn))
+            {
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
+            }
+            if (Optional.IsDefined(DscNodeReportType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(DscNodeReportType);
+            }
+            if (Optional.IsDefined(ReportId))
+            {
+                writer.WritePropertyName("reportId"u8);
+                writer.WriteStringValue(ReportId);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (Optional.IsDefined(RefreshMode))
+            {
+                writer.WritePropertyName("refreshMode"u8);
+                writer.WriteStringValue(RefreshMode);
+            }
+            if (Optional.IsDefined(RebootRequested))
+            {
+                writer.WritePropertyName("rebootRequested"u8);
+                writer.WriteStringValue(RebootRequested);
+            }
+            if (Optional.IsDefined(ReportFormatVersion))
+            {
+                writer.WritePropertyName("reportFormatVersion"u8);
+                writer.WriteStringValue(ReportFormatVersion);
+            }
+            if (Optional.IsDefined(ConfigurationVersion))
+            {
+                writer.WritePropertyName("configurationVersion"u8);
+                writer.WriteStringValue(ConfigurationVersion);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsCollectionDefined(Errors))
+            {
+                writer.WritePropertyName("errors"u8);
+                writer.WriteStartArray();
+                foreach (var item in Errors)
+                {
+                    writer.WriteObjectValue<DscReportError>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(Resources))
+            {
+                writer.WritePropertyName("resources"u8);
+                writer.WriteStartArray();
+                foreach (var item in Resources)
+                {
+                    writer.WriteObjectValue<DscReportResource>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(MetaConfiguration))
+            {
+                writer.WritePropertyName("metaConfiguration"u8);
+                writer.WriteObjectValue<DscMetaConfiguration>(MetaConfiguration, options);
+            }
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (Optional.IsCollectionDefined(IPV4Addresses))
+            {
+                writer.WritePropertyName("iPV4Addresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPV4Addresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(IPV6Addresses))
+            {
+                writer.WritePropertyName("iPV6Addresses"u8);
+                writer.WriteStartArray();
+                foreach (var item in IPV6Addresses)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NumberOfResources))
+            {
+                writer.WritePropertyName("numberOfResources"u8);
+                writer.WriteNumberValue(NumberOfResources.Value);
+            }
+            if (Optional.IsDefined(RawErrors))
+            {
+                writer.WritePropertyName("rawErrors"u8);
+                writer.WriteStringValue(RawErrors);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DscNodeReport IJsonModel<DscNodeReport>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscNodeReport(document.RootElement, options);
+        }
+
+        internal static DscNodeReport DeserializeDscNodeReport(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<string> type = default;
-            Optional<string> reportId = default;
-            Optional<string> status = default;
-            Optional<string> refreshMode = default;
-            Optional<string> rebootRequested = default;
-            Optional<string> reportFormatVersion = default;
-            Optional<string> configurationVersion = default;
-            Optional<string> id = default;
-            Optional<IReadOnlyList<DscReportError>> errors = default;
-            Optional<IReadOnlyList<DscReportResource>> resources = default;
-            Optional<DscMetaConfiguration> metaConfiguration = default;
-            Optional<string> hostName = default;
-            Optional<IReadOnlyList<string>> ipV4Addresses = default;
-            Optional<IReadOnlyList<string>> ipV6Addresses = default;
-            Optional<int> numberOfResources = default;
-            Optional<string> rawErrors = default;
+            DateTimeOffset? endTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            DateTimeOffset? startTime = default;
+            string type = default;
+            string reportId = default;
+            string status = default;
+            string refreshMode = default;
+            string rebootRequested = default;
+            string reportFormatVersion = default;
+            string configurationVersion = default;
+            string id = default;
+            IReadOnlyList<DscReportError> errors = default;
+            IReadOnlyList<DscReportResource> resources = default;
+            DscMetaConfiguration metaConfiguration = default;
+            string hostName = default;
+            IReadOnlyList<string> ipV4Addresses = default;
+            IReadOnlyList<string> ipV6Addresses = default;
+            int? numberOfResources = default;
+            string rawErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endTime"u8))
@@ -119,7 +294,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportError> array = new List<DscReportError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportError.DeserializeDscReportError(item));
+                        array.Add(DscReportError.DeserializeDscReportError(item, options));
                     }
                     errors = array;
                     continue;
@@ -133,7 +308,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscReportResource> array = new List<DscReportResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscReportResource.DeserializeDscReportResource(item));
+                        array.Add(DscReportResource.DeserializeDscReportResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -144,7 +319,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value);
+                    metaConfiguration = DscMetaConfiguration.DeserializeDscMetaConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("hostName"u8))
@@ -194,8 +369,64 @@ namespace Azure.ResourceManager.Automation.Models
                     rawErrors = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DscNodeReport(Optional.ToNullable(endTime), Optional.ToNullable(lastModifiedTime), Optional.ToNullable(startTime), type.Value, reportId.Value, status.Value, refreshMode.Value, rebootRequested.Value, reportFormatVersion.Value, configurationVersion.Value, id.Value, Optional.ToList(errors), Optional.ToList(resources), metaConfiguration.Value, hostName.Value, Optional.ToList(ipV4Addresses), Optional.ToList(ipV6Addresses), Optional.ToNullable(numberOfResources), rawErrors.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DscNodeReport(
+                endTime,
+                lastModifiedTime,
+                startTime,
+                type,
+                reportId,
+                status,
+                refreshMode,
+                rebootRequested,
+                reportFormatVersion,
+                configurationVersion,
+                id,
+                errors ?? new ChangeTrackingList<DscReportError>(),
+                resources ?? new ChangeTrackingList<DscReportResource>(),
+                metaConfiguration,
+                hostName,
+                ipV4Addresses ?? new ChangeTrackingList<string>(),
+                ipV6Addresses ?? new ChangeTrackingList<string>(),
+                numberOfResources,
+                rawErrors,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DscNodeReport>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DscNodeReport IPersistableModel<DscNodeReport>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDscNodeReport(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DscNodeReport>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

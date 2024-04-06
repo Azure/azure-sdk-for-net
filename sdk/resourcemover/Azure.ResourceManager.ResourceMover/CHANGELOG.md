@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.2-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,40 @@
 
 ### Bugs Fixed
 
+- [Issue#30952](https://github.com/Azure/azure-sdk-for-net/issues/30952) fixed, add operation: `MoveCollections_Delete` back.
+
 ### Other Changes
+
+## 1.1.2-beta.1 (2024-02-22)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Bugs Fixed
+
+- Fixed serialization issues.
+
+## 1.1.1 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0 (2023-09-25)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-08-01' to 'package-2023-08-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf2585e9f0696cc8d5f230481612a37eac542f39/specification/resourcemover/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.28.0 to 1.35.0
+- Upgraded Azure.ResourceManager from 1.4.0 to 1.7.0
 
 ## 1.1.0-beta.1 (2023-05-31)
 

@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.Models
 {
-    public partial class MySqlServerPrivateEndpointConnection
+    public partial class MySqlServerPrivateEndpointConnection : IUtf8JsonSerializable, IJsonModel<MySqlServerPrivateEndpointConnection>
     {
-        internal static MySqlServerPrivateEndpointConnection DeserializeMySqlServerPrivateEndpointConnection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlServerPrivateEndpointConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlServerPrivateEndpointConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPrivateEndpointConnection)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<MySqlServerPrivateEndpointConnectionProperties>(Properties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlServerPrivateEndpointConnection IJsonModel<MySqlServerPrivateEndpointConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlServerPrivateEndpointConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlServerPrivateEndpointConnection(document.RootElement, options);
+        }
+
+        internal static MySqlServerPrivateEndpointConnection DeserializeMySqlServerPrivateEndpointConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<MySqlServerPrivateEndpointConnectionProperties> properties = default;
+            ResourceIdentifier id = default;
+            MySqlServerPrivateEndpointConnectionProperties properties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -37,11 +95,47 @@ namespace Azure.ResourceManager.MySql.Models
                     {
                         continue;
                     }
-                    properties = MySqlServerPrivateEndpointConnectionProperties.DeserializeMySqlServerPrivateEndpointConnectionProperties(property.Value);
+                    properties = MySqlServerPrivateEndpointConnectionProperties.DeserializeMySqlServerPrivateEndpointConnectionProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlServerPrivateEndpointConnection(id.Value, properties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlServerPrivateEndpointConnection(id, properties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlServerPrivateEndpointConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerPrivateEndpointConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlServerPrivateEndpointConnection IPersistableModel<MySqlServerPrivateEndpointConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlServerPrivateEndpointConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlServerPrivateEndpointConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlServerPrivateEndpointConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlServerPrivateEndpointConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

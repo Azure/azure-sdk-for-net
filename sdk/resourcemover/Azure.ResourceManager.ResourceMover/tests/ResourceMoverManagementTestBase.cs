@@ -45,9 +45,9 @@ namespace Azure.ResourceManager.ResourceMover.Tests
 
         protected async Task<MoverResourceSetResource> CreateMoverResourceSet(ResourceGroupResource rg, string moverResourceSetName)
         {
-            MoverResourceSetData input = new MoverResourceSetData(AzureLocation.EastUS2)
+            MoverResourceSetData input = new MoverResourceSetData("eastus2")
             {
-                Properties = new MoverResourceSetProperties(AzureLocation.EastUS, AzureLocation.EastUS2),
+                Properties = new MoverResourceSetProperties() { SourceLocation = AzureLocation.EastUS, TargetLocation = AzureLocation.EastUS2 },
                 Identity = new ManagedServiceIdentity(ManagedServiceIdentityType.SystemAssigned)
             };
             var lro = await rg.GetMoverResourceSets().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceSetName, input);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ResourceMover.Tests
             {
                 Properties = new MoverResourceProperties(vnetId)
                 {
-                    ResourceSettings = new MoverVirtualNetworkResourceSettings(targetVnetName)
+                    ResourceSettings = new MoverVirtualNetworkResourceSettings() { TargetResourceName = targetVnetName }
                 }
             };
             var lro = await moverResourceSet.GetMoverResources().CreateOrUpdateAsync(WaitUntil.Completed, moverResourceName, input);

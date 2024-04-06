@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a mail message entity. </summary>
     public partial class SecurityInsightsMailMessageEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsMailMessageEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
         public SecurityInsightsMailMessageEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
@@ -27,12 +27,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Kind = SecurityInsightsEntityKind.MailMessage;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsMailMessageEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsMailMessageEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="fileEntityIds"> The File entity ids of this mail message's attachments. </param>
@@ -60,7 +61,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="antispamDirection"> The directionality of this mail message. </param>
         /// <param name="deliveryAction"> The delivery action of this mail message like Delivered, Blocked, Replaced etc. </param>
         /// <param name="deliveryLocation"> The delivery location of this mail message like Inbox, JunkFolder etc. </param>
-        internal SecurityInsightsMailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<Uri> uris, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, IPAddress senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, SecurityInsightsMailMessageDeliveryAction? deliveryAction, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsMailMessageEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IReadOnlyList<string> fileEntityIds, string recipient, IReadOnlyList<Uri> uris, IReadOnlyList<string> threats, string p1Sender, string p1SenderDisplayName, string p1SenderDomain, IPAddress senderIP, string p2Sender, string p2SenderDisplayName, string p2SenderDomain, DateTimeOffset? receiveOn, Guid? networkMessageId, string internetMessageId, string subject, string language, IReadOnlyList<string> threatDetectionMethods, int? bodyFingerprintBin1, int? bodyFingerprintBin2, int? bodyFingerprintBin3, int? bodyFingerprintBin4, int? bodyFingerprintBin5, AntispamMailDirection? antispamDirection, SecurityInsightsMailMessageDeliveryAction? deliveryAction, SecurityInsightsMailMessageDeliveryLocation? deliveryLocation) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\src\Azure.Communication.Common.csproj" />
+    <ProjectReference Include="..\..\Azure.Communication.Common\tests\Azure.Communication.Common.Tests.csproj" />
+    <ProjectReference Include="..\src\Azure.Communication.Messages.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\tests.yml" Link="\tests.yml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
+    <Compile Include="..\..\Shared\tests\CommunicationTestEnvironment.cs" LinkBase="Shared\Communication.Tests" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="SessionRecords\" />
+  </ItemGroup>
+
+</Project>

@@ -22,14 +22,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Kernelspec))
             {
                 writer.WritePropertyName("kernelspec"u8);
-                writer.WriteObjectValue(Kernelspec);
+                writer.WriteObjectValue<NotebookKernelSpec>(Kernelspec);
             }
             if (Optional.IsDefined(LanguageInfo))
             {
                 if (LanguageInfo != null)
                 {
                     writer.WritePropertyName("language_info"u8);
-                    writer.WriteObjectValue(LanguageInfo);
+                    writer.WriteObjectValue<NotebookLanguageInfo>(LanguageInfo);
                 }
                 else
                 {
@@ -39,7 +39,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -50,8 +50,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<NotebookKernelSpec> kernelspec = default;
-            Optional<NotebookLanguageInfo> languageInfo = default;
+            NotebookKernelSpec kernelspec = default;
+            NotebookLanguageInfo languageInfo = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -78,15 +78,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new NotebookMetadata(kernelspec.Value, languageInfo.Value, additionalProperties);
+            return new NotebookMetadata(kernelspec, languageInfo, additionalProperties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookMetadata FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookMetadata(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotebookMetadata>(this);
+            return content;
         }
 
         internal partial class NotebookMetadataConverter : JsonConverter<NotebookMetadata>
         {
             public override void Write(Utf8JsonWriter writer, NotebookMetadata model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<NotebookMetadata>(model);
             }
+
             public override NotebookMetadata Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

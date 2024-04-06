@@ -5,21 +5,25 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
     /// <summary> The service properties when target service type is ConfluentSchemaRegistry. </summary>
     public partial class ConfluentSchemaRegistryInfo : TargetServiceBaseInfo
     {
-        /// <summary> Initializes a new instance of ConfluentSchemaRegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentSchemaRegistryInfo"/>. </summary>
         public ConfluentSchemaRegistryInfo()
         {
             TargetServiceType = TargetServiceType.ConfluentSchemaRegistry;
         }
 
-        /// <summary> Initializes a new instance of ConfluentSchemaRegistryInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentSchemaRegistryInfo"/>. </summary>
         /// <param name="targetServiceType"> The target service type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="endpoint"> The endpoint of service. </param>
-        internal ConfluentSchemaRegistryInfo(TargetServiceType targetServiceType, string endpoint) : base(targetServiceType)
+        internal ConfluentSchemaRegistryInfo(TargetServiceType targetServiceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string endpoint) : base(targetServiceType, serializedAdditionalRawData)
         {
             Endpoint = endpoint;
             TargetServiceType = targetServiceType;

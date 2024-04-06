@@ -6,18 +6,51 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Request property. </summary>
     public partial class QuotaSubRequestDetail
     {
-        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="QuotaSubRequestDetail"/>. </summary>
         internal QuotaSubRequestDetail()
         {
         }
 
-        /// <summary> Initializes a new instance of QuotaSubRequestDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaSubRequestDetail"/>. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="resourceTypeName"> Resource type for which the quota properties were requested. </param>
         /// <param name="unit"> Quota limit units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
@@ -29,7 +62,8 @@ namespace Azure.ResourceManager.Quota.Models
         /// Please note <see cref="QuotaLimitJsonObject"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="QuotaLimitObject"/>.
         /// </param>
-        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceTypeName, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal QuotaSubRequestDetail(QuotaRequestResourceName name, string resourceTypeName, string unit, QuotaRequestState? provisioningState, string message, Guid? subRequestId, QuotaLimitJsonObject limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ResourceTypeName = resourceTypeName;
@@ -38,6 +72,7 @@ namespace Azure.ResourceManager.Quota.Models
             Message = message;
             SubRequestId = subRequestId;
             Limit = limit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource name. </summary>

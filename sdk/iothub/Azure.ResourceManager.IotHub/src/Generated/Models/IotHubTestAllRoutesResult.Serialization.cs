@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class IotHubTestAllRoutesResult
+    public partial class IotHubTestAllRoutesResult : IUtf8JsonSerializable, IJsonModel<IotHubTestAllRoutesResult>
     {
-        internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IotHubTestAllRoutesResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IotHubTestAllRoutesResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestAllRoutesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubTestAllRoutesResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Routes))
+            {
+                writer.WritePropertyName("routes"u8);
+                writer.WriteStartArray();
+                foreach (var item in Routes)
+                {
+                    writer.WriteObjectValue<IotHubMatchedRoute>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IotHubTestAllRoutesResult IJsonModel<IotHubTestAllRoutesResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestAllRoutesResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IotHubTestAllRoutesResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIotHubTestAllRoutesResult(document.RootElement, options);
+        }
+
+        internal static IotHubTestAllRoutesResult DeserializeIotHubTestAllRoutesResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<IotHubMatchedRoute>> routes = default;
+            IReadOnlyList<IotHubMatchedRoute> routes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("routes"u8))
@@ -31,13 +88,49 @@ namespace Azure.ResourceManager.IotHub.Models
                     List<IotHubMatchedRoute> array = new List<IotHubMatchedRoute>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item));
+                        array.Add(IotHubMatchedRoute.DeserializeIotHubMatchedRoute(item, options));
                     }
                     routes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IotHubTestAllRoutesResult(Optional.ToList(routes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IotHubTestAllRoutesResult(routes ?? new ChangeTrackingList<IotHubMatchedRoute>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IotHubTestAllRoutesResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestAllRoutesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IotHubTestAllRoutesResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IotHubTestAllRoutesResult IPersistableModel<IotHubTestAllRoutesResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IotHubTestAllRoutesResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIotHubTestAllRoutesResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IotHubTestAllRoutesResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IotHubTestAllRoutesResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

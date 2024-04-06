@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable
+    public partial class BackupInstancePolicySettings : IUtf8JsonSerializable, IJsonModel<BackupInstancePolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupInstancePolicySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupInstancePolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(DataStoreParametersList))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in DataStoreParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataStoreSettings>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -32,21 +42,52 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupDataSourceParametersList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupDataSourceSettings>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element)
+        BackupInstancePolicySettings IJsonModel<BackupInstancePolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupInstancePolicySettings(document.RootElement, options);
+        }
+
+        internal static BackupInstancePolicySettings DeserializeBackupInstancePolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<DataStoreSettings>> dataStoreParametersList = default;
-            Optional<IList<BackupDataSourceSettings>> backupDatasourceParametersList = default;
+            IList<DataStoreSettings> dataStoreParametersList = default;
+            IList<BackupDataSourceSettings> backupDatasourceParametersList = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dataStoreParametersList"u8))
@@ -58,7 +99,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<DataStoreSettings> array = new List<DataStoreSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item));
+                        array.Add(DataStoreSettings.DeserializeDataStoreSettings(item, options));
                     }
                     dataStoreParametersList = array;
                     continue;
@@ -72,13 +113,49 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<BackupDataSourceSettings> array = new List<BackupDataSourceSettings>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item));
+                        array.Add(BackupDataSourceSettings.DeserializeBackupDataSourceSettings(item, options));
                     }
                     backupDatasourceParametersList = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupInstancePolicySettings(Optional.ToList(dataStoreParametersList), Optional.ToList(backupDatasourceParametersList));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupInstancePolicySettings(dataStoreParametersList ?? new ChangeTrackingList<DataStoreSettings>(), backupDatasourceParametersList ?? new ChangeTrackingList<BackupDataSourceSettings>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupInstancePolicySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupInstancePolicySettings IPersistableModel<BackupInstancePolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupInstancePolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupInstancePolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupInstancePolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupInstancePolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

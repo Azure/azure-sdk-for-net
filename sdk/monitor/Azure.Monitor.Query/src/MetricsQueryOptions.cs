@@ -9,7 +9,7 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query
 {
     /// <summary>
-    /// Options for <see cref="MetricsQueryClient.QueryResourceAsync"/>.
+    /// Options for the <see cref="MetricsQueryClient.QueryResourceAsync"/> and <see cref="MetricsQueryClient.QueryResource"/> methods.
     /// </summary>
     public class MetricsQueryOptions
     {
@@ -68,7 +68,7 @@ namespace Azure.Monitor.Query
         public string OrderBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the metric namespace to query.
+        /// Gets or sets the metric namespace to query. For a list of valid namespaces by Azure resource, see <see href="https://aka.ms/metrics-by-resource-provider">Metrics by resource provider</see>.
         /// </summary>
         public string MetricNamespace { get; set; }
     }

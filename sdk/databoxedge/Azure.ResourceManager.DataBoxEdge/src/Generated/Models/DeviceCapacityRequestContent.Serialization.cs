@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DeviceCapacityRequestContent : IUtf8JsonSerializable
+    public partial class DeviceCapacityRequestContent : IUtf8JsonSerializable, IJsonModel<DeviceCapacityRequestContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceCapacityRequestContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DeviceCapacityRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -40,12 +51,141 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in VmPlacementResults)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmPlacementRequestResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DeviceCapacityRequestContent IJsonModel<DeviceCapacityRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDeviceCapacityRequestContent(document.RootElement, options);
+        }
+
+        internal static DeviceCapacityRequestContent DeserializeDeviceCapacityRequestContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<IList<string>> vmPlacementQuery = default;
+            IList<VmPlacementRequestResult> vmPlacementResults = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("vmPlacementQuery"u8))
+                        {
+                            List<IList<string>> array = new List<IList<string>>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                if (item.ValueKind == JsonValueKind.Null)
+                                {
+                                    array.Add(null);
+                                }
+                                else
+                                {
+                                    List<string> array0 = new List<string>();
+                                    foreach (var item0 in item.EnumerateArray())
+                                    {
+                                        array0.Add(item0.GetString());
+                                    }
+                                    array.Add(array0);
+                                }
+                            }
+                            vmPlacementQuery = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("vmPlacementResults"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<VmPlacementRequestResult> array = new List<VmPlacementRequestResult>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(VmPlacementRequestResult.DeserializeVmPlacementRequestResult(item, options));
+                            }
+                            vmPlacementResults = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DeviceCapacityRequestContent(vmPlacementQuery, vmPlacementResults ?? new ChangeTrackingList<VmPlacementRequestResult>(), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DeviceCapacityRequestContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DeviceCapacityRequestContent IPersistableModel<DeviceCapacityRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceCapacityRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDeviceCapacityRequestContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DeviceCapacityRequestContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DeviceCapacityRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

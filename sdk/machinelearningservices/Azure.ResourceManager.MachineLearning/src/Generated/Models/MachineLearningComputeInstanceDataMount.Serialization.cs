@@ -6,28 +6,120 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningComputeInstanceDataMount
+    public partial class MachineLearningComputeInstanceDataMount : IUtf8JsonSerializable, IJsonModel<MachineLearningComputeInstanceDataMount>
     {
-        internal static MachineLearningComputeInstanceDataMount DeserializeMachineLearningComputeInstanceDataMount(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningComputeInstanceDataMount>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningComputeInstanceDataMount>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
+            if (Optional.IsDefined(MountName))
+            {
+                writer.WritePropertyName("mountName"u8);
+                writer.WriteStringValue(MountName);
+            }
+            if (Optional.IsDefined(MountAction))
+            {
+                writer.WritePropertyName("mountAction"u8);
+                writer.WriteStringValue(MountAction.Value.ToString());
+            }
+            if (Optional.IsDefined(CreatedBy))
+            {
+                writer.WritePropertyName("createdBy"u8);
+                writer.WriteStringValue(CreatedBy);
+            }
+            if (Optional.IsDefined(MountPath))
+            {
+                writer.WritePropertyName("mountPath"u8);
+                writer.WriteStringValue(MountPath);
+            }
+            if (Optional.IsDefined(MountState))
+            {
+                writer.WritePropertyName("mountState"u8);
+                writer.WriteStringValue(MountState.Value.ToString());
+            }
+            if (Optional.IsDefined(MountedOn))
+            {
+                writer.WritePropertyName("mountedOn"u8);
+                writer.WriteStringValue(MountedOn.Value, "O");
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteStringValue(Error);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningComputeInstanceDataMount IJsonModel<MachineLearningComputeInstanceDataMount>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningComputeInstanceDataMount(document.RootElement, options);
+        }
+
+        internal static MachineLearningComputeInstanceDataMount DeserializeMachineLearningComputeInstanceDataMount(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<MachineLearningSourceType> sourceType = default;
-            Optional<string> mountName = default;
-            Optional<MachineLearningMountAction> mountAction = default;
-            Optional<string> createdBy = default;
-            Optional<string> mountPath = default;
-            Optional<MachineLearningMountState> mountState = default;
-            Optional<DateTimeOffset> mountedOn = default;
-            Optional<string> error = default;
+            string source = default;
+            MachineLearningSourceType? sourceType = default;
+            string mountName = default;
+            MachineLearningMountAction? mountAction = default;
+            string createdBy = default;
+            string mountPath = default;
+            MachineLearningMountState? mountState = default;
+            DateTimeOffset? mountedOn = default;
+            string error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -91,8 +183,54 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     error = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningComputeInstanceDataMount(source.Value, Optional.ToNullable(sourceType), mountName.Value, Optional.ToNullable(mountAction), createdBy.Value, mountPath.Value, Optional.ToNullable(mountState), Optional.ToNullable(mountedOn), error.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningComputeInstanceDataMount(
+                source,
+                sourceType,
+                mountName,
+                mountAction,
+                createdBy,
+                mountPath,
+                mountState,
+                mountedOn,
+                error,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningComputeInstanceDataMount>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningComputeInstanceDataMount IPersistableModel<MachineLearningComputeInstanceDataMount>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningComputeInstanceDataMount>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningComputeInstanceDataMount(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningComputeInstanceDataMount)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningComputeInstanceDataMount>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

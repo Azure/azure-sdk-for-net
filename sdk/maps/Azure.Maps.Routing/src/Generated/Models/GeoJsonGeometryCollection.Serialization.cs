@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,12 +20,20 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GeoJsonGeometry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GeoJsonGeometryCollection>(this);
+            return content;
         }
     }
 }

@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchAccountAutoStorageConfiguration : IUtf8JsonSerializable
+    public partial class BatchAccountAutoStorageConfiguration : IUtf8JsonSerializable, IJsonModel<BatchAccountAutoStorageConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchAccountAutoStorageConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchAccountAutoStorageConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("lastKeySync"u8);
             writer.WriteStringValue(LastKeySyncedOn, "O");
@@ -28,21 +38,52 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NodeIdentity))
             {
                 writer.WritePropertyName("nodeIdentityReference"u8);
-                writer.WriteObjectValue(NodeIdentity);
+                writer.WriteObjectValue<ComputeNodeIdentityReference>(NodeIdentity, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element)
+        BatchAccountAutoStorageConfiguration IJsonModel<BatchAccountAutoStorageConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchAccountAutoStorageConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchAccountAutoStorageConfiguration DeserializeBatchAccountAutoStorageConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DateTimeOffset lastKeySync = default;
             ResourceIdentifier storageAccountId = default;
-            Optional<BatchAutoStorageAuthenticationMode> authenticationMode = default;
-            Optional<ComputeNodeIdentityReference> nodeIdentityReference = default;
+            BatchAutoStorageAuthenticationMode? authenticationMode = default;
+            ComputeNodeIdentityReference nodeIdentityReference = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastKeySync"u8))
@@ -70,11 +111,47 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value);
+                    nodeIdentityReference = ComputeNodeIdentityReference.DeserializeComputeNodeIdentityReference(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchAccountAutoStorageConfiguration(storageAccountId, Optional.ToNullable(authenticationMode), nodeIdentityReference.Value, lastKeySync);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchAccountAutoStorageConfiguration(storageAccountId, authenticationMode, nodeIdentityReference, serializedAdditionalRawData, lastKeySync);
         }
+
+        BinaryData IPersistableModel<BatchAccountAutoStorageConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchAccountAutoStorageConfiguration IPersistableModel<BatchAccountAutoStorageConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoStorageConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchAccountAutoStorageConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchAccountAutoStorageConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchAccountAutoStorageConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

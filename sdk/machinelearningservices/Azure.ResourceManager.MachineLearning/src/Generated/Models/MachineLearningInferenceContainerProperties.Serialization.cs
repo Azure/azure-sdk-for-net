@@ -5,43 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable
+    public partial class MachineLearningInferenceContainerProperties : IUtf8JsonSerializable, IJsonModel<MachineLearningInferenceContainerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningInferenceContainerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningInferenceContainerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LivenessRoute))
             {
                 writer.WritePropertyName("livenessRoute"u8);
-                writer.WriteObjectValue(LivenessRoute);
+                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(LivenessRoute, options);
             }
             if (Optional.IsDefined(ReadinessRoute))
             {
                 writer.WritePropertyName("readinessRoute"u8);
-                writer.WriteObjectValue(ReadinessRoute);
+                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ReadinessRoute, options);
             }
             if (Optional.IsDefined(ScoringRoute))
             {
                 writer.WritePropertyName("scoringRoute"u8);
-                writer.WriteObjectValue(ScoringRoute);
+                writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ScoringRoute, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element)
+        MachineLearningInferenceContainerProperties IJsonModel<MachineLearningInferenceContainerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningInferenceContainerProperties(document.RootElement, options);
+        }
+
+        internal static MachineLearningInferenceContainerProperties DeserializeMachineLearningInferenceContainerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<MachineLearningInferenceContainerRoute> livenessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> readinessRoute = default;
-            Optional<MachineLearningInferenceContainerRoute> scoringRoute = default;
+            MachineLearningInferenceContainerRoute livenessRoute = default;
+            MachineLearningInferenceContainerRoute readinessRoute = default;
+            MachineLearningInferenceContainerRoute scoringRoute = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("livenessRoute"u8))
@@ -50,7 +92,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    livenessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessRoute"u8))
@@ -59,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    readinessRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scoringRoute"u8))
@@ -68,11 +110,47 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value);
+                    scoringRoute = MachineLearningInferenceContainerRoute.DeserializeMachineLearningInferenceContainerRoute(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningInferenceContainerProperties(livenessRoute.Value, readinessRoute.Value, scoringRoute.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningInferenceContainerProperties(livenessRoute, readinessRoute, scoringRoute, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningInferenceContainerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningInferenceContainerProperties IPersistableModel<MachineLearningInferenceContainerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInferenceContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningInferenceContainerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningInferenceContainerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningInferenceContainerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

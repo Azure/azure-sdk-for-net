@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,22 +14,102 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.PolicyInsights.Models
 {
-    public partial class ComponentEventDetails
+    public partial class ComponentEventDetails : IUtf8JsonSerializable, IJsonModel<ComponentEventDetails>
     {
-        internal static ComponentEventDetails DeserializeComponentEventDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComponentEventDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComponentEventDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Timestamp))
+            {
+                writer.WritePropertyName("timestamp"u8);
+                writer.WriteStringValue(Timestamp.Value, "O");
+            }
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(PrincipalOid))
+            {
+                writer.WritePropertyName("principalOid"u8);
+                writer.WriteStringValue(PrincipalOid);
+            }
+            if (Optional.IsDefined(PolicyDefinitionAction))
+            {
+                writer.WritePropertyName("policyDefinitionAction"u8);
+                writer.WriteStringValue(PolicyDefinitionAction);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            foreach (var item in AdditionalProperties)
+            {
+                writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            writer.WriteEndObject();
+        }
+
+        ComponentEventDetails IJsonModel<ComponentEventDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComponentEventDetails(document.RootElement, options);
+        }
+
+        internal static ComponentEventDetails DeserializeComponentEventDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> principalOid = default;
-            Optional<string> policyDefinitionAction = default;
+            DateTimeOffset? timestamp = default;
+            Guid? tenantId = default;
+            string principalOid = default;
+            string policyDefinitionAction = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +169,47 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ComponentEventDetails(id, name, type, systemData.Value, Optional.ToNullable(timestamp), Optional.ToNullable(tenantId), principalOid.Value, policyDefinitionAction.Value, additionalProperties);
+            return new ComponentEventDetails(
+                id,
+                name,
+                type,
+                systemData,
+                timestamp,
+                tenantId,
+                principalOid,
+                policyDefinitionAction,
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<ComponentEventDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComponentEventDetails IPersistableModel<ComponentEventDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComponentEventDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComponentEventDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComponentEventDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComponentEventDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

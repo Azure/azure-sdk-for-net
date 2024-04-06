@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The azure blob storage linked service. </summary>
     public partial class AzureBlobStorageLinkedService : LinkedService
     {
-        /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
         public AzureBlobStorageLinkedService()
         {
             Type = "AzureBlobStorage";
         }
 
-        /// <summary> Initializes a new instance of AzureBlobStorageLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureBlobStorageLinkedService"/>. </summary>
         /// <param name="type"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>

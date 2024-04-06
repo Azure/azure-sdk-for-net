@@ -11,11 +11,13 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource> GetAll(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource> GetAllAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>> GetAsync(string federatedIdentityCredentialResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource> GetIfExists(string federatedIdentityCredentialResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>> GetIfExistsAsync(string federatedIdentityCredentialResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class FederatedIdentityCredentialData : Azure.ResourceManager.Models.ResourceData
+    public partial class FederatedIdentityCredentialData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>
     {
         public FederatedIdentityCredentialData() { }
         public System.Collections.Generic.IList<string> Audiences { get { throw null; } }
@@ -23,6 +25,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public string Issuer { get { throw null; } set { } }
         public System.Uri IssuerUri { get { throw null; } set { } }
         public string Subject { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class FederatedIdentityCredentialResource : Azure.ResourceManager.ArmResource
     {
@@ -51,13 +58,18 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource GetUserAssignedIdentityResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class SystemAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SystemAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>
     {
-        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SystemAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Uri ClientSecretUri { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SystemAssignedIdentityResource : Azure.ResourceManager.ArmResource
     {
@@ -98,16 +110,23 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class UserAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class UserAssignedIdentityData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>
     {
-        public UserAssignedIdentityData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityData(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class UserAssignedIdentityResource : Azure.ResourceManager.ArmResource
     {
@@ -139,6 +158,35 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> UpdateAsync(Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedServiceIdentities.Mocking
+{
+    public partial class MockableManagedServiceIdentitiesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesArmClient() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.FederatedIdentityCredentialResource GetFederatedIdentityCredentialResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity(Azure.Core.ResourceIdentifier scope) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource GetUserAssignedIdentityResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesArmResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesArmResource() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.SystemAssignedIdentityResource GetSystemAssignedIdentity() { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesResourceGroupResource() { }
+        public virtual Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityCollection GetUserAssignedIdentities() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentity(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource>> GetUserAssignedIdentityAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableManagedServiceIdentitiesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedServiceIdentitiesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentities(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityResource> GetUserAssignedIdentitiesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedServiceIdentities.Models
 {
     public static partial class ArmManagedServiceIdentitiesModelFactory
@@ -155,11 +203,16 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Models
         public string SubscriptionDisplayName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
     }
-    public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class UserAssignedIdentityPatch : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>
     {
-        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public UserAssignedIdentityPatch(Azure.Core.AzureLocation location) { }
         public System.Guid? ClientId { get { throw null; } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedServiceIdentities.Models.UserAssignedIdentityPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

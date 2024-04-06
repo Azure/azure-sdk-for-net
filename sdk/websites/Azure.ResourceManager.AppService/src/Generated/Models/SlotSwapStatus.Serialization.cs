@@ -6,22 +6,85 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class SlotSwapStatus
+    public partial class SlotSwapStatus : IUtf8JsonSerializable, IJsonModel<SlotSwapStatus>
     {
-        internal static SlotSwapStatus DeserializeSlotSwapStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SlotSwapStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SlotSwapStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(TimestampUtc))
+            {
+                writer.WritePropertyName("timestampUtc"u8);
+                writer.WriteStringValue(TimestampUtc.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SourceSlotName))
+            {
+                writer.WritePropertyName("sourceSlotName"u8);
+                writer.WriteStringValue(SourceSlotName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DestinationSlotName))
+            {
+                writer.WritePropertyName("destinationSlotName"u8);
+                writer.WriteStringValue(DestinationSlotName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SlotSwapStatus IJsonModel<SlotSwapStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSlotSwapStatus(document.RootElement, options);
+        }
+
+        internal static SlotSwapStatus DeserializeSlotSwapStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestampUtc = default;
-            Optional<string> sourceSlotName = default;
-            Optional<string> destinationSlotName = default;
+            DateTimeOffset? timestampUtc = default;
+            string sourceSlotName = default;
+            string destinationSlotName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestampUtc"u8))
@@ -43,8 +106,120 @@ namespace Azure.ResourceManager.AppService.Models
                     destinationSlotName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SlotSwapStatus(Optional.ToNullable(timestampUtc), sourceSlotName.Value, destinationSlotName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimestampUtc), out propertyOverride);
+            if (Optional.IsDefined(TimestampUtc) || hasPropertyOverride)
+            {
+                builder.Append("  timestampUtc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(TimestampUtc.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceSlotName), out propertyOverride);
+            if (Optional.IsDefined(SourceSlotName) || hasPropertyOverride)
+            {
+                builder.Append("  sourceSlotName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceSlotName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceSlotName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceSlotName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DestinationSlotName), out propertyOverride);
+            if (Optional.IsDefined(DestinationSlotName) || hasPropertyOverride)
+            {
+                builder.Append("  destinationSlotName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DestinationSlotName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DestinationSlotName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DestinationSlotName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SlotSwapStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SlotSwapStatus IPersistableModel<SlotSwapStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SlotSwapStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSlotSwapStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SlotSwapStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SlotSwapStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

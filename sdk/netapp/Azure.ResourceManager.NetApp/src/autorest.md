@@ -8,12 +8,20 @@ azure-arm: true
 csharp: true
 library-name: NetApp
 namespace: Azure.ResourceManager.NetApp
-require: https://github.com/Azure/azure-rest-api-specs/blob/f14f1d17370ed1d56f06d8933f434832b3f0a618/specification/netapp/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/ac74f8d5cf37351c5b26ecf2df17128d0408bd8e/specification/netapp/resource-manager/readme.md
+tag: package-netapp-2023-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -22,7 +30,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -51,6 +59,7 @@ rename-rules:
 request-path-to-resource-name:
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/accountBackups/{backupName}: NetAppAccountBackup
   /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/capacityPools/{poolName}/volumes/{volumeName}/backups/{backupName}: NetAppVolumeBackup
+  /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/backupVaults/{backupVaultName}/backups/{backupName}: NetAppBackupVaultBackup
 
 override-operation-name:
   NetAppResource_CheckFilePathAvailability: CheckNetAppFilePathAvailability
@@ -92,13 +101,14 @@ prepend-rp-prefix:
   - KeyVaultStatus
   - RegionInfo
   - EncryptionIdentity
+  - BackupVault
 
 rename-mapping:
   CapacityPool.properties.poolId: -|uuid
   FilePathAvailabilityRequest.subnetId: -|arm-id
   MountTargetProperties.mountTargetId: -|uuid
   MountTargetProperties.fileSystemId: -|uuid
-  MountTargetProperties.ipAddress: -|ip-address  
+  MountTargetProperties.ipAddress: -|ip-address
   ActiveDirectory.kdcIP: -|ip-address
   ReplicationSchedule._10minutely: TenMinutely
   EndpointType.src: Source
@@ -167,6 +177,7 @@ rename-mapping:
   VolumeBackupProperties.backupPolicyId: -|arm-id
   VolumeBackupProperties.policyEnforced: IsPolicyEnforced
   VolumeBackupProperties.vaultId: -|arm-id
+  VolumeBackupProperties.backupVaultId: -|arm-id
   VolumeBackupProperties.backupEnabled: IsBackupEnabled
   VolumeGroupDetails: NetAppVolumeGroup
   QosType: CapacityPoolQosType
@@ -219,16 +230,24 @@ rename-mapping:
   VolumeRelocationProperties.readyToBeFinalized: IsReadyToBeFinalized
   VolumeRelocationProperties.relocationRequested: IsRelocationRequested
   BreakFileLocksRequest.clientIp: -|ip-address
-  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent  
+  BreakFileLocksRequest: NetAppVolumeBreakFileLocksContent
   BackupRestoreFiles.destinationVolumeId: -|arm-id
-  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent
+  BackupRestoreFiles: NetAppVolumeBackupBackupRestoreFilesContent  
   VolumeRelocationProperties: NetAppVolumeRelocationProperties
   FileAccessLogs: NetAppFileAccessLog
   GetGroupIdListForLdapUserResponse: GetGroupIdListForLdapUserResult
+  BackupsMigrationRequest: BackupsMigrationContent
+  Backup.properties.volumeResourceId: -|arm-id
+
+
+models-to-treat-empty-string-as-null:
+- VolumeSnapshotProperties
+
 list-exception:
   - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.NetApp/netAppAccounts/{accountName}/volumeGroups/{volumeGroupName}
 
 directive:
   # remove this operation because the Snapshots_Update defines an empty object
   - remove-operation: Snapshots_Update
+
 ```

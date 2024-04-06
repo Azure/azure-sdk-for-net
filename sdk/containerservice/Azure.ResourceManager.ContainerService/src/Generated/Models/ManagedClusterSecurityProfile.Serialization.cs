@@ -6,67 +6,90 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterSecurityProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterSecurityProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterSecurityProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterSecurityProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Defender))
             {
                 writer.WritePropertyName("defender"u8);
-                writer.WriteObjectValue(Defender);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileDefender>(Defender, options);
             }
             if (Optional.IsDefined(AzureKeyVaultKms))
             {
                 writer.WritePropertyName("azureKeyVaultKms"u8);
-                writer.WriteObjectValue(AzureKeyVaultKms);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileKeyVaultKms>(AzureKeyVaultKms, options);
             }
             if (Optional.IsDefined(WorkloadIdentity))
             {
                 writer.WritePropertyName("workloadIdentity"u8);
-                writer.WriteObjectValue(WorkloadIdentity);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileWorkloadIdentity>(WorkloadIdentity, options);
             }
             if (Optional.IsDefined(ImageCleaner))
             {
                 writer.WritePropertyName("imageCleaner"u8);
-                writer.WriteObjectValue(ImageCleaner);
+                writer.WriteObjectValue<ManagedClusterSecurityProfileImageCleaner>(ImageCleaner, options);
             }
-            if (Optional.IsDefined(NodeRestriction))
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
-                writer.WritePropertyName("nodeRestriction"u8);
-                writer.WriteObjectValue(NodeRestriction);
-            }
-            if (Optional.IsCollectionDefined(CustomCATrustCertificates))
-            {
-                writer.WritePropertyName("customCATrustCertificates"u8);
-                writer.WriteStartArray();
-                foreach (var item in CustomCATrustCertificates)
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    writer.WriteBase64StringValue(item, "D");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
-                writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element)
+        ManagedClusterSecurityProfile IJsonModel<ManagedClusterSecurityProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterSecurityProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterSecurityProfile DeserializeManagedClusterSecurityProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedClusterSecurityProfileDefender> defender = default;
-            Optional<ManagedClusterSecurityProfileKeyVaultKms> azureKeyVaultKms = default;
-            Optional<ManagedClusterSecurityProfileWorkloadIdentity> workloadIdentity = default;
-            Optional<ManagedClusterSecurityProfileImageCleaner> imageCleaner = default;
-            Optional<ManagedClusterSecurityProfileNodeRestriction> nodeRestriction = default;
-            Optional<IList<byte[]>> customCATrustCertificates = default;
+            ManagedClusterSecurityProfileDefender defender = default;
+            ManagedClusterSecurityProfileKeyVaultKms azureKeyVaultKms = default;
+            ManagedClusterSecurityProfileWorkloadIdentity workloadIdentity = default;
+            ManagedClusterSecurityProfileImageCleaner imageCleaner = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defender"u8))
@@ -75,7 +98,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value);
+                    defender = ManagedClusterSecurityProfileDefender.DeserializeManagedClusterSecurityProfileDefender(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("azureKeyVaultKms"u8))
@@ -84,7 +107,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value);
+                    azureKeyVaultKms = ManagedClusterSecurityProfileKeyVaultKms.DeserializeManagedClusterSecurityProfileKeyVaultKms(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("workloadIdentity"u8))
@@ -93,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value);
+                    workloadIdentity = ManagedClusterSecurityProfileWorkloadIdentity.DeserializeManagedClusterSecurityProfileWorkloadIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("imageCleaner"u8))
@@ -102,34 +125,47 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value);
+                    imageCleaner = ManagedClusterSecurityProfileImageCleaner.DeserializeManagedClusterSecurityProfileImageCleaner(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodeRestriction"u8))
+                if (options.Format != "W")
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    nodeRestriction = ManagedClusterSecurityProfileNodeRestriction.DeserializeManagedClusterSecurityProfileNodeRestriction(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("customCATrustCertificates"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<byte[]> array = new List<byte[]>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetBytesFromBase64("D"));
-                    }
-                    customCATrustCertificates = array;
-                    continue;
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterSecurityProfile(defender.Value, azureKeyVaultKms.Value, workloadIdentity.Value, imageCleaner.Value, nodeRestriction.Value, Optional.ToList(customCATrustCertificates));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterSecurityProfile(defender, azureKeyVaultKms, workloadIdentity, imageCleaner, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedClusterSecurityProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterSecurityProfile IPersistableModel<ManagedClusterSecurityProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterSecurityProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterSecurityProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

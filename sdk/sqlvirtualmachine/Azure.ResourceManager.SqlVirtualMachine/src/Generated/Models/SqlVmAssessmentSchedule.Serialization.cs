@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAssessmentSchedule : IUtf8JsonSerializable
+    public partial class SqlVmAssessmentSchedule : IUtf8JsonSerializable, IJsonModel<SqlVmAssessmentSchedule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmAssessmentSchedule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlVmAssessmentSchedule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -40,20 +51,51 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element)
+        SqlVmAssessmentSchedule IJsonModel<SqlVmAssessmentSchedule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAssessmentSchedule(document.RootElement, options);
+        }
+
+        internal static SqlVmAssessmentSchedule DeserializeSqlVmAssessmentSchedule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<int> weeklyInterval = default;
-            Optional<int> monthlyOccurrence = default;
-            Optional<SqlVmAssessmentDayOfWeek> dayOfWeek = default;
-            Optional<string> startTime = default;
+            bool? enable = default;
+            int? weeklyInterval = default;
+            int? monthlyOccurrence = default;
+            SqlVmAssessmentDayOfWeek? dayOfWeek = default;
+            string startTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -97,8 +139,50 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     startTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmAssessmentSchedule(Optional.ToNullable(enable), Optional.ToNullable(weeklyInterval), Optional.ToNullable(monthlyOccurrence), Optional.ToNullable(dayOfWeek), startTime.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlVmAssessmentSchedule(
+                enable,
+                weeklyInterval,
+                monthlyOccurrence,
+                dayOfWeek,
+                startTime,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlVmAssessmentSchedule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlVmAssessmentSchedule IPersistableModel<SqlVmAssessmentSchedule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlVmAssessmentSchedule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlVmAssessmentSchedule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

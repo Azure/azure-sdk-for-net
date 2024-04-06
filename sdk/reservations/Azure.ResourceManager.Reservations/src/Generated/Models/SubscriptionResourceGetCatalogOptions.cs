@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Reservations.Models
     /// <summary> The SubscriptionResourceGetCatalogOptions. </summary>
     public partial class SubscriptionResourceGetCatalogOptions
     {
-        /// <summary> Initializes a new instance of SubscriptionResourceGetCatalogOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SubscriptionResourceGetCatalogOptions"/>. </summary>
         public SubscriptionResourceGetCatalogOptions()
         {
         }

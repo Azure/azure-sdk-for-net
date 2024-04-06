@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
     /// <summary> Get Operation response object. </summary>
     public partial class DocumentClassifierBuildOperationDetails : OperationDetails
     {
-        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
@@ -30,7 +29,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             Kind = DocumentOperationKind.DocumentClassifierBuild;
         }
 
-        /// <summary> Initializes a new instance of DocumentClassifierBuildOperationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DocumentClassifierBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>

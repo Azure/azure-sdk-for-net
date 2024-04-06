@@ -87,8 +87,6 @@ steps:
     - ${{ if ne(parameters.DocValidationImageId, '') }}:
       - template: /eng/common/pipelines/templates/steps/docker-pull-image.yml
         parameters:
-          ContainerRegistryClientId: $(azuresdkimages-cr-clientid)
-          ContainerRegistryClientSecret: $(azuresdkimages-cr-clientsecret)
           ImageId: '${{ parameters.DocValidationImageId }}'
     - pwsh: |
         $packageInfoJson = '${{ convertToJson(parameters.PackageInfoLocations) }}'.Trim('"').Replace("\\", "/")
@@ -100,10 +98,7 @@ steps:
           -Language '${{parameters.Language}}' `
           -RepoId '${{ parameters.RepoId }}' `
           -DocValidationImageId '${{ parameters.DocValidationImageId }}' `
-          -PackageSourceOverride '${{ parameters.PackageSourceOverride }}' `
-          -TenantId '$(opensource-aad-tenant-id)' `
-          -ClientId '$(opensource-aad-app-id)' `
-          -ClientSecret '$(opensource-aad-secret)'
+          -PackageSourceOverride '${{ parameters.PackageSourceOverride }}'
       displayName: Apply Documentation Updates
 
     - template: /eng/common/pipelines/templates/steps/git-push-changes.yml

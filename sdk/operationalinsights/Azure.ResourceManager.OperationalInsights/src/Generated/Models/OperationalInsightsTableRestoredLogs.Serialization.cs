@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsTableRestoredLogs : IUtf8JsonSerializable
+    public partial class OperationalInsightsTableRestoredLogs : IUtf8JsonSerializable, IJsonModel<OperationalInsightsTableRestoredLogs>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsTableRestoredLogs>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsTableRestoredLogs>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(StartRestoreOn))
             {
@@ -31,19 +42,55 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("sourceTable"u8);
                 writer.WriteStringValue(SourceTable);
             }
+            if (options.Format != "W" && Optional.IsDefined(AzureAsyncOperationId))
+            {
+                writer.WritePropertyName("azureAsyncOperationId"u8);
+                writer.WriteStringValue(AzureAsyncOperationId.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsTableRestoredLogs DeserializeOperationalInsightsTableRestoredLogs(JsonElement element)
+        OperationalInsightsTableRestoredLogs IJsonModel<OperationalInsightsTableRestoredLogs>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsTableRestoredLogs(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsTableRestoredLogs DeserializeOperationalInsightsTableRestoredLogs(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> startRestoreTime = default;
-            Optional<DateTimeOffset> endRestoreTime = default;
-            Optional<string> sourceTable = default;
-            Optional<Guid> azureAsyncOperationId = default;
+            DateTimeOffset? startRestoreTime = default;
+            DateTimeOffset? endRestoreTime = default;
+            string sourceTable = default;
+            Guid? azureAsyncOperationId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("startRestoreTime"u8))
@@ -78,8 +125,127 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     azureAsyncOperationId = property.Value.GetGuid();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsTableRestoredLogs(Optional.ToNullable(startRestoreTime), Optional.ToNullable(endRestoreTime), sourceTable.Value, Optional.ToNullable(azureAsyncOperationId));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalInsightsTableRestoredLogs(startRestoreTime, endRestoreTime, sourceTable, azureAsyncOperationId, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartRestoreOn), out propertyOverride);
+            if (Optional.IsDefined(StartRestoreOn) || hasPropertyOverride)
+            {
+                builder.Append("  startRestoreTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(StartRestoreOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndRestoreOn), out propertyOverride);
+            if (Optional.IsDefined(EndRestoreOn) || hasPropertyOverride)
+            {
+                builder.Append("  endRestoreTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndRestoreOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceTable), out propertyOverride);
+            if (Optional.IsDefined(SourceTable) || hasPropertyOverride)
+            {
+                builder.Append("  sourceTable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceTable.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceTable}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceTable}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureAsyncOperationId), out propertyOverride);
+            if (Optional.IsDefined(AzureAsyncOperationId) || hasPropertyOverride)
+            {
+                builder.Append("  azureAsyncOperationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AzureAsyncOperationId.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsTableRestoredLogs>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsTableRestoredLogs IPersistableModel<OperationalInsightsTableRestoredLogs>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsTableRestoredLogs>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsTableRestoredLogs(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsTableRestoredLogs)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsTableRestoredLogs>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

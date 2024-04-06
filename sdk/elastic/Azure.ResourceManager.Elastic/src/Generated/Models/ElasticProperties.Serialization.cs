@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
-    public partial class ElasticProperties : IUtf8JsonSerializable
+    public partial class ElasticProperties : IUtf8JsonSerializable, IJsonModel<ElasticProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ElasticProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ElasticProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ElasticCloudUser))
             {
                 writer.WritePropertyName("elasticCloudUser"u8);
-                writer.WriteObjectValue(ElasticCloudUser);
+                writer.WriteObjectValue<ElasticCloudUser>(ElasticCloudUser, options);
             }
             if (Optional.IsDefined(ElasticCloudDeployment))
             {
                 writer.WritePropertyName("elasticCloudDeployment"u8);
-                writer.WriteObjectValue(ElasticCloudDeployment);
+                writer.WriteObjectValue<ElasticCloudDeployment>(ElasticCloudDeployment, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ElasticProperties DeserializeElasticProperties(JsonElement element)
+        ElasticProperties IJsonModel<ElasticProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ElasticProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeElasticProperties(document.RootElement, options);
+        }
+
+        internal static ElasticProperties DeserializeElasticProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ElasticCloudUser> elasticCloudUser = default;
-            Optional<ElasticCloudDeployment> elasticCloudDeployment = default;
+            ElasticCloudUser elasticCloudUser = default;
+            ElasticCloudDeployment elasticCloudDeployment = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("elasticCloudUser"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value);
+                    elasticCloudUser = ElasticCloudUser.DeserializeElasticCloudUser(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("elasticCloudDeployment"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value);
+                    elasticCloudDeployment = ElasticCloudDeployment.DeserializeElasticCloudDeployment(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ElasticProperties(elasticCloudUser.Value, elasticCloudDeployment.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ElasticProperties(elasticCloudUser, elasticCloudDeployment, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ElasticProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ElasticProperties IPersistableModel<ElasticProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ElasticProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeElasticProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ElasticProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ElasticProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

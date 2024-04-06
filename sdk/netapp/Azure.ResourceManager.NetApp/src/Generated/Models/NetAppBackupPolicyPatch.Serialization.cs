@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    public partial class NetAppBackupPolicyPatch : IUtf8JsonSerializable
+    public partial class NetAppBackupPolicyPatch : IUtf8JsonSerializable, IJsonModel<NetAppBackupPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetAppBackupPolicyPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetAppBackupPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -28,8 +40,38 @@ namespace Azure.ResourceManager.NetApp.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BackupPolicyId))
+            {
+                writer.WritePropertyName("backupPolicyId"u8);
+                writer.WriteStringValue(BackupPolicyId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsDefined(DailyBackupsToKeep))
             {
                 writer.WritePropertyName("dailyBackupsToKeep"u8);
@@ -45,13 +87,264 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("monthlyBackupsToKeep"u8);
                 writer.WriteNumberValue(MonthlyBackupsToKeep.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(VolumesAssigned))
+            {
+                writer.WritePropertyName("volumesAssigned"u8);
+                writer.WriteNumberValue(VolumesAssigned.Value);
+            }
             if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VolumeBackups))
+            {
+                writer.WritePropertyName("volumeBackups"u8);
+                writer.WriteStartArray();
+                foreach (var item in VolumeBackups)
+                {
+                    writer.WriteObjectValue<NetAppVolumeBackupDetail>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        NetAppBackupPolicyPatch IJsonModel<NetAppBackupPolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetAppBackupPolicyPatch(document.RootElement, options);
+        }
+
+        internal static NetAppBackupPolicyPatch DeserializeNetAppBackupPolicyPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType type = default;
+            SystemData systemData = default;
+            ResourceIdentifier backupPolicyId = default;
+            string provisioningState = default;
+            int? dailyBackupsToKeep = default;
+            int? weeklyBackupsToKeep = default;
+            int? monthlyBackupsToKeep = default;
+            int? volumesAssigned = default;
+            bool? enabled = default;
+            IReadOnlyList<NetAppVolumeBackupDetail> volumeBackups = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("id"u8))
+                {
+                    id = new ResourceIdentifier(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("name"u8))
+                {
+                    name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("type"u8))
+                {
+                    type = new ResourceType(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("systemData"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("backupPolicyId"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            backupPolicyId = new ResourceIdentifier(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("provisioningState"u8))
+                        {
+                            provisioningState = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dailyBackupsToKeep"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            dailyBackupsToKeep = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("weeklyBackupsToKeep"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            weeklyBackupsToKeep = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("monthlyBackupsToKeep"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            monthlyBackupsToKeep = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("volumesAssigned"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            volumesAssigned = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("enabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            enabled = property0.Value.GetBoolean();
+                            continue;
+                        }
+                        if (property0.NameEquals("volumeBackups"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<NetAppVolumeBackupDetail> array = new List<NetAppVolumeBackupDetail>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(NetAppVolumeBackupDetail.DeserializeNetAppVolumeBackupDetail(item, options));
+                            }
+                            volumeBackups = array;
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetAppBackupPolicyPatch(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                backupPolicyId,
+                provisioningState,
+                dailyBackupsToKeep,
+                weeklyBackupsToKeep,
+                monthlyBackupsToKeep,
+                volumesAssigned,
+                enabled,
+                volumeBackups ?? new ChangeTrackingList<NetAppVolumeBackupDetail>(),
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<NetAppBackupPolicyPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetAppBackupPolicyPatch IPersistableModel<NetAppBackupPolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetAppBackupPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetAppBackupPolicyPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetAppBackupPolicyPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetAppBackupPolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

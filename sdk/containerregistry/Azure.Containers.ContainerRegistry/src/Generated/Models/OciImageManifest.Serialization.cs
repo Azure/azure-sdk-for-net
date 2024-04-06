@@ -22,7 +22,7 @@ namespace Azure.Containers.ContainerRegistry
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("config"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<OciDescriptor>(Configuration);
             }
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -30,7 +30,7 @@ namespace Azure.Containers.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OciDescriptor>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -39,7 +39,7 @@ namespace Azure.Containers.ContainerRegistry
                 if (Annotations != null)
                 {
                     writer.WritePropertyName("annotations"u8);
-                    writer.WriteObjectValue(Annotations);
+                    writer.WriteObjectValue<OciAnnotations>(Annotations);
                 }
                 else
                 {
@@ -57,9 +57,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<OciDescriptor> config = default;
-            Optional<IList<OciDescriptor>> layers = default;
-            Optional<OciAnnotations> annotations = default;
+            OciDescriptor config = default;
+            IList<OciDescriptor> layers = default;
+            OciAnnotations annotations = default;
             int schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -102,15 +102,32 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OciImageManifest(config.Value, Optional.ToList(layers), annotations.Value, schemaVersion);
+            return new OciImageManifest(config, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations, schemaVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OciImageManifest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOciImageManifest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OciImageManifest>(this);
+            return content;
         }
 
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>
         {
             public override void Write(Utf8JsonWriter writer, OciImageManifest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<OciImageManifest>(model);
             }
+
             public override OciImageManifest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

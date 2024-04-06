@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
@@ -20,7 +19,7 @@ namespace Azure.Security.KeyVault.Administration
             }
             string name = default;
             string value = default;
-            Optional<KeyVaultSettingType> type = default;
+            KeyVaultSettingType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -43,7 +42,15 @@ namespace Azure.Security.KeyVault.Administration
                     continue;
                 }
             }
-            return new KeyVaultSetting(name, value, Optional.ToNullable(type));
+            return new KeyVaultSetting(name, value, type);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultSetting FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultSetting(document.RootElement);
         }
     }
 }

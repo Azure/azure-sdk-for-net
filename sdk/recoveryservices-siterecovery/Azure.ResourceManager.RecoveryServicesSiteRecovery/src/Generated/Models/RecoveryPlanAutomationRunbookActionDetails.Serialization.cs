@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable
+    public partial class RecoveryPlanAutomationRunbookActionDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanAutomationRunbookActionDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanAutomationRunbookActionDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecoveryPlanAutomationRunbookActionDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RunbookId))
             {
@@ -29,19 +40,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(FabricLocation.ToString());
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element)
+        RecoveryPlanAutomationRunbookActionDetails IJsonModel<RecoveryPlanAutomationRunbookActionDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanAutomationRunbookActionDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanAutomationRunbookActionDetails DeserializeRecoveryPlanAutomationRunbookActionDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> runbookId = default;
-            Optional<string> timeout = default;
+            ResourceIdentifier runbookId = default;
+            string timeout = default;
             RecoveryPlanActionLocation fabricLocation = default;
             string instanceType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runbookId"u8))
@@ -68,8 +110,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     instanceType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, runbookId.Value, timeout.Value, fabricLocation);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryPlanAutomationRunbookActionDetails(instanceType, serializedAdditionalRawData, runbookId, timeout, fabricLocation);
         }
+
+        BinaryData IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryPlanAutomationRunbookActionDetails IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryPlanAutomationRunbookActionDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanAutomationRunbookActionDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryPlanAutomationRunbookActionDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

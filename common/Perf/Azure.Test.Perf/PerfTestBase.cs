@@ -65,7 +65,7 @@ namespace Azure.Test.Perf
             return Task.CompletedTask;
         }
 
-        // https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection/implementing-disposeasync#implement-both-dispose-and-async-dispose-patterns
+        // https://learn.microsoft.com/dotnet/standard/garbage-collection/implementing-disposeasync#implement-both-dispose-and-async-dispose-patterns
         public void Dispose()
         {
             Dispose(disposing: true);

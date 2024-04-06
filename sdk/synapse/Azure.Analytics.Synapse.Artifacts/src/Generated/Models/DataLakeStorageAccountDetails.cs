@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Details of the data lake storage account associated with the workspace. </summary>
     public partial class DataLakeStorageAccountDetails
     {
-        /// <summary> Initializes a new instance of DataLakeStorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStorageAccountDetails"/>. </summary>
         public DataLakeStorageAccountDetails()
         {
         }
 
-        /// <summary> Initializes a new instance of DataLakeStorageAccountDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataLakeStorageAccountDetails"/>. </summary>
         /// <param name="accountUrl"> Account URL. </param>
         /// <param name="filesystem"> Filesystem name. </param>
         internal DataLakeStorageAccountDetails(string accountUrl, string filesystem)

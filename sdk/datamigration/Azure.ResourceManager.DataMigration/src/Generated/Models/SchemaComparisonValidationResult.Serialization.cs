@@ -5,24 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SchemaComparisonValidationResult
+    public partial class SchemaComparisonValidationResult : IUtf8JsonSerializable, IJsonModel<SchemaComparisonValidationResult>
     {
-        internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SchemaComparisonValidationResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SchemaComparisonValidationResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SchemaDifferences))
+            {
+                writer.WritePropertyName("schemaDifferences"u8);
+                writer.WriteObjectValue<SchemaComparisonValidationResultType>(SchemaDifferences, options);
+            }
+            if (Optional.IsDefined(ValidationErrors))
+            {
+                writer.WritePropertyName("validationErrors"u8);
+                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
+            }
+            if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
+            {
+                writer.WritePropertyName("sourceDatabaseObjectCount"u8);
+                writer.WriteStartObject();
+                foreach (var item in SourceDatabaseObjectCount)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsCollectionDefined(TargetDatabaseObjectCount))
+            {
+                writer.WritePropertyName("targetDatabaseObjectCount"u8);
+                writer.WriteStartObject();
+                foreach (var item in TargetDatabaseObjectCount)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SchemaComparisonValidationResult IJsonModel<SchemaComparisonValidationResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSchemaComparisonValidationResult(document.RootElement, options);
+        }
+
+        internal static SchemaComparisonValidationResult DeserializeSchemaComparisonValidationResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SchemaComparisonValidationResultType> schemaDifferences = default;
-            Optional<ValidationError> validationErrors = default;
-            Optional<IReadOnlyDictionary<string, long>> sourceDatabaseObjectCount = default;
-            Optional<IReadOnlyDictionary<string, long>> targetDatabaseObjectCount = default;
+            SchemaComparisonValidationResultType schemaDifferences = default;
+            ValidationError validationErrors = default;
+            IReadOnlyDictionary<string, long> sourceDatabaseObjectCount = default;
+            IReadOnlyDictionary<string, long> targetDatabaseObjectCount = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaDifferences"u8))
@@ -31,7 +110,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    schemaDifferences = SchemaComparisonValidationResultType.DeserializeSchemaComparisonValidationResultType(property.Value);
+                    schemaDifferences = SchemaComparisonValidationResultType.DeserializeSchemaComparisonValidationResultType(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -40,7 +119,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    validationErrors = ValidationError.DeserializeValidationError(property.Value);
+                    validationErrors = ValidationError.DeserializeValidationError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceDatabaseObjectCount"u8))
@@ -71,8 +150,44 @@ namespace Azure.ResourceManager.DataMigration.Models
                     targetDatabaseObjectCount = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SchemaComparisonValidationResult(schemaDifferences.Value, validationErrors.Value, Optional.ToDictionary(sourceDatabaseObjectCount), Optional.ToDictionary(targetDatabaseObjectCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SchemaComparisonValidationResult(schemaDifferences, validationErrors, sourceDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), targetDatabaseObjectCount ?? new ChangeTrackingDictionary<string, long>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SchemaComparisonValidationResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SchemaComparisonValidationResult IPersistableModel<SchemaComparisonValidationResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSchemaComparisonValidationResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SchemaComparisonValidationResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

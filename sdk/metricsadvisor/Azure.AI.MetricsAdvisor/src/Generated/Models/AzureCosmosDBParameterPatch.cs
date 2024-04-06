@@ -10,9 +10,22 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureCosmosDBParameterPatch. </summary>
     internal partial class AzureCosmosDBParameterPatch
     {
-        /// <summary> Initializes a new instance of AzureCosmosDBParameterPatch. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameterPatch"/>. </summary>
         public AzureCosmosDBParameterPatch()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBParameterPatch"/>. </summary>
+        /// <param name="connectionString"> The connection string of this Azure CosmosDB. </param>
+        /// <param name="sqlQuery"> The statement to query this collection. </param>
+        /// <param name="database"> A database name in this Azure CosmosDB. </param>
+        /// <param name="collectionId"> A collection id in this database. </param>
+        internal AzureCosmosDBParameterPatch(string connectionString, string sqlQuery, string database, string collectionId)
+        {
+            ConnectionString = connectionString;
+            SqlQuery = sqlQuery;
+            Database = database;
+            CollectionId = collectionId;
         }
 
         /// <summary> The connection string of this Azure CosmosDB. </summary>

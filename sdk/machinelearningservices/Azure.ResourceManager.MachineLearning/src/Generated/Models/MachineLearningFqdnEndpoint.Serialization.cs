@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningFqdnEndpoint
+    public partial class MachineLearningFqdnEndpoint : IUtf8JsonSerializable, IJsonModel<MachineLearningFqdnEndpoint>
     {
-        internal static MachineLearningFqdnEndpoint DeserializeMachineLearningFqdnEndpoint(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningFqdnEndpoint>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningFqdnEndpoint>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFqdnEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningFqdnEndpoint)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DomainName))
+            {
+                writer.WritePropertyName("domainName"u8);
+                writer.WriteStringValue(DomainName);
+            }
+            if (Optional.IsCollectionDefined(EndpointDetails))
+            {
+                writer.WritePropertyName("endpointDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in EndpointDetails)
+                {
+                    writer.WriteObjectValue<MachineLearningFqdnEndpointDetail>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MachineLearningFqdnEndpoint IJsonModel<MachineLearningFqdnEndpoint>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFqdnEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningFqdnEndpoint)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningFqdnEndpoint(document.RootElement, options);
+        }
+
+        internal static MachineLearningFqdnEndpoint DeserializeMachineLearningFqdnEndpoint(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<MachineLearningFqdnEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            IReadOnlyList<MachineLearningFqdnEndpointDetail> endpointDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -37,13 +99,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     List<MachineLearningFqdnEndpointDetail> array = new List<MachineLearningFqdnEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item));
+                        array.Add(MachineLearningFqdnEndpointDetail.DeserializeMachineLearningFqdnEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningFqdnEndpoint(domainName.Value, Optional.ToList(endpointDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningFqdnEndpoint(domainName, endpointDetails ?? new ChangeTrackingList<MachineLearningFqdnEndpointDetail>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MachineLearningFqdnEndpoint>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFqdnEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFqdnEndpoint)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningFqdnEndpoint IPersistableModel<MachineLearningFqdnEndpoint>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningFqdnEndpoint>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningFqdnEndpoint(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningFqdnEndpoint)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningFqdnEndpoint>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,10 +11,14 @@ namespace: Azure.ResourceManager.ServiceLinker
 require: https://github.com/Azure/azure-rest-api-specs/blob/42ca0236ef14093f5aff0694efa34d5594e814a0/specification/servicelinker/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
 
 rename-mapping:
   TargetServiceBase: TargetServiceBaseInfo
@@ -48,7 +52,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

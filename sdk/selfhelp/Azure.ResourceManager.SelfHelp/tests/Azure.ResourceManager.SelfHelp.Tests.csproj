@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <Compile Remove="NewFolder\**" />
-    <EmbeddedResource Remove="NewFolder\**" />
-    <None Remove="NewFolder\**" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.SelfHelp.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.SelfHelp.csproj" />
+    <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
+    <Compile Include="..\..\..\..\common\ManagementTestShared\Temp\*.cs" LinkBase="TestShared" />
   </ItemGroup>
 </Project>

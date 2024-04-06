@@ -6,27 +6,115 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class StorageAccountEndpoints
+    public partial class StorageAccountEndpoints : IUtf8JsonSerializable, IJsonModel<StorageAccountEndpoints>
     {
-        internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageAccountEndpoints>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageAccountEndpoints>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
+            {
+                writer.WritePropertyName("blob"u8);
+                writer.WriteStringValue(BlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(QueueUri))
+            {
+                writer.WritePropertyName("queue"u8);
+                writer.WriteStringValue(QueueUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TableUri))
+            {
+                writer.WritePropertyName("table"u8);
+                writer.WriteStringValue(TableUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FileUri))
+            {
+                writer.WritePropertyName("file"u8);
+                writer.WriteStringValue(FileUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(WebUri))
+            {
+                writer.WritePropertyName("web"u8);
+                writer.WriteStringValue(WebUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DfsUri))
+            {
+                writer.WritePropertyName("dfs"u8);
+                writer.WriteStringValue(DfsUri.AbsoluteUri);
+            }
+            if (Optional.IsDefined(MicrosoftEndpoints))
+            {
+                writer.WritePropertyName("microsoftEndpoints"u8);
+                writer.WriteObjectValue<StorageAccountMicrosoftEndpoints>(MicrosoftEndpoints, options);
+            }
+            if (Optional.IsDefined(InternetEndpoints))
+            {
+                writer.WritePropertyName("internetEndpoints"u8);
+                writer.WriteObjectValue<StorageAccountInternetEndpoints>(InternetEndpoints, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StorageAccountEndpoints IJsonModel<StorageAccountEndpoints>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageAccountEndpoints(document.RootElement, options);
+        }
+
+        internal static StorageAccountEndpoints DeserializeStorageAccountEndpoints(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> blob = default;
-            Optional<Uri> queue = default;
-            Optional<Uri> table = default;
-            Optional<Uri> file = default;
-            Optional<Uri> web = default;
-            Optional<Uri> dfs = default;
-            Optional<StorageAccountMicrosoftEndpoints> microsoftEndpoints = default;
-            Optional<StorageAccountInternetEndpoints> internetEndpoints = default;
+            Uri blob = default;
+            Uri queue = default;
+            Uri table = default;
+            Uri file = default;
+            Uri web = default;
+            Uri dfs = default;
+            StorageAccountMicrosoftEndpoints microsoftEndpoints = default;
+            StorageAccountInternetEndpoints internetEndpoints = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("blob"u8))
@@ -89,7 +177,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value);
+                    microsoftEndpoints = StorageAccountMicrosoftEndpoints.DeserializeStorageAccountMicrosoftEndpoints(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("internetEndpoints"u8))
@@ -98,11 +186,185 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value);
+                    internetEndpoints = StorageAccountInternetEndpoints.DeserializeStorageAccountInternetEndpoints(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageAccountEndpoints(blob.Value, queue.Value, table.Value, file.Value, web.Value, dfs.Value, microsoftEndpoints.Value, internetEndpoints.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageAccountEndpoints(
+                blob,
+                queue,
+                table,
+                file,
+                web,
+                dfs,
+                microsoftEndpoints,
+                internetEndpoints,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobUri), out propertyOverride);
+            if (Optional.IsDefined(BlobUri) || hasPropertyOverride)
+            {
+                builder.Append("  blob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BlobUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueUri), out propertyOverride);
+            if (Optional.IsDefined(QueueUri) || hasPropertyOverride)
+            {
+                builder.Append("  queue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{QueueUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableUri), out propertyOverride);
+            if (Optional.IsDefined(TableUri) || hasPropertyOverride)
+            {
+                builder.Append("  table: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TableUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUri), out propertyOverride);
+            if (Optional.IsDefined(FileUri) || hasPropertyOverride)
+            {
+                builder.Append("  file: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{FileUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebUri), out propertyOverride);
+            if (Optional.IsDefined(WebUri) || hasPropertyOverride)
+            {
+                builder.Append("  web: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{WebUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DfsUri), out propertyOverride);
+            if (Optional.IsDefined(DfsUri) || hasPropertyOverride)
+            {
+                builder.Append("  dfs: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DfsUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MicrosoftEndpoints), out propertyOverride);
+            if (Optional.IsDefined(MicrosoftEndpoints) || hasPropertyOverride)
+            {
+                builder.Append("  microsoftEndpoints: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, MicrosoftEndpoints, options, 2, false, "  microsoftEndpoints: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternetEndpoints), out propertyOverride);
+            if (Optional.IsDefined(InternetEndpoints) || hasPropertyOverride)
+            {
+                builder.Append("  internetEndpoints: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, InternetEndpoints, options, 2, false, "  internetEndpoints: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<StorageAccountEndpoints>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageAccountEndpoints IPersistableModel<StorageAccountEndpoints>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageAccountEndpoints>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageAccountEndpoints(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageAccountEndpoints)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageAccountEndpoints>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

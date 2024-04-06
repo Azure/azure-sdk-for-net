@@ -6,18 +6,28 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable
+    public partial class OperationalInsightsWorkspacePatch : IUtf8JsonSerializable, IJsonModel<OperationalInsightsWorkspacePatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OperationalInsightsWorkspacePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<OperationalInsightsWorkspacePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
@@ -35,12 +45,47 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(CustomerId))
+            {
+                writer.WritePropertyName("customerId"u8);
+                writer.WriteStringValue(CustomerId.Value);
+            }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<OperationalInsightsWorkspaceSku>(Sku, options);
             }
             if (Optional.IsDefined(RetentionInDays))
             {
@@ -57,7 +102,17 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             if (Optional.IsDefined(WorkspaceCapping))
             {
                 writer.WritePropertyName("workspaceCapping"u8);
-                writer.WriteObjectValue(WorkspaceCapping);
+                writer.WriteObjectValue<OperationalInsightsWorkspaceCapping>(WorkspaceCapping, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("createdDate"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
+            {
+                writer.WritePropertyName("modifiedDate"u8);
+                writer.WriteStringValue(ModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(PublicNetworkAccessForIngestion))
             {
@@ -74,10 +129,20 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("forceCmkForQuery"u8);
                 writer.WriteBooleanValue(ForceCmkForQuery.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateLinkScopedResources))
+            {
+                writer.WritePropertyName("privateLinkScopedResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateLinkScopedResources)
+                {
+                    writer.WriteObjectValue<OperationalInsightsPrivateLinkScopedResourceInfo>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
-                writer.WriteObjectValue(Features);
+                writer.WriteObjectValue<OperationalInsightsWorkspaceFeatures>(Features, options);
             }
             if (Optional.IsDefined(DefaultDataCollectionRuleResourceId))
             {
@@ -85,35 +150,66 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WriteStringValue(DefaultDataCollectionRuleResourceId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element)
+        OperationalInsightsWorkspacePatch IJsonModel<OperationalInsightsWorkspacePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+        }
+
+        internal static OperationalInsightsWorkspacePatch DeserializeOperationalInsightsWorkspacePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ETag> etag = default;
+            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<OperationalInsightsWorkspaceEntityStatus> provisioningState = default;
-            Optional<Guid> customerId = default;
-            Optional<OperationalInsightsWorkspaceSku> sku = default;
-            Optional<int?> retentionInDays = default;
-            Optional<OperationalInsightsWorkspaceCapping> workspaceCapping = default;
-            Optional<DateTimeOffset> createdDate = default;
-            Optional<DateTimeOffset> modifiedDate = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForIngestion = default;
-            Optional<OperationalInsightsPublicNetworkAccessType> publicNetworkAccessForQuery = default;
-            Optional<bool> forceCmkForQuery = default;
-            Optional<IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo>> privateLinkScopedResources = default;
-            Optional<OperationalInsightsWorkspaceFeatures> features = default;
-            Optional<ResourceIdentifier> defaultDataCollectionRuleResourceId = default;
+            SystemData systemData = default;
+            OperationalInsightsWorkspaceEntityStatus? provisioningState = default;
+            Guid? customerId = default;
+            OperationalInsightsWorkspaceSku sku = default;
+            int? retentionInDays = default;
+            OperationalInsightsWorkspaceCapping workspaceCapping = default;
+            DateTimeOffset? createdDate = default;
+            DateTimeOffset? modifiedDate = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion = default;
+            OperationalInsightsPublicNetworkAccessType? publicNetworkAccessForQuery = default;
+            bool? forceCmkForQuery = default;
+            IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> privateLinkScopedResources = default;
+            OperationalInsightsWorkspaceFeatures features = default;
+            ResourceIdentifier defaultDataCollectionRuleResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identity"u8))
@@ -205,7 +301,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value);
+                            sku = OperationalInsightsWorkspaceSku.DeserializeOperationalInsightsWorkspaceSku(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("retentionInDays"u8))
@@ -224,7 +320,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value);
+                            workspaceCapping = OperationalInsightsWorkspaceCapping.DeserializeOperationalInsightsWorkspaceCapping(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createdDate"u8))
@@ -281,7 +377,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             List<OperationalInsightsPrivateLinkScopedResourceInfo> array = new List<OperationalInsightsPrivateLinkScopedResourceInfo>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item));
+                                array.Add(OperationalInsightsPrivateLinkScopedResourceInfo.DeserializeOperationalInsightsPrivateLinkScopedResourceInfo(item, options));
                             }
                             privateLinkScopedResources = array;
                             continue;
@@ -292,7 +388,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                             {
                                 continue;
                             }
-                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value);
+                            features = OperationalInsightsWorkspaceFeatures.DeserializeOperationalInsightsWorkspaceFeatures(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("defaultDataCollectionRuleResourceId"u8))
@@ -307,8 +403,392 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new OperationalInsightsWorkspacePatch(id, name, type, systemData.Value, identity, Optional.ToDictionary(tags), Optional.ToNullable(provisioningState), Optional.ToNullable(customerId), sku.Value, Optional.ToNullable(retentionInDays), workspaceCapping.Value, Optional.ToNullable(createdDate), Optional.ToNullable(modifiedDate), Optional.ToNullable(publicNetworkAccessForIngestion), Optional.ToNullable(publicNetworkAccessForQuery), Optional.ToNullable(forceCmkForQuery), Optional.ToList(privateLinkScopedResources), features.Value, defaultDataCollectionRuleResourceId.Value, Optional.ToNullable(etag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new OperationalInsightsWorkspacePatch(
+                id,
+                name,
+                type,
+                systemData,
+                identity,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                provisioningState,
+                customerId,
+                sku,
+                retentionInDays,
+                workspaceCapping,
+                createdDate,
+                modifiedDate,
+                publicNetworkAccessForIngestion,
+                publicNetworkAccessForQuery,
+                forceCmkForQuery,
+                privateLinkScopedResources ?? new ChangeTrackingList<OperationalInsightsPrivateLinkScopedResourceInfo>(),
+                features,
+                defaultDataCollectionRuleResourceId,
+                etag,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            {
+                if (Tags.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tags: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Identity), out propertyOverride);
+            if (Optional.IsDefined(Identity) || hasPropertyOverride)
+            {
+                builder.Append("  identity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerId), out propertyOverride);
+            if (Optional.IsDefined(CustomerId) || hasPropertyOverride)
+            {
+                builder.Append("    customerId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CustomerId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            {
+                builder.Append("    sku: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 4, false, "    sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetentionInDays), out propertyOverride);
+            if (Optional.IsDefined(RetentionInDays) || hasPropertyOverride)
+            {
+                builder.Append("    retentionInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{RetentionInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkspaceCapping), out propertyOverride);
+            if (Optional.IsDefined(WorkspaceCapping) || hasPropertyOverride)
+            {
+                builder.Append("    workspaceCapping: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, WorkspaceCapping, options, 4, false, "    workspaceCapping: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
+            if (Optional.IsDefined(CreatedOn) || hasPropertyOverride)
+            {
+                builder.Append("    createdDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
+            if (Optional.IsDefined(ModifiedOn) || hasPropertyOverride)
+            {
+                builder.Append("    modifiedDate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForIngestion), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccessForIngestion) || hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccessForIngestion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccessForIngestion.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PublicNetworkAccessForQuery), out propertyOverride);
+            if (Optional.IsDefined(PublicNetworkAccessForQuery) || hasPropertyOverride)
+            {
+                builder.Append("    publicNetworkAccessForQuery: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PublicNetworkAccessForQuery.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForceCmkForQuery), out propertyOverride);
+            if (Optional.IsDefined(ForceCmkForQuery) || hasPropertyOverride)
+            {
+                builder.Append("    forceCmkForQuery: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ForceCmkForQuery.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateLinkScopedResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(PrivateLinkScopedResources) || hasPropertyOverride)
+            {
+                if (PrivateLinkScopedResources.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    privateLinkScopedResources: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in PrivateLinkScopedResources)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    privateLinkScopedResources: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Features), out propertyOverride);
+            if (Optional.IsDefined(Features) || hasPropertyOverride)
+            {
+                builder.Append("    features: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Features, options, 4, false, "    features: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDataCollectionRuleResourceId), out propertyOverride);
+            if (Optional.IsDefined(DefaultDataCollectionRuleResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    defaultDataCollectionRuleResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DefaultDataCollectionRuleResourceId.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<OperationalInsightsWorkspacePatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        OperationalInsightsWorkspacePatch IPersistableModel<OperationalInsightsWorkspacePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<OperationalInsightsWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeOperationalInsightsWorkspacePatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OperationalInsightsWorkspacePatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<OperationalInsightsWorkspacePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

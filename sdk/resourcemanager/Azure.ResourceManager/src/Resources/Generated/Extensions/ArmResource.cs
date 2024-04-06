@@ -8,7 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources;
 
@@ -20,7 +19,7 @@ namespace Azure.ResourceManager
         /// <returns> An object representing collection of PolicyAssignmentResources and their operations over a PolicyAssignmentResource. </returns>
         public virtual PolicyAssignmentCollection GetPolicyAssignments()
         {
-            return GetCachedClient(Client => new PolicyAssignmentCollection(Client, Id));
+            return GetCachedClient(client => new PolicyAssignmentCollection(client, Id));
         }
 
         /// <summary>
@@ -34,12 +33,20 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>PolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<PolicyAssignmentResource>> GetPolicyAssignmentAsync(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -57,12 +64,20 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>PolicyAssignments_Get</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2022-06-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PolicyAssignmentResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="policyAssignmentName"> The name of the policy assignment to get. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="policyAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="policyAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<PolicyAssignmentResource> GetPolicyAssignment(string policyAssignmentName, CancellationToken cancellationToken = default)
         {
@@ -73,7 +88,7 @@ namespace Azure.ResourceManager
         /// <returns> An object representing collection of ManagementLockResources and their operations over a ManagementLockResource. </returns>
         public virtual ManagementLockCollection GetManagementLocks()
         {
-            return GetCachedClient(Client => new ManagementLockCollection(Client, Id));
+            return GetCachedClient(client => new ManagementLockCollection(client, Id));
         }
 
         /// <summary>
@@ -87,12 +102,20 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>ManagementLocks_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementLockResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<ManagementLockResource>> GetManagementLockAsync(string lockName, CancellationToken cancellationToken = default)
         {
@@ -110,12 +133,20 @@ namespace Azure.ResourceManager
         /// <term>Operation Id</term>
         /// <description>ManagementLocks_GetByScope</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2020-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementLockResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="lockName"> The name of lock. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="lockName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="lockName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<ManagementLockResource> GetManagementLock(string lockName, CancellationToken cancellationToken = default)
         {

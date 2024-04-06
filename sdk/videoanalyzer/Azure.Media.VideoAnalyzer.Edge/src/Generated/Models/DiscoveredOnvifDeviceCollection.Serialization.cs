@@ -22,7 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiscoveredOnvifDevice>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -35,7 +35,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<DiscoveredOnvifDevice>> value = default;
+            IList<DiscoveredOnvifDevice> value = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -53,7 +53,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new DiscoveredOnvifDeviceCollection(Optional.ToList(value));
+            return new DiscoveredOnvifDeviceCollection(value ?? new ChangeTrackingList<DiscoveredOnvifDevice>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DiscoveredOnvifDeviceCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDiscoveredOnvifDeviceCollection(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DiscoveredOnvifDeviceCollection>(this);
+            return content;
         }
     }
 }

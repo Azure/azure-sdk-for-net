@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningRecurrenceTrigger : IUtf8JsonSerializable
+    public partial class MachineLearningRecurrenceTrigger : IUtf8JsonSerializable, IJsonModel<MachineLearningRecurrenceTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningRecurrenceTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningRecurrenceTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningRecurrenceTrigger)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("frequency"u8);
             writer.WriteStringValue(Frequency.ToString());
@@ -24,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    writer.WriteObjectValue<MachineLearningRecurrenceSchedule>(Schedule, options);
                 }
                 else
                 {
@@ -62,22 +73,53 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("triggerType"u8);
             writer.WriteStringValue(TriggerType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningRecurrenceTrigger DeserializeMachineLearningRecurrenceTrigger(JsonElement element)
+        MachineLearningRecurrenceTrigger IJsonModel<MachineLearningRecurrenceTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningRecurrenceTrigger)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningRecurrenceTrigger(document.RootElement, options);
+        }
+
+        internal static MachineLearningRecurrenceTrigger DeserializeMachineLearningRecurrenceTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             MachineLearningRecurrenceFrequency frequency = default;
             int interval = default;
-            Optional<MachineLearningRecurrenceSchedule> schedule = default;
-            Optional<string> endTime = default;
-            Optional<string> startTime = default;
-            Optional<string> timeZone = default;
+            MachineLearningRecurrenceSchedule schedule = default;
+            string endTime = default;
+            string startTime = default;
+            string timeZone = default;
             MachineLearningTriggerType triggerType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("frequency"u8))
@@ -97,7 +139,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         schedule = null;
                         continue;
                     }
-                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value);
+                    schedule = MachineLearningRecurrenceSchedule.DeserializeMachineLearningRecurrenceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
@@ -130,8 +172,52 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     triggerType = new MachineLearningTriggerType(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MachineLearningRecurrenceTrigger(endTime.Value, startTime.Value, timeZone.Value, triggerType, frequency, interval, schedule.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MachineLearningRecurrenceTrigger(
+                endTime,
+                startTime,
+                timeZone,
+                triggerType,
+                serializedAdditionalRawData,
+                frequency,
+                interval,
+                schedule);
         }
+
+        BinaryData IPersistableModel<MachineLearningRecurrenceTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningRecurrenceTrigger IPersistableModel<MachineLearningRecurrenceTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningRecurrenceTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningRecurrenceTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

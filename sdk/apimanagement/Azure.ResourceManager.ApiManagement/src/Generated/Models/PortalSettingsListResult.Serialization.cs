@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class PortalSettingsListResult
+    internal partial class PortalSettingsListResult : IUtf8JsonSerializable, IJsonModel<PortalSettingsListResult>
     {
-        internal static PortalSettingsListResult DeserializePortalSettingsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PortalSettingsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PortalSettingsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<PortalSettingsContractData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PortalSettingsListResult IJsonModel<PortalSettingsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePortalSettingsListResult(document.RootElement, options);
+        }
+
+        internal static PortalSettingsListResult DeserializePortalSettingsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<PortalSettingsContractData>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<PortalSettingsContractData> value = default;
+            long? count = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<PortalSettingsContractData> array = new List<PortalSettingsContractData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item));
+                        array.Add(PortalSettingsContractData.DeserializePortalSettingsContractData(item, options));
                     }
                     value = array;
                     continue;
@@ -46,8 +108,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PortalSettingsListResult(Optional.ToList(value), Optional.ToNullable(count));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PortalSettingsListResult(value ?? new ChangeTrackingList<PortalSettingsContractData>(), count, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PortalSettingsListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PortalSettingsListResult IPersistableModel<PortalSettingsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PortalSettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePortalSettingsListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PortalSettingsListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PortalSettingsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

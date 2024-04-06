@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    internal partial class ConfluentAgreementListResult
+    internal partial class ConfluentAgreementListResult : IUtf8JsonSerializable, IJsonModel<ConfluentAgreementListResult>
     {
-        internal static ConfluentAgreementListResult DeserializeConfluentAgreementListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentAgreementListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConfluentAgreementListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<ConfluentAgreement>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConfluentAgreementListResult IJsonModel<ConfluentAgreementListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfluentAgreementListResult(document.RootElement, options);
+        }
+
+        internal static ConfluentAgreementListResult DeserializeConfluentAgreementListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfluentAgreement>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConfluentAgreement> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.Confluent.Models
                     List<ConfluentAgreement> array = new List<ConfluentAgreement>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item));
+                        array.Add(ConfluentAgreement.DeserializeConfluentAgreement(item, options));
                     }
                     value = array;
                     continue;
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.Confluent.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfluentAgreementListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfluentAgreementListResult(value ?? new ChangeTrackingList<ConfluentAgreement>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfluentAgreementListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfluentAgreementListResult IPersistableModel<ConfluentAgreementListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentAgreementListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfluentAgreementListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentAgreementListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfluentAgreementListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

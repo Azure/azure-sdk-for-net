@@ -59,8 +59,23 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         public async Task RestorableDatabaseAccountList()
         {
             _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestUS);
-            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
-            Assert.That(restorableAccounts.Any(account => account.Data.AccountName == _restorableDatabaseAccount.Data.Name));
+            await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task RestorableDatabaseAccountListWithContinuous7Account()
+        {
+            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestUS, continuousTier: ContinuousTier.Continuous7Days);
+            await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
+        }
+
+        [Test]
+        [RecordedTest]
+        public async Task RestorableDatabaseAccountListWithContinuous30Account()
+        {
+            _restorableDatabaseAccount = await CreateRestorableDatabaseAccount(Recording.GenerateAssetName("r-database-account-"), CosmosDBAccountKind.GlobalDocumentDB, AzureLocation.WestUS, continuousTier: ContinuousTier.Continuous30Days);
+            await VerifyRestorableDatabaseAccount(_restorableDatabaseAccount.Data.Name);
         }
 
         [Test]
@@ -98,29 +113,48 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 RestoreMode = "PointInTime",
                 RestoreTimestampInUtc = ts.AddSeconds(230),
                 RestoreSource = restorableAccount.Id.ToString(),
+                IsRestoreWithTtlDisabled = true,
             };
 
             _restoredDatabaseAccount = await RestoreAndVerifyRestoredAccount(AccountType.PitrSql, restorableAccount, restoreParameters, AzureLocation.WestUS, AzureLocation.WestUS);
         }
         // TODO: more tests after fixing the code generation issue
 
-        protected async Task<CosmosDBAccountResource> CreateRestorableDatabaseAccount(string name, CosmosDBAccountKind kind, AzureLocation location, bool isFreeTierEnabled = false, List<CosmosDBAccountCapability> capabilities = null, string apiVersion = null)
+        protected async Task<CosmosDBAccountResource> CreateRestorableDatabaseAccount(string name, CosmosDBAccountKind kind, AzureLocation location, bool isFreeTierEnabled = false, List<CosmosDBAccountCapability> capabilities = null, string apiVersion = null, ContinuousTier? continuousTier = null)
         {
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: location, documentEndpoint: null, provisioningState: null, failoverPriority: 0, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: location, documentEndpoint: null, provisioningState: null, failoverPriority: 0, isZoneRedundant: false, null)
             };
+
+            CosmosDBAccountBackupPolicy backupPolicy;
+            ContinuousTier inputContinuousTier;
+
+            if (continuousTier.HasValue)
+            {
+                inputContinuousTier = continuousTier.Value;
+
+                backupPolicy = new ContinuousModeBackupPolicy
+                {
+                    ContinuousModeProperties = new ContinuousModeProperties { Tier = continuousTier.Value }
+                };
+            }
+            else
+            {
+                inputContinuousTier = ContinuousTier.Continuous30Days; // if ContinuousTier is not provided, then it defaults to Continuous30Days
+                backupPolicy = new ContinuousModeBackupPolicy();
+            }
 
             var createOptions = new CosmosDBAccountCreateOrUpdateContent(location, locations)
             {
                 Kind = kind,
-                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds),
-                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120") },
+                ConsistencyPolicy = new ConsistencyPolicy(DefaultConsistencyLevel.BoundedStaleness, MaxStalenessPrefix, MaxIntervalInSeconds, null),
+                IPRules = { new CosmosDBIPAddressOrRange("23.43.231.120", null) },
                 IsVirtualNetworkFilterEnabled = true,
                 EnableAutomaticFailover = false,
                 ConnectorOffer = ConnectorOffer.Small,
                 DisableKeyBasedMetadataWriteAccess = false,
-                BackupPolicy = new ContinuousModeBackupPolicy(),
+                BackupPolicy = backupPolicy,
                 IsFreeTierEnabled = isFreeTierEnabled,
             };
 
@@ -136,7 +170,22 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             _databaseAccountName = name;
             var accountLro = await DatabaseAccountCollection.CreateOrUpdateAsync(WaitUntil.Completed, _databaseAccountName, createOptions);
+
+            Assert.AreEqual(inputContinuousTier, ((ContinuousModeBackupPolicy)accountLro.Value.Data.BackupPolicy).ContinuousModeTier, "Unexpected ContinuousTier");
+
             return accountLro.Value;
+        }
+
+        private async Task VerifyRestorableDatabaseAccount(string expectedRestorableDatabaseAccountName)
+        {
+            var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
+
+            RestorableCosmosDBAccountResource restorableDBA = restorableAccounts.Where(account => account.Data.AccountName == expectedRestorableDatabaseAccountName).Single();
+            Assert.AreEqual(restorableDBA.Data.ApiType, CosmosDBApiType.Sql);
+            Assert.IsNotNull(restorableDBA.Data.CreatedOn);
+            Assert.IsNull(restorableDBA.Data.DeletedOn, $"Actual DeletedOn: {restorableDBA.Data.DeletedOn}");
+            Assert.IsNotNull(restorableDBA.Data.OldestRestorableOn);
+            Assert.IsNotNull(restorableDBA.Data.RestorableLocations);
         }
 
         private async Task<CosmosDBAccountResource> RestoreAndVerifyRestoredAccount(AccountType accountType, RestorableCosmosDBAccountResource restorableAccount, CosmosDBAccountRestoreParameters restoreParameters, AzureLocation location, AzureLocation armLocation, bool IsFreeTierEnabled = false)
@@ -145,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
             var locations = new List<CosmosDBAccountLocation>()
             {
-                new CosmosDBAccountLocation(id: null, locationName: location, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false)
+                new CosmosDBAccountLocation(id: null, locationName: location, documentEndpoint: null, provisioningState: null, failoverPriority: null, isZoneRedundant: false, null)
             };
 
             var restoredAccountName = Recording.GenerateAssetName("restoredaccount-");
@@ -164,6 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.NotNull(restoredDatabaseAccount);
             Assert.NotNull(restoredDatabaseAccount.Data.RestoreParameters);
             Assert.AreEqual(restoredDatabaseAccount.Data.RestoreParameters.RestoreSource.ToLower(), restorableAccount.Id.ToString().ToLower());
+            Assert.True(restoredDatabaseAccount.Data.RestoreParameters.IsRestoreWithTtlDisabled);
             Assert.True(restoredDatabaseAccount.Data.BackupPolicy is ContinuousModeBackupPolicy);
 
             ContinuousModeBackupPolicy policy = restoredDatabaseAccount.Data.BackupPolicy as ContinuousModeBackupPolicy;
@@ -199,7 +249,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var sqlDatabaseCreateUpdateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestCentralUS,
                 new Models.CosmosDBSqlContainerResourceInfo(name)
                 {
-                    PartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false)
+                    PartitionKey = new CosmosDBContainerPartitionKey(new List<string> { "/address/zipCode" }, null, null, false, null)
                     {
                         Kind = new CosmosDBPartitionKind("Hash")
                     },
@@ -230,10 +280,8 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                                     new List<CosmosDBSpatialType>
                                     {
                                         new CosmosDBSpatialType("Point")
-                                    }
-                            ),
-                        }
-                    )
+                                    }, null),
+                        }, null)
                 })
             {
                 Options = BuildDatabaseCreateUpdateOptions(TestThroughput1, autoscale),

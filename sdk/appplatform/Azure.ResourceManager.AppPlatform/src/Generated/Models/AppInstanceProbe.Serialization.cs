@@ -5,20 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppInstanceProbe : IUtf8JsonSerializable
+    public partial class AppInstanceProbe : IUtf8JsonSerializable, IJsonModel<AppInstanceProbe>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppInstanceProbe>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppInstanceProbe>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ProbeAction))
             {
                 writer.WritePropertyName("probeAction"u8);
-                writer.WriteObjectValue(ProbeAction);
+                writer.WriteObjectValue<AppInstanceProbeAction>(ProbeAction, options);
             }
             writer.WritePropertyName("disableProbe"u8);
             writer.WriteBooleanValue(IsProbeDisabled);
@@ -47,22 +58,53 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WritePropertyName("successThreshold"u8);
                 writer.WriteNumberValue(SuccessThreshold.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element)
+        AppInstanceProbe IJsonModel<AppInstanceProbe>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppInstanceProbe(document.RootElement, options);
+        }
+
+        internal static AppInstanceProbe DeserializeAppInstanceProbe(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AppInstanceProbeAction> probeAction = default;
+            AppInstanceProbeAction probeAction = default;
             bool disableProbe = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> timeoutSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? timeoutSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("probeAction"u8))
@@ -71,7 +113,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value);
+                    probeAction = AppInstanceProbeAction.DeserializeAppInstanceProbeAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("disableProbe"u8))
@@ -124,8 +166,52 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     successThreshold = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppInstanceProbe(probeAction.Value, disableProbe, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(timeoutSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppInstanceProbe(
+                probeAction,
+                disableProbe,
+                initialDelaySeconds,
+                periodSeconds,
+                timeoutSeconds,
+                failureThreshold,
+                successThreshold,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppInstanceProbe>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppInstanceProbe IPersistableModel<AppInstanceProbe>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppInstanceProbe>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppInstanceProbe(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppInstanceProbe)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppInstanceProbe>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

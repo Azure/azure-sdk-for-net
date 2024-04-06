@@ -7,8 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics.Legacy;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
@@ -20,9 +18,9 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             {
                 return null;
             }
-            Optional<SentimentResponse> results = default;
+            SentimentResponse results = default;
             DateTimeOffset lastUpdateDateTime = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             State status = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -51,7 +49,15 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                     continue;
                 }
             }
-            return new TasksStateTasksSentimentAnalysisTasksItem(lastUpdateDateTime, taskName.Value, status, results.Value);
+            return new TasksStateTasksSentimentAnalysisTasksItem(lastUpdateDateTime, taskName, status, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TasksStateTasksSentimentAnalysisTasksItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTasksStateTasksSentimentAnalysisTasksItem(document.RootElement);
         }
     }
 }

@@ -5,21 +5,80 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Storage.Models
 {
-    public partial class LeaseShareResponse
+    public partial class LeaseShareResponse : IUtf8JsonSerializable, IJsonModel<LeaseShareResponse>
     {
-        internal static LeaseShareResponse DeserializeLeaseShareResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LeaseShareResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LeaseShareResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(LeaseId))
+            {
+                writer.WritePropertyName("leaseId"u8);
+                writer.WriteStringValue(LeaseId);
+            }
+            if (Optional.IsDefined(LeaseTimeSeconds))
+            {
+                writer.WritePropertyName("leaseTimeSeconds"u8);
+                writer.WriteStringValue(LeaseTimeSeconds);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        LeaseShareResponse IJsonModel<LeaseShareResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLeaseShareResponse(document.RootElement, options);
+        }
+
+        internal static LeaseShareResponse DeserializeLeaseShareResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> leaseId = default;
-            Optional<string> leaseTimeSeconds = default;
+            string leaseId = default;
+            string leaseTimeSeconds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("leaseId"u8))
@@ -32,8 +91,105 @@ namespace Azure.ResourceManager.Storage.Models
                     leaseTimeSeconds = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LeaseShareResponse(leaseId.Value, leaseTimeSeconds.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LeaseShareResponse(leaseId, leaseTimeSeconds, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseId), out propertyOverride);
+            if (Optional.IsDefined(LeaseId) || hasPropertyOverride)
+            {
+                builder.Append("  leaseId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LeaseId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LeaseId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LeaseId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LeaseTimeSeconds), out propertyOverride);
+            if (Optional.IsDefined(LeaseTimeSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  leaseTimeSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LeaseTimeSeconds.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LeaseTimeSeconds}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LeaseTimeSeconds}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<LeaseShareResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LeaseShareResponse IPersistableModel<LeaseShareResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LeaseShareResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLeaseShareResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LeaseShareResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LeaseShareResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

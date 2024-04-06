@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class BekDetails : IUtf8JsonSerializable
+    public partial class BekDetails : IUtf8JsonSerializable, IJsonModel<BekDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BekDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BekDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BekDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SecretUri))
             {
@@ -31,18 +41,49 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BekDetails DeserializeBekDetails(JsonElement element)
+        BekDetails IJsonModel<BekDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BekDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBekDetails(document.RootElement, options);
+        }
+
+        internal static BekDetails DeserializeBekDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Uri> secretUrl = default;
-            Optional<ResourceIdentifier> secretVaultId = default;
-            Optional<string> secretData = default;
+            Uri secretUrl = default;
+            ResourceIdentifier secretVaultId = default;
+            string secretData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secretUrl"u8))
@@ -68,8 +109,44 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     secretData = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BekDetails(secretUrl.Value, secretVaultId.Value, secretData.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BekDetails(secretUrl, secretVaultId, secretData, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BekDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BekDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BekDetails IPersistableModel<BekDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBekDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BekDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BekDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

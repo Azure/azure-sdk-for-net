@@ -15,19 +15,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents a host entity. </summary>
     public partial class SecurityInsightsHostEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsHostEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
         public SecurityInsightsHostEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Host;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsHostEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsHostEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="azureId"> The azure resource id of the VM. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="omsAgentId"> The OMS agent id, if the host has OMS agent installed. </param>
         /// <param name="osFamily"> The operating system type. </param>
         /// <param name="osVersion"> A free text representation of the operating system. This field is meant to hold specific versions the are more fine grained than OSFamily or future values not supported by OSFamily enumeration. </param>
-        internal SecurityInsightsHostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, ResourceIdentifier azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, SecurityInsightsHostOSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsHostEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, ResourceIdentifier azureId, string dnsDomain, string hostName, bool? isDomainJoined, string netBiosName, string ntDomain, string omsAgentId, SecurityInsightsHostOSFamily? osFamily, string osVersion) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

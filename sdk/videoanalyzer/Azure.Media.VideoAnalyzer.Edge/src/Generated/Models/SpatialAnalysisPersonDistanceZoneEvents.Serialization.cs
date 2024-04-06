@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("zone"u8);
-            writer.WriteObjectValue(Zone);
+            writer.WriteObjectValue<NamedPolygonBase>(Zone);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpatialAnalysisPersonDistanceEvent>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedPolygonBase zone = default;
-            Optional<IList<SpatialAnalysisPersonDistanceEvent>> events = default;
+            IList<SpatialAnalysisPersonDistanceEvent> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("zone"u8))
@@ -61,7 +61,23 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonDistanceZoneEvents(zone, Optional.ToList(events));
+            return new SpatialAnalysisPersonDistanceZoneEvents(zone, events ?? new ChangeTrackingList<SpatialAnalysisPersonDistanceEvent>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpatialAnalysisPersonDistanceZoneEvents FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonDistanceZoneEvents(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SpatialAnalysisPersonDistanceZoneEvents>(this);
+            return content;
         }
     }
 }

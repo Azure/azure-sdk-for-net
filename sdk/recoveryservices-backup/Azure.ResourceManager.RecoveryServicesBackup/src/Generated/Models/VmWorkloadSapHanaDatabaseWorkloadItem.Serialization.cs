@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class VmWorkloadSapHanaDatabaseWorkloadItem : IUtf8JsonSerializable
+    public partial class VmWorkloadSapHanaDatabaseWorkloadItem : IUtf8JsonSerializable, IJsonModel<VmWorkloadSapHanaDatabaseWorkloadItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VmWorkloadSapHanaDatabaseWorkloadItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VmWorkloadSapHanaDatabaseWorkloadItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDatabaseWorkloadItem)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ParentName))
             {
@@ -62,25 +73,56 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static VmWorkloadSapHanaDatabaseWorkloadItem DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(JsonElement element)
+        VmWorkloadSapHanaDatabaseWorkloadItem IJsonModel<VmWorkloadSapHanaDatabaseWorkloadItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDatabaseWorkloadItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(document.RootElement, options);
+        }
+
+        internal static VmWorkloadSapHanaDatabaseWorkloadItem DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> parentName = default;
-            Optional<string> serverName = default;
-            Optional<bool> isAutoProtectable = default;
-            Optional<int> subinquireditemcount = default;
-            Optional<int> subWorkloadItemCount = default;
-            Optional<string> backupManagementType = default;
-            Optional<string> workloadType = default;
+            string parentName = default;
+            string serverName = default;
+            bool? isAutoProtectable = default;
+            int? subinquireditemcount = default;
+            int? subWorkloadItemCount = default;
+            string backupManagementType = default;
+            string workloadType = default;
             string workloadItemType = default;
-            Optional<string> friendlyName = default;
-            Optional<BackupProtectionStatus> protectionState = default;
+            string friendlyName = default;
+            BackupProtectionStatus? protectionState = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parentName"u8))
@@ -149,8 +191,55 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     protectionState = new BackupProtectionStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VmWorkloadSapHanaDatabaseWorkloadItem(backupManagementType.Value, workloadType.Value, workloadItemType, friendlyName.Value, Optional.ToNullable(protectionState), parentName.Value, serverName.Value, Optional.ToNullable(isAutoProtectable), Optional.ToNullable(subinquireditemcount), Optional.ToNullable(subWorkloadItemCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VmWorkloadSapHanaDatabaseWorkloadItem(
+                backupManagementType,
+                workloadType,
+                workloadItemType,
+                friendlyName,
+                protectionState,
+                serializedAdditionalRawData,
+                parentName,
+                serverName,
+                isAutoProtectable,
+                subinquireditemcount,
+                subWorkloadItemCount);
         }
+
+        BinaryData IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDatabaseWorkloadItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VmWorkloadSapHanaDatabaseWorkloadItem IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVmWorkloadSapHanaDatabaseWorkloadItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDatabaseWorkloadItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VmWorkloadSapHanaDatabaseWorkloadItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

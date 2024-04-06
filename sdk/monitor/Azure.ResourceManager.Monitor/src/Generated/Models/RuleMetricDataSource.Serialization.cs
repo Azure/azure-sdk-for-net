@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleMetricDataSource : IUtf8JsonSerializable
+    public partial class RuleMetricDataSource : IUtf8JsonSerializable, IJsonModel<RuleMetricDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleMetricDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RuleMetricDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MetricName))
             {
@@ -42,21 +53,52 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleMetricDataSource DeserializeRuleMetricDataSource(JsonElement element)
+        RuleMetricDataSource IJsonModel<RuleMetricDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleMetricDataSource(document.RootElement, options);
+        }
+
+        internal static RuleMetricDataSource DeserializeRuleMetricDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> metricName = default;
+            string metricName = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("metricName"u8))
@@ -97,8 +139,51 @@ namespace Azure.ResourceManager.Monitor.Models
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuleMetricDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, metricName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RuleMetricDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData,
+                metricName);
         }
+
+        BinaryData IPersistableModel<RuleMetricDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RuleMetricDataSource IPersistableModel<RuleMetricDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleMetricDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRuleMetricDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuleMetricDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RuleMetricDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

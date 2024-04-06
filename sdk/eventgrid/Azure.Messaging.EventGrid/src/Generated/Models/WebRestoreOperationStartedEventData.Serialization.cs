@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,13 +20,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<AppEventTypeDetail> appEventTypeDetail = default;
-            Optional<string> name = default;
-            Optional<string> clientRequestId = default;
-            Optional<string> correlationRequestId = default;
-            Optional<string> requestId = default;
-            Optional<string> address = default;
-            Optional<string> verb = default;
+            AppEventTypeDetail appEventTypeDetail = default;
+            string name = default;
+            string clientRequestId = default;
+            string correlationRequestId = default;
+            string requestId = default;
+            string address = default;
+            string verb = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("appEventTypeDetail"u8))
@@ -70,7 +69,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new WebRestoreOperationStartedEventData(appEventTypeDetail.Value, name.Value, clientRequestId.Value, correlationRequestId.Value, requestId.Value, address.Value, verb.Value);
+            return new WebRestoreOperationStartedEventData(
+                appEventTypeDetail,
+                name,
+                clientRequestId,
+                correlationRequestId,
+                requestId,
+                address,
+                verb);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebRestoreOperationStartedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebRestoreOperationStartedEventData(document.RootElement);
         }
 
         internal partial class WebRestoreOperationStartedEventDataConverter : JsonConverter<WebRestoreOperationStartedEventData>
@@ -79,6 +93,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override WebRestoreOperationStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

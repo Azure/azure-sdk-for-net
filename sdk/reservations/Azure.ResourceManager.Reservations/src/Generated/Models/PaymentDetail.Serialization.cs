@@ -6,26 +6,108 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class PaymentDetail
+    public partial class PaymentDetail : IUtf8JsonSerializable, IJsonModel<PaymentDetail>
     {
-        internal static PaymentDetail DeserializePaymentDetail(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PaymentDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PaymentDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentDetail)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DueOn))
+            {
+                writer.WritePropertyName("dueDate"u8);
+                writer.WriteStringValue(DueOn.Value, "D");
+            }
+            if (Optional.IsDefined(PayOn))
+            {
+                writer.WritePropertyName("paymentDate"u8);
+                writer.WriteStringValue(PayOn.Value, "D");
+            }
+            if (Optional.IsDefined(PricingCurrencyTotal))
+            {
+                writer.WritePropertyName("pricingCurrencyTotal"u8);
+                writer.WriteObjectValue<PurchasePrice>(PricingCurrencyTotal, options);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotal, options);
+            }
+            if (Optional.IsDefined(BillingAccount))
+            {
+                writer.WritePropertyName("billingAccount"u8);
+                writer.WriteStringValue(BillingAccount);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(ExtendedStatusInfo))
+            {
+                writer.WritePropertyName("extendedStatusInfo"u8);
+                writer.WriteObjectValue<ExtendedStatusInfo>(ExtendedStatusInfo, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PaymentDetail IJsonModel<PaymentDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PaymentDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePaymentDetail(document.RootElement, options);
+        }
+
+        internal static PaymentDetail DeserializePaymentDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> dueDate = default;
-            Optional<DateTimeOffset> paymentDate = default;
-            Optional<PurchasePrice> pricingCurrencyTotal = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
-            Optional<string> billingAccount = default;
-            Optional<PaymentStatus> status = default;
-            Optional<ExtendedStatusInfo> extendedStatusInfo = default;
+            DateTimeOffset? dueDate = default;
+            DateTimeOffset? paymentDate = default;
+            PurchasePrice pricingCurrencyTotal = default;
+            PurchasePrice billingCurrencyTotal = default;
+            string billingAccount = default;
+            PaymentStatus? status = default;
+            ExtendedStatusInfo extendedStatusInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dueDate"u8))
@@ -52,7 +134,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    pricingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -61,7 +143,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingAccount"u8))
@@ -84,11 +166,55 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value);
+                    extendedStatusInfo = ExtendedStatusInfo.DeserializeExtendedStatusInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PaymentDetail(Optional.ToNullable(dueDate), Optional.ToNullable(paymentDate), pricingCurrencyTotal.Value, billingCurrencyTotal.Value, billingAccount.Value, Optional.ToNullable(status), extendedStatusInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PaymentDetail(
+                dueDate,
+                paymentDate,
+                pricingCurrencyTotal,
+                billingCurrencyTotal,
+                billingAccount,
+                status,
+                extendedStatusInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PaymentDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PaymentDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PaymentDetail IPersistableModel<PaymentDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PaymentDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePaymentDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PaymentDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PaymentDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

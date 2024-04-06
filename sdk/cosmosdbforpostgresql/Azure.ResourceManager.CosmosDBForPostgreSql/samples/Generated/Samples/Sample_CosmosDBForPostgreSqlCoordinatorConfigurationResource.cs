@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 {
@@ -44,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerConfigurationData resourceData = result.Data;
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -72,7 +69,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlCoordinatorConfigurationResource cosmosDBForPostgreSqlCoordinatorConfiguration = client.GetCosmosDBForPostgreSqlCoordinatorConfigurationResource(cosmosDBForPostgreSqlCoordinatorConfigurationResourceId);
 
             // invoke the operation
-            ServerConfigurationData data = new ServerConfigurationData()
+            CosmosDBForPostgreSqlServerConfigurationData data = new CosmosDBForPostgreSqlServerConfigurationData()
             {
                 Value = "on",
             };
@@ -81,7 +78,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ServerConfigurationData resourceData = result.Data;
+            CosmosDBForPostgreSqlServerConfigurationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class DscCompilationJobListResult
+    internal partial class DscCompilationJobListResult : IUtf8JsonSerializable, IJsonModel<DscCompilationJobListResult>
     {
-        internal static DscCompilationJobListResult DeserializeDscCompilationJobListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DscCompilationJobListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DscCompilationJobListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscCompilationJobListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<DscCompilationJobData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DscCompilationJobListResult IJsonModel<DscCompilationJobListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DscCompilationJobListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDscCompilationJobListResult(document.RootElement, options);
+        }
+
+        internal static DscCompilationJobListResult DeserializeDscCompilationJobListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DscCompilationJobData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DscCompilationJobData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<DscCompilationJobData> array = new List<DscCompilationJobData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DscCompilationJobData.DeserializeDscCompilationJobData(item));
+                        array.Add(DscCompilationJobData.DeserializeDscCompilationJobData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.Automation.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DscCompilationJobListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DscCompilationJobListResult(value ?? new ChangeTrackingList<DscCompilationJobData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DscCompilationJobListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DscCompilationJobListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DscCompilationJobListResult IPersistableModel<DscCompilationJobListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DscCompilationJobListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDscCompilationJobListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DscCompilationJobListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DscCompilationJobListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

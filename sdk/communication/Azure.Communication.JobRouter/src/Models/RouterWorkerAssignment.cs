@@ -3,9 +3,8 @@
 
 using Azure.Core;
 
-namespace Azure.Communication.JobRouter.Models
+namespace Azure.Communication.JobRouter
 {
-    [CodeGenModel("RouterWorkerAssignment")]
     public partial class RouterWorkerAssignment
     {
     }

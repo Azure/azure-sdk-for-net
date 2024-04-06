@@ -6,21 +6,21 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
     /// <summary> The error detail. </summary>
     internal partial class ErrorDetail
     {
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         internal ErrorDetail()
         {
             Details = new ChangeTrackingList<ErrorDetail>();
             AdditionalInfo = new ChangeTrackingList<ErrorAdditionalInfo>();
         }
 
-        /// <summary> Initializes a new instance of ErrorDetail. </summary>
+        /// <summary> Initializes a new instance of <see cref="ErrorDetail"/>. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="target"> The error target. </param>

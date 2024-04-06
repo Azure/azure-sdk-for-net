@@ -6,10 +6,8 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.CallAutomation;
-using Azure.Core;
 
-namespace Azure.Communication.CallAutomation.Models.Events
+namespace Azure.Communication.CallAutomation
 {
     internal partial class DialogTransferInternal
     {
@@ -19,31 +17,26 @@ namespace Azure.Communication.CallAutomation.Models.Events
             {
                 return null;
             }
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<DialogInputType> dialogInputType = default;
-            Optional<string> dialogId = default;
-            Optional<string> transferType = default;
-            Optional<string> transferDestination = default;
-            Optional<object> ivrContext = default;
+            string transferType = default;
+            string transferDestination = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            DialogInputType? dialogInputType = default;
+            string dialogId = default;
+            object ivrContext = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
+                if (property.NameEquals("transferType"u8))
                 {
-                    callConnectionId = property.Value.GetString();
+                    transferType = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serverCallId"u8))
+                if (property.NameEquals("transferDestination"u8))
                 {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
+                    transferDestination = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))
@@ -74,16 +67,6 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("transferType"u8))
-                {
-                    transferType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("transferDestination"u8))
-                {
-                    transferDestination = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("ivrContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -93,8 +76,41 @@ namespace Azure.Communication.CallAutomation.Models.Events
                     ivrContext = property.Value.GetObject();
                     continue;
                 }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
-            return new DialogTransferInternal(callConnectionId.Value, serverCallId.Value, correlationId.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, transferType.Value, transferDestination.Value, ivrContext.Value);
+            return new DialogTransferInternal(
+                transferType,
+                transferDestination,
+                operationContext,
+                resultInformation,
+                dialogInputType,
+                dialogId,
+                ivrContext,
+                callConnectionId,
+                serverCallId,
+                correlationId);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DialogTransferInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDialogTransferInternal(document.RootElement);
         }
     }
 }

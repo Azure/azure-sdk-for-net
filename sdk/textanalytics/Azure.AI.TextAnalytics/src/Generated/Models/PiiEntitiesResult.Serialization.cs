@@ -21,20 +21,20 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PiiResultDocumentsItem>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("errors"u8);
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentError>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentBatchStatistics>(Statistics);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -49,7 +49,7 @@ namespace Azure.AI.TextAnalytics
             }
             IList<PiiResultDocumentsItem> documents = default;
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -88,7 +88,23 @@ namespace Azure.AI.TextAnalytics
                     continue;
                 }
             }
-            return new PiiEntitiesResult(errors, statistics.Value, modelVersion, documents);
+            return new PiiEntitiesResult(errors, statistics, modelVersion, documents);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PiiEntitiesResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePiiEntitiesResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PiiEntitiesResult>(this);
+            return content;
         }
     }
 }

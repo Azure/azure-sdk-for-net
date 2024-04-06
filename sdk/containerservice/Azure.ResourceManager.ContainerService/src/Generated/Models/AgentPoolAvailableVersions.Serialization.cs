@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,86 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class AgentPoolAvailableVersions
+    public partial class AgentPoolAvailableVersions : IUtf8JsonSerializable, IJsonModel<AgentPoolAvailableVersions>
     {
-        internal static AgentPoolAvailableVersions DeserializeAgentPoolAvailableVersions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgentPoolAvailableVersions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AgentPoolAvailableVersions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersions)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(AgentPoolVersions))
+            {
+                writer.WritePropertyName("agentPoolVersions"u8);
+                writer.WriteStartArray();
+                foreach (var item in AgentPoolVersions)
+                {
+                    writer.WriteObjectValue<AgentPoolAvailableVersion>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AgentPoolAvailableVersions IJsonModel<AgentPoolAvailableVersions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgentPoolAvailableVersions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgentPoolAvailableVersions(document.RootElement, options);
+        }
+
+        internal static AgentPoolAvailableVersions DeserializeAgentPoolAvailableVersions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,8 +101,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IReadOnlyList<AgentPoolAvailableVersion>> agentPoolVersions = default;
+            SystemData systemData = default;
+            IReadOnlyList<AgentPoolAvailableVersion> agentPoolVersions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -69,7 +149,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                             List<AgentPoolAvailableVersion> array = new List<AgentPoolAvailableVersion>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item));
+                                array.Add(AgentPoolAvailableVersion.DeserializeAgentPoolAvailableVersion(item, options));
                             }
                             agentPoolVersions = array;
                             continue;
@@ -77,8 +157,50 @@ namespace Azure.ResourceManager.ContainerService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgentPoolAvailableVersions(id, name, type, systemData.Value, Optional.ToList(agentPoolVersions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgentPoolAvailableVersions(
+                id,
+                name,
+                type,
+                systemData,
+                agentPoolVersions ?? new ChangeTrackingList<AgentPoolAvailableVersion>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgentPoolAvailableVersions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AgentPoolAvailableVersions IPersistableModel<AgentPoolAvailableVersions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgentPoolAvailableVersions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgentPoolAvailableVersions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgentPoolAvailableVersions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgentPoolAvailableVersions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

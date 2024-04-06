@@ -5,16 +5,88 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class RecoveryPlanGroupTaskDetails
+    public partial class RecoveryPlanGroupTaskDetails : IUtf8JsonSerializable, IJsonModel<RecoveryPlanGroupTaskDetails>
     {
-        internal static RecoveryPlanGroupTaskDetails DeserializeRecoveryPlanGroupTaskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RecoveryPlanGroupTaskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RecoveryPlanGroupTaskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(GroupId))
+            {
+                writer.WritePropertyName("groupId"u8);
+                writer.WriteStringValue(GroupId);
+            }
+            if (Optional.IsDefined(RpGroupType))
+            {
+                writer.WritePropertyName("rpGroupType"u8);
+                writer.WriteStringValue(RpGroupType);
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(ChildTasks))
+            {
+                writer.WritePropertyName("childTasks"u8);
+                writer.WriteStartArray();
+                foreach (var item in ChildTasks)
+                {
+                    writer.WriteObjectValue<AsrTask>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RecoveryPlanGroupTaskDetails IJsonModel<RecoveryPlanGroupTaskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRecoveryPlanGroupTaskDetails(document.RootElement, options);
+        }
+
+        internal static RecoveryPlanGroupTaskDetails DeserializeRecoveryPlanGroupTaskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -23,14 +95,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element);
+                    case "RecoveryPlanShutdownGroupTaskDetails": return RecoveryPlanShutdownGroupTaskDetails.DeserializeRecoveryPlanShutdownGroupTaskDetails(element, options);
                 }
             }
-            Optional<string> name = default;
-            Optional<string> groupId = default;
-            Optional<string> rpGroupType = default;
+            string name = default;
+            string groupId = default;
+            string rpGroupType = default;
             string instanceType = "RecoveryPlanGroupTaskDetails";
-            Optional<IReadOnlyList<AsrTask>> childTasks = default;
+            IReadOnlyList<AsrTask> childTasks = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -62,13 +136,55 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<AsrTask> array = new List<AsrTask>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AsrTask.DeserializeAsrTask(item));
+                        array.Add(AsrTask.DeserializeAsrTask(item, options));
                     }
                     childTasks = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RecoveryPlanGroupTaskDetails(instanceType, Optional.ToList(childTasks), name.Value, groupId.Value, rpGroupType.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RecoveryPlanGroupTaskDetails(
+                instanceType,
+                childTasks ?? new ChangeTrackingList<AsrTask>(),
+                serializedAdditionalRawData,
+                name,
+                groupId,
+                rpGroupType);
         }
+
+        BinaryData IPersistableModel<RecoveryPlanGroupTaskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RecoveryPlanGroupTaskDetails IPersistableModel<RecoveryPlanGroupTaskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanGroupTaskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRecoveryPlanGroupTaskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RecoveryPlanGroupTaskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RecoveryPlanGroupTaskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

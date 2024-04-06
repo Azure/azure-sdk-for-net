@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.StoragePool
         public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource>> GetAsync(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StoragePool.DiskPoolResource> GetIfExists(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StoragePool.DiskPoolResource>> GetIfExistsAsync(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StoragePool.DiskPoolResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StoragePool.DiskPoolResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPoolResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DiskPoolData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolData>
     {
-        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus status, Azure.Core.ResourceIdentifier subnetId) : base (default(Azure.Core.AzureLocation)) { }
+        public DiskPoolData(Azure.Core.AzureLocation location, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState provisioningState, System.Collections.Generic.IEnumerable<string> availabilityZones, Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus status, Azure.Core.ResourceIdentifier subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IList<string> AvailabilityZones { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
@@ -27,6 +29,11 @@ namespace Azure.ResourceManager.StoragePool
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus Status { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.StoragePool.DiskPoolData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.DiskPoolData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DiskPoolIscsiTargetCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>, System.Collections.IEnumerable
     {
@@ -39,11 +46,13 @@ namespace Azure.ResourceManager.StoragePool
         public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>> GetAsync(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource> GetIfExists(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>> GetIfExistsAsync(string iscsiTargetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DiskPoolIscsiTargetData : Azure.ResourceManager.Models.ResourceData
+    public partial class DiskPoolIscsiTargetData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>
     {
         public DiskPoolIscsiTargetData(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode aclMode, string targetIqn, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState provisioningState, Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus status) { }
         public Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode AclMode { get { throw null; } set { } }
@@ -57,6 +66,11 @@ namespace Azure.ResourceManager.StoragePool
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl> StaticAcls { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus Status { get { throw null; } set { } }
         public string TargetIqn { get { throw null; } set { } }
+        Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DiskPoolIscsiTargetResource : Azure.ResourceManager.ArmResource
     {
@@ -118,10 +132,37 @@ namespace Azure.ResourceManager.StoragePool
         public static Azure.AsyncPageable<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo> GetResourceSkusAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.StoragePool.Mocking
+{
+    public partial class MockableStoragePoolArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStoragePoolArmClient() { }
+        public virtual Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetResource GetDiskPoolIscsiTargetResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.StoragePool.DiskPoolResource GetDiskPoolResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableStoragePoolResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStoragePoolResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPool(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.StoragePool.DiskPoolResource>> GetDiskPoolAsync(string diskPoolName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.StoragePool.DiskPoolCollection GetDiskPools() { throw null; }
+    }
+    public partial class MockableStoragePoolSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableStoragePoolSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPools(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.DiskPoolResource> GetDiskPoolsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo> GetDiskPoolZones(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo> GetDiskPoolZonesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo> GetResourceSkus(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo> GetResourceSkusAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.StoragePool.Models
 {
     public static partial class ArmStoragePoolModelFactory
     {
+        public static Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent DiskPoolCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string managedBy = null, System.Collections.Generic.IEnumerable<string> managedByExtended = null, System.Collections.Generic.IEnumerable<string> availabilityZones = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> disks = null, Azure.Core.ResourceIdentifier subnetId = null, System.Collections.Generic.IEnumerable<string> additionalCapabilities = null) { throw null; }
         public static Azure.ResourceManager.StoragePool.DiskPoolData DiskPoolData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku = null, string managedBy = null, System.Collections.Generic.IEnumerable<string> managedByExtended = null, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState provisioningState = default(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState), System.Collections.Generic.IEnumerable<string> availabilityZones = null, Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus status = default(Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> disks = null, Azure.Core.ResourceIdentifier subnetId = null, System.Collections.Generic.IEnumerable<string> additionalCapabilities = null) { throw null; }
         public static Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent DiskPoolIscsiTargetCreateOrUpdateContent(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, System.Collections.Generic.IEnumerable<string> managedByExtended = null, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode aclMode = default(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode), string targetIqn = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl> staticAcls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun> luns = null) { throw null; }
         public static Azure.ResourceManager.StoragePool.DiskPoolIscsiTargetData DiskPoolIscsiTargetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string managedBy = null, System.Collections.Generic.IEnumerable<string> managedByExtended = null, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode aclMode = default(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode), System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl> staticAcls = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun> luns = null, string targetIqn = null, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState provisioningState = default(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState), Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus status = default(Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus), System.Collections.Generic.IEnumerable<string> endpoints = null, int? port = default(int?), System.Collections.Generic.IEnumerable<string> sessions = null) { throw null; }
@@ -138,7 +179,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions StoragePoolSkuRestrictions(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsType? restrictionsType = default(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsType?), System.Collections.Generic.IEnumerable<string> values = null, Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo restrictionInfo = null, Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsReasonCode? reasonCode = default(Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsReasonCode?)) { throw null; }
         public static Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails StoragePoolSkuZoneDetails(System.Collections.Generic.IEnumerable<string> name = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability> capabilities = null) { throw null; }
     }
-    public partial class DiskPoolCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    public partial class DiskPoolCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>
     {
         public DiskPoolCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.StoragePoolSku sku, Azure.Core.AzureLocation location, Azure.Core.ResourceIdentifier subnetId) { }
         public System.Collections.Generic.IList<string> AdditionalCapabilities { get { throw null; } }
@@ -150,6 +191,11 @@ namespace Azure.ResourceManager.StoragePool.Models
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
         public Azure.Core.ResourceIdentifier SubnetId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskPoolIscsiTargetAclMode : System.IEquatable<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode>
@@ -169,7 +215,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode left, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData
+    public partial class DiskPoolIscsiTargetCreateOrUpdateContent : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>
     {
         public DiskPoolIscsiTargetCreateOrUpdateContent(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode aclMode) { }
         public Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetAclMode AclMode { get { throw null; } set { } }
@@ -178,20 +224,35 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl> StaticAcls { get { throw null; } }
         public string TargetIqn { get { throw null; } set { } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DiskPoolIscsiTargetPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class DiskPoolIscsiTargetPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>
     {
         public DiskPoolIscsiTargetPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun> Luns { get { throw null; } }
         public string ManagedBy { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl> StaticAcls { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DiskPoolIscsiTargetPortalGroupAcl
+    public partial class DiskPoolIscsiTargetPortalGroupAcl : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>
     {
         public DiskPoolIscsiTargetPortalGroupAcl(string initiatorIqn, System.Collections.Generic.IEnumerable<string> mappedLuns) { }
         public string InitiatorIqn { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> MappedLuns { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetPortalGroupAcl>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DiskPoolIscsiTargetProvisioningState : System.IEquatable<Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState>
@@ -217,7 +278,7 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState left, Azure.ResourceManager.StoragePool.Models.DiskPoolIscsiTargetProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DiskPoolPatch
+    public partial class DiskPoolPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>
     {
         public DiskPoolPatch() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Disks { get { throw null; } }
@@ -225,34 +286,59 @@ namespace Azure.ResourceManager.StoragePool.Models
         public System.Collections.Generic.IList<string> ManagedByExtended { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DiskPoolZoneInfo
+    public partial class DiskPoolZoneInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>
     {
         internal DiskPoolZoneInfo() { }
         public System.Collections.Generic.IReadOnlyList<string> AdditionalCapabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> AvailabilityZones { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSku Sku { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.DiskPoolZoneInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedDiskIscsiLun
+    public partial class ManagedDiskIscsiLun : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>
     {
         public ManagedDiskIscsiLun(string name, Azure.Core.ResourceIdentifier managedDiskAzureResourceId) { }
         public int? Lun { get { throw null; } }
         public Azure.Core.ResourceIdentifier ManagedDiskAzureResourceId { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.ManagedDiskIscsiLun>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OutboundEndpointDependency
+    public partial class OutboundEndpointDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>
     {
         internal OutboundEndpointDependency() { }
         public string DomainName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail> EndpointDetails { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OutboundEndpointDetail
+    public partial class OutboundEndpointDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>
     {
         internal OutboundEndpointDetail() { }
         public System.Net.IPAddress IPAddress { get { throw null; } }
         public bool? IsAccessible { get { throw null; } }
         public double? LatencyInMs { get { throw null; } }
         public int? Port { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct StoragePoolOperationalStatus : System.IEquatable<Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus>
@@ -278,25 +364,40 @@ namespace Azure.ResourceManager.StoragePool.Models
         public static bool operator !=(Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus left, Azure.ResourceManager.StoragePool.Models.StoragePoolOperationalStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StoragePoolOutboundEnvironment
+    public partial class StoragePoolOutboundEnvironment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>
     {
         internal StoragePoolOutboundEnvironment() { }
         public string Category { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.OutboundEndpointDependency> Endpoints { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolOutboundEnvironment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSku
+    public partial class StoragePoolSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>
     {
         public StoragePoolSku(string name) { }
         public string Name { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSkuCapability
+    public partial class StoragePoolSkuCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>
     {
         internal StoragePoolSkuCapability() { }
         public string Name { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSkuInfo
+    public partial class StoragePoolSkuInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>
     {
         internal StoragePoolSkuInfo() { }
         public string ApiVersion { get { throw null; } }
@@ -306,27 +407,47 @@ namespace Azure.ResourceManager.StoragePool.Models
         public string ResourceType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions> Restrictions { get { throw null; } }
         public string Tier { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSkuLocationInfo
+    public partial class StoragePoolSkuLocationInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>
     {
         internal StoragePoolSkuLocationInfo() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails> ZoneDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuLocationInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSkuRestrictionInfo
+    public partial class StoragePoolSkuRestrictionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>
     {
         internal StoragePoolSkuRestrictionInfo() { }
         public System.Collections.Generic.IReadOnlyList<Azure.Core.AzureLocation> Locations { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Zones { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StoragePoolSkuRestrictions
+    public partial class StoragePoolSkuRestrictions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>
     {
         internal StoragePoolSkuRestrictions() { }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsReasonCode? ReasonCode { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionInfo RestrictionInfo { get { throw null; } }
         public Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictionsType? RestrictionsType { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Values { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuRestrictions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum StoragePoolSkuRestrictionsReasonCode
     {
@@ -338,10 +459,15 @@ namespace Azure.ResourceManager.StoragePool.Models
         Location = 0,
         Zone = 1,
     }
-    public partial class StoragePoolSkuZoneDetails
+    public partial class StoragePoolSkuZoneDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>
     {
         internal StoragePoolSkuZoneDetails() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuCapability> Capabilities { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Name { get { throw null; } }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.StoragePool.Models.StoragePoolSkuZoneDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

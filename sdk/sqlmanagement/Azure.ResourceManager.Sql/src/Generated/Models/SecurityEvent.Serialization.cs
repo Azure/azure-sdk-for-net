@@ -6,26 +6,131 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Net;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class SecurityEvent : IUtf8JsonSerializable
+    public partial class SecurityEvent : IUtf8JsonSerializable, IJsonModel<SecurityEvent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityEvent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityEvent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(EventOn))
+            {
+                writer.WritePropertyName("eventTime"u8);
+                writer.WriteStringValue(EventOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecurityEventType))
+            {
+                writer.WritePropertyName("securityEventType"u8);
+                writer.WriteStringValue(SecurityEventType.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteStringValue(Subscription);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Server))
+            {
+                writer.WritePropertyName("server"u8);
+                writer.WriteStringValue(Server);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Database))
+            {
+                writer.WritePropertyName("database"u8);
+                writer.WriteStringValue(Database);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ClientIP))
+            {
+                writer.WritePropertyName("clientIp"u8);
+                writer.WriteStringValue(ClientIP.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
+            {
+                writer.WritePropertyName("applicationName"u8);
+                writer.WriteStringValue(ApplicationName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrincipalName))
+            {
+                writer.WritePropertyName("principalName"u8);
+                writer.WriteStringValue(PrincipalName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties))
+            {
+                writer.WritePropertyName("securityEventSqlInjectionAdditionalProperties"u8);
+                writer.WriteObjectValue<SecurityEventSqlInjectionAdditionalProperties>(SecurityEventSqlInjectionAdditionalProperties, options);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SecurityEvent DeserializeSecurityEvent(JsonElement element)
+        SecurityEvent IJsonModel<SecurityEvent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityEvent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityEvent(document.RootElement, options);
+        }
+
+        internal static SecurityEvent DeserializeSecurityEvent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -33,16 +138,18 @@ namespace Azure.ResourceManager.Sql.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<DateTimeOffset> eventTime = default;
-            Optional<SecurityEventType> securityEventType = default;
-            Optional<string> subscription = default;
-            Optional<string> server = default;
-            Optional<string> database = default;
-            Optional<IPAddress> clientIP = default;
-            Optional<string> applicationName = default;
-            Optional<string> principalName = default;
-            Optional<SecurityEventSqlInjectionAdditionalProperties> securityEventSqlInjectionAdditionalProperties = default;
+            SystemData systemData = default;
+            DateTimeOffset? eventTime = default;
+            SecurityEventType? securityEventType = default;
+            string subscription = default;
+            string server = default;
+            string database = default;
+            IPAddress clientIP = default;
+            string applicationName = default;
+            string principalName = default;
+            SecurityEventSqlInjectionAdditionalProperties securityEventSqlInjectionAdditionalProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -136,14 +243,301 @@ namespace Azure.ResourceManager.Sql.Models
                             {
                                 continue;
                             }
-                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value);
+                            securityEventSqlInjectionAdditionalProperties = SecurityEventSqlInjectionAdditionalProperties.DeserializeSecurityEventSqlInjectionAdditionalProperties(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityEvent(id, name, type, systemData.Value, Optional.ToNullable(eventTime), Optional.ToNullable(securityEventType), subscription.Value, server.Value, database.Value, clientIP.Value, applicationName.Value, principalName.Value, securityEventSqlInjectionAdditionalProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityEvent(
+                id,
+                name,
+                type,
+                systemData,
+                eventTime,
+                securityEventType,
+                subscription,
+                server,
+                database,
+                clientIP,
+                applicationName,
+                principalName,
+                securityEventSqlInjectionAdditionalProperties,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventOn), out propertyOverride);
+            if (Optional.IsDefined(EventOn) || hasPropertyOverride)
+            {
+                builder.Append("    eventTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EventOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityEventType), out propertyOverride);
+            if (Optional.IsDefined(SecurityEventType) || hasPropertyOverride)
+            {
+                builder.Append("    securityEventType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SecurityEventType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscription), out propertyOverride);
+            if (Optional.IsDefined(Subscription) || hasPropertyOverride)
+            {
+                builder.Append("    subscription: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Subscription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subscription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subscription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Server), out propertyOverride);
+            if (Optional.IsDefined(Server) || hasPropertyOverride)
+            {
+                builder.Append("    server: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Server.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Server}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Server}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Database), out propertyOverride);
+            if (Optional.IsDefined(Database) || hasPropertyOverride)
+            {
+                builder.Append("    database: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Database.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Database}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Database}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ClientIP), out propertyOverride);
+            if (Optional.IsDefined(ClientIP) || hasPropertyOverride)
+            {
+                builder.Append("    clientIp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ClientIP.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationName), out propertyOverride);
+            if (Optional.IsDefined(ApplicationName) || hasPropertyOverride)
+            {
+                builder.Append("    applicationName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ApplicationName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ApplicationName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ApplicationName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalName), out propertyOverride);
+            if (Optional.IsDefined(PrincipalName) || hasPropertyOverride)
+            {
+                builder.Append("    principalName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrincipalName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrincipalName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrincipalName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecurityEventSqlInjectionAdditionalProperties), out propertyOverride);
+            if (Optional.IsDefined(SecurityEventSqlInjectionAdditionalProperties) || hasPropertyOverride)
+            {
+                builder.Append("    securityEventSqlInjectionAdditionalProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SecurityEventSqlInjectionAdditionalProperties, options, 4, false, "    securityEventSqlInjectionAdditionalProperties: ");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecurityEvent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityEvent IPersistableModel<SecurityEvent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityEvent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityEvent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityEvent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityEvent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,20 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> A managed Virtual Network associated with the Azure Data Factory. </summary>
     public partial class DataFactoryManagedVirtualNetworkProperties
     {
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkProperties"/>. </summary>
         public DataFactoryManagedVirtualNetworkProperties()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
-        /// <summary> Initializes a new instance of DataFactoryManagedVirtualNetworkProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedVirtualNetworkProperties"/>. </summary>
         /// <param name="vnetId"> Managed Virtual Network ID. </param>
         /// <param name="alias"> Managed Virtual Network alias. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

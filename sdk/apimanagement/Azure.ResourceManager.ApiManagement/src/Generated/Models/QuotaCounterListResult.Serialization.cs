@@ -5,23 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class QuotaCounterListResult
+    internal partial class QuotaCounterListResult : IUtf8JsonSerializable, IJsonModel<QuotaCounterListResult>
     {
-        internal static QuotaCounterListResult DeserializeQuotaCounterListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QuotaCounterListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QuotaCounterListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QuotaCounterListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<QuotaCounterContract>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QuotaCounterListResult IJsonModel<QuotaCounterListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QuotaCounterListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQuotaCounterListResult(document.RootElement, options);
+        }
+
+        internal static QuotaCounterListResult DeserializeQuotaCounterListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<QuotaCounterContract>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<QuotaCounterContract> value = default;
+            long? count = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<QuotaCounterContract> array = new List<QuotaCounterContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(QuotaCounterContract.DeserializeQuotaCounterContract(item));
+                        array.Add(QuotaCounterContract.DeserializeQuotaCounterContract(item, options));
                     }
                     value = array;
                     continue;
@@ -52,8 +119,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QuotaCounterListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QuotaCounterListResult(value ?? new ChangeTrackingList<QuotaCounterContract>(), count, nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QuotaCounterListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QuotaCounterListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QuotaCounterListResult IPersistableModel<QuotaCounterListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QuotaCounterListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQuotaCounterListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QuotaCounterListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QuotaCounterListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

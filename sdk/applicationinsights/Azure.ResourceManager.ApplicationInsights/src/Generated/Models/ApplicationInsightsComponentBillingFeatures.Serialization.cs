@@ -5,21 +5,33 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsComponentBillingFeatures : IUtf8JsonSerializable
+    public partial class ApplicationInsightsComponentBillingFeatures : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsComponentBillingFeatures>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsComponentBillingFeatures>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ApplicationInsightsComponentBillingFeatures>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentBillingFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DataVolumeCap))
             {
                 writer.WritePropertyName("DataVolumeCap"u8);
-                writer.WriteObjectValue(DataVolumeCap);
+                writer.WriteObjectValue<ApplicationInsightsComponentDataVolumeCap>(DataVolumeCap, options);
             }
             if (Optional.IsCollectionDefined(CurrentBillingFeatures))
             {
@@ -31,17 +43,48 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ApplicationInsightsComponentBillingFeatures DeserializeApplicationInsightsComponentBillingFeatures(JsonElement element)
+        ApplicationInsightsComponentBillingFeatures IJsonModel<ApplicationInsightsComponentBillingFeatures>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentBillingFeatures>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeApplicationInsightsComponentBillingFeatures(document.RootElement, options);
+        }
+
+        internal static ApplicationInsightsComponentBillingFeatures DeserializeApplicationInsightsComponentBillingFeatures(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ApplicationInsightsComponentDataVolumeCap> dataVolumeCap = default;
-            Optional<IList<string>> currentBillingFeatures = default;
+            ApplicationInsightsComponentDataVolumeCap dataVolumeCap = default;
+            IList<string> currentBillingFeatures = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("DataVolumeCap"u8))
@@ -50,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     {
                         continue;
                     }
-                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value);
+                    dataVolumeCap = ApplicationInsightsComponentDataVolumeCap.DeserializeApplicationInsightsComponentDataVolumeCap(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("CurrentBillingFeatures"u8))
@@ -67,8 +110,110 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     currentBillingFeatures = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap.Value, Optional.ToList(currentBillingFeatures));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, currentBillingFeatures ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DataVolumeCap), out propertyOverride);
+            if (Optional.IsDefined(DataVolumeCap) || hasPropertyOverride)
+            {
+                builder.Append("  DataVolumeCap: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DataVolumeCap, options, 2, false, "  DataVolumeCap: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CurrentBillingFeatures), out propertyOverride);
+            if (Optional.IsCollectionDefined(CurrentBillingFeatures) || hasPropertyOverride)
+            {
+                if (CurrentBillingFeatures.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  CurrentBillingFeatures: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in CurrentBillingFeatures)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentBillingFeatures>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ApplicationInsightsComponentBillingFeatures IPersistableModel<ApplicationInsightsComponentBillingFeatures>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsComponentBillingFeatures>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeApplicationInsightsComponentBillingFeatures(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsComponentBillingFeatures)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ApplicationInsightsComponentBillingFeatures>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

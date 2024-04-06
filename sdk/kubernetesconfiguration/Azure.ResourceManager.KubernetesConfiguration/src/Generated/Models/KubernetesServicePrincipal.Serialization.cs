@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KubernetesConfiguration.Models
 {
-    public partial class KubernetesServicePrincipal : IUtf8JsonSerializable
+    public partial class KubernetesServicePrincipal : IUtf8JsonSerializable, IJsonModel<KubernetesServicePrincipal>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KubernetesServicePrincipal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<KubernetesServicePrincipal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ClientId))
             {
@@ -81,21 +91,52 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static KubernetesServicePrincipal DeserializeKubernetesServicePrincipal(JsonElement element)
+        KubernetesServicePrincipal IJsonModel<KubernetesServicePrincipal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeKubernetesServicePrincipal(document.RootElement, options);
+        }
+
+        internal static KubernetesServicePrincipal DeserializeKubernetesServicePrincipal(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid?> clientId = default;
-            Optional<Guid?> tenantId = default;
-            Optional<string> clientSecret = default;
-            Optional<string> clientCertificate = default;
-            Optional<string> clientCertificatePassword = default;
-            Optional<bool> clientCertificateSendChain = default;
+            Guid? clientId = default;
+            Guid? tenantId = default;
+            string clientSecret = default;
+            string clientCertificate = default;
+            string clientCertificatePassword = default;
+            bool? clientCertificateSendChain = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("clientId"u8))
@@ -157,8 +198,51 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     clientCertificateSendChain = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new KubernetesServicePrincipal(Optional.ToNullable(clientId), Optional.ToNullable(tenantId), clientSecret.Value, clientCertificate.Value, clientCertificatePassword.Value, Optional.ToNullable(clientCertificateSendChain));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new KubernetesServicePrincipal(
+                clientId,
+                tenantId,
+                clientSecret,
+                clientCertificate,
+                clientCertificatePassword,
+                clientCertificateSendChain,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<KubernetesServicePrincipal>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        KubernetesServicePrincipal IPersistableModel<KubernetesServicePrincipal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeKubernetesServicePrincipal(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<KubernetesServicePrincipal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

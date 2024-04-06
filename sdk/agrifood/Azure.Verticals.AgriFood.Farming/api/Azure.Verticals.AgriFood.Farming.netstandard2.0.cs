@@ -114,8 +114,8 @@ namespace Azure.Verticals.AgriFood.Farming
     public partial class FarmBeatsClient
     {
         protected FarmBeatsClient() { }
-        public FarmBeatsClient(Azure.Core.TokenCredential credential) { }
-        public FarmBeatsClient(Azure.Core.TokenCredential credential, System.Uri endpoint, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
+        public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public FarmBeatsClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.Verticals.AgriFood.Farming.FarmBeatsClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Verticals.AgriFood.Farming.ApplicationData GetApplicationDataClient(string apiVersion = "2022-11-01-preview") { throw null; }
         public virtual Azure.Verticals.AgriFood.Farming.Attachments GetAttachmentsClient(string apiVersion = "2022-11-01-preview") { throw null; }

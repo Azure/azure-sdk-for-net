@@ -5,22 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    internal partial class ExportListResult
+    internal partial class ExportListResult : IUtf8JsonSerializable, IJsonModel<ExportListResult>
     {
-        internal static ExportListResult DeserializeExportListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExportListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExportListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExportListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<CostManagementExportData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExportListResult IJsonModel<ExportListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExportListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExportListResult(document.RootElement, options);
+        }
+
+        internal static ExportListResult DeserializeExportListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<CostManagementExportData>> value = default;
+            IReadOnlyList<CostManagementExportData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,13 +88,49 @@ namespace Azure.ResourceManager.CostManagement.Models
                     List<CostManagementExportData> array = new List<CostManagementExportData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item));
+                        array.Add(CostManagementExportData.DeserializeCostManagementExportData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExportListResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExportListResult(value ?? new ChangeTrackingList<CostManagementExportData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExportListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExportListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExportListResult IPersistableModel<ExportListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExportListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExportListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExportListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExportListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

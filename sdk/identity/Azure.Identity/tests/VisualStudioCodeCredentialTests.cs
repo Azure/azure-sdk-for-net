@@ -54,7 +54,7 @@ namespace Azure.Identity.Tests
             var environment = new IdentityTestEnvironment();
             var options = new VisualStudioCodeCredentialOptions { TenantId = environment.TenantId, AdditionallyAllowedTenants = { TenantIdHint }, Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
-            expectedTenantId = TenantIdResolver.Resolve(environment.TenantId, context, TenantIdResolver.AllTenants);
+            expectedTenantId = TenantIdResolverBase.Default.Resolve(environment.TenantId, context, TenantIdResolverBase.AllTenants);
 
             VisualStudioCodeCredential credential = InstrumentClient(
                 new VisualStudioCodeCredential(
@@ -75,7 +75,7 @@ namespace Azure.Identity.Tests
         {
             var options = new VisualStudioCodeCredentialOptions { TenantId = "adfs", Transport = new MockTransport() };
             var context = new TokenRequestContext(new[] { Scope });
-            string expectedTenantId = TenantIdResolver.Resolve(null, context, TenantIdResolver.AllTenants);
+            string expectedTenantId = TenantIdResolverBase.Default.Resolve(null, context, TenantIdResolverBase.AllTenants);
 
             VisualStudioCodeCredential credential = InstrumentClient(new VisualStudioCodeCredential(options));
 

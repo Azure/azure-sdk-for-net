@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Magento server linked service. </summary>
     public partial class MagentoLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/>. </summary>
         /// <param name="host"> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public MagentoLinkedService(DataFactoryElement<string> host)
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Magento";
         }
 
-        /// <summary> Initializes a new instance of MagentoLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal MagentoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactorySecretBaseDefinition accessToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal MagentoLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactorySecret accessToken, DataFactoryElement<bool> useEncryptedEndpoints, DataFactoryElement<bool> useHostVerification, DataFactoryElement<bool> usePeerVerification, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             AccessToken = accessToken;
@@ -50,10 +49,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "Magento";
         }
 
+        /// <summary> Initializes a new instance of <see cref="MagentoLinkedService"/> for deserialization. </summary>
+        internal MagentoLinkedService()
+        {
+        }
+
         /// <summary> The URL of the Magento instance. (i.e. 192.168.222.110/magento3). </summary>
         public DataFactoryElement<string> Host { get; set; }
         /// <summary> The access token from Magento. </summary>
-        public DataFactorySecretBaseDefinition AccessToken { get; set; }
+        public DataFactorySecret AccessToken { get; set; }
         /// <summary> Specifies whether the data source endpoints are encrypted using HTTPS. The default value is true. </summary>
         public DataFactoryElement<bool> UseEncryptedEndpoints { get; set; }
         /// <summary> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </summary>

@@ -7,13 +7,17 @@ azure-arm: true
 csharp: true
 library-name: ResourceHealth
 namespace: Azure.ResourceManager.ResourceHealth
-require: https://github.com/Azure/azure-rest-api-specs/blob/56b585b014e28a73a0a7831e27b93fa803effead/specification/resourcehealth/resource-manager/readme.md
-# tag: package-2022-10
+require: https://github.com/Azure/azure-rest-api-specs/blob/4bafbf3ab1532e390ad5757433679e9ebb5cbf38/specification/resourcehealth/resource-manager/readme.md
+tag: package-preview-2023-10
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -77,7 +81,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

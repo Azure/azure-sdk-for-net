@@ -8,12 +8,20 @@ azure-arm: true
 csharp: true
 library-name: HealthcareApis
 namespace: Azure.ResourceManager.HealthcareApis
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/healthcareapis/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d701c73fb5ee44f95b97b6c3eaf8c4aeb051e73/specification/healthcareapis/resource-manager/readme.md
+#tag: package-2024-03-31
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -22,7 +30,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -93,6 +101,11 @@ rename-mapping:
   ServiceImportConfigurationInfo.enabled: IsEnabled
   ServiceImportConfigurationInfo.initialImportMode: IsInitialImportMode
   IotFhirDestination.properties.fhirServiceResourceId: -|arm-id
+  ServiceCosmosDbConfigurationInfo.crossTenantCmkApplicationId: -|uuid
+  ImplementationGuidesConfiguration.usCoreMissingData: IsUsCoreMissingDataEnabled
+  DicomService.properties.enableDataPartitions: IsDataPartitionsEnabled
+  StorageConfiguration: HealthcareApisServiceStorageConfiguration
+  StorageConfiguration.storageResourceId: -|arm-id
 
 directive:
 # remove LRO related operations

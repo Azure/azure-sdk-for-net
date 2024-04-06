@@ -831,8 +831,8 @@ namespace Azure.ResourceManager.Network.Tests
 
             // Put AppGw
             var applicationGatewayCollection = resourceGroup.GetApplicationGateways();
-            Operation<ApplicationGatewayResource> putAppGw = InstrumentOperation(await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Started, appGwName, appGw));
-            Response<ApplicationGatewayResource> putAppGwResponse = await putAppGw.WaitForCompletionAsync();
+            var putAppGw = await applicationGatewayCollection.CreateOrUpdateAsync(WaitUntil.Started, appGwName, appGw);
+            var putAppGwResponse = await putAppGw.WaitForCompletionAsync();
             Assert.AreEqual("Succeeded", putAppGwResponse.Value.Data.ProvisioningState.ToString());
 
             // Get AppGw

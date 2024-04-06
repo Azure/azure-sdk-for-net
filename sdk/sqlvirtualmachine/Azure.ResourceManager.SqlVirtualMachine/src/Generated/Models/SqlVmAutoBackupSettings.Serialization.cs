@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
-    public partial class SqlVmAutoBackupSettings : IUtf8JsonSerializable
+    public partial class SqlVmAutoBackupSettings : IUtf8JsonSerializable, IJsonModel<SqlVmAutoBackupSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlVmAutoBackupSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlVmAutoBackupSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoBackupSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsEnabled))
             {
@@ -92,29 +101,60 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 writer.WritePropertyName("logBackupFrequency"u8);
                 writer.WriteNumberValue(LogBackupFrequency.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SqlVmAutoBackupSettings DeserializeSqlVmAutoBackupSettings(JsonElement element)
+        SqlVmAutoBackupSettings IJsonModel<SqlVmAutoBackupSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoBackupSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlVmAutoBackupSettings(document.RootElement, options);
+        }
+
+        internal static SqlVmAutoBackupSettings DeserializeSqlVmAutoBackupSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> enable = default;
-            Optional<bool> enableEncryption = default;
-            Optional<int> retentionPeriod = default;
-            Optional<Uri> storageAccountUrl = default;
-            Optional<string> storageContainerName = default;
-            Optional<string> storageAccessKey = default;
-            Optional<string> password = default;
-            Optional<bool> backupSystemDbs = default;
-            Optional<SqVmBackupScheduleType> backupScheduleType = default;
-            Optional<SqlVmFullBackupFrequency> fullBackupFrequency = default;
-            Optional<IList<SqlVmAutoBackupDayOfWeek>> daysOfWeek = default;
-            Optional<int> fullBackupStartTime = default;
-            Optional<int> fullBackupWindowHours = default;
-            Optional<int> logBackupFrequency = default;
+            bool? enable = default;
+            bool? enableEncryption = default;
+            int? retentionPeriod = default;
+            Uri storageAccountUrl = default;
+            string storageContainerName = default;
+            string storageAccessKey = default;
+            string password = default;
+            bool? backupSystemDbs = default;
+            SqVmBackupScheduleType? backupScheduleType = default;
+            SqlVmFullBackupFrequency? fullBackupFrequency = default;
+            IList<SqlVmAutoBackupDayOfWeek> daysOfWeek = default;
+            int? fullBackupStartTime = default;
+            int? fullBackupWindowHours = default;
+            int? logBackupFrequency = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("enable"u8))
@@ -236,8 +276,59 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                     logBackupFrequency = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlVmAutoBackupSettings(Optional.ToNullable(enable), Optional.ToNullable(enableEncryption), Optional.ToNullable(retentionPeriod), storageAccountUrl.Value, storageContainerName.Value, storageAccessKey.Value, password.Value, Optional.ToNullable(backupSystemDbs), Optional.ToNullable(backupScheduleType), Optional.ToNullable(fullBackupFrequency), Optional.ToList(daysOfWeek), Optional.ToNullable(fullBackupStartTime), Optional.ToNullable(fullBackupWindowHours), Optional.ToNullable(logBackupFrequency));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlVmAutoBackupSettings(
+                enable,
+                enableEncryption,
+                retentionPeriod,
+                storageAccountUrl,
+                storageContainerName,
+                storageAccessKey,
+                password,
+                backupSystemDbs,
+                backupScheduleType,
+                fullBackupFrequency,
+                daysOfWeek ?? new ChangeTrackingList<SqlVmAutoBackupDayOfWeek>(),
+                fullBackupStartTime,
+                fullBackupWindowHours,
+                logBackupFrequency,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlVmAutoBackupSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoBackupSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlVmAutoBackupSettings IPersistableModel<SqlVmAutoBackupSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlVmAutoBackupSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlVmAutoBackupSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlVmAutoBackupSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlVmAutoBackupSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

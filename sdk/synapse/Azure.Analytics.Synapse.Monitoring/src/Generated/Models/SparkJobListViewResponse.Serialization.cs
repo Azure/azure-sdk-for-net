@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Monitoring.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
             {
                 return null;
             }
-            Optional<int> nJobs = default;
-            Optional<IReadOnlyList<SparkJob>> sparkJobs = default;
+            int? nJobs = default;
+            IReadOnlyList<SparkJob> sparkJobs = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nJobs"u8))
@@ -47,7 +46,15 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                     continue;
                 }
             }
-            return new SparkJobListViewResponse(Optional.ToNullable(nJobs), Optional.ToList(sparkJobs));
+            return new SparkJobListViewResponse(nJobs, sparkJobs ?? new ChangeTrackingList<SparkJob>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJobListViewResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJobListViewResponse(document.RootElement);
         }
     }
 }

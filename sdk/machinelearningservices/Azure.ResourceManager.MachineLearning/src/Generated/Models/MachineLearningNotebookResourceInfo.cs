@@ -5,32 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningNotebookResourceInfo. </summary>
     public partial class MachineLearningNotebookResourceInfo
     {
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         internal MachineLearningNotebookResourceInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningNotebookResourceInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
-        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="isPrivateLinkEnabled"></param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
-        internal MachineLearningNotebookResourceInfo(string fqdn, string resourceId, MachineLearningNotebookPreparationError notebookPreparationError)
+        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNotebookResourceInfo(string fqdn, bool? isPrivateLinkEnabled, MachineLearningNotebookPreparationError notebookPreparationError, string resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Fqdn = fqdn;
-            ResourceId = resourceId;
+            IsPrivateLinkEnabled = isPrivateLinkEnabled;
             NotebookPreparationError = notebookPreparationError;
+            ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets the fqdn. </summary>
         public string Fqdn { get; }
-        /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
-        public string ResourceId { get; }
+        /// <summary> Gets the is private link enabled. </summary>
+        public bool? IsPrivateLinkEnabled { get; }
         /// <summary> The error that occurs when preparing notebook. </summary>
         public MachineLearningNotebookPreparationError NotebookPreparationError { get; }
+        /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
+        public string ResourceId { get; }
     }
 }

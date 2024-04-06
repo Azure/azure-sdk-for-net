@@ -1,0 +1,10 @@
+{
+    "version": "2.0",
+    "logging": {
+        "fileLoggingMode": "always",
+        "logLevel": {
+          "Function.MyFunction": "Information",
+          "default": "None"
+        }
+    }
+}

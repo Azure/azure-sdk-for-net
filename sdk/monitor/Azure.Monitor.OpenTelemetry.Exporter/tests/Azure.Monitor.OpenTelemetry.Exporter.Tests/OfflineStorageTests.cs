@@ -99,6 +99,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         [Fact]
+        public void NetworkFailure()
+        {
+            using var activity = CreateActivity("TestActivity");
+            var telemetryItem = CreateTelemetryItem(activity);
+            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            telemetryItems.Add(telemetryItem);
+
+            // Transmit
+            using var transmitter = GetTransmitter(null);
+            transmitter.TrackAsync(telemetryItems, TelemetryItemOrigin.UnitTest, false, CancellationToken.None).EnsureCompleted();
+
+            //Assert
+            Assert.NotNull(transmitter._fileBlobProvider);
+            Assert.Single(transmitter._fileBlobProvider.GetBlobs());
+        }
+
+        [Fact]
         public void FailureResponseCode206()
         {
             using var activity1 = CreateActivity("TestActivity1");
@@ -260,17 +277,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             transmitter.Dispose();
         }
 
-        private static AzureMonitorTransmitter GetTransmitter(params MockResponse[] mockResponse)
+        private static AzureMonitorTransmitter GetTransmitter(params MockResponse[]? mockResponse)
         {
-            MockTransport mockTransport = new MockTransport(mockResponse);
-            AzureMonitorExporterOptions options = new AzureMonitorExporterOptions
+            AzureMonitorTransmitter transmitter;
+            AzureMonitorExporterOptions options;
+            if (mockResponse == null)
             {
-                ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
-                StorageDirectory = "C:\\test",
-                Transport = mockTransport,
-                EnableStatsbeat = false, // disabled in tests.
-            };
-            AzureMonitorTransmitter transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
+                options = new AzureMonitorExporterOptions
+                {
+                    ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
+                    StorageDirectory = "C:\\test",
+                    EnableStatsbeat = false, // disabled in tests.
+                };
+            }
+            else
+            {
+                MockTransport mockTransport = new MockTransport(mockResponse);
+                options = new AzureMonitorExporterOptions
+                {
+                    ConnectionString = $"InstrumentationKey={testIkey};IngestionEndpoint={testEndpoint}",
+                    StorageDirectory = "C:\\test",
+                    Transport = mockTransport,
+                    EnableStatsbeat = false, // disabled in tests.
+                };
+            }
+
+            transmitter = new AzureMonitorTransmitter(options, new MockPlatform());
 
             // Overwrite storage with mock
             transmitter._fileBlobProvider = new MockFileProvider();

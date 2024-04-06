@@ -5,26 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesRegistrationAssignmentRegistrationData
+    public partial class ManagedServicesRegistrationAssignmentRegistrationData : IUtf8JsonSerializable, IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>
     {
-        internal static ManagedServicesRegistrationAssignmentRegistrationData DeserializeManagedServicesRegistrationAssignmentRegistrationData(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<ManagedServicesRegistrationAssignmentRegistrationProperties>(Properties, options);
+            }
+            if (Optional.IsDefined(Plan))
+            {
+                writer.WritePropertyName("plan"u8);
+                writer.WriteObjectValue<ManagedServicesPlan>(Plan, options);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationData IJsonModel<ManagedServicesRegistrationAssignmentRegistrationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesRegistrationAssignmentRegistrationData(document.RootElement, options);
+        }
+
+        internal static ManagedServicesRegistrationAssignmentRegistrationData DeserializeManagedServicesRegistrationAssignmentRegistrationData(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ManagedServicesRegistrationAssignmentRegistrationProperties> properties = default;
-            Optional<ManagedServicesPlan> plan = default;
+            ManagedServicesRegistrationAssignmentRegistrationProperties properties = default;
+            ManagedServicesPlan plan = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -33,7 +111,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value);
+                    properties = ManagedServicesRegistrationAssignmentRegistrationProperties.DeserializeManagedServicesRegistrationAssignmentRegistrationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("plan"u8))
@@ -42,7 +120,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     {
                         continue;
                     }
-                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value);
+                    plan = ManagedServicesPlan.DeserializeManagedServicesPlan(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -69,8 +147,51 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesRegistrationAssignmentRegistrationData(id, name, type, systemData.Value, properties.Value, plan.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedServicesRegistrationAssignmentRegistrationData(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                plan,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServicesRegistrationAssignmentRegistrationData IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServicesRegistrationAssignmentRegistrationData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesRegistrationAssignmentRegistrationData)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServicesRegistrationAssignmentRegistrationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

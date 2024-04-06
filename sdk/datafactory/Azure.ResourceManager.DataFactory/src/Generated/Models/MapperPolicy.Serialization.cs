@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperPolicy : IUtf8JsonSerializable
+    public partial class MapperPolicy : IUtf8JsonSerializable, IJsonModel<MapperPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapperPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Mode))
             {
@@ -23,19 +34,50 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<MapperPolicyRecurrence>(Recurrence, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MapperPolicy DeserializeMapperPolicy(JsonElement element)
+        MapperPolicy IJsonModel<MapperPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperPolicy(document.RootElement, options);
+        }
+
+        internal static MapperPolicy DeserializeMapperPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> mode = default;
-            Optional<MapperPolicyRecurrence> recurrence = default;
+            string mode = default;
+            MapperPolicyRecurrence recurrence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("mode"u8))
@@ -49,11 +91,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value);
+                    recurrence = MapperPolicyRecurrence.DeserializeMapperPolicyRecurrence(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapperPolicy(mode.Value, recurrence.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MapperPolicy(mode, recurrence, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapperPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MapperPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MapperPolicy IPersistableModel<MapperPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapperPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapperPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapperPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

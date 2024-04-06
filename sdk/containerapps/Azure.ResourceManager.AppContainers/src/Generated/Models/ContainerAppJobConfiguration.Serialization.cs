@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppJobConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppJobConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppJobConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppJobConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppJobConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Secrets))
             {
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppWritableSecret>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -38,17 +48,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(ManualTriggerConfig))
             {
                 writer.WritePropertyName("manualTriggerConfig"u8);
-                writer.WriteObjectValue(ManualTriggerConfig);
+                writer.WriteObjectValue<JobConfigurationManualTriggerConfig>(ManualTriggerConfig, options);
             }
             if (Optional.IsDefined(ScheduleTriggerConfig))
             {
                 writer.WritePropertyName("scheduleTriggerConfig"u8);
-                writer.WriteObjectValue(ScheduleTriggerConfig);
+                writer.WriteObjectValue<JobConfigurationScheduleTriggerConfig>(ScheduleTriggerConfig, options);
             }
             if (Optional.IsDefined(EventTriggerConfig))
             {
                 writer.WritePropertyName("eventTriggerConfig"u8);
-                writer.WriteObjectValue(EventTriggerConfig);
+                writer.WriteObjectValue<EventTriggerConfiguration>(EventTriggerConfig, options);
             }
             if (Optional.IsCollectionDefined(Registries))
             {
@@ -56,27 +66,58 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Registries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppRegistryCredentials>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppJobConfiguration DeserializeContainerAppJobConfiguration(JsonElement element)
+        ContainerAppJobConfiguration IJsonModel<ContainerAppJobConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppJobConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppJobConfiguration DeserializeContainerAppJobConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<ContainerAppWritableSecret>> secrets = default;
+            IList<ContainerAppWritableSecret> secrets = default;
             ContainerAppJobTriggerType triggerType = default;
             int replicaTimeout = default;
-            Optional<int> replicaRetryLimit = default;
-            Optional<JobConfigurationManualTriggerConfig> manualTriggerConfig = default;
-            Optional<JobConfigurationScheduleTriggerConfig> scheduleTriggerConfig = default;
-            Optional<EventTriggerConfiguration> eventTriggerConfig = default;
-            Optional<IList<ContainerAppRegistryCredentials>> registries = default;
+            int? replicaRetryLimit = default;
+            JobConfigurationManualTriggerConfig manualTriggerConfig = default;
+            JobConfigurationScheduleTriggerConfig scheduleTriggerConfig = default;
+            EventTriggerConfiguration eventTriggerConfig = default;
+            IList<ContainerAppRegistryCredentials> registries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("secrets"u8))
@@ -88,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppWritableSecret> array = new List<ContainerAppWritableSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item));
+                        array.Add(ContainerAppWritableSecret.DeserializeContainerAppWritableSecret(item, options));
                     }
                     secrets = array;
                     continue;
@@ -118,7 +159,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    manualTriggerConfig = JobConfigurationManualTriggerConfig.DeserializeJobConfigurationManualTriggerConfig(property.Value);
+                    manualTriggerConfig = JobConfigurationManualTriggerConfig.DeserializeJobConfigurationManualTriggerConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scheduleTriggerConfig"u8))
@@ -127,7 +168,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scheduleTriggerConfig = JobConfigurationScheduleTriggerConfig.DeserializeJobConfigurationScheduleTriggerConfig(property.Value);
+                    scheduleTriggerConfig = JobConfigurationScheduleTriggerConfig.DeserializeJobConfigurationScheduleTriggerConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventTriggerConfig"u8))
@@ -136,7 +177,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value);
+                    eventTriggerConfig = EventTriggerConfiguration.DeserializeEventTriggerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("registries"u8))
@@ -148,13 +189,58 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRegistryCredentials> array = new List<ContainerAppRegistryCredentials>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item));
+                        array.Add(ContainerAppRegistryCredentials.DeserializeContainerAppRegistryCredentials(item, options));
                     }
                     registries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppJobConfiguration(Optional.ToList(secrets), triggerType, replicaTimeout, Optional.ToNullable(replicaRetryLimit), manualTriggerConfig.Value, scheduleTriggerConfig.Value, eventTriggerConfig.Value, Optional.ToList(registries));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppJobConfiguration(
+                secrets ?? new ChangeTrackingList<ContainerAppWritableSecret>(),
+                triggerType,
+                replicaTimeout,
+                replicaRetryLimit,
+                manualTriggerConfig,
+                scheduleTriggerConfig,
+                eventTriggerConfig,
+                registries ?? new ChangeTrackingList<ContainerAppRegistryCredentials>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppJobConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppJobConfiguration IPersistableModel<ContainerAppJobConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppJobConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppJobConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppJobConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppJobConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

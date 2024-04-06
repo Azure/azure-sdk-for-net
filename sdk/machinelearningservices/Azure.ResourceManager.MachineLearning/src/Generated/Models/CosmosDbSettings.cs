@@ -5,24 +5,61 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The CosmosDbSettings. </summary>
     internal partial class CosmosDbSettings
     {
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
         public CosmosDbSettings()
         {
         }
 
-        /// <summary> Initializes a new instance of CosmosDbSettings. </summary>
-        /// <param name="collectionsThroughput"> The throughput of the collections in cosmosdb database. </param>
-        internal CosmosDbSettings(int? collectionsThroughput)
+        /// <summary> Initializes a new instance of <see cref="CosmosDbSettings"/>. </summary>
+        /// <param name="collectionsThroughput"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CosmosDbSettings(int? collectionsThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CollectionsThroughput = collectionsThroughput;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The throughput of the collections in cosmosdb database. </summary>
+        /// <summary> Gets or sets the collections throughput. </summary>
         public int? CollectionsThroughput { get; set; }
     }
 }

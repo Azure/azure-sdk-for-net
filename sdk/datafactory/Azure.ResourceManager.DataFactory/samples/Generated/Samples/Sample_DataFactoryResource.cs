@@ -8,12 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.DataFactory;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
 
@@ -712,7 +709,7 @@ RowLimit = 222,
 },
                     Parameters =
 {
-["sourcePath"] = BinaryData.FromString("Toy"),
+["sourcePath"] = BinaryData.FromString("\"Toy\""),
 },
                     DatasetParameters = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
                     {

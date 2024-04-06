@@ -685,7 +685,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual Response<TableItem> CreateTableIfNotExists(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -724,7 +724,7 @@ namespace Azure.Data.Tables
         /// </summary>
         /// <param name="tableName">The name of the table to create.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>If the table does not already exist, a <see cref="Response{TableItem}"/>. If the table already exists, <c>null</c>.</returns>
+        /// <returns>A <see cref="Response{TableItem}"/> containing properties of the table. If the table already exists, then <see cref="Response.Status"/> is 409. The <see cref="Response"/> can be accessed via the GetRawResponse() method.</returns>
         public virtual async Task<Response<TableItem>> CreateTableIfNotExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tableName, nameof(tableName));
@@ -808,6 +808,7 @@ namespace Azure.Data.Tables
         /// <param name="properties"> The Table Service properties. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Response SetProperties(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -828,6 +829,7 @@ namespace Azure.Data.Tables
         /// <param name="properties"> The Table Service properties. </param>
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         /// <returns>The <see cref="Response"/> indicating the result of the operation.</returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual async Task<Response> SetPropertiesAsync(TableServiceProperties properties, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(TableServiceClient)}.{nameof(SetProperties)}");
@@ -942,6 +944,7 @@ namespace Azure.Data.Tables
         /// </param>
         /// <returns> A <see cref="TableAccountSasBuilder"/> on successfully deleting. </returns>
         /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Uri GenerateSasUri(TableAccountSasPermissions permissions, TableAccountSasResourceTypes resourceTypes, DateTimeOffset expiresOn)
             => GenerateSasUri(new TableAccountSasBuilder(permissions, resourceTypes, expiresOn));
 
@@ -957,6 +960,7 @@ namespace Azure.Data.Tables
         /// <param name="builder"> Used to generate a Shared Access Signature (SAS). </param>
         /// <returns> A <see cref="TableAccountSasBuilder"/> on successfully deleting. </returns>
         /// <remarks> An <see cref="Exception"/> will be thrown if a failure occurs. </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/data-tables")]
         public virtual Uri GenerateSasUri(
             TableAccountSasBuilder builder)
         {

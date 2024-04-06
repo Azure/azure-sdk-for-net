@@ -22,10 +22,10 @@ namespace Azure.Communication.CallAutomation
                 writer.WritePropertyName("sourceLocale"u8);
                 writer.WriteStringValue(SourceLocale);
             }
-            if (Optional.IsDefined(VoiceGender))
+            if (Optional.IsDefined(VoiceKind))
             {
-                writer.WritePropertyName("voiceGender"u8);
-                writer.WriteStringValue(VoiceGender.Value.ToString());
+                writer.WritePropertyName("voiceKind"u8);
+                writer.WriteStringValue(VoiceKind.Value.ToString());
             }
             if (Optional.IsDefined(VoiceName))
             {
@@ -38,6 +38,14 @@ namespace Azure.Communication.CallAutomation
                 writer.WriteStringValue(CustomVoiceEndpointId);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TextSourceInternal>(this);
+            return content;
         }
     }
 }

@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class Participant : IUtf8JsonSerializable
+    public partial class Participant : IUtf8JsonSerializable, IJsonModel<Participant>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<Participant>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<Participant>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Participant)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("profileTypeName"u8);
             writer.WriteStringValue(ProfileTypeName);
@@ -22,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             writer.WriteStartArray();
             foreach (var item in ParticipantPropertyReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ParticipantPropertyReference>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("participantName"u8);
@@ -54,11 +64,40 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static Participant DeserializeParticipant(JsonElement element)
+        Participant IJsonModel<Participant>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(Participant)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParticipant(document.RootElement, options);
+        }
+
+        internal static Participant DeserializeParticipant(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -66,9 +105,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             string profileTypeName = default;
             IList<ParticipantPropertyReference> participantPropertyReferences = default;
             string participantName = default;
-            Optional<IDictionary<string, string>> displayName = default;
-            Optional<IDictionary<string, string>> description = default;
-            Optional<string> role = default;
+            IDictionary<string, string> displayName = default;
+            IDictionary<string, string> description = default;
+            string role = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("profileTypeName"u8))
@@ -81,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ParticipantPropertyReference> array = new List<ParticipantPropertyReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item));
+                        array.Add(ParticipantPropertyReference.DeserializeParticipantPropertyReference(item, options));
                     }
                     participantPropertyReferences = array;
                     continue;
@@ -124,8 +165,51 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     role = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new Participant(profileTypeName, participantPropertyReferences, participantName, Optional.ToDictionary(displayName), Optional.ToDictionary(description), role.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new Participant(
+                profileTypeName,
+                participantPropertyReferences,
+                participantName,
+                displayName ?? new ChangeTrackingDictionary<string, string>(),
+                description ?? new ChangeTrackingDictionary<string, string>(),
+                role,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<Participant>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(Participant)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        Participant IPersistableModel<Participant>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<Participant>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParticipant(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(Participant)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<Participant>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

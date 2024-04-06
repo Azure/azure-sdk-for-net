@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Couchbase server linked service. </summary>
     public partial class CouchbaseLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of CouchbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CouchbaseLinkedService"/>. </summary>
         public CouchbaseLinkedService()
         {
             LinkedServiceType = "Couchbase";
         }
 
-        /// <summary> Initializes a new instance of CouchbaseLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CouchbaseLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="credString"> The Azure key vault secret reference of credString in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal CouchbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecretReference credString, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CouchbaseLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> connectionString, DataFactoryKeyVaultSecret credString, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             ConnectionString = connectionString;
             CredString = credString;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> An ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </summary>
         public DataFactoryElement<string> ConnectionString { get; set; }
         /// <summary> The Azure key vault secret reference of credString in connection string. </summary>
-        public DataFactoryKeyVaultSecretReference CredString { get; set; }
+        public DataFactoryKeyVaultSecret CredString { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

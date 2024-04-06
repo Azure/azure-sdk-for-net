@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -18,8 +17,8 @@ namespace Azure.Maps.Routing.Models
             {
                 return null;
             }
-            Optional<RouteDirectionsBatchItemResponse> response = default;
-            Optional<int> statusCode = default;
+            RouteDirectionsBatchItemResponse response = default;
+            int? statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("response"u8))
@@ -41,7 +40,15 @@ namespace Azure.Maps.Routing.Models
                     continue;
                 }
             }
-            return new RouteDirectionsBatchItem(Optional.ToNullable(statusCode), response.Value);
+            return new RouteDirectionsBatchItem(statusCode, response);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RouteDirectionsBatchItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteDirectionsBatchItem(document.RootElement);
         }
     }
 }

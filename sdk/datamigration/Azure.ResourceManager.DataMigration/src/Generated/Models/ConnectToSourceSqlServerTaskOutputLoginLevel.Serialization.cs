@@ -5,26 +5,106 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ConnectToSourceSqlServerTaskOutputLoginLevel
+    public partial class ConnectToSourceSqlServerTaskOutputLoginLevel : IUtf8JsonSerializable, IJsonModel<ConnectToSourceSqlServerTaskOutputLoginLevel>
     {
-        internal static ConnectToSourceSqlServerTaskOutputLoginLevel DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectToSourceSqlServerTaskOutputLoginLevel>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputLoginLevel)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LoginType))
+            {
+                writer.WritePropertyName("loginType"u8);
+                writer.WriteStringValue(LoginType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultDatabase))
+            {
+                writer.WritePropertyName("defaultDatabase"u8);
+                writer.WriteStringValue(DefaultDatabase);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("isEnabled"u8);
+                writer.WriteBooleanValue(IsEnabled.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MigrationEligibility))
+            {
+                writer.WritePropertyName("migrationEligibility"u8);
+                writer.WriteObjectValue<MigrationEligibilityInfo>(MigrationEligibility, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("resultType"u8);
+            writer.WriteStringValue(ResultType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectToSourceSqlServerTaskOutputLoginLevel IJsonModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputLoginLevel)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(document.RootElement, options);
+        }
+
+        internal static ConnectToSourceSqlServerTaskOutputLoginLevel DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<LoginType> loginType = default;
-            Optional<string> defaultDatabase = default;
-            Optional<bool> isEnabled = default;
-            Optional<MigrationEligibilityInfo> migrationEligibility = default;
-            Optional<string> id = default;
+            string name = default;
+            LoginType? loginType = default;
+            string defaultDatabase = default;
+            bool? isEnabled = default;
+            MigrationEligibilityInfo migrationEligibility = default;
+            string id = default;
             string resultType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -61,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value);
+                    migrationEligibility = MigrationEligibilityInfo.DeserializeMigrationEligibilityInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -74,8 +154,52 @@ namespace Azure.ResourceManager.DataMigration.Models
                     resultType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectToSourceSqlServerTaskOutputLoginLevel(id.Value, resultType, name.Value, Optional.ToNullable(loginType), defaultDatabase.Value, Optional.ToNullable(isEnabled), migrationEligibility.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectToSourceSqlServerTaskOutputLoginLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                name,
+                loginType,
+                defaultDatabase,
+                isEnabled,
+                migrationEligibility);
         }
+
+        BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputLoginLevel)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectToSourceSqlServerTaskOutputLoginLevel IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectToSourceSqlServerTaskOutputLoginLevel(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputLoginLevel)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectToSourceSqlServerTaskOutputLoginLevel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

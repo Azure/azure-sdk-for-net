@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication.MediaComposition;
 using Azure.Core;
 
 namespace Azure.Communication.MediaComposition.Models
@@ -21,7 +20,7 @@ namespace Azure.Communication.MediaComposition.Models
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -54,6 +53,22 @@ namespace Azure.Communication.MediaComposition.Models
                 }
             }
             return UnknownLayout.DeserializeUnknownLayout(element);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaCompositionLayout FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaCompositionLayout(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MediaCompositionLayout>(this);
+            return content;
         }
     }
 }

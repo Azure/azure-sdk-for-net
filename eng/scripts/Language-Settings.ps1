@@ -4,7 +4,6 @@ $LanguageDisplayName = ".NET"
 $PackageRepository = "Nuget"
 $packagePattern = "*.nupkg"
 $MetadataUri = "https://raw.githubusercontent.com/Azure/azure-sdk/main/_data/releases/latest/dotnet-packages.csv"
-$BlobStorageUrl = "https://azuresdkdocs.blob.core.windows.net/%24web?restype=container&comp=list&prefix=dotnet%2F&delimiter=%2F"
 $GithubUri = "https://github.com/Azure/azure-sdk-for-net"
 $PackageRepositoryUri = "https://www.nuget.org/packages"
 
@@ -187,7 +186,13 @@ function Get-dotnet-GithubIoDocIndex()
   # Fetch out all package metadata from csv file.
   $metadata = Get-CSVMetadata -MetadataUri $MetadataUri
   # Get the artifacts name from blob storage
-  $artifacts =  Get-BlobStorage-Artifacts -blobStorageUrl $BlobStorageUrl -blobDirectoryRegex "^dotnet/(.*)/$" -blobArtifactsReplacement '$1'
+  $artifacts =  Get-BlobStorage-Artifacts `
+    -blobDirectoryRegex "^dotnet/(.*)/$" `
+    -blobArtifactsReplacement '$1' `
+    -storageAccountName 'azuresdkdocs' `
+    -storageContainerName '$web' `
+    -storagePrefix 'dotnet/'
+
   # Build up the artifact to service name mapping for GithubIo toc.
   $tocContent = Get-TocMapping -metadata $metadata -artifacts $artifacts
   # Generate yml/md toc files and build site.
@@ -298,6 +303,7 @@ function Get-dotnet-DocsMsMetadataForPackage($PackageInfo) {
     DocsMsReadMeName = $readmeName
     LatestReadMeLocation = 'api/overview/azure/latest'
     PreviewReadMeLocation = 'api/overview/azure/preview'
+    LegacyReadMeLocation = 'api/overview/azure/legacy'
     Suffix = ''
   }
 }
@@ -418,7 +424,7 @@ function EnsureCustomSource($package) {
       -AllVersions `
       -AllowPrereleaseVersions
 
-      if (!$? -or !$existingVersions) { 
+      if (!$? -or !$existingVersions) {
         Write-Host "Failed to find package $($package.Name) in custom source $customPackageSource"
         return $package
       }
@@ -494,6 +500,25 @@ function UpdateDocsMsPackages($DocConfigFile, $Mode, $DocsMetadata) {
       continue
     }
 
+    if ($matchingPublishedPackage.Support -eq 'deprecated') {
+      if ($Mode -eq 'legacy') {
+
+        # Select the GA version, if none use the preview version
+        $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
+        if (!$updatedVersion) {
+          $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
+        }
+        $package.Versions = @($updatedVersion)
+
+        Write-Host "Add deprecated package to legacy moniker: $($package.Name)"
+        $outputPackages += $package
+      } else {
+        Write-Host "Removing deprecated package: $($package.Name)"
+      }
+
+      continue
+    }
+
     $updatedVersion = $matchingPublishedPackage.VersionGA.Trim()
     if ($Mode -eq 'preview') {
       $updatedVersion = $matchingPublishedPackage.VersionPreview.Trim()
@@ -565,4 +590,70 @@ function Get-dotnet-EmitterName() {
 
 function Get-dotnet-EmitterAdditionalOptions([string]$projectDirectory) {
   return "--option @azure-tools/typespec-csharp.emitter-output-dir=$projectDirectory/src"
+}
+
+function Update-dotnet-GeneratedSdks([string]$PackageDirectoriesFile) {
+  Push-Location $RepoRoot
+  try {
+    Write-Host "`n`n======================================================================"
+    Write-Host "Generating projects" -ForegroundColor Yellow
+    Write-Host "======================================================================`n"
+
+    $packageDirectories = Get-Content $PackageDirectoriesFile | ConvertFrom-Json
+
+    # Build the project list override file
+
+    $lines = @('<Project>', '  <ItemGroup>')
+
+    foreach ($directory in $packageDirectories) {
+      $projects = Get-ChildItem -Path "$RepoRoot/sdk/$directory" -Filter "*.csproj" -Recurse
+      foreach ($project in $projects) {
+        $lines += "    <ProjectReference Include=`"$($project.FullName)`" />"
+      }
+    }
+
+    $lines += '  </ItemGroup>', '</Project>'
+    $artifactsPath = Join-Path $RepoRoot "artifacts"
+    $projectListOverrideFile = Join-Path $artifactsPath "GeneratedSdks.proj"
+
+    Write-Host "Creating project list override file $projectListOverrideFile`:"
+    $lines | ForEach-Object { "  $_" } | Out-Host
+
+    New-Item $artifactsPath -ItemType Directory -Force | Out-Null
+    $lines | Out-File $projectListOverrideFile -Encoding UTF8
+    Write-Host "`n"
+
+    # Install autorest locally
+    Invoke-LoggedCommand "npm ci --prefix $RepoRoot"
+
+    Write-Host "Running npm ci over emitter-package.json in a temp folder to prime the npm cache"
+
+    $tempFolder = New-TemporaryFile
+    $tempFolder | Remove-Item -Force
+    New-Item $tempFolder -ItemType Directory -Force | Out-Null
+
+    Push-Location $tempFolder
+    try {
+        Copy-Item "$RepoRoot/eng/emitter-package.json" "package.json"
+        if(Test-Path "$RepoRoot/eng/emitter-package-lock.json") {
+            Copy-Item "$RepoRoot/eng/emitter-package-lock.json" "package-lock.json"
+            Invoke-LoggedCommand "npm ci"
+        } else {
+          Invoke-LoggedCommand "npm install"
+        }
+    }
+    finally {
+      Pop-Location
+      $tempFolder | Remove-Item -Force -Recurse
+    }
+
+    # Generate projects
+    $showSummary = ($env:SYSTEM_DEBUG -eq 'true') -or ($VerbosePreference -ne 'SilentlyContinue')
+    $summaryArgs = $showSummary ? "/v:n /ds" : ""
+
+    Invoke-LoggedCommand "dotnet msbuild /restore /t:GenerateCode /p:ProjectListOverrideFile=$(Resolve-Path $projectListOverrideFile -Relative) $summaryArgs eng\service.proj"
+  }
+  finally {
+    Pop-Location
+  }
 }

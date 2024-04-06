@@ -5,26 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
-    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability
+    public partial class PostgreSqlFlexibleServerFastProvisioningEditionCapability : IUtf8JsonSerializable, IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>
     {
-        internal static PostgreSqlFlexibleServerFastProvisioningEditionCapability DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(SupportedTier))
+            {
+                writer.WritePropertyName("supportedTier"u8);
+                writer.WriteStringValue(SupportedTier);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedSku))
+            {
+                writer.WritePropertyName("supportedSku"u8);
+                writer.WriteStringValue(SupportedSku);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedStorageGb))
+            {
+                writer.WritePropertyName("supportedStorageGb"u8);
+                writer.WriteNumberValue(SupportedStorageGb.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SupportedServerVersions))
+            {
+                writer.WritePropertyName("supportedServerVersions"u8);
+                writer.WriteStringValue(SupportedServerVersions);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ServerCount))
+            {
+                writer.WritePropertyName("serverCount"u8);
+                writer.WriteNumberValue(ServerCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CapabilityStatus))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(CapabilityStatus.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reason))
+            {
+                writer.WritePropertyName("reason"u8);
+                writer.WriteStringValue(Reason);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PostgreSqlFlexibleServerFastProvisioningEditionCapability IJsonModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(document.RootElement, options);
+        }
+
+        internal static PostgreSqlFlexibleServerFastProvisioningEditionCapability DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> supportedTier = default;
-            Optional<string> supportedSku = default;
-            Optional<long> supportedStorageGb = default;
-            Optional<string> supportedServerVersions = default;
-            Optional<int> serverCount = default;
-            Optional<PostgreSqlFlexbileServerCapabilityStatus> status = default;
-            Optional<string> reason = default;
+            string supportedTier = default;
+            string supportedSku = default;
+            long? supportedStorageGb = default;
+            string supportedServerVersions = default;
+            int? serverCount = default;
+            PostgreSqlFlexbileServerCapabilityStatus? status = default;
+            string reason = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedTier"u8))
@@ -74,8 +158,199 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     reason = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(Optional.ToNullable(status), reason.Value, supportedTier.Value, supportedSku.Value, Optional.ToNullable(supportedStorageGb), supportedServerVersions.Value, Optional.ToNullable(serverCount));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
+                status,
+                reason,
+                serializedAdditionalRawData,
+                supportedTier,
+                supportedSku,
+                supportedStorageGb,
+                supportedServerVersions,
+                serverCount);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedTier), out propertyOverride);
+            if (Optional.IsDefined(SupportedTier) || hasPropertyOverride)
+            {
+                builder.Append("  supportedTier: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SupportedTier.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SupportedTier}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SupportedTier}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedSku), out propertyOverride);
+            if (Optional.IsDefined(SupportedSku) || hasPropertyOverride)
+            {
+                builder.Append("  supportedSku: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SupportedSku.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SupportedSku}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SupportedSku}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedStorageGb), out propertyOverride);
+            if (Optional.IsDefined(SupportedStorageGb) || hasPropertyOverride)
+            {
+                builder.Append("  supportedStorageGb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SupportedStorageGb.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedServerVersions), out propertyOverride);
+            if (Optional.IsDefined(SupportedServerVersions) || hasPropertyOverride)
+            {
+                builder.Append("  supportedServerVersions: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SupportedServerVersions.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SupportedServerVersions}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SupportedServerVersions}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerCount), out propertyOverride);
+            if (Optional.IsDefined(ServerCount) || hasPropertyOverride)
+            {
+                builder.Append("  serverCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ServerCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CapabilityStatus), out propertyOverride);
+            if (Optional.IsDefined(CapabilityStatus) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{CapabilityStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PostgreSqlFlexibleServerFastProvisioningEditionCapability IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePostgreSqlFlexibleServerFastProvisioningEditionCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PostgreSqlFlexibleServerFastProvisioningEditionCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PostgreSqlFlexibleServerFastProvisioningEditionCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

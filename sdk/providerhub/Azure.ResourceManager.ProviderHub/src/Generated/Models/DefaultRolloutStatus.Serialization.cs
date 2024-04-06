@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class DefaultRolloutStatus : IUtf8JsonSerializable
+    public partial class DefaultRolloutStatus : IUtf8JsonSerializable, IJsonModel<DefaultRolloutStatus>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DefaultRolloutStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DefaultRolloutStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutStatus)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NextTrafficRegion))
             {
@@ -49,24 +58,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 foreach (var item in FailedOrSkippedRegions)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ExtendedErrorInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static DefaultRolloutStatus DeserializeDefaultRolloutStatus(JsonElement element)
+        DefaultRolloutStatus IJsonModel<DefaultRolloutStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DefaultRolloutStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDefaultRolloutStatus(document.RootElement, options);
+        }
+
+        internal static DefaultRolloutStatus DeserializeDefaultRolloutStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TrafficRegionCategory> nextTrafficRegion = default;
-            Optional<DateTimeOffset> nextTrafficRegionScheduledTime = default;
-            Optional<SubscriptionReregistrationResult> subscriptionReregistrationResult = default;
-            Optional<IList<AzureLocation>> completedRegions = default;
-            Optional<IDictionary<string, ExtendedErrorInfo>> failedOrSkippedRegions = default;
+            TrafficRegionCategory? nextTrafficRegion = default;
+            DateTimeOffset? nextTrafficRegionScheduledTime = default;
+            SubscriptionReregistrationResult? subscriptionReregistrationResult = default;
+            IList<AzureLocation> completedRegions = default;
+            IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextTrafficRegion"u8))
@@ -119,13 +159,55 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     Dictionary<string, ExtendedErrorInfo> dictionary = new Dictionary<string, ExtendedErrorInfo>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value));
+                        dictionary.Add(property0.Name, ExtendedErrorInfo.DeserializeExtendedErrorInfo(property0.Value, options));
                     }
                     failedOrSkippedRegions = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DefaultRolloutStatus(Optional.ToList(completedRegions), Optional.ToDictionary(failedOrSkippedRegions), Optional.ToNullable(nextTrafficRegion), Optional.ToNullable(nextTrafficRegionScheduledTime), Optional.ToNullable(subscriptionReregistrationResult));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DefaultRolloutStatus(
+                completedRegions ?? new ChangeTrackingList<AzureLocation>(),
+                failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(),
+                serializedAdditionalRawData,
+                nextTrafficRegion,
+                nextTrafficRegionScheduledTime,
+                subscriptionReregistrationResult);
         }
+
+        BinaryData IPersistableModel<DefaultRolloutStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DefaultRolloutStatus IPersistableModel<DefaultRolloutStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DefaultRolloutStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDefaultRolloutStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DefaultRolloutStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DefaultRolloutStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

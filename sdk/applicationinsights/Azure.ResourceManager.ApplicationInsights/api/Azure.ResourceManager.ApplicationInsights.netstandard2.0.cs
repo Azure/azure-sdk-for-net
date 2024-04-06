@@ -11,13 +11,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ApplicationInsightsComponentData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ApplicationInsightsComponentData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>
     {
-        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
+        public ApplicationInsightsComponentData(Azure.Core.AzureLocation location, string kind) { }
         public string AppId { get { throw null; } }
         public string ApplicationId { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? ApplicationType { get { throw null; } set { } }
@@ -36,7 +38,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string Kind { get { throw null; } set { } }
         public System.DateTimeOffset? LaMigrationOn { get { throw null; } }
         public string NamePropertiesName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource> PrivateLinkScopedResources { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent> PrivateLinkScopedResources { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? PublicNetworkAccessForIngestion { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? PublicNetworkAccessForQuery { get { throw null; } set { } }
@@ -45,6 +47,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         public double? SamplingPercentage { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
         public string WorkspaceResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ApplicationInsightsComponentResource : Azure.ResourceManager.ArmResource
     {
@@ -136,8 +143,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> Update(Azure.ResourceManager.ApplicationInsights.Models.TagsResource componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.TagsResource componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> Update(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag componentTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures> UpdateComponentCurrentBillingFeature(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>> UpdateComponentCurrentBillingFeatureAsync(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures billingFeaturesProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration> UpdateExportConfiguration(string exportId, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest exportProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -193,11 +200,18 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource> Get(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> GetAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource> GetIfExists(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource>> GetIfExistsAsync(Azure.ResourceManager.ApplicationInsights.Models.StorageType storageType, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class ComponentLinkedStorageAccountData : Azure.ResourceManager.Models.ResourceData
+    public partial class ComponentLinkedStorageAccountData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>
     {
         public ComponentLinkedStorageAccountData() { }
         public string LinkedStorageAccount { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ComponentLinkedStorageAccountResource : Azure.ResourceManager.ArmResource
     {
@@ -224,8 +238,10 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetAll(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetAllAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MyWorkbookData : Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResource
+    public partial class MyWorkbookData : Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>
     {
         public MyWorkbookData() { }
         public string Category { get { throw null; } set { } }
@@ -238,6 +254,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string TimeModified { get { throw null; } }
         public string UserId { get { throw null; } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.MyWorkbookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.MyWorkbookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.MyWorkbookData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MyWorkbookResource : Azure.ResourceManager.ArmResource
     {
@@ -270,13 +291,15 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetIfExists(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetIfExistsAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WebTestResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WebTestResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WebTestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WebTestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WebTestData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class WebTestData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WebTestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WebTestData>
     {
-        public WebTestData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WebTestData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
         public int? FrequencyInSeconds { get { throw null; } set { } }
         public bool? IsEnabled { get { throw null; } set { } }
@@ -291,6 +314,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         public string WebTest { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.WebTestKind? WebTestKind { get { throw null; } set { } }
         public string WebTestName { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.WebTestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WebTestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WebTestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.WebTestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WebTestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WebTestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WebTestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WebTestResource : Azure.ResourceManager.ArmResource
     {
@@ -309,8 +337,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> Update(Azure.ResourceManager.ApplicationInsights.Models.TagsResource webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.TagsResource webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> Update(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.ComponentTag webTestTags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class WorkbookCollection : Azure.ResourceManager.ArmCollection
     {
@@ -323,10 +351,12 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetAll(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetAllAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, string sourceId = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetIfExists(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetIfExistsAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class WorkbookData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class WorkbookData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>
     {
-        public WorkbookData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookData(Azure.Core.AzureLocation location) { }
         public string Category { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
@@ -340,6 +370,11 @@ namespace Azure.ResourceManager.ApplicationInsights
         public System.Uri StorageUri { get { throw null; } set { } }
         public string UserId { get { throw null; } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.WorkbookData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.WorkbookData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WorkbookResource : Azure.ResourceManager.ArmResource
     {
@@ -373,6 +408,8 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>> GetAsync(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> GetIfExists(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>> GetIfExistsAsync(string revisionId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -398,18 +435,25 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class WorkbookTemplateData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class WorkbookTemplateData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>
     {
-        public WorkbookTemplateData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public WorkbookTemplateData(Azure.Core.AzureLocation location) { }
         public string Author { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> Galleries { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>> LocalizedGalleries { get { throw null; } }
         public int? Priority { get { throw null; } set { } }
         public System.BinaryData TemplateData { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class WorkbookTemplateResource : Azure.ResourceManager.ArmResource
     {
@@ -432,9 +476,56 @@ namespace Azure.ResourceManager.ApplicationInsights
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> UpdateAsync(Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ApplicationInsights.Mocking
+{
+    public partial class MockableApplicationInsightsArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsArmClient() { }
+        public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse> GetLiveToken(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>> GetLiveTokenAsync(Azure.Core.ResourceIdentifier scope, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.MyWorkbookResource GetMyWorkbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WebTestResource GetWebTestResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookResource GetWorkbookResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookRevisionResource GetWorkbookRevisionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource GetWorkbookTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableApplicationInsightsResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponent(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentCollection GetApplicationInsightsComponents() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbook(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource>> GetMyWorkbookAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.MyWorkbookCollection GetMyWorkbooks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTest(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WebTestResource>> GetWebTestAsync(string webTestName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WebTestCollection GetWebTests() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbook(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookResource>> GetWorkbookAsync(string resourceName, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookCollection GetWorkbooks() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource> GetWorkbookTemplate(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ApplicationInsights.WorkbookTemplateResource>> GetWorkbookTemplateAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ApplicationInsights.WorkbookTemplateCollection GetWorkbookTemplates() { throw null; }
+    }
+    public partial class MockableApplicationInsightsSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableApplicationInsightsSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponents(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbooks(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.MyWorkbookResource> GetMyWorkbooksAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTests(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WebTestResource> GetWebTestsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbooks(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ApplicationInsights.WorkbookResource> GetWorkbooksAsync(Azure.ResourceManager.ApplicationInsights.Models.CategoryType category, System.Collections.Generic.IEnumerable<string> tags = null, bool? canFetchContent = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class Annotation
+    public partial class Annotation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>
     {
         public Annotation() { }
         public string AnnotationName { get { throw null; } set { } }
@@ -443,15 +534,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Id { get { throw null; } set { } }
         public string Properties { get { throw null; } set { } }
         public string RelatedAnnotation { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.Annotation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.Annotation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.Annotation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class APIKeyContent
+    public partial class APIKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>
     {
         public APIKeyContent() { }
         public System.Collections.Generic.IList<string> LinkedReadProperties { get { throw null; } }
         public System.Collections.Generic.IList<string> LinkedWriteProperties { get { throw null; } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.APIKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentAnalyticsItem
+    public partial class ApplicationInsightsComponentAnalyticsItem : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>
     {
         public ApplicationInsightsComponentAnalyticsItem() { }
         public string ApplicationInsightsComponentAnalyticsItemFunctionAlias { get { throw null; } set { } }
@@ -463,8 +564,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string TimeCreated { get { throw null; } }
         public string TimeModified { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentAPIKey
+    public partial class ApplicationInsightsComponentAPIKey : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>
     {
         internal ApplicationInsightsComponentAPIKey() { }
         public string ApiKey { get { throw null; } }
@@ -473,19 +579,34 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public System.Collections.Generic.IReadOnlyList<string> LinkedReadProperties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> LinkedWriteProperties { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentAvailableFeatures
+    public partial class ApplicationInsightsComponentAvailableFeatures : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>
     {
         internal ApplicationInsightsComponentAvailableFeatures() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature> Result { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentBillingFeatures
+    public partial class ApplicationInsightsComponentBillingFeatures : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>
     {
         public ApplicationInsightsComponentBillingFeatures() { }
         public System.Collections.Generic.IList<string> CurrentBillingFeatures { get { throw null; } }
         public Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap DataVolumeCap { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentBillingFeatures>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentDataVolumeCap
+    public partial class ApplicationInsightsComponentDataVolumeCap : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>
     {
         public ApplicationInsightsComponentDataVolumeCap() { }
         public float? Cap { get { throw null; } set { } }
@@ -494,8 +615,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public float? MaxHistoryCap { get { throw null; } }
         public int? ResetTime { get { throw null; } }
         public int? WarningThreshold { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentExportConfiguration
+    public partial class ApplicationInsightsComponentExportConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>
     {
         internal ApplicationInsightsComponentExportConfiguration() { }
         public string ApplicationName { get { throw null; } }
@@ -517,8 +643,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string ResourceGroup { get { throw null; } }
         public string StorageName { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentExportRequest
+    public partial class ApplicationInsightsComponentExportRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>
     {
         public ApplicationInsightsComponentExportRequest() { }
         public string DestinationAccountId { get { throw null; } set { } }
@@ -530,8 +661,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string NotificationQueueEnabled { get { throw null; } set { } }
         public System.Uri NotificationQueueUri { get { throw null; } set { } }
         public string RecordTypes { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentFavorite
+    public partial class ApplicationInsightsComponentFavorite : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>
     {
         public ApplicationInsightsComponentFavorite() { }
         public string Category { get { throw null; } set { } }
@@ -545,8 +681,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string TimeModified { get { throw null; } }
         public string UserId { get { throw null; } }
         public string Version { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentFeature
+    public partial class ApplicationInsightsComponentFeature : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>
     {
         internal ApplicationInsightsComponentFeature() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability> Capabilities { get { throw null; } }
@@ -558,8 +699,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string ResourceId { get { throw null; } }
         public string SupportedAddonFeatures { get { throw null; } }
         public string Title { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentFeatureCapabilities
+    public partial class ApplicationInsightsComponentFeatureCapabilities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>
     {
         internal ApplicationInsightsComponentFeatureCapabilities() { }
         public bool? AnalyticsIntegration { get { throw null; } }
@@ -578,8 +724,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public float? ThrottleRate { get { throw null; } }
         public string TrackingType { get { throw null; } }
         public bool? WorkItemIntegration { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapabilities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentFeatureCapability
+    public partial class ApplicationInsightsComponentFeatureCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>
     {
         internal ApplicationInsightsComponentFeatureCapability() { }
         public string Description { get { throw null; } }
@@ -588,8 +739,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Name { get { throw null; } }
         public string Unit { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeatureCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration
+    public partial class ApplicationInsightsComponentProactiveDetectionConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>
     {
         public ApplicationInsightsComponentProactiveDetectionConfiguration() { }
         public System.Collections.Generic.IList<string> CustomEmails { get { throw null; } }
@@ -598,8 +754,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions RuleDefinitions { get { throw null; } set { } }
         public bool? SendEmailsToSubscriptionOwners { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions
+    public partial class ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>
     {
         public ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions() { }
         public string Description { get { throw null; } set { } }
@@ -610,19 +771,34 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public bool? IsInPreview { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public bool? SupportsEmailNotifications { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentQuotaStatus
+    public partial class ApplicationInsightsComponentQuotaStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>
     {
         internal ApplicationInsightsComponentQuotaStatus() { }
         public string AppId { get { throw null; } }
         public string ExpirationTime { get { throw null; } }
         public bool? ShouldBeThrottled { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentQuotaStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ApplicationInsightsComponentWebTestLocation
+    public partial class ApplicationInsightsComponentWebTestLocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>
     {
         internal ApplicationInsightsComponentWebTestLocation() { }
         public string DisplayName { get { throw null; } }
         public string Tag { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentWebTestLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ApplicationInsightsKind : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsKind>
@@ -665,7 +841,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAnalyticsItem ApplicationInsightsComponentAnalyticsItem(string id = null, string name = null, string content = null, string version = null, Azure.ResourceManager.ApplicationInsights.Models.ItemScope? scope = default(Azure.ResourceManager.ApplicationInsights.Models.ItemScope?), Azure.ResourceManager.ApplicationInsights.Models.ItemType? itemType = default(Azure.ResourceManager.ApplicationInsights.Models.ItemType?), string timeCreated = null, string timeModified = null, string applicationInsightsComponentAnalyticsItemFunctionAlias = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAPIKey ApplicationInsightsComponentAPIKey(string id = null, string apiKey = null, string createdDate = null, string name = null, System.Collections.Generic.IEnumerable<string> linkedReadProperties = null, System.Collections.Generic.IEnumerable<string> linkedWriteProperties = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentAvailableFeatures ApplicationInsightsComponentAvailableFeatures(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFeature> result = null) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData ApplicationInsightsComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ETag? etag = default(Azure.ETag?), string applicationId = null, string appId = null, string namePropertiesName = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? applicationType = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationType?), Azure.ResourceManager.ApplicationInsights.Models.FlowType? flowType = default(Azure.ResourceManager.ApplicationInsights.Models.FlowType?), Azure.ResourceManager.ApplicationInsights.Models.RequestSource? requestSource = default(Azure.ResourceManager.ApplicationInsights.Models.RequestSource?), string instrumentationKey = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? tenantId = default(System.Guid?), string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = default(double?), string connectionString = null, int? retentionInDays = default(int?), bool? isDisableIPMasking = default(bool?), bool? isImmediatePurgeDataOn30Days = default(bool?), string workspaceResourceId = null, System.DateTimeOffset? laMigrationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource> privateLinkScopedResources = null, Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.ApplicationInsights.Models.IngestionMode?), bool? isDisableLocalAuth = default(bool?), bool? isForceCustomerStorageForProfiler = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData ApplicationInsightsComponentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string kind = null, Azure.ETag? etag = default(Azure.ETag?), string applicationId = null, string appId = null, string namePropertiesName = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationType? applicationType = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationType?), Azure.ResourceManager.ApplicationInsights.Models.FlowType? flowType = default(Azure.ResourceManager.ApplicationInsights.Models.FlowType?), Azure.ResourceManager.ApplicationInsights.Models.RequestSource? requestSource = default(Azure.ResourceManager.ApplicationInsights.Models.RequestSource?), string instrumentationKey = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Guid? tenantId = default(System.Guid?), string hockeyAppId = null, string hockeyAppToken = null, string provisioningState = null, double? samplingPercentage = default(double?), string connectionString = null, int? retentionInDays = default(int?), bool? isDisableIPMasking = default(bool?), bool? isImmediatePurgeDataOn30Days = default(bool?), string workspaceResourceId = null, System.DateTimeOffset? laMigrationOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent> privateLinkScopedResources = null, Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForIngestion = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType? publicNetworkAccessForQuery = default(Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType?), Azure.ResourceManager.ApplicationInsights.Models.IngestionMode? ingestionMode = default(Azure.ResourceManager.ApplicationInsights.Models.IngestionMode?), bool? isDisableLocalAuth = default(bool?), bool? isForceCustomerStorageForProfiler = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentDataVolumeCap ApplicationInsightsComponentDataVolumeCap(float? cap = default(float?), int? resetTime = default(int?), int? warningThreshold = default(int?), bool? isStopSendNotificationWhenHitThreshold = default(bool?), bool? isStopSendNotificationWhenHitCap = default(bool?), float? maxHistoryCap = default(float?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentExportConfiguration ApplicationInsightsComponentExportConfiguration(string exportId = null, string instrumentationKey = null, string recordTypes = null, string applicationName = null, string subscriptionId = null, string resourceGroup = null, string destinationStorageSubscriptionId = null, string destinationStorageLocationId = null, string destinationAccountId = null, string destinationType = null, string isUserEnabled = null, string lastUserUpdate = null, string notificationQueueEnabled = null, string exportStatus = null, string lastSuccessTime = null, string lastGapTime = null, string permanentErrorReason = null, string storageName = null, string containerName = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsComponentFavorite ApplicationInsightsComponentFavorite(string name = null, string config = null, string version = null, string favoriteId = null, Azure.ResourceManager.ApplicationInsights.Models.FavoriteType? favoriteType = default(Azure.ResourceManager.ApplicationInsights.Models.FavoriteType?), string sourceType = null, string timeModified = null, System.Collections.Generic.IEnumerable<string> tags = null, string category = null, bool? isGeneratedFromTemplate = default(bool?), string userId = null) { throw null; }
@@ -680,7 +856,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse LiveTokenResponse(string liveToken = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.MyWorkbookData MyWorkbookData(Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity identity = null, string id = null, string name = null, string resourceType = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), System.Collections.Generic.IDictionary<string, string> tags = null, System.Collections.Generic.IDictionary<string, string> etag = null, Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.ApplicationInsightsKind?), Azure.ResourceManager.Models.SystemData systemData = null, string displayName = null, string serializedData = null, string version = null, string timeModified = null, string category = null, string userId = null, string sourceId = null, System.Uri storageUri = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities MyWorkbookUserAssignedIdentities(string principalId = null, System.Guid? tenantId = default(System.Guid?)) { throw null; }
-        public static Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResource PrivateLinkScopedResource(string resourceId = null, string scopeId = null) { throw null; }
+        public static Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent PrivateLinkScopedResourceContent(string resourceId = null, string scopeId = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WebTestData WebTestData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ApplicationInsights.Models.WebTestKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WebTestKind?), string syntheticMonitorId = null, string webTestName = null, string description = null, bool? isEnabled = default(bool?), int? frequencyInSeconds = default(int?), int? timeoutInSeconds = default(int?), Azure.ResourceManager.ApplicationInsights.Models.WebTestKind? webTestKind = default(Azure.ResourceManager.ApplicationInsights.Models.WebTestKind?), bool? isRetryEnabled = default(bool?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation> locations = null, string webTest = null, string provisioningState = null, Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest request = null, Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules validationRules = null) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WorkbookData WorkbookData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string displayName = null, string serializedData = null, string version = null, System.DateTimeOffset? modifiedOn = default(System.DateTimeOffset?), string category = null, string userId = null, string sourceId = null, System.Uri storageUri = null, string description = null, string revision = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind? kind = default(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ApplicationInsights.WorkbookTemplateData WorkbookTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), int? priority = default(int?), string author = null, System.BinaryData templateData = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> galleries = null, System.Collections.Generic.IDictionary<string, System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>> localizedGalleries = null) { throw null; }
@@ -706,34 +882,69 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.CategoryType left, Azure.ResourceManager.ApplicationInsights.Models.CategoryType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ComponentLinkedStorageAccountPatch
+    public partial class ComponentLinkedStorageAccountPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>
     {
         public ComponentLinkedStorageAccountPatch() { }
         public string LinkedStorageAccount { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentLinkedStorageAccountPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComponentPurgeBody
+    public partial class ComponentPurgeBody : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>
     {
         public ComponentPurgeBody(string table, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters> filters) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters> Filters { get { throw null; } }
         public string Table { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBody>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComponentPurgeBodyFilters
+    public partial class ComponentPurgeBodyFilters : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>
     {
         public ComponentPurgeBodyFilters() { }
         public string Column { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
         public string Operator { get { throw null; } set { } }
         public System.BinaryData Value { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeBodyFilters>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComponentPurgeResponse
+    public partial class ComponentPurgeResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>
     {
         internal ComponentPurgeResponse() { }
         public string OperationId { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ComponentPurgeStatusResponse
+    public partial class ComponentPurgeStatusResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>
     {
         internal ComponentPurgeStatusResponse() { }
         public Azure.ResourceManager.ApplicationInsights.Models.PurgeState Status { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentPurgeStatusResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ComponentTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>
+    {
+        public ComponentTag() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.ComponentTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.ComponentTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct FavoriteSourceType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.FavoriteSourceType>
@@ -781,11 +992,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.FlowType left, Azure.ResourceManager.ApplicationInsights.Models.FlowType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HeaderField
+    public partial class HeaderField : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>
     {
         public HeaderField() { }
         public string HeaderFieldName { get { throw null; } set { } }
         public string HeaderFieldValue { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.HeaderField System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.HeaderField System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.HeaderField>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct IngestionMode : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.IngestionMode>
@@ -883,16 +1099,26 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.ItemTypeParameter left, Azure.ResourceManager.ApplicationInsights.Models.ItemTypeParameter right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LiveTokenResponse
+    public partial class LiveTokenResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>
     {
         internal LiveTokenResponse() { }
         public string LiveToken { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.LiveTokenResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MyWorkbookManagedIdentity
+    public partial class MyWorkbookManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>
     {
         public MyWorkbookManagedIdentity() { }
         public Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType? IdentityType { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities UserAssignedIdentities { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MyWorkbookManagedIdentityType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType>
@@ -912,9 +1138,9 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType left, Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MyWorkbookResource
+    public partial class MyWorkbookResourceContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>
     {
-        public MyWorkbookResource() { }
+        public MyWorkbookResourceContent() { }
         public System.Collections.Generic.IDictionary<string, string> ETag { get { throw null; } }
         public string Id { get { throw null; } set { } }
         public Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookManagedIdentity Identity { get { throw null; } set { } }
@@ -922,18 +1148,33 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookResourceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MyWorkbookUserAssignedIdentities
+    public partial class MyWorkbookUserAssignedIdentities : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>
     {
         public MyWorkbookUserAssignedIdentities() { }
         public string PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.MyWorkbookUserAssignedIdentities>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class PrivateLinkScopedResource
+    public partial class PrivateLinkScopedResourceContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>
     {
-        internal PrivateLinkScopedResource() { }
+        internal PrivateLinkScopedResourceContent() { }
         public string ResourceId { get { throw null; } }
         public string ScopeId { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.PrivateLinkScopedResourceContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct PublicNetworkAccessType : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.PublicNetworkAccessType>
@@ -1005,15 +1246,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.StorageType left, Azure.ResourceManager.ApplicationInsights.Models.StorageType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TagsResource
-    {
-        public TagsResource() { }
-        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
-    }
-    public partial class WebTestGeolocation
+    public partial class WebTestGeolocation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>
     {
         public WebTestGeolocation() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestGeolocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum WebTestKind
     {
@@ -1021,7 +1262,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         Multistep = 1,
         Standard = 2,
     }
-    public partial class WebTestPropertiesRequest
+    public partial class WebTestPropertiesRequest : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>
     {
         public WebTestPropertiesRequest() { }
         public bool? FollowRedirects { get { throw null; } set { } }
@@ -1030,8 +1271,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public bool? ParseDependentRequests { get { throw null; } set { } }
         public string RequestBody { get { throw null; } set { } }
         public System.Uri RequestUri { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesRequest>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebTestPropertiesValidationRules
+    public partial class WebTestPropertiesValidationRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>
     {
         public WebTestPropertiesValidationRules() { }
         public bool? CheckSsl { get { throw null; } set { } }
@@ -1039,15 +1285,25 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public int? ExpectedHttpStatusCode { get { throw null; } set { } }
         public bool? IgnoreHttpStatusCode { get { throw null; } set { } }
         public int? SSLCertRemainingLifetimeCheck { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WebTestPropertiesValidationRulesContentValidation
+    public partial class WebTestPropertiesValidationRulesContentValidation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>
     {
         public WebTestPropertiesValidationRulesContentValidation() { }
         public string ContentMatch { get { throw null; } set { } }
         public bool? IgnoreCase { get { throw null; } set { } }
         public bool? PassIfTextFound { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WebTestPropertiesValidationRulesContentValidation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkbookPatch
+    public partial class WorkbookPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>
     {
         public WorkbookPatch() { }
         public string Category { get { throw null; } set { } }
@@ -1058,6 +1314,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string SerializedData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IList<string> TagsPropertiesTags { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkbookSharedTypeKind : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind>
@@ -1076,7 +1337,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind left, Azure.ResourceManager.ApplicationInsights.Models.WorkbookSharedTypeKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkbookTemplateGallery
+    public partial class WorkbookTemplateGallery : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>
     {
         public WorkbookTemplateGallery() { }
         public string Category { get { throw null; } set { } }
@@ -1084,14 +1345,24 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public int? Order { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
         public string WorkbookTemplateGalleryType { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkbookTemplateLocalizedGallery
+    public partial class WorkbookTemplateLocalizedGallery : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>
     {
         public WorkbookTemplateLocalizedGallery() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateGallery> Galleries { get { throw null; } }
         public System.BinaryData TemplateData { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplateLocalizedGallery>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkbookTemplatePatch
+    public partial class WorkbookTemplatePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>
     {
         public WorkbookTemplatePatch() { }
         public string Author { get { throw null; } set { } }
@@ -1100,6 +1371,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public int? Priority { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.BinaryData TemplateData { get { throw null; } set { } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkbookTemplatePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkbookUpdateSharedTypeKind : System.IEquatable<Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind>
@@ -1118,7 +1394,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public static bool operator !=(Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind left, Azure.ResourceManager.ApplicationInsights.Models.WorkbookUpdateSharedTypeKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class WorkItemConfiguration
+    public partial class WorkItemConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>
     {
         internal WorkItemConfiguration() { }
         public string ConfigDisplayName { get { throw null; } }
@@ -1126,13 +1402,23 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         public string ConnectorId { get { throw null; } }
         public string Id { get { throw null; } }
         public bool? IsDefault { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WorkItemCreateConfiguration
+    public partial class WorkItemCreateConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>
     {
         public WorkItemCreateConfiguration() { }
         public string ConnectorDataConfiguration { get { throw null; } set { } }
         public string ConnectorId { get { throw null; } set { } }
         public bool? IsValidateOnly { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> WorkItemProperties { get { throw null; } }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ApplicationInsights.Models.WorkItemCreateConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

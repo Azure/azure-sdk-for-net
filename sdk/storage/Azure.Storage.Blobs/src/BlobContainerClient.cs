@@ -6,16 +6,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
-using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 #pragma warning disable SA1402  // File may only contain a single type
@@ -361,7 +360,10 @@ namespace Azure.Storage.Blobs
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
             Argument.AssertNotNull(blobContainerUri, nameof(blobContainerUri));
             _uri = blobContainerUri;
-            _authenticationPolicy = credential.AsPolicy(options);
+
+            string audienceScope = string.IsNullOrEmpty(options?.Audience?.ToString()) ? BlobAudience.DefaultAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope();
+
+            _authenticationPolicy = credential.AsPolicy(audienceScope, options);
             options ??= new BlobClientOptions();
 
             _clientConfiguration = new BlobClientConfiguration(
@@ -2201,6 +2203,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Response<BlobContainerInfo> SetAccessPolicy(
             PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<BlobSignedIdentifier> permissions = default,
@@ -2256,6 +2259,7 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
             PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<BlobSignedIdentifier> permissions = default,
@@ -3420,9 +3424,8 @@ namespace Azure.Storage.Blobs
 
         #region FilterBlobs
         /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
         /// match a given search expression and only the tags appearing in the expression will be returned.
-        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
@@ -3432,7 +3435,7 @@ namespace Azure.Storage.Blobs
         /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
@@ -3452,9 +3455,8 @@ namespace Azure.Storage.Blobs
             new FilterBlobsAsyncCollection(this, tagFilterSqlExpression).ToSyncCollection(cancellationToken);
 
         /// <summary>
-        /// The Filter Blobs operation enables callers to list blobs across all containers whose tags
+        /// The Filter Blobs operation enables callers to list blobs in the container whose tags
         /// match a given search expression and only the tags appearing in the expression will be returned.
-        /// Filter blobs searches across all containers within a storage account but can be scoped within the expression to a single container.
         ///
         /// For more information, see
         /// <see href="https://docs.microsoft.com/en-us/rest/api/storageservices/find-blobs-by-tags">
@@ -3464,7 +3466,7 @@ namespace Azure.Storage.Blobs
         /// The where parameter finds blobs in the storage account whose tags match a given expression.
         /// The expression must evaluate to true for a blob to be returned in the result set.
         /// The storage service supports a subset of the ANSI SQL WHERE clause grammar for the value of the where=expression query parameter.
-        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND. and @container.
+        /// The following operators are supported: =, &gt;, &gt;=, &lt;, &lt;=, AND.
         /// Example expression: "tagKey"='tagValue'.
         /// </param>
         /// <param name="cancellationToken">
@@ -3571,6 +3573,7 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobContainerSasPermissions permissions, DateTimeOffset expiresOn) =>
             GenerateSasUri(new BlobSasBuilder(permissions, expiresOn) { BlobContainerName = Name });
 
@@ -3596,6 +3599,7 @@ namespace Azure.Storage.Blobs
         /// <remarks>
         /// A <see cref="Exception"/> will be thrown if a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
         public virtual Uri GenerateSasUri(BlobSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

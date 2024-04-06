@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class UpgradeOperationHistoricalStatusInfoProperties
+    public partial class UpgradeOperationHistoricalStatusInfoProperties : IUtf8JsonSerializable, IJsonModel<UpgradeOperationHistoricalStatusInfoProperties>
     {
-        internal static UpgradeOperationHistoricalStatusInfoProperties DeserializeUpgradeOperationHistoricalStatusInfoProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpgradeOperationHistoricalStatusInfoProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UpgradeOperationHistoricalStatusInfoProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(RunningStatus))
+            {
+                writer.WritePropertyName("runningStatus"u8);
+                writer.WriteObjectValue<UpgradeOperationHistoryStatus>(RunningStatus, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Progress))
+            {
+                writer.WritePropertyName("progress"u8);
+                writer.WriteObjectValue<RollingUpgradeProgressInfo>(Progress, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
+            {
+                writer.WritePropertyName("startedBy"u8);
+                writer.WriteStringValue(StartedBy.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetImageReference))
+            {
+                writer.WritePropertyName("targetImageReference"u8);
+                writer.WriteObjectValue<ImageReference>(TargetImageReference, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RollbackInfo))
+            {
+                writer.WritePropertyName("rollbackInfo"u8);
+                writer.WriteObjectValue<RollbackStatusInfo>(RollbackInfo, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        UpgradeOperationHistoricalStatusInfoProperties IJsonModel<UpgradeOperationHistoricalStatusInfoProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUpgradeOperationHistoricalStatusInfoProperties(document.RootElement, options);
+        }
+
+        internal static UpgradeOperationHistoricalStatusInfoProperties DeserializeUpgradeOperationHistoricalStatusInfoProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<UpgradeOperationHistoryStatus> runningStatus = default;
-            Optional<RollingUpgradeProgressInfo> progress = default;
-            Optional<ComputeApiError> error = default;
-            Optional<UpgradeOperationInvoker> startedBy = default;
-            Optional<ImageReference> targetImageReference = default;
-            Optional<RollbackStatusInfo> rollbackInfo = default;
+            UpgradeOperationHistoryStatus runningStatus = default;
+            RollingUpgradeProgressInfo progress = default;
+            ComputeApiError error = default;
+            UpgradeOperationInvoker? startedBy = default;
+            ImageReference targetImageReference = default;
+            RollbackStatusInfo rollbackInfo = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("runningStatus"u8))
@@ -32,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value);
+                    runningStatus = UpgradeOperationHistoryStatus.DeserializeUpgradeOperationHistoryStatus(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("progress"u8))
@@ -41,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value);
+                    progress = RollingUpgradeProgressInfo.DeserializeRollingUpgradeProgressInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -50,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startedBy"u8))
@@ -68,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    targetImageReference = ImageReference.DeserializeImageReference(property.Value);
+                    targetImageReference = ImageReference.DeserializeImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rollbackInfo"u8))
@@ -77,11 +155,54 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value);
+                    rollbackInfo = RollbackStatusInfo.DeserializeRollbackStatusInfo(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UpgradeOperationHistoricalStatusInfoProperties(runningStatus.Value, progress.Value, error.Value, Optional.ToNullable(startedBy), targetImageReference.Value, rollbackInfo.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UpgradeOperationHistoricalStatusInfoProperties(
+                runningStatus,
+                progress,
+                error,
+                startedBy,
+                targetImageReference,
+                rollbackInfo,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UpgradeOperationHistoricalStatusInfoProperties IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUpgradeOperationHistoricalStatusInfoProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

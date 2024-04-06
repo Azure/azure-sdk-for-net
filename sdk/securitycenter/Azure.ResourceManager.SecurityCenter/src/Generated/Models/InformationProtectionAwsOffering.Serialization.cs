@@ -5,35 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class InformationProtectionAwsOffering : IUtf8JsonSerializable
+    public partial class InformationProtectionAwsOffering : IUtf8JsonSerializable, IJsonModel<InformationProtectionAwsOffering>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InformationProtectionAwsOffering>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InformationProtectionAwsOffering>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(InformationProtection))
             {
                 writer.WritePropertyName("informationProtection"u8);
-                writer.WriteObjectValue(InformationProtection);
+                writer.WriteObjectValue<AwsInformationProtection>(InformationProtection, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
+            if (options.Format != "W" && Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static InformationProtectionAwsOffering DeserializeInformationProtectionAwsOffering(JsonElement element)
+        InformationProtectionAwsOffering IJsonModel<InformationProtectionAwsOffering>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInformationProtectionAwsOffering(document.RootElement, options);
+        }
+
+        internal static InformationProtectionAwsOffering DeserializeInformationProtectionAwsOffering(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AwsInformationProtection> informationProtection = default;
+            AwsInformationProtection informationProtection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("informationProtection"u8))
@@ -42,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value);
+                    informationProtection = AwsInformationProtection.DeserializeAwsInformationProtection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -55,8 +102,44 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InformationProtectionAwsOffering(offeringType, description.Value, informationProtection.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InformationProtectionAwsOffering(offeringType, description, serializedAdditionalRawData, informationProtection);
         }
+
+        BinaryData IPersistableModel<InformationProtectionAwsOffering>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InformationProtectionAwsOffering IPersistableModel<InformationProtectionAwsOffering>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionAwsOffering>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInformationProtectionAwsOffering(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InformationProtectionAwsOffering)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InformationProtectionAwsOffering>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

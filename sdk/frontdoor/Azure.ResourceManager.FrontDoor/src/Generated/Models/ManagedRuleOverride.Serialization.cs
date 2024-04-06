@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    public partial class ManagedRuleOverride : IUtf8JsonSerializable
+    public partial class ManagedRuleOverride : IUtf8JsonSerializable, IJsonModel<ManagedRuleOverride>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedRuleOverride>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedRuleOverride>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("ruleId"u8);
             writer.WriteStringValue(RuleId);
@@ -34,23 +44,54 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedRuleExclusion>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element)
+        ManagedRuleOverride IJsonModel<ManagedRuleOverride>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedRuleOverride(document.RootElement, options);
+        }
+
+        internal static ManagedRuleOverride DeserializeManagedRuleOverride(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string ruleId = default;
-            Optional<ManagedRuleEnabledState> enabledState = default;
-            Optional<RuleMatchActionType> action = default;
-            Optional<IList<ManagedRuleExclusion>> exclusions = default;
+            ManagedRuleEnabledState? enabledState = default;
+            RuleMatchActionType? action = default;
+            IList<ManagedRuleExclusion> exclusions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ruleId"u8))
@@ -85,13 +126,49 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<ManagedRuleExclusion> array = new List<ManagedRuleExclusion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item));
+                        array.Add(ManagedRuleExclusion.DeserializeManagedRuleExclusion(item, options));
                     }
                     exclusions = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedRuleOverride(ruleId, Optional.ToNullable(enabledState), Optional.ToNullable(action), Optional.ToList(exclusions));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedRuleOverride(ruleId, enabledState, action, exclusions ?? new ChangeTrackingList<ManagedRuleExclusion>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedRuleOverride>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedRuleOverride IPersistableModel<ManagedRuleOverride>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedRuleOverride>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedRuleOverride(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedRuleOverride)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedRuleOverride>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

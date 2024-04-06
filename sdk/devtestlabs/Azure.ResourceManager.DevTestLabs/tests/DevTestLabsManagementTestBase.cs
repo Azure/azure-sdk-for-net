@@ -22,11 +22,13 @@ namespace Azure.ResourceManager.DevTestLabs.Tests
         protected DevTestLabsManagementTestBase(bool isAsync, RecordedTestMode mode)
             : base(isAsync, mode)
         {
+            IgnoreAuthorizationDependencyVersions();
         }
 
         protected DevTestLabsManagementTestBase(bool isAsync)
             : base(isAsync)
         {
+            IgnoreAuthorizationDependencyVersions();
         }
 
         [SetUp]

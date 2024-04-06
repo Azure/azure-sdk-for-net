@@ -31,13 +31,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedInfo))
             {
                 writer.WritePropertyName("linkedInfo"u8);
-                writer.WriteObjectValue(LinkedInfo);
+                writer.WriteObjectValue<LinkedIntegrationRuntimeType>(LinkedInfo);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IntegrationRuntimeType type = default;
-            Optional<string> description = default;
-            Optional<LinkedIntegrationRuntimeType> linkedInfo = default;
+            string description = default;
+            LinkedIntegrationRuntimeType linkedInfo = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -89,15 +89,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SelfHostedIntegrationRuntime(type, description.Value, additionalProperties, linkedInfo.Value);
+            return new SelfHostedIntegrationRuntime(type, description, additionalProperties, linkedInfo);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SelfHostedIntegrationRuntime FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSelfHostedIntegrationRuntime(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SelfHostedIntegrationRuntime>(this);
+            return content;
         }
 
         internal partial class SelfHostedIntegrationRuntimeConverter : JsonConverter<SelfHostedIntegrationRuntime>
         {
             public override void Write(Utf8JsonWriter writer, SelfHostedIntegrationRuntime model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SelfHostedIntegrationRuntime>(model);
             }
+
             public override SelfHostedIntegrationRuntime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

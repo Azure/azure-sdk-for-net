@@ -5,25 +5,102 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ComputeApiError
+    public partial class ComputeApiError : IUtf8JsonSerializable, IJsonModel<ComputeApiError>
     {
-        internal static ComputeApiError DeserializeComputeApiError(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ComputeApiError>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ComputeApiError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Details))
+            {
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue<ComputeApiErrorBase>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Innererror))
+            {
+                writer.WritePropertyName("innererror"u8);
+                writer.WriteObjectValue<InnerError>(Innererror, options);
+            }
+            if (Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (Optional.IsDefined(Target))
+            {
+                writer.WritePropertyName("target"u8);
+                writer.WriteStringValue(Target);
+            }
+            if (Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ComputeApiError IJsonModel<ComputeApiError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeComputeApiError(document.RootElement, options);
+        }
+
+        internal static ComputeApiError DeserializeComputeApiError(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ComputeApiErrorBase>> details = default;
-            Optional<InnerError> innererror = default;
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            IReadOnlyList<ComputeApiErrorBase> details = default;
+            InnerError innererror = default;
+            string code = default;
+            string target = default;
+            string message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("details"u8))
@@ -35,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<ComputeApiErrorBase> array = new List<ComputeApiErrorBase>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item));
+                        array.Add(ComputeApiErrorBase.DeserializeComputeApiErrorBase(item, options));
                     }
                     details = array;
                     continue;
@@ -46,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    innererror = InnerError.DeserializeInnerError(property.Value);
+                    innererror = InnerError.DeserializeInnerError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("code"u8))
@@ -64,8 +141,50 @@ namespace Azure.ResourceManager.Compute.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ComputeApiError(Optional.ToList(details), innererror.Value, code.Value, target.Value, message.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ComputeApiError(
+                details ?? new ChangeTrackingList<ComputeApiErrorBase>(),
+                innererror,
+                code,
+                target,
+                message,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ComputeApiError>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ComputeApiError IPersistableModel<ComputeApiError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ComputeApiError>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeComputeApiError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ComputeApiError)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ComputeApiError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

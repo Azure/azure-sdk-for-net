@@ -5,21 +5,36 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DevTestLabs.Models
 {
-    public partial class DevTestLabScheduleCreationParameter : IUtf8JsonSerializable
+    public partial class DevTestLabScheduleCreationParameter : IUtf8JsonSerializable, IJsonModel<DevTestLabScheduleCreationParameter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DevTestLabScheduleCreationParameter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DevTestLabScheduleCreationParameter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleCreationParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabScheduleCreationParameter)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -47,17 +62,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue(WeeklyRecurrence);
+                writer.WriteObjectValue<DevTestLabWeekDetails>(WeeklyRecurrence, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue(DailyRecurrence);
+                writer.WriteObjectValue<DayDetails>(DailyRecurrence, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue(HourlyRecurrence);
+                writer.WriteObjectValue<HourDetails>(HourlyRecurrence, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -67,7 +82,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue(NotificationSettings);
+                writer.WriteObjectValue<DevTestLabNotificationSettings>(NotificationSettings, options);
             }
             if (Optional.IsDefined(TargetResourceId))
             {
@@ -75,26 +90,57 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WriteStringValue(TargetResourceId);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DevTestLabScheduleCreationParameter DeserializeDevTestLabScheduleCreationParameter(JsonElement element)
+        DevTestLabScheduleCreationParameter IJsonModel<DevTestLabScheduleCreationParameter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleCreationParameter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DevTestLabScheduleCreationParameter)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDevTestLabScheduleCreationParameter(document.RootElement, options);
+        }
+
+        internal static DevTestLabScheduleCreationParameter DeserializeDevTestLabScheduleCreationParameter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<DevTestLabEnableStatus> status = default;
-            Optional<string> taskType = default;
-            Optional<DevTestLabWeekDetails> weeklyRecurrence = default;
-            Optional<DayDetails> dailyRecurrence = default;
-            Optional<HourDetails> hourlyRecurrence = default;
-            Optional<string> timeZoneId = default;
-            Optional<DevTestLabNotificationSettings> notificationSettings = default;
-            Optional<ResourceIdentifier> targetResourceId = default;
+            string name = default;
+            AzureLocation? location = default;
+            IDictionary<string, string> tags = default;
+            DevTestLabEnableStatus? status = default;
+            string taskType = default;
+            DevTestLabWeekDetails weeklyRecurrence = default;
+            DayDetails dailyRecurrence = default;
+            HourDetails hourlyRecurrence = default;
+            string timeZoneId = default;
+            DevTestLabNotificationSettings notificationSettings = default;
+            ResourceIdentifier targetResourceId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -154,7 +200,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value);
+                            weeklyRecurrence = DevTestLabWeekDetails.DeserializeDevTestLabWeekDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dailyRecurrence"u8))
@@ -163,7 +209,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value);
+                            dailyRecurrence = DayDetails.DeserializeDayDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("hourlyRecurrence"u8))
@@ -172,7 +218,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value);
+                            hourlyRecurrence = HourDetails.DeserializeHourDetails(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeZoneId"u8))
@@ -186,7 +232,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                             {
                                 continue;
                             }
-                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value);
+                            notificationSettings = DevTestLabNotificationSettings.DeserializeDevTestLabNotificationSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("targetResourceId"u8))
@@ -201,8 +247,56 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DevTestLabScheduleCreationParameter(name.Value, Optional.ToNullable(location), Optional.ToDictionary(tags), Optional.ToNullable(status), taskType.Value, weeklyRecurrence.Value, dailyRecurrence.Value, hourlyRecurrence.Value, timeZoneId.Value, notificationSettings.Value, targetResourceId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DevTestLabScheduleCreationParameter(
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                status,
+                taskType,
+                weeklyRecurrence,
+                dailyRecurrence,
+                hourlyRecurrence,
+                timeZoneId,
+                notificationSettings,
+                targetResourceId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DevTestLabScheduleCreationParameter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleCreationParameter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabScheduleCreationParameter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DevTestLabScheduleCreationParameter IPersistableModel<DevTestLabScheduleCreationParameter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleCreationParameter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDevTestLabScheduleCreationParameter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DevTestLabScheduleCreationParameter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DevTestLabScheduleCreationParameter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

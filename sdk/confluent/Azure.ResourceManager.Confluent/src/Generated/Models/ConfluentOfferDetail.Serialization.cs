@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
-    public partial class ConfluentOfferDetail : IUtf8JsonSerializable
+    public partial class ConfluentOfferDetail : IUtf8JsonSerializable, IJsonModel<ConfluentOfferDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfluentOfferDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConfluentOfferDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
@@ -25,11 +36,65 @@ namespace Azure.ResourceManager.Confluent.Models
             writer.WriteStringValue(PlanName);
             writer.WritePropertyName("termUnit"u8);
             writer.WriteStringValue(TermUnit);
+            if (Optional.IsDefined(TermId))
+            {
+                writer.WritePropertyName("termId"u8);
+                writer.WriteStringValue(TermId);
+            }
+            if (Optional.IsDefined(PrivateOfferId))
+            {
+                writer.WritePropertyName("privateOfferId"u8);
+                writer.WriteStringValue(PrivateOfferId);
+            }
+            if (Optional.IsCollectionDefined(PrivateOfferIds))
+            {
+                writer.WritePropertyName("privateOfferIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateOfferIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element)
+        ConfluentOfferDetail IJsonModel<ConfluentOfferDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConfluentOfferDetail(document.RootElement, options);
+        }
+
+        internal static ConfluentOfferDetail DeserializeConfluentOfferDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -39,7 +104,12 @@ namespace Azure.ResourceManager.Confluent.Models
             string planId = default;
             string planName = default;
             string termUnit = default;
-            Optional<ConfluentSaaSOfferStatus> status = default;
+            string termId = default;
+            string privateOfferId = default;
+            IList<string> privateOfferIds = default;
+            ConfluentSaaSOfferStatus? status = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("publisherId"u8))
@@ -67,6 +137,30 @@ namespace Azure.ResourceManager.Confluent.Models
                     termUnit = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("termId"u8))
+                {
+                    termId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateOfferId"u8))
+                {
+                    privateOfferId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("privateOfferIds"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    privateOfferIds = array;
+                    continue;
+                }
                 if (property.NameEquals("status"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -76,8 +170,54 @@ namespace Azure.ResourceManager.Confluent.Models
                     status = new ConfluentSaaSOfferStatus(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConfluentOfferDetail(publisherId, id, planId, planName, termUnit, Optional.ToNullable(status));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConfluentOfferDetail(
+                publisherId,
+                id,
+                planId,
+                planName,
+                termUnit,
+                termId,
+                privateOfferId,
+                privateOfferIds ?? new ChangeTrackingList<string>(),
+                status,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConfluentOfferDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConfluentOfferDetail IPersistableModel<ConfluentOfferDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConfluentOfferDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConfluentOfferDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfluentOfferDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConfluentOfferDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

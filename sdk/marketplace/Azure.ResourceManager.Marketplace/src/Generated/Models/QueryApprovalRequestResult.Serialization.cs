@@ -5,25 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class QueryApprovalRequestResult
+    public partial class QueryApprovalRequestResult : IUtf8JsonSerializable, IJsonModel<QueryApprovalRequestResult>
     {
-        internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<QueryApprovalRequestResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<QueryApprovalRequestResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(UniqueOfferId))
+            {
+                writer.WritePropertyName("uniqueOfferId"u8);
+                writer.WriteStringValue(UniqueOfferId);
+            }
+            if (Optional.IsCollectionDefined(PlansDetails))
+            {
+                writer.WritePropertyName("plansDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in PlansDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteObjectValue<PrivateStorePlanDetails>(item.Value, options);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        QueryApprovalRequestResult IJsonModel<QueryApprovalRequestResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeQueryApprovalRequestResult(document.RootElement, options);
+        }
+
+        internal static QueryApprovalRequestResult DeserializeQueryApprovalRequestResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> uniqueOfferId = default;
-            Optional<IReadOnlyDictionary<string, PrivateStorePlanDetails>> plansDetails = default;
-            Optional<ETag> etag = default;
-            Optional<long> messageCode = default;
+            string uniqueOfferId = default;
+            IReadOnlyDictionary<string, PrivateStorePlanDetails> plansDetails = default;
+            ETag? etag = default;
+            long? messageCode = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uniqueOfferId"u8))
@@ -40,7 +112,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     Dictionary<string, PrivateStorePlanDetails> dictionary = new Dictionary<string, PrivateStorePlanDetails>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value));
+                        dictionary.Add(property0.Name, PrivateStorePlanDetails.DeserializePrivateStorePlanDetails(property0.Value, options));
                     }
                     plansDetails = dictionary;
                     continue;
@@ -63,8 +135,44 @@ namespace Azure.ResourceManager.Marketplace.Models
                     messageCode = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new QueryApprovalRequestResult(uniqueOfferId.Value, Optional.ToDictionary(plansDetails), Optional.ToNullable(etag), Optional.ToNullable(messageCode));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new QueryApprovalRequestResult(uniqueOfferId, plansDetails ?? new ChangeTrackingDictionary<string, PrivateStorePlanDetails>(), etag, messageCode, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<QueryApprovalRequestResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        QueryApprovalRequestResult IPersistableModel<QueryApprovalRequestResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeQueryApprovalRequestResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<QueryApprovalRequestResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

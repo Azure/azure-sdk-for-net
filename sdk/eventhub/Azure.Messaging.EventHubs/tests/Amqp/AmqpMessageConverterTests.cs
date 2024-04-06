@@ -30,6 +30,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <summary>
         ///  The set of test cases for known described type properties.
         /// </summary>
+        ///
         public static IEnumerable<object[]> DescribedTypePropertyTestCases()
         {
             Func<object, object> TranslateValue = value =>
@@ -61,6 +62,18 @@ namespace Azure.Messaging.EventHubs.Tests
 
             yield return new object[] { new MemoryStream(contents, false), contents };
             yield return new object[] { new BufferedStream(new MemoryStream(contents, false), 512), contents };
+        }
+
+        /// <summary>
+        ///  The set of test cases for known described type properties.
+        /// </summary>
+        ///
+        public static IEnumerable<object[]> BinaryPropertyTestCases()
+        {
+            var contents = new byte[] { 0x55, 0x66, 0x99, 0xAA };
+
+            yield return new object[] { contents, contents };
+            yield return new object[] { new ArraySegment<byte>(contents), contents };
         }
 
         /// <summary>
@@ -323,6 +336,34 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
+        [TestCaseSource(nameof(BinaryPropertyTestCases))]
+        public void CreateMessageFromEventTranslatesBinaryApplicationProperties(object property,
+                                                                                object contents)
+        {
+            var eventData = new EventData(
+                eventBody: new BinaryData(new byte[] { 0x11, 0x22, 0x33 }),
+                properties: new Dictionary<string, object> { { "TestProp", property } });
+
+            using AmqpMessage message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
+
+            Assert.That(message, Is.Not.Null, "The AMQP message should have been created.");
+            Assert.That(message.DataBody, Is.Not.Null, "The AMQP message should a body.");
+            Assert.That(message.ApplicationProperties, Is.Not.Null, "The AMQP message should have a set of application properties.");
+
+            var propertyKey = eventData.Properties.Keys.First();
+            var containsValue = message.ApplicationProperties.Map.TryGetValue(propertyKey, out object streamValue);
+
+            Assert.That(containsValue, Is.True, "The message properties did not contain the property.");
+            Assert.That(streamValue, Is.InstanceOf<ArraySegment<byte>>(), "The message property stream was not read correctly.");
+            Assert.That(((ArraySegment<byte>)streamValue).ToArray(), Is.EqualTo(contents), "The property value did not match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
         public void CreateMessageFromEventFailsForUnknownApplicationPropertyType()
         {
             var eventData = new EventData(
@@ -376,7 +417,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantation()
+        public void CreateMessageFromEventDoesNotTriggerPropertiesInstantiation()
         {
             var eventData = new EventData(ReadOnlyMemory<byte>.Empty);
             using var message = new AmqpMessageConverter().CreateMessageFromEvent(eventData);
@@ -1654,11 +1695,11 @@ namespace Azure.Messaging.EventHubs.Tests
 
             // Properties
 
-            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime, Is.EqualTo(sourceMessage.Properties.AbsoluteExpiryTime), "The expiry time should match.");
+            Assert.That(convertedMessage.Properties.AbsoluteExpiryTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime + sourceMessage.Header.TimeToLive), "The expiry time should be based on creation time and TimeToLive.");
             Assert.That(convertedMessage.Properties.ContentEncoding, Is.EqualTo(sourceMessage.Properties.ContentEncoding), "The content encoding should match.");
             Assert.That(convertedMessage.Properties.ContentType, Is.EqualTo(sourceMessage.Properties.ContentType), "The content type should match.");
             Assert.That(convertedMessage.Properties.CorrelationId, Is.EqualTo(sourceMessage.Properties.CorrelationId), "The correlation identifier should match.");
-            Assert.That(convertedMessage.Properties.CreationTime, Is.EqualTo(sourceMessage.Properties.CreationTime), "The creation time should match.");
+            Assert.That(convertedMessage.Properties.CreationTime!.Value.UtcDateTime, Is.EqualTo(tempMessage.Properties.CreationTime), "The creation time should match the computed creation time.");
             Assert.That(convertedMessage.Properties.GroupId, Is.EqualTo(sourceMessage.Properties.GroupId), "The group identifier should match.");
             Assert.That(convertedMessage.Properties.GroupSequence, Is.EqualTo(sourceMessage.Properties.GroupSequence), "The group sequence should match.");
             Assert.That(convertedMessage.Properties.MessageId, Is.EqualTo(sourceMessage.Properties.MessageId), "The message identifier should match.");
@@ -1716,6 +1757,31 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(sourceValue.Count, Is.EqualTo(1), "The source sequence should have one embedded list.");
             Assert.That(convertedValue.Count, Is.EqualTo(1), "The converted sequence should have one embedded list.");
             Assert.That(convertedValue.First(), Is.EquivalentTo(sourceValue.First()), "The sequence embedded list should match.");
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpMessageConverter.CreateMessageFromEvent" />
+        ///   method. Specifically, verifies that the TimeToLive property is respected when no AbsoluteExpiryTime is present.
+        /// </summary>
+        ///
+        [Test]
+        public void AnEventWithTimeToLiveCanBeTranslatedToItself()
+        {
+            var sourceValue = new Dictionary<string, string> { { "key", "value" } };
+            var sourceMessage = new AmqpAnnotatedMessage(AmqpMessageBody.FromValue(sourceValue));
+            sourceMessage.Header.TimeToLive = TimeSpan.FromDays(2);
+            var sourceEvent = new EventData(sourceMessage);
+
+            var converter = new AmqpMessageConverter();
+            using var tempMessage = converter.CreateMessageFromEvent(sourceEvent);
+            var convertedEvent = converter.CreateEventFromMessage(tempMessage);
+            var convertedMessage = convertedEvent.GetRawAmqpMessage();
+
+            Assert.That(tempMessage, Is.Not.Null, "The temporary AMQP message should have been created.");
+            Assert.That(convertedEvent, Is.Not.Null, "The translated event should have been created.");
+            Assert.That(convertedMessage.Body.TryGetValue(out var convertedValue), Is.True, "The message should have a value body.");
+            Assert.That(convertedValue, Is.EquivalentTo(sourceValue), "The value body should match.");
+            Assert.That(convertedMessage.Header.TimeToLive, Is.EqualTo(sourceMessage.Header.TimeToLive));
         }
 
         /// <summary>

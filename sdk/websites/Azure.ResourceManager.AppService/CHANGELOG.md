@@ -1,18 +1,42 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.1.0-beta.5 (Unreleased)
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
+
+### Bugs Fixed
+
+-Add `200` to the response code of the `SyncFunctionTriggers`
+
+### Other Changes
+
+## 1.1.0-beta.4 (2023-11-30)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0-beta.3 (2023-09-14)
+
+### Bugs Fixed
+
+- Due to `HealthCheckUri` not being a valid URI, add a new property `HealthCheckUriString` to replace it in order to fix the URI format issue.
+
+## 1.1.0-beta.2 (2023-09-06)
 
 ### Bugs Fixed
 
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebAppBackupData`.
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `WebSiteInstanceStatusData`.
 - Fixed an issue that exception throws when `Uri` type field is empty during deserialization of `AppServiceTableStorageApplicationLogsConfig`.
-
-### Other Changes
 
 ## 1.1.0-beta.1 (2023-05-31)
 
@@ -39,7 +63,7 @@
   `SiteAuthSettings.ClientSecretCertificateThumbprint` has been hidden but is still available.
 - Added `PublicCertificateData.ThumbprintString` to return the hexadecimal string representation of the SHA-1 hash of the certificate.
   `PublicCertificateData.Thumbprint` has been hidden but is still available.
-  
+
 ### Other Changes
 
 - Upgraded dependent Azure.Core to 1.32.0.

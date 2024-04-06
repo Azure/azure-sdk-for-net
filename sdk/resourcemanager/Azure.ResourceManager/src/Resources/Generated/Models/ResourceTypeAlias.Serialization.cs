@@ -5,26 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ResourceTypeAlias
+    public partial class ResourceTypeAlias : IUtf8JsonSerializable, IJsonModel<ResourceTypeAlias>
     {
-        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeAlias>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceTypeAlias>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsCollectionDefined(Paths))
+            {
+                writer.WritePropertyName("paths"u8);
+                writer.WriteStartArray();
+                foreach (var item in Paths)
+                {
+                    writer.WriteObjectValue<ResourceTypeAliasPath>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(AliasType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(AliasType.Value.ToSerialString());
+            }
+            if (Optional.IsDefined(DefaultPath))
+            {
+                writer.WritePropertyName("defaultPath"u8);
+                writer.WriteStringValue(DefaultPath);
+            }
+            if (Optional.IsDefined(DefaultPattern))
+            {
+                writer.WritePropertyName("defaultPattern"u8);
+                writer.WriteObjectValue<ResourceTypeAliasPattern>(DefaultPattern, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DefaultMetadata))
+            {
+                writer.WritePropertyName("defaultMetadata"u8);
+                writer.WriteObjectValue<ResourceTypeAliasPathMetadata>(DefaultMetadata, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourceTypeAlias IJsonModel<ResourceTypeAlias>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeAlias(document.RootElement, options);
+        }
+
+        internal static ResourceTypeAlias DeserializeResourceTypeAlias(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<ResourceTypeAliasPath>> paths = default;
-            Optional<ResourceTypeAliasType> type = default;
-            Optional<string> defaultPath = default;
-            Optional<ResourceTypeAliasPattern> defaultPattern = default;
-            Optional<ResourceTypeAliasPathMetadata> defaultMetadata = default;
+            string name = default;
+            IReadOnlyList<ResourceTypeAliasPath> paths = default;
+            ResourceTypeAliasType? type = default;
+            string defaultPath = default;
+            ResourceTypeAliasPattern defaultPattern = default;
+            ResourceTypeAliasPathMetadata defaultMetadata = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -41,7 +125,7 @@ namespace Azure.ResourceManager.Resources.Models
                     List<ResourceTypeAliasPath> array = new List<ResourceTypeAliasPath>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item));
+                        array.Add(ResourceTypeAliasPath.DeserializeResourceTypeAliasPath(item, options));
                     }
                     paths = array;
                     continue;
@@ -66,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value);
+                    defaultPattern = ResourceTypeAliasPattern.DeserializeResourceTypeAliasPattern(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("defaultMetadata"u8))
@@ -75,11 +159,179 @@ namespace Azure.ResourceManager.Resources.Models
                     {
                         continue;
                     }
-                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value);
+                    defaultMetadata = ResourceTypeAliasPathMetadata.DeserializeResourceTypeAliasPathMetadata(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceTypeAlias(name.Value, Optional.ToList(paths), Optional.ToNullable(type), defaultPath.Value, defaultPattern.Value, defaultMetadata.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeAlias(
+                name,
+                paths ?? new ChangeTrackingList<ResourceTypeAliasPath>(),
+                type,
+                defaultPath,
+                defaultPattern,
+                defaultMetadata,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Paths), out propertyOverride);
+            if (Optional.IsCollectionDefined(Paths) || hasPropertyOverride)
+            {
+                if (Paths.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  paths: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Paths)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  paths: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AliasType), out propertyOverride);
+            if (Optional.IsDefined(AliasType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AliasType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultPath), out propertyOverride);
+            if (Optional.IsDefined(DefaultPath) || hasPropertyOverride)
+            {
+                builder.Append("  defaultPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DefaultPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DefaultPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DefaultPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultPattern), out propertyOverride);
+            if (Optional.IsDefined(DefaultPattern) || hasPropertyOverride)
+            {
+                builder.Append("  defaultPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DefaultPattern, options, 2, false, "  defaultPattern: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultMetadata), out propertyOverride);
+            if (Optional.IsDefined(DefaultMetadata) || hasPropertyOverride)
+            {
+                builder.Append("  defaultMetadata: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DefaultMetadata, options, 2, false, "  defaultMetadata: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ResourceTypeAlias>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeAlias IPersistableModel<ResourceTypeAlias>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAlias>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceTypeAlias(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeAlias)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeAlias>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.LabServices.Models
 {
-    internal partial class PagedLabServicesSkus
+    internal partial class PagedLabServicesSkus : IUtf8JsonSerializable, IJsonModel<PagedLabServicesSkus>
     {
-        internal static PagedLabServicesSkus DeserializePagedLabServicesSkus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedLabServicesSkus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PagedLabServicesSkus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<AvailableLabServicesSku>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PagedLabServicesSkus IJsonModel<PagedLabServicesSkus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePagedLabServicesSkus(document.RootElement, options);
+        }
+
+        internal static PagedLabServicesSkus DeserializePagedLabServicesSkus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AvailableLabServicesSku>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AvailableLabServicesSku> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.LabServices.Models
                     List<AvailableLabServicesSku> array = new List<AvailableLabServicesSku>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item));
+                        array.Add(AvailableLabServicesSku.DeserializeAvailableLabServicesSku(item, options));
                     }
                     value = array;
                     continue;
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.LabServices.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PagedLabServicesSkus(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PagedLabServicesSkus(value ?? new ChangeTrackingList<AvailableLabServicesSku>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PagedLabServicesSkus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PagedLabServicesSkus IPersistableModel<PagedLabServicesSkus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedLabServicesSkus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePagedLabServicesSkus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedLabServicesSkus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PagedLabServicesSkus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

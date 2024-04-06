@@ -354,9 +354,19 @@ var options = new ServiceBusSessionProcessorOptions
 // create a session processor that we can use to process the messages
 await using ServiceBusSessionProcessor processor = client.CreateSessionProcessor(queueName, options);
 
-// configure the message and error handler to use
+// configure the message and error event handler to use - these event handlers are required
 processor.ProcessMessageAsync += MessageHandler;
 processor.ProcessErrorAsync += ErrorHandler;
+
+// configure optional event handlers that will be executed when a session starts processing and stops processing
+// NOTE: The SessionInitializingAsync event is raised when the processor obtains a lock for a session. This does not mean the session was
+// never processed before by this or any other ServiceBusSessionProcessor instances. Similarly, the SessionClosingAsync
+// event is raised when no more messages are available for the session being processed subject to the SessionIdleTimeout
+// in the ServiceBusSessionProcessorOptions. If additional messages are sent for that session later, the SessionInitializingAsync and SessionClosingAsync
+// events would be raised again.
+
+processor.SessionInitializingAsync += SessionInitializingHandler;
+processor.SessionClosingAsync += SessionClosingHandler;
 
 async Task MessageHandler(ProcessSessionMessageEventArgs args)
 {
@@ -367,7 +377,7 @@ async Task MessageHandler(ProcessSessionMessageEventArgs args)
 
     // we can also set arbitrary session state using this receiver
     // the state is specific to the session, and not any particular message
-    await args.SetSessionStateAsync(new BinaryData("some state"));
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when processing a message."));
 }
 
 Task ErrorHandler(ProcessErrorEventArgs args)
@@ -382,10 +392,27 @@ Task ErrorHandler(ProcessErrorEventArgs args)
     return Task.CompletedTask;
 }
 
+async Task SessionInitializingHandler(ProcessSessionEventArgs args)
+{
+    await args.SetSessionStateAsync(new BinaryData("Some state specific to this session when the session is opened for processing."));
+}
+
+async Task SessionClosingHandler(ProcessSessionEventArgs args)
+{
+    // We may want to clear the session state when no more messages are available for the session or when some known terminal message
+    // has been received. This is entirely dependent on the application scenario.
+    BinaryData sessionState = await args.GetSessionStateAsync();
+    if (sessionState.ToString() ==
+        "Some state that indicates the final message was received for the session")
+    {
+        await args.SetSessionStateAsync(null);
+    }
+}
+
 // start processing
 await processor.StartProcessingAsync();
 
-// since the processing happens in the background, we add a Conole.ReadKey to allow the processing to continue until a key is pressed.
+// since the processing happens in the background, we add a Console.ReadKey to allow the processing to continue until a key is pressed.
 Console.ReadKey();
 ```
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Search.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<int> statusCode = default;
+            int? statusCode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("statusCode"u8))
@@ -31,7 +30,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new BatchResultItem(Optional.ToNullable(statusCode));
+            return new BatchResultItem(statusCode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BatchResultItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBatchResultItem(document.RootElement);
         }
     }
 }

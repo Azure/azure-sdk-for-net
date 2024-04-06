@@ -6,14 +6,13 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy.Models
 {
     /// <summary> The TasksStateTasks. </summary>
     internal partial class TasksStateTasks
     {
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>
@@ -31,7 +30,7 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
             SentimentAnalysisTasks = new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>();
         }
 
-        /// <summary> Initializes a new instance of TasksStateTasks. </summary>
+        /// <summary> Initializes a new instance of <see cref="TasksStateTasks"/>. </summary>
         /// <param name="completed"></param>
         /// <param name="failed"></param>
         /// <param name="inProgress"></param>

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -12,23 +14,57 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// <summary> The MachineLearningWorkspaceConnectionManagedIdentity. </summary>
     public partial class MachineLearningWorkspaceConnectionManagedIdentity
     {
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         public MachineLearningWorkspaceConnectionManagedIdentity()
         {
         }
 
-        /// <summary> Initializes a new instance of MachineLearningWorkspaceConnectionManagedIdentity. </summary>
-        /// <param name="resourceId"></param>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningWorkspaceConnectionManagedIdentity"/>. </summary>
         /// <param name="clientId"></param>
-        internal MachineLearningWorkspaceConnectionManagedIdentity(ResourceIdentifier resourceId, string clientId)
+        /// <param name="resourceId"></param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningWorkspaceConnectionManagedIdentity(string clientId, ResourceIdentifier resourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourceId = resourceId;
             ClientId = clientId;
+            ResourceId = resourceId;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Gets or sets the resource id. </summary>
-        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Gets or sets the client id. </summary>
         public string ClientId { get; set; }
+        /// <summary> Gets or sets the resource id. </summary>
+        public ResourceIdentifier ResourceId { get; set; }
     }
 }

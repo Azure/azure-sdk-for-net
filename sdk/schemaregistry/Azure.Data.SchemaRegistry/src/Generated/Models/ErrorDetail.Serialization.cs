@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Data.SchemaRegistry.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Data.SchemaRegistry.Models
             }
             string code = default;
             string message = default;
-            Optional<IReadOnlyList<ErrorDetail>> details = default;
+            IReadOnlyList<ErrorDetail> details = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -49,7 +48,15 @@ namespace Azure.Data.SchemaRegistry.Models
                     continue;
                 }
             }
-            return new ErrorDetail(code, message, Optional.ToList(details));
+            return new ErrorDetail(code, message, details ?? new ChangeTrackingList<ErrorDetail>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorDetail FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorDetail(document.RootElement);
         }
     }
 }

@@ -5,23 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class DataBoxEdgeJobErrorDetails
+    public partial class DataBoxEdgeJobErrorDetails : IUtf8JsonSerializable, IJsonModel<DataBoxEdgeJobErrorDetails>
     {
-        internal static DataBoxEdgeJobErrorDetails DeserializeDataBoxEdgeJobErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataBoxEdgeJobErrorDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataBoxEdgeJobErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeJobErrorDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ErrorDetails)
+                {
+                    writer.WriteObjectValue<DataBoxEdgeJobErrorItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(Code))
+            {
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Message))
+            {
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataBoxEdgeJobErrorDetails IJsonModel<DataBoxEdgeJobErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataBoxEdgeJobErrorDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataBoxEdgeJobErrorDetails(document.RootElement, options);
+        }
+
+        internal static DataBoxEdgeJobErrorDetails DeserializeDataBoxEdgeJobErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxEdgeJobErrorItem>> errorDetails = default;
-            Optional<string> code = default;
-            Optional<string> message = default;
+            IReadOnlyList<DataBoxEdgeJobErrorItem> errorDetails = default;
+            string code = default;
+            string message = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("errorDetails"u8))
@@ -33,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<DataBoxEdgeJobErrorItem> array = new List<DataBoxEdgeJobErrorItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item));
+                        array.Add(DataBoxEdgeJobErrorItem.DeserializeDataBoxEdgeJobErrorItem(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -48,8 +115,44 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     message = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataBoxEdgeJobErrorDetails(Optional.ToList(errorDetails), code.Value, message.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataBoxEdgeJobErrorDetails(errorDetails ?? new ChangeTrackingList<DataBoxEdgeJobErrorItem>(), code, message, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataBoxEdgeJobErrorDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeJobErrorDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataBoxEdgeJobErrorDetails IPersistableModel<DataBoxEdgeJobErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataBoxEdgeJobErrorDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataBoxEdgeJobErrorDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataBoxEdgeJobErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,21 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class SavingsPlanToPurchaseCalculateExchange
+    public partial class SavingsPlanToPurchaseCalculateExchange : IUtf8JsonSerializable, IJsonModel<SavingsPlanToPurchaseCalculateExchange>
     {
-        internal static SavingsPlanToPurchaseCalculateExchange DeserializeSavingsPlanToPurchaseCalculateExchange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SavingsPlanToPurchaseCalculateExchange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SavingsPlanToPurchaseCalculateExchange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanToPurchaseCalculateExchange)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<SavingsPlanPurchase>(Properties, options);
+            }
+            if (Optional.IsDefined(BillingCurrencyTotal))
+            {
+                writer.WritePropertyName("billingCurrencyTotal"u8);
+                writer.WriteObjectValue<PurchasePrice>(BillingCurrencyTotal, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SavingsPlanToPurchaseCalculateExchange IJsonModel<SavingsPlanToPurchaseCalculateExchange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SavingsPlanToPurchaseCalculateExchange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSavingsPlanToPurchaseCalculateExchange(document.RootElement, options);
+        }
+
+        internal static SavingsPlanToPurchaseCalculateExchange DeserializeSavingsPlanToPurchaseCalculateExchange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SavingsPlanPurchase> properties = default;
-            Optional<PurchasePrice> billingCurrencyTotal = default;
+            SavingsPlanPurchase properties = default;
+            PurchasePrice billingCurrencyTotal = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -28,7 +86,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = SavingsPlanPurchase.DeserializeSavingsPlanPurchase(property.Value);
+                    properties = SavingsPlanPurchase.DeserializeSavingsPlanPurchase(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("billingCurrencyTotal"u8))
@@ -37,11 +95,47 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value);
+                    billingCurrencyTotal = PurchasePrice.DeserializePurchasePrice(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SavingsPlanToPurchaseCalculateExchange(properties.Value, billingCurrencyTotal.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SavingsPlanToPurchaseCalculateExchange(properties, billingCurrencyTotal, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SavingsPlanToPurchaseCalculateExchange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanToPurchaseCalculateExchange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SavingsPlanToPurchaseCalculateExchange IPersistableModel<SavingsPlanToPurchaseCalculateExchange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanToPurchaseCalculateExchange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSavingsPlanToPurchaseCalculateExchange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SavingsPlanToPurchaseCalculateExchange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SavingsPlanToPurchaseCalculateExchange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

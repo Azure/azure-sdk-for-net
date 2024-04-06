@@ -7,15 +7,19 @@ azure-arm: true
 csharp: true
 library-name: PaloAltoNetworks.Ngfw
 namespace: Azure.ResourceManager.PaloAltoNetworks.Ngfw
-require: https://github.com/Azure/azure-rest-api-specs/blob/0691ac4b0e05c8ca3bde2f8a33f036c12282fa25/specification/paloaltonetworks/resource-manager/readme.md
-#tag: package-2022-08-29
+require: https://github.com/Azure/azure-rest-api-specs/blob/6301be1289cf6b8cf44074f0e4229c2adf822991/specification/paloaltonetworks/resource-manager/readme.md
+#tag: package-2023-09-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -128,7 +132,7 @@ format-by-name-rules:
   '*Uri': 'Uri'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -173,4 +177,18 @@ directive:
             'modelAsString': true
           }
         };
+  # This change replaces pagination for List api's since operationName is incorrect
+  - from: PaloAltoNetworks.Cloudngfw.json
+    where: $.paths
+    transform: >
+      for (const pathKey in $) {
+        const path = $[pathKey];
+        for (const methodKey in path) {
+          const method = path[methodKey];
+          if (method['x-ms-pageable'] && (method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listAppIds' || method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listCountries' || method['x-ms-pageable']['operationName'] === 'LocalRulestacks_listPredefinedUrlCategories')) {
+            delete method['x-ms-pageable'];
+          }
+        }
+      }
+
 ```

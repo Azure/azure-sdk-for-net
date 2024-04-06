@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetIfExists(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetIfExistsAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DynatraceMonitorData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class DynatraceMonitorData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>
     {
-        public DynatraceMonitorData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public DynatraceMonitorData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory? LiftrResourceCategory { get { throw null; } }
@@ -38,6 +40,11 @@ namespace Azure.ResourceManager.Dynatrace
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.DynatraceMonitorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.DynatraceMonitorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceMonitorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DynatraceMonitorResource : Azure.ResourceManager.ArmResource
     {
@@ -90,11 +97,13 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> GetIfExists(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>> GetIfExistsAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DynatraceSingleSignOnData : Azure.ResourceManager.Models.ResourceData
+    public partial class DynatraceSingleSignOnData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>
     {
         public DynatraceSingleSignOnData() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
@@ -102,6 +111,11 @@ namespace Azure.ResourceManager.Dynatrace
         public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DynatraceSingleSignOnResource : Azure.ResourceManager.ArmResource
     {
@@ -126,16 +140,23 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> GetIfExists(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetIfExistsAsync(string ruleSetName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class DynatraceTagRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class DynatraceTagRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>
     {
         public DynatraceTagRuleData() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules LogRules { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.DynatraceTagRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.DynatraceTagRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.DynatraceTagRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DynatraceTagRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -150,6 +171,29 @@ namespace Azure.ResourceManager.Dynatrace
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource> Update(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource>> UpdateAsync(Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.Dynatrace.Mocking
+{
+    public partial class MockableDynatraceArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceArmClient() { }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorResource GetDynatraceMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceSingleSignOnResource GetDynatraceSingleSignOnResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceTagRuleResource GetDynatraceTagRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableDynatraceResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitor(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource>> GetDynatraceMonitorAsync(string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.Dynatrace.DynatraceMonitorCollection GetDynatraceMonitors() { throw null; }
+    }
+    public partial class MockableDynatraceSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableDynatraceSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.Dynatrace.DynatraceMonitorResource> GetDynatraceMonitorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.Dynatrace.Models
@@ -203,42 +247,67 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload DynatraceVmExtensionPayload(string ingestionKey = null, string environmentId = null) { throw null; }
         public static Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult LinkableEnvironmentResult(string environmentId = null, string environmentName = null, Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo planData = null) { throw null; }
     }
-    public partial class DynatraceAccountCredentialsInfo
+    public partial class DynatraceAccountCredentialsInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>
     {
         internal DynatraceAccountCredentialsInfo() { }
         public string AccountId { get { throw null; } }
         public string ApiKey { get { throw null; } }
         public string RegionId { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountCredentialsInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceAccountInfo
+    public partial class DynatraceAccountInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>
     {
         public DynatraceAccountInfo() { }
         public string AccountId { get { throw null; } set { } }
         public string RegionId { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceBillingPlanInfo
+    public partial class DynatraceBillingPlanInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>
     {
         public DynatraceBillingPlanInfo() { }
         public string BillingCycle { get { throw null; } set { } }
         public System.DateTimeOffset? EffectiveOn { get { throw null; } set { } }
         public string PlanDetails { get { throw null; } set { } }
         public string UsageType { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceEnvironmentInfo
+    public partial class DynatraceEnvironmentInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>
     {
         public DynatraceEnvironmentInfo() { }
         public string EnvironmentId { get { throw null; } set { } }
         public string IngestionKey { get { throw null; } set { } }
         public System.Uri LandingUri { get { throw null; } set { } }
         public System.Uri LogsIngestionEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceEnvironmentProperties
+    public partial class DynatraceEnvironmentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>
     {
         public DynatraceEnvironmentProperties() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceAccountInfo AccountInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentInfo EnvironmentInfo { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties SingleSignOnProperties { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceLogModuleState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState>
@@ -258,7 +327,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState left, Azure.ResourceManager.Dynatrace.Models.DynatraceLogModuleState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceMonitoredResourceDetails
+    public partial class DynatraceMonitoredResourceDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>
     {
         internal DynatraceMonitoredResourceDetails() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
@@ -266,6 +335,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string ReasonForMetricsStatus { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus? SendingLogsStatus { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.MetricsSendingStatus? SendingMetricsStatus { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoredResourceDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceMonitoringStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitoringStatus>
@@ -303,7 +377,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorMarketplaceSubscriptionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceMonitorPatch
+    public partial class DynatraceMonitorPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>
     {
         public DynatraceMonitorPatch() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceEnvironmentProperties DynatraceEnvironmentProperties { get { throw null; } set { } }
@@ -312,21 +386,36 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo UserInfo { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceMonitorResourceFilteringTag
+    public partial class DynatraceMonitorResourceFilteringTag : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>
     {
         public DynatraceMonitorResourceFilteringTag() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction? Action { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceMonitorResourceLogRules
+    public partial class DynatraceMonitorResourceLogRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>
     {
         public DynatraceMonitorResourceLogRules() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> FilteringTags { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.AadLogsSendingStatus? SendAadLogs { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.ActivityLogsSendingStatus? SendActivityLogs { get { throw null; } set { } }
         public Azure.ResourceManager.Dynatrace.Models.SubscriptionLogsSendingStatus? SendSubscriptionLogs { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceMonitorResourceTagAction : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction>
@@ -346,7 +435,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction left, Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceTagAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceMonitorUserInfo
+    public partial class DynatraceMonitorUserInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>
     {
         public DynatraceMonitorUserInfo() { }
         public string Country { get { throw null; } set { } }
@@ -354,8 +443,13 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public string FirstName { get { throw null; } set { } }
         public string LastName { get { throw null; } set { } }
         public string PhoneNumber { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorUserInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceMonitorVmInfo
+    public partial class DynatraceMonitorVmInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>
     {
         internal DynatraceMonitorVmInfo() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
@@ -367,6 +461,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus? UpdateStatus { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorVmInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceOneAgentAutoUpdateSetting : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting>
@@ -410,7 +509,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState left, Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAvailabilityState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceOneAgentEnabledAppServiceInfo
+    public partial class DynatraceOneAgentEnabledAppServiceInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>
     {
         internal DynatraceOneAgentEnabledAppServiceInfo() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentAutoUpdateSetting? AutoUpdateSetting { get { throw null; } }
@@ -422,6 +521,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentUpdateStatus? UpdateStatus { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentEnabledAppServiceInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceOneAgentMonitoringType : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceOneAgentMonitoringType>
@@ -491,7 +595,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState left, Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceSingleSignOnProperties
+    public partial class DynatraceSingleSignOnProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>
     {
         public DynatraceSingleSignOnProperties() { }
         public System.Collections.Generic.IList<string> AadDomains { get { throw null; } }
@@ -499,6 +603,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.ResourceManager.Dynatrace.Models.DynatraceProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState? SingleSignOnState { get { throw null; } set { } }
         public System.Uri SingleSignOnUri { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceSingleSignOnState : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState>
@@ -520,12 +629,17 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState left, Azure.ResourceManager.Dynatrace.Models.DynatraceSingleSignOnState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceSsoDetailsContent
+    public partial class DynatraceSsoDetailsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>
     {
         public DynatraceSsoDetailsContent() { }
         public string UserPrincipal { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceSsoDetailsResult
+    public partial class DynatraceSsoDetailsResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>
     {
         internal DynatraceSsoDetailsResult() { }
         public System.Collections.Generic.IReadOnlyList<string> AadDomains { get { throw null; } }
@@ -533,6 +647,11 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus? IsSsoEnabled { get { throw null; } }
         public System.Uri MetadataUri { get { throw null; } }
         public System.Uri SingleSignOnUri { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoDetailsResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DynatraceSsoStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus>
@@ -552,17 +671,27 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus left, Azure.ResourceManager.Dynatrace.Models.DynatraceSsoStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class DynatraceTagRulePatch
+    public partial class DynatraceTagRulePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>
     {
         public DynatraceTagRulePatch() { }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceLogRules LogRules { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Dynatrace.Models.DynatraceMonitorResourceFilteringTag> MetricRulesFilteringTags { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceTagRulePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynatraceVmExtensionPayload
+    public partial class DynatraceVmExtensionPayload : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>
     {
         internal DynatraceVmExtensionPayload() { }
         public string EnvironmentId { get { throw null; } }
         public string IngestionKey { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.DynatraceVmExtensionPayload>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LiftrResourceCategory : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory>
@@ -582,19 +711,29 @@ namespace Azure.ResourceManager.Dynatrace.Models
         public static bool operator !=(Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory left, Azure.ResourceManager.Dynatrace.Models.LiftrResourceCategory right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LinkableEnvironmentContent
+    public partial class LinkableEnvironmentContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>
     {
         public LinkableEnvironmentContent() { }
         public Azure.Core.AzureLocation? Region { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
         public string UserPrincipal { get { throw null; } set { } }
+        Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LinkableEnvironmentResult
+    public partial class LinkableEnvironmentResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>
     {
         internal LinkableEnvironmentResult() { }
         public string EnvironmentId { get { throw null; } }
         public string EnvironmentName { get { throw null; } }
         public Azure.ResourceManager.Dynatrace.Models.DynatraceBillingPlanInfo PlanData { get { throw null; } }
+        Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Dynatrace.Models.LinkableEnvironmentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct LogsSendingStatus : System.IEquatable<Azure.ResourceManager.Dynatrace.Models.LogsSendingStatus>

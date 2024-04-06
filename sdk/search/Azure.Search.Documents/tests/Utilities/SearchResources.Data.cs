@@ -39,12 +39,7 @@ namespace Azure.Search.Documents.Tests
                     new SearchableField("hotelName") { IsFilterable = true, IsSortable = true },
                     new SearchableField("description") { AnalyzerName = LexicalAnalyzerName.EnLucene },
                     new SearchableField("descriptionFr") { AnalyzerName = LexicalAnalyzerName.FrLucene },
-                    new SearchField("descriptionVector", SearchFieldDataType.Collection(SearchFieldDataType.Single))
-                    {
-                        IsSearchable = true,
-                        VectorSearchDimensions = 1536,
-                        VectorSearchConfiguration = "my-vector-config"
-                    },
+                    new VectorSearchField("descriptionVector", 1536, "my-vector-profile"),
                     new SearchableField("category") { IsFilterable = true, IsSortable = true, IsFacetable = true },
                     new SearchableField("tags", collection: true) { IsFilterable = true, IsFacetable = true },
                     new SimpleField("parkingIncluded", SearchFieldDataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
@@ -81,25 +76,29 @@ namespace Azure.Search.Documents.Tests
                 },
                 VectorSearch = new()
                 {
-                    AlgorithmConfigurations =
+                    Profiles =
                     {
-                        new HnswVectorSearchAlgorithmConfiguration( "my-vector-config")
+                        new VectorSearchProfile("my-vector-profile", "my-hsnw-vector-config")
+                    },
+                    Algorithms =
+                    {
+                        new HnswAlgorithmConfiguration( "my-hsnw-vector-config")
                     }
                 },
-                SemanticSettings = new()
+                SemanticSearch = new()
                 {
                     Configurations =
                     {
                        new SemanticConfiguration("my-semantic-config", new()
                        {
-                           TitleField = new(){ FieldName = "hotelName" },
+                           TitleField = new SemanticField("hotelName"),
                            ContentFields =
                            {
-                               new() { FieldName = "description" }
+                               new SemanticField("description")
                            },
-                           KeywordFields =
+                           KeywordsFields =
                            {
-                               new() { FieldName = "category" }
+                               new SemanticField("category")
                            }
                        })
                     }
@@ -361,7 +360,7 @@ namespace Azure.Search.Documents.Tests
         public string DescriptionFr { get; set; }
 
         [JsonPropertyName("descriptionVector")]
-        public IReadOnlyList<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
+        public ReadOnlyMemory<float> DescriptionVector { get; set; } = VectorSearchEmbeddings.DefaultVectorizeDescription; // Default DescriptionVector: "Hotel"
 
         [JsonPropertyName("category")]
         public string Category { get; set; }
@@ -402,7 +401,7 @@ namespace Azure.Search.Documents.Tests
             HotelName == other.HotelName &&
             Description == other.Description &&
             DescriptionFr == other.DescriptionFr &&
-            DescriptionVector.SequenceEqualsNullSafe(other.DescriptionVector) &&
+            DescriptionVector.Span.SequenceEqual(other.DescriptionVector.Span) &&
             Category == other.Category &&
             Tags.SequenceEqualsNullSafe(other.Tags) &&
             ParkingIncluded == other.ParkingIncluded &&

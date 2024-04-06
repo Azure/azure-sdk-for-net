@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteObjectValue(LogLevel);
+                writer.WriteObjectValue<object>(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                writer.WriteObjectValue(EnableReliableLogging);
+                writer.WriteObjectValue<object>(EnableReliableLogging);
             }
             writer.WriteEndObject();
         }
@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> logLevel = default;
-            Optional<object> enableReliableLogging = default;
+            object logLevel = default;
+            object enableReliableLogging = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logLevel"u8))
@@ -60,15 +60,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CopyActivityLogSettings(logLevel.Value, enableReliableLogging.Value);
+            return new CopyActivityLogSettings(logLevel, enableReliableLogging);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyActivityLogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyActivityLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CopyActivityLogSettings>(this);
+            return content;
         }
 
         internal partial class CopyActivityLogSettingsConverter : JsonConverter<CopyActivityLogSettings>
         {
             public override void Write(Utf8JsonWriter writer, CopyActivityLogSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CopyActivityLogSettings>(model);
             }
+
             public override CopyActivityLogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -4,13 +4,14 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 using Azure.Core;
 using Azure.Search.Documents.Models;
 
 namespace Azure.Search.Documents
 {
     /// <summary>
-    /// Options for <see cref="SearchClient.SearchAsync"/> that
+    /// Options for <see cref="SearchClient.SearchAsync(string, SearchOptions, CancellationToken)"/> that
     /// allow specifying filtering, sorting, faceting, paging, and other search
     /// query behaviors.
     /// </summary>
@@ -18,9 +19,85 @@ namespace Azure.Search.Documents
     [CodeGenModel("SearchRequest")]
     public partial class SearchOptions
     {
-        private const string QueryAnswerCountRaw = "count-";
-        private const string QueryAnswerThresholdRaw = "threshold-";
-        private const string QueryCaptionRawSplitter = "|highlight-";
+        /// <summary> Initializes a new instance of <see cref="SearchOptions"/>. </summary>
+        /// <param name="includeTotalCount"> A value that specifies whether to fetch the total count of results. Default is false. Setting this value to true may have a performance impact. Note that the count returned is an approximation. </param>
+        /// <param name="facets"> The list of facet expressions to apply to the search query. Each facet expression contains a field name, optionally followed by a comma-separated list of name:value pairs. </param>
+        /// <param name="filter"> The OData $filter expression to apply to the search query. </param>
+        /// <param name="highlightFieldsRaw"> The comma-separated list of field names to use for hit highlights. Only searchable fields can be used for hit highlighting. </param>
+        /// <param name="highlightPostTag"> A string tag that is appended to hit highlights. Must be set with highlightPreTag. Default is &lt;/em&gt;. </param>
+        /// <param name="highlightPreTag"> A string tag that is prepended to hit highlights. Must be set with highlightPostTag. Default is &lt;em&gt;. </param>
+        /// <param name="minimumCoverage"> A number between 0 and 100 indicating the percentage of the index that must be covered by a search query in order for the query to be reported as a success. This parameter can be useful for ensuring search availability even for services with only one replica. The default is 100. </param>
+        /// <param name="orderByRaw"> The comma-separated list of OData $orderby expressions by which to sort the results. Each expression can be either a field name or a call to either the geo.distance() or the search.score() functions. Each expression can be followed by asc to indicate ascending, or desc to indicate descending. The default is ascending order. Ties will be broken by the match scores of documents. If no $orderby is specified, the default sort order is descending by document match score. There can be at most 32 $orderby clauses. </param>
+        /// <param name="queryType"> A value that specifies the syntax of the search query. The default is 'simple'. Use 'full' if your query uses the Lucene query syntax. </param>
+        /// <param name="scoringStatistics"> A value that specifies whether we want to calculate scoring statistics (such as document frequency) globally for more consistent scoring, or locally, for lower latency. The default is 'local'. Use 'global' to aggregate scoring statistics globally before scoring. Using global scoring statistics can increase latency of search queries. </param>
+        /// <param name="sessionId"> A value to be used to create a sticky session, which can help getting more consistent results. As long as the same sessionId is used, a best-effort attempt will be made to target the same replica set. Be wary that reusing the same sessionID values repeatedly can interfere with the load balancing of the requests across replicas and adversely affect the performance of the search service. The value used as sessionId cannot start with a '_' character. </param>
+        /// <param name="scoringParameters"> The list of parameter values to be used in scoring functions (for example, referencePointParameter) using the format name-values. For example, if the scoring profile defines a function with a parameter called 'mylocation' the parameter string would be "mylocation--122.2,44.8" (without the quotes). </param>
+        /// <param name="scoringProfile"> The name of a scoring profile to evaluate match scores for matching documents in order to sort the results. </param>
+        /// <param name="semanticQuery"> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </param>
+        /// <param name="semanticConfigurationName"> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </param>
+        /// <param name="semanticErrorMode"> Allows the user to choose whether a semantic call should fail completely, or to return partial results (default). </param>
+        /// <param name="semanticMaxWaitInMilliseconds"> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </param>
+        /// <param name="debug"> Enables a debugging tool that can be used to further explore your reranked results. </param>
+        /// <param name="searchText"> A full-text search query expression; Use "*" or omit this parameter to match all documents. </param>
+        /// <param name="searchFieldsRaw"> The comma-separated list of field names to which to scope the full-text search. When using fielded search (fieldName:searchExpression) in a full Lucene query, the field names of each fielded search expression take precedence over any field names listed in this parameter. </param>
+        /// <param name="searchMode"> A value that specifies whether any or all of the search terms must be matched in order to count the document as a match. </param>
+        /// <param name="queryLanguage"> A value that specifies the language of the search query. </param>
+        /// <param name="querySpeller"> A value that specified the type of the speller to use to spell-correct individual search query terms. </param>
+        /// <param name="queryAnswerRaw"> A value that specifies whether answers should be returned as part of the search response. </param>
+        /// <param name="selectRaw"> The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included. </param>
+        /// <param name="skip"> The number of search results to skip. This value cannot be greater than 100,000. If you need to scan documents in sequence, but cannot use skip due to this limitation, consider using orderby on a totally-ordered key and filter with a range query instead. </param>
+        /// <param name="size"> The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results. </param>
+        /// <param name="queryCaptionRaw"> A value that specifies whether captions should be returned as part of the search response. </param>
+        /// <param name="semanticFieldsRaw"> The comma-separated list of field names used for semantic ranking. </param>
+        /// <param name="vectorQueries">
+        /// The query parameters for vector and hybrid search queries.
+        /// Please note <see cref="VectorQuery"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="VectorizableTextQuery"/> and <see cref="VectorizedQuery"/>.
+        /// </param>
+        /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'. </param>
+        internal SearchOptions(bool? includeTotalCount, IList<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IList<string> scoringParameters, string scoringProfile, string semanticQuery, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string queryAnswerRaw, string selectRaw, int? skip, int? size, string queryCaptionRaw, string semanticFieldsRaw, IList<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        {
+            IncludeTotalCount = includeTotalCount;
+            Facets = facets;
+            Filter = filter;
+            HighlightFieldsRaw = highlightFieldsRaw;
+            HighlightPostTag = highlightPostTag;
+            HighlightPreTag = highlightPreTag;
+            MinimumCoverage = minimumCoverage;
+            OrderByRaw = orderByRaw;
+            QueryType = queryType;
+            ScoringStatistics = scoringStatistics;
+            SessionId = sessionId;
+            ScoringParameters = scoringParameters;
+            ScoringProfile = scoringProfile;
+            SearchText = searchText;
+            SearchFieldsRaw = searchFieldsRaw;
+            SearchMode = searchMode;
+            SelectRaw = selectRaw;
+            Skip = skip;
+            Size = size;
+            QueryLanguage = queryLanguage;
+            QuerySpeller = querySpeller;
+
+            SemanticSearch = (semanticConfigurationName != null || semanticErrorMode != null || semanticMaxWaitInMilliseconds != null || queryAnswerRaw != null || queryCaptionRaw != null || semanticQuery != null || semanticFieldsRaw != null || debug != null) ? new SemanticSearchOptions() : null;
+            if (SemanticSearch != null)
+            {
+                SemanticSearch.QueryAnswer = queryAnswerRaw != null ? new QueryAnswer() : null;
+                SemanticSearch.QueryCaption = queryCaptionRaw != null ? new QueryCaption() : null;
+            }
+            SemanticConfigurationName = semanticConfigurationName;
+            SemanticErrorMode = semanticErrorMode;
+            SemanticMaxWaitInMilliseconds = semanticMaxWaitInMilliseconds;
+            QueryAnswerRaw = queryAnswerRaw;
+            QueryCaptionRaw = queryCaptionRaw;
+            SemanticQuery = semanticQuery;
+            SemanticFieldsRaw = semanticFieldsRaw;
+            Debug = debug;
+
+            VectorSearch = (vectorQueries != null || filterMode != null) ? new VectorSearchOptions() : null;
+            VectorQueries = vectorQueries;
+            FilterMode = filterMode;
+        }
 
         /// <summary>
         /// Initializes a new instance of SearchOptions from a continuation
@@ -81,19 +158,6 @@ namespace Azure.Search.Documents
         {
             get => SearchFields.CommaJoin();
             set => SearchFields = SearchExtensions.CommaSplit(value);
-        }
-
-        /// <summary> The list of field names used for semantic search. </summary>
-        public IList<string> SemanticFields { get; internal set; } = new List<string>();
-
-        /// <summary>
-        /// Join SemanticFields so it can be sent as a comma-separated string.
-        /// </summary>
-        [CodeGenMember("SemanticFields")]
-        internal string SemanticFieldsRaw
-        {
-            get => SemanticFields.CommaJoin();
-            set => SemanticFields = SearchExtensions.CommaSplit(value);
         }
 
         /// <summary>
@@ -174,10 +238,6 @@ namespace Azure.Search.Documents
         [CodeGenMember("ScoringParameters")]
         public IList<string> ScoringParameters { get; internal set; } = new List<string>();
 
-        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
-        [CodeGenMember("SemanticConfiguration")]
-        public string SemanticConfigurationName { get; set; }
-
         /// <summary> A value that specifies the language of the search query. </summary>
         [CodeGenMember("QueryLanguage")]
         public QueryLanguage? QueryLanguage { get; set; }
@@ -186,149 +246,152 @@ namespace Azure.Search.Documents
         [CodeGenMember("Speller")]
         public QuerySpellerType? QuerySpeller { get; set; }
 
-        /// <summary> A value that specifies whether <see cref="SearchResults{T}.Answers"/> should be returned as part of the search response. </summary>
-        public QueryAnswerType? QueryAnswer { get; set; }
+        /// <summary> Options for performing Semantic Search. </summary>
+        public SemanticSearchOptions SemanticSearch { get; set; }
 
-        /// <summary> A value that specifies the number of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
-        public int? QueryAnswerCount { get; set; }
+        /// <summary> Options for performing Vector Search. </summary>
+        public VectorSearchOptions VectorSearch { get; set; }
 
-        /// <summary> A value that specifies the threshold of <see cref="SearchResults{T}.Answers"/> that should be returned as part of the search response. </summary>
-        public double? QueryAnswerThreshold { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryAnswer"/>, <see cref="QueryAnswerCount"/> and <see cref="QueryAnswerThreshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
-        [CodeGenMember("Answers")]
-        internal string QueryAnswerRaw
+        /// <summary> The name of a semantic configuration that will be used when processing documents for queries of type semantic. </summary>
+        [CodeGenMember("SemanticConfiguration")]
+        private string SemanticConfigurationName
         {
-            get
-            {
-                if (QueryAnswer.HasValue)
-                {
-                    StringBuilder queryAnswerStringValue = new(QueryAnswer.Value.ToString());
-
-                    int tokens = 0;
-                    char NextToken() => tokens++ == 0 ? '|' : ',';
-
-                    if (QueryAnswerCount.HasValue)
-                    {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerCountRaw}{QueryAnswerCount.Value}");
-                        tokens = 1;
-                    }
-
-                    if (QueryAnswerThreshold.HasValue)
-                    {
-                        queryAnswerStringValue.Append(NextToken()).Append($"{QueryAnswerThresholdRaw}{QueryAnswerThreshold.Value}");
-                    }
-
-                    return queryAnswerStringValue.ToString();
-                }
-
-                return null;
-            }
+            get { return SemanticSearch?.SemanticConfigurationName; }
             set
             {
-                if (!string.IsNullOrEmpty(value)) // If the value is - "extractive" or "extractive|count-1" or "extractive|threshold-0.7" or "extractive|count-5,threshold-0.9" or "extractive|threshold-0.8,count-4"
+                if (SemanticSearch != null)
                 {
-                    string[] queryAnswerValues = value.Split('|');
-                    if (!string.IsNullOrEmpty(queryAnswerValues[0]))
-                    {
-                        QueryAnswer = new QueryAnswerType(queryAnswerValues[0]);
-                    }
-
-                    if (queryAnswerValues.Length == 2)
-                    {
-                        var queryAnswerParams = queryAnswerValues[1].Split(',');
-                        if (queryAnswerParams.Length <= 2)
-                        {
-                            foreach (var param in queryAnswerParams)
-                            {
-                                if (param.Contains(QueryAnswerCountRaw))
-                                {
-                                    var countPart = param.Substring(param.IndexOf(QueryAnswerCountRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerCountRaw.Length);
-                                    if (int.TryParse(countPart, out int countValue))
-                                    {
-                                        QueryAnswerCount = countValue;
-                                    }
-                                }
-                                else if (param.Contains(QueryAnswerThresholdRaw))
-                                {
-                                    var thresholdPart = param.Substring(param.IndexOf(QueryAnswerThresholdRaw, StringComparison.OrdinalIgnoreCase) + QueryAnswerThresholdRaw.Length);
-                                    if (double.TryParse(thresholdPart, out double thresholdValue))
-                                    {
-                                        QueryAnswerThreshold = thresholdValue;
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    SemanticSearch.SemanticConfigurationName = value;
                 }
             }
         }
 
-        /// <summary>
-        /// A value that specifies whether <see cref="SearchResults{T}.Captions"/> should be returned as part of the search response.
-        /// <para>The default value is <see cref="QueryCaptionType.None"/>.</para>
-        /// </summary>
-        public QueryCaptionType? QueryCaption { get; set; }
+        /// <summary> Constructed from <see cref="QueryAnswer.AnswerType"/>, <see cref="QueryAnswer.Count"/> and <see cref="QueryAnswer.Threshold"/>. For example: "extractive|count-1,threshold-0.7"</summary>
+        [CodeGenMember("Answers")]
+        private string QueryAnswerRaw
+        {
+            get { return SemanticSearch?.QueryAnswer?.QueryAnswerRaw; }
+            set
+            {
+                if (SemanticSearch?.QueryAnswer != null)
+                {
+                    SemanticSearch.QueryAnswer.QueryAnswerRaw = value;
+                }
+            }
+        }
 
-        /// <summary>
-        /// If <see cref="QueryCaption"/> is set to <see cref="QueryCaptionType.Extractive"/>, setting this to <c>true</c> enables highlighting of the returned captions.
-        /// It populates <see cref="CaptionResult.Highlights"/>.
-        /// <para>The default value is <c>true</c>.</para>
-        /// </summary>
-        public bool? QueryCaptionHighlightEnabled { get; set; }
-
-        /// <summary> Constructed from <see cref="QueryCaption"/> and <see cref="QueryCaptionHighlightEnabled"/>.</summary>
+        /// <summary> Constructed from <see cref="QueryCaption.CaptionType"/> and <see cref="QueryCaption.HighlightEnabled"/>.</summary>
         [CodeGenMember("Captions")]
-        internal string QueryCaptionRaw
+        private string QueryCaptionRaw
+        {
+            get { return SemanticSearch?.QueryCaption?.QueryCaptionRaw; }
+            set
+            {
+                if (SemanticSearch?.QueryCaption != null)
+                {
+                    SemanticSearch.QueryCaption.QueryCaptionRaw = value;
+                }
+            }
+        }
+
+        /// <summary> The comma-separated list of field names used for semantic ranking. </summary>
+        [CodeGenMember("SemanticFields")]
+        private string SemanticFieldsRaw
+        {
+            get { return SemanticSearch?.SemanticFieldsRaw; }
+            set
+            {
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.SemanticFieldsRaw = value;
+                }
+            }
+        }
+
+        /// <summary> Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase. </summary>
+        [CodeGenMember("SemanticQuery")]
+        private string SemanticQuery
+        {
+            get { return SemanticSearch?.SemanticQuery; }
+            set
+            {
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.SemanticQuery = value;
+                }
+            }
+        }
+
+        /// <summary> Enables a debugging tool that can be used to further explore your reranked results. </summary>
+        [CodeGenMember("Debug")]
+        private QueryDebugMode? Debug
+        {
+            get { return SemanticSearch?.Debug; }
+            set
+            {
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.Debug = value;
+                }
+            }
+        }
+
+        /// <summary> Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results. </summary>
+        [CodeGenMember("SemanticErrorHandling")]
+        private SemanticErrorMode? SemanticErrorMode
+        {
+            get { return SemanticSearch?.ErrorMode; }
+            set
+            {
+                if (SemanticSearch != null)
+                {
+                    SemanticSearch.ErrorMode = value;
+                }
+            }
+        }
+
+        /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
+        private int? SemanticMaxWaitInMilliseconds
         {
             get
             {
-                string queryCaptionStringValue = null;
-
-                if (QueryCaption.HasValue)
-                {
-                    if (QueryCaption.Value == QueryCaptionType.Extractive)
-                    {
-                        queryCaptionStringValue = $"{QueryCaption.Value}{QueryCaptionRawSplitter}{QueryCaptionHighlightEnabled.GetValueOrDefault(true)}";
-                    }
-                    else
-                    {
-                        queryCaptionStringValue = QueryCaption.Value.ToString();
-                    }
-                }
-
-                return queryCaptionStringValue;
+                return (int?)SemanticSearch?.MaxWait?.TotalMilliseconds;
             }
-
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (SemanticSearch != null)
                 {
-                    QueryCaption = null;
-                    QueryCaptionHighlightEnabled = null;
-                }
-                else
-                {
-                    int splitIndex = value.IndexOf(QueryCaptionRawSplitter, StringComparison.OrdinalIgnoreCase);
-                    if (splitIndex >= 0)
-                    {
-                        var queryCaptionPart = value.Substring(0, splitIndex);
-                        var highlightPart = value.Substring(splitIndex + QueryCaptionRawSplitter.Length);
-
-                        QueryCaption = string.IsNullOrEmpty(queryCaptionPart) ? null : new QueryCaptionType(queryCaptionPart);
-                        QueryCaptionHighlightEnabled = bool.TryParse(highlightPart, out bool highlightValue) ? highlightValue : null;
-                    }
-                    else
-                    {
-                        QueryCaption = new QueryCaptionType(value);
-                        QueryCaptionHighlightEnabled = null;
-                    }
+                    SemanticSearch.MaxWait = value.HasValue ? TimeSpan.FromMilliseconds(value.Value) : null;
                 }
             }
         }
 
         /// <summary> The query parameters for multi-vector search queries. </summary>
-        public IList<SearchQueryVector> Vectors { get; internal set; } = new List<SearchQueryVector>();
+        private IList<VectorQuery> VectorQueries
+        {
+            get { return VectorSearch?.Queries != null ? VectorSearch.Queries : new ChangeTrackingList<VectorQuery>(); }
+            set
+            {
+                if (VectorSearch != null)
+                {
+                    VectorSearch.Queries = value;
+                }
+            }
+        }
+
+        /// <summary> Determines whether or not filters are applied before or after the vector search is performed. Default is <see cref="VectorFilterMode.PreFilter" /> for new indexes. </summary>
+        [CodeGenMember("VectorFilterMode")]
+        private VectorFilterMode? FilterMode
+        {
+            get { return VectorSearch?.FilterMode; }
+            set
+            {
+                if (VectorSearch != null)
+                {
+                    VectorSearch.FilterMode = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Shallow copy one SearchOptions instance to another.
@@ -348,13 +411,6 @@ namespace Azure.Search.Documents
             destination.IncludeTotalCount = source.IncludeTotalCount;
             destination.MinimumCoverage = source.MinimumCoverage;
             destination.OrderBy = source.OrderBy;
-            destination.QueryAnswer = source.QueryAnswer;
-            destination.QueryAnswerCount = source.QueryAnswerCount;
-            destination.QueryAnswerThreshold = source.QueryAnswerThreshold;
-            destination.QueryCaption = source.QueryCaption;
-            destination.QueryCaptionHighlightEnabled = source.QueryCaptionHighlightEnabled;
-            destination.QueryLanguage = source.QueryLanguage;
-            destination.QuerySpeller = source.QuerySpeller;
             destination.QueryType = source.QueryType;
             destination.ScoringParameters = source.ScoringParameters;
             destination.ScoringProfile = source.ScoringProfile;
@@ -363,12 +419,13 @@ namespace Azure.Search.Documents
             destination.SearchMode = source.SearchMode;
             destination.SearchText = source.SearchText;
             destination.Select = source.Select;
-            destination.SemanticConfigurationName = source.SemanticConfigurationName;
-            destination.SemanticFields = source.SemanticFields;
             destination.SessionId = source.SessionId;
             destination.Size = source.Size;
             destination.Skip = source.Skip;
-            destination.Vectors = source.Vectors;
+            destination.QueryLanguage = source.QueryLanguage;
+            destination.QuerySpeller = source.QuerySpeller;
+            destination.SemanticSearch = source.SemanticSearch;
+            destination.VectorSearch = source.VectorSearch;
         }
 
         /// <summary>

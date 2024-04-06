@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -72,7 +69,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             WebTestResource webTest = client.GetWebTestResource(webTestResourceId);
 
             // invoke the operation
-            TagsResource webTestTags = new TagsResource()
+            ComponentTag webTestTags = new ComponentTag()
             {
                 Tags =
 {

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.EventGrid.Models;
 using Azure.ResourceManager.Models;
@@ -18,12 +19,44 @@ namespace Azure.ResourceManager.EventGrid
     /// </summary>
     public partial class PartnerNamespaceChannelData : ResourceData
     {
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         public PartnerNamespaceChannelData()
         {
         }
 
-        /// <summary> Initializes a new instance of PartnerNamespaceChannelData. </summary>
+        /// <summary> Initializes a new instance of <see cref="PartnerNamespaceChannelData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -32,7 +65,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <param name="partnerTopicInfo"> This property should be populated when channelType is PartnerTopic and represents information about the partner topic resource corresponding to the channel. </param>
         /// <param name="partnerDestinationInfo">
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </param>
         /// <param name="messageForActivation"> Context or helpful message that can be used during the approval process by the subscriber. </param>
@@ -42,7 +75,8 @@ namespace Azure.ResourceManager.EventGrid
         /// Expiration time of the channel. If this timer expires while the corresponding partner topic is never activated,
         /// the channel and corresponding partner topic are deleted.
         /// </param>
-        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PartnerNamespaceChannelData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, PartnerNamespaceChannelType? channelType, PartnerTopicInfo partnerTopicInfo, PartnerDestinationInfo partnerDestinationInfo, string messageForActivation, PartnerNamespaceChannelProvisioningState? provisioningState, PartnerTopicReadinessState? readinessState, DateTimeOffset? expireOnIfNotActivated, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ChannelType = channelType;
             PartnerTopicInfo = partnerTopicInfo;
@@ -51,6 +85,7 @@ namespace Azure.ResourceManager.EventGrid
             ProvisioningState = provisioningState;
             ReadinessState = readinessState;
             ExpireOnIfNotActivated = expireOnIfNotActivated;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of the event channel which represents the direction flow of events. </summary>
@@ -59,7 +94,7 @@ namespace Azure.ResourceManager.EventGrid
         public PartnerTopicInfo PartnerTopicInfo { get; set; }
         /// <summary>
         /// This property should be populated when channelType is PartnerDestination and represents information about the partner destination resource corresponding to the channel.
-        /// Please note <see cref="PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// Please note <see cref="Models.PartnerDestinationInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="WebhookPartnerDestinationInfo"/>.
         /// </summary>
         public PartnerDestinationInfo PartnerDestinationInfo { get; set; }

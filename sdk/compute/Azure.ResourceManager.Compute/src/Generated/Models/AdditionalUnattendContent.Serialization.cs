@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AdditionalUnattendContent : IUtf8JsonSerializable
+    public partial class AdditionalUnattendContent : IUtf8JsonSerializable, IJsonModel<AdditionalUnattendContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AdditionalUnattendContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AdditionalUnattendContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PassName))
             {
@@ -35,19 +46,50 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element)
+        AdditionalUnattendContent IJsonModel<AdditionalUnattendContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAdditionalUnattendContent(document.RootElement, options);
+        }
+
+        internal static AdditionalUnattendContent DeserializeAdditionalUnattendContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PassName> passName = default;
-            Optional<ComponentName> componentName = default;
-            Optional<SettingName> settingName = default;
-            Optional<string> content = default;
+            PassName? passName = default;
+            ComponentName? componentName = default;
+            SettingName? settingName = default;
+            string content = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("passName"u8))
@@ -82,8 +124,44 @@ namespace Azure.ResourceManager.Compute.Models
                     content = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AdditionalUnattendContent(Optional.ToNullable(passName), Optional.ToNullable(componentName), Optional.ToNullable(settingName), content.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AdditionalUnattendContent(passName, componentName, settingName, content, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AdditionalUnattendContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AdditionalUnattendContent IPersistableModel<AdditionalUnattendContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AdditionalUnattendContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAdditionalUnattendContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AdditionalUnattendContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AdditionalUnattendContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AutoHealActions : IUtf8JsonSerializable
+    public partial class AutoHealActions : IUtf8JsonSerializable, IJsonModel<AutoHealActions>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoHealActions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoHealActions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ActionType))
             {
@@ -23,25 +35,56 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
-                writer.WriteObjectValue(CustomAction);
+                writer.WriteObjectValue<AutoHealCustomAction>(CustomAction, options);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {
                 writer.WritePropertyName("minProcessExecutionTime"u8);
                 writer.WriteStringValue(MinProcessExecutionTime);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutoHealActions DeserializeAutoHealActions(JsonElement element)
+        AutoHealActions IJsonModel<AutoHealActions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoHealActions(document.RootElement, options);
+        }
+
+        internal static AutoHealActions DeserializeAutoHealActions(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AutoHealActionType> actionType = default;
-            Optional<AutoHealCustomAction> customAction = default;
-            Optional<string> minProcessExecutionTime = default;
+            AutoHealActionType? actionType = default;
+            AutoHealCustomAction customAction = default;
+            string minProcessExecutionTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("actionType"u8))
@@ -59,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value);
+                    customAction = AutoHealCustomAction.DeserializeAutoHealCustomAction(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("minProcessExecutionTime"u8))
@@ -67,8 +110,111 @@ namespace Azure.ResourceManager.AppService.Models
                     minProcessExecutionTime = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoHealActions(Optional.ToNullable(actionType), customAction.Value, minProcessExecutionTime.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutoHealActions(actionType, customAction, minProcessExecutionTime, serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (Optional.IsDefined(ActionType) || hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomAction), out propertyOverride);
+            if (Optional.IsDefined(CustomAction) || hasPropertyOverride)
+            {
+                builder.Append("  customAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CustomAction, options, 2, false, "  customAction: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProcessExecutionTime), out propertyOverride);
+            if (Optional.IsDefined(MinProcessExecutionTime) || hasPropertyOverride)
+            {
+                builder.Append("  minProcessExecutionTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MinProcessExecutionTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinProcessExecutionTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinProcessExecutionTime}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AutoHealActions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoHealActions IPersistableModel<AutoHealActions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoHealActions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoHealActions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

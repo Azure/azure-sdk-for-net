@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.TrafficManager.Models;
@@ -53,11 +52,11 @@ namespace Azure.ResourceManager.TrafficManager
             uri.AppendPath(profileName, true);
             uri.AppendPath("/heatMaps/", false);
             uri.AppendPath(heatMapType.ToString(), true);
-            if (topLeft != null && Optional.IsCollectionDefined(topLeft))
+            if (topLeft != null && !(topLeft is ChangeTrackingList<double> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("topLeft", topLeft, ",", true);
             }
-            if (botRight != null && Optional.IsCollectionDefined(botRight))
+            if (botRight != null && !(botRight is ChangeTrackingList<double> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 uri.AppendQueryDelimited("botRight", botRight, ",", true);
             }

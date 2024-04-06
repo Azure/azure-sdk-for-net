@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Files.Shares.Models
 {

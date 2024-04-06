@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Attestation.Models
 {
-    public partial class JsonWebKey : IUtf8JsonSerializable
+    public partial class JsonWebKey : IUtf8JsonSerializable, IJsonModel<JsonWebKey>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<JsonWebKey>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<JsonWebKey>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Alg))
             {
@@ -102,7 +113,215 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WritePropertyName("y"u8);
                 writer.WriteStringValue(Y);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        JsonWebKey IJsonModel<JsonWebKey>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeJsonWebKey(document.RootElement, options);
+        }
+
+        internal static JsonWebKey DeserializeJsonWebKey(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            string alg = default;
+            string crv = default;
+            string d = default;
+            string dp = default;
+            string dq = default;
+            string e = default;
+            string k = default;
+            string kid = default;
+            string kty = default;
+            string n = default;
+            string p = default;
+            string q = default;
+            string qi = default;
+            string use = default;
+            string x = default;
+            IList<string> x5c = default;
+            string y = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("alg"u8))
+                {
+                    alg = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("crv"u8))
+                {
+                    crv = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("d"u8))
+                {
+                    d = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dp"u8))
+                {
+                    dp = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("dq"u8))
+                {
+                    dq = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("e"u8))
+                {
+                    e = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("k"u8))
+                {
+                    k = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kid"u8))
+                {
+                    kid = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("kty"u8))
+                {
+                    kty = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("n"u8))
+                {
+                    n = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("p"u8))
+                {
+                    p = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("q"u8))
+                {
+                    q = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("qi"u8))
+                {
+                    qi = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("use"u8))
+                {
+                    use = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("x"u8))
+                {
+                    x = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("x5c"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    x5c = array;
+                    continue;
+                }
+                if (property.NameEquals("y"u8))
+                {
+                    y = property.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new JsonWebKey(
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
+                kty,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
+                x5c ?? new ChangeTrackingList<string>(),
+                y,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        JsonWebKey IPersistableModel<JsonWebKey>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeJsonWebKey(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<JsonWebKey>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

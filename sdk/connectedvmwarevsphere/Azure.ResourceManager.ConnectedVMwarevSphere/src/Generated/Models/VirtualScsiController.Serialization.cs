@@ -5,24 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
 {
-    public partial class VirtualScsiController
+    public partial class VirtualScsiController : IUtf8JsonSerializable, IJsonModel<VirtualScsiController>
     {
-        internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VirtualScsiController>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<VirtualScsiController>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualScsiController>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualScsiController)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ScsiControllerType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ScsiControllerType.Value.ToString());
+            }
+            if (Optional.IsDefined(ControllerKey))
+            {
+                writer.WritePropertyName("controllerKey"u8);
+                writer.WriteNumberValue(ControllerKey.Value);
+            }
+            if (Optional.IsDefined(BusNumber))
+            {
+                writer.WritePropertyName("busNumber"u8);
+                writer.WriteNumberValue(BusNumber.Value);
+            }
+            if (Optional.IsDefined(ScsiCtlrUnitNumber))
+            {
+                writer.WritePropertyName("scsiCtlrUnitNumber"u8);
+                writer.WriteNumberValue(ScsiCtlrUnitNumber.Value);
+            }
+            if (Optional.IsDefined(Sharing))
+            {
+                writer.WritePropertyName("sharing"u8);
+                writer.WriteStringValue(Sharing.Value.ToString());
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        VirtualScsiController IJsonModel<VirtualScsiController>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualScsiController>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(VirtualScsiController)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeVirtualScsiController(document.RootElement, options);
+        }
+
+        internal static VirtualScsiController DeserializeVirtualScsiController(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ScsiControllerType> type = default;
-            Optional<int> controllerKey = default;
-            Optional<int> busNumber = default;
-            Optional<int> scsiCtlrUnitNumber = default;
-            Optional<VirtualScsiSharing> sharing = default;
+            ScsiControllerType? type = default;
+            int? controllerKey = default;
+            int? busNumber = default;
+            int? scsiCtlrUnitNumber = default;
+            VirtualScsiSharing? sharing = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -70,8 +143,50 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                     sharing = new VirtualScsiSharing(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new VirtualScsiController(Optional.ToNullable(type), Optional.ToNullable(controllerKey), Optional.ToNullable(busNumber), Optional.ToNullable(scsiCtlrUnitNumber), Optional.ToNullable(sharing));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new VirtualScsiController(
+                type,
+                controllerKey,
+                busNumber,
+                scsiCtlrUnitNumber,
+                sharing,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<VirtualScsiController>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualScsiController>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(VirtualScsiController)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        VirtualScsiController IPersistableModel<VirtualScsiController>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<VirtualScsiController>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeVirtualScsiController(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VirtualScsiController)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<VirtualScsiController>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

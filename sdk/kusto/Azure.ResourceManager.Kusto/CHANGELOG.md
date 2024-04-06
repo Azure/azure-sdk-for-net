@@ -1,14 +1,36 @@
 # Release History
 
-## 1.5.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.5.1 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.5.0 (2023-10-25)
+
+### Features Added
+
+- Introduced Cluster Sandbox Custom Image functionality.
+
+### Other Changes
+
+- Upgraded to Azure API version 2023-08-15.
 
 ## 1.4.0 (2023-07-05)
 

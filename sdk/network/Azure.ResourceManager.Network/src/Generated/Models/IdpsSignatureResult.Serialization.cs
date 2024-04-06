@@ -5,31 +5,143 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class IdpsSignatureResult
+    public partial class IdpsSignatureResult : IUtf8JsonSerializable, IJsonModel<IdpsSignatureResult>
     {
-        internal static IdpsSignatureResult DeserializeIdpsSignatureResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdpsSignatureResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<IdpsSignatureResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SignatureId))
+            {
+                writer.WritePropertyName("signatureId"u8);
+                writer.WriteNumberValue(SignatureId.Value);
+            }
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteNumberValue((int)Mode.Value);
+            }
+            if (Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteNumberValue((int)Severity.Value);
+            }
+            if (Optional.IsDefined(Direction))
+            {
+                writer.WritePropertyName("direction"u8);
+                writer.WriteNumberValue((int)Direction.Value);
+            }
+            if (Optional.IsDefined(Group))
+            {
+                writer.WritePropertyName("group"u8);
+                writer.WriteStringValue(Group);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(Protocol))
+            {
+                writer.WritePropertyName("protocol"u8);
+                writer.WriteStringValue(Protocol);
+            }
+            if (Optional.IsCollectionDefined(SourcePorts))
+            {
+                writer.WritePropertyName("sourcePorts"u8);
+                writer.WriteStartArray();
+                foreach (var item in SourcePorts)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(DestinationPorts))
+            {
+                writer.WritePropertyName("destinationPorts"u8);
+                writer.WriteStartArray();
+                foreach (var item in DestinationPorts)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(LastUpdated))
+            {
+                writer.WritePropertyName("lastUpdated"u8);
+                writer.WriteStringValue(LastUpdated);
+            }
+            if (Optional.IsDefined(InheritedFromParentPolicy))
+            {
+                writer.WritePropertyName("inheritedFromParentPolicy"u8);
+                writer.WriteBooleanValue(InheritedFromParentPolicy.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        IdpsSignatureResult IJsonModel<IdpsSignatureResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeIdpsSignatureResult(document.RootElement, options);
+        }
+
+        internal static IdpsSignatureResult DeserializeIdpsSignatureResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> signatureId = default;
-            Optional<FirewallPolicyIdpsSignatureMode> mode = default;
-            Optional<FirewallPolicyIdpsSignatureSeverity> severity = default;
-            Optional<FirewallPolicyIdpsSignatureDirection> direction = default;
-            Optional<string> group = default;
-            Optional<string> description = default;
-            Optional<string> protocol = default;
-            Optional<IReadOnlyList<string>> sourcePorts = default;
-            Optional<IReadOnlyList<string>> destinationPorts = default;
-            Optional<string> lastUpdated = default;
-            Optional<bool> inheritedFromParentPolicy = default;
+            int? signatureId = default;
+            FirewallPolicyIdpsSignatureMode? mode = default;
+            FirewallPolicyIdpsSignatureSeverity? severity = default;
+            FirewallPolicyIdpsSignatureDirection? direction = default;
+            string group = default;
+            string description = default;
+            string protocol = default;
+            IReadOnlyList<string> sourcePorts = default;
+            IReadOnlyList<string> destinationPorts = default;
+            string lastUpdated = default;
+            bool? inheritedFromParentPolicy = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("signatureId"u8))
@@ -125,8 +237,56 @@ namespace Azure.ResourceManager.Network.Models
                     inheritedFromParentPolicy = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new IdpsSignatureResult(Optional.ToNullable(signatureId), Optional.ToNullable(mode), Optional.ToNullable(severity), Optional.ToNullable(direction), group.Value, description.Value, protocol.Value, Optional.ToList(sourcePorts), Optional.ToList(destinationPorts), lastUpdated.Value, Optional.ToNullable(inheritedFromParentPolicy));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new IdpsSignatureResult(
+                signatureId,
+                mode,
+                severity,
+                direction,
+                group,
+                description,
+                protocol,
+                sourcePorts ?? new ChangeTrackingList<string>(),
+                destinationPorts ?? new ChangeTrackingList<string>(),
+                lastUpdated,
+                inheritedFromParentPolicy,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<IdpsSignatureResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        IdpsSignatureResult IPersistableModel<IdpsSignatureResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<IdpsSignatureResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeIdpsSignatureResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(IdpsSignatureResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<IdpsSignatureResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

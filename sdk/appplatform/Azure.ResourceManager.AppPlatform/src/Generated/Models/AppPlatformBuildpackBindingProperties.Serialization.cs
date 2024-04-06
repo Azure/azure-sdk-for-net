@@ -5,38 +5,85 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    public partial class AppPlatformBuildpackBindingProperties : IUtf8JsonSerializable
+    public partial class AppPlatformBuildpackBindingProperties : IUtf8JsonSerializable, IJsonModel<AppPlatformBuildpackBindingProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppPlatformBuildpackBindingProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppPlatformBuildpackBindingProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildpackBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BindingType))
             {
                 writer.WritePropertyName("bindingType"u8);
                 writer.WriteStringValue(BindingType.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(LaunchProperties))
             {
                 writer.WritePropertyName("launchProperties"u8);
-                writer.WriteObjectValue(LaunchProperties);
+                writer.WriteObjectValue<BuildpackBindingLaunchProperties>(LaunchProperties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element)
+        AppPlatformBuildpackBindingProperties IJsonModel<AppPlatformBuildpackBindingProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildpackBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppPlatformBuildpackBindingProperties(document.RootElement, options);
+        }
+
+        internal static AppPlatformBuildpackBindingProperties DeserializeAppPlatformBuildpackBindingProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BuildpackBindingType> bindingType = default;
-            Optional<BuildpackBindingProvisioningState> provisioningState = default;
-            Optional<BuildpackBindingLaunchProperties> launchProperties = default;
+            BuildpackBindingType? bindingType = default;
+            BuildpackBindingProvisioningState? provisioningState = default;
+            BuildpackBindingLaunchProperties launchProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bindingType"u8))
@@ -63,11 +110,47 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value);
+                    launchProperties = BuildpackBindingLaunchProperties.DeserializeBuildpackBindingLaunchProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppPlatformBuildpackBindingProperties(Optional.ToNullable(bindingType), Optional.ToNullable(provisioningState), launchProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppPlatformBuildpackBindingProperties(bindingType, provisioningState, launchProperties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AppPlatformBuildpackBindingProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildpackBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppPlatformBuildpackBindingProperties IPersistableModel<AppPlatformBuildpackBindingProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildpackBindingProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppPlatformBuildpackBindingProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppPlatformBuildpackBindingProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppPlatformBuildpackBindingProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

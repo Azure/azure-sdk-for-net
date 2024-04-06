@@ -5,25 +5,104 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class AutoPauseDelayTimeRange
+    public partial class AutoPauseDelayTimeRange : IUtf8JsonSerializable, IJsonModel<AutoPauseDelayTimeRange>
     {
-        internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoPauseDelayTimeRange>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoPauseDelayTimeRange>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(MinValue))
+            {
+                writer.WritePropertyName("minValue"u8);
+                writer.WriteNumberValue(MinValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxValue))
+            {
+                writer.WritePropertyName("maxValue"u8);
+                writer.WriteNumberValue(MaxValue.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StepSize))
+            {
+                writer.WritePropertyName("stepSize"u8);
+                writer.WriteNumberValue(StepSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Default))
+            {
+                writer.WritePropertyName("default"u8);
+                writer.WriteNumberValue(Default.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DoNotPauseValue))
+            {
+                writer.WritePropertyName("doNotPauseValue"u8);
+                writer.WriteNumberValue(DoNotPauseValue.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutoPauseDelayTimeRange IJsonModel<AutoPauseDelayTimeRange>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoPauseDelayTimeRange(document.RootElement, options);
+        }
+
+        internal static AutoPauseDelayTimeRange DeserializeAutoPauseDelayTimeRange(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> minValue = default;
-            Optional<int> maxValue = default;
-            Optional<int> stepSize = default;
-            Optional<int> @default = default;
-            Optional<PauseDelayTimeUnit> unit = default;
-            Optional<int> doNotPauseValue = default;
+            int? minValue = default;
+            int? maxValue = default;
+            int? stepSize = default;
+            int? @default = default;
+            PauseDelayTimeUnit? unit = default;
+            int? doNotPauseValue = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("minValue"u8))
@@ -80,8 +159,152 @@ namespace Azure.ResourceManager.Sql.Models
                     doNotPauseValue = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoPauseDelayTimeRange(Optional.ToNullable(minValue), Optional.ToNullable(maxValue), Optional.ToNullable(stepSize), Optional.ToNullable(@default), Optional.ToNullable(unit), Optional.ToNullable(doNotPauseValue));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutoPauseDelayTimeRange(
+                minValue,
+                maxValue,
+                stepSize,
+                @default,
+                unit,
+                doNotPauseValue,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinValue), out propertyOverride);
+            if (Optional.IsDefined(MinValue) || hasPropertyOverride)
+            {
+                builder.Append("  minValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MinValue.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxValue), out propertyOverride);
+            if (Optional.IsDefined(MaxValue) || hasPropertyOverride)
+            {
+                builder.Append("  maxValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaxValue.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StepSize), out propertyOverride);
+            if (Optional.IsDefined(StepSize) || hasPropertyOverride)
+            {
+                builder.Append("  stepSize: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{StepSize.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Default), out propertyOverride);
+            if (Optional.IsDefined(Default) || hasPropertyOverride)
+            {
+                builder.Append("  default: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Default.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Unit.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DoNotPauseValue), out propertyOverride);
+            if (Optional.IsDefined(DoNotPauseValue) || hasPropertyOverride)
+            {
+                builder.Append("  doNotPauseValue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{DoNotPauseValue.Value}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AutoPauseDelayTimeRange>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoPauseDelayTimeRange IPersistableModel<AutoPauseDelayTimeRange>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoPauseDelayTimeRange>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoPauseDelayTimeRange(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoPauseDelayTimeRange)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoPauseDelayTimeRange>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

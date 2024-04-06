@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
-    public partial class ContainerCapabilities
+    public partial class ContainerCapabilities : IUtf8JsonSerializable, IJsonModel<ContainerCapabilities>
     {
-        internal static ContainerCapabilities DeserializeContainerCapabilities(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerCapabilities>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerCapabilities>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
+            {
+                writer.WritePropertyName("resourceType"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(OSType))
+            {
+                writer.WritePropertyName("osType"u8);
+                writer.WriteStringValue(OSType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Location))
+            {
+                writer.WritePropertyName("location"u8);
+                writer.WriteStringValue(Location.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IPAddressType))
+            {
+                writer.WritePropertyName("ipAddressType"u8);
+                writer.WriteStringValue(IPAddressType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Gpu))
+            {
+                writer.WritePropertyName("gpu"u8);
+                writer.WriteStringValue(Gpu);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Capabilities))
+            {
+                writer.WritePropertyName("capabilities"u8);
+                writer.WriteObjectValue<ContainerSupportedCapabilities>(Capabilities, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ContainerCapabilities IJsonModel<ContainerCapabilities>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerCapabilities(document.RootElement, options);
+        }
+
+        internal static ContainerCapabilities DeserializeContainerCapabilities(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> osType = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> ipAddressType = default;
-            Optional<string> gpu = default;
-            Optional<ContainerSupportedCapabilities> capabilities = default;
+            string resourceType = default;
+            string osType = default;
+            AzureLocation? location = default;
+            string ipAddressType = default;
+            string gpu = default;
+            ContainerSupportedCapabilities capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceType"u8))
@@ -61,11 +139,54 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value);
+                    capabilities = ContainerSupportedCapabilities.DeserializeContainerSupportedCapabilities(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerCapabilities(resourceType.Value, osType.Value, Optional.ToNullable(location), ipAddressType.Value, gpu.Value, capabilities.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerCapabilities(
+                resourceType,
+                osType,
+                location,
+                ipAddressType,
+                gpu,
+                capabilities,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerCapabilities>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerCapabilities IPersistableModel<ContainerCapabilities>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerCapabilities>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerCapabilities(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerCapabilities)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerCapabilities>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

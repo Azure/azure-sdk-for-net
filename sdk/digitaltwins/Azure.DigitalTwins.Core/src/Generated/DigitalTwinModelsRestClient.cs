@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -31,7 +30,7 @@ namespace Azure.DigitalTwins.Core
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2022-05-31")
+        public DigitalTwinModelsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Uri endpoint = null, string apiVersion = "2023-06-30")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -60,7 +59,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -163,7 +162,7 @@ namespace Azure.DigitalTwins.Core
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/models", false);
-            if (dependenciesFor != null && Optional.IsCollectionDefined(dependenciesFor))
+            if (dependenciesFor != null && !(dependenciesFor is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in dependenciesFor)
                 {
@@ -194,7 +193,7 @@ namespace Azure.DigitalTwins.Core
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -226,7 +225,7 @@ namespace Azure.DigitalTwins.Core
         /// * 404 Not Found
         ///   * ModelNotFound - The model was not found.
         /// </summary>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -365,7 +364,7 @@ namespace Azure.DigitalTwins.Core
                     content.JsonWriter.WriteNullValue();
                     continue;
                 }
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<object>(item);
             }
             content.JsonWriter.WriteEndArray();
             request.Content = content;
@@ -563,7 +562,7 @@ namespace Azure.DigitalTwins.Core
         ///   * ModelNotFound - The model was not found.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -602,7 +601,7 @@ namespace Azure.DigitalTwins.Core
         ///   * ModelNotFound - The model was not found.
         /// </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="dependenciesFor"> The set of the models which will have their dependencies retrieved. If omitted, all models are retrieved. </param>
+        /// <param name="dependenciesFor"> If specified, only return the set of the specified models along with their dependencies. If omitted, all models are retrieved. </param>
         /// <param name="includeModelDefinition"> When true the model definition will be returned as part of the result. </param>
         /// <param name="digitalTwinModelsListOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>

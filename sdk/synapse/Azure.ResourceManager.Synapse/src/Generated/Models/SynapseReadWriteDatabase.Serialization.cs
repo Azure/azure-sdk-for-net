@@ -6,16 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Synapse.Models
 {
-    public partial class SynapseReadWriteDatabase : IUtf8JsonSerializable
+    public partial class SynapseReadWriteDatabase : IUtf8JsonSerializable, IJsonModel<SynapseReadWriteDatabase>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SynapseReadWriteDatabase>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SynapseReadWriteDatabase>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReadWriteDatabase)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Location))
             {
@@ -24,8 +34,33 @@ namespace Azure.ResourceManager.Synapse.Models
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
             if (Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
@@ -36,27 +71,68 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
+            {
+                writer.WritePropertyName("statistics"u8);
+                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsFollowed))
+            {
+                writer.WritePropertyName("isFollowed"u8);
+                writer.WriteBooleanValue(IsFollowed.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SynapseReadWriteDatabase DeserializeSynapseReadWriteDatabase(JsonElement element)
+        SynapseReadWriteDatabase IJsonModel<SynapseReadWriteDatabase>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SynapseReadWriteDatabase)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSynapseReadWriteDatabase(document.RootElement, options);
+        }
+
+        internal static SynapseReadWriteDatabase DeserializeSynapseReadWriteDatabase(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             SynapseKind kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceProvisioningState> provisioningState = default;
-            Optional<TimeSpan> softDeletePeriod = default;
-            Optional<TimeSpan> hotCachePeriod = default;
-            Optional<DatabaseStatistics> statistics = default;
-            Optional<bool> isFollowed = default;
+            SystemData systemData = default;
+            ResourceProvisioningState? provisioningState = default;
+            TimeSpan? softDeletePeriod = default;
+            TimeSpan? hotCachePeriod = default;
+            DatabaseStatistics statistics = default;
+            bool? isFollowed = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("location"u8))
@@ -139,7 +215,7 @@ namespace Azure.ResourceManager.Synapse.Models
                             {
                                 continue;
                             }
-                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value);
+                            statistics = DatabaseStatistics.DeserializeDatabaseStatistics(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("isFollowed"u8))
@@ -154,8 +230,56 @@ namespace Azure.ResourceManager.Synapse.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SynapseReadWriteDatabase(id, name, type, systemData.Value, Optional.ToNullable(location), kind, Optional.ToNullable(provisioningState), Optional.ToNullable(softDeletePeriod), Optional.ToNullable(hotCachePeriod), statistics.Value, Optional.ToNullable(isFollowed));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SynapseReadWriteDatabase(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                kind,
+                serializedAdditionalRawData,
+                provisioningState,
+                softDeletePeriod,
+                hotCachePeriod,
+                statistics,
+                isFollowed);
         }
+
+        BinaryData IPersistableModel<SynapseReadWriteDatabase>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReadWriteDatabase)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SynapseReadWriteDatabase IPersistableModel<SynapseReadWriteDatabase>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SynapseReadWriteDatabase>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSynapseReadWriteDatabase(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SynapseReadWriteDatabase)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SynapseReadWriteDatabase>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

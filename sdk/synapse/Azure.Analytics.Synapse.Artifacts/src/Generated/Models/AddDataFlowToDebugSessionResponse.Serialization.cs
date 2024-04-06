@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> jobVersion = default;
+            string jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"u8))
@@ -30,7 +29,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new AddDataFlowToDebugSessionResponse(jobVersion.Value);
+            return new AddDataFlowToDebugSessionResponse(jobVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddDataFlowToDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
         }
 
         internal partial class AddDataFlowToDebugSessionResponseConverter : JsonConverter<AddDataFlowToDebugSessionResponse>
@@ -39,6 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 throw new NotImplementedException();
             }
+
             public override AddDataFlowToDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

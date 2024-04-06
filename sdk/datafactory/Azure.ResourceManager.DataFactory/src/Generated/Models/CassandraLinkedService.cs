@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Linked service for Cassandra data source. </summary>
     public partial class CassandraLinkedService : DataFactoryLinkedServiceProperties
     {
-        /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/>. </summary>
         /// <param name="host"> Host name for connection. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         public CassandraLinkedService(DataFactoryElement<string> host)
@@ -26,7 +25,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = "Cassandra";
         }
 
-        /// <summary> Initializes a new instance of CassandraLinkedService. </summary>
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/>. </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="username"> Username for authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for authentication. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        internal CassandraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> authenticationType, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactorySecretBaseDefinition password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal CassandraLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> host, DataFactoryElement<string> authenticationType, DataFactoryElement<int> port, DataFactoryElement<string> username, DataFactorySecret password, string encryptedCredential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             Host = host;
             AuthenticationType = authenticationType;
@@ -48,6 +47,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Password = password;
             EncryptedCredential = encryptedCredential;
             LinkedServiceType = linkedServiceType ?? "Cassandra";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CassandraLinkedService"/> for deserialization. </summary>
+        internal CassandraLinkedService()
+        {
         }
 
         /// <summary> Host name for connection. Type: string (or Expression with resultType string). </summary>
@@ -59,7 +63,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Username for authentication. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Username { get; set; }
         /// <summary> Password for authentication. </summary>
-        public DataFactorySecretBaseDefinition Password { get; set; }
+        public DataFactorySecret Password { get; set; }
         /// <summary> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </summary>
         public string EncryptedCredential { get; set; }
     }

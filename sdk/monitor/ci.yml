@@ -13,6 +13,7 @@ trigger:
     - sdk/monitor/service.projects
     - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore
     - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics
     - sdk/monitor/Azure.Monitor.Query
     - sdk/monitor/Azure.Monitor.Ingestion
 
@@ -29,6 +30,7 @@ pr:
     - sdk/monitor/service.projects
     - sdk/monitor/Azure.Monitor.OpenTelemetry.AspNetCore
     - sdk/monitor/Azure.Monitor.OpenTelemetry.Exporter
+    - sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics
     - sdk/monitor/Azure.Monitor.Query
     - sdk/monitor/Azure.Monitor.Ingestion
 
@@ -43,6 +45,8 @@ extends:
       safeName: AzureMonitorOpenTelemetryAspNetCore
     - name: Azure.Monitor.OpenTelemetry.Exporter
       safeName: AzureMonitorOpenTelemetryExporter
+    - name: Azure.Monitor.OpenTelemetry.LiveMetrics
+      safeName: AzureMonitorOpenTelemetryLiveMetrics
     - name: Azure.Monitor.Query
       safeName: AzureMonitorQuery
     - name: Azure.Monitor.Ingestion

@@ -6,14 +6,14 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Data flow debug resource. </summary>
     public partial class DataFactoryDataFlowDebugInfo : DataFactoryDebugInfo
     {
-        /// <summary> Initializes a new instance of DataFactoryDataFlowDebugInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
         /// <param name="properties">
         /// Data flow properties.
         /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
@@ -25,6 +25,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(properties, nameof(properties));
 
             Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/>. </summary>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties">
+        /// Data flow properties.
+        /// Please note <see cref="DataFactoryDataFlowProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="DataFactoryFlowletProperties"/>, <see cref="DataFactoryMappingDataFlowProperties"/> and <see cref="DataFactoryWranglingDataFlowProperties"/>.
+        /// </param>
+        internal DataFactoryDataFlowDebugInfo(string name, IDictionary<string, BinaryData> serializedAdditionalRawData, DataFactoryDataFlowProperties properties) : base(name, serializedAdditionalRawData)
+        {
+            Properties = properties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFactoryDataFlowDebugInfo"/> for deserialization. </summary>
+        internal DataFactoryDataFlowDebugInfo()
+        {
         }
 
         /// <summary>

@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Supported version details of the network device. </summary>
     public partial class SupportedVersionProperties
     {
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         public SupportedVersionProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of SupportedVersionProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="SupportedVersionProperties"/>. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
         /// <param name="isDefault"> If true newly provisioned Fabric will use this device version by default to bootstrap the network devices for the first time. </param>
-        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SupportedVersionProperties(string version, string vendorOSVersion, string vendorFirmwareVersion, NetworkFabricBooleanValue? isDefault, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Version = version;
             VendorOSVersion = vendorOSVersion;
             VendorFirmwareVersion = vendorFirmwareVersion;
             IsDefault = isDefault;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Operating system and firmware combined versions. </summary>

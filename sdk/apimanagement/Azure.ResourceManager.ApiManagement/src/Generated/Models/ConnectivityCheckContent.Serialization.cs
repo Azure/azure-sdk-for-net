@@ -5,20 +5,31 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    public partial class ConnectivityCheckContent : IUtf8JsonSerializable
+    public partial class ConnectivityCheckContent : IUtf8JsonSerializable, IJsonModel<ConnectivityCheckContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityCheckContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityCheckContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<ConnectivityCheckRequestSource>(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            writer.WriteObjectValue<ConnectivityCheckRequestDestination>(Destination, options);
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
@@ -32,9 +43,136 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                writer.WriteObjectValue<ConnectivityCheckRequestProtocolConfiguration>(ProtocolConfiguration, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
+
+        ConnectivityCheckContent IJsonModel<ConnectivityCheckContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityCheckContent(document.RootElement, options);
+        }
+
+        internal static ConnectivityCheckContent DeserializeConnectivityCheckContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            ConnectivityCheckRequestSource source = default;
+            ConnectivityCheckRequestDestination destination = default;
+            PreferredIPVersion? preferredIPVersion = default;
+            ConnectivityCheckProtocol? protocol = default;
+            ConnectivityCheckRequestProtocolConfiguration protocolConfiguration = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("source"u8))
+                {
+                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("destination"u8))
+                {
+                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("preferredIPVersion"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    preferredIPVersion = new PreferredIPVersion(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocol"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocol = new ConnectivityCheckProtocol(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("protocolConfiguration"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectivityCheckContent(
+                source,
+                destination,
+                preferredIPVersion,
+                protocol,
+                protocolConfiguration,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<ConnectivityCheckContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityCheckContent IPersistableModel<ConnectivityCheckContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityCheckContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityCheckContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

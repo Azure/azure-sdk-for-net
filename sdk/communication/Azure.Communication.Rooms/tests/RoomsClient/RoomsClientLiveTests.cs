@@ -4,9 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-#region Snippet:Azure_Communication_Rooms_Tests_UsingStatements
-//@@ using Azure.Communication.Rooms
-#endregion Snippet:Azure_Communication_Rooms_Tests_UsingStatements
 using System.Threading.Tasks;
 using Azure.Communication.Identity;
 using Azure.Communication.Rooms;

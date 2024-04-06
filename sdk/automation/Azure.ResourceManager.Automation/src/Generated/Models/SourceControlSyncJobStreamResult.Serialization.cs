@@ -6,27 +6,136 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class SourceControlSyncJobStreamResult
+    public partial class SourceControlSyncJobStreamResult : IUtf8JsonSerializable, IJsonModel<SourceControlSyncJobStreamResult>
     {
-        internal static SourceControlSyncJobStreamResult DeserializeSourceControlSyncJobStreamResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SourceControlSyncJobStreamResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SourceControlSyncJobStreamResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStreamResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceControlSyncJobStreamResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(SourceControlSyncJobStreamId))
+            {
+                writer.WritePropertyName("sourceControlSyncJobStreamId"u8);
+                writer.WriteStringValue(SourceControlSyncJobStreamId);
+            }
+            if (Optional.IsDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStringValue(Summary);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Time))
+            {
+                if (Time != null)
+                {
+                    writer.WritePropertyName("time"u8);
+                    writer.WriteStringValue(Time.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("time");
+                }
+            }
+            if (Optional.IsDefined(StreamType))
+            {
+                writer.WritePropertyName("streamType"u8);
+                writer.WriteStringValue(StreamType.Value.ToString());
+            }
+            if (Optional.IsDefined(StreamText))
+            {
+                writer.WritePropertyName("streamText"u8);
+                writer.WriteStringValue(StreamText);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartObject();
+                foreach (var item in Value)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SourceControlSyncJobStreamResult IJsonModel<SourceControlSyncJobStreamResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStreamResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SourceControlSyncJobStreamResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSourceControlSyncJobStreamResult(document.RootElement, options);
+        }
+
+        internal static SourceControlSyncJobStreamResult DeserializeSourceControlSyncJobStreamResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobStreamId = default;
-            Optional<string> summary = default;
-            Optional<DateTimeOffset?> time = default;
-            Optional<SourceControlStreamType> streamType = default;
-            Optional<string> streamText = default;
-            Optional<IReadOnlyDictionary<string, BinaryData>> value = default;
+            ResourceIdentifier id = default;
+            string sourceControlSyncJobStreamId = default;
+            string summary = default;
+            DateTimeOffset? time = default;
+            SourceControlStreamType? streamType = default;
+            string streamText = default;
+            IReadOnlyDictionary<string, BinaryData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -105,8 +214,52 @@ namespace Azure.ResourceManager.Automation.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SourceControlSyncJobStreamResult(id.Value, sourceControlSyncJobStreamId.Value, summary.Value, Optional.ToNullable(time), Optional.ToNullable(streamType), streamText.Value, Optional.ToDictionary(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SourceControlSyncJobStreamResult(
+                id,
+                sourceControlSyncJobStreamId,
+                summary,
+                time,
+                streamType,
+                streamText,
+                value ?? new ChangeTrackingDictionary<string, BinaryData>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SourceControlSyncJobStreamResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStreamResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobStreamResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SourceControlSyncJobStreamResult IPersistableModel<SourceControlSyncJobStreamResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStreamResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSourceControlSyncJobStreamResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobStreamResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SourceControlSyncJobStreamResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

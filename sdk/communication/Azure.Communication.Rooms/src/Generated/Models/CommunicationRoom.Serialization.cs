@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -23,6 +22,7 @@ namespace Azure.Communication.Rooms
             DateTimeOffset createdAt = default;
             DateTimeOffset validFrom = default;
             DateTimeOffset validUntil = default;
+            bool pstnDialOutEnabled = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -45,8 +45,21 @@ namespace Azure.Communication.Rooms
                     validUntil = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("pstnDialOutEnabled"u8))
+                {
+                    pstnDialOutEnabled = property.Value.GetBoolean();
+                    continue;
+                }
             }
-            return new CommunicationRoom(id, createdAt, validFrom, validUntil);
+            return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationRoom FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationRoom(document.RootElement);
         }
     }
 }

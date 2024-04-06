@@ -11,17 +11,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Purview
 {
     /// <summary>
-    /// A class representing a collection of <see cref="PurviewPrivateLinkResource" /> and their operations.
-    /// Each <see cref="PurviewPrivateLinkResource" /> in the collection will belong to the same instance of <see cref="PurviewAccountResource" />.
-    /// To get a <see cref="PurviewPrivateLinkResourceCollection" /> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource" />.
+    /// A class representing a collection of <see cref="PurviewPrivateLinkResource"/> and their operations.
+    /// Each <see cref="PurviewPrivateLinkResource"/> in the collection will belong to the same instance of <see cref="PurviewAccountResource"/>.
+    /// To get a <see cref="PurviewPrivateLinkResourceCollection"/> instance call the GetPurviewPrivateLinkResources method from an instance of <see cref="PurviewAccountResource"/>.
     /// </summary>
     public partial class PurviewPrivateLinkResourceCollection : ArmCollection, IEnumerable<PurviewPrivateLinkResource>, IAsyncEnumerable<PurviewPrivateLinkResource>
     {
@@ -63,6 +62,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
@@ -99,6 +106,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,15 +152,23 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> An async collection of <see cref="PurviewPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<PurviewPrivateLinkResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -159,15 +182,23 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_ListByAccount</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PurviewPrivateLinkResource" /> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="PurviewPrivateLinkResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<PurviewPrivateLinkResource> GetAll(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.CreateListByAccountNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PurviewPrivateLinkResource(Client, PurviewPrivateLinkResourceData.DeserializePurviewPrivateLinkResourceData(e)), _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics, Pipeline, "PurviewPrivateLinkResourceCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -180,6 +211,14 @@ namespace Azure.ResourceManager.Purview
         /// <item>
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,6 +255,14 @@ namespace Azure.ResourceManager.Purview
         /// <term>Operation Id</term>
         /// <description>PrivateLinkResources_GetByGroupId</description>
         /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="groupId"> The group identifier. </param>
@@ -232,6 +279,96 @@ namespace Azure.ResourceManager.Purview
             {
                 var response = _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.GetByGroupId(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The group identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual async Task<NullableResponse<PurviewPrivateLinkResource>> GetIfExistsAsync(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = await _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.GetByGroupIdAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                if (response.Value == null)
+                    return new NoValueResponse<PurviewPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new PurviewPrivateLinkResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Purview/accounts/{accountName}/privateLinkResources/{groupId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>PrivateLinkResources_GetByGroupId</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-05-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="PurviewPrivateLinkResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="groupId"> The group identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentException"> <paramref name="groupId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="groupId"/> is null. </exception>
+        public virtual NullableResponse<PurviewPrivateLinkResource> GetIfExists(string groupId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(groupId, nameof(groupId));
+
+            using var scope = _purviewPrivateLinkResourcePrivateLinkResourcesClientDiagnostics.CreateScope("PurviewPrivateLinkResourceCollection.GetIfExists");
+            scope.Start();
+            try
+            {
+                var response = _purviewPrivateLinkResourcePrivateLinkResourcesRestClient.GetByGroupId(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, groupId, cancellationToken: cancellationToken);
+                if (response.Value == null)
+                    return new NoValueResponse<PurviewPrivateLinkResource>(response.GetRawResponse());
+                return Response.FromValue(new PurviewPrivateLinkResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

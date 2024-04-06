@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class AzureReachabilityReportLocation : IUtf8JsonSerializable
+    public partial class AzureReachabilityReportLocation : IUtf8JsonSerializable, IJsonModel<AzureReachabilityReportLocation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureReachabilityReportLocation>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureReachabilityReportLocation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureReachabilityReportLocation)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("country"u8);
             writer.WriteStringValue(Country);
@@ -27,18 +38,49 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element)
+        AzureReachabilityReportLocation IJsonModel<AzureReachabilityReportLocation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportLocation>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureReachabilityReportLocation)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureReachabilityReportLocation(document.RootElement, options);
+        }
+
+        internal static AzureReachabilityReportLocation DeserializeAzureReachabilityReportLocation(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string country = default;
-            Optional<string> state = default;
-            Optional<string> city = default;
+            string state = default;
+            string city = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("country"u8))
@@ -56,8 +98,44 @@ namespace Azure.ResourceManager.Network.Models
                     city = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureReachabilityReportLocation(country, state.Value, city.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureReachabilityReportLocation(country, state, city, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureReachabilityReportLocation>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportLocation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureReachabilityReportLocation IPersistableModel<AzureReachabilityReportLocation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportLocation>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureReachabilityReportLocation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportLocation)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureReachabilityReportLocation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

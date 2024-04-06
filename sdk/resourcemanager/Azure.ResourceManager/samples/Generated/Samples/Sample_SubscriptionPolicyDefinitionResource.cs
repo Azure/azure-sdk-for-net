@@ -8,11 +8,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Resources.Samples
@@ -159,9 +156,9 @@ Description = "Resource name suffix",
 ParameterType = ArmPolicyParameterType.Integer,
 AllowedValues =
 {
-BinaryData.FromString("0"),BinaryData.FromString("30"),BinaryData.FromString("90"),BinaryData.FromString("180"),BinaryData.FromString("365")
+BinaryData.FromString("\"0\""),BinaryData.FromString("\"30\""),BinaryData.FromString("\"90\""),BinaryData.FromString("\"180\""),BinaryData.FromString("\"365\"")
 },
-DefaultValue = BinaryData.FromString("365"),
+DefaultValue = BinaryData.FromString("\"365\""),
 Metadata = new ParameterDefinitionsValueMetadata()
 {
 DisplayName = "Required retention (days)",

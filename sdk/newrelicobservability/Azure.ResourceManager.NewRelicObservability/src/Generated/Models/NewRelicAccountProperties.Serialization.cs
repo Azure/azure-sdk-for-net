@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicAccountProperties : IUtf8JsonSerializable
+    public partial class NewRelicAccountProperties : IUtf8JsonSerializable, IJsonModel<NewRelicAccountProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicAccountProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NewRelicAccountProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UserId))
             {
@@ -23,31 +34,62 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue(AccountInfo);
+                writer.WriteObjectValue<NewRelicObservabilityAccountInfo>(AccountInfo, options);
             }
             if (Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
-                writer.WriteObjectValue(OrganizationInfo);
+                writer.WriteObjectValue<NewRelicObservabilityOrganizationInfo>(OrganizationInfo, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties);
+                writer.WriteObjectValue<NewRelicSingleSignOnProperties>(SingleSignOnProperties, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicAccountProperties DeserializeNewRelicAccountProperties(JsonElement element)
+        NewRelicAccountProperties IJsonModel<NewRelicAccountProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicAccountProperties(document.RootElement, options);
+        }
+
+        internal static NewRelicAccountProperties DeserializeNewRelicAccountProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> userId = default;
-            Optional<NewRelicObservabilityAccountInfo> accountInfo = default;
-            Optional<NewRelicObservabilityOrganizationInfo> organizationInfo = default;
-            Optional<NewRelicSingleSignOnProperties> singleSignOnProperties = default;
+            string userId = default;
+            NewRelicObservabilityAccountInfo accountInfo = default;
+            NewRelicObservabilityOrganizationInfo organizationInfo = default;
+            NewRelicSingleSignOnProperties singleSignOnProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("userId"u8))
@@ -61,7 +103,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value);
+                    accountInfo = NewRelicObservabilityAccountInfo.DeserializeNewRelicObservabilityAccountInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("organizationInfo"u8))
@@ -70,7 +112,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value);
+                    organizationInfo = NewRelicObservabilityOrganizationInfo.DeserializeNewRelicObservabilityOrganizationInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("singleSignOnProperties"u8))
@@ -79,11 +121,47 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     {
                         continue;
                     }
-                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value);
+                    singleSignOnProperties = NewRelicSingleSignOnProperties.DeserializeNewRelicSingleSignOnProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicAccountProperties(userId.Value, accountInfo.Value, organizationInfo.Value, singleSignOnProperties.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NewRelicAccountProperties(userId, accountInfo, organizationInfo, singleSignOnProperties, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NewRelicAccountProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NewRelicAccountProperties IPersistableModel<NewRelicAccountProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNewRelicAccountProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicAccountProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

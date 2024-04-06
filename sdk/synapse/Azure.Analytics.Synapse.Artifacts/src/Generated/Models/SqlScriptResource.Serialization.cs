@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<SqlScript>(Properties);
             writer.WriteEndObject();
         }
 
@@ -31,10 +31,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> type = default;
-            Optional<string> etag = default;
+            string type = default;
+            string etag = default;
             SqlScript properties = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -64,15 +64,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SqlScriptResource(id.Value, name, type.Value, etag.Value, properties);
+            return new SqlScriptResource(id, name, type, etag, properties);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlScriptResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlScriptResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SqlScriptResource>(this);
+            return content;
         }
 
         internal partial class SqlScriptResourceConverter : JsonConverter<SqlScriptResource>
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlScriptResource>(model);
             }
+
             public override SqlScriptResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

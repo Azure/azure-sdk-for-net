@@ -8,15 +8,20 @@ azure-arm: true
 csharp: true
 library-name: IotHub
 namespace: Azure.ResourceManager.IotHub
-require: https://github.com/Azure/azure-rest-api-specs/blob/0f9df940977c680c39938c8b8bd5baf893737ed0/specification/iothub/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+#tag: package-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-# mgmt-debug: 
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 override-operation-name:
   IotHubResource_CheckNameAvailability: CheckIotHubNameAvailability
@@ -60,6 +65,8 @@ rename-mapping:
   IotHubSkuDescription.resourceType: -|resource-type
   CertificateProperties.thumbprint: ThumbprintString
   CertificatePropertiesWithNonce.thumbprint: ThumbprintString
+  RootCertificateProperties.enableRootCertificateV2: IsRootCertificateV2Enabled
+  RootCertificateProperties.lastUpdatedTimeUtc: LastUpdatedOn
 
 prepend-rp-prefix:
   - AuthenticationType
@@ -82,8 +89,8 @@ prepend-rp-prefix:
   - PublicNetworkAccess
   - UserSubscriptionQuota
   - UserSubscriptionQuotaListResult
-  - IPFilterRule
-  - IPFilterActionType
+  - IpFilterRule
+  - IpFilterActionType
   - RoutingSource
   - JobStatus
   - JobType
@@ -94,10 +101,11 @@ prepend-rp-prefix:
   - RegistryStatistics
   - MatchedRoute
   - NetworkRuleSetProperties
-  - NetworkRuleSetIPRule
+  - NetworkRuleSetIpRule
   - NetworkRuleIPAction
   - RoutingProperties
   - StorageEndpointProperties
+  - IPVersion
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -108,7 +116,7 @@ format-by-name-rules:
   'certificate': 'any'
   'UserAssignedIdentity': 'arm-id'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

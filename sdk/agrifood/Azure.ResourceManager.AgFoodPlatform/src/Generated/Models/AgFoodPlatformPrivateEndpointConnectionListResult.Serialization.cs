@@ -5,22 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AgFoodPlatform;
 
 namespace Azure.ResourceManager.AgFoodPlatform.Models
 {
-    internal partial class AgFoodPlatformPrivateEndpointConnectionListResult
+    internal partial class AgFoodPlatformPrivateEndpointConnectionListResult : IUtf8JsonSerializable, IJsonModel<AgFoodPlatformPrivateEndpointConnectionListResult>
     {
-        internal static AgFoodPlatformPrivateEndpointConnectionListResult DeserializeAgFoodPlatformPrivateEndpointConnectionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AgFoodPlatformPrivateEndpointConnectionListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateEndpointConnectionListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<AgFoodPlatformPrivateEndpointConnectionData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AgFoodPlatformPrivateEndpointConnectionListResult IJsonModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateEndpointConnectionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAgFoodPlatformPrivateEndpointConnectionListResult(document.RootElement, options);
+        }
+
+        internal static AgFoodPlatformPrivateEndpointConnectionListResult DeserializeAgFoodPlatformPrivateEndpointConnectionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData>> value = default;
+            IReadOnlyList<AgFoodPlatformPrivateEndpointConnectionData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,13 +88,49 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     List<AgFoodPlatformPrivateEndpointConnectionData> array = new List<AgFoodPlatformPrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item));
+                        array.Add(AgFoodPlatformPrivateEndpointConnectionData.DeserializeAgFoodPlatformPrivateEndpointConnectionData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AgFoodPlatformPrivateEndpointConnectionListResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AgFoodPlatformPrivateEndpointConnectionListResult(value ?? new ChangeTrackingList<AgFoodPlatformPrivateEndpointConnectionData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateEndpointConnectionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AgFoodPlatformPrivateEndpointConnectionListResult IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAgFoodPlatformPrivateEndpointConnectionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateEndpointConnectionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AgFoodPlatformPrivateEndpointConnectionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

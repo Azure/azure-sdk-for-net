@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results);
+            writer.WriteObjectValue<CustomEntitiesResult>(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -41,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             CustomEntitiesResult results = default;
             AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +71,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomEntityRecognitionLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new CustomEntityRecognitionLROResult(lastUpdateDateTime, status, kind, taskName, results);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomEntityRecognitionLROResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomEntityRecognitionLROResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomEntityRecognitionLROResult>(this);
+            return content;
         }
     }
 }

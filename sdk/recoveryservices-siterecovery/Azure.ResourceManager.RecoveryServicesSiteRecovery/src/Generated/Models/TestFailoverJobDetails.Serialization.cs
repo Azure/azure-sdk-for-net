@@ -5,28 +5,123 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class TestFailoverJobDetails
+    public partial class TestFailoverJobDetails : IUtf8JsonSerializable, IJsonModel<TestFailoverJobDetails>
     {
-        internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TestFailoverJobDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TestFailoverJobDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TestFailoverStatus))
+            {
+                writer.WritePropertyName("testFailoverStatus"u8);
+                writer.WriteStringValue(TestFailoverStatus);
+            }
+            if (Optional.IsDefined(Comments))
+            {
+                writer.WritePropertyName("comments"u8);
+                writer.WriteStringValue(Comments);
+            }
+            if (Optional.IsDefined(NetworkName))
+            {
+                writer.WritePropertyName("networkName"u8);
+                writer.WriteStringValue(NetworkName);
+            }
+            if (Optional.IsDefined(NetworkFriendlyName))
+            {
+                writer.WritePropertyName("networkFriendlyName"u8);
+                writer.WriteStringValue(NetworkFriendlyName);
+            }
+            if (Optional.IsDefined(NetworkType))
+            {
+                writer.WritePropertyName("networkType"u8);
+                writer.WriteStringValue(NetworkType);
+            }
+            if (Optional.IsCollectionDefined(ProtectedItemDetails))
+            {
+                writer.WritePropertyName("protectedItemDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in ProtectedItemDetails)
+                {
+                    writer.WriteObjectValue<FailoverReplicationProtectedItemDetails>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
+            if (Optional.IsCollectionDefined(AffectedObjectDetails))
+            {
+                writer.WritePropertyName("affectedObjectDetails"u8);
+                writer.WriteStartObject();
+                foreach (var item in AffectedObjectDetails)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TestFailoverJobDetails IJsonModel<TestFailoverJobDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTestFailoverJobDetails(document.RootElement, options);
+        }
+
+        internal static TestFailoverJobDetails DeserializeTestFailoverJobDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> testFailoverStatus = default;
-            Optional<string> comments = default;
-            Optional<string> networkName = default;
-            Optional<string> networkFriendlyName = default;
-            Optional<string> networkType = default;
-            Optional<IReadOnlyList<FailoverReplicationProtectedItemDetails>> protectedItemDetails = default;
+            string testFailoverStatus = default;
+            string comments = default;
+            string networkName = default;
+            string networkFriendlyName = default;
+            string networkType = default;
+            IReadOnlyList<FailoverReplicationProtectedItemDetails> protectedItemDetails = default;
             string instanceType = default;
-            Optional<IReadOnlyDictionary<string, string>> affectedObjectDetails = default;
+            IReadOnlyDictionary<string, string> affectedObjectDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("testFailoverStatus"u8))
@@ -63,7 +158,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<FailoverReplicationProtectedItemDetails> array = new List<FailoverReplicationProtectedItemDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FailoverReplicationProtectedItemDetails.DeserializeFailoverReplicationProtectedItemDetails(item));
+                        array.Add(FailoverReplicationProtectedItemDetails.DeserializeFailoverReplicationProtectedItemDetails(item, options));
                     }
                     protectedItemDetails = array;
                     continue;
@@ -87,8 +182,53 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     affectedObjectDetails = dictionary;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TestFailoverJobDetails(instanceType, Optional.ToDictionary(affectedObjectDetails), testFailoverStatus.Value, comments.Value, networkName.Value, networkFriendlyName.Value, networkType.Value, Optional.ToList(protectedItemDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TestFailoverJobDetails(
+                instanceType,
+                affectedObjectDetails ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                testFailoverStatus,
+                comments,
+                networkName,
+                networkFriendlyName,
+                networkType,
+                protectedItemDetails ?? new ChangeTrackingList<FailoverReplicationProtectedItemDetails>());
         }
+
+        BinaryData IPersistableModel<TestFailoverJobDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TestFailoverJobDetails IPersistableModel<TestFailoverJobDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TestFailoverJobDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTestFailoverJobDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TestFailoverJobDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TestFailoverJobDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

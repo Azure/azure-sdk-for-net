@@ -10,6 +10,13 @@
 
 ### Other Changes
 
+## 1.1.1 (2023-12-13)
+
+### Bugs Fixed
+
+- Fixed an issue where content client `DownloadBlobStreaming()` method would throw for blobs greater than 2GB in size. ([#37113](https://github.com/Azure/azure-sdk-for-net/pull/37113))
+- Fixed an issue in the ACR client to enable redirects due to the change in Azure.Core 1.33.0, which made redirects disabled by default. ([#39377](https://github.com/Azure/azure-sdk-for-net/issues/39377))
+
 ## 1.2.0-beta.1 (2023-07-12)
 
 ### Bugs Fixed

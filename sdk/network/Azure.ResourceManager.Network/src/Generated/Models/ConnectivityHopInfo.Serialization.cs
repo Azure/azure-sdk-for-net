@@ -5,29 +5,146 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class ConnectivityHopInfo
+    public partial class ConnectivityHopInfo : IUtf8JsonSerializable, IJsonModel<ConnectivityHopInfo>
     {
-        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectivityHopInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectivityHopInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(ConnectivityHopType))
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ConnectivityHopType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Address))
+            {
+                writer.WritePropertyName("address"u8);
+                writer.WriteStringValue(Address);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(NextHopIds))
+            {
+                writer.WritePropertyName("nextHopIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in NextHopIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousHopIds))
+            {
+                writer.WritePropertyName("previousHopIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in PreviousHopIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Links))
+            {
+                writer.WritePropertyName("links"u8);
+                writer.WriteStartArray();
+                foreach (var item in Links)
+                {
+                    writer.WriteObjectValue<HopLink>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PreviousLinks))
+            {
+                writer.WritePropertyName("previousLinks"u8);
+                writer.WriteStartArray();
+                foreach (var item in PreviousLinks)
+                {
+                    writer.WriteObjectValue<HopLink>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Issues))
+            {
+                writer.WritePropertyName("issues"u8);
+                writer.WriteStartArray();
+                foreach (var item in Issues)
+                {
+                    writer.WriteObjectValue<ConnectivityIssueInfo>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConnectivityHopInfo IJsonModel<ConnectivityHopInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectivityHopInfo(document.RootElement, options);
+        }
+
+        internal static ConnectivityHopInfo DeserializeConnectivityHopInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> id = default;
-            Optional<string> address = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IReadOnlyList<string>> nextHopIds = default;
-            Optional<IReadOnlyList<string>> previousHopIds = default;
-            Optional<IReadOnlyList<HopLink>> links = default;
-            Optional<IReadOnlyList<HopLink>> previousLinks = default;
-            Optional<IReadOnlyList<ConnectivityIssueInfo>> issues = default;
+            string type = default;
+            string id = default;
+            string address = default;
+            ResourceIdentifier resourceId = default;
+            IReadOnlyList<string> nextHopIds = default;
+            IReadOnlyList<string> previousHopIds = default;
+            IReadOnlyList<HopLink> links = default;
+            IReadOnlyList<HopLink> previousLinks = default;
+            IReadOnlyList<ConnectivityIssueInfo> issues = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -91,7 +208,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     links = array;
                     continue;
@@ -105,7 +222,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<HopLink> array = new List<HopLink>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HopLink.DeserializeHopLink(item));
+                        array.Add(HopLink.DeserializeHopLink(item, options));
                     }
                     previousLinks = array;
                     continue;
@@ -119,13 +236,59 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityIssueInfo> array = new List<ConnectivityIssueInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item));
+                        array.Add(ConnectivityIssueInfo.DeserializeConnectivityIssueInfo(item, options));
                     }
                     issues = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectivityHopInfo(type.Value, id.Value, address.Value, resourceId.Value, Optional.ToList(nextHopIds), Optional.ToList(previousHopIds), Optional.ToList(links), Optional.ToList(previousLinks), Optional.ToList(issues));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectivityHopInfo(
+                type,
+                id,
+                address,
+                resourceId,
+                nextHopIds ?? new ChangeTrackingList<string>(),
+                previousHopIds ?? new ChangeTrackingList<string>(),
+                links ?? new ChangeTrackingList<HopLink>(),
+                previousLinks ?? new ChangeTrackingList<HopLink>(),
+                issues ?? new ChangeTrackingList<ConnectivityIssueInfo>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectivityHopInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectivityHopInfo IPersistableModel<ConnectivityHopInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectivityHopInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectivityHopInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectivityHopInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectivityHopInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

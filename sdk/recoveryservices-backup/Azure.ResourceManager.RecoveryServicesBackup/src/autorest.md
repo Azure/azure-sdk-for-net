@@ -8,13 +8,17 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesBackup
 namespace: Azure.ResourceManager.RecoveryServicesBackup
-# tag: package-2023-01
-require: https://github.com/Azure/azure-rest-api-specs/blob/add28efcd3a5fd422285d992fb1ec5ee5a7a40a6/specification/recoveryservicesbackup/resource-manager/readme.md
+# tag: package-2023-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/ec238f30bd6d4a0681b691908fe00b54868467de/specification/recoveryservicesbackup/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   Job: BackupGenericJob
@@ -100,7 +104,7 @@ rename-mapping:
   AzureVmWorkloadSAPHanaDatabaseWorkloadItem: VmWorkloadSapHanaDatabaseWorkloadItem
   AzureVmWorkloadSAPHanaDBInstance: VmWorkloadSapHanaDBInstance
   AzureVmWorkloadSAPHanaDBInstanceProtectedItem: VmWorkloadSapHanaDBInstanceProtectedItem
-  AzureVmWorkloadSAPHanaHSR: VmWorkloadSapHanaHsr
+  AzureVmWorkloadSAPHanaHSRProtectableItem: VmWorkloadSapHanaHsrProtectableItem
   AzureVmWorkloadSAPHanaSystemProtectableItem: VmWorkloadSapHanaSystemProtectableItem
   AzureVmWorkloadSAPHanaSystemWorkloadItem: VmWorkloadSapHanaSystemWorkloadItem
   AzureVmWorkloadSQLAvailabilityGroupProtectableItem: VmWorkloadSqlAvailabilityGroupProtectableItem
@@ -150,6 +154,10 @@ rename-mapping:
   ErrorDetail: BackupErrorDetail
   ExtendedProperties: IaasVmBackupExtendedProperties
   FabricName: BackupFabricName
+  FetchTieringCostInfoForRehydrationRequest: FetchTieringCostInfoForRehydrationContent
+  FetchTieringCostSavingsInfoForPolicyRequest: FetchTieringCostSavingsInfoForPolicyContent
+  FetchTieringCostSavingsInfoForProtectedItemRequest: FetchTieringCostSavingsInfoForProtectedItemContent
+  FetchTieringCostSavingsInfoForVaultRequest: FetchTieringCostSavingsInfoForVaultContent
   HealthStatus: IaasVmProtectedItemHealthStatus
   ProtectedItemHealthStatus: VmWorkloadProtectedItemHealthStatus
   HourlySchedule: BackupHourlySchedule
@@ -283,6 +291,7 @@ rename-mapping:
   DpmJobTaskDetails: DpmBackupJobTaskDetails
   IdentityInfo: BackupIdentityInfo
   SecuredVMDetails.securedVMOsDiskEncryptionSetId: -|arm-id
+  SnapshotRestoreParameters: SnapshotRestoreContent
   TargetDiskNetworkAccessOption: BackupTargetDiskNetworkAccessOption
   TargetDiskNetworkAccessSettings: BackupTargetDiskNetworkAccessSettings
   TargetDiskNetworkAccessSettings.targetDiskAccessId: -|arm-id
@@ -295,7 +304,7 @@ format-by-name-rules:
   '*Uris': 'Uri'
   'SubscriptionIdParameter': 'object'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -373,6 +382,7 @@ directive:
   - remove-operation: BackupOperationResults_Get
   - remove-operation: BackupOperationStatuses_Get
   - remove-operation: ProtectionPolicyOperationStatuses_Get
+  - remove-operation: TieringCostOperationStatus_Get
   - from: bms.json
     where: $.definitions
     transform: >
@@ -468,9 +478,18 @@ directive:
     where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupResourceGuardProxies']
     transform: >
       $.get['operationId'] = 'ResourceGuardProxy_List';
-  # Here the format date-time isn't specified in swagger, hence adding it explicitly 
+  # Here the format date-time isn't specified in swagger, hence adding it explicitly
   - from: bms.json
     where: $.definitions.RecoveryPointProperties.properties.expiryTime
     transform: >
       $["format"] = "date-time";
+  # TODO: Remove this workaround once we have the swagger issue fixed
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}']
+    transform: >
+      $.put['x-ms-long-running-operation'] = true;
+  - from: bms.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.RecoveryServices/vaults/{vaultName}/backupFabrics/{fabricName}/protectionContainers/{containerName}/protectedItems/{protectedItemName}']
+    transform: >
+      $.put['x-ms-long-running-operation'] = true;
 ```

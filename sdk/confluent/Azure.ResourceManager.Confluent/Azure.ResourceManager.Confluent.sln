@@ -1,21 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30309.148
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confluent", "src\Azure.ResourceManager.Confluent.csproj", "{4ED4B575-8567-4965-B9A4-BCA5D04F1A6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Confluent", "src\Azure.ResourceManager.Confluent.csproj", "{4ED4B575-8567-4965-B9A4-BCA5D04F1A6D}"
 EndProject
-Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confluent.Tests", "tests\Azure.ResourceManager.Confluent.Tests.csproj", "{8835039D-1A98-4F8E-82E8-2E84B60140BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Confluent.Tests", "tests\Azure.ResourceManager.Confluent.Tests.csproj", "{8835039D-1A98-4F8E-82E8-2E84B60140BE}"
 EndProject
-Project("{F6672391-5856-4802-8735-03F714F354B6}") = "Azure.ResourceManager.Confluent.Samples", "samples\Azure.ResourceManager.Confluent.Samples.csproj", "{13544639-8C92-441F-9C13-10807F59F409}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.ResourceManager.Confluent.Samples", "samples\Azure.ResourceManager.Confluent.Samples.csproj", "{13544639-8C92-441F-9C13-10807F59F409}"
 EndProject
 Global
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {03BACE7F-D570-485D-9819-08F83DF91B49}
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -49,5 +43,23 @@ Global
 		{8835039D-1A98-4F8E-82E8-2E84B60140BE}.Release|x64.Build.0 = Release|Any CPU
 		{8835039D-1A98-4F8E-82E8-2E84B60140BE}.Release|x86.ActiveCfg = Release|Any CPU
 		{8835039D-1A98-4F8E-82E8-2E84B60140BE}.Release|x86.Build.0 = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|x64.Build.0 = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Debug|x86.Build.0 = Debug|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|x64.ActiveCfg = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|x64.Build.0 = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|x86.ActiveCfg = Release|Any CPU
+		{13544639-8C92-441F-9C13-10807F59F409}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {03BACE7F-D570-485D-9819-08F83DF91B49}
 	EndGlobalSection
 EndGlobal

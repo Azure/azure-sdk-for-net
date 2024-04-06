@@ -42,6 +42,22 @@ namespace Azure.Communication.Sms.Tests
             return InstrumentClient(client);
         }
 
+        public SmsClient CreateSmsClientWithNullOptions()
+        {
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
+            SmsClient client = new SmsClient(connectionString, null);
+
+            return InstrumentClient(client);
+        }
+
+        public SmsClient CreateSmsClientWithoutOptions()
+        {
+            var connectionString = TestEnvironment.LiveTestStaticConnectionString;
+            SmsClient client = new SmsClient(connectionString);
+
+            return InstrumentClient(client);
+        }
+
         public SmsClient CreateSmsClientWithToken()
         {
             Uri endpoint = TestEnvironment.LiveTestStaticEndpoint;

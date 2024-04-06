@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class StorageBackupJob : IUtf8JsonSerializable
+    public partial class StorageBackupJob : IUtf8JsonSerializable, IJsonModel<StorageBackupJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StorageBackupJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StorageBackupJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Duration))
             {
@@ -38,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in ErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<StorageBackupJobExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsDefined(IsUserTriggered))
             {
@@ -99,30 +108,61 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             writer.WritePropertyName("jobType"u8);
             writer.WriteStringValue(JobType);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static StorageBackupJob DeserializeStorageBackupJob(JsonElement element)
+        StorageBackupJob IJsonModel<StorageBackupJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StorageBackupJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStorageBackupJob(document.RootElement, options);
+        }
+
+        internal static StorageBackupJob DeserializeStorageBackupJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<TimeSpan> duration = default;
-            Optional<IList<JobSupportedAction>> actionsInfo = default;
-            Optional<IList<StorageErrorInfo>> errorDetails = default;
-            Optional<string> storageAccountName = default;
-            Optional<string> storageAccountVersion = default;
-            Optional<StorageBackupJobExtendedInfo> extendedInfo = default;
-            Optional<bool> isUserTriggered = default;
-            Optional<string> entityFriendlyName = default;
-            Optional<BackupManagementType> backupManagementType = default;
-            Optional<string> operation = default;
-            Optional<string> status = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<string> activityId = default;
+            TimeSpan? duration = default;
+            IList<JobSupportedAction> actionsInfo = default;
+            IList<StorageErrorInfo> errorDetails = default;
+            string storageAccountName = default;
+            string storageAccountVersion = default;
+            StorageBackupJobExtendedInfo extendedInfo = default;
+            bool? isUserTriggered = default;
+            string entityFriendlyName = default;
+            BackupManagementType? backupManagementType = default;
+            string operation = default;
+            string status = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            string activityId = default;
             string jobType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("duration"u8))
@@ -157,7 +197,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     List<StorageErrorInfo> array = new List<StorageErrorInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item));
+                        array.Add(StorageErrorInfo.DeserializeStorageErrorInfo(item, options));
                     }
                     errorDetails = array;
                     continue;
@@ -178,7 +218,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value);
+                    extendedInfo = StorageBackupJobExtendedInfo.DeserializeStorageBackupJobExtendedInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUserTriggered"u8))
@@ -242,8 +282,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     jobType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StorageBackupJob(entityFriendlyName.Value, Optional.ToNullable(backupManagementType), operation.Value, status.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), activityId.Value, jobType, Optional.ToNullable(duration), Optional.ToList(actionsInfo), Optional.ToList(errorDetails), storageAccountName.Value, storageAccountVersion.Value, extendedInfo.Value, Optional.ToNullable(isUserTriggered));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StorageBackupJob(
+                entityFriendlyName,
+                backupManagementType,
+                operation,
+                status,
+                startTime,
+                endTime,
+                activityId,
+                jobType,
+                serializedAdditionalRawData,
+                duration,
+                actionsInfo ?? new ChangeTrackingList<JobSupportedAction>(),
+                errorDetails ?? new ChangeTrackingList<StorageErrorInfo>(),
+                storageAccountName,
+                storageAccountVersion,
+                extendedInfo,
+                isUserTriggered);
         }
+
+        BinaryData IPersistableModel<StorageBackupJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StorageBackupJob IPersistableModel<StorageBackupJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StorageBackupJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStorageBackupJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StorageBackupJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StorageBackupJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

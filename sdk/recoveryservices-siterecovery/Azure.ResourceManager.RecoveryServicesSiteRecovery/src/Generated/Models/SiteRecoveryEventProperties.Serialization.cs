@@ -6,31 +6,137 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryEventProperties
+    public partial class SiteRecoveryEventProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryEventProperties>
     {
-        internal static SiteRecoveryEventProperties DeserializeSiteRecoveryEventProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryEventProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryEventProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(EventCode))
+            {
+                writer.WritePropertyName("eventCode"u8);
+                writer.WriteStringValue(EventCode);
+            }
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(EventType))
+            {
+                writer.WritePropertyName("eventType"u8);
+                writer.WriteStringValue(EventType);
+            }
+            if (Optional.IsDefined(AffectedObjectFriendlyName))
+            {
+                writer.WritePropertyName("affectedObjectFriendlyName"u8);
+                writer.WriteStringValue(AffectedObjectFriendlyName);
+            }
+            if (Optional.IsDefined(AffectedObjectCorrelationId))
+            {
+                writer.WritePropertyName("affectedObjectCorrelationId"u8);
+                writer.WriteStringValue(AffectedObjectCorrelationId);
+            }
+            if (Optional.IsDefined(Severity))
+            {
+                writer.WritePropertyName("severity"u8);
+                writer.WriteStringValue(Severity);
+            }
+            if (Optional.IsDefined(OccurredOn))
+            {
+                writer.WritePropertyName("timeOfOccurrence"u8);
+                writer.WriteStringValue(OccurredOn.Value, "O");
+            }
+            if (Optional.IsDefined(FabricId))
+            {
+                writer.WritePropertyName("fabricId"u8);
+                writer.WriteStringValue(FabricId);
+            }
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteObjectValue<SiteRecoveryEventProviderSpecificDetails>(ProviderSpecificDetails, options);
+            }
+            if (Optional.IsDefined(EventSpecificDetails))
+            {
+                writer.WritePropertyName("eventSpecificDetails"u8);
+                writer.WriteObjectValue<SiteRecoveryEventSpecificDetails>(EventSpecificDetails, options);
+            }
+            if (Optional.IsCollectionDefined(HealthErrors))
+            {
+                writer.WritePropertyName("healthErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in HealthErrors)
+                {
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryEventProperties IJsonModel<SiteRecoveryEventProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryEventProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryEventProperties DeserializeSiteRecoveryEventProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> eventCode = default;
-            Optional<string> description = default;
-            Optional<string> eventType = default;
-            Optional<string> affectedObjectFriendlyName = default;
-            Optional<string> affectedObjectCorrelationId = default;
-            Optional<string> severity = default;
-            Optional<DateTimeOffset> timeOfOccurrence = default;
-            Optional<ResourceIdentifier> fabricId = default;
-            Optional<SiteRecoveryEventProviderSpecificDetails> providerSpecificDetails = default;
-            Optional<SiteRecoveryEventSpecificDetails> eventSpecificDetails = default;
-            Optional<IReadOnlyList<SiteRecoveryHealthError>> healthErrors = default;
+            string eventCode = default;
+            string description = default;
+            string eventType = default;
+            string affectedObjectFriendlyName = default;
+            string affectedObjectCorrelationId = default;
+            string severity = default;
+            DateTimeOffset? timeOfOccurrence = default;
+            ResourceIdentifier fabricId = default;
+            SiteRecoveryEventProviderSpecificDetails providerSpecificDetails = default;
+            SiteRecoveryEventSpecificDetails eventSpecificDetails = default;
+            IReadOnlyList<SiteRecoveryHealthError> healthErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventCode"u8))
@@ -87,7 +193,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = SiteRecoveryEventProviderSpecificDetails.DeserializeSiteRecoveryEventProviderSpecificDetails(property.Value);
+                    providerSpecificDetails = SiteRecoveryEventProviderSpecificDetails.DeserializeSiteRecoveryEventProviderSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("eventSpecificDetails"u8))
@@ -96,7 +202,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    eventSpecificDetails = SiteRecoveryEventSpecificDetails.DeserializeSiteRecoveryEventSpecificDetails(property.Value);
+                    eventSpecificDetails = SiteRecoveryEventSpecificDetails.DeserializeSiteRecoveryEventSpecificDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("healthErrors"u8))
@@ -108,13 +214,61 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoveryHealthError> array = new List<SiteRecoveryHealthError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item));
+                        array.Add(SiteRecoveryHealthError.DeserializeSiteRecoveryHealthError(item, options));
                     }
                     healthErrors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryEventProperties(eventCode.Value, description.Value, eventType.Value, affectedObjectFriendlyName.Value, affectedObjectCorrelationId.Value, severity.Value, Optional.ToNullable(timeOfOccurrence), fabricId.Value, providerSpecificDetails.Value, eventSpecificDetails.Value, Optional.ToList(healthErrors));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteRecoveryEventProperties(
+                eventCode,
+                description,
+                eventType,
+                affectedObjectFriendlyName,
+                affectedObjectCorrelationId,
+                severity,
+                timeOfOccurrence,
+                fabricId,
+                providerSpecificDetails,
+                eventSpecificDetails,
+                healthErrors ?? new ChangeTrackingList<SiteRecoveryHealthError>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryEventProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryEventProperties IPersistableModel<SiteRecoveryEventProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryEventProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryEventProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryEventProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryEventProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

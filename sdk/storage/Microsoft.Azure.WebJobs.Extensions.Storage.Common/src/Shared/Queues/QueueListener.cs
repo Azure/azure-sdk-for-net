@@ -42,8 +42,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         private readonly FunctionDescriptor _functionDescriptor;
         private readonly string _functionId;
         private readonly CancellationTokenSource _shutdownCancellationTokenSource;
+        private readonly CancellationTokenSource _executionCancellationTokenSource;
         private readonly Lazy<QueueTargetScaler> _targetScaler;
         private readonly Lazy<QueueScaleMonitor> _scaleMonitor;
+        private readonly IDrainModeManager _drainModeManager;
 
         private bool? _queueExists;
         private bool _foundMessageSinceLastDelay;
@@ -70,7 +72,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             FunctionDescriptor functionDescriptor,
             ConcurrencyManager concurrencyManager = null,
             string functionId = null,
-            TimeSpan? maxPollingInterval = null)
+            TimeSpan? maxPollingInterval = null,
+            IDrainModeManager drainModeManager = null)
         {
             if (queueOptions == null)
             {
@@ -131,6 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
             _shutdownCancellationTokenSource = new CancellationTokenSource();
+            _executionCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
 
@@ -143,6 +147,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         ));
 
             _scaleMonitor = new Lazy<QueueScaleMonitor>(() => new QueueScaleMonitor(_functionId, _queue, loggerFactory));
+            _drainModeManager = drainModeManager;
         }
 
         // for testing
@@ -164,6 +169,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
+            if (_drainModeManager?.IsDrainModeEnabled ?? false)
+            {
+                _executionCancellationTokenSource.Cancel();
+            }
             using (cancellationToken.Register(() => _shutdownCancellationTokenSource.Cancel()))
             {
                 ThrowIfDisposed();
@@ -179,7 +188,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             if (!_disposed)
             {
                 _timer.Dispose();
+                _shutdownCancellationTokenSource.Cancel();
+                _executionCancellationTokenSource.Cancel();
                 _shutdownCancellationTokenSource.Dispose();
+                _executionCancellationTokenSource.Dispose();
                 _disposed = true;
             }
         }
@@ -225,11 +237,14 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
                         }
 
                         sw = Stopwatch.StartNew();
-                        Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(numMessagesToReceive, _visibilityTimeout, cancellationToken).ConfigureAwait(false);
-                        batch = response.Value;
+                        using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdownCancellationTokenSource.Token))
+                        {
+                            Response<QueueMessage[]> response = await _queue.ReceiveMessagesAsync(numMessagesToReceive, _visibilityTimeout, linkedCts.Token).ConfigureAwait(false);
+                            batch = response.Value;
 
-                        int count = batch?.Length ?? -1;
-                        Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
+                            int count = batch?.Length ?? -1;
+                            Logger.GetMessages(_logger, _functionDescriptor.LogName, _queue.Name, response.GetRawResponse().ClientRequestId, count, sw.ElapsedMilliseconds);
+                        }
                     }
                 }
                 catch (RequestFailedException exception)
@@ -381,26 +396,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             try
             {
-                if (!await _queueProcessor.BeginProcessingMessageAsync(message, cancellationToken).ConfigureAwait(false))
+                using (CancellationTokenSource linkedCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, _shutdownCancellationTokenSource.Token))
                 {
-                    return;
+                    if (!await _queueProcessor.BeginProcessingMessageAsync(message, linkedCts.Token).ConfigureAwait(false))
+                    {
+                        return;
+                    }
+
+                    FunctionResult result = null;
+                    Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
+                    using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
+                    {
+                        timer.Start();
+
+                        result = await _triggerExecutor.ExecuteAsync(message, _executionCancellationTokenSource.Token).ConfigureAwait(false);
+
+                        await timer.StopAsync(linkedCts.Token).ConfigureAwait(false);
+                    }
+
+                    // Use a different cancellation token for shutdown to allow graceful shutdown.
+                    // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
+                    // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
+                    await _queueProcessor.CompleteProcessingMessageAsync(message, result, linkedCts.Token).ConfigureAwait(false);
                 }
-
-                FunctionResult result = null;
-                Action<UpdateReceipt> onUpdateReceipt = updateReceipt => { message = message.Update(updateReceipt); };
-                using (ITaskSeriesTimer timer = CreateUpdateMessageVisibilityTimer(_queue, message, visibilityTimeout, _exceptionHandler, onUpdateReceipt))
-                {
-                    timer.Start();
-
-                    result = await _triggerExecutor.ExecuteAsync(message, cancellationToken).ConfigureAwait(false);
-
-                    await timer.StopAsync(cancellationToken).ConfigureAwait(false);
-                }
-
-                // Use a different cancellation token for shutdown to allow graceful shutdown.
-                // Specifically, don't cancel the completion or update of the message itself during graceful shutdown.
-                // Only cancel completion or update of the message if a non-graceful shutdown is requested via _shutdownCancellationTokenSource.
-                await _queueProcessor.CompleteProcessingMessageAsync(message, result, _shutdownCancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (TaskCanceledException)
             {

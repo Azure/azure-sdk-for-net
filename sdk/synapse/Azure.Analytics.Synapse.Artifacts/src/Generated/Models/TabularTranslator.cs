@@ -12,13 +12,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> A copy activity tabular translator. </summary>
     public partial class TabularTranslator : CopyTranslator
     {
-        /// <summary> Initializes a new instance of TabularTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TabularTranslator"/>. </summary>
         public TabularTranslator()
         {
             Type = "TabularTranslator";
         }
 
-        /// <summary> Initializes a new instance of TabularTranslator. </summary>
+        /// <summary> Initializes a new instance of <see cref="TabularTranslator"/>. </summary>
         /// <param name="type"> Copy translator type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <param name="columnMappings"> Column mappings. Example: "UserId: MyUserId, Group: MyGroup, Name: MyName" Type: string (or Expression with resultType string). This property will be retired. Please use mappings property. </param>

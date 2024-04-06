@@ -10,12 +10,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
     /// <summary> Defines a Spatial Analysis person count operation eventing configuration. </summary>
     public partial class SpatialAnalysisPersonCountEvent : SpatialAnalysisOperationEventBase
     {
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonCountEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountEvent"/>. </summary>
         public SpatialAnalysisPersonCountEvent()
         {
         }
 
-        /// <summary> Initializes a new instance of SpatialAnalysisPersonCountEvent. </summary>
+        /// <summary> Initializes a new instance of <see cref="SpatialAnalysisPersonCountEvent"/>. </summary>
         /// <param name="threshold"> The event threshold. </param>
         /// <param name="focus"> The operation focus type. </param>
         /// <param name="trigger"> The event trigger type. </param>

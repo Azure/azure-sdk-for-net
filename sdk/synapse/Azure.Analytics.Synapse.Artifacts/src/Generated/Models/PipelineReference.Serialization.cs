@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             PipelineReferenceType type = default;
             string referenceName = default;
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -57,15 +57,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new PipelineReference(type, referenceName, name.Value);
+            return new PipelineReference(type, referenceName, name);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PipelineReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePipelineReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PipelineReference>(this);
+            return content;
         }
 
         internal partial class PipelineReferenceConverter : JsonConverter<PipelineReference>
         {
             public override void Write(Utf8JsonWriter writer, PipelineReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PipelineReference>(model);
             }
+
             public override PipelineReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

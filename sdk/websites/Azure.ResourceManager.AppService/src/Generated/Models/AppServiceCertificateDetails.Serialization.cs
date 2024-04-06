@@ -6,28 +6,121 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServiceCertificateDetails
+    public partial class AppServiceCertificateDetails : IUtf8JsonSerializable, IJsonModel<AppServiceCertificateDetails>
     {
-        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServiceCertificateDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServiceCertificateDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Version))
+            {
+                writer.WritePropertyName("version"u8);
+                writer.WriteNumberValue(Version.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SerialNumber))
+            {
+                writer.WritePropertyName("serialNumber"u8);
+                writer.WriteStringValue(SerialNumber);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ThumbprintString))
+            {
+                writer.WritePropertyName("thumbprint"u8);
+                writer.WriteStringValue(ThumbprintString);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subject))
+            {
+                writer.WritePropertyName("subject"u8);
+                writer.WriteStringValue(Subject);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotBefore))
+            {
+                writer.WritePropertyName("notBefore"u8);
+                writer.WriteStringValue(NotBefore.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(NotAfter))
+            {
+                writer.WritePropertyName("notAfter"u8);
+                writer.WriteStringValue(NotAfter.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(SignatureAlgorithm))
+            {
+                writer.WritePropertyName("signatureAlgorithm"u8);
+                writer.WriteStringValue(SignatureAlgorithm);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Issuer))
+            {
+                writer.WritePropertyName("issuer"u8);
+                writer.WriteStringValue(Issuer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RawData))
+            {
+                writer.WritePropertyName("rawData"u8);
+                writer.WriteStringValue(RawData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AppServiceCertificateDetails IJsonModel<AppServiceCertificateDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServiceCertificateDetails(document.RootElement, options);
+        }
+
+        internal static AppServiceCertificateDetails DeserializeAppServiceCertificateDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> version = default;
-            Optional<string> serialNumber = default;
-            Optional<string> thumbprint = default;
-            Optional<string> subject = default;
-            Optional<DateTimeOffset> notBefore = default;
-            Optional<DateTimeOffset> notAfter = default;
-            Optional<string> signatureAlgorithm = default;
-            Optional<string> issuer = default;
-            Optional<string> rawData = default;
+            int? version = default;
+            string serialNumber = default;
+            string thumbprint = default;
+            string subject = default;
+            DateTimeOffset? notBefore = default;
+            DateTimeOffset? notAfter = default;
+            string signatureAlgorithm = default;
+            string issuer = default;
+            string rawData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("version"u8))
@@ -87,8 +180,247 @@ namespace Azure.ResourceManager.AppService.Models
                     rawData = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServiceCertificateDetails(Optional.ToNullable(version), serialNumber.Value, thumbprint.Value, subject.Value, Optional.ToNullable(notBefore), Optional.ToNullable(notAfter), signatureAlgorithm.Value, issuer.Value, rawData.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServiceCertificateDetails(
+                version,
+                serialNumber,
+                thumbprint,
+                subject,
+                notBefore,
+                notAfter,
+                signatureAlgorithm,
+                issuer,
+                rawData,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Version.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SerialNumber), out propertyOverride);
+            if (Optional.IsDefined(SerialNumber) || hasPropertyOverride)
+            {
+                builder.Append("  serialNumber: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SerialNumber.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SerialNumber}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SerialNumber}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(ThumbprintString) || hasPropertyOverride)
+            {
+                builder.Append("  thumbprint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subject), out propertyOverride);
+            if (Optional.IsDefined(Subject) || hasPropertyOverride)
+            {
+                builder.Append("  subject: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Subject.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subject}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subject}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotBefore), out propertyOverride);
+            if (Optional.IsDefined(NotBefore) || hasPropertyOverride)
+            {
+                builder.Append("  notBefore: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(NotBefore.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NotAfter), out propertyOverride);
+            if (Optional.IsDefined(NotAfter) || hasPropertyOverride)
+            {
+                builder.Append("  notAfter: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(NotAfter.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SignatureAlgorithm), out propertyOverride);
+            if (Optional.IsDefined(SignatureAlgorithm) || hasPropertyOverride)
+            {
+                builder.Append("  signatureAlgorithm: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SignatureAlgorithm.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SignatureAlgorithm}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SignatureAlgorithm}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Issuer), out propertyOverride);
+            if (Optional.IsDefined(Issuer) || hasPropertyOverride)
+            {
+                builder.Append("  issuer: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Issuer.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Issuer}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Issuer}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RawData), out propertyOverride);
+            if (Optional.IsDefined(RawData) || hasPropertyOverride)
+            {
+                builder.Append("  rawData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RawData.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RawData}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RawData}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppServiceCertificateDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServiceCertificateDetails IPersistableModel<AppServiceCertificateDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServiceCertificateDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServiceCertificateDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServiceCertificateDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServiceCertificateDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

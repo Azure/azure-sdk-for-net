@@ -57,5 +57,12 @@ namespace Azure.AI.Personalizer
         {
             liveModel.QueueActionTakenEvent(eventId);
         }
+
+        /// <summary> Dispose liveModel </summary>
+        protected override void DisposeManagedObjects()
+        {
+            liveModel.Dispose();
+            base.DisposeManagedObjects();
+        }
     }
 }

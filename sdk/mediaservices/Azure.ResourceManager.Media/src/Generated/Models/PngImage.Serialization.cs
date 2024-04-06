@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class PngImage : IUtf8JsonSerializable
+    public partial class PngImage : IUtf8JsonSerializable, IJsonModel<PngImage>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PngImage>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PngImage>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PngImage)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Layers))
             {
@@ -23,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in Layers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PngLayer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,24 +70,55 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PngImage DeserializePngImage(JsonElement element)
+        PngImage IJsonModel<PngImage>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PngImage)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePngImage(document.RootElement, options);
+        }
+
+        internal static PngImage DeserializePngImage(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<PngLayer>> layers = default;
+            IList<PngLayer> layers = default;
             string start = default;
-            Optional<string> step = default;
-            Optional<string> range = default;
-            Optional<TimeSpan> keyFrameInterval = default;
-            Optional<InputVideoStretchMode> stretchMode = default;
-            Optional<VideoSyncMode> syncMode = default;
+            string step = default;
+            string range = default;
+            TimeSpan? keyFrameInterval = default;
+            InputVideoStretchMode? stretchMode = default;
+            VideoSyncMode? syncMode = default;
             string odataType = default;
-            Optional<string> label = default;
+            string label = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("layers"u8))
@@ -90,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<PngLayer> array = new List<PngLayer>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PngLayer.DeserializePngLayer(item));
+                        array.Add(PngLayer.DeserializePngLayer(item, options));
                     }
                     layers = array;
                     continue;
@@ -147,8 +187,54 @@ namespace Azure.ResourceManager.Media.Models
                     label = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PngImage(odataType, label.Value, Optional.ToNullable(keyFrameInterval), Optional.ToNullable(stretchMode), Optional.ToNullable(syncMode), start, step.Value, range.Value, Optional.ToList(layers));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PngImage(
+                odataType,
+                label,
+                serializedAdditionalRawData,
+                keyFrameInterval,
+                stretchMode,
+                syncMode,
+                start,
+                step,
+                range,
+                layers ?? new ChangeTrackingList<PngLayer>());
         }
+
+        BinaryData IPersistableModel<PngImage>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PngImage)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PngImage IPersistableModel<PngImage>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PngImage>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePngImage(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PngImage)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PngImage>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,10 +17,9 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> dialogId = default;
-            Optional<DialogOptionsInternal> dialogOptions = default;
-            Optional<DialogInputType> dialogInputType = default;
-            Optional<string> operationContext = default;
+            string dialogId = default;
+            BaseDialog dialog = default;
+            string operationContext = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dialogId"u8))
@@ -29,22 +27,13 @@ namespace Azure.Communication.CallAutomation
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("dialogOptions"u8))
+                if (property.NameEquals("dialog"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dialogOptions = DialogOptionsInternal.DeserializeDialogOptionsInternal(property.Value);
-                    continue;
-                }
-                if (property.NameEquals("dialogInputType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dialogInputType = new DialogInputType(property.Value.GetString());
+                    dialog = BaseDialog.DeserializeBaseDialog(property.Value);
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))
@@ -53,7 +42,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogStateResponseInternal(dialogId.Value, dialogOptions.Value, Optional.ToNullable(dialogInputType), operationContext.Value);
+            return new DialogStateResponseInternal(dialogId, dialog, operationContext);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DialogStateResponseInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDialogStateResponseInternal(document.RootElement);
         }
     }
 }

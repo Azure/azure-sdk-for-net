@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.IoT.TimeSeriesInsights
 {
@@ -18,9 +17,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> cumulativeInstanceCount = default;
-            Optional<SearchHierarchyNodesResponse> hierarchyNodes = default;
+            string name = default;
+            int? cumulativeInstanceCount = default;
+            SearchHierarchyNodesResponse hierarchyNodes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -47,7 +46,15 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new HierarchyHit(name.Value, Optional.ToNullable(cumulativeInstanceCount), hierarchyNodes.Value);
+            return new HierarchyHit(name, cumulativeInstanceCount, hierarchyNodes);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static HierarchyHit FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHierarchyHit(document.RootElement);
         }
     }
 }

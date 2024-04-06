@@ -6,15 +6,26 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.KeyVault.Models
 {
-    public partial class SecretProperties : IUtf8JsonSerializable
+    public partial class SecretProperties : IUtf8JsonSerializable, IJsonModel<SecretProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecretProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
@@ -29,22 +40,63 @@ namespace Azure.ResourceManager.KeyVault.Models
             if (Optional.IsDefined(Attributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(Attributes);
+                writer.WriteObjectValue<SecretAttributes>(Attributes, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecretUri))
+            {
+                writer.WritePropertyName("secretUri"u8);
+                writer.WriteStringValue(SecretUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SecretUriWithVersion))
+            {
+                writer.WritePropertyName("secretUriWithVersion"u8);
+                writer.WriteStringValue(SecretUriWithVersion);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SecretProperties DeserializeSecretProperties(JsonElement element)
+        SecretProperties IJsonModel<SecretProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecretProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecretProperties(document.RootElement, options);
+        }
+
+        internal static SecretProperties DeserializeSecretProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> value = default;
-            Optional<string> contentType = default;
-            Optional<SecretAttributes> attributes = default;
-            Optional<Uri> secretUri = default;
-            Optional<string> secretUriWithVersion = default;
+            string value = default;
+            string contentType = default;
+            SecretAttributes attributes = default;
+            Uri secretUri = default;
+            string secretUriWithVersion = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -63,7 +115,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     {
                         continue;
                     }
-                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value);
+                    attributes = SecretAttributes.DeserializeSecretAttributes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("secretUri"u8))
@@ -80,8 +132,161 @@ namespace Azure.ResourceManager.KeyVault.Models
                     secretUriWithVersion = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecretProperties(value.Value, contentType.Value, attributes.Value, secretUri.Value, secretUriWithVersion.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecretProperties(
+                value,
+                contentType,
+                attributes,
+                secretUri,
+                secretUriWithVersion,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Value.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Value}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Value}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContentType), out propertyOverride);
+            if (Optional.IsDefined(ContentType) || hasPropertyOverride)
+            {
+                builder.Append("  contentType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ContentType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContentType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContentType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
+            if (Optional.IsDefined(Attributes) || hasPropertyOverride)
+            {
+                builder.Append("  attributes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Attributes, options, 2, false, "  attributes: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretUri), out propertyOverride);
+            if (Optional.IsDefined(SecretUri) || hasPropertyOverride)
+            {
+                builder.Append("  secretUri: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SecretUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecretUriWithVersion), out propertyOverride);
+            if (Optional.IsDefined(SecretUriWithVersion) || hasPropertyOverride)
+            {
+                builder.Append("  secretUriWithVersion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecretUriWithVersion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecretUriWithVersion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecretUriWithVersion}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<SecretProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(SecretProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecretProperties IPersistableModel<SecretProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecretProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecretProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecretProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

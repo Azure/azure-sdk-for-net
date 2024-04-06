@@ -6,21 +6,19 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A copy activity SQL source. </summary>
     public partial class SqlSource : TabularSource
     {
-        /// <summary> Initializes a new instance of SqlSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSource"/>. </summary>
         public SqlSource()
         {
-            StoredProcedureParameters = new ChangeTrackingDictionary<string, StoredProcedureParameter>();
             Type = "SqlSource";
         }
 
-        /// <summary> Initializes a new instance of SqlSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSource"/>. </summary>
         /// <param name="type"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -34,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <param name="isolationLevel"> Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionOption"> The partition mechanism that will be used for Sql read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange". </param>
         /// <param name="partitionSettings"> The settings that will be leveraged for Sql source partitioning. </param>
-        internal SqlSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object sqlReaderQuery, object sqlReaderStoredProcedureName, IDictionary<string, StoredProcedureParameter> storedProcedureParameters, object isolationLevel, object partitionOption, SqlPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
+        internal SqlSource(string type, object sourceRetryCount, object sourceRetryWait, object maxConcurrentConnections, IDictionary<string, object> additionalProperties, object queryTimeout, object additionalColumns, object sqlReaderQuery, object sqlReaderStoredProcedureName, object storedProcedureParameters, object isolationLevel, object partitionOption, SqlPartitionSettings partitionSettings) : base(type, sourceRetryCount, sourceRetryWait, maxConcurrentConnections, additionalProperties, queryTimeout, additionalColumns)
         {
             SqlReaderQuery = sqlReaderQuery;
             SqlReaderStoredProcedureName = sqlReaderStoredProcedureName;
@@ -50,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <summary> Name of the stored procedure for a SQL Database source. This cannot be used at the same time as SqlReaderQuery. Type: string (or Expression with resultType string). </summary>
         public object SqlReaderStoredProcedureName { get; set; }
         /// <summary> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </summary>
-        public IDictionary<string, StoredProcedureParameter> StoredProcedureParameters { get; }
+        public object StoredProcedureParameters { get; set; }
         /// <summary> Specifies the transaction locking behavior for the SQL source. Allowed values: ReadCommitted/ReadUncommitted/RepeatableRead/Serializable/Snapshot. The default value is ReadCommitted. Type: string (or Expression with resultType string). </summary>
         public object IsolationLevel { get; set; }
         /// <summary> The partition mechanism that will be used for Sql read in parallel. Possible values include: "None", "PhysicalPartitionsOfTable", "DynamicRange". </summary>

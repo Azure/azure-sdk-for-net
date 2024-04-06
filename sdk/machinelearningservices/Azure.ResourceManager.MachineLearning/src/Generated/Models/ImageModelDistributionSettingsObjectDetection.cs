@@ -5,17 +5,20 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
     /// Distribution expressions to sweep over values of model settings.
     /// &lt;example&gt;
     /// Some examples are:
-    /// &lt;code&gt;
+    /// ```
     /// ModelName = "choice('seresnext', 'resnest50')";
     /// LearningRate = "uniform(0.001, 0.01)";
     /// LayersToFreeze = "choice(0, 2)";
-    /// &lt;/code&gt;&lt;/example&gt;
+    /// ```&lt;/example&gt;
     /// For more details on how to compose distribution expressions please check the documentation:
     /// https://docs.microsoft.com/en-us/azure/machine-learning/how-to-tune-hyperparameters
     /// For more information on the available settings please visit the official documentation:
@@ -23,12 +26,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelDistributionSettingsObjectDetection : ImageModelDistributionSettings
     {
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
         public ImageModelDistributionSettingsObjectDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelDistributionSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelDistributionSettingsObjectDetection"/>. </summary>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
         /// <param name="beta1"> Value of 'beta1' when optimizer is 'adam' or 'adamw'. Must be a float in the range [0, 1]. </param>
@@ -76,6 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="boxDetectionsPerImage">
         /// Maximum number of detections per image, for all classes. Must be a positive integer.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
@@ -127,7 +131,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="validationIouThreshold"> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </param>
         /// <param name="validationMetricType"> Metric computation method to use for validation metrics. Must be 'none', 'coco', 'voc', or 'coco_voc'. </param>
-        internal ImageModelDistributionSettingsObjectDetection(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, string boxDetectionsPerImage, string boxScoreThreshold, string imageSize, string maxSize, string minSize, string modelSize, string multiScale, string nmsIouThreshold, string tileGridSize, string tileOverlapRatio, string tilePredictionsNmsThreshold, string validationIouThreshold, string validationMetricType) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
+        internal ImageModelDistributionSettingsObjectDetection(string amsGradient, string augmentations, string beta1, string beta2, string distributed, string earlyStopping, string earlyStoppingDelay, string earlyStoppingPatience, string enableOnnxNormalization, string evaluationFrequency, string gradientAccumulationStep, string layersToFreeze, string learningRate, string learningRateScheduler, string modelName, string momentum, string nesterov, string numberOfEpochs, string numberOfWorkers, string optimizer, string randomSeed, string stepLRGamma, string stepLRStepSize, string trainingBatchSize, string validationBatchSize, string warmupCosineLRCycles, string warmupCosineLRWarmupEpochs, string weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData, string boxDetectionsPerImage, string boxScoreThreshold, string imageSize, string maxSize, string minSize, string modelSize, string multiScale, string nmsIouThreshold, string tileGridSize, string tileOverlapRatio, string tilePredictionsNmsThreshold, string validationIouThreshold, string validationMetricType) : base(amsGradient, augmentations, beta1, beta2, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
         {
             BoxDetectionsPerImage = boxDetectionsPerImage;
             BoxScoreThreshold = boxScoreThreshold;

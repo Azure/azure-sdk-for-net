@@ -5,7 +5,12 @@ using System;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+#if AZURE_MONITOR_EXPORTER
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+#elif LIVE_METRICS_EXPORTER
+using Azure.Monitor.OpenTelemetry.LiveMetrics;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+#endif
 using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
@@ -14,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     {
         private static string? s_prefix;
         internal static string? s_sdkVersion = GetSdkVersion();
+        internal static bool s_isDistro = false;
 
         internal static string? SdkVersionPrefix
         {
@@ -21,6 +27,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             set
             {
                 s_prefix = value;
+                s_sdkVersion = GetSdkVersion();
+            }
+        }
+
+        internal static bool IsDistro
+        {
+            get => s_isDistro;
+            set
+            {
+                s_isDistro = value;
                 s_sdkVersion = GetSdkVersion();
             }
         }
@@ -42,7 +58,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                 if (shortVersion.Length > 20)
                 {
+#if AZURE_MONITOR_EXPORTER
                     AzureMonitorExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+#elif LIVE_METRICS_EXPORTER
+                    LiveMetricsExporterEventSource.Log.VersionStringUnexpectedLength(type.Name, versionString);
+#endif
                     return shortVersion.Substring(0, 20);
                 }
 
@@ -50,7 +70,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
+#if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
+#elif LIVE_METRICS_EXPORTER
+                LiveMetricsExporterEventSource.Log.ErrorInitializingPartOfSdkVersion(type.Name, ex);
+#endif
                 return null;
             }
         }
@@ -62,13 +86,26 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 string? sdkVersionPrefix = !string.IsNullOrWhiteSpace(SdkVersionPrefix) ? $"{SdkVersionPrefix}_" : null;
                 string? dotnetSdkVersion = GetVersion(typeof(object));
                 string? otelSdkVersion = GetVersion(typeof(Sdk));
+#if AZURE_MONITOR_EXPORTER
                 string? extensionVersion = GetVersion(typeof(AzureMonitorTraceExporter));
+#elif LIVE_METRICS_EXPORTER
+                string? extensionVersion = GetVersion(typeof(LiveMetricsActivityProcessor));
+#endif
+
+                if (IsDistro)
+                {
+                    extensionVersion += "-d";
+                }
 
                 return string.Format(CultureInfo.InvariantCulture, $"{sdkVersionPrefix}dotnet{dotnetSdkVersion}:otel{otelSdkVersion}:ext{extensionVersion}");
             }
             catch (Exception ex)
             {
+#if AZURE_MONITOR_EXPORTER
                 AzureMonitorExporterEventSource.Log.SdkVersionCreateFailed(ex);
+#elif LIVE_METRICS_EXPORTER
+                LiveMetricsExporterEventSource.Log.SdkVersionCreateFailed(ex);
+#endif
                 return null;
             }
         }

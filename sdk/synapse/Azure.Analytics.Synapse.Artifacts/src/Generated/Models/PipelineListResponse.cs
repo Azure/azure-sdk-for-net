@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> A list of pipeline resources. </summary>
     internal partial class PipelineListResponse
     {
-        /// <summary> Initializes a new instance of PipelineListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineListResponse"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         internal PipelineListResponse(IEnumerable<PipelineResource> value)
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of PipelineListResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="PipelineListResponse"/>. </summary>
         /// <param name="value"> List of pipelines. </param>
         /// <param name="nextLink"> The link to the next page of results, if any remaining results exist. </param>
         internal PipelineListResponse(IReadOnlyList<PipelineResource> value, string nextLink)

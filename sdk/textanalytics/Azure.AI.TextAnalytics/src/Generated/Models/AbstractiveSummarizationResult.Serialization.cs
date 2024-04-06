@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -21,13 +20,13 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Errors)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentError>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<TextDocumentBatchStatistics>(Statistics);
             }
             writer.WritePropertyName("modelVersion"u8);
             writer.WriteStringValue(ModelVersion);
@@ -35,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in Documents)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AbstractiveSummaryDocumentResult>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -48,7 +47,7 @@ namespace Azure.AI.TextAnalytics.Models
                 return null;
             }
             IList<DocumentError> errors = default;
-            Optional<TextDocumentBatchStatistics> statistics = default;
+            TextDocumentBatchStatistics statistics = default;
             string modelVersion = default;
             IList<AbstractiveSummaryDocumentResult> documents = default;
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,23 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new AbstractiveSummarizationResult(documents, errors, statistics.Value, modelVersion);
+            return new AbstractiveSummarizationResult(documents, errors, statistics, modelVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AbstractiveSummarizationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAbstractiveSummarizationResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AbstractiveSummarizationResult>(this);
+            return content;
         }
     }
 }

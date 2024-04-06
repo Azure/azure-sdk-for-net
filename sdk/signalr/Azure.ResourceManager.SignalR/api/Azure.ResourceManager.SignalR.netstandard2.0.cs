@@ -11,6 +11,8 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SignalR.SignalRResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SignalR.SignalRResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
@@ -26,17 +28,24 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource>> GetAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource> GetIfExists(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource>> GetIfExistsAsync(string certificateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRCustomCertificateResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SignalRCustomCertificateData : Azure.ResourceManager.Models.ResourceData
+    public partial class SignalRCustomCertificateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>
     {
         public SignalRCustomCertificateData(System.Uri keyVaultBaseUri, string keyVaultSecretName) { }
         public System.Uri KeyVaultBaseUri { get { throw null; } set { } }
         public string KeyVaultSecretName { get { throw null; } set { } }
         public string KeyVaultSecretVersion { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.SignalRProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.SignalR.SignalRCustomCertificateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.SignalRCustomCertificateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomCertificateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SignalRCustomCertificateResource : Azure.ResourceManager.ArmResource
     {
@@ -63,16 +72,23 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRCustomDomainResource>> GetAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> GetIfExists(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRCustomDomainResource>> GetIfExistsAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRCustomDomainResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRCustomDomainResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SignalRCustomDomainData : Azure.ResourceManager.Models.ResourceData
+    public partial class SignalRCustomDomainData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>
     {
         public SignalRCustomDomainData(string domainName, Azure.ResourceManager.Resources.Models.WritableSubResource customCertificate) { }
         public Azure.Core.ResourceIdentifier CustomCertificateId { get { throw null; } set { } }
         public string DomainName { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.SignalRProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.SignalR.SignalRCustomDomainData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.SignalRCustomDomainData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRCustomDomainData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SignalRCustomDomainResource : Azure.ResourceManager.ArmResource
     {
@@ -88,9 +104,9 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SignalR.SignalRCustomDomainResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.SignalR.SignalRCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.SignalR.SignalRCustomDomainResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.SignalR.SignalRCustomDomainData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class SignalRData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class SignalRData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRData>
     {
-        public SignalRData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public SignalRData(Azure.Core.AzureLocation location) { }
         public System.Collections.Generic.IList<string> CorsAllowedOrigins { get { throw null; } }
         public bool? DisableAadAuth { get { throw null; } set { } }
         public bool? DisableLocalAuth { get { throw null; } set { } }
@@ -113,6 +129,11 @@ namespace Azure.ResourceManager.SignalR
         public Azure.ResourceManager.SignalR.Models.SignalRResourceSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate> UpstreamTemplates { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.SignalR.SignalRData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.SignalRData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class SignalRExtensions
     {
@@ -142,17 +163,24 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource>> GetAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource> GetIfExists(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource>> GetIfExistsAsync(string privateEndpointConnectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SignalRPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class SignalRPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>
     {
         public SignalRPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.SignalRProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SignalRPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -235,11 +263,13 @@ namespace Azure.ResourceManager.SignalR
         public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource>> GetAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource> GetIfExists(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource>> GetIfExistsAsync(string sharedPrivateLinkResourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class SignalRSharedPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class SignalRSharedPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>
     {
         public SignalRSharedPrivateLinkResourceData() { }
         public string GroupId { get { throw null; } set { } }
@@ -247,6 +277,40 @@ namespace Azure.ResourceManager.SignalR
         public Azure.ResourceManager.SignalR.Models.SignalRProvisioningState? ProvisioningState { get { throw null; } }
         public string RequestMessage { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus? Status { get { throw null; } }
+        Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+}
+namespace Azure.ResourceManager.SignalR.Mocking
+{
+    public partial class MockableSignalRArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSignalRArmClient() { }
+        public virtual Azure.ResourceManager.SignalR.SignalRCustomCertificateResource GetSignalRCustomCertificateResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SignalR.SignalRCustomDomainResource GetSignalRCustomDomainResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SignalR.SignalRPrivateEndpointConnectionResource GetSignalRPrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SignalR.SignalRResource GetSignalRResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.SignalR.SignalRSharedPrivateLinkResource GetSignalRSharedPrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableSignalRResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSignalRResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.SignalR.SignalRResource> GetSignalR(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.SignalRResource>> GetSignalRAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.SignalR.SignalRCollection GetSignalRs() { throw null; }
+    }
+    public partial class MockableSignalRSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableSignalRSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult> CheckSignalRNameAvailability(Azure.Core.AzureLocation location, Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>> CheckSignalRNameAvailabilityAsync(Azure.Core.AzureLocation location, Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SignalR.SignalRResource> GetSignalRs(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.SignalRResource> GetSignalRsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.SignalR.Models.SignalRUsage> GetUsages(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.SignalR.Models.SignalRUsage> GetUsagesAsync(Azure.Core.AzureLocation location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
 namespace Azure.ResourceManager.SignalR.Models
@@ -287,25 +351,40 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus left, Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ShareablePrivateLinkResourceProperties
+    public partial class ShareablePrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>
     {
         public ShareablePrivateLinkResourceProperties() { }
         public string Description { get { throw null; } set { } }
         public string GroupId { get { throw null; } set { } }
         public string ShareablePrivateLinkResourcePropertiesType { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ShareablePrivateLinkResourceType
+    public partial class ShareablePrivateLinkResourceType : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>
     {
         public ShareablePrivateLinkResourceType() { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRFeature
+    public partial class SignalRFeature : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>
     {
         public SignalRFeature(Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag flag, string value) { }
         public Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag Flag { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Properties { get { throw null; } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRFeature System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRFeature System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRFeature>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRFeatureFlag : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag>
@@ -327,13 +406,18 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag left, Azure.ResourceManager.SignalR.Models.SignalRFeatureFlag right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRKeys
+    public partial class SignalRKeys : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>
     {
         internal SignalRKeys() { }
         public string PrimaryConnectionString { get { throw null; } }
         public string PrimaryKey { get { throw null; } }
         public string SecondaryConnectionString { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRKeys System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRKeys System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRKeys>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRKeyType : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRKeyType>
@@ -354,36 +438,61 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRKeyType left, Azure.ResourceManager.SignalR.Models.SignalRKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRLiveTraceCategory
+    public partial class SignalRLiveTraceCategory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>
     {
         public SignalRLiveTraceCategory() { }
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRLiveTraceConfiguration
+    public partial class SignalRLiveTraceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>
     {
         public SignalRLiveTraceConfiguration() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceCategory> Categories { get { throw null; } }
         public string Enabled { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRLiveTraceConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRNameAvailabilityContent
+    public partial class SignalRNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>
     {
         public SignalRNameAvailabilityContent(Azure.Core.ResourceType resourceType, string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType ResourceType { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRNameAvailabilityResult
+    public partial class SignalRNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>
     {
         internal SignalRNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRNetworkAcl
+    public partial class SignalRNetworkAcl : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>
     {
         public SignalRNetworkAcl() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRRequestType> Allow { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRRequestType> Deny { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRNetworkAclAction : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction>
@@ -403,32 +512,52 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction left, Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRNetworkAcls
+    public partial class SignalRNetworkAcls : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>
     {
         public SignalRNetworkAcls() { }
         public Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction? DefaultAction { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl> PrivateEndpoints { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl PublicNetwork { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRPrivateEndpointAcl : Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl
+    public partial class SignalRPrivateEndpointAcl : Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>
     {
         public SignalRPrivateEndpointAcl(string name) { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRPrivateLinkResource : Azure.ResourceManager.Models.ResourceData
+    public partial class SignalRPrivateLinkResource : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>
     {
         public SignalRPrivateLinkResource() { }
         public string GroupId { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> RequiredMembers { get { throw null; } }
         public System.Collections.Generic.IList<string> RequiredZoneNames { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.ShareablePrivateLinkResourceType> ShareablePrivateLinkResourceTypes { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRPrivateLinkServiceConnectionState
+    public partial class SignalRPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>
     {
         public SignalRPrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.SignalR.Models.PrivateLinkServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRProvisioningState : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRProvisioningState>
@@ -455,10 +584,15 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRProvisioningState left, Azure.ResourceManager.SignalR.Models.SignalRProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRRegenerateKeyContent
+    public partial class SignalRRegenerateKeyContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>
     {
         public SignalRRegenerateKeyContent() { }
         public Azure.ResourceManager.SignalR.Models.SignalRKeyType? KeyType { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRRegenerateKeyContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRRequestType : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRRequestType>
@@ -480,13 +614,18 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRRequestType left, Azure.ResourceManager.SignalR.Models.SignalRRequestType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRResourceLogCategory
+    public partial class SignalRResourceLogCategory : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>
     {
         public SignalRResourceLogCategory() { }
         public string Enabled { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceLogCategory>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRResourceSku
+    public partial class SignalRResourceSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>
     {
         public SignalRResourceSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -494,6 +633,11 @@ namespace Azure.ResourceManager.SignalR.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRResourceSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRResourceSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRResourceSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRScaleType : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRScaleType>
@@ -553,14 +697,19 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus left, Azure.ResourceManager.SignalR.Models.SignalRSharedPrivateLinkResourceStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRSku
+    public partial class SignalRSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSku>
     {
         internal SignalRSku() { }
         public Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity Capacity { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRResourceSku Sku { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRSkuCapacity
+    public partial class SignalRSkuCapacity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>
     {
         internal SignalRSkuCapacity() { }
         public System.Collections.Generic.IReadOnlyList<int> AllowedValues { get { throw null; } }
@@ -568,6 +717,11 @@ namespace Azure.ResourceManager.SignalR.Models
         public int? Maximum { get { throw null; } }
         public int? Minimum { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRScaleType? ScaleType { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRSkuCapacity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRSkuTier : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRSkuTier>
@@ -589,11 +743,16 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRSkuTier left, Azure.ResourceManager.SignalR.Models.SignalRSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRUpstreamAuthSettings
+    public partial class SignalRUpstreamAuthSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>
     {
         public SignalRUpstreamAuthSettings() { }
         public Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType? AuthType { get { throw null; } set { } }
         public string ManagedIdentityResource { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SignalRUpstreamAuthType : System.IEquatable<Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType>
@@ -613,7 +772,7 @@ namespace Azure.ResourceManager.SignalR.Models
         public static bool operator !=(Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType left, Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class SignalRUpstreamTemplate
+    public partial class SignalRUpstreamTemplate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>
     {
         public SignalRUpstreamTemplate(string urlTemplate) { }
         public Azure.ResourceManager.SignalR.Models.SignalRUpstreamAuthSettings Auth { get { throw null; } set { } }
@@ -621,8 +780,13 @@ namespace Azure.ResourceManager.SignalR.Models
         public string EventPattern { get { throw null; } set { } }
         public string HubPattern { get { throw null; } set { } }
         public string UrlTemplate { get { throw null; } set { } }
+        Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUpstreamTemplate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRUsage
+    public partial class SignalRUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>
     {
         internal SignalRUsage() { }
         public long? CurrentValue { get { throw null; } }
@@ -630,11 +794,21 @@ namespace Azure.ResourceManager.SignalR.Models
         public long? Limit { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRUsageName Name { get { throw null; } }
         public string Unit { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SignalRUsageName
+    public partial class SignalRUsageName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>
     {
         internal SignalRUsageName() { }
         public string LocalizedValue { get { throw null; } }
         public string Value { get { throw null; } }
+        Azure.ResourceManager.SignalR.Models.SignalRUsageName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.SignalR.Models.SignalRUsageName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.SignalR.Models.SignalRUsageName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

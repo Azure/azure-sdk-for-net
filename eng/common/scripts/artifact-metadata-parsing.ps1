@@ -2,7 +2,7 @@
 
 $SDIST_PACKAGE_REGEX = "^(?<package>.*)\-(?<versionstring>$([AzureEngSemanticVersion]::SEMVER_REGEX))"
 
-# Posts a github release for each item of the pkgList variable. SilentlyContinue
+# Posts a github release for each item of the pkgList variable. Silently continue
 function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
   foreach ($pkgInfo in $pkgList) {
     Write-Host "Creating release $($pkgInfo.Tag)"
@@ -11,7 +11,7 @@ function CreateReleases($pkgList, $releaseApiUrl, $releaseSha) {
     if ($pkgInfo.ReleaseNotes -ne $null) {
       $releaseNotes = $pkgInfo.ReleaseNotes
     }
-    # As github api limit the body param length with 125000 characters, we have to truncate the release note if needed.
+    # As github api limits the body param length to 125000 characters, we have to truncate the release note if needed.
     if ($releaseNotes.Length -gt 124996) {
       $releaseNotes = $releaseNotes.SubString(0, 124996) + " ..."
     }
@@ -68,7 +68,7 @@ function GetExistingTags($apiUrl) {
       return ,@()
     }
 
-    exit(1)
+    exit 1
   }
 }
 
@@ -116,7 +116,7 @@ function RetrievePackages($artifactLocation) {
 }
 
 # Walk across all build artifacts, check them against the appropriate repository, return a list of tags/releases
-function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseSha,  $continueOnError = $false) {
+function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseSha, $packageFilter, $continueOnError = $false) {
   $pkgList = [array]@()
   $pkgs, $parsePkgInfoFn = RetrievePackages -artifactLocation $artifactLocation
 
@@ -128,10 +128,15 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
         continue
       }
 
+      if ($packageFilter -and $parsedPackage.PackageId -notlike $packageFilter) {
+        Write-Host "Skipping package $($parsedPackage.PackageId) not matching filter $packageFilter"
+        continue
+      }
+
       if ($parsedPackage.Deployable -ne $True -and !$continueOnError) {
         Write-Host "Package $($parsedPackage.PackageId) is marked with version $($parsedPackage.PackageVersion), the version $($parsedPackage.PackageVersion) has already been deployed to the target repository."
         Write-Host "Maybe a pkg version wasn't updated properly?"
-        exit(1)
+        exit 1
       }
       $docsReadMeName = $parsedPackage.PackageId
       if ($parsedPackage.DocsReadMeName) {
@@ -150,7 +155,7 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
     }
     catch {
       Write-Host $_.Exception.Message
-      exit(1)
+      exit 1
     }
   }
 
@@ -170,7 +175,7 @@ function VerifyPackages($artifactLocation, $workingDirectory, $apiUrl, $releaseS
   return $results
 }
 
-# given a set of tags that we want to release, we need to ensure that if they already DO exist.
+# given a set of tags that we want to release, we need to ensure they DO already exist.
 # if they DO exist, quietly exit if the commit sha of the artifact matches that of the tag
 # if the commit sha does not match, exit with error and report both problem shas
 function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $apiUrl, $continueOnError) {
@@ -197,6 +202,6 @@ function CheckArtifactShaAgainstTagsList($priorExistingTagList, $releaseSha, $ap
 
   if ($unmatchedTags.Length -gt 0 -and !$continueOnError) {
     Write-Host "Tags already existing with different SHA versions. Exiting."
-    exit(1)
+    exit 1
   }
 }

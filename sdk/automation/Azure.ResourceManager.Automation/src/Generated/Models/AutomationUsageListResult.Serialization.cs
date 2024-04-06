@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class AutomationUsageListResult
+    internal partial class AutomationUsageListResult : IUtf8JsonSerializable, IJsonModel<AutomationUsageListResult>
     {
-        internal static AutomationUsageListResult DeserializeAutomationUsageListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationUsageListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<AutomationUsage>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutomationUsageListResult IJsonModel<AutomationUsageListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationUsageListResult(document.RootElement, options);
+        }
+
+        internal static AutomationUsageListResult DeserializeAutomationUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationUsage>> value = default;
+            IReadOnlyList<AutomationUsage> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,13 +88,49 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationUsage> array = new List<AutomationUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationUsage.DeserializeAutomationUsage(item));
+                        array.Add(AutomationUsage.DeserializeAutomationUsage(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationUsageListResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationUsageListResult(value ?? new ChangeTrackingList<AutomationUsage>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationUsageListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationUsageListResult IPersistableModel<AutomationUsageListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationUsageListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationUsageListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationUsageListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

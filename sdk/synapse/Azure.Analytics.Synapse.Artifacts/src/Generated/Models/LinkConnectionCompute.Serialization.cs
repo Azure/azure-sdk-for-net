@@ -42,9 +42,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<int> coreCount = default;
-            Optional<string> computeType = default;
-            Optional<int> dataProcessIntervalMinutes = default;
+            int? coreCount = default;
+            string computeType = default;
+            int? dataProcessIntervalMinutes = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("coreCount"u8))
@@ -71,15 +71,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkConnectionCompute(Optional.ToNullable(coreCount), computeType.Value, Optional.ToNullable(dataProcessIntervalMinutes));
+            return new LinkConnectionCompute(coreCount, computeType, dataProcessIntervalMinutes);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionCompute FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionCompute(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkConnectionCompute>(this);
+            return content;
         }
 
         internal partial class LinkConnectionComputeConverter : JsonConverter<LinkConnectionCompute>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionCompute model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkConnectionCompute>(model);
             }
+
             public override LinkConnectionCompute Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -8,15 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.TextAnalytics;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
 {
     /// <summary> The PreBuiltResult. </summary>
     internal partial class PreBuiltResult
     {
-        /// <summary> Initializes a new instance of PreBuiltResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBuiltResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="errors"/> or <paramref name="modelVersion"/> is null. </exception>
@@ -29,7 +27,7 @@ namespace Azure.AI.TextAnalytics.Models
             ModelVersion = modelVersion;
         }
 
-        /// <summary> Initializes a new instance of PreBuiltResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="PreBuiltResult"/>. </summary>
         /// <param name="errors"> Errors by document id. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>

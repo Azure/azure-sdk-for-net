@@ -6,22 +6,80 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sphere.Models
 {
-    internal partial class PagedDeviceInsight
+    internal partial class PagedDeviceInsight : IUtf8JsonSerializable, IJsonModel<PagedDeviceInsight>
     {
-        internal static PagedDeviceInsight DeserializePagedDeviceInsight(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PagedDeviceInsight>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PagedDeviceInsight>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PagedDeviceInsight)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<SphereDeviceInsight>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink.AbsoluteUri);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PagedDeviceInsight IJsonModel<PagedDeviceInsight>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PagedDeviceInsight)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePagedDeviceInsight(document.RootElement, options);
+        }
+
+        internal static PagedDeviceInsight DeserializePagedDeviceInsight(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<SphereDeviceInsight> value = default;
-            Optional<Uri> nextLink = default;
+            Uri nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,7 +87,7 @@ namespace Azure.ResourceManager.Sphere.Models
                     List<SphereDeviceInsight> array = new List<SphereDeviceInsight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item));
+                        array.Add(SphereDeviceInsight.DeserializeSphereDeviceInsight(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +101,44 @@ namespace Azure.ResourceManager.Sphere.Models
                     nextLink = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PagedDeviceInsight(value, nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PagedDeviceInsight(value, nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PagedDeviceInsight>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PagedDeviceInsight)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PagedDeviceInsight IPersistableModel<PagedDeviceInsight>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PagedDeviceInsight>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePagedDeviceInsight(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PagedDeviceInsight)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PagedDeviceInsight>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

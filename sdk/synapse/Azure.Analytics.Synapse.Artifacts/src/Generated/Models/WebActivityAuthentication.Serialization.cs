@@ -23,32 +23,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Pfx))
             {
                 writer.WritePropertyName("pfx"u8);
-                writer.WriteObjectValue(Pfx);
+                writer.WriteObjectValue<SecretBase>(Pfx);
             }
             if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
-                writer.WriteStringValue(Username);
+                writer.WriteObjectValue<object>(Username);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<object>(Resource);
             }
             if (Optional.IsDefined(UserTenant))
             {
                 writer.WritePropertyName("userTenant"u8);
-                writer.WriteObjectValue(UserTenant);
+                writer.WriteObjectValue<object>(UserTenant);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<CredentialReference>(Credential);
             }
             writer.WriteEndObject();
         }
@@ -60,12 +60,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<SecretBase> pfx = default;
-            Optional<string> username = default;
-            Optional<SecretBase> password = default;
-            Optional<object> resource = default;
-            Optional<object> userTenant = default;
-            Optional<CredentialReference> credential = default;
+            SecretBase pfx = default;
+            object username = default;
+            SecretBase password = default;
+            object resource = default;
+            object userTenant = default;
+            CredentialReference credential = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -84,7 +84,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 }
                 if (property.NameEquals("username"u8))
                 {
-                    username = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    username = property.Value.GetObject();
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -124,15 +128,39 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new WebActivityAuthentication(type, pfx.Value, username.Value, password.Value, resource.Value, userTenant.Value, credential.Value);
+            return new WebActivityAuthentication(
+                type,
+                pfx,
+                username,
+                password,
+                resource,
+                userTenant,
+                credential);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebActivityAuthentication FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebActivityAuthentication(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WebActivityAuthentication>(this);
+            return content;
         }
 
         internal partial class WebActivityAuthenticationConverter : JsonConverter<WebActivityAuthentication>
         {
             public override void Write(Utf8JsonWriter writer, WebActivityAuthentication model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<WebActivityAuthentication>(model);
             }
+
             public override WebActivityAuthentication Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

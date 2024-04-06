@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    internal partial class L2IsolationDomainsListResult
+    internal partial class L2IsolationDomainsListResult : IUtf8JsonSerializable, IJsonModel<L2IsolationDomainsListResult>
     {
-        internal static L2IsolationDomainsListResult DeserializeL2IsolationDomainsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<L2IsolationDomainsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<L2IsolationDomainsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<L2IsolationDomainsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(L2IsolationDomainsListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<NetworkFabricL2IsolationDomainData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        L2IsolationDomainsListResult IJsonModel<L2IsolationDomainsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<L2IsolationDomainsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(L2IsolationDomainsListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeL2IsolationDomainsListResult(document.RootElement, options);
+        }
+
+        internal static L2IsolationDomainsListResult DeserializeL2IsolationDomainsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<NetworkFabricL2IsolationDomainData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<NetworkFabricL2IsolationDomainData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<NetworkFabricL2IsolationDomainData> array = new List<NetworkFabricL2IsolationDomainData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(item));
+                        array.Add(NetworkFabricL2IsolationDomainData.DeserializeNetworkFabricL2IsolationDomainData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new L2IsolationDomainsListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new L2IsolationDomainsListResult(value ?? new ChangeTrackingList<NetworkFabricL2IsolationDomainData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<L2IsolationDomainsListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<L2IsolationDomainsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(L2IsolationDomainsListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        L2IsolationDomainsListResult IPersistableModel<L2IsolationDomainsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<L2IsolationDomainsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeL2IsolationDomainsListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(L2IsolationDomainsListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<L2IsolationDomainsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -18,14 +17,14 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// </summary>
     public partial class MultiplePipelineTrigger : DataFactoryTriggerProperties
     {
-        /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiplePipelineTrigger"/>. </summary>
         public MultiplePipelineTrigger()
         {
             Pipelines = new ChangeTrackingList<TriggerPipelineReference>();
             TriggerType = "MultiplePipelineTrigger";
         }
 
-        /// <summary> Initializes a new instance of MultiplePipelineTrigger. </summary>
+        /// <summary> Initializes a new instance of <see cref="MultiplePipelineTrigger"/>. </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>

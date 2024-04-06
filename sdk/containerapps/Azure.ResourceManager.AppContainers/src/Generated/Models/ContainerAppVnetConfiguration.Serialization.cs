@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable
+    public partial class ContainerAppVnetConfiguration : IUtf8JsonSerializable, IJsonModel<ContainerAppVnetConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVnetConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppVnetConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInternal))
             {
@@ -40,20 +51,51 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("platformReservedDnsIP"u8);
                 writer.WriteStringValue(PlatformReservedDnsIP);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppVnetConfiguration DeserializeContainerAppVnetConfiguration(JsonElement element)
+        ContainerAppVnetConfiguration IJsonModel<ContainerAppVnetConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppVnetConfiguration(document.RootElement, options);
+        }
+
+        internal static ContainerAppVnetConfiguration DeserializeContainerAppVnetConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> @internal = default;
-            Optional<ResourceIdentifier> infrastructureSubnetId = default;
-            Optional<string> dockerBridgeCidr = default;
-            Optional<string> platformReservedCidr = default;
-            Optional<string> platformReservedDnsIP = default;
+            bool? @internal = default;
+            ResourceIdentifier infrastructureSubnetId = default;
+            string dockerBridgeCidr = default;
+            string platformReservedCidr = default;
+            string platformReservedDnsIP = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("internal"u8))
@@ -67,11 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 if (property.NameEquals("infrastructureSubnetId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
+                    DeserializeInfrastructureSubnetIdValue(property, ref infrastructureSubnetId);
                     continue;
                 }
                 if (property.NameEquals("dockerBridgeCidr"u8))
@@ -89,8 +127,50 @@ namespace Azure.ResourceManager.AppContainers.Models
                     platformReservedDnsIP = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppVnetConfiguration(Optional.ToNullable(@internal), infrastructureSubnetId.Value, dockerBridgeCidr.Value, platformReservedCidr.Value, platformReservedDnsIP.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppVnetConfiguration(
+                @internal,
+                infrastructureSubnetId,
+                dockerBridgeCidr,
+                platformReservedCidr,
+                platformReservedDnsIP,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppVnetConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppVnetConfiguration IPersistableModel<ContainerAppVnetConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVnetConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppVnetConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVnetConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppVnetConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
@@ -76,6 +73,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             {
                 ConfigurationType = NetworkFabricConfigurationType.File,
                 AclsUri = new Uri("https://microsoft.com/a"),
+                DefaultAction = CommunityActionType.Permit,
                 MatchConfigurations =
 {
 new AccessControlListMatchConfiguration()

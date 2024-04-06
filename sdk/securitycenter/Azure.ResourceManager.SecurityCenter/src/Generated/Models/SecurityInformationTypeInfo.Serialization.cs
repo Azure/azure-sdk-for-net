@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class SecurityInformationTypeInfo : IUtf8JsonSerializable
+    public partial class SecurityInformationTypeInfo : IUtf8JsonSerializable, IJsonModel<SecurityInformationTypeInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityInformationTypeInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SecurityInformationTypeInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(DisplayName))
             {
@@ -53,26 +62,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Keywords)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InformationProtectionKeyword>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SecurityInformationTypeInfo DeserializeSecurityInformationTypeInfo(JsonElement element)
+        SecurityInformationTypeInfo IJsonModel<SecurityInformationTypeInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSecurityInformationTypeInfo(document.RootElement, options);
+        }
+
+        internal static SecurityInformationTypeInfo DeserializeSecurityInformationTypeInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> order = default;
-            Optional<Guid> recommendedLabelId = default;
-            Optional<bool> enabled = default;
-            Optional<bool> custom = default;
-            Optional<IList<InformationProtectionKeyword>> keywords = default;
+            string displayName = default;
+            string description = default;
+            int? order = default;
+            Guid? recommendedLabelId = default;
+            bool? enabled = default;
+            bool? custom = default;
+            IList<InformationProtectionKeyword> keywords = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -130,13 +170,57 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<InformationProtectionKeyword> array = new List<InformationProtectionKeyword>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item));
+                        array.Add(InformationProtectionKeyword.DeserializeInformationProtectionKeyword(item, options));
                     }
                     keywords = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SecurityInformationTypeInfo(displayName.Value, description.Value, Optional.ToNullable(order), Optional.ToNullable(recommendedLabelId), Optional.ToNullable(enabled), Optional.ToNullable(custom), Optional.ToList(keywords));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SecurityInformationTypeInfo(
+                displayName,
+                description,
+                order,
+                recommendedLabelId,
+                enabled,
+                custom,
+                keywords ?? new ChangeTrackingList<InformationProtectionKeyword>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SecurityInformationTypeInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SecurityInformationTypeInfo IPersistableModel<SecurityInformationTypeInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityInformationTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSecurityInformationTypeInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecurityInformationTypeInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SecurityInformationTypeInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

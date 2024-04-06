@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DWCopyCommandDefaultValue>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -49,8 +49,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<DWCopyCommandDefaultValue>> defaultValues = default;
-            Optional<IDictionary<string, string>> additionalOptions = default;
+            IList<DWCopyCommandDefaultValue> defaultValues = default;
+            IDictionary<string, string> additionalOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("defaultValues"u8))
@@ -82,15 +82,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DWCopyCommandSettings(Optional.ToList(defaultValues), Optional.ToDictionary(additionalOptions));
+            return new DWCopyCommandSettings(defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>(), additionalOptions ?? new ChangeTrackingDictionary<string, string>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DWCopyCommandSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDWCopyCommandSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DWCopyCommandSettings>(this);
+            return content;
         }
 
         internal partial class DWCopyCommandSettingsConverter : JsonConverter<DWCopyCommandSettings>
         {
             public override void Write(Utf8JsonWriter writer, DWCopyCommandSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DWCopyCommandSettings>(model);
             }
+
             public override DWCopyCommandSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

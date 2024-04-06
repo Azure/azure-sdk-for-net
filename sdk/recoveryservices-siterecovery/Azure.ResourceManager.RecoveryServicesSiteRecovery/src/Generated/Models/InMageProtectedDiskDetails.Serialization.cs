@@ -6,41 +6,198 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageProtectedDiskDetails
+    public partial class InMageProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageProtectedDiskDetails>
     {
-        internal static InMageProtectedDiskDetails DeserializeInMageProtectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageProtectedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageProtectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DiskId))
+            {
+                writer.WritePropertyName("diskId"u8);
+                writer.WriteStringValue(DiskId);
+            }
+            if (Optional.IsDefined(DiskName))
+            {
+                writer.WritePropertyName("diskName"u8);
+                writer.WriteStringValue(DiskName);
+            }
+            if (Optional.IsDefined(ProtectionStage))
+            {
+                writer.WritePropertyName("protectionStage"u8);
+                writer.WriteStringValue(ProtectionStage);
+            }
+            if (Optional.IsDefined(HealthErrorCode))
+            {
+                writer.WritePropertyName("healthErrorCode"u8);
+                writer.WriteStringValue(HealthErrorCode);
+            }
+            if (Optional.IsDefined(RpoInSeconds))
+            {
+                writer.WritePropertyName("rpoInSeconds"u8);
+                writer.WriteNumberValue(RpoInSeconds.Value);
+            }
+            if (Optional.IsDefined(ResyncRequired))
+            {
+                writer.WritePropertyName("resyncRequired"u8);
+                writer.WriteStringValue(ResyncRequired);
+            }
+            if (Optional.IsDefined(ResyncProgressPercentage))
+            {
+                writer.WritePropertyName("resyncProgressPercentage"u8);
+                writer.WriteNumberValue(ResyncProgressPercentage.Value);
+            }
+            if (Optional.IsDefined(ResyncDurationInSeconds))
+            {
+                writer.WritePropertyName("resyncDurationInSeconds"u8);
+                writer.WriteNumberValue(ResyncDurationInSeconds.Value);
+            }
+            if (Optional.IsDefined(DiskCapacityInBytes))
+            {
+                writer.WritePropertyName("diskCapacityInBytes"u8);
+                writer.WriteNumberValue(DiskCapacityInBytes.Value);
+            }
+            if (Optional.IsDefined(FileSystemCapacityInBytes))
+            {
+                writer.WritePropertyName("fileSystemCapacityInBytes"u8);
+                writer.WriteNumberValue(FileSystemCapacityInBytes.Value);
+            }
+            if (Optional.IsDefined(SourceDataInMB))
+            {
+                writer.WritePropertyName("sourceDataInMB"u8);
+                writer.WriteNumberValue(SourceDataInMB.Value);
+            }
+            if (Optional.IsDefined(PSDataInMB))
+            {
+                writer.WritePropertyName("psDataInMB"u8);
+                writer.WriteNumberValue(PSDataInMB.Value);
+            }
+            if (Optional.IsDefined(TargetDataInMB))
+            {
+                writer.WritePropertyName("targetDataInMB"u8);
+                writer.WriteNumberValue(TargetDataInMB.Value);
+            }
+            if (Optional.IsDefined(DiskResized))
+            {
+                writer.WritePropertyName("diskResized"u8);
+                writer.WriteStringValue(DiskResized);
+            }
+            if (Optional.IsDefined(LastRpoCalculatedOn))
+            {
+                writer.WritePropertyName("lastRpoCalculatedTime"u8);
+                writer.WriteStringValue(LastRpoCalculatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(ResyncProcessedBytes))
+            {
+                writer.WritePropertyName("resyncProcessedBytes"u8);
+                writer.WriteNumberValue(ResyncProcessedBytes.Value);
+            }
+            if (Optional.IsDefined(ResyncTotalTransferredBytes))
+            {
+                writer.WritePropertyName("resyncTotalTransferredBytes"u8);
+                writer.WriteNumberValue(ResyncTotalTransferredBytes.Value);
+            }
+            if (Optional.IsDefined(ResyncLast15MinutesTransferredBytes))
+            {
+                writer.WritePropertyName("resyncLast15MinutesTransferredBytes"u8);
+                writer.WriteNumberValue(ResyncLast15MinutesTransferredBytes.Value);
+            }
+            if (Optional.IsDefined(ResyncLastDataTransferTimeUTC))
+            {
+                writer.WritePropertyName("resyncLastDataTransferTimeUTC"u8);
+                writer.WriteStringValue(ResyncLastDataTransferTimeUTC.Value, "O");
+            }
+            if (Optional.IsDefined(ResyncStartOn))
+            {
+                writer.WritePropertyName("resyncStartTime"u8);
+                writer.WriteStringValue(ResyncStartOn.Value, "O");
+            }
+            if (Optional.IsDefined(ProgressHealth))
+            {
+                writer.WritePropertyName("progressHealth"u8);
+                writer.WriteStringValue(ProgressHealth);
+            }
+            if (Optional.IsDefined(ProgressStatus))
+            {
+                writer.WritePropertyName("progressStatus"u8);
+                writer.WriteStringValue(ProgressStatus);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageProtectedDiskDetails IJsonModel<InMageProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
+        }
+
+        internal static InMageProtectedDiskDetails DeserializeInMageProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> protectionStage = default;
-            Optional<string> healthErrorCode = default;
-            Optional<long> rpoInSeconds = default;
-            Optional<string> resyncRequired = default;
-            Optional<int> resyncProgressPercentage = default;
-            Optional<long> resyncDurationInSeconds = default;
-            Optional<long> diskCapacityInBytes = default;
-            Optional<long> fileSystemCapacityInBytes = default;
-            Optional<double> sourceDataInMB = default;
-            Optional<double> psDataInMB = default;
-            Optional<double> targetDataInMB = default;
-            Optional<string> diskResized = default;
-            Optional<DateTimeOffset> lastRpoCalculatedTime = default;
-            Optional<long> resyncProcessedBytes = default;
-            Optional<long> resyncTotalTransferredBytes = default;
-            Optional<long> resyncLast15MinutesTransferredBytes = default;
-            Optional<DateTimeOffset> resyncLastDataTransferTimeUTC = default;
-            Optional<DateTimeOffset> resyncStartTime = default;
-            Optional<string> progressHealth = default;
-            Optional<string> progressStatus = default;
+            string diskId = default;
+            string diskName = default;
+            string protectionStage = default;
+            string healthErrorCode = default;
+            long? rpoInSeconds = default;
+            string resyncRequired = default;
+            int? resyncProgressPercentage = default;
+            long? resyncDurationInSeconds = default;
+            long? diskCapacityInBytes = default;
+            long? fileSystemCapacityInBytes = default;
+            double? sourceDataInMB = default;
+            double? psDataInMB = default;
+            double? targetDataInMB = default;
+            string diskResized = default;
+            DateTimeOffset? lastRpoCalculatedTime = default;
+            long? resyncProcessedBytes = default;
+            long? resyncTotalTransferredBytes = default;
+            long? resyncLast15MinutesTransferredBytes = default;
+            DateTimeOffset? resyncLastDataTransferTimeUTC = default;
+            DateTimeOffset? resyncStartTime = default;
+            string progressHealth = default;
+            string progressStatus = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -209,8 +366,67 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     progressStatus = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageProtectedDiskDetails(diskId.Value, diskName.Value, protectionStage.Value, healthErrorCode.Value, Optional.ToNullable(rpoInSeconds), resyncRequired.Value, Optional.ToNullable(resyncProgressPercentage), Optional.ToNullable(resyncDurationInSeconds), Optional.ToNullable(diskCapacityInBytes), Optional.ToNullable(fileSystemCapacityInBytes), Optional.ToNullable(sourceDataInMB), Optional.ToNullable(psDataInMB), Optional.ToNullable(targetDataInMB), diskResized.Value, Optional.ToNullable(lastRpoCalculatedTime), Optional.ToNullable(resyncProcessedBytes), Optional.ToNullable(resyncTotalTransferredBytes), Optional.ToNullable(resyncLast15MinutesTransferredBytes), Optional.ToNullable(resyncLastDataTransferTimeUTC), Optional.ToNullable(resyncStartTime), progressHealth.Value, progressStatus.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageProtectedDiskDetails(
+                diskId,
+                diskName,
+                protectionStage,
+                healthErrorCode,
+                rpoInSeconds,
+                resyncRequired,
+                resyncProgressPercentage,
+                resyncDurationInSeconds,
+                diskCapacityInBytes,
+                fileSystemCapacityInBytes,
+                sourceDataInMB,
+                psDataInMB,
+                targetDataInMB,
+                diskResized,
+                lastRpoCalculatedTime,
+                resyncProcessedBytes,
+                resyncTotalTransferredBytes,
+                resyncLast15MinutesTransferredBytes,
+                resyncLastDataTransferTimeUTC,
+                resyncStartTime,
+                progressHealth,
+                progressStatus,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageProtectedDiskDetails IPersistableModel<InMageProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageProtectedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageProtectedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

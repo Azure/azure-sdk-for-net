@@ -5,16 +5,27 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
 {
-    public partial class SimStaticIPProperties : IUtf8JsonSerializable
+    public partial class SimStaticIPProperties : IUtf8JsonSerializable, IJsonModel<SimStaticIPProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SimStaticIPProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SimStaticIPProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SimStaticIPProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AttachedDataNetwork))
             {
@@ -29,20 +40,51 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             if (Optional.IsDefined(StaticIP))
             {
                 writer.WritePropertyName("staticIp"u8);
-                writer.WriteObjectValue(StaticIP);
+                writer.WriteObjectValue<SimStaticIPPropertiesStaticIP>(StaticIP, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SimStaticIPProperties DeserializeSimStaticIPProperties(JsonElement element)
+        SimStaticIPProperties IJsonModel<SimStaticIPProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SimStaticIPProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSimStaticIPProperties(document.RootElement, options);
+        }
+
+        internal static SimStaticIPProperties DeserializeSimStaticIPProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<WritableSubResource> attachedDataNetwork = default;
-            Optional<WritableSubResource> slice = default;
-            Optional<SimStaticIPPropertiesStaticIP> staticIP = default;
+            WritableSubResource attachedDataNetwork = default;
+            WritableSubResource slice = default;
+            SimStaticIPPropertiesStaticIP staticIP = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("attachedDataNetwork"u8))
@@ -69,11 +111,47 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                     {
                         continue;
                     }
-                    staticIP = SimStaticIPPropertiesStaticIP.DeserializeSimStaticIPPropertiesStaticIP(property.Value);
+                    staticIP = SimStaticIPPropertiesStaticIP.DeserializeSimStaticIPPropertiesStaticIP(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SimStaticIPProperties(attachedDataNetwork, slice, staticIP, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SimStaticIPProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SimStaticIPProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SimStaticIPProperties IPersistableModel<SimStaticIPProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SimStaticIPProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSimStaticIPProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SimStaticIPProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SimStaticIPProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeAnalytics.Models
 {
-    public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable
+    public partial class DataLakeAnalyticsAccountCreateOrUpdateContent : IUtf8JsonSerializable, IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
@@ -36,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             writer.WriteStartArray();
             foreach (var item in DataLakeStoreAccounts)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(StorageAccounts))
@@ -45,7 +56,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +66,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +76,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +121,277 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 writer.WriteNumberValue(QueryStoreRetention.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        DataLakeAnalyticsAccountCreateOrUpdateContent IJsonModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(document.RootElement, options);
+        }
+
+        internal static DataLakeAnalyticsAccountCreateOrUpdateContent DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            AzureLocation location = default;
+            IDictionary<string, string> tags = default;
+            string defaultDataLakeStoreAccount = default;
+            IList<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> dataLakeStoreAccounts = default;
+            IList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> storageAccounts = default;
+            IList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> computePolicies = default;
+            IList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> firewallRules = default;
+            DataLakeAnalyticsFirewallState? firewallState = default;
+            DataLakeAnalyticsFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            DataLakeAnalyticsCommitmentTierType? newTier = default;
+            int? maxJobCount = default;
+            int? maxDegreeOfParallelism = default;
+            int? maxDegreeOfParallelismPerJob = default;
+            int? minPriorityPerJob = default;
+            int? queryStoreRetention = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        property.ThrowNonNullablePropertyIsNull();
+                        continue;
+                    }
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("defaultDataLakeStoreAccount"u8))
+                        {
+                            defaultDataLakeStoreAccount = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("dataLakeStoreAccounts"u8))
+                        {
+                            List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(DataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeDataLakeStoreForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
+                            }
+                            dataLakeStoreAccounts = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("storageAccounts"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeStorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
+                            }
+                            storageAccounts = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("computePolicies"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
+                            }
+                            computePolicies = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallRules"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent> array = new List<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent.DeserializeFirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent(item, options));
+                            }
+                            firewallRules = array;
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallState"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firewallState = property0.Value.GetString().ToDataLakeAnalyticsFirewallState();
+                            continue;
+                        }
+                        if (property0.NameEquals("firewallAllowAzureIps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            firewallAllowAzureIPs = property0.Value.GetString().ToDataLakeAnalyticsFirewallAllowAzureIPsState();
+                            continue;
+                        }
+                        if (property0.NameEquals("newTier"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            newTier = property0.Value.GetString().ToDataLakeAnalyticsCommitmentTierType();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxJobCount"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxJobCount = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxDegreeOfParallelism"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxDegreeOfParallelism = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("maxDegreeOfParallelismPerJob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxDegreeOfParallelismPerJob = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("minPriorityPerJob"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            minPriorityPerJob = property0.Value.GetInt32();
+                            continue;
+                        }
+                        if (property0.NameEquals("queryStoreRetention"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            queryStoreRetention = property0.Value.GetInt32();
+                            continue;
+                        }
+                    }
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeAnalyticsAccountCreateOrUpdateContent(
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultDataLakeStoreAccount,
+                dataLakeStoreAccounts,
+                storageAccounts ?? new ChangeTrackingList<StorageAccountForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                computePolicies ?? new ChangeTrackingList<ComputePolicyForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeAnalyticsAccountCreateOrUpdateContent>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                newTier,
+                maxJobCount,
+                maxDegreeOfParallelism,
+                maxDegreeOfParallelismPerJob,
+                minPriorityPerJob,
+                queryStoreRetention,
+                serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataLakeAnalyticsAccountCreateOrUpdateContent IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataLakeAnalyticsAccountCreateOrUpdateContent(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataLakeAnalyticsAccountCreateOrUpdateContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

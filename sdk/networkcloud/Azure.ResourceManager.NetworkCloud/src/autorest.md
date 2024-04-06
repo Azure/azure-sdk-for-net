@@ -11,11 +11,15 @@ require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba
 #tag: package-2023-07-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 # 'tenantId': 'uuid' cannot be used globally as it break our list clusters API where tenantId sometimes is an empty string
@@ -31,7 +35,7 @@ rename-mapping:
   BareMetalMachine.properties.clusterId: -|arm-id
   BareMetalMachine.properties.rackId: -|arm-id
   BareMetalMachine.properties.oamIpv4Address: -|ip-address
-  BareMetalMachineConfigurationData: BareMetalMachineConfiguration 
+  BareMetalMachineConfigurationData: BareMetalMachineConfiguration
   BareMetalMachineKeySet.properties.expiration: ExpireOn
   BareMetalMachineKeySet.properties.jumpHostsAllowed: -|ip-address
   BareMetalMachineKeySet.properties.lastValidation: LastValidatedOn
@@ -119,7 +123,7 @@ prepend-rp-prefix:
   - L3Network
   - NetworkInterface
   - Nic
-  - OSDisk
+  - OsDisk
   - Rack
   - RackDefinition
   - RackSku
@@ -131,7 +135,7 @@ prepend-rp-prefix:
   - Volume
   - OperationStatusResult
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

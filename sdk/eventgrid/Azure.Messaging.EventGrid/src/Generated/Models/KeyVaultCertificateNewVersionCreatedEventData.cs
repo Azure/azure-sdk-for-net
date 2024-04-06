@@ -10,12 +10,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
     /// <summary> Schema of the Data property of an EventGridEvent for a Microsoft.KeyVault.CertificateNewVersionCreated event. </summary>
     public partial class KeyVaultCertificateNewVersionCreatedEventData
     {
-        /// <summary> Initializes a new instance of KeyVaultCertificateNewVersionCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateNewVersionCreatedEventData"/>. </summary>
         internal KeyVaultCertificateNewVersionCreatedEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultCertificateNewVersionCreatedEventData. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultCertificateNewVersionCreatedEventData"/>. </summary>
         /// <param name="id"> The id of the object that triggered this event. </param>
         /// <param name="vaultName"> Key vault name of the object that triggered this event. </param>
         /// <param name="objectType"> The type of the object that triggered this event. </param>

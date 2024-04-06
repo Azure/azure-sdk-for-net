@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -13,12 +14,18 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
+    [ClientTestFixture(
+        ConfigurationClientOptions.ServiceVersion.V1_0,
+        ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
     public class ConfigurationLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
+        private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
+
         private string specialChars = "~`!@#$^&()_+=[]{}|;\"'<>./-";
 
-        public ConfigurationLiveTests(bool isAsync) : base(isAsync)
+        public ConfigurationLiveTests(bool isAsync, ConfigurationClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
+            _serviceVersion = serviceVersion;
         }
 
         private string GenerateKeyId(string prefix = null)
@@ -31,21 +38,28 @@ namespace Azure.Data.AppConfiguration.Tests
             return prefix + Recording.GenerateId();
         }
 
-        private ConfigurationClient GetClient()
+        private ConfigurationClient GetClient(bool skipClientInstrumentation = false)
         {
             if (string.IsNullOrEmpty(TestEnvironment.ConnectionString))
             {
                 throw new TestRecordingMismatchException();
             }
-            var options = InstrumentClientOptions(new ConfigurationClientOptions());
-            return InstrumentClient(new ConfigurationClient(TestEnvironment.ConnectionString, options));
+            var options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
+            var client = new ConfigurationClient(TestEnvironment.ConnectionString, options);
+
+            if (!skipClientInstrumentation)
+            {
+                client = InstrumentClient(client);
+            }
+
+            return client;
         }
 
         private ConfigurationClient GetAADClient()
         {
             string endpoint = TestEnvironment.Endpoint;
             TokenCredential credential = TestEnvironment.Credential;
-            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions());
+            ConfigurationClientOptions options = InstrumentClientOptions(new ConfigurationClientOptions(_serviceVersion));
             return InstrumentClient(new ConfigurationClient(new Uri(endpoint), credential, options));
         }
 
@@ -80,16 +94,15 @@ namespace Azure.Data.AppConfiguration.Tests
             return CreateSetting($"{specialChars}", $"value-{specialChars}", $"label-{specialChars}");
         }
 
-        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents)
+        private async Task<string> SetMultipleKeys(ConfigurationClient service, int expectedEvents, [CallerMemberName] string batchKey = null)
         {
             string key = GenerateKeyId("key-");
 
             /*
              * The configuration store contains a KV with the Key
              * that represents {expectedEvents} data points.
-             * If not set, create the {expectedEvents} data points and the "BatchKey"
+             * If not set, create the {expectedEvents} data points and the "batchKey"
             */
-            const string batchKey = "BatchKey";
 
             try
             {
@@ -100,7 +113,7 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 for (int i = 0; i < expectedEvents; i++)
                 {
-                    await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "test_value", $"{i.ToString()}"));
+                    await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "test_value", $"{i}"));
                 }
 
                 await service.SetConfigurationSettingAsync(new ConfigurationSetting(batchKey, key));
@@ -919,6 +932,188 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPage()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithUnmodifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+            }
+
+            int pagesCount = 0;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                Assert.AreEqual(304, response.Status);
+                Assert.IsEmpty(page.Values);
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [AsyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithModifiedPage()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
+            }
+
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            await foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettingsAsync(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
+        [SyncOnly]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetBatchSettingIfChangedWithModifiedPageSync()
+        {
+            ConfigurationClient service = GetClient(skipClientInstrumentation: true);
+
+            const int expectedEvents = 105;
+            var key = await SetMultipleKeys(service, expectedEvents);
+
+            SettingSelector selector = new SettingSelector { KeyFilter = key };
+            var matchConditionsList = new List<MatchConditions>();
+            ConfigurationSetting lastSetting = null;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages())
+            {
+                Response response = page.GetRawResponse();
+                var matchConditions = new MatchConditions()
+                {
+                    IfNoneMatch = response.Headers.ETag
+                };
+
+                matchConditionsList.Add(matchConditions);
+                lastSetting = page.Values.Last();
+            }
+
+            lastSetting.Value += "1";
+            await service.SetConfigurationSettingAsync(lastSetting);
+
+            int pagesCount = 0;
+
+            foreach (Page<ConfigurationSetting> page in service.GetConfigurationSettings(selector).AsPages(matchConditionsList))
+            {
+                Response response = page.GetRawResponse();
+
+                if (pagesCount == 0)
+                {
+                    Assert.AreEqual(304, response.Status);
+                    Assert.IsEmpty(page.Values);
+                }
+                else
+                {
+                    Assert.AreEqual(200, response.Status);
+                    Assert.IsNotEmpty(page.Values);
+                }
+
+                pagesCount++;
+            }
+
+            Assert.AreEqual(2, pagesCount);
+        }
+
+        [RecordedTest]
         public async Task GetBatchSettingAny()
         {
             ConfigurationClient service = GetClient();
@@ -1046,7 +1241,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
                 Assert.IsNotNull(batch[0].Key);
                 Assert.IsNotNull(batch[0].Label);
-                Assert.IsNotNull(batch[0].ETag);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
                 Assert.IsNull(batch[0].Value);
                 Assert.IsNull(batch[0].ContentType);
                 Assert.IsNull(batch[0].LastModified);
@@ -1118,9 +1313,49 @@ namespace Azure.Data.AppConfiguration.Tests
                 Assert.IsNotNull(batch[0].Label);
                 Assert.IsNotNull(batch[0].Value);
                 Assert.IsNotNull(batch[0].ContentType);
-                Assert.IsNotNull(batch[0].ETag);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
                 Assert.IsNotNull(batch[0].LastModified);
                 Assert.IsNotNull(batch[0].IsReadOnly);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(setting.Key, setting.Label));
+            }
+        }
+
+        [RecordedTest]
+        public async Task GetBatchSettingWithAllFieldsSetExplicitly()
+        {
+            ConfigurationClient service = GetClient();
+            string key = GenerateKeyId("keyFields-");
+            ConfigurationSetting setting = await service.AddConfigurationSettingAsync(new ConfigurationSetting(key, "my_value", "my_label")
+            {
+                ContentType = "content-type",
+                Tags = { { "my_tag", "my_tag_value" } }
+            });
+
+            try
+            {
+                SettingSelector selector = new SettingSelector
+                {
+                    KeyFilter = key,
+                    Fields = SettingFields.Key | SettingFields.Label | SettingFields.Value | SettingFields.ContentType
+                        | SettingFields.ETag | SettingFields.LastModified | SettingFields.IsReadOnly | SettingFields.Tags
+                };
+
+                ConfigurationSetting[] batch = (await service.GetConfigurationSettingsAsync(selector, CancellationToken.None).ToEnumerableAsync())
+                    .ToArray();
+
+                Assert.AreEqual(1, batch.Length);
+
+                Assert.IsNotNull(batch[0].Key);
+                Assert.IsNotNull(batch[0].Label);
+                Assert.IsNotNull(batch[0].Value);
+                Assert.IsNotNull(batch[0].ContentType);
+                Assert.AreNotEqual(batch[0].ETag, default(ETag));
+                Assert.IsNotNull(batch[0].LastModified);
+                Assert.IsNotNull(batch[0].IsReadOnly);
+                Assert.IsNotEmpty(batch[0].Tags);
             }
             finally
             {
@@ -1652,6 +1887,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingAutomaticPolling()
         {
             var service = GetClient();
@@ -1661,8 +1897,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1679,6 +1915,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingWaitForCompletion()
         {
             var service = GetClient();
@@ -1688,8 +1925,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1707,6 +1944,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task CreateSnapshotUsingManualPolling()
         {
             var service = GetClient();
@@ -1716,8 +1954,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Started, snapshotName, settingsSnapshot);
@@ -1743,6 +1981,48 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task CreateSnapshotUsingWildCardKeyFilter()
+        {
+            var service = GetClient();
+            var key1 = GenerateKeyId("Key-1");
+            var key2 = GenerateKeyId("Key-2");
+            var key3 = GenerateKeyId("Key1");
+            var key4 = GenerateKeyId("Key2");
+            var firstSetting = new ConfigurationSetting(key1, "value1");
+            var secondSetting = new ConfigurationSetting(key2, "value2");
+            var thirdSetting = new ConfigurationSetting(key3, "value3");
+            var fourthSetting = new ConfigurationSetting(key4, "value4");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+                await service.AddConfigurationSettingAsync(thirdSetting);
+                await service.AddConfigurationSettingAsync(fourthSetting);
+
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter("Key-*") });
+                var snapshotName = GenerateSnapshotName();
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
+                ValidateCompletedOperation(operation);
+
+                ConfigurationSetting[] settings = (await service.GetConfigurationSettingsForSnapshotAsync(snapshotName, CancellationToken.None).ToEnumerableAsync()).ToArray();
+                Assert.GreaterOrEqual(2, settings.Count());
+
+                Assert.AreEqual(key1, settings[0].Key);
+                Assert.AreEqual(key2, settings[1].Key);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(thirdSetting.Key, thirdSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(fourthSetting.Key, fourthSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task ArchiveSnapshotStatus()
         {
             var service = GetClient();
@@ -1752,8 +2032,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1763,9 +2043,9 @@ namespace Azure.Data.AppConfiguration.Tests
                 var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
             }
             finally
             {
@@ -1774,6 +2054,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task RecoverSnapshotStatus()
         {
             var service = GetClient();
@@ -1783,8 +2064,8 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(testSetting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(testSetting.Key) });
-                var settingsSnapshot = new ConfigurationSettingsSnapshot(snapshotFilter);
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(testSetting.Key) });
+                var settingsSnapshot = new ConfigurationSnapshot(settingsFilter);
 
                 var snapshotName = GenerateSnapshotName();
                 var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, settingsSnapshot);
@@ -1794,13 +2075,13 @@ namespace Azure.Data.AppConfiguration.Tests
                 var retrievedSnapshot = await service.GetSnapshotAsync(snapshotName);
                 ValidateCreatedSnapshot(createdSnapshot, retrievedSnapshot, snapshotName);
 
-                ConfigurationSettingsSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
+                ConfigurationSnapshot archivedSnapshot = await service.ArchiveSnapshotAsync(snapshotName);
                 Assert.NotNull(archivedSnapshot);
-                Assert.AreEqual(SnapshotStatus.Archived, archivedSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Archived, archivedSnapshot.Status);
 
-                ConfigurationSettingsSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
+                ConfigurationSnapshot recoveredSnapshot = await service.RecoverSnapshotAsync(snapshotName);
                 Assert.NotNull(recoveredSnapshot);
-                Assert.AreEqual(SnapshotStatus.Ready, recoveredSnapshot.Status);
+                Assert.AreEqual(ConfigurationSnapshotStatus.Ready, recoveredSnapshot.Status);
             }
             finally
             {
@@ -1809,6 +2090,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetSnapshots()
         {
             var service = GetClient();
@@ -1820,17 +2102,18 @@ namespace Azure.Data.AppConfiguration.Tests
                 await service.AddConfigurationSettingAsync(firstSetting);
                 await service.AddConfigurationSettingAsync(secondSetting);
 
-                var firstSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(firstSetting.Key) });
+                var firstSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(firstSetting.Key) });
                 var firstSnapshotName = GenerateSnapshotName("first_snapshot");
-                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSettingsSnapshot(firstSnapshotFilter));
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
                 ValidateCompletedOperation(firstOperation);
 
-                var secondSnapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(secondSetting.Key) });
+                var secondSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(secondSetting.Key) });
                 var secondSnapshotName = GenerateSnapshotName("second_snapshot");
-                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSettingsSnapshot(secondSnapshotFilter));
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
                 ValidateCompletedOperation(secondOperation);
 
-                var snapshots = service.GetSnapshotsAsync(cancellationToken: CancellationToken.None);
+                var selector = new SnapshotSelector();
+                var snapshots = service.GetSnapshotsAsync(selector);
                 var resultsReturned = (await snapshots.ToEnumerableAsync()).Count;
                 Assert.GreaterOrEqual(resultsReturned, 2);
             }
@@ -1842,6 +2125,47 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
+        public async Task GetSnapshotsUsingNameFilter()
+        {
+            var service = GetClient();
+            var firstSetting = new ConfigurationSetting("first_key", "first_value");
+            var secondSetting = new ConfigurationSetting("second_key", "second_value");
+
+            try
+            {
+                await service.AddConfigurationSettingAsync(firstSetting);
+                await service.AddConfigurationSettingAsync(secondSetting);
+
+                var firstSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(firstSetting.Key) });
+                var firstSnapshotName = GenerateSnapshotName("first_snapshot");
+                var firstOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, firstSnapshotName, new ConfigurationSnapshot(firstSnapshotFilter));
+                ValidateCompletedOperation(firstOperation);
+
+                var secondSnapshotFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(secondSetting.Key) });
+                var secondSnapshotName = GenerateSnapshotName("second_snapshot");
+                var secondOperation = await service.CreateSnapshotAsync(WaitUntil.Completed, secondSnapshotName, new ConfigurationSnapshot(secondSnapshotFilter));
+                ValidateCompletedOperation(secondOperation);
+
+                var selector = new SnapshotSelector()
+                {
+                    NameFilter = firstSnapshotName
+                };
+
+                ConfigurationSnapshot[] batch = (await service.GetSnapshotsAsync(selector).ToEnumerableAsync()).ToArray();
+
+                Assert.AreEqual(1, batch.Length);
+                Assert.AreEqual(firstSnapshotName, batch[0].Name);
+            }
+            finally
+            {
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(firstSetting.Key, firstSetting.Label));
+                AssertStatus200(await service.DeleteConfigurationSettingAsync(secondSetting.Key, secondSetting.Label));
+            }
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task GetConfigurationSettingsForSnapshot()
         {
             var service = GetClient();
@@ -1851,9 +2175,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 await service.AddConfigurationSettingAsync(setting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(setting.Key) });
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(setting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
                 ValidateCompletedOperation(operation);
 
                 var settingsForSnapshot = service.GetConfigurationSettingsForSnapshotAsync(snapshotName);
@@ -1867,6 +2191,7 @@ namespace Azure.Data.AppConfiguration.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ConfigurationClientOptions.ServiceVersion.V2023_10_01)]
         public async Task UnchangedSnapshotAfterSettingsUpdate()
         {
             var service = GetClient();
@@ -1876,9 +2201,9 @@ namespace Azure.Data.AppConfiguration.Tests
             {
                 ConfigurationSetting createdSetting = await service.AddConfigurationSettingAsync(setting);
 
-                var snapshotFilter = new List<SnapshotSettingFilter>(new SnapshotSettingFilter[] { new SnapshotSettingFilter(createdSetting.Key) });
+                var settingsFilter = new List<ConfigurationSettingsFilter>(new ConfigurationSettingsFilter[] { new ConfigurationSettingsFilter(createdSetting.Key) });
                 var snapshotName = GenerateSnapshotName();
-                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSettingsSnapshot(snapshotFilter));
+                var operation = await service.CreateSnapshotAsync(WaitUntil.Completed, snapshotName, new ConfigurationSnapshot(settingsFilter));
                 ValidateCompletedOperation(operation);
 
                 setting.Value = "Updated_Value";
@@ -1897,7 +2222,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
         }
 
-        private void ValidateCreatedSnapshot(ConfigurationSettingsSnapshot createdSnapshot, ConfigurationSettingsSnapshot retrievedSnapshot, string expectedName)
+        private void ValidateCreatedSnapshot(ConfigurationSnapshot createdSnapshot, ConfigurationSnapshot retrievedSnapshot, string expectedName)
         {
             Assert.NotNull(createdSnapshot);
             Assert.AreEqual(expectedName, createdSnapshot.Name);

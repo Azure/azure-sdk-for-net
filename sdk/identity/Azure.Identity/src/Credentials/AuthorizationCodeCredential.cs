@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -12,8 +12,8 @@ using Microsoft.Identity.Client;
 namespace Azure.Identity
 {
     /// <summary>
-    /// Authenticates by redeeming an authorization code previously obtained from Azure Active Directory. See
-    /// <seealso href="https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow" /> for more information
+    /// Authenticates by redeeming an authorization code previously obtained from Microsoft Entra ID. See
+    /// <seealso href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow" /> for more information
     /// about the authorization code authentication flow.
     /// </summary>
     public class AuthorizationCodeCredential : TokenCredential
@@ -22,12 +22,11 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly CredentialPipeline _pipeline;
         private AuthenticationRecord _record;
-        private bool _isCaeEnabledRequestCached = false;
-        private bool _isCaeDisabledRequestCached = false;
         internal MsalConfidentialClient Client { get; }
         private readonly string _redirectUri;
         private readonly string _tenantId;
         internal readonly string[] AdditionallyAllowedTenantIds;
+        internal TenantIdResolverBase TenantIdResolver { get; }
 
         /// <summary>
         /// Protected constructor for mocking.
@@ -37,27 +36,27 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
+        /// See https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow for more information.</param>
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode)
             : this(tenantId, clientId, clientSecret, authorizationCode, null)
         {
         }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// See <see href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow" /> for more information.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         public AuthorizationCodeCredential(
             string tenantId,
             string clientId,
@@ -67,14 +66,14 @@ namespace Azure.Identity
         { }
 
         /// <summary>
-        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Azure Active Directory with a prefetched authorization code.
+        /// Creates an instance of the ClientSecretCredential with the details needed to authenticate against Microsoft Entra ID with a prefetched authorization code.
         /// </summary>
-        /// <param name="tenantId">The Azure Active Directory tenant (directory) Id of the service principal.</param>
+        /// <param name="tenantId">The Microsoft Entra tenant (directory) ID of the service principal.</param>
         /// <param name="clientId">The client (application) ID of the service principal</param>
         /// <param name="clientSecret">A client secret that was generated for the App Registration used to authenticate the client.</param>
         /// <param name="authorizationCode">The authorization code obtained from a call to authorize. The code should be obtained with all required scopes.
-        /// See https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-auth-code-flow for more information.</param>
-        /// <param name="options">Options that allow to configure the management of the requests sent to the Azure Active Directory service.</param>
+        /// See <see href="https://learn.microsoft.com/entra/identity-platform/v2-oauth2-auth-code-flow" /> for more information.</param>
+        /// <param name="options">Options that allow to configure the management of the requests sent to Microsoft Entra ID.</param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AuthorizationCodeCredential(string tenantId, string clientId, string clientSecret, string authorizationCode, TokenCredentialOptions options)
             : this(tenantId, clientId, clientSecret, authorizationCode, options, null)
@@ -104,12 +103,12 @@ namespace Azure.Identity
                           clientSecret,
                           _redirectUri,
                           options);
-
+            TenantIdResolver = options?.TenantIdResolver ?? TenantIdResolverBase.Default;
             AdditionallyAllowedTenantIds = TenantIdResolver.ResolveAddionallyAllowedTenantIds((options as ISupportsAdditionallyAllowedTenants)?.AdditionallyAllowedTenants);
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
+        /// Obtains a token from Microsoft Entra ID, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
@@ -122,7 +121,7 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// Obtains a token from the Azure Active Directory service, using the specified authorization code to authenticate. Acquired tokens
+        /// Obtains a token from Microsoft Entra ID, using the specified authorization code to authenticate. Acquired tokens
         /// are cached by the credential instance. Token lifetime and refreshing is handled automatically. Where possible, reuse credential
         /// instances to optimize cache effectiveness.
         /// </summary>
@@ -138,48 +137,55 @@ namespace Azure.Identity
         {
             using CredentialDiagnosticScope scope = _pipeline.StartGetTokenScope($"{nameof(AuthorizationCodeCredential)}.{nameof(GetToken)}", requestContext);
 
+            AccessToken token;
+            string tenantId = null;
             try
             {
-                AccessToken token;
-                var tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
-                var isCachePopulated = _record switch
-                {
-                    not null when requestContext.IsCaeEnabled && _isCaeEnabledRequestCached => true,
-                    not null when !requestContext.IsCaeEnabled && _isCaeDisabledRequestCached => true,
-                    _ => false
-                };
+                tenantId = TenantIdResolver.Resolve(_tenantId, requestContext, AdditionallyAllowedTenantIds);
 
-                if (!isCachePopulated)
+                if (_record is null)
                 {
-                    AuthenticationResult result = await Client
-                        .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
-                        .ConfigureAwait(false);
-                    _record = new AuthenticationRecord(result, _clientId);
-                    if (requestContext.IsCaeEnabled)
-                    {
-                        _isCaeEnabledRequestCached = true;
-                    }
-                    else
-                    {
-                        _isCaeDisabledRequestCached = true;
-                    }
-
-                    token = new AccessToken(result.AccessToken, result.ExpiresOn);
+                    token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
                     AuthenticationResult result = await Client
-                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.IsCaeEnabled, async, cancellationToken)
+                        .AcquireTokenSilentAsync(requestContext.Scopes, (AuthenticationAccount)_record, tenantId, _redirectUri, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
                         .ConfigureAwait(false);
                     token = new AccessToken(result.AccessToken, result.ExpiresOn);
                 }
 
                 return scope.Succeeded(token);
             }
+            catch (MsalUiRequiredException)
+            {
+                // This occurs when we have an auth record but the cae or ncae cache entry is missing
+                // fall through to the acquire call below
+            }
             catch (Exception e)
             {
                 throw scope.FailWrapAndThrow(e);
             }
+
+            try
+            {
+                token = await AcquireTokenWithCode(async, requestContext, token, tenantId, cancellationToken).ConfigureAwait(false);
+                return scope.Succeeded(token);
+            }
+            catch (Exception e)
+            {
+                throw scope.FailWrapAndThrow(e);
+            }
+        }
+
+        private async Task<AccessToken> AcquireTokenWithCode(bool async, TokenRequestContext requestContext, AccessToken token, string tenantId, CancellationToken cancellationToken)
+        {
+            AuthenticationResult result = await Client
+                                    .AcquireTokenByAuthorizationCodeAsync(requestContext.Scopes, _authCode, tenantId, _redirectUri, requestContext.Claims, requestContext.IsCaeEnabled, async, cancellationToken)
+                                    .ConfigureAwait(false);
+            _record = new AuthenticationRecord(result, _clientId);
+            token = new AccessToken(result.AccessToken, result.ExpiresOn);
+            return token;
         }
     }
 }

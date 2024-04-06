@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
     /// <summary> Network and credential configuration currently applied on terminal server. </summary>
     public partial class TerminalServerPatchableProperties
     {
-        /// <summary> Initializes a new instance of TerminalServerPatchableProperties. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         public TerminalServerPatchableProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of TerminalServerPatchableProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="TerminalServerPatchableProperties"/>. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        internal TerminalServerPatchableProperties(string username, string password, string serialNumber)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal TerminalServerPatchableProperties(string username, string password, string serialNumber, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Username = username;
             Password = password;
             SerialNumber = serialNumber;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Username for the terminal server connection. </summary>

@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     /// <summary> A2A provider specific settings. </summary>
     public partial class A2AReplicationDetails : ReplicationProviderSpecificSettings
     {
-        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
         internal A2AReplicationDetails()
         {
             ProtectedDisks = new ChangeTrackingList<A2AProtectedDiskDetails>();
@@ -24,8 +24,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             InstanceType = "A2A";
         }
 
-        /// <summary> Initializes a new instance of A2AReplicationDetails. </summary>
+        /// <summary> Initializes a new instance of <see cref="A2AReplicationDetails"/>. </summary>
         /// <param name="instanceType"> Gets the Instance type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="fabricObjectId"> The fabric specific object Id of the virtual machine. </param>
         /// <param name="initialPrimaryZone"> The initial primary availability zone. </param>
         /// <param name="initialPrimaryFabricLocation"> The initial primary fabric location. </param>
@@ -79,7 +80,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="autoProtectionOfDataDisk"> A value indicating whether the auto protection is enabled. </param>
         /// <param name="recoveryVirtualMachineScaleSetId"> The recovery virtual machine scale set id. </param>
         /// <param name="recoveryCapacityReservationGroupId"> The recovery capacity reservation group Id. </param>
-        internal A2AReplicationDetails(string instanceType, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId) : base(instanceType)
+        /// <param name="churnOptionSelected"> A value indicating the churn option selected by user. </param>
+        internal A2AReplicationDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier fabricObjectId, string initialPrimaryZone, AzureLocation? initialPrimaryFabricLocation, string initialRecoveryZone, SiteRecoveryExtendedLocation initialPrimaryExtendedLocation, SiteRecoveryExtendedLocation initialRecoveryExtendedLocation, AzureLocation? initialRecoveryFabricLocation, string multiVmGroupId, string multiVmGroupName, MultiVmGroupCreateOption? multiVmGroupCreateOption, string managementId, IReadOnlyList<A2AProtectedDiskDetails> protectedDisks, IReadOnlyList<A2AUnprotectedDiskDetails> unprotectedDisks, IReadOnlyList<A2AProtectedManagedDiskDetails> protectedManagedDisks, ResourceIdentifier recoveryBootDiagStorageAccountId, AzureLocation? primaryFabricLocation, AzureLocation? recoveryFabricLocation, string osType, string recoveryAzureVmSize, string recoveryAzureVmName, ResourceIdentifier recoveryAzureResourceGroupId, string recoveryCloudService, string recoveryAvailabilitySet, ResourceIdentifier selectedRecoveryAzureNetworkId, ResourceIdentifier selectedTfoAzureNetworkId, IReadOnlyList<VmNicDetails> vmNics, A2AVmSyncedConfigDetails vmSyncedConfigDetails, int? monitoringPercentageCompletion, string monitoringJobType, DateTimeOffset? lastHeartbeat, string agentVersion, DateTimeOffset? agentExpireOn, bool? isReplicationAgentUpdateRequired, DateTimeOffset? agentCertificateExpireOn, bool? isReplicationAgentCertificateUpdateRequired, ResourceIdentifier recoveryFabricObjectId, string vmProtectionState, string vmProtectionStateDescription, string lifecycleId, ResourceIdentifier testFailoverRecoveryFabricObjectId, long? rpoInSeconds, DateTimeOffset? lastRpoCalculatedOn, string primaryAvailabilityZone, string recoveryAvailabilityZone, SiteRecoveryExtendedLocation primaryExtendedLocation, SiteRecoveryExtendedLocation recoveryExtendedLocation, SiteRecoveryVmEncryptionType? vmEncryptionType, string tfoAzureVmName, string recoveryAzureGeneration, ResourceIdentifier recoveryProximityPlacementGroupId, AutoProtectionOfDataDisk? autoProtectionOfDataDisk, ResourceIdentifier recoveryVirtualMachineScaleSetId, ResourceIdentifier recoveryCapacityReservationGroupId, ChurnOptionSelected? churnOptionSelected) : base(instanceType, serializedAdditionalRawData)
         {
             FabricObjectId = fabricObjectId;
             InitialPrimaryZone = initialPrimaryZone;
@@ -134,6 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             AutoProtectionOfDataDisk = autoProtectionOfDataDisk;
             RecoveryVirtualMachineScaleSetId = recoveryVirtualMachineScaleSetId;
             RecoveryCapacityReservationGroupId = recoveryCapacityReservationGroupId;
+            ChurnOptionSelected = churnOptionSelected;
             InstanceType = instanceType ?? "A2A";
         }
 
@@ -243,5 +246,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public ResourceIdentifier RecoveryVirtualMachineScaleSetId { get; }
         /// <summary> The recovery capacity reservation group Id. </summary>
         public ResourceIdentifier RecoveryCapacityReservationGroupId { get; }
+        /// <summary> A value indicating the churn option selected by user. </summary>
+        public ChurnOptionSelected? ChurnOptionSelected { get; }
     }
 }

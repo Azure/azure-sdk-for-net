@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class SubProtectionPolicy : IUtf8JsonSerializable
+    public partial class SubProtectionPolicy : IUtf8JsonSerializable, IJsonModel<SubProtectionPolicy>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubProtectionPolicy>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SubProtectionPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubProtectionPolicy)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PolicyType))
             {
@@ -24,12 +34,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue<BackupSchedulePolicy>(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -38,23 +48,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<BackupTieringPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(SnapshotBackupAdditionalDetails))
+            {
+                writer.WritePropertyName("snapshotBackupAdditionalDetails"u8);
+                writer.WriteObjectValue<SnapshotBackupAdditionalDetails>(SnapshotBackupAdditionalDetails, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static SubProtectionPolicy DeserializeSubProtectionPolicy(JsonElement element)
+        SubProtectionPolicy IJsonModel<SubProtectionPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SubProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SubProtectionPolicy)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSubProtectionPolicy(document.RootElement, options);
+        }
+
+        internal static SubProtectionPolicy DeserializeSubProtectionPolicy(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SubProtectionPolicyType> policyType = default;
-            Optional<BackupSchedulePolicy> schedulePolicy = default;
-            Optional<BackupRetentionPolicy> retentionPolicy = default;
-            Optional<IDictionary<string, BackupTieringPolicy>> tieringPolicy = default;
+            SubProtectionPolicyType? policyType = default;
+            BackupSchedulePolicy schedulePolicy = default;
+            BackupRetentionPolicy retentionPolicy = default;
+            IDictionary<string, BackupTieringPolicy> tieringPolicy = default;
+            SnapshotBackupAdditionalDetails snapshotBackupAdditionalDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("policyType"u8))
@@ -72,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value);
+                    schedulePolicy = BackupSchedulePolicy.DeserializeBackupSchedulePolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("retentionPolicy"u8))
@@ -81,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value);
+                    retentionPolicy = BackupRetentionPolicy.DeserializeBackupRetentionPolicy(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tieringPolicy"u8))
@@ -93,13 +140,64 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     Dictionary<string, BackupTieringPolicy> dictionary = new Dictionary<string, BackupTieringPolicy>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value));
+                        dictionary.Add(property0.Name, BackupTieringPolicy.DeserializeBackupTieringPolicy(property0.Value, options));
                     }
                     tieringPolicy = dictionary;
                     continue;
                 }
+                if (property.NameEquals("snapshotBackupAdditionalDetails"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotBackupAdditionalDetails = SnapshotBackupAdditionalDetails.DeserializeSnapshotBackupAdditionalDetails(property.Value, options);
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SubProtectionPolicy(Optional.ToNullable(policyType), schedulePolicy.Value, retentionPolicy.Value, Optional.ToDictionary(tieringPolicy));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SubProtectionPolicy(
+                policyType,
+                schedulePolicy,
+                retentionPolicy,
+                tieringPolicy ?? new ChangeTrackingDictionary<string, BackupTieringPolicy>(),
+                snapshotBackupAdditionalDetails,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SubProtectionPolicy>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SubProtectionPolicy)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SubProtectionPolicy IPersistableModel<SubProtectionPolicy>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SubProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSubProtectionPolicy(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SubProtectionPolicy)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SubProtectionPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

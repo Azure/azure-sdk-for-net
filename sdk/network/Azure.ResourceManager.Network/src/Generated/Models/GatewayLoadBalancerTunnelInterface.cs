@@ -5,27 +5,64 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Gateway load balancer tunnel interface of a load balancer backend address pool. </summary>
     public partial class GatewayLoadBalancerTunnelInterface
     {
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         public GatewayLoadBalancerTunnelInterface()
         {
         }
 
-        /// <summary> Initializes a new instance of GatewayLoadBalancerTunnelInterface. </summary>
+        /// <summary> Initializes a new instance of <see cref="GatewayLoadBalancerTunnelInterface"/>. </summary>
         /// <param name="port"> Port of gateway load balancer tunnel interface. </param>
         /// <param name="identifier"> Identifier of gateway load balancer tunnel interface. </param>
         /// <param name="protocol"> Protocol of gateway load balancer tunnel interface. </param>
         /// <param name="interfaceType"> Traffic type of gateway load balancer tunnel interface. </param>
-        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? interfaceType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal GatewayLoadBalancerTunnelInterface(int? port, int? identifier, GatewayLoadBalancerTunnelProtocol? protocol, GatewayLoadBalancerTunnelInterfaceType? interfaceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Port = port;
             Identifier = identifier;
             Protocol = protocol;
             InterfaceType = interfaceType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Port of gateway load balancer tunnel interface. </summary>

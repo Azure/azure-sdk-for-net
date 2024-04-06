@@ -5,22 +5,89 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class ResourcesResponse
+    public partial class ResourcesResponse : IUtf8JsonSerializable, IJsonModel<ResourcesResponse>
     {
-        internal static ResourcesResponse DeserializeResourcesResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourcesResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourcesResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourcesResponse)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Endpoints))
+            {
+                writer.WritePropertyName("endpoints"u8);
+                writer.WriteStartArray();
+                foreach (var item in Endpoints)
+                {
+                    writer.WriteObjectValue<ResourcesResponseEndpointsItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(CustomDomains))
+            {
+                writer.WritePropertyName("customDomains"u8);
+                writer.WriteStartArray();
+                foreach (var item in CustomDomains)
+                {
+                    writer.WriteObjectValue<ResourcesResponseCustomDomainsItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ResourcesResponse IJsonModel<ResourcesResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourcesResponse)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourcesResponse(document.RootElement, options);
+        }
+
+        internal static ResourcesResponse DeserializeResourcesResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourcesResponseEndpointsItem>> endpoints = default;
-            Optional<IReadOnlyList<ResourcesResponseCustomDomainsItem>> customDomains = default;
+            IReadOnlyList<ResourcesResponseEndpointsItem> endpoints = default;
+            IReadOnlyList<ResourcesResponseCustomDomainsItem> customDomains = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("endpoints"u8))
@@ -32,7 +99,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseEndpointsItem> array = new List<ResourcesResponseEndpointsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item));
+                        array.Add(ResourcesResponseEndpointsItem.DeserializeResourcesResponseEndpointsItem(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -46,13 +113,49 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseCustomDomainsItem> array = new List<ResourcesResponseCustomDomainsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item));
+                        array.Add(ResourcesResponseCustomDomainsItem.DeserializeResourcesResponseCustomDomainsItem(item, options));
                     }
                     customDomains = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourcesResponse(Optional.ToList(endpoints), Optional.ToList(customDomains));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourcesResponse(endpoints ?? new ChangeTrackingList<ResourcesResponseEndpointsItem>(), customDomains ?? new ChangeTrackingList<ResourcesResponseCustomDomainsItem>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourcesResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourcesResponse IPersistableModel<ResourcesResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourcesResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourcesResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourcesResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

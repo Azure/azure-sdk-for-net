@@ -37,9 +37,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<string> content = default;
-            Optional<string> filename = default;
+            DateTimeOffset? time = default;
+            string content = default;
+            string filename = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -62,15 +62,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LibraryRequirements(Optional.ToNullable(time), content.Value, filename.Value);
+            return new LibraryRequirements(time, content, filename);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LibraryRequirements FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLibraryRequirements(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LibraryRequirements>(this);
+            return content;
         }
 
         internal partial class LibraryRequirementsConverter : JsonConverter<LibraryRequirements>
         {
             public override void Write(Utf8JsonWriter writer, LibraryRequirements model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LibraryRequirements>(model);
             }
+
             public override LibraryRequirements Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

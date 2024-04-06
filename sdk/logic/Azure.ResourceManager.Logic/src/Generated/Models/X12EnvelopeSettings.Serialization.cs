@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
 {
-    public partial class X12EnvelopeSettings : IUtf8JsonSerializable
+    public partial class X12EnvelopeSettings : IUtf8JsonSerializable, IJsonModel<X12EnvelopeSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<X12EnvelopeSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<X12EnvelopeSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("controlStandardsId"u8);
             writer.WriteNumberValue(ControlStandardsId);
@@ -72,11 +83,40 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(GroupHeaderTimeFormat.ToString());
             writer.WritePropertyName("usageIndicator"u8);
             writer.WriteStringValue(UsageIndicator.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static X12EnvelopeSettings DeserializeX12EnvelopeSettings(JsonElement element)
+        X12EnvelopeSettings IJsonModel<X12EnvelopeSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeX12EnvelopeSettings(document.RootElement, options);
+        }
+
+        internal static X12EnvelopeSettings DeserializeX12EnvelopeSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -90,7 +130,7 @@ namespace Azure.ResourceManager.Logic.Models
             int interchangeControlNumberUpperBound = default;
             bool rolloverInterchangeControlNumber = default;
             bool enableDefaultGroupHeaders = default;
-            Optional<string> functionalGroupId = default;
+            string functionalGroupId = default;
             int groupControlNumberLowerBound = default;
             int groupControlNumberUpperBound = default;
             bool rolloverGroupControlNumber = default;
@@ -99,12 +139,14 @@ namespace Azure.ResourceManager.Logic.Models
             int transactionSetControlNumberLowerBound = default;
             int transactionSetControlNumberUpperBound = default;
             bool rolloverTransactionSetControlNumber = default;
-            Optional<string> transactionSetControlNumberPrefix = default;
-            Optional<string> transactionSetControlNumberSuffix = default;
+            string transactionSetControlNumberPrefix = default;
+            string transactionSetControlNumberSuffix = default;
             bool overwriteExistingTransactionSetControlNumber = default;
             X12DateFormat groupHeaderDateFormat = default;
             X12TimeFormat groupHeaderTimeFormat = default;
             UsageIndicator usageIndicator = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("controlStandardsId"u8))
@@ -227,8 +269,69 @@ namespace Azure.ResourceManager.Logic.Models
                     usageIndicator = new UsageIndicator(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new X12EnvelopeSettings(controlStandardsId, useControlStandardsIdAsRepetitionCharacter, senderApplicationId, receiverApplicationId, controlVersionNumber, interchangeControlNumberLowerBound, interchangeControlNumberUpperBound, rolloverInterchangeControlNumber, enableDefaultGroupHeaders, functionalGroupId.Value, groupControlNumberLowerBound, groupControlNumberUpperBound, rolloverGroupControlNumber, groupHeaderAgencyCode, groupHeaderVersion, transactionSetControlNumberLowerBound, transactionSetControlNumberUpperBound, rolloverTransactionSetControlNumber, transactionSetControlNumberPrefix.Value, transactionSetControlNumberSuffix.Value, overwriteExistingTransactionSetControlNumber, groupHeaderDateFormat, groupHeaderTimeFormat, usageIndicator);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new X12EnvelopeSettings(
+                controlStandardsId,
+                useControlStandardsIdAsRepetitionCharacter,
+                senderApplicationId,
+                receiverApplicationId,
+                controlVersionNumber,
+                interchangeControlNumberLowerBound,
+                interchangeControlNumberUpperBound,
+                rolloverInterchangeControlNumber,
+                enableDefaultGroupHeaders,
+                functionalGroupId,
+                groupControlNumberLowerBound,
+                groupControlNumberUpperBound,
+                rolloverGroupControlNumber,
+                groupHeaderAgencyCode,
+                groupHeaderVersion,
+                transactionSetControlNumberLowerBound,
+                transactionSetControlNumberUpperBound,
+                rolloverTransactionSetControlNumber,
+                transactionSetControlNumberPrefix,
+                transactionSetControlNumberSuffix,
+                overwriteExistingTransactionSetControlNumber,
+                groupHeaderDateFormat,
+                groupHeaderTimeFormat,
+                usageIndicator,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<X12EnvelopeSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        X12EnvelopeSettings IPersistableModel<X12EnvelopeSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<X12EnvelopeSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeX12EnvelopeSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(X12EnvelopeSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<X12EnvelopeSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

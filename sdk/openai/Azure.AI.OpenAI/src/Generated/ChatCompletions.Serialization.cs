@@ -6,70 +6,113 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    public partial class ChatCompletions
+    public partial class ChatCompletions : IUtf8JsonSerializable, IJsonModel<ChatCompletions>
     {
-        internal static ChatCompletions DeserializeChatCompletions(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletions>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ChatCompletions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            if (element.ValueKind == JsonValueKind.Null)
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                return null;
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{format}' format.");
             }
-            string id = default;
-            DateTimeOffset created = default;
-            IReadOnlyList<ChatChoice> choices = default;
-            Optional<IReadOnlyList<PromptFilterResult>> promptAnnotations = default;
-            CompletionsUsage usage = default;
-            foreach (var property in element.EnumerateObject())
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("id"u8);
+            writer.WriteStringValue(Id);
+            writer.WritePropertyName("created"u8);
+            writer.WriteNumberValue(Created, "U");
+            writer.WritePropertyName("choices"u8);
+            writer.WriteStartArray();
+            foreach (var item in Choices)
             {
-                if (property.NameEquals("id"u8))
+                writer.WriteObjectValue<ChatChoice>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(PromptFilterResults))
+            {
+                writer.WritePropertyName("prompt_filter_results"u8);
+                writer.WriteStartArray();
+                foreach (var item in PromptFilterResults)
                 {
-                    id = property.Value.GetString();
-                    continue;
+                    writer.WriteObjectValue<ContentFilterResultsForPrompt>(item, options);
                 }
-                if (property.NameEquals("created"u8))
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(SystemFingerprint))
+            {
+                writer.WritePropertyName("system_fingerprint"u8);
+                writer.WriteStringValue(SystemFingerprint);
+            }
+            writer.WritePropertyName("usage"u8);
+            writer.WriteObjectValue<CompletionsUsage>(Usage, options);
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
                 {
-                    created = DateTimeOffset.FromUnixTimeSeconds(property.Value.GetInt64());
-                    continue;
-                }
-                if (property.NameEquals("choices"u8))
-                {
-                    List<ChatChoice> array = new List<ChatChoice>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
-                        array.Add(ChatChoice.DeserializeChatChoice(item));
+                        JsonSerializer.Serialize(writer, document.RootElement);
                     }
-                    choices = array;
-                    continue;
-                }
-                if (property.NameEquals("prompt_annotations"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<PromptFilterResult> array = new List<PromptFilterResult>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(PromptFilterResult.DeserializePromptFilterResult(item));
-                    }
-                    promptAnnotations = array;
-                    continue;
-                }
-                if (property.NameEquals("usage"u8))
-                {
-                    usage = CompletionsUsage.DeserializeCompletionsUsage(property.Value);
-                    continue;
+#endif
                 }
             }
-            return new ChatCompletions(id, created, choices, Optional.ToList(promptAnnotations), usage);
+            writer.WriteEndObject();
         }
+
+        ChatCompletions IJsonModel<ChatCompletions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeChatCompletions(document.RootElement, options);
+        }
+
+        BinaryData IPersistableModel<ChatCompletions>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ChatCompletions IPersistableModel<ChatCompletions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletions>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeChatCompletions(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ChatCompletions)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ChatCompletions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -77,6 +120,14 @@ namespace Azure.AI.OpenAI
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeChatCompletions(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ChatCompletions>(this, new ModelReaderWriterOptions("W"));
+            return content;
         }
     }
 }

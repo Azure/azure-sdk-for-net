@@ -15,14 +15,46 @@ namespace Azure.ResourceManager.FrontDoor.Models
     /// <summary> Defines the Timeseries. </summary>
     public partial class FrontDoorTimeSeriesInfo : TrackedResourceData
     {
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="location"> The location. </param>
         public FrontDoorTimeSeriesInfo(AzureLocation location) : base(location)
         {
             TimeSeriesData = new ChangeTrackingList<FrontDoorTimeSeriesDataPoint>();
         }
 
-        /// <summary> Initializes a new instance of FrontDoorTimeSeriesInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -36,7 +68,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="timeSeriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
-        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorTimeSeriesInfo(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Uri endpoint, DateTimeOffset? startOn, DateTimeOffset? endOn, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval, FrontDoorTimeSeriesType? timeSeriesType, string country, IList<FrontDoorTimeSeriesDataPoint> timeSeriesData, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Endpoint = endpoint;
             StartOn = startOn;
@@ -45,6 +78,12 @@ namespace Azure.ResourceManager.FrontDoor.Models
             TimeSeriesType = timeSeriesType;
             Country = country;
             TimeSeriesData = timeSeriesData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FrontDoorTimeSeriesInfo"/> for deserialization. </summary>
+        internal FrontDoorTimeSeriesInfo()
+        {
         }
 
         /// <summary> The endpoint associated with the Timeseries data point. </summary>

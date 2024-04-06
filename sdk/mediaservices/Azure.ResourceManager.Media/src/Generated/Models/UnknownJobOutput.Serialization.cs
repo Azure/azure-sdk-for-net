@@ -6,45 +6,125 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class UnknownJobOutput : IUtf8JsonSerializable
+    internal partial class UnknownJobOutput : IUtf8JsonSerializable, IJsonModel<MediaJobOutput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MediaJobOutput>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MediaJobOutput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("@odata.type"u8);
             writer.WriteStringValue(OdataType);
+            if (options.Format != "W" && Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue<MediaJobError>(Error, options);
+            }
             if (Optional.IsDefined(PresetOverride))
             {
                 writer.WritePropertyName("presetOverride"u8);
-                writer.WriteObjectValue(PresetOverride);
+                writer.WriteObjectValue<MediaTransformPreset>(PresetOverride, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Progress))
+            {
+                writer.WritePropertyName("progress"u8);
+                writer.WriteNumberValue(Progress.Value);
             }
             if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            {
+                if (StartOn != null)
+                {
+                    writer.WritePropertyName("startTime"u8);
+                    writer.WriteStringValue(StartOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("startTime");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            {
+                if (EndOn != null)
+                {
+                    writer.WritePropertyName("endTime"u8);
+                    writer.WriteStringValue(EndOn.Value, "O");
+                }
+                else
+                {
+                    writer.WriteNull("endTime");
+                }
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element)
+        MediaJobOutput IJsonModel<MediaJobOutput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMediaJobOutput(document.RootElement, options);
+        }
+
+        internal static UnknownJobOutput DeserializeUnknownJobOutput(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string odataType = "Unknown";
-            Optional<MediaJobError> error = default;
-            Optional<MediaTransformPreset> presetOverride = default;
-            Optional<MediaJobState> state = default;
-            Optional<int> progress = default;
-            Optional<string> label = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
+            MediaJobError error = default;
+            MediaTransformPreset presetOverride = default;
+            MediaJobState? state = default;
+            int? progress = default;
+            string label = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("@odata.type"u8))
@@ -58,7 +138,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    error = MediaJobError.DeserializeMediaJobError(property.Value);
+                    error = MediaJobError.DeserializeMediaJobError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("presetOverride"u8))
@@ -67,7 +147,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value);
+                    presetOverride = MediaTransformPreset.DeserializeMediaTransformPreset(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("state"u8))
@@ -113,8 +193,53 @@ namespace Azure.ResourceManager.Media.Models
                     endTime = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownJobOutput(odataType, error.Value, presetOverride.Value, Optional.ToNullable(state), Optional.ToNullable(progress), label.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownJobOutput(
+                odataType,
+                error,
+                presetOverride,
+                state,
+                progress,
+                label,
+                startTime,
+                endTime,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MediaJobOutput>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MediaJobOutput IPersistableModel<MediaJobOutput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MediaJobOutput>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMediaJobOutput(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MediaJobOutput)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MediaJobOutput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

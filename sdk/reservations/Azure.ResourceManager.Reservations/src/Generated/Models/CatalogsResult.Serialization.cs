@@ -5,23 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    internal partial class CatalogsResult
+    internal partial class CatalogsResult : IUtf8JsonSerializable, IJsonModel<CatalogsResult>
     {
-        internal static CatalogsResult DeserializeCatalogsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CatalogsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CatalogsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CatalogsResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<ReservationCatalog>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsDefined(TotalItems))
+            {
+                writer.WritePropertyName("totalItems"u8);
+                writer.WriteNumberValue(TotalItems.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CatalogsResult IJsonModel<CatalogsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CatalogsResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCatalogsResult(document.RootElement, options);
+        }
+
+        internal static CatalogsResult DeserializeCatalogsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ReservationCatalog>> value = default;
-            Optional<string> nextLink = default;
-            Optional<long> totalItems = default;
+            IReadOnlyList<ReservationCatalog> value = default;
+            string nextLink = default;
+            long? totalItems = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +100,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     List<ReservationCatalog> array = new List<ReservationCatalog>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReservationCatalog.DeserializeReservationCatalog(item));
+                        array.Add(ReservationCatalog.DeserializeReservationCatalog(item, options));
                     }
                     value = array;
                     continue;
@@ -52,8 +119,44 @@ namespace Azure.ResourceManager.Reservations.Models
                     totalItems = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CatalogsResult(Optional.ToList(value), nextLink.Value, Optional.ToNullable(totalItems));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CatalogsResult(value ?? new ChangeTrackingList<ReservationCatalog>(), nextLink, totalItems, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CatalogsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CatalogsResult IPersistableModel<CatalogsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CatalogsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCatalogsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CatalogsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CatalogsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

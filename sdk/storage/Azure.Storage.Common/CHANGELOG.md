@@ -1,14 +1,22 @@
 # Release History
 
-## 12.17.0-beta.2 (Unreleased)
+## 12.19.0-beta.2 (Unreleased)
+- This release contains bug fixes to improve quality.
 
-### Features Added
+## 12.19.0-beta.1 (2023-12-05)
+- Fixed bug where parsing the "sdd" value of a SAS would increment the value by 6 if the value was 10 or over.
 
-### Breaking Changes
+## 12.18.1 (2023-11-13)
+- Distributed tracing with `ActivitySource` is stable and no longer requires the [Experimental feature-flag](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md).
 
-### Bugs Fixed
+## 12.18.0 (2023-11-06)
+- Includes all features from 12.18.0-beta.1.
 
-### Other Changes
+## 12.18.0-beta.1 (2023-10-16)
+- This release contains bug fixes to improve quality.
+
+## 12.17.0 (2023-09-12)
+- Includes all features from 12.17.0-beta.1.
 
 ## 12.17.0-beta.1 (2023-08-08)
 - This release contains bug fixes to improve quality.

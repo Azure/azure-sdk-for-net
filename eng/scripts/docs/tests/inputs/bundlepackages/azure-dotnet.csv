@@ -1,2 +1,2 @@
-azurekeyvaultkeys,[tfm=netstandard2.0]Azure.Security.KeyVault.Keys,4.4.0
+azuresecuritykeyvaultcertificates,[tfm=netstandard2.0]Azure.Security.KeyVault.Certificates,4.2.0
 azurekeyvaultsecrets,[tfm=netstandard2.0]Azure.Security.KeyVault.Secrets,4.4.0

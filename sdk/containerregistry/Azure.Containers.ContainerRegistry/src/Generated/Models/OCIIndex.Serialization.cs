@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Containers.ContainerRegistry
 {
@@ -19,9 +18,9 @@ namespace Azure.Containers.ContainerRegistry
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManifestListAttributes>> manifests = default;
-            Optional<OciAnnotations> annotations = default;
-            Optional<int> schemaVersion = default;
+            IReadOnlyList<ManifestListAttributes> manifests = default;
+            OciAnnotations annotations = default;
+            int? schemaVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("manifests"u8))
@@ -58,7 +57,15 @@ namespace Azure.Containers.ContainerRegistry
                     continue;
                 }
             }
-            return new OCIIndex(Optional.ToNullable(schemaVersion), Optional.ToList(manifests), annotations.Value);
+            return new OCIIndex(schemaVersion, manifests ?? new ChangeTrackingList<ManifestListAttributes>(), annotations);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OCIIndex FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOCIIndex(document.RootElement);
         }
     }
 }

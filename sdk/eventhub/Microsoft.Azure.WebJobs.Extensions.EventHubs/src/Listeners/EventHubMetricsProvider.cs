@@ -109,7 +109,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 // In that case, LastEnqueuedSequenceNumber will be >= 0
 
                 if ((partitionProperties.LastEnqueuedSequenceNumber != -1 && partitionProperties.LastEnqueuedSequenceNumber != (checkpoint?.SequenceNumber ?? -1))
-                    || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
+                    || (checkpoint == null && partitionProperties.LastEnqueuedSequenceNumber >= 0)
+                    || (checkpoint != null && checkpoint.Offset == null && partitionProperties.LastEnqueuedSequenceNumber >= 0))
                 {
                     long partitionUnprocessedEventCount = GetUnprocessedEventCount(partitionProperties, checkpoint);
                     totalUnprocessedEventCount += partitionUnprocessedEventCount;
@@ -155,6 +156,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.EventHubs.Listeners
                 && partitionInfo.LastEnqueuedSequenceNumber == partitionInfo.BeginningSequenceNumber)
             {
                 return 1;
+            }
+
+            // Legacy checkpoint support
+            if (checkpoint != null && checkpoint.Offset == null && partitionInfo.LastEnqueuedSequenceNumber >= 0)
+            {
+                return partitionInfo.LastEnqueuedSequenceNumber + 1;
             }
 
             var startingSequenceNumber = checkpoint?.SequenceNumber switch

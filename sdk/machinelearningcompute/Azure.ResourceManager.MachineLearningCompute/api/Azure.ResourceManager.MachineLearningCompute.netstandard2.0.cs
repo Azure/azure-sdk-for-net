@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetAll(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetAllAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>> GetAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetIfExists(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>> GetIfExistsAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class OperationalizationClusterData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class OperationalizationClusterData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>
     {
-        public OperationalizationClusterData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public OperationalizationClusterData(Azure.Core.AzureLocation location) { }
         public string AppInsightsResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.ClusterType? ClusterType { get { throw null; } set { } }
         public string ContainerRegistryResourceId { get { throw null; } set { } }
@@ -40,6 +42,11 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper> ProvisioningErrors { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus? ProvisioningState { get { throw null; } }
         public string StorageAccountResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OperationalizationClusterResource : Azure.ResourceManager.ArmResource
     {
@@ -68,9 +75,36 @@ namespace Azure.ResourceManager.MachineLearningCompute
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>> UpdateSystemServicesAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.MachineLearningCompute.Mocking
+{
+    public partial class MockableMachineLearningComputeArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeArmClient() { }
+        public virtual Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource GetOperationalizationClusterResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableMachineLearningComputeResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationCluster(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource>> GetOperationalizationClusterAsync(string clusterName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterCollection GetOperationalizationClusters() { throw null; }
+    }
+    public partial class MockableMachineLearningComputeSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClusters(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.OperationalizationClusterResource> GetOperationalizationClustersAsync(string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MockableMachineLearningComputeTenantResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableMachineLearningComputeTenantResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputes(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation> GetAvailableOperationsMachineLearningComputesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
-    public partial class AcsClusterProperties
+    public partial class AcsClusterProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>
     {
         public AcsClusterProperties(Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType orchestratorType) { }
         public int? AgentCount { get { throw null; } set { } }
@@ -80,6 +114,11 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties OrchestratorServicePrincipal { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType OrchestratorType { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MachineLearningCompute.Models.SystemService> SystemServices { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AcsClusterProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AgentVmSizeType : System.IEquatable<Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType>
@@ -144,11 +183,16 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType left, Azure.ResourceManager.MachineLearningCompute.Models.AgentVmSizeType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AppInsightsCredentials
+    public partial class AppInsightsCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>
     {
         internal AppInsightsCredentials() { }
         public string AppId { get { throw null; } }
         public string InstrumentationKey { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmMachineLearningComputeModelFactory
     {
@@ -168,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static Azure.ResourceManager.MachineLearningCompute.Models.SystemService SystemService(Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType systemServiceType = default(Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType), string publicIPAddress = null, string version = null) { throw null; }
         public static Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse UpdateSystemServicesResponse(Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus? updateStatus = default(Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus?), System.DateTimeOffset? updateStartedOn = default(System.DateTimeOffset?), System.DateTimeOffset? updateCompletedOn = default(System.DateTimeOffset?)) { throw null; }
     }
-    public partial class AutoScaleConfiguration
+    public partial class AutoScaleConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>
     {
         public AutoScaleConfiguration() { }
         public int? MaxReplicas { get { throw null; } set { } }
@@ -176,11 +220,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public int? RefreshPeriodInSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.Status? Status { get { throw null; } set { } }
         public float? TargetUtilization { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.AutoScaleConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CheckSystemServicesUpdatesAvailableResponse
+    public partial class CheckSystemServicesUpdatesAvailableResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>
     {
         internal CheckSystemServicesUpdatesAvailableResponse() { }
         public Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable? UpdatesAvailable { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.CheckSystemServicesUpdatesAvailableResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ClusterType : System.IEquatable<Azure.ResourceManager.MachineLearningCompute.Models.ClusterType>
@@ -200,40 +254,65 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningCompute.Models.ClusterType left, Azure.ResourceManager.MachineLearningCompute.Models.ClusterType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ContainerRegistryCredentials
+    public partial class ContainerRegistryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>
     {
         internal ContainerRegistryCredentials() { }
         public string LoginServer { get { throw null; } }
         public string Password { get { throw null; } }
         public string Password2 { get { throw null; } }
         public string Username { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerRegistryCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ContainerServiceCredentials
+    public partial class ContainerServiceCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>
     {
         internal ContainerServiceCredentials() { }
         public string AcsKubeConfig { get { throw null; } }
         public string ImagePullSecretName { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties ServicePrincipalConfiguration { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ContainerServiceCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ErrorDetail
+    public partial class ErrorDetail : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>
     {
         internal ErrorDetail() { }
         public string Code { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ErrorResponse
+    public partial class ErrorResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>
     {
         internal ErrorResponse() { }
         public string Code { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MachineLearningCompute.Models.ErrorDetail> Details { get { throw null; } }
         public string Message { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ErrorResponseWrapper
+    public partial class ErrorResponseWrapper : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>
     {
         internal ErrorResponseWrapper() { }
         public Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponse Error { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ErrorResponseWrapper>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GlobalServiceConfiguration
+    public partial class GlobalServiceConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>
     {
         public GlobalServiceConfiguration() { }
         public System.Collections.Generic.IDictionary<string, System.BinaryData> AdditionalProperties { get { throw null; } }
@@ -241,8 +320,13 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public Azure.ETag? ETag { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration ServiceAuth { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration Ssl { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.GlobalServiceConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationalizationClusterCredentials
+    public partial class OperationalizationClusterCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>
     {
         internal OperationalizationClusterCredentials() { }
         public Azure.ResourceManager.MachineLearningCompute.Models.AppInsightsCredentials AppInsights { get { throw null; } }
@@ -251,11 +335,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration ServiceAuthConfiguration { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration SslConfiguration { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials StorageAccount { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationalizationClusterPatch
+    public partial class OperationalizationClusterPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>
     {
         public OperationalizationClusterPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.OperationalizationClusterPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct OperationStatus : System.IEquatable<Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus>
@@ -298,40 +392,65 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType left, Azure.ResourceManager.MachineLearningCompute.Models.OrchestratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceOperation
+    public partial class ResourceOperation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>
     {
         internal ResourceOperation() { }
         public Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay Display { get { throw null; } }
         public string Name { get { throw null; } }
         public string Origin { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ResourceOperationDisplay
+    public partial class ResourceOperationDisplay : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>
     {
         internal ResourceOperationDisplay() { }
         public string Description { get { throw null; } }
         public string Operation { get { throw null; } }
         public string Provider { get { throw null; } }
         public string Resource { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ResourceOperationDisplay>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServiceAuthConfiguration
+    public partial class ServiceAuthConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>
     {
         public ServiceAuthConfiguration(string primaryAuthKeyHash, string secondaryAuthKeyHash) { }
         public string PrimaryAuthKeyHash { get { throw null; } set { } }
         public string SecondaryAuthKeyHash { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServiceAuthConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServicePrincipalProperties
+    public partial class ServicePrincipalProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>
     {
         public ServicePrincipalProperties(string clientId, string secret) { }
         public string ClientId { get { throw null; } set { } }
         public string Secret { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.ServicePrincipalProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SslConfiguration
+    public partial class SslConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>
     {
         public SslConfiguration() { }
         public string Cert { get { throw null; } set { } }
         public string Cname { get { throw null; } set { } }
         public string Key { get { throw null; } set { } }
         public Azure.ResourceManager.MachineLearningCompute.Models.Status? Status { get { throw null; } set { } }
+        Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SslConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct Status : System.IEquatable<Azure.ResourceManager.MachineLearningCompute.Models.Status>
@@ -351,19 +470,29 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningCompute.Models.Status left, Azure.ResourceManager.MachineLearningCompute.Models.Status right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class StorageAccountCredentials
+    public partial class StorageAccountCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>
     {
         internal StorageAccountCredentials() { }
         public string PrimaryKey { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public string SecondaryKey { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.StorageAccountCredentials>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SystemService
+    public partial class SystemService : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>
     {
         public SystemService(Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType systemServiceType) { }
         public string PublicIPAddress { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType SystemServiceType { get { throw null; } set { } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.SystemService System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.SystemService System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.SystemService>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct SystemServiceType : System.IEquatable<Azure.ResourceManager.MachineLearningCompute.Models.SystemServiceType>
@@ -402,11 +531,16 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
         public static bool operator !=(Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable left, Azure.ResourceManager.MachineLearningCompute.Models.UpdatesAvailable right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class UpdateSystemServicesResponse
+    public partial class UpdateSystemServicesResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>
     {
         internal UpdateSystemServicesResponse() { }
         public System.DateTimeOffset? UpdateCompletedOn { get { throw null; } }
         public System.DateTimeOffset? UpdateStartedOn { get { throw null; } }
         public Azure.ResourceManager.MachineLearningCompute.Models.OperationStatus? UpdateStatus { get { throw null; } }
+        Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MachineLearningCompute.Models.UpdateSystemServicesResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

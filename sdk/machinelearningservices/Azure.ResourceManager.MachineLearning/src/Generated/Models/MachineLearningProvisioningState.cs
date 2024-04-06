@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The current deployment state of workspace resource. The provisioningState is to indicate states for resource provisioning. </summary>
+    /// <summary> The provision state of the cluster. Valid values are Unknown, Updating, Provisioning, Succeeded, and Failed. </summary>
     public readonly partial struct MachineLearningProvisioningState : IEquatable<MachineLearningProvisioningState>
     {
         private readonly string _value;

@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    public partial class AutomationRunbookDraft : IUtf8JsonSerializable
+    public partial class AutomationRunbookDraft : IUtf8JsonSerializable, IJsonModel<AutomationRunbookDraft>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationRunbookDraft>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationRunbookDraft>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(IsInEditMode))
             {
@@ -25,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
-                writer.WriteObjectValue(DraftContentLink);
+                writer.WriteObjectValue<AutomationContentLink>(DraftContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -44,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RunbookParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -58,21 +67,52 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AutomationRunbookDraft DeserializeAutomationRunbookDraft(JsonElement element)
+        AutomationRunbookDraft IJsonModel<AutomationRunbookDraft>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationRunbookDraft(document.RootElement, options);
+        }
+
+        internal static AutomationRunbookDraft DeserializeAutomationRunbookDraft(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<bool> inEdit = default;
-            Optional<AutomationContentLink> draftContentLink = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<IDictionary<string, RunbookParameterDefinition>> parameters = default;
-            Optional<IList<string>> outputTypes = default;
+            bool? inEdit = default;
+            AutomationContentLink draftContentLink = default;
+            DateTimeOffset? creationTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            IDictionary<string, RunbookParameterDefinition> parameters = default;
+            IList<string> outputTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("inEdit"u8))
@@ -90,7 +130,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value);
+                    draftContentLink = AutomationContentLink.DeserializeAutomationContentLink(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("creationTime"u8))
@@ -120,7 +160,7 @@ namespace Azure.ResourceManager.Automation.Models
                     Dictionary<string, RunbookParameterDefinition> dictionary = new Dictionary<string, RunbookParameterDefinition>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value));
+                        dictionary.Add(property0.Name, RunbookParameterDefinition.DeserializeRunbookParameterDefinition(property0.Value, options));
                     }
                     parameters = dictionary;
                     continue;
@@ -139,8 +179,51 @@ namespace Azure.ResourceManager.Automation.Models
                     outputTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationRunbookDraft(Optional.ToNullable(inEdit), draftContentLink.Value, Optional.ToNullable(creationTime), Optional.ToNullable(lastModifiedTime), Optional.ToDictionary(parameters), Optional.ToList(outputTypes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationRunbookDraft(
+                inEdit,
+                draftContentLink,
+                creationTime,
+                lastModifiedTime,
+                parameters ?? new ChangeTrackingDictionary<string, RunbookParameterDefinition>(),
+                outputTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationRunbookDraft>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationRunbookDraft IPersistableModel<AutomationRunbookDraft>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationRunbookDraft(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationRunbookDraft>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

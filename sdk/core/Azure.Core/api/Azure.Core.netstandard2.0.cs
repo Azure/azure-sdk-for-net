@@ -137,6 +137,7 @@ namespace Azure
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override int GetHashCode() { throw null; }
         public abstract Azure.Response GetRawResponse();
+        public virtual Azure.Core.RehydrationToken? GetRehydrationToken() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string? ToString() { throw null; }
         public abstract Azure.Response UpdateStatus(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
@@ -318,8 +319,10 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation CentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaEast2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaEast3 { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation ChinaNorth2 { get { throw null; } }
+        public static Azure.Core.AzureLocation ChinaNorth3 { get { throw null; } }
         public string? DisplayName { get { throw null; } }
         public static Azure.Core.AzureLocation EastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation EastUS { get { throw null; } }
@@ -330,6 +333,8 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation GermanyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyNorthEast { get { throw null; } }
         public static Azure.Core.AzureLocation GermanyWestCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation IsraelCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation ItalyNorth { get { throw null; } }
         public static Azure.Core.AzureLocation JapanEast { get { throw null; } }
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
@@ -339,6 +344,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayEast { get { throw null; } }
         public static Azure.Core.AzureLocation NorwayWest { get { throw null; } }
+        public static Azure.Core.AzureLocation PolandCentral { get { throw null; } }
         public static Azure.Core.AzureLocation QatarCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SouthAfricaWest { get { throw null; } }
@@ -346,6 +352,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
+        public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandWest { get { throw null; } }
         public static Azure.Core.AzureLocation UAECentral { get { throw null; } }
@@ -518,6 +525,23 @@ namespace Azure.Core
         public static Azure.Response[] Parse(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response[]> ParseAsync(Azure.Response response, bool expectCrLf, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RehydrationToken : System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IJsonModel<object>, System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>, System.ClientModel.Primitives.IPersistableModel<object>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public string? Id { get { throw null; } }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.Core.RehydrationToken>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        object System.ClientModel.Primitives.IJsonModel<object>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<object>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.Core.RehydrationToken System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.Core.RehydrationToken>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        object System.ClientModel.Primitives.IPersistableModel<object>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<object>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<object>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class Request : System.IDisposable
     {
         protected Request() { }
@@ -539,8 +563,6 @@ namespace Azure.Core
     {
         protected RequestContent() { }
         public static Azure.Core.RequestContent Create(Azure.Core.Serialization.DynamicData content) { throw null; }
-        public static Azure.Core.RequestContent Create(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static Azure.Core.RequestContent Create(Azure.Core.Serialization.IModelSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
         public static Azure.Core.RequestContent Create(System.BinaryData content) { throw null; }
         public static Azure.Core.RequestContent Create(System.Buffers.ReadOnlySequence<byte> bytes) { throw null; }
         public static Azure.Core.RequestContent Create(byte[] bytes) { throw null; }
@@ -653,7 +675,7 @@ namespace Azure.Core
         public static bool operator <=(Azure.Core.ResourceIdentifier left, Azure.Core.ResourceIdentifier right) { throw null; }
         public static Azure.Core.ResourceIdentifier Parse(string input) { throw null; }
         public override string ToString() { throw null; }
-        public static bool TryParse(string input, out Azure.Core.ResourceIdentifier? result) { throw null; }
+        public static bool TryParse(string? input, out Azure.Core.ResourceIdentifier? result) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ResourceType : System.IEquatable<Azure.Core.ResourceType>
@@ -1077,12 +1099,6 @@ namespace Azure.Core.Pipeline
 }
 namespace Azure.Core.Serialization
 {
-    [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
-    public sealed partial class AbstractHierarchyDeserializerAttribute : System.Attribute
-    {
-        public AbstractHierarchyDeserializerAttribute(System.Type typeToActivate) { }
-        public System.Type TypeToActivate { get { throw null; } }
-    }
     [System.Diagnostics.DebuggerDisplayAttribute("{DebuggerDisplay,nq}")]
     public sealed partial class DynamicData : System.Dynamic.IDynamicMetaObjectProvider, System.IDisposable
     {
@@ -1117,16 +1133,6 @@ namespace Azure.Core.Serialization
     {
         string? ConvertMemberName(System.Reflection.MemberInfo member);
     }
-    public partial interface IModelJsonSerializable<out T> : Azure.Core.Serialization.IModelSerializable<T>
-    {
-        T Deserialize(ref System.Text.Json.Utf8JsonReader reader, Azure.Core.Serialization.ModelSerializerOptions options);
-        void Serialize(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.ModelSerializerOptions options);
-    }
-    public partial interface IModelSerializable<out T>
-    {
-        T Deserialize(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions options);
-        System.BinaryData Serialize(Azure.Core.Serialization.ModelSerializerOptions options);
-    }
     public partial class JsonObjectSerializer : Azure.Core.Serialization.ObjectSerializer, Azure.Core.Serialization.IMemberNameConverter
     {
         public JsonObjectSerializer() { }
@@ -1144,54 +1150,6 @@ namespace Azure.Core.Serialization
     {
         UseExact = 0,
         CamelCase = 1,
-    }
-    public partial class ModelJsonConverter : System.Text.Json.Serialization.JsonConverter<Azure.Core.Serialization.IModelJsonSerializable<object>>
-    {
-        public ModelJsonConverter() { }
-        public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerFormat format) { }
-        public ModelJsonConverter(Azure.Core.Serialization.ModelSerializerOptions options) { }
-        public Azure.Core.Serialization.ModelSerializerOptions ModelSerializerOptions { get { throw null; } }
-        public override bool CanConvert(System.Type typeToConvert) { throw null; }
-        public override Azure.Core.Serialization.IModelJsonSerializable<object> Read(ref System.Text.Json.Utf8JsonReader reader, System.Type typeToConvert, System.Text.Json.JsonSerializerOptions options) { throw null; }
-        public override void Write(System.Text.Json.Utf8JsonWriter writer, Azure.Core.Serialization.IModelJsonSerializable<object> value, System.Text.Json.JsonSerializerOptions options) { }
-    }
-    public static partial class ModelSerializer
-    {
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static object Deserialize(System.BinaryData data, System.Type returnType, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-        public static T Deserialize<T>(System.BinaryData data, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-        public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerFormat format) { throw null; }
-        public static System.BinaryData Serialize(object model, Azure.Core.Serialization.ModelSerializerOptions? options = null) { throw null; }
-        public static System.BinaryData SerializeCore(Azure.Core.Serialization.IModelJsonSerializable<object> model, Azure.Core.Serialization.ModelSerializerOptions options) { throw null; }
-        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerFormat format) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-        public static System.BinaryData Serialize<T>(T model, Azure.Core.Serialization.ModelSerializerOptions? options = null) where T : Azure.Core.Serialization.IModelSerializable<T> { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ModelSerializerFormat : System.IEquatable<Azure.Core.Serialization.ModelSerializerFormat>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public static readonly Azure.Core.Serialization.ModelSerializerFormat Json;
-        public static readonly Azure.Core.Serialization.ModelSerializerFormat Wire;
-        public ModelSerializerFormat(string value) { throw null; }
-        public bool Equals(Azure.Core.Serialization.ModelSerializerFormat other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
-        public static implicit operator Azure.Core.Serialization.ModelSerializerFormat (string value) { throw null; }
-        public static bool operator !=(Azure.Core.Serialization.ModelSerializerFormat left, Azure.Core.Serialization.ModelSerializerFormat right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    public partial class ModelSerializerOptions
-    {
-        public static readonly Azure.Core.Serialization.ModelSerializerOptions DefaultWireOptions;
-        public ModelSerializerOptions() { }
-        public ModelSerializerOptions(Azure.Core.Serialization.ModelSerializerFormat format) { }
-        public Azure.Core.Serialization.ModelSerializerFormat Format { get { throw null; } }
-        public System.Func<System.Type, Azure.Core.Serialization.ObjectSerializer>? GenericTypeSerializerCreator { get { throw null; } set { } }
     }
     public abstract partial class ObjectSerializer
     {

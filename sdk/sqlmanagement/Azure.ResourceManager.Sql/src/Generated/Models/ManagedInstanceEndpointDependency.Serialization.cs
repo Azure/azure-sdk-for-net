@@ -5,22 +5,86 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class ManagedInstanceEndpointDependency
+    public partial class ManagedInstanceEndpointDependency : IUtf8JsonSerializable, IJsonModel<ManagedInstanceEndpointDependency>
     {
-        internal static ManagedInstanceEndpointDependency DeserializeManagedInstanceEndpointDependency(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedInstanceEndpointDependency>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedInstanceEndpointDependency>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceEndpointDependency)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DomainName))
+            {
+                writer.WritePropertyName("domainName"u8);
+                writer.WriteStringValue(DomainName);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EndpointDetails))
+            {
+                writer.WritePropertyName("endpointDetails"u8);
+                writer.WriteStartArray();
+                foreach (var item in EndpointDetails)
+                {
+                    writer.WriteObjectValue<ManagedInstanceEndpointDetail>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedInstanceEndpointDependency IJsonModel<ManagedInstanceEndpointDependency>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedInstanceEndpointDependency)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedInstanceEndpointDependency(document.RootElement, options);
+        }
+
+        internal static ManagedInstanceEndpointDependency DeserializeManagedInstanceEndpointDependency(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<ManagedInstanceEndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            IReadOnlyList<ManagedInstanceEndpointDetail> endpointDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("domainName"u8))
@@ -37,13 +101,110 @@ namespace Azure.ResourceManager.Sql.Models
                     List<ManagedInstanceEndpointDetail> array = new List<ManagedInstanceEndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item));
+                        array.Add(ManagedInstanceEndpointDetail.DeserializeManagedInstanceEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedInstanceEndpointDependency(domainName.Value, Optional.ToList(endpointDetails));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedInstanceEndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<ManagedInstanceEndpointDetail>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
+            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            {
+                builder.Append("  domainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointDetails), out propertyOverride);
+            if (Optional.IsCollectionDefined(EndpointDetails) || hasPropertyOverride)
+            {
+                if (EndpointDetails.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  endpointDetails: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in EndpointDetails)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  endpointDetails: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<ManagedInstanceEndpointDependency>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceEndpointDependency)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedInstanceEndpointDependency IPersistableModel<ManagedInstanceEndpointDependency>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedInstanceEndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedInstanceEndpointDependency(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedInstanceEndpointDependency)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedInstanceEndpointDependency>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

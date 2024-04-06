@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Datadog;
 using Azure.ResourceManager.Datadog.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
@@ -186,7 +183,7 @@ namespace Azure.ResourceManager.Datadog.Samples
             DatadogMonitorResource datadogMonitorResource = client.GetDatadogMonitorResource(datadogMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResource item in datadogMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (MonitoredResourceContent item in datadogMonitorResource.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

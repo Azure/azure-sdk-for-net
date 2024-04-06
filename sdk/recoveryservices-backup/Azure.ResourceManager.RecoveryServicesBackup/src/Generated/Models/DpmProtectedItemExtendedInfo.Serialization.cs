@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    public partial class DpmProtectedItemExtendedInfo : IUtf8JsonSerializable
+    public partial class DpmProtectedItemExtendedInfo : IUtf8JsonSerializable, IJsonModel<DpmProtectedItemExtendedInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DpmProtectedItemExtendedInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DpmProtectedItemExtendedInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(ProtectableObjectLoadPath))
             {
@@ -93,29 +102,60 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("totalDiskStorageSizeInBytes"u8);
                 writer.WriteStringValue(TotalDiskStorageSizeInBytes);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element)
+        DpmProtectedItemExtendedInfo IJsonModel<DpmProtectedItemExtendedInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
+        }
+
+        internal static DpmProtectedItemExtendedInfo DeserializeDpmProtectedItemExtendedInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> protectableObjectLoadPath = default;
-            Optional<bool> @protected = default;
-            Optional<bool> isPresentOnCloud = default;
-            Optional<string> lastBackupStatus = default;
-            Optional<DateTimeOffset> lastRefreshedAt = default;
-            Optional<DateTimeOffset> oldestRecoveryPoint = default;
-            Optional<int> recoveryPointCount = default;
-            Optional<DateTimeOffset> onPremiseOldestRecoveryPoint = default;
-            Optional<DateTimeOffset> onPremiseLatestRecoveryPoint = default;
-            Optional<int> onPremiseRecoveryPointCount = default;
-            Optional<bool> isCollocated = default;
-            Optional<string> protectionGroupName = default;
-            Optional<string> diskStorageUsedInBytes = default;
-            Optional<string> totalDiskStorageSizeInBytes = default;
+            IDictionary<string, string> protectableObjectLoadPath = default;
+            bool? @protected = default;
+            bool? isPresentOnCloud = default;
+            string lastBackupStatus = default;
+            DateTimeOffset? lastRefreshedAt = default;
+            DateTimeOffset? oldestRecoveryPoint = default;
+            int? recoveryPointCount = default;
+            DateTimeOffset? onPremiseOldestRecoveryPoint = default;
+            DateTimeOffset? onPremiseLatestRecoveryPoint = default;
+            int? onPremiseRecoveryPointCount = default;
+            bool? isCollocated = default;
+            string protectionGroupName = default;
+            string diskStorageUsedInBytes = default;
+            string totalDiskStorageSizeInBytes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("protectableObjectLoadPath"u8))
@@ -233,8 +273,59 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     totalDiskStorageSizeInBytes = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DpmProtectedItemExtendedInfo(Optional.ToDictionary(protectableObjectLoadPath), Optional.ToNullable(@protected), Optional.ToNullable(isPresentOnCloud), lastBackupStatus.Value, Optional.ToNullable(lastRefreshedAt), Optional.ToNullable(oldestRecoveryPoint), Optional.ToNullable(recoveryPointCount), Optional.ToNullable(onPremiseOldestRecoveryPoint), Optional.ToNullable(onPremiseLatestRecoveryPoint), Optional.ToNullable(onPremiseRecoveryPointCount), Optional.ToNullable(isCollocated), protectionGroupName.Value, diskStorageUsedInBytes.Value, totalDiskStorageSizeInBytes.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DpmProtectedItemExtendedInfo(
+                protectableObjectLoadPath ?? new ChangeTrackingDictionary<string, string>(),
+                @protected,
+                isPresentOnCloud,
+                lastBackupStatus,
+                lastRefreshedAt,
+                oldestRecoveryPoint,
+                recoveryPointCount,
+                onPremiseOldestRecoveryPoint,
+                onPremiseLatestRecoveryPoint,
+                onPremiseRecoveryPointCount,
+                isCollocated,
+                protectionGroupName,
+                diskStorageUsedInBytes,
+                totalDiskStorageSizeInBytes,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DpmProtectedItemExtendedInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DpmProtectedItemExtendedInfo IPersistableModel<DpmProtectedItemExtendedInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DpmProtectedItemExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDpmProtectedItemExtendedInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DpmProtectedItemExtendedInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DpmProtectedItemExtendedInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -50,51 +50,11 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
         /// <inheritdoc />
         public IReadOnlyCollection<XElement> GetAllElements()
         {
-            // Shunt the work onto a ThreadPool thread so that it's independent of any
-            // existing sync context or other potentially deadlock-causing items.
-
-            var elements = Task.Run(() => GetAllElementsAsync()).GetAwaiter().GetResult();
-            return new ReadOnlyCollection<XElement>(elements);
-        }
-
-        /// <inheritdoc />
-        public void StoreElement(XElement element, string friendlyName)
-        {
-            if (element == null)
-            {
-                throw new ArgumentNullException(nameof(element));
-            }
-
-            // Shunt the work onto a ThreadPool thread so that it's independent of any
-            // existing sync context or other potentially deadlock-causing items.
-
-            Task.Run(() => StoreElementAsync(element)).GetAwaiter().GetResult();
-        }
-
-        private static XDocument CreateDocumentFromBlobData(BlobData blobData)
-        {
-            if (blobData == null || blobData.BlobContents.Length == 0)
-            {
-                return new XDocument(new XElement(RepositoryElementName));
-            }
-
-            using var memoryStream = new MemoryStream(blobData.BlobContents);
-
-            var xmlReaderSettings = new XmlReaderSettings()
-            {
-                DtdProcessing = DtdProcessing.Prohibit,
-                IgnoreProcessingInstructions = true,
-            };
-
-            using (var xmlReader = XmlReader.Create(memoryStream, xmlReaderSettings))
-            {
-                return XDocument.Load(xmlReader);
-            }
-        }
-
-        private async Task<IList<XElement>> GetAllElementsAsync()
-        {
-            var data = await GetLatestDataAsync().ConfigureAwait(false);
+            // Fixes for #40174
+            // Original `Task.Run(() => GetAllElementsAsync()).GetAwaiter().GetResult();` blocks the thread in ThreadPool until task is completed,
+            // then runs first part of the task on another ThreadPool thread and schedules continuation to run in ThreadPool thread again.
+            // If too many calls of GetAllElements() happens before any continuation is executed, all threads in ThreadPool will become blocked
+            var data = GetLatestData();
 
             // The document will look like this:
             //
@@ -107,68 +67,17 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
             // We want to return the first-level child elements to our caller.
 
             var doc = CreateDocumentFromBlobData(data);
-            return doc.Root.Elements().ToList();
+            return new ReadOnlyCollection<XElement>(doc.Root.Elements().ToList());
         }
 
-        private async Task<BlobData> GetLatestDataAsync()
+        /// <inheritdoc />
+        public void StoreElement(XElement element, string friendlyName)
         {
-            // Set the appropriate AccessCondition based on what we believe the latest
-            // file contents to be, then make the request.
-
-            var latestCachedData = Volatile.Read(ref _cachedBlobData); // local ref so field isn't mutated under our feet
-            var requestCondition = (latestCachedData != null)
-                ? new BlobRequestConditions() { IfNoneMatch = latestCachedData.ETag }
-                : null;
-
-            try
+            if (element == null)
             {
-                using (var memoryStream = new MemoryStream())
-                {
-                    var response = await _blobClient.DownloadToAsync(
-                        destination: memoryStream,
-                        conditions: requestCondition).ConfigureAwait(false);
-
-                    if (response.Status == 304)
-                    {
-                        // 304 Not Modified
-                        // Thrown when we already have the latest cached data.
-                        // This isn't an error; we'll return our cached copy of the data.
-                        return latestCachedData;
-                    }
-
-                    // At this point, our original cache either didn't exist or was outdated.
-                    // We'll update it now and return the updated value
-                    latestCachedData = new BlobData()
-                    {
-                        BlobContents = memoryStream.ToArray(),
-                        ETag = response.Headers.ETag
-                    };
-                }
-                Volatile.Write(ref _cachedBlobData, latestCachedData);
-            }
-            catch (RequestFailedException ex) when (ex.Status == 404)
-            {
-                // 404 Not Found
-                // Thrown when no file exists in storage.
-                // This isn't an error; we'll delete our cached copy of data.
-
-                latestCachedData = null;
-                Volatile.Write(ref _cachedBlobData, latestCachedData);
+                throw new ArgumentNullException(nameof(element));
             }
 
-            return latestCachedData;
-        }
-
-        private int GetRandomizedBackoffPeriod()
-        {
-            // returns a TimeSpan in the range [0.8, 1.0) * ConflictBackoffPeriod
-            // not used for crypto purposes
-            var multiplier = 0.8 + (_random.NextDouble() * 0.2);
-            return (int) (multiplier * ConflictBackoffPeriod.Ticks);
-        }
-
-        private async Task StoreElementAsync(XElement element)
-        {
             // holds the last error in case we need to rethrow it
             ExceptionDispatchInfo lastError = null;
 
@@ -178,14 +87,14 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                 {
                     // If multiple conflicts occurred, wait a small period of time before retrying
                     // the operation so that other writers can make forward progress.
-                    await Task.Delay(GetRandomizedBackoffPeriod()).ConfigureAwait(false);
+                    Thread.Sleep(GetRandomizedBackoffPeriod());
                 }
 
                 if (i > 0)
                 {
                     // If at least one conflict occurred, make sure we have an up-to-date
                     // view of the blob contents.
-                    await GetLatestDataAsync().ConfigureAwait(false);
+                    GetLatestData();
                 }
 
                 // Merge the new element into the document. If no document exists,
@@ -217,10 +126,7 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
                 try
                 {
                     // Send the request up to the server.
-                    var response = await _blobClient.UploadAsync(
-                        serializedDoc,
-                        httpHeaders: _blobHttpHeaders,
-                        conditions: requestConditions).ConfigureAwait(false);
+                    var response = _blobClient.Upload(serializedDoc, httpHeaders: _blobHttpHeaders, conditions: requestConditions);
 
                     // If we got this far, success!
                     // We can update the cached view of the remote contents.
@@ -253,6 +159,82 @@ namespace Azure.Extensions.AspNetCore.DataProtection.Blobs
 
             // if we got this far, something went awry
             lastError.Throw();
+        }
+
+        private static XDocument CreateDocumentFromBlobData(BlobData blobData)
+        {
+            if (blobData == null || blobData.BlobContents.Length == 0)
+            {
+                return new XDocument(new XElement(RepositoryElementName));
+            }
+
+            using var memoryStream = new MemoryStream(blobData.BlobContents);
+
+            var xmlReaderSettings = new XmlReaderSettings()
+            {
+                DtdProcessing = DtdProcessing.Prohibit,
+                IgnoreProcessingInstructions = true,
+            };
+
+            using (var xmlReader = XmlReader.Create(memoryStream, xmlReaderSettings))
+            {
+                return XDocument.Load(xmlReader);
+            }
+        }
+
+        private BlobData GetLatestData()
+        {
+            // Set the appropriate AccessCondition based on what we believe the latest
+            // file contents to be, then make the request.
+
+            var latestCachedData = Volatile.Read(ref _cachedBlobData); // local ref so field isn't mutated under our feet
+            var requestCondition = (latestCachedData != null)
+                ? new BlobRequestConditions() { IfNoneMatch = latestCachedData.ETag }
+                : null;
+
+            try
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    var response = _blobClient.DownloadTo(destination: memoryStream, conditions: requestCondition);
+
+                    if (response.Status == 304)
+                    {
+                        // 304 Not Modified
+                        // Thrown when we already have the latest cached data.
+                        // This isn't an error; we'll return our cached copy of the data.
+                        return latestCachedData;
+                    }
+
+                    // At this point, our original cache either didn't exist or was outdated.
+                    // We'll update it now and return the updated value
+                    latestCachedData = new BlobData
+                    {
+                        BlobContents = memoryStream.ToArray(),
+                        ETag = response.Headers.ETag
+                    };
+                }
+                Volatile.Write(ref _cachedBlobData, latestCachedData);
+            }
+            catch (RequestFailedException ex) when (ex.Status == 404)
+            {
+                // 404 Not Found
+                // Thrown when no file exists in storage.
+                // This isn't an error; we'll delete our cached copy of data.
+
+                latestCachedData = null;
+                Volatile.Write(ref _cachedBlobData, latestCachedData);
+            }
+
+            return latestCachedData;
+        }
+
+        private int GetRandomizedBackoffPeriod()
+        {
+            // returns a TimeSpan in the range [0.8, 1.0) * ConflictBackoffPeriod
+            // not used for crypto purposes
+            var multiplier = 0.8 + (_random.NextDouble() * 0.2);
+            return (int) (multiplier * ConflictBackoffPeriod.TotalMilliseconds);
         }
 
         private sealed class BlobData

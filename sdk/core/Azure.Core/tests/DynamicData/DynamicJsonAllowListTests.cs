@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Runtime.Serialization;
-using System.Text.Json;
 using Azure.Core.Serialization;
 using NUnit.Framework;
 
@@ -64,6 +63,46 @@ namespace Azure.Core.Tests
 
             // New property
             Assert.DoesNotThrow(() => json.Bar = new object[] { 2, false, "b" });
+        }
+
+        [Test]
+        public void CanAssignObjectArrayOfAllowedTypes()
+        {
+            dynamic json = BinaryData.FromString("""{"foo":1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = new object[] { 1, null, "a" });
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = new object[] { 2, false, "b" });
+        }
+
+        [Test]
+        public void CanAssignArrayOfDynamic()
+        {
+            dynamic jsonWithArray = BinaryData.FromString("""
+                {
+                    "MyArray": ["a", "b", "c"]
+                }
+                """).ToDynamicFromJson(JsonPropertyNames.CamelCase);
+
+            dynamic json = BinaryData.FromString("""{"foo": 1}""").ToDynamicFromJson(JsonPropertyNames.CamelCase);
+
+            // Existing property
+            Assert.DoesNotThrow(() => json.Foo = jsonWithArray.MyArray);
+
+            // New property
+            Assert.DoesNotThrow(() => json.Bar = jsonWithArray.MyArray);
+
+            // Create list to add an item to
+            List<string> list = new((string[])json.Foo);
+            list.Add("d");
+
+            json.Foo = list;
+            Assert.IsTrue("a" == json.Foo[0]);
+            Assert.IsTrue("b" == json.Foo[1]);
+            Assert.IsTrue("c" == json.Foo[2]);
+            Assert.IsTrue("d" == json.Foo[3]);
         }
 
         [Test]

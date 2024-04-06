@@ -10,7 +10,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
     /// <summary> The SmartGroupCollectionGetAllOptions. </summary>
     public partial class SmartGroupCollectionGetAllOptions
     {
-        /// <summary> Initializes a new instance of SmartGroupCollectionGetAllOptions. </summary>
+        /// <summary> Initializes a new instance of <see cref="SmartGroupCollectionGetAllOptions"/>. </summary>
         public SmartGroupCollectionGetAllOptions()
         {
         }

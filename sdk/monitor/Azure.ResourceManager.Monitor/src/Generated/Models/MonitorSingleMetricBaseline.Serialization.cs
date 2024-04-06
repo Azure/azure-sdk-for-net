@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,92 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class MonitorSingleMetricBaseline
+    public partial class MonitorSingleMetricBaseline : IUtf8JsonSerializable, IJsonModel<MonitorSingleMetricBaseline>
     {
-        internal static MonitorSingleMetricBaseline DeserializeMonitorSingleMetricBaseline(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MonitorSingleMetricBaseline>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MonitorSingleMetricBaseline>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorSingleMetricBaseline)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            writer.WritePropertyName("timespan"u8);
+            writer.WriteStringValue(Timespan);
+            writer.WritePropertyName("interval"u8);
+            writer.WriteStringValue(Interval, "P");
+            if (Optional.IsDefined(Namespace))
+            {
+                writer.WritePropertyName("namespace"u8);
+                writer.WriteStringValue(Namespace);
+            }
+            writer.WritePropertyName("baselines"u8);
+            writer.WriteStartArray();
+            foreach (var item in Baselines)
+            {
+                writer.WriteObjectValue<MonitorTimeSeriesBaseline>(item, options);
+            }
+            writer.WriteEndArray();
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MonitorSingleMetricBaseline IJsonModel<MonitorSingleMetricBaseline>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MonitorSingleMetricBaseline)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMonitorSingleMetricBaseline(document.RootElement, options);
+        }
+
+        internal static MonitorSingleMetricBaseline DeserializeMonitorSingleMetricBaseline(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -24,11 +107,13 @@ namespace Azure.ResourceManager.Monitor.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string timespan = default;
             TimeSpan interval = default;
-            Optional<string> @namespace = default;
+            string @namespace = default;
             IReadOnlyList<MonitorTimeSeriesBaseline> baselines = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -84,7 +169,7 @@ namespace Azure.ResourceManager.Monitor.Models
                             List<MonitorTimeSeriesBaseline> array = new List<MonitorTimeSeriesBaseline>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item));
+                                array.Add(MonitorTimeSeriesBaseline.DeserializeMonitorTimeSeriesBaseline(item, options));
                             }
                             baselines = array;
                             continue;
@@ -92,8 +177,53 @@ namespace Azure.ResourceManager.Monitor.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MonitorSingleMetricBaseline(id, name, type, systemData.Value, timespan, interval, @namespace.Value, baselines);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MonitorSingleMetricBaseline(
+                id,
+                name,
+                type,
+                systemData,
+                timespan,
+                interval,
+                @namespace,
+                baselines,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MonitorSingleMetricBaseline>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MonitorSingleMetricBaseline)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MonitorSingleMetricBaseline IPersistableModel<MonitorSingleMetricBaseline>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MonitorSingleMetricBaseline>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMonitorSingleMetricBaseline(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MonitorSingleMetricBaseline)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MonitorSingleMetricBaseline>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

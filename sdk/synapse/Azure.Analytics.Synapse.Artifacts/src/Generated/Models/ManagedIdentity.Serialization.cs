@@ -32,9 +32,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> principalId = default;
-            Optional<Guid> tenantId = default;
-            Optional<ResourceIdentityType> type = default;
+            string principalId = default;
+            Guid? tenantId = default;
+            ResourceIdentityType? type = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("principalId"u8))
@@ -61,15 +61,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new ManagedIdentity(principalId.Value, Optional.ToNullable(tenantId), Optional.ToNullable(type));
+            return new ManagedIdentity(principalId, tenantId, type);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ManagedIdentity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeManagedIdentity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ManagedIdentity>(this);
+            return content;
         }
 
         internal partial class ManagedIdentityConverter : JsonConverter<ManagedIdentity>
         {
             public override void Write(Utf8JsonWriter writer, ManagedIdentity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ManagedIdentity>(model);
             }
+
             public override ManagedIdentity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

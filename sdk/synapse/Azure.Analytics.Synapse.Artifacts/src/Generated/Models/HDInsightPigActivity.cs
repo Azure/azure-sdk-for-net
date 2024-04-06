@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> HDInsight Pig activity type. </summary>
     public partial class HDInsightPigActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public HDInsightPigActivity(string name) : base(name)
@@ -26,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "HDInsightPig";
         }
 
-        /// <summary> Initializes a new instance of HDInsightPigActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

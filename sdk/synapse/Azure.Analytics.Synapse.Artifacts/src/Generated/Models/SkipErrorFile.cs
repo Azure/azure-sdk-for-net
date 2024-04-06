@@ -10,12 +10,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Skip error file. </summary>
     public partial class SkipErrorFile
     {
-        /// <summary> Initializes a new instance of SkipErrorFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkipErrorFile"/>. </summary>
         public SkipErrorFile()
         {
         }
 
-        /// <summary> Initializes a new instance of SkipErrorFile. </summary>
+        /// <summary> Initializes a new instance of <see cref="SkipErrorFile"/>. </summary>
         /// <param name="fileMissing"> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataInconsistency"> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         internal SkipErrorFile(object fileMissing, object dataInconsistency)

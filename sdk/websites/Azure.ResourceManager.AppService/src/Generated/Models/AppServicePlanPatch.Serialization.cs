@@ -6,21 +6,52 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AppServicePlanPatch : IUtf8JsonSerializable
+    public partial class AppServicePlanPatch : IUtf8JsonSerializable, IJsonModel<AppServicePlanPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppServicePlanPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AppServicePlanPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -29,10 +60,30 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("workerTierName"u8);
                 writer.WriteStringValue(WorkerTierName);
             }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToSerialString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(Subscription))
+            {
+                writer.WritePropertyName("subscription"u8);
+                writer.WriteStringValue(Subscription);
+            }
             if (Optional.IsDefined(HostingEnvironmentProfile))
             {
                 writer.WritePropertyName("hostingEnvironmentProfile"u8);
-                writer.WriteObjectValue(HostingEnvironmentProfile);
+                writer.WriteObjectValue<HostingEnvironmentProfile>(HostingEnvironmentProfile, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaximumNumberOfWorkers))
+            {
+                writer.WritePropertyName("maximumNumberOfWorkers"u8);
+                writer.WriteNumberValue(MaximumNumberOfWorkers.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GeoRegion))
+            {
+                writer.WritePropertyName("geoRegion"u8);
+                writer.WriteStringValue(GeoRegion);
             }
             if (Optional.IsDefined(IsPerSiteScaling))
             {
@@ -49,6 +100,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("maximumElasticWorkerCount"u8);
                 writer.WriteNumberValue(MaximumElasticWorkerCount.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(NumberOfSites))
+            {
+                writer.WritePropertyName("numberOfSites"u8);
+                writer.WriteNumberValue(NumberOfSites.Value);
+            }
             if (Optional.IsDefined(IsSpot))
             {
                 writer.WritePropertyName("isSpot"u8);
@@ -63,6 +119,11 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 writer.WritePropertyName("freeOfferExpirationTime"u8);
                 writer.WriteStringValue(FreeOfferExpirationOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGroup))
+            {
+                writer.WritePropertyName("resourceGroup"u8);
+                writer.WriteStringValue(ResourceGroup);
             }
             if (Optional.IsDefined(IsReserved))
             {
@@ -89,10 +150,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("targetWorkerSizeId"u8);
                 writer.WriteNumberValue(TargetWorkerSizeId.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+            }
             if (Optional.IsDefined(KubeEnvironmentProfile))
             {
                 writer.WritePropertyName("kubeEnvironmentProfile"u8);
-                writer.WriteObjectValue(KubeEnvironmentProfile);
+                writer.WriteObjectValue<KubeEnvironmentProfile>(KubeEnvironmentProfile, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -100,42 +166,73 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteBooleanValue(IsZoneRedundant.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AppServicePlanPatch DeserializeAppServicePlanPatch(JsonElement element)
+        AppServicePlanPatch IJsonModel<AppServicePlanPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAppServicePlanPatch(document.RootElement, options);
+        }
+
+        internal static AppServicePlanPatch DeserializeAppServicePlanPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> kind = default;
+            string kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> workerTierName = default;
-            Optional<AppServicePlanStatus> status = default;
-            Optional<string> subscription = default;
-            Optional<HostingEnvironmentProfile> hostingEnvironmentProfile = default;
-            Optional<int> maximumNumberOfWorkers = default;
-            Optional<string> geoRegion = default;
-            Optional<bool> perSiteScaling = default;
-            Optional<bool> elasticScaleEnabled = default;
-            Optional<int> maximumElasticWorkerCount = default;
-            Optional<int> numberOfSites = default;
-            Optional<bool> isSpot = default;
-            Optional<DateTimeOffset> spotExpirationTime = default;
-            Optional<DateTimeOffset> freeOfferExpirationTime = default;
-            Optional<string> resourceGroup = default;
-            Optional<bool> reserved = default;
-            Optional<bool> isXenon = default;
-            Optional<bool> hyperV = default;
-            Optional<int> targetWorkerCount = default;
-            Optional<int> targetWorkerSizeId = default;
-            Optional<ProvisioningState> provisioningState = default;
-            Optional<KubeEnvironmentProfile> kubeEnvironmentProfile = default;
-            Optional<bool> zoneRedundant = default;
+            SystemData systemData = default;
+            string workerTierName = default;
+            AppServicePlanStatus? status = default;
+            string subscription = default;
+            HostingEnvironmentProfile hostingEnvironmentProfile = default;
+            int? maximumNumberOfWorkers = default;
+            string geoRegion = default;
+            bool? perSiteScaling = default;
+            bool? elasticScaleEnabled = default;
+            int? maximumElasticWorkerCount = default;
+            int? numberOfSites = default;
+            bool? isSpot = default;
+            DateTimeOffset? spotExpirationTime = default;
+            DateTimeOffset? freeOfferExpirationTime = default;
+            string resourceGroup = default;
+            bool? reserved = default;
+            bool? isXenon = default;
+            bool? hyperV = default;
+            int? targetWorkerCount = default;
+            int? targetWorkerSizeId = default;
+            ProvisioningState? provisioningState = default;
+            KubeEnvironmentProfile kubeEnvironmentProfile = default;
+            bool? zoneRedundant = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -201,7 +298,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value);
+                            hostingEnvironmentProfile = HostingEnvironmentProfile.DeserializeHostingEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("maximumNumberOfWorkers"u8))
@@ -346,7 +443,7 @@ namespace Azure.ResourceManager.AppService.Models
                             {
                                 continue;
                             }
-                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value);
+                            kubeEnvironmentProfile = KubeEnvironmentProfile.DeserializeKubeEnvironmentProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("zoneRedundant"u8))
@@ -361,8 +458,513 @@ namespace Azure.ResourceManager.AppService.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AppServicePlanPatch(id, name, type, systemData.Value, workerTierName.Value, Optional.ToNullable(status), subscription.Value, hostingEnvironmentProfile.Value, Optional.ToNullable(maximumNumberOfWorkers), geoRegion.Value, Optional.ToNullable(perSiteScaling), Optional.ToNullable(elasticScaleEnabled), Optional.ToNullable(maximumElasticWorkerCount), Optional.ToNullable(numberOfSites), Optional.ToNullable(isSpot), Optional.ToNullable(spotExpirationTime), Optional.ToNullable(freeOfferExpirationTime), resourceGroup.Value, Optional.ToNullable(reserved), Optional.ToNullable(isXenon), Optional.ToNullable(hyperV), Optional.ToNullable(targetWorkerCount), Optional.ToNullable(targetWorkerSizeId), Optional.ToNullable(provisioningState), kubeEnvironmentProfile.Value, Optional.ToNullable(zoneRedundant), kind.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AppServicePlanPatch(
+                id,
+                name,
+                type,
+                systemData,
+                workerTierName,
+                status,
+                subscription,
+                hostingEnvironmentProfile,
+                maximumNumberOfWorkers,
+                geoRegion,
+                perSiteScaling,
+                elasticScaleEnabled,
+                maximumElasticWorkerCount,
+                numberOfSites,
+                isSpot,
+                spotExpirationTime,
+                freeOfferExpirationTime,
+                resourceGroup,
+                reserved,
+                isXenon,
+                hyperV,
+                targetWorkerCount,
+                targetWorkerSizeId,
+                provisioningState,
+                kubeEnvironmentProfile,
+                zoneRedundant,
+                kind,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerTierName), out propertyOverride);
+            if (Optional.IsDefined(WorkerTierName) || hasPropertyOverride)
+            {
+                builder.Append("    workerTierName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WorkerTierName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkerTierName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkerTierName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("    status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subscription), out propertyOverride);
+            if (Optional.IsDefined(Subscription) || hasPropertyOverride)
+            {
+                builder.Append("    subscription: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Subscription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Subscription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Subscription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HostingEnvironmentProfile), out propertyOverride);
+            if (Optional.IsDefined(HostingEnvironmentProfile) || hasPropertyOverride)
+            {
+                builder.Append("    hostingEnvironmentProfile: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, HostingEnvironmentProfile, options, 4, false, "    hostingEnvironmentProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumNumberOfWorkers), out propertyOverride);
+            if (Optional.IsDefined(MaximumNumberOfWorkers) || hasPropertyOverride)
+            {
+                builder.Append("    maximumNumberOfWorkers: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaximumNumberOfWorkers.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoRegion), out propertyOverride);
+            if (Optional.IsDefined(GeoRegion) || hasPropertyOverride)
+            {
+                builder.Append("    geoRegion: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (GeoRegion.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeoRegion}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeoRegion}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsPerSiteScaling), out propertyOverride);
+            if (Optional.IsDefined(IsPerSiteScaling) || hasPropertyOverride)
+            {
+                builder.Append("    perSiteScaling: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsPerSiteScaling.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsElasticScaleEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsElasticScaleEnabled) || hasPropertyOverride)
+            {
+                builder.Append("    elasticScaleEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsElasticScaleEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumElasticWorkerCount), out propertyOverride);
+            if (Optional.IsDefined(MaximumElasticWorkerCount) || hasPropertyOverride)
+            {
+                builder.Append("    maximumElasticWorkerCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaximumElasticWorkerCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NumberOfSites), out propertyOverride);
+            if (Optional.IsDefined(NumberOfSites) || hasPropertyOverride)
+            {
+                builder.Append("    numberOfSites: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{NumberOfSites.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSpot), out propertyOverride);
+            if (Optional.IsDefined(IsSpot) || hasPropertyOverride)
+            {
+                builder.Append("    isSpot: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsSpot.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SpotExpirationOn), out propertyOverride);
+            if (Optional.IsDefined(SpotExpirationOn) || hasPropertyOverride)
+            {
+                builder.Append("    spotExpirationTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(SpotExpirationOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FreeOfferExpirationOn), out propertyOverride);
+            if (Optional.IsDefined(FreeOfferExpirationOn) || hasPropertyOverride)
+            {
+                builder.Append("    freeOfferExpirationTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(FreeOfferExpirationOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceGroup), out propertyOverride);
+            if (Optional.IsDefined(ResourceGroup) || hasPropertyOverride)
+            {
+                builder.Append("    resourceGroup: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceGroup.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceGroup}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceGroup}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsReserved), out propertyOverride);
+            if (Optional.IsDefined(IsReserved) || hasPropertyOverride)
+            {
+                builder.Append("    reserved: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsReserved.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsXenon), out propertyOverride);
+            if (Optional.IsDefined(IsXenon) || hasPropertyOverride)
+            {
+                builder.Append("    isXenon: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsXenon.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsHyperV), out propertyOverride);
+            if (Optional.IsDefined(IsHyperV) || hasPropertyOverride)
+            {
+                builder.Append("    hyperV: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsHyperV.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetWorkerCount), out propertyOverride);
+            if (Optional.IsDefined(TargetWorkerCount) || hasPropertyOverride)
+            {
+                builder.Append("    targetWorkerCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TargetWorkerCount.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetWorkerSizeId), out propertyOverride);
+            if (Optional.IsDefined(TargetWorkerSizeId) || hasPropertyOverride)
+            {
+                builder.Append("    targetWorkerSizeId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TargetWorkerSizeId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeEnvironmentProfile), out propertyOverride);
+            if (Optional.IsDefined(KubeEnvironmentProfile) || hasPropertyOverride)
+            {
+                builder.Append("    kubeEnvironmentProfile: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, KubeEnvironmentProfile, options, 4, false, "    kubeEnvironmentProfile: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            {
+                builder.Append("    zoneRedundant: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<AppServicePlanPatch>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AppServicePlanPatch IPersistableModel<AppServicePlanPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AppServicePlanPatch>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAppServicePlanPatch(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AppServicePlanPatch)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AppServicePlanPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

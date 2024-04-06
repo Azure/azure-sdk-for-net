@@ -5,28 +5,37 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotChannelGetWithKeysResult : IUtf8JsonSerializable
+    public partial class BotChannelGetWithKeysResult : IUtf8JsonSerializable, IJsonModel<BotChannelGetWithKeysResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotChannelGetWithKeysResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BotChannelGetWithKeysResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<BotChannelProperties>(Resource, options);
             }
             if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Setting);
+                writer.WriteObjectValue<BotChannelSettings>(Setting, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -46,12 +55,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BotChannelProperties>(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BotServiceSku>(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -70,6 +79,16 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Zones))
+            {
+                writer.WritePropertyName("zones"u8);
+                writer.WriteStartArray();
+                foreach (var item in Zones)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -83,31 +102,82 @@ namespace Azure.ResourceManager.BotService.Models
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BotChannelGetWithKeysResult DeserializeBotChannelGetWithKeysResult(JsonElement element)
+        BotChannelGetWithKeysResult IJsonModel<BotChannelGetWithKeysResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotChannelGetWithKeysResult(document.RootElement, options);
+        }
+
+        internal static BotChannelGetWithKeysResult DeserializeBotChannelGetWithKeysResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BotChannelProperties> resource = default;
-            Optional<BotChannelSettings> setting = default;
-            Optional<string> provisioningState = default;
-            Optional<string> entityTag = default;
-            Optional<string> changedTime = default;
-            Optional<BotChannelProperties> properties = default;
-            Optional<BotServiceSku> sku = default;
-            Optional<BotServiceKind?> kind = default;
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IDictionary<string, string>> tags = default;
+            BotChannelProperties resource = default;
+            BotChannelSettings setting = default;
+            string provisioningState = default;
+            string entityTag = default;
+            string changedTime = default;
+            BotChannelProperties properties = default;
+            BotServiceSku sku = default;
+            BotServiceKind? kind = default;
+            ETag? etag = default;
+            IReadOnlyList<string> zones = default;
+            IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resource"u8))
@@ -116,7 +186,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    resource = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("setting"u8))
@@ -125,7 +195,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value);
+                    setting = BotChannelSettings.DeserializeBotChannelSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -149,7 +219,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value);
+                    properties = BotChannelProperties.DeserializeBotChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sku"u8))
@@ -158,7 +228,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value);
+                    sku = BotServiceSku.DeserializeBotServiceSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -237,8 +307,61 @@ namespace Azure.ResourceManager.BotService.Models
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BotChannelGetWithKeysResult(id, name, type, systemData.Value, Optional.ToDictionary(tags), location, resource.Value, setting.Value, provisioningState.Value, entityTag.Value, changedTime.Value, properties.Value, sku.Value, Optional.ToNullable(kind), Optional.ToNullable(etag), Optional.ToList(zones));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BotChannelGetWithKeysResult(
+                id,
+                name,
+                type,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                resource,
+                setting,
+                provisioningState,
+                entityTag,
+                changedTime,
+                properties,
+                sku,
+                kind,
+                etag,
+                zones ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotChannelGetWithKeysResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BotChannelGetWithKeysResult IPersistableModel<BotChannelGetWithKeysResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBotChannelGetWithKeysResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotChannelGetWithKeysResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,21 +6,54 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class NetworkAdminRule : IUtf8JsonSerializable
+    public partial class NetworkAdminRule : IUtf8JsonSerializable, IJsonModel<NetworkAdminRule>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag.Value.ToString());
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(Description))
@@ -39,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AddressPrefixItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -49,7 +82,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Destinations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AddressPrefixItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,33 +121,74 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("direction"u8);
                 writer.WriteStringValue(Direction.Value.ToString());
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
+            {
+                writer.WritePropertyName("resourceGuid"u8);
+                writer.WriteStringValue(ResourceGuid.Value);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NetworkAdminRule DeserializeNetworkAdminRule(JsonElement element)
+        NetworkAdminRule IJsonModel<NetworkAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkAdminRule(document.RootElement, options);
+        }
+
+        internal static NetworkAdminRule DeserializeNetworkAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             AdminRuleKind kind = default;
-            Optional<ETag> etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<SecurityConfigurationRuleProtocol> protocol = default;
-            Optional<IList<AddressPrefixItem>> sources = default;
-            Optional<IList<AddressPrefixItem>> destinations = default;
-            Optional<IList<string>> sourcePortRanges = default;
-            Optional<IList<string>> destinationPortRanges = default;
-            Optional<SecurityConfigurationRuleAccess> access = default;
-            Optional<int> priority = default;
-            Optional<SecurityConfigurationRuleDirection> direction = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<Guid> resourceGuid = default;
+            SystemData systemData = default;
+            string description = default;
+            SecurityConfigurationRuleProtocol? protocol = default;
+            IList<AddressPrefixItem> sources = default;
+            IList<AddressPrefixItem> destinations = default;
+            IList<string> sourcePortRanges = default;
+            IList<string> destinationPortRanges = default;
+            SecurityConfigurationRuleAccess? access = default;
+            int? priority = default;
+            SecurityConfigurationRuleDirection? direction = default;
+            NetworkProvisioningState? provisioningState = default;
+            Guid? resourceGuid = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -187,7 +261,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             sources = array;
                             continue;
@@ -201,7 +275,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AddressPrefixItem> array = new List<AddressPrefixItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item));
+                                array.Add(AddressPrefixItem.DeserializeAddressPrefixItem(item, options));
                             }
                             destinations = array;
                             continue;
@@ -282,8 +356,62 @@ namespace Azure.ResourceManager.Network.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkAdminRule(id, name, type, systemData.Value, kind, Optional.ToNullable(etag), description.Value, Optional.ToNullable(protocol), Optional.ToList(sources), Optional.ToList(destinations), Optional.ToList(sourcePortRanges), Optional.ToList(destinationPortRanges), Optional.ToNullable(access), Optional.ToNullable(priority), Optional.ToNullable(direction), Optional.ToNullable(provisioningState), Optional.ToNullable(resourceGuid));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkAdminRule(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                etag,
+                serializedAdditionalRawData,
+                description,
+                protocol,
+                sources ?? new ChangeTrackingList<AddressPrefixItem>(),
+                destinations ?? new ChangeTrackingList<AddressPrefixItem>(),
+                sourcePortRanges ?? new ChangeTrackingList<string>(),
+                destinationPortRanges ?? new ChangeTrackingList<string>(),
+                access,
+                priority,
+                direction,
+                provisioningState,
+                resourceGuid);
         }
+
+        BinaryData IPersistableModel<NetworkAdminRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkAdminRule IPersistableModel<NetworkAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkAdminRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

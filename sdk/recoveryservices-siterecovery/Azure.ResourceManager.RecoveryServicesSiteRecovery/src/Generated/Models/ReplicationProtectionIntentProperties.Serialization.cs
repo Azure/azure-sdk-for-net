@@ -5,25 +5,103 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class ReplicationProtectionIntentProperties
+    public partial class ReplicationProtectionIntentProperties : IUtf8JsonSerializable, IJsonModel<ReplicationProtectionIntentProperties>
     {
-        internal static ReplicationProtectionIntentProperties DeserializeReplicationProtectionIntentProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationProtectionIntentProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReplicationProtectionIntentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionIntentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationProtectionIntentProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobId))
+            {
+                writer.WritePropertyName("jobId"u8);
+                writer.WriteStringValue(JobId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(JobState))
+            {
+                writer.WritePropertyName("jobState"u8);
+                writer.WriteStringValue(JobState);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsActive))
+            {
+                writer.WritePropertyName("isActive"u8);
+                writer.WriteBooleanValue(IsActive.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTimeUTC"u8);
+                writer.WriteStringValue(CreatedOn);
+            }
+            if (Optional.IsDefined(ProviderSpecificDetails))
+            {
+                writer.WritePropertyName("providerSpecificDetails"u8);
+                writer.WriteObjectValue<ReplicationProtectionIntentProviderSpecificSettings>(ProviderSpecificDetails, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReplicationProtectionIntentProperties IJsonModel<ReplicationProtectionIntentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionIntentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationProtectionIntentProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationProtectionIntentProperties(document.RootElement, options);
+        }
+
+        internal static ReplicationProtectionIntentProperties DeserializeReplicationProtectionIntentProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> friendlyName = default;
-            Optional<ResourceIdentifier> jobId = default;
-            Optional<string> jobState = default;
-            Optional<bool> isActive = default;
-            Optional<string> creationTimeUTC = default;
-            Optional<ReplicationProtectionIntentProviderSpecificSettings> providerSpecificDetails = default;
+            string friendlyName = default;
+            ResourceIdentifier jobId = default;
+            string jobState = default;
+            bool? isActive = default;
+            string creationTimeUTC = default;
+            ReplicationProtectionIntentProviderSpecificSettings providerSpecificDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("friendlyName"u8))
@@ -65,11 +143,54 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value);
+                    providerSpecificDetails = ReplicationProtectionIntentProviderSpecificSettings.DeserializeReplicationProtectionIntentProviderSpecificSettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReplicationProtectionIntentProperties(friendlyName.Value, jobId.Value, jobState.Value, Optional.ToNullable(isActive), creationTimeUTC.Value, providerSpecificDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReplicationProtectionIntentProperties(
+                friendlyName,
+                jobId,
+                jobState,
+                isActive,
+                creationTimeUTC,
+                providerSpecificDetails,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReplicationProtectionIntentProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionIntentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProtectionIntentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReplicationProtectionIntentProperties IPersistableModel<ReplicationProtectionIntentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationProtectionIntentProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReplicationProtectionIntentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationProtectionIntentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReplicationProtectionIntentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

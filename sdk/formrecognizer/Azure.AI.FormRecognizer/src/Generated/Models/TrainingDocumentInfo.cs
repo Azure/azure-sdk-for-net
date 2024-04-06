@@ -9,14 +9,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.FormRecognizer.Models;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Training
 {
     /// <summary> Report for a custom model training document. </summary>
     public partial class TrainingDocumentInfo
     {
-        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingDocumentInfo"/>. </summary>
         /// <param name="name"> Training document name. </param>
         /// <param name="pageCount"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>
@@ -33,7 +32,7 @@ namespace Azure.AI.FormRecognizer.Training
             Status = status;
         }
 
-        /// <summary> Initializes a new instance of TrainingDocumentInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="TrainingDocumentInfo"/>. </summary>
         /// <param name="name"> Training document name. </param>
         /// <param name="pageCount"> Total number of pages trained. </param>
         /// <param name="errors"> List of errors. </param>

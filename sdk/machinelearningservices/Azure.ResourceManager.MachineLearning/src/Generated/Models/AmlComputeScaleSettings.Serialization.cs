@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class AmlComputeScaleSettings : IUtf8JsonSerializable
+    public partial class AmlComputeScaleSettings : IUtf8JsonSerializable, IJsonModel<AmlComputeScaleSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmlComputeScaleSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmlComputeScaleSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
@@ -35,18 +45,49 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodeIdleTimeBeforeScaleDown");
                 }
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static AmlComputeScaleSettings DeserializeAmlComputeScaleSettings(JsonElement element)
+        AmlComputeScaleSettings IJsonModel<AmlComputeScaleSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmlComputeScaleSettings(document.RootElement, options);
+        }
+
+        internal static AmlComputeScaleSettings DeserializeAmlComputeScaleSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             int maxNodeCount = default;
-            Optional<int> minNodeCount = default;
-            Optional<TimeSpan?> nodeIdleTimeBeforeScaleDown = default;
+            int? minNodeCount = default;
+            TimeSpan? nodeIdleTimeBeforeScaleDown = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("maxNodeCount"u8))
@@ -73,8 +114,44 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     nodeIdleTimeBeforeScaleDown = property.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AmlComputeScaleSettings(maxNodeCount, Optional.ToNullable(minNodeCount), Optional.ToNullable(nodeIdleTimeBeforeScaleDown));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AmlComputeScaleSettings(maxNodeCount, minNodeCount, nodeIdleTimeBeforeScaleDown, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AmlComputeScaleSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AmlComputeScaleSettings IPersistableModel<AmlComputeScaleSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmlComputeScaleSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmlComputeScaleSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

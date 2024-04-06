@@ -19,7 +19,7 @@ namespace Azure.Communication.MediaComposition
             writer.WritePropertyName("streamKey"u8);
             writer.WriteStringValue(StreamKey);
             writer.WritePropertyName("resolution"u8);
-            writer.WriteObjectValue(Resolution);
+            writer.WriteObjectValue<LayoutResolution>(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
             if (Optional.IsDefined(Mode))
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             string streamKey = default;
             LayoutResolution resolution = default;
             string streamUrl = default;
-            Optional<RtmpMode> mode = default;
+            RtmpMode? mode = default;
             MediaOutputType kind = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -75,7 +75,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RtmpOutput(kind, streamKey, resolution, streamUrl, Optional.ToNullable(mode));
+            return new RtmpOutput(kind, streamKey, resolution, streamUrl, mode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RtmpOutput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRtmpOutput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RtmpOutput>(this);
+            return content;
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> jobVersion = default;
+            string jobVersion = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("jobVersion"u8))
@@ -41,15 +41,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new StartDataFlowDebugSessionResponse(jobVersion.Value);
+            return new StartDataFlowDebugSessionResponse(jobVersion);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StartDataFlowDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStartDataFlowDebugSessionResponse(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartDataFlowDebugSessionResponse>(this);
+            return content;
         }
 
         internal partial class StartDataFlowDebugSessionResponseConverter : JsonConverter<StartDataFlowDebugSessionResponse>
         {
             public override void Write(Utf8JsonWriter writer, StartDataFlowDebugSessionResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<StartDataFlowDebugSessionResponse>(model);
             }
+
             public override StartDataFlowDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

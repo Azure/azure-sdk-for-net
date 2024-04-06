@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Storage.Models
             if (Optional.IsDefined(StorageAccountAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(StorageAccountAttributes);
+                writer.WriteObjectValue<StorageAccountAttributes>(StorageAccountAttributes);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -43,6 +43,14 @@ namespace Azure.Security.KeyVault.Storage.Models
                 writer.WriteEndObject();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StorageAccountCreateParameters>(this);
+            return content;
         }
     }
 }

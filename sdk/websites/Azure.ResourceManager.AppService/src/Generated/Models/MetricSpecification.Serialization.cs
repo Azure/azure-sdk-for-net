@@ -5,37 +5,191 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class MetricSpecification
+    public partial class MetricSpecification : IUtf8JsonSerializable, IJsonModel<MetricSpecification>
     {
-        internal static MetricSpecification DeserializeMetricSpecification(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricSpecification>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricSpecification>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricSpecification)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(DisplayDescription))
+            {
+                writer.WritePropertyName("displayDescription"u8);
+                writer.WriteStringValue(DisplayDescription);
+            }
+            if (Optional.IsDefined(Unit))
+            {
+                writer.WritePropertyName("unit"u8);
+                writer.WriteStringValue(Unit);
+            }
+            if (Optional.IsDefined(AggregationType))
+            {
+                writer.WritePropertyName("aggregationType"u8);
+                writer.WriteStringValue(AggregationType);
+            }
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported))
+            {
+                writer.WritePropertyName("supportsInstanceLevelAggregation"u8);
+                writer.WriteBooleanValue(IsInstanceLevelAggregationSupported.Value);
+            }
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled))
+            {
+                writer.WritePropertyName("enableRegionalMdmAccount"u8);
+                writer.WriteBooleanValue(IsRegionalMdmAccountEnabled.Value);
+            }
+            if (Optional.IsDefined(SourceMdmAccount))
+            {
+                writer.WritePropertyName("sourceMdmAccount"u8);
+                writer.WriteStringValue(SourceMdmAccount);
+            }
+            if (Optional.IsDefined(SourceMdmNamespace))
+            {
+                writer.WritePropertyName("sourceMdmNamespace"u8);
+                writer.WriteStringValue(SourceMdmNamespace);
+            }
+            if (Optional.IsDefined(MetricFilterPattern))
+            {
+                writer.WritePropertyName("metricFilterPattern"u8);
+                writer.WriteStringValue(MetricFilterPattern);
+            }
+            if (Optional.IsDefined(FillGapWithZero))
+            {
+                writer.WritePropertyName("fillGapWithZero"u8);
+                writer.WriteBooleanValue(FillGapWithZero.Value);
+            }
+            if (Optional.IsDefined(IsInternal))
+            {
+                writer.WritePropertyName("isInternal"u8);
+                writer.WriteBooleanValue(IsInternal.Value);
+            }
+            if (Optional.IsCollectionDefined(Dimensions))
+            {
+                writer.WritePropertyName("dimensions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Dimensions)
+                {
+                    writer.WriteObjectValue<MetricDimension>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Category))
+            {
+                writer.WritePropertyName("category"u8);
+                writer.WriteStringValue(Category);
+            }
+            if (Optional.IsCollectionDefined(Availabilities))
+            {
+                writer.WritePropertyName("availabilities"u8);
+                writer.WriteStartArray();
+                foreach (var item in Availabilities)
+                {
+                    writer.WriteObjectValue<MetricAvailability>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes))
+            {
+                writer.WritePropertyName("supportedTimeGrainTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedTimeGrainTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes))
+            {
+                writer.WritePropertyName("supportedAggregationTypes"u8);
+                writer.WriteStartArray();
+                foreach (var item in SupportedAggregationTypes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MetricSpecification IJsonModel<MetricSpecification>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricSpecification)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricSpecification(document.RootElement, options);
+        }
+
+        internal static MetricSpecification DeserializeMetricSpecification(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> displayName = default;
-            Optional<string> displayDescription = default;
-            Optional<string> unit = default;
-            Optional<string> aggregationType = default;
-            Optional<bool> supportsInstanceLevelAggregation = default;
-            Optional<bool> enableRegionalMdmAccount = default;
-            Optional<string> sourceMdmAccount = default;
-            Optional<string> sourceMdmNamespace = default;
-            Optional<string> metricFilterPattern = default;
-            Optional<bool> fillGapWithZero = default;
-            Optional<bool> isInternal = default;
-            Optional<IReadOnlyList<MetricDimension>> dimensions = default;
-            Optional<string> category = default;
-            Optional<IReadOnlyList<MetricAvailability>> availabilities = default;
-            Optional<IReadOnlyList<string>> supportedTimeGrainTypes = default;
-            Optional<IReadOnlyList<string>> supportedAggregationTypes = default;
+            string name = default;
+            string displayName = default;
+            string displayDescription = default;
+            string unit = default;
+            string aggregationType = default;
+            bool? supportsInstanceLevelAggregation = default;
+            bool? enableRegionalMdmAccount = default;
+            string sourceMdmAccount = default;
+            string sourceMdmNamespace = default;
+            string metricFilterPattern = default;
+            bool? fillGapWithZero = default;
+            bool? isInternal = default;
+            IReadOnlyList<MetricDimension> dimensions = default;
+            string category = default;
+            IReadOnlyList<MetricAvailability> availabilities = default;
+            IReadOnlyList<string> supportedTimeGrainTypes = default;
+            IReadOnlyList<string> supportedAggregationTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -123,7 +277,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricDimension> array = new List<MetricDimension>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricDimension.DeserializeMetricDimension(item));
+                        array.Add(MetricDimension.DeserializeMetricDimension(item, options));
                     }
                     dimensions = array;
                     continue;
@@ -142,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<MetricAvailability> array = new List<MetricAvailability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricAvailability.DeserializeMetricAvailability(item));
+                        array.Add(MetricAvailability.DeserializeMetricAvailability(item, options));
                     }
                     availabilities = array;
                     continue;
@@ -175,8 +329,451 @@ namespace Azure.ResourceManager.AppService.Models
                     supportedAggregationTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricSpecification(name.Value, displayName.Value, displayDescription.Value, unit.Value, aggregationType.Value, Optional.ToNullable(supportsInstanceLevelAggregation), Optional.ToNullable(enableRegionalMdmAccount), sourceMdmAccount.Value, sourceMdmNamespace.Value, metricFilterPattern.Value, Optional.ToNullable(fillGapWithZero), Optional.ToNullable(isInternal), Optional.ToList(dimensions), category.Value, Optional.ToList(availabilities), Optional.ToList(supportedTimeGrainTypes), Optional.ToList(supportedAggregationTypes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MetricSpecification(
+                name,
+                displayName,
+                displayDescription,
+                unit,
+                aggregationType,
+                supportsInstanceLevelAggregation,
+                enableRegionalMdmAccount,
+                sourceMdmAccount,
+                sourceMdmNamespace,
+                metricFilterPattern,
+                fillGapWithZero,
+                isInternal,
+                dimensions ?? new ChangeTrackingList<MetricDimension>(),
+                category,
+                availabilities ?? new ChangeTrackingList<MetricAvailability>(),
+                supportedTimeGrainTypes ?? new ChangeTrackingList<string>(),
+                supportedAggregationTypes ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayName), out propertyOverride);
+            if (Optional.IsDefined(DisplayName) || hasPropertyOverride)
+            {
+                builder.Append("  displayName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DisplayDescription), out propertyOverride);
+            if (Optional.IsDefined(DisplayDescription) || hasPropertyOverride)
+            {
+                builder.Append("  displayDescription: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DisplayDescription.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DisplayDescription}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DisplayDescription}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AggregationType), out propertyOverride);
+            if (Optional.IsDefined(AggregationType) || hasPropertyOverride)
+            {
+                builder.Append("  aggregationType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AggregationType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AggregationType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AggregationType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInstanceLevelAggregationSupported), out propertyOverride);
+            if (Optional.IsDefined(IsInstanceLevelAggregationSupported) || hasPropertyOverride)
+            {
+                builder.Append("  supportsInstanceLevelAggregation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInstanceLevelAggregationSupported.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRegionalMdmAccountEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsRegionalMdmAccountEnabled) || hasPropertyOverride)
+            {
+                builder.Append("  enableRegionalMdmAccount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRegionalMdmAccountEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceMdmAccount), out propertyOverride);
+            if (Optional.IsDefined(SourceMdmAccount) || hasPropertyOverride)
+            {
+                builder.Append("  sourceMdmAccount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceMdmAccount.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceMdmAccount}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceMdmAccount}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceMdmNamespace), out propertyOverride);
+            if (Optional.IsDefined(SourceMdmNamespace) || hasPropertyOverride)
+            {
+                builder.Append("  sourceMdmNamespace: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceMdmNamespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceMdmNamespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceMdmNamespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricFilterPattern), out propertyOverride);
+            if (Optional.IsDefined(MetricFilterPattern) || hasPropertyOverride)
+            {
+                builder.Append("  metricFilterPattern: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MetricFilterPattern.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MetricFilterPattern}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MetricFilterPattern}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FillGapWithZero), out propertyOverride);
+            if (Optional.IsDefined(FillGapWithZero) || hasPropertyOverride)
+            {
+                builder.Append("  fillGapWithZero: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = FillGapWithZero.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInternal), out propertyOverride);
+            if (Optional.IsDefined(IsInternal) || hasPropertyOverride)
+            {
+                builder.Append("  isInternal: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInternal.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dimensions), out propertyOverride);
+            if (Optional.IsCollectionDefined(Dimensions) || hasPropertyOverride)
+            {
+                if (Dimensions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dimensions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Dimensions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dimensions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            {
+                builder.Append("  category: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Availabilities), out propertyOverride);
+            if (Optional.IsCollectionDefined(Availabilities) || hasPropertyOverride)
+            {
+                if (Availabilities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  availabilities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Availabilities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  availabilities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedTimeGrainTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedTimeGrainTypes) || hasPropertyOverride)
+            {
+                if (SupportedTimeGrainTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedTimeGrainTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedTimeGrainTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAggregationTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedAggregationTypes) || hasPropertyOverride)
+            {
+                if (SupportedAggregationTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedAggregationTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedAggregationTypes)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<MetricSpecification>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricSpecification IPersistableModel<MetricSpecification>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricSpecification>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricSpecification(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricSpecification)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricSpecification>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

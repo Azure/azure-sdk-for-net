@@ -5,26 +5,110 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    internal partial class UnknownEffectiveBaseSecurityAdminRule
+    internal partial class UnknownEffectiveBaseSecurityAdminRule : IUtf8JsonSerializable, IJsonModel<EffectiveBaseSecurityAdminRule>
     {
-        internal static UnknownEffectiveBaseSecurityAdminRule DeserializeUnknownEffectiveBaseSecurityAdminRule(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EffectiveBaseSecurityAdminRule>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EffectiveBaseSecurityAdminRule>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ResourceId))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(ResourceId);
+            }
+            if (Optional.IsDefined(ConfigurationDescription))
+            {
+                writer.WritePropertyName("configurationDescription"u8);
+                writer.WriteStringValue(ConfigurationDescription);
+            }
+            if (Optional.IsDefined(RuleCollectionDescription))
+            {
+                writer.WritePropertyName("ruleCollectionDescription"u8);
+                writer.WriteStringValue(RuleCollectionDescription);
+            }
+            if (Optional.IsCollectionDefined(RuleCollectionAppliesToGroups))
+            {
+                writer.WritePropertyName("ruleCollectionAppliesToGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleCollectionAppliesToGroups)
+                {
+                    writer.WriteObjectValue<NetworkManagerSecurityGroupItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(RuleGroups))
+            {
+                writer.WritePropertyName("ruleGroups"u8);
+                writer.WriteStartArray();
+                foreach (var item in RuleGroups)
+                {
+                    writer.WriteObjectValue<NetworkConfigurationGroup>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WritePropertyName("kind"u8);
+            writer.WriteStringValue(Kind.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EffectiveBaseSecurityAdminRule IJsonModel<EffectiveBaseSecurityAdminRule>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
+        }
+
+        internal static UnknownEffectiveBaseSecurityAdminRule DeserializeUnknownEffectiveBaseSecurityAdminRule(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> configurationDescription = default;
-            Optional<string> ruleCollectionDescription = default;
-            Optional<IReadOnlyList<NetworkManagerSecurityGroupItem>> ruleCollectionAppliesToGroups = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> ruleGroups = default;
+            ResourceIdentifier id = default;
+            string configurationDescription = default;
+            string ruleCollectionDescription = default;
+            IReadOnlyList<NetworkManagerSecurityGroupItem> ruleCollectionAppliesToGroups = default;
+            IReadOnlyList<NetworkConfigurationGroup> ruleGroups = default;
             EffectiveAdminRuleKind kind = "Unknown";
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -55,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkManagerSecurityGroupItem> array = new List<NetworkManagerSecurityGroupItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item));
+                        array.Add(NetworkManagerSecurityGroupItem.DeserializeNetworkManagerSecurityGroupItem(item, options));
                     }
                     ruleCollectionAppliesToGroups = array;
                     continue;
@@ -69,7 +153,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     ruleGroups = array;
                     continue;
@@ -79,8 +163,51 @@ namespace Azure.ResourceManager.Network.Models
                     kind = new EffectiveAdminRuleKind(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new UnknownEffectiveBaseSecurityAdminRule(id.Value, configurationDescription.Value, ruleCollectionDescription.Value, Optional.ToList(ruleCollectionAppliesToGroups), Optional.ToList(ruleGroups), kind);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new UnknownEffectiveBaseSecurityAdminRule(
+                id,
+                configurationDescription,
+                ruleCollectionDescription,
+                ruleCollectionAppliesToGroups ?? new ChangeTrackingList<NetworkManagerSecurityGroupItem>(),
+                ruleGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                kind,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EffectiveBaseSecurityAdminRule>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EffectiveBaseSecurityAdminRule IPersistableModel<EffectiveBaseSecurityAdminRule>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EffectiveBaseSecurityAdminRule>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEffectiveBaseSecurityAdminRule(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EffectiveBaseSecurityAdminRule)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EffectiveBaseSecurityAdminRule>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

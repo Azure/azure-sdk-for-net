@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> accountUrl = default;
-            Optional<string> filesystem = default;
+            string accountUrl = default;
+            string filesystem = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("accountUrl"u8))
@@ -52,15 +52,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataLakeStorageAccountDetails(accountUrl.Value, filesystem.Value);
+            return new DataLakeStorageAccountDetails(accountUrl, filesystem);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataLakeStorageAccountDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataLakeStorageAccountDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataLakeStorageAccountDetails>(this);
+            return content;
         }
 
         internal partial class DataLakeStorageAccountDetailsConverter : JsonConverter<DataLakeStorageAccountDetails>
         {
             public override void Write(Utf8JsonWriter writer, DataLakeStorageAccountDetails model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataLakeStorageAccountDetails>(model);
             }
+
             public override DataLakeStorageAccountDetails Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

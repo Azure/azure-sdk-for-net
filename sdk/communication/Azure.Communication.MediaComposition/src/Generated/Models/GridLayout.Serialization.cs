@@ -43,7 +43,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -68,9 +68,9 @@ namespace Azure.Communication.MediaComposition
             int columns = default;
             IList<IList<string>> inputIds = default;
             LayoutType kind = default;
-            Optional<LayoutResolution> resolution = default;
-            Optional<string> placeholderImageUri = default;
-            Optional<ScalingMode> scalingMode = default;
+            LayoutResolution resolution = default;
+            string placeholderImageUri = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rows"u8))
@@ -134,7 +134,30 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new GridLayout(kind, resolution.Value, placeholderImageUri.Value, Optional.ToNullable(scalingMode), rows, columns, inputIds);
+            return new GridLayout(
+                kind,
+                resolution,
+                placeholderImageUri,
+                scalingMode,
+                rows,
+                columns,
+                inputIds);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new GridLayout FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGridLayout(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GridLayout>(this);
+            return content;
         }
     }
 }

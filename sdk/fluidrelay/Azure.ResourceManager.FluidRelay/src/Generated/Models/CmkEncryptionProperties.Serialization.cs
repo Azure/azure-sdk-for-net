@@ -6,37 +6,78 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FluidRelay.Models
 {
-    public partial class CmkEncryptionProperties : IUtf8JsonSerializable
+    public partial class CmkEncryptionProperties : IUtf8JsonSerializable, IJsonModel<CmkEncryptionProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CmkEncryptionProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CmkEncryptionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CmkEncryptionProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyEncryptionKeyIdentity))
             {
                 writer.WritePropertyName("keyEncryptionKeyIdentity"u8);
-                writer.WriteObjectValue(KeyEncryptionKeyIdentity);
+                writer.WriteObjectValue<CmkIdentity>(KeyEncryptionKeyIdentity, options);
             }
             if (Optional.IsDefined(KeyEncryptionKeyUri))
             {
                 writer.WritePropertyName("keyEncryptionKeyUrl"u8);
                 writer.WriteStringValue(KeyEncryptionKeyUri.AbsoluteUri);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element)
+        CmkEncryptionProperties IJsonModel<CmkEncryptionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CmkEncryptionProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCmkEncryptionProperties(document.RootElement, options);
+        }
+
+        internal static CmkEncryptionProperties DeserializeCmkEncryptionProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<CmkIdentity> keyEncryptionKeyIdentity = default;
-            Optional<Uri> keyEncryptionKeyUrl = default;
+            CmkIdentity keyEncryptionKeyIdentity = default;
+            Uri keyEncryptionKeyUrl = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("keyEncryptionKeyIdentity"u8))
@@ -45,7 +86,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     {
                         continue;
                     }
-                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value);
+                    keyEncryptionKeyIdentity = CmkIdentity.DeserializeCmkIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyEncryptionKeyUrl"u8))
@@ -57,8 +98,44 @@ namespace Azure.ResourceManager.FluidRelay.Models
                     keyEncryptionKeyUrl = new Uri(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CmkEncryptionProperties(keyEncryptionKeyIdentity.Value, keyEncryptionKeyUrl.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUrl, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CmkEncryptionProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CmkEncryptionProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CmkEncryptionProperties IPersistableModel<CmkEncryptionProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CmkEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCmkEncryptionProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CmkEncryptionProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CmkEncryptionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class PrivateAccessVirtualNetwork : IUtf8JsonSerializable
+    public partial class PrivateAccessVirtualNetwork : IUtf8JsonSerializable, IJsonModel<PrivateAccessVirtualNetwork>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrivateAccessVirtualNetwork>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrivateAccessVirtualNetwork>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,23 +49,54 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateAccessSubnet>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static PrivateAccessVirtualNetwork DeserializePrivateAccessVirtualNetwork(JsonElement element)
+        PrivateAccessVirtualNetwork IJsonModel<PrivateAccessVirtualNetwork>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrivateAccessVirtualNetwork(document.RootElement, options);
+        }
+
+        internal static PrivateAccessVirtualNetwork DeserializePrivateAccessVirtualNetwork(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<int> key = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<IList<PrivateAccessSubnet>> subnets = default;
+            string name = default;
+            int? key = default;
+            ResourceIdentifier resourceId = default;
+            IList<PrivateAccessSubnet> subnets = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -88,13 +131,138 @@ namespace Azure.ResourceManager.AppService.Models
                     List<PrivateAccessSubnet> array = new List<PrivateAccessSubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item));
+                        array.Add(PrivateAccessSubnet.DeserializePrivateAccessSubnet(item, options));
                     }
                     subnets = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrivateAccessVirtualNetwork(name.Value, Optional.ToNullable(key), resourceId.Value, Optional.ToList(subnets));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrivateAccessVirtualNetwork(name, key, resourceId, subnets ?? new ChangeTrackingList<PrivateAccessSubnet>(), serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
+            if (Optional.IsDefined(Key) || hasPropertyOverride)
+            {
+                builder.Append("  key: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Key.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceId), out propertyOverride);
+            if (Optional.IsDefined(ResourceId) || hasPropertyOverride)
+            {
+                builder.Append("  resourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subnets), out propertyOverride);
+            if (Optional.IsCollectionDefined(Subnets) || hasPropertyOverride)
+            {
+                if (Subnets.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  subnets: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Subnets)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  subnets: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        BinaryData IPersistableModel<PrivateAccessVirtualNetwork>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrivateAccessVirtualNetwork IPersistableModel<PrivateAccessVirtualNetwork>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrivateAccessVirtualNetwork>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrivateAccessVirtualNetwork(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrivateAccessVirtualNetwork)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrivateAccessVirtualNetwork>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

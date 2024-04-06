@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionBudgetFilter : IUtf8JsonSerializable
+    public partial class ConsumptionBudgetFilter : IUtf8JsonSerializable, IJsonModel<ConsumptionBudgetFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionBudgetFilter>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionBudgetFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBudgetFilter)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(And))
             {
@@ -22,32 +32,63 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BudgetFilterProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<BudgetComparisonExpression>(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<BudgetComparisonExpression>(Tags, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element)
+        ConsumptionBudgetFilter IJsonModel<ConsumptionBudgetFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetFilter>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionBudgetFilter)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionBudgetFilter(document.RootElement, options);
+        }
+
+        internal static ConsumptionBudgetFilter DeserializeConsumptionBudgetFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<BudgetFilterProperties>> and = default;
-            Optional<BudgetComparisonExpression> dimensions = default;
-            Optional<BudgetComparisonExpression> tags = default;
+            IList<BudgetFilterProperties> and = default;
+            BudgetComparisonExpression dimensions = default;
+            BudgetComparisonExpression tags = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("and"u8))
@@ -59,7 +100,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<BudgetFilterProperties> array = new List<BudgetFilterProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item));
+                        array.Add(BudgetFilterProperties.DeserializeBudgetFilterProperties(item, options));
                     }
                     and = array;
                     continue;
@@ -70,7 +111,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    dimensions = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -79,11 +120,47 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value);
+                    tags = BudgetComparisonExpression.DeserializeBudgetComparisonExpression(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionBudgetFilter(Optional.ToList(and), dimensions.Value, tags.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionBudgetFilter(and ?? new ChangeTrackingList<BudgetFilterProperties>(), dimensions, tags, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionBudgetFilter>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetFilter)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionBudgetFilter IPersistableModel<ConsumptionBudgetFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetFilter>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionBudgetFilter(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetFilter)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionBudgetFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

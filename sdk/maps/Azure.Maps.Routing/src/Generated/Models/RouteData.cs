@@ -6,21 +6,21 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> The Route. </summary>
     public partial class RouteData
     {
-        /// <summary> Initializes a new instance of RouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         internal RouteData()
         {
             Legs = new ChangeTrackingList<RouteLeg>();
             Sections = new ChangeTrackingList<RouteSection>();
         }
 
-        /// <summary> Initializes a new instance of RouteData. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteData"/>. </summary>
         /// <param name="summary"> Summary object. </param>
         /// <param name="legs"> Legs array. </param>
         /// <param name="sections"> Sections array. </param>

@@ -7,18 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Base definition of a schedule. </summary>
     public partial class MachineLearningScheduleProperties : MachineLearningResourceBase
     {
-        /// <summary> Initializes a new instance of MachineLearningScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="trigger">
         /// [Required] Specifies the trigger details
@@ -35,14 +34,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Trigger = trigger;
         }
 
-        /// <summary> Initializes a new instance of MachineLearningScheduleProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/>. </summary>
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="action">
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </param>
         /// <param name="displayName"> Display name of schedule. </param>
         /// <param name="isEnabled"> Is the schedule enabled?. </param>
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Please note <see cref="MachineLearningTriggerBase"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="MachineLearningRecurrenceTrigger"/>.
         /// </param>
-        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags)
+        internal MachineLearningScheduleProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningScheduleAction action, string displayName, bool? isEnabled, MachineLearningScheduleProvisioningStatus? provisioningState, MachineLearningTriggerBase trigger) : base(description, properties, tags, serializedAdditionalRawData)
         {
             Action = action;
             DisplayName = displayName;
@@ -61,10 +61,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Trigger = trigger;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MachineLearningScheduleProperties"/> for deserialization. </summary>
+        internal MachineLearningScheduleProperties()
+        {
+        }
+
         /// <summary>
         /// [Required] Specifies the action of the schedule
         /// Please note <see cref="MachineLearningScheduleAction"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
+        /// The available derived classes include <see cref="MachineLearningJobScheduleAction"/>, <see cref="CreateMonitorAction"/>, <see cref="ImportDataAction"/> and <see cref="MachineLearningEndpointScheduleAction"/>.
         /// </summary>
         public MachineLearningScheduleAction Action { get; set; }
         /// <summary> Display name of schedule. </summary>

@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class ServiceLoadBalancerBgpPeer : IUtf8JsonSerializable
+    public partial class ServiceLoadBalancerBgpPeer : IUtf8JsonSerializable, IJsonModel<ServiceLoadBalancerBgpPeer>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServiceLoadBalancerBgpPeer>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServiceLoadBalancerBgpPeer>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BfdEnabled))
             {
@@ -56,25 +67,56 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WritePropertyName("peerPort"u8);
                 writer.WriteNumberValue(PeerPort.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ServiceLoadBalancerBgpPeer DeserializeServiceLoadBalancerBgpPeer(JsonElement element)
+        ServiceLoadBalancerBgpPeer IJsonModel<ServiceLoadBalancerBgpPeer>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServiceLoadBalancerBgpPeer(document.RootElement, options);
+        }
+
+        internal static ServiceLoadBalancerBgpPeer DeserializeServiceLoadBalancerBgpPeer(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BfdEnabled> bfdEnabled = default;
-            Optional<BgpMultiHop> bgpMultiHop = default;
-            Optional<string> holdTime = default;
-            Optional<string> keepAliveTime = default;
-            Optional<long> myAsn = default;
+            BfdEnabled? bfdEnabled = default;
+            BgpMultiHop? bgpMultiHop = default;
+            string holdTime = default;
+            string keepAliveTime = default;
+            long? myAsn = default;
             string name = default;
-            Optional<string> password = default;
+            string password = default;
             string peerAddress = default;
             long peerAsn = default;
-            Optional<long> peerPort = default;
+            long? peerPort = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bfdEnabled"u8))
@@ -143,8 +185,55 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     peerPort = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServiceLoadBalancerBgpPeer(Optional.ToNullable(bfdEnabled), Optional.ToNullable(bgpMultiHop), holdTime.Value, keepAliveTime.Value, Optional.ToNullable(myAsn), name, password.Value, peerAddress, peerAsn, Optional.ToNullable(peerPort));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServiceLoadBalancerBgpPeer(
+                bfdEnabled,
+                bgpMultiHop,
+                holdTime,
+                keepAliveTime,
+                myAsn,
+                name,
+                password,
+                peerAddress,
+                peerAsn,
+                peerPort,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServiceLoadBalancerBgpPeer>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServiceLoadBalancerBgpPeer IPersistableModel<ServiceLoadBalancerBgpPeer>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServiceLoadBalancerBgpPeer>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServiceLoadBalancerBgpPeer(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServiceLoadBalancerBgpPeer)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServiceLoadBalancerBgpPeer>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

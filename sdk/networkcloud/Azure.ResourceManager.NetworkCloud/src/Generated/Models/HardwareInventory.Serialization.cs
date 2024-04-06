@@ -5,23 +5,95 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class HardwareInventory
+    public partial class HardwareInventory : IUtf8JsonSerializable, IJsonModel<HardwareInventory>
     {
-        internal static HardwareInventory DeserializeHardwareInventory(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HardwareInventory>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HardwareInventory>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AdditionalHostInformation))
+            {
+                writer.WritePropertyName("additionalHostInformation"u8);
+                writer.WriteStringValue(AdditionalHostInformation);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Interfaces))
+            {
+                writer.WritePropertyName("interfaces"u8);
+                writer.WriteStartArray();
+                foreach (var item in Interfaces)
+                {
+                    writer.WriteObjectValue<HardwareInventoryNetworkInterface>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Nics))
+            {
+                writer.WritePropertyName("nics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Nics)
+                {
+                    writer.WriteObjectValue<NetworkCloudNic>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HardwareInventory IJsonModel<HardwareInventory>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHardwareInventory(document.RootElement, options);
+        }
+
+        internal static HardwareInventory DeserializeHardwareInventory(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> additionalHostInformation = default;
-            Optional<IReadOnlyList<HardwareInventoryNetworkInterface>> interfaces = default;
-            Optional<IReadOnlyList<NetworkCloudNic>> nics = default;
+            string additionalHostInformation = default;
+            IReadOnlyList<HardwareInventoryNetworkInterface> interfaces = default;
+            IReadOnlyList<NetworkCloudNic> nics = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("additionalHostInformation"u8))
@@ -38,7 +110,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<HardwareInventoryNetworkInterface> array = new List<HardwareInventoryNetworkInterface>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item));
+                        array.Add(HardwareInventoryNetworkInterface.DeserializeHardwareInventoryNetworkInterface(item, options));
                     }
                     interfaces = array;
                     continue;
@@ -52,13 +124,49 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudNic> array = new List<NetworkCloudNic>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item));
+                        array.Add(NetworkCloudNic.DeserializeNetworkCloudNic(item, options));
                     }
                     nics = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HardwareInventory(additionalHostInformation.Value, Optional.ToList(interfaces), Optional.ToList(nics));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HardwareInventory(additionalHostInformation, interfaces ?? new ChangeTrackingList<HardwareInventoryNetworkInterface>(), nics ?? new ChangeTrackingList<NetworkCloudNic>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HardwareInventory>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HardwareInventory IPersistableModel<HardwareInventory>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HardwareInventory>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHardwareInventory(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HardwareInventory)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HardwareInventory>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

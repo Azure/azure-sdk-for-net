@@ -6,24 +6,95 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
-    public partial class MetricsResponse
+    public partial class MetricsResponse : IUtf8JsonSerializable, IJsonModel<MetricsResponse>
     {
-        internal static MetricsResponse DeserializeMetricsResponse(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MetricsResponse>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MetricsResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsResponse)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(DateTimeBegin))
+            {
+                writer.WritePropertyName("dateTimeBegin"u8);
+                writer.WriteStringValue(DateTimeBegin.Value, "O");
+            }
+            if (Optional.IsDefined(DateTimeEnd))
+            {
+                writer.WritePropertyName("dateTimeEnd"u8);
+                writer.WriteStringValue(DateTimeEnd.Value, "O");
+            }
+            if (Optional.IsDefined(Granularity))
+            {
+                writer.WritePropertyName("granularity"u8);
+                writer.WriteStringValue(Granularity.Value.ToString());
+            }
+            if (Optional.IsCollectionDefined(Series))
+            {
+                writer.WritePropertyName("series"u8);
+                writer.WriteStartArray();
+                foreach (var item in Series)
+                {
+                    writer.WriteObjectValue<MetricsResponseSeriesItem>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MetricsResponse IJsonModel<MetricsResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MetricsResponse)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMetricsResponse(document.RootElement, options);
+        }
+
+        internal static MetricsResponse DeserializeMetricsResponse(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> dateTimeBegin = default;
-            Optional<DateTimeOffset> dateTimeEnd = default;
-            Optional<MetricsResponseGranularity> granularity = default;
-            Optional<IReadOnlyList<MetricsResponseSeriesItem>> series = default;
+            DateTimeOffset? dateTimeBegin = default;
+            DateTimeOffset? dateTimeEnd = default;
+            MetricsResponseGranularity? granularity = default;
+            IReadOnlyList<MetricsResponseSeriesItem> series = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("dateTimeBegin"u8))
@@ -62,13 +133,49 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<MetricsResponseSeriesItem> array = new List<MetricsResponseSeriesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item));
+                        array.Add(MetricsResponseSeriesItem.DeserializeMetricsResponseSeriesItem(item, options));
                     }
                     series = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MetricsResponse(Optional.ToNullable(dateTimeBegin), Optional.ToNullable(dateTimeEnd), Optional.ToNullable(granularity), Optional.ToList(series));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MetricsResponse(dateTimeBegin, dateTimeEnd, granularity, series ?? new ChangeTrackingList<MetricsResponseSeriesItem>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MetricsResponse>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MetricsResponse IPersistableModel<MetricsResponse>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMetricsResponse(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MetricsResponse)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MetricsResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

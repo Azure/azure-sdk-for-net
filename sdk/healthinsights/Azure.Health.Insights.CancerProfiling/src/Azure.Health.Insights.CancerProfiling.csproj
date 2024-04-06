@@ -4,15 +4,16 @@
     <AssemblyTitle>Azure SDK Code Generation HealthInsights for Azure Data Plane</AssemblyTitle>
     <Version>1.0.0-beta.2</Version>
     <PackageTags>Azure Health Insights</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <GenerateAPIListing>true</GenerateAPIListing>
     <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
-    <IncludeGeneratorSharedCode>true</IncludeGeneratorSharedCode>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

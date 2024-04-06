@@ -12,12 +12,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> Library requirements for a Big Data pool powered by Apache Spark. </summary>
     public partial class LibraryRequirements
     {
-        /// <summary> Initializes a new instance of LibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryRequirements"/>. </summary>
         public LibraryRequirements()
         {
         }
 
-        /// <summary> Initializes a new instance of LibraryRequirements. </summary>
+        /// <summary> Initializes a new instance of <see cref="LibraryRequirements"/>. </summary>
         /// <param name="time"> The last update time of the library requirements file. </param>
         /// <param name="content"> The library requirements. </param>
         /// <param name="filename"> The filename of the library requirements file. </param>

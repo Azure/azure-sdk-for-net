@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
-    public partial class BackupVaultSecuritySettings : IUtf8JsonSerializable
+    public partial class BackupVaultSecuritySettings : IUtf8JsonSerializable, IJsonModel<BackupVaultSecuritySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BackupVaultSecuritySettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BackupVaultSecuritySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(SoftDeleteSettings))
             {
                 writer.WritePropertyName("softDeleteSettings"u8);
-                writer.WriteObjectValue(SoftDeleteSettings);
+                writer.WriteObjectValue<BackupVaultSoftDeleteSettings>(SoftDeleteSettings, options);
             }
             if (Optional.IsDefined(ImmutabilitySettings))
             {
                 writer.WritePropertyName("immutabilitySettings"u8);
-                writer.WriteObjectValue(ImmutabilitySettings);
+                writer.WriteObjectValue<ImmutabilitySettings>(ImmutabilitySettings, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BackupVaultSecuritySettings DeserializeBackupVaultSecuritySettings(JsonElement element)
+        BackupVaultSecuritySettings IJsonModel<BackupVaultSecuritySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBackupVaultSecuritySettings(document.RootElement, options);
+        }
+
+        internal static BackupVaultSecuritySettings DeserializeBackupVaultSecuritySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<BackupVaultSoftDeleteSettings> softDeleteSettings = default;
-            Optional<ImmutabilitySettings> immutabilitySettings = default;
+            BackupVaultSoftDeleteSettings softDeleteSettings = default;
+            ImmutabilitySettings immutabilitySettings = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("softDeleteSettings"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value);
+                    softDeleteSettings = BackupVaultSoftDeleteSettings.DeserializeBackupVaultSoftDeleteSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("immutabilitySettings"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value);
+                    immutabilitySettings = ImmutabilitySettings.DeserializeImmutabilitySettings(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BackupVaultSecuritySettings(softDeleteSettings.Value, immutabilitySettings.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BackupVaultSecuritySettings(softDeleteSettings, immutabilitySettings, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BackupVaultSecuritySettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BackupVaultSecuritySettings IPersistableModel<BackupVaultSecuritySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSecuritySettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBackupVaultSecuritySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BackupVaultSecuritySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BackupVaultSecuritySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

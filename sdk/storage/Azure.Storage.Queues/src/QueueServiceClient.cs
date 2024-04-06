@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.Storage.Common;
 using Azure.Storage.Queues.Models;
 using Azure.Storage.Queues.Specialized;
 using Azure.Storage.Sas;
@@ -240,7 +241,9 @@ namespace Azure.Storage.Queues
         public QueueServiceClient(Uri serviceUri, TokenCredential credential, QueueClientOptions options = default)
             : this(
                   serviceUri,
-                  credential.AsPolicy(options),
+                  credential.AsPolicy(
+                    string.IsNullOrEmpty(options?.Audience?.ToString()) ? QueueAudience.PublicAudience.CreateDefaultScope() : options.Audience.Value.CreateDefaultScope(),
+                    options),
                   options,
                   sharedKeyCredential: null,
                   sasCredential: null,
@@ -637,6 +640,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual Response SetProperties(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -661,6 +665,7 @@ namespace Azure.Storage.Queues
         /// <returns>
         /// <see cref="Response"/>
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public virtual async Task<Response> SetPropertiesAsync(
             QueueServiceProperties properties,
             CancellationToken cancellationToken = default) =>
@@ -987,6 +992,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(
             AccountSasPermissions permissions,
             DateTimeOffset expiresOn,
@@ -1015,6 +1021,7 @@ namespace Azure.Storage.Queues
         /// A <see cref="Exception"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-queues")]
         public Uri GenerateAccountSasUri(AccountSasBuilder builder)
         {
             builder = builder ?? throw Errors.ArgumentNull(nameof(builder));

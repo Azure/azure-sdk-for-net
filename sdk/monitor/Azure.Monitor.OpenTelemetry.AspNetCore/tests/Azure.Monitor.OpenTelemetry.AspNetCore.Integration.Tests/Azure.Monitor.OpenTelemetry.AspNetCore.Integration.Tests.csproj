@@ -13,13 +13,12 @@
     <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.AspNetCore.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)\HttpPipelineMessageHandler.cs" LinkBase="Shared" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
-  <ItemGroup>
-    <!-- Workaround to fix CI build failure in macOS. This package is being used indirectly by Azure analyzers. -->
-    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" VersionOverride="7.0.0" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net7.0'">
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>

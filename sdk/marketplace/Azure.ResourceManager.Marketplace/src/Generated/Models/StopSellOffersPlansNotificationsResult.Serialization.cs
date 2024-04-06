@@ -6,28 +6,124 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
 {
-    public partial class StopSellOffersPlansNotificationsResult
+    public partial class StopSellOffersPlansNotificationsResult : IUtf8JsonSerializable, IJsonModel<StopSellOffersPlansNotificationsResult>
     {
-        internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StopSellOffersPlansNotificationsResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StopSellOffersPlansNotificationsResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(OfferId))
+            {
+                writer.WritePropertyName("offerId"u8);
+                writer.WriteStringValue(OfferId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEntireInStopSell))
+            {
+                writer.WritePropertyName("isEntire"u8);
+                writer.WriteBooleanValue(IsEntireInStopSell.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MessageCode))
+            {
+                writer.WritePropertyName("messageCode"u8);
+                writer.WriteNumberValue(MessageCode.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IconUri))
+            {
+                writer.WritePropertyName("icon"u8);
+                writer.WriteStringValue(IconUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Plans))
+            {
+                writer.WritePropertyName("plans"u8);
+                writer.WriteStartArray();
+                foreach (var item in Plans)
+                {
+                    writer.WriteObjectValue<PlanNotificationDetails>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(HasPublicContext))
+            {
+                writer.WritePropertyName("publicContext"u8);
+                writer.WriteBooleanValue(HasPublicContext.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(SubscriptionsIds))
+            {
+                writer.WritePropertyName("subscriptionsIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in SubscriptionsIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StopSellOffersPlansNotificationsResult IJsonModel<StopSellOffersPlansNotificationsResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStopSellOffersPlansNotificationsResult(document.RootElement, options);
+        }
+
+        internal static StopSellOffersPlansNotificationsResult DeserializeStopSellOffersPlansNotificationsResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> offerId = default;
-            Optional<string> displayName = default;
-            Optional<bool> isEntire = default;
-            Optional<long> messageCode = default;
-            Optional<Uri> icon = default;
-            Optional<IReadOnlyList<PlanNotificationDetails>> plans = default;
-            Optional<bool> publicContext = default;
-            Optional<IReadOnlyList<string>> subscriptionsIds = default;
+            string offerId = default;
+            string displayName = default;
+            bool? isEntire = default;
+            long? messageCode = default;
+            Uri icon = default;
+            IReadOnlyList<PlanNotificationDetails> plans = default;
+            bool? publicContext = default;
+            IReadOnlyList<string> subscriptionsIds = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("offerId"u8))
@@ -76,7 +172,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                     List<PlanNotificationDetails> array = new List<PlanNotificationDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item));
+                        array.Add(PlanNotificationDetails.DeserializePlanNotificationDetails(item, options));
                     }
                     plans = array;
                     continue;
@@ -104,8 +200,53 @@ namespace Azure.ResourceManager.Marketplace.Models
                     subscriptionsIds = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StopSellOffersPlansNotificationsResult(offerId.Value, displayName.Value, Optional.ToNullable(isEntire), Optional.ToNullable(messageCode), icon.Value, Optional.ToList(plans), Optional.ToNullable(publicContext), Optional.ToList(subscriptionsIds));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StopSellOffersPlansNotificationsResult(
+                offerId,
+                displayName,
+                isEntire,
+                messageCode,
+                icon,
+                plans ?? new ChangeTrackingList<PlanNotificationDetails>(),
+                publicContext,
+                subscriptionsIds ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StopSellOffersPlansNotificationsResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StopSellOffersPlansNotificationsResult IPersistableModel<StopSellOffersPlansNotificationsResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StopSellOffersPlansNotificationsResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStopSellOffersPlansNotificationsResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StopSellOffersPlansNotificationsResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StopSellOffersPlansNotificationsResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

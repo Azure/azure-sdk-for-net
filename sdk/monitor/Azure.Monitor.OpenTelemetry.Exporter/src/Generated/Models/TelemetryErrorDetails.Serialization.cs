@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -18,9 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             {
                 return null;
             }
-            Optional<int> index = default;
-            Optional<int> statusCode = default;
-            Optional<string> message = default;
+            int? index = default;
+            int? statusCode = default;
+            string message = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("index"u8))
@@ -47,7 +46,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                     continue;
                 }
             }
-            return new TelemetryErrorDetails(Optional.ToNullable(index), Optional.ToNullable(statusCode), message.Value);
+            return new TelemetryErrorDetails(index, statusCode, message);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TelemetryErrorDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTelemetryErrorDetails(document.RootElement);
         }
     }
 }

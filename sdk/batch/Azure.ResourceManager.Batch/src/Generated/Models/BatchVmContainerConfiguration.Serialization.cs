@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Batch.Models
 {
-    public partial class BatchVmContainerConfiguration : IUtf8JsonSerializable
+    public partial class BatchVmContainerConfiguration : IUtf8JsonSerializable, IJsonModel<BatchVmContainerConfiguration>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BatchVmContainerConfiguration>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BatchVmContainerConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchVmContainerConfiguration)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ContainerType.ToString());
@@ -34,22 +44,53 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in ContainerRegistries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchVmContainerRegistry>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static BatchVmContainerConfiguration DeserializeBatchVmContainerConfiguration(JsonElement element)
+        BatchVmContainerConfiguration IJsonModel<BatchVmContainerConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BatchVmContainerConfiguration)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBatchVmContainerConfiguration(document.RootElement, options);
+        }
+
+        internal static BatchVmContainerConfiguration DeserializeBatchVmContainerConfiguration(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BatchVmContainerType type = default;
-            Optional<IList<string>> containerImageNames = default;
-            Optional<IList<BatchVmContainerRegistry>> containerRegistries = default;
+            IList<string> containerImageNames = default;
+            IList<BatchVmContainerRegistry> containerRegistries = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -80,13 +121,49 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchVmContainerRegistry> array = new List<BatchVmContainerRegistry>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item));
+                        array.Add(BatchVmContainerRegistry.DeserializeBatchVmContainerRegistry(item, options));
                     }
                     containerRegistries = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BatchVmContainerConfiguration(type, Optional.ToList(containerImageNames), Optional.ToList(containerRegistries));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BatchVmContainerConfiguration(type, containerImageNames ?? new ChangeTrackingList<string>(), containerRegistries ?? new ChangeTrackingList<BatchVmContainerRegistry>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BatchVmContainerConfiguration>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmContainerConfiguration)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BatchVmContainerConfiguration IPersistableModel<BatchVmContainerConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BatchVmContainerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBatchVmContainerConfiguration(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BatchVmContainerConfiguration)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BatchVmContainerConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

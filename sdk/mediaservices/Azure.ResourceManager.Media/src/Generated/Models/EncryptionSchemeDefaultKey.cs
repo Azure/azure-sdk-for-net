@@ -5,23 +5,60 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Class to specify properties of default content key for each encryption scheme. </summary>
     public partial class EncryptionSchemeDefaultKey
     {
-        /// <summary> Initializes a new instance of EncryptionSchemeDefaultKey. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EncryptionSchemeDefaultKey"/>. </summary>
         public EncryptionSchemeDefaultKey()
         {
         }
 
-        /// <summary> Initializes a new instance of EncryptionSchemeDefaultKey. </summary>
+        /// <summary> Initializes a new instance of <see cref="EncryptionSchemeDefaultKey"/>. </summary>
         /// <param name="label"> Label can be used to specify Content Key when creating a Streaming Locator. </param>
         /// <param name="policyName"> Policy used by Default Key. </param>
-        internal EncryptionSchemeDefaultKey(string label, string policyName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EncryptionSchemeDefaultKey(string label, string policyName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Label = label;
             PolicyName = policyName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Label can be used to specify Content Key when creating a Streaming Locator. </summary>

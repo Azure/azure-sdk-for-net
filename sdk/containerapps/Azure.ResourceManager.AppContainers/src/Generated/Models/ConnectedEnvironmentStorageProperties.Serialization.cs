@@ -5,31 +5,73 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ConnectedEnvironmentStorageProperties : IUtf8JsonSerializable
+    internal partial class ConnectedEnvironmentStorageProperties : IUtf8JsonSerializable, IJsonModel<ConnectedEnvironmentStorageProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedEnvironmentStorageProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConnectedEnvironmentStorageProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEnvironmentStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectedEnvironmentStorageProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue<ContainerAppAzureFileProperties>(AzureFile, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ConnectedEnvironmentStorageProperties DeserializeConnectedEnvironmentStorageProperties(JsonElement element)
+        ConnectedEnvironmentStorageProperties IJsonModel<ConnectedEnvironmentStorageProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEnvironmentStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConnectedEnvironmentStorageProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConnectedEnvironmentStorageProperties(document.RootElement, options);
+        }
+
+        internal static ConnectedEnvironmentStorageProperties DeserializeConnectedEnvironmentStorageProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ContainerAppAzureFileProperties> azureFile = default;
+            ContainerAppAzureFileProperties azureFile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("azureFile"u8))
@@ -38,11 +80,47 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value);
+                    azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConnectedEnvironmentStorageProperties(azureFile.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConnectedEnvironmentStorageProperties(azureFile, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConnectedEnvironmentStorageProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEnvironmentStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedEnvironmentStorageProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConnectedEnvironmentStorageProperties IPersistableModel<ConnectedEnvironmentStorageProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedEnvironmentStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConnectedEnvironmentStorageProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConnectedEnvironmentStorageProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConnectedEnvironmentStorageProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

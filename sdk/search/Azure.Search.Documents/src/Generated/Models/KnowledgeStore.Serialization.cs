@@ -22,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Projections)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<KnowledgeStoreProjection>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(Identity))
@@ -30,12 +30,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
+            }
+            if (Optional.IsDefined(Parameters))
+            {
+                writer.WritePropertyName("parameters"u8);
+                writer.WriteObjectValue<SearchIndexerKnowledgeStoreParameters>(Parameters);
             }
             writer.WriteEndObject();
         }
@@ -48,7 +53,8 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string storageConnectionString = default;
             IList<KnowledgeStoreProjection> projections = default;
-            Optional<SearchIndexerDataIdentity> identity = default;
+            SearchIndexerDataIdentity identity = default;
+            SearchIndexerKnowledgeStoreParameters parameters = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("storageConnectionString"u8))
@@ -76,8 +82,33 @@ namespace Azure.Search.Documents.Indexes.Models
                     identity = SearchIndexerDataIdentity.DeserializeSearchIndexerDataIdentity(property.Value);
                     continue;
                 }
+                if (property.NameEquals("parameters"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parameters = SearchIndexerKnowledgeStoreParameters.DeserializeSearchIndexerKnowledgeStoreParameters(property.Value);
+                    continue;
+                }
             }
-            return new KnowledgeStore(storageConnectionString, projections, identity.Value);
+            return new KnowledgeStore(storageConnectionString, projections, identity, parameters);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KnowledgeStore FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeStore(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<KnowledgeStore>(this);
+            return content;
         }
     }
 }
