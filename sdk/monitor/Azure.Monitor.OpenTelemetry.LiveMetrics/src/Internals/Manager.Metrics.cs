@@ -55,8 +55,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             IEnumerable<DocumentStream> documentStreams = _collectionConfiguration.DocumentStreams;
             foreach (var item in filledBuffer.ReadAllAndClear())
             {
-                // TODO: item.DocumentStreamIds = new List<string> { "" }; - Will add the identifier for the specific filtering rules (if applicable). See also "matchingDocumentStreamIds" in AI SDK.
-
                 DocumentIngress? telemetryDocument = null;
 
                 CollectionConfigurationError[] groupErrors;

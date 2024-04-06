@@ -65,7 +65,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Request");
                 using (var activity = s_activitySource.StartActivity("Request", kind: ActivityKind.Server))
                 {
-                    await Task.Delay(100 + _random.Next(0, 100));
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
@@ -98,7 +97,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                 Console.WriteLine("Dependency");
                 using (var activity = s_activitySource.StartActivity("Dependency", kind: ActivityKind.Client))
                 {
-                    await Task.Delay(100 + _random.Next(0, 100));
                     // Exception
                     if (GetRandomBool(percent: 40))
                     {
