@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ReplicationStatus
+    public partial class ReplicationStatus : IUtf8JsonSerializable, IJsonModel<ReplicationStatus>
     {
-        internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReplicationStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ReplicationStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(AggregatedState))
+            {
+                writer.WritePropertyName("aggregatedState"u8);
+                writer.WriteStringValue(AggregatedState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Summary))
+            {
+                writer.WritePropertyName("summary"u8);
+                writer.WriteStartArray();
+                foreach (var item in Summary)
+                {
+                    writer.WriteObjectValue<RegionalReplicationStatus>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ReplicationStatus IJsonModel<ReplicationStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeReplicationStatus(document.RootElement, options);
+        }
+
+        internal static ReplicationStatus DeserializeReplicationStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AggregatedReplicationState> aggregatedState = default;
-            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
+            AggregatedReplicationState? aggregatedState = default;
+            IReadOnlyList<RegionalReplicationStatus> summary = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregatedState"u8))
@@ -41,13 +103,49 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item, options));
                     }
                     summary = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ReplicationStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ReplicationStatus(aggregatedState, summary ?? new ChangeTrackingList<RegionalReplicationStatus>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ReplicationStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ReplicationStatus IPersistableModel<ReplicationStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeReplicationStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ReplicationStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

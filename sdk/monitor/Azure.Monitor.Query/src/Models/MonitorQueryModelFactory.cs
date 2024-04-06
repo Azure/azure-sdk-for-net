@@ -14,14 +14,16 @@ using Azure.Monitor.Query.Models;
 namespace Azure.Monitor.Query.Models
 {
     /// <summary>
-    /// Model factory that enables mocking for the MetricsQueryResult class.
+    /// Model factory that enables mocking for public model types.
     /// </summary>
     public static partial class MonitorQueryModelFactory
     {
-        /// <summary> Enables the user to create an instance of a <see cref="MetricsQueryResult"/>. </summary>
+        /// <summary>
+        /// Creates an instance of <see cref="MetricsQueryResult"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
         /// <param name="cost"> The integer value representing the relative cost of the query. </param>
         /// <param name="timespan"> The timespan for which the data was retrieved. Its value consists of two datetimes concatenated, separated by &apos;/&apos;.  This may be adjusted in the future and returned back from what was originally requested. </param>
-        /// <param name="granularity"> The interval (window size) for which the metric data was returned in.  This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
+        /// <param name="granularity"> The interval (window size) for which the metric data was returned in. This may be adjusted in the future and returned back from what was originally requested.  This is not present if a metadata request was made. </param>
         /// <param name="namespace"> The namespace of the metrics being queried. </param>
         /// <param name="resourceRegion"> The region of the resource being queried for metrics. </param>
         /// <param name="metrics"> The value of the collection. </param>
@@ -31,7 +33,7 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary>
-        /// Enables the user to create an instance of a <see cref="MetricResult"/>.
+        /// Creates an instance of <see cref="Models.MetricResult"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
         /// </summary>
         /// <param name="id"> The metric ID. </param>
         /// <param name="resourceType"> The resource type of the metric resource. </param>
@@ -44,10 +46,10 @@ namespace Azure.Monitor.Query.Models
         }
 
         /// <summary>
-        /// Enables the user to create an instance of a <see cref="MetricTimeSeriesElement"/>.
+        /// Creates an instance of <see cref="Models.MetricTimeSeriesElement"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
         /// <param name="metadataValues"> A dictionary comprised of metric metadata values. </param>
         /// <param name="values"> A list of <see cref="Models.MetricValue"/> elements. </param>
-        /// </summary>
         public static MetricTimeSeriesElement MetricTimeSeriesElement(IReadOnlyDictionary<string, string> metadataValues, IEnumerable<MetricValue> values)
         {
             var metadataValueList = new List<MetadataValue>();
@@ -59,7 +61,9 @@ namespace Azure.Monitor.Query.Models
             return new MetricTimeSeriesElement(metadataValueList, values.ToList());
         }
 
-        /// <summary> Initializes a new instance of MetricValue. </summary>
+        /// <summary>
+        /// Creates an instance of <see cref="Models.MetricValue"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
         /// <param name="timeStamp"> The timestamp for the metric value in ISO 8601 format. </param>
         /// <param name="average"> The average value in the time range. </param>
         /// <param name="minimum"> The least value in the time range. </param>
@@ -71,8 +75,10 @@ namespace Azure.Monitor.Query.Models
             return new MetricValue(timeStamp, average, minimum, maximum, total, count);
         }
 
-        /// <summary> Enables the user to create an instance of a <see cref="LogsQueryResult"/>. </summary>
-        /// <param name="allTables"> The list of tables, columns and rows. </param>
+        /// <summary>
+        /// Creates an instance of <see cref="Models.LogsQueryResult"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
+        /// <param name="allTables"> The list of tables, columns, and rows. </param>
         /// <param name="statistics"> Any object. </param>
         /// <param name="visualization"> Any object. </param>
         /// <param name="error"> Any object. </param>
@@ -84,10 +90,11 @@ namespace Azure.Monitor.Query.Models
             return new LogsQueryResult(allTables.ToArray(), statisticsJson, visualizationJson, errorJson);
         }
 
-        /// <summary> Enables the user to create an instance of a <see cref="LogsTableRow"/>. </summary>
+        /// <summary>
+        /// Creates an instance of <see cref="Models.LogsTableRow"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
         /// <param name="columns"> The list of columns. </param>
         /// <param name="values"> An object array representing the rows of the table. </param>
-        /// <returns> A new <see cref="Models.LogsTableRow"/> instance for mocking. </returns>
         public static LogsTableRow LogsTableRow(IEnumerable<LogsTableColumn> columns, IEnumerable<object> values)
         {
             var columnsList = columns.ToArray();
@@ -96,7 +103,9 @@ namespace Azure.Monitor.Query.Models
             return new LogsTableRow(columnMap, columnsList, row);
         }
 
-        /// <summary> Enables the user to create an instance of a <see cref="LogsTable"/>. </summary>
+        /// <summary>
+        /// Creates an instance of <see cref="Models.LogsTable"/> to support <see href="https://aka.ms/azsdk/net/mocking">mocking</see>.
+        /// </summary>
         /// <param name="name"> The name of the table. </param>
         /// <param name="columns"> The list of columns. </param>
         /// <param name="rows"> The list of rows. </param>

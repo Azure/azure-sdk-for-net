@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class RequestReportListResult
+    internal partial class RequestReportListResult : IUtf8JsonSerializable, IJsonModel<RequestReportListResult>
     {
-        internal static RequestReportListResult DeserializeRequestReportListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RequestReportListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RequestReportListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestReportListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestReportListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<RequestReportRecordContract>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Count))
+            {
+                writer.WritePropertyName("count"u8);
+                writer.WriteNumberValue(Count.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        RequestReportListResult IJsonModel<RequestReportListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestReportListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RequestReportListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRequestReportListResult(document.RootElement, options);
+        }
+
+        internal static RequestReportListResult DeserializeRequestReportListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<RequestReportRecordContract>> value = default;
-            Optional<long> count = default;
+            IReadOnlyList<RequestReportRecordContract> value = default;
+            long? count = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<RequestReportRecordContract> array = new List<RequestReportRecordContract>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RequestReportRecordContract.DeserializeRequestReportRecordContract(item));
+                        array.Add(RequestReportRecordContract.DeserializeRequestReportRecordContract(item, options));
                     }
                     value = array;
                     continue;
@@ -46,8 +108,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     count = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RequestReportListResult(Optional.ToList(value), Optional.ToNullable(count));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RequestReportListResult(value ?? new ChangeTrackingList<RequestReportRecordContract>(), count, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RequestReportListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestReportListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RequestReportListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RequestReportListResult IPersistableModel<RequestReportListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RequestReportListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRequestReportListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RequestReportListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RequestReportListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

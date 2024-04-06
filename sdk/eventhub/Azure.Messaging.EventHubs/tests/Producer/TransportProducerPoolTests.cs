@@ -101,7 +101,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ExpireCoseNotCloseTheRemovedItemWhenInUse()
+        public async Task ExpireCloseNotCloseTheRemovedItemWhenInUse()
         {
             var transportProducer = new ObservableTransportProducerMock();
 
@@ -426,7 +426,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     string eventHubName,
                                                                     TimeSpan operationTimeout,
                                                                     EventHubTokenCredential credential,
-                                                                    EventHubConnectionOptions options)
+                                                                    EventHubConnectionOptions options,
+                                                                    bool useTls = true)
             {
                 var client = new Mock<TransportClient>();
 

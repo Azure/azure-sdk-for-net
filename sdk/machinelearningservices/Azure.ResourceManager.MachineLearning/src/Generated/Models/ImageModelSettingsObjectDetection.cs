@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary>
@@ -14,12 +17,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
     /// </summary>
     public partial class ImageModelSettingsObjectDetection : ImageModelSettings
     {
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         public ImageModelSettingsObjectDetection()
         {
         }
 
-        /// <summary> Initializes a new instance of ImageModelSettingsObjectDetection. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImageModelSettingsObjectDetection"/>. </summary>
         /// <param name="advancedSettings"> Settings for advanced scenarios. </param>
         /// <param name="amsGradient"> Enable AMSGrad when optimizer is 'adam' or 'adamw'. </param>
         /// <param name="augmentations"> Settings for using Augmentations. </param>
@@ -71,6 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="warmupCosineLRCycles"> Value of cosine cycle when learning rate scheduler is 'warmup_cosine'. Must be a float in the range [0, 1]. </param>
         /// <param name="warmupCosineLRWarmupEpochs"> Value of warmup epochs when learning rate scheduler is 'warmup_cosine'. Must be a positive integer. </param>
         /// <param name="weightDecay"> Value of weight decay when optimizer is 'sgd', 'adam', or 'adamw'. Must be a float in the range[0, 1]. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="boxDetectionsPerImage">
         /// Maximum number of detections per image, for all classes. Must be a positive integer.
         /// Note: This settings is not supported for the 'yolov5' algorithm.
@@ -84,6 +88,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: The training run may get into CUDA OOM if the size is too big.
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </param>
+        /// <param name="logTrainingMetrics"> Enable computing and logging training metrics. </param>
+        /// <param name="logValidationLoss"> Enable computing and logging validation loss. </param>
         /// <param name="maxSize">
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.
@@ -121,11 +127,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="validationIouThreshold"> IOU threshold to use when computing validation metric. Must be float in the range [0, 1]. </param>
         /// <param name="validationMetricType"> Metric computation method to use for validation metrics. </param>
-        internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay)
+        internal ImageModelSettingsObjectDetection(string advancedSettings, bool? amsGradient, string augmentations, float? beta1, float? beta2, int? checkpointFrequency, MachineLearningFlowModelJobInput checkpointModel, string checkpointRunId, bool? distributed, bool? earlyStopping, int? earlyStoppingDelay, int? earlyStoppingPatience, bool? enableOnnxNormalization, int? evaluationFrequency, int? gradientAccumulationStep, int? layersToFreeze, float? learningRate, LearningRateScheduler? learningRateScheduler, string modelName, float? momentum, bool? nesterov, int? numberOfEpochs, int? numberOfWorkers, StochasticOptimizer? optimizer, int? randomSeed, float? stepLRGamma, int? stepLRStepSize, int? trainingBatchSize, int? validationBatchSize, float? warmupCosineLRCycles, int? warmupCosineLRWarmupEpochs, float? weightDecay, IDictionary<string, BinaryData> serializedAdditionalRawData, int? boxDetectionsPerImage, float? boxScoreThreshold, int? imageSize, LogTrainingMetric? logTrainingMetrics, LogValidationLoss? logValidationLoss, int? maxSize, int? minSize, MachineLearningModelSize? modelSize, bool? multiScale, float? nmsIouThreshold, string tileGridSize, float? tileOverlapRatio, float? tilePredictionsNmsThreshold, float? validationIouThreshold, ValidationMetricType? validationMetricType) : base(advancedSettings, amsGradient, augmentations, beta1, beta2, checkpointFrequency, checkpointModel, checkpointRunId, distributed, earlyStopping, earlyStoppingDelay, earlyStoppingPatience, enableOnnxNormalization, evaluationFrequency, gradientAccumulationStep, layersToFreeze, learningRate, learningRateScheduler, modelName, momentum, nesterov, numberOfEpochs, numberOfWorkers, optimizer, randomSeed, stepLRGamma, stepLRStepSize, trainingBatchSize, validationBatchSize, warmupCosineLRCycles, warmupCosineLRWarmupEpochs, weightDecay, serializedAdditionalRawData)
         {
             BoxDetectionsPerImage = boxDetectionsPerImage;
             BoxScoreThreshold = boxScoreThreshold;
             ImageSize = imageSize;
+            LogTrainingMetrics = logTrainingMetrics;
+            LogValidationLoss = logValidationLoss;
             MaxSize = maxSize;
             MinSize = minSize;
             ModelSize = modelSize;
@@ -154,6 +162,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Note: This settings is only supported for the 'yolov5' algorithm.
         /// </summary>
         public int? ImageSize { get; set; }
+        /// <summary> Enable computing and logging training metrics. </summary>
+        public LogTrainingMetric? LogTrainingMetrics { get; set; }
+        /// <summary> Enable computing and logging validation loss. </summary>
+        public LogValidationLoss? LogValidationLoss { get; set; }
         /// <summary>
         /// Maximum size of the image to be rescaled before feeding it to the backbone.
         /// Must be a positive integer. Note: training run may get into CUDA OOM if the size is too big.

@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/fleet/ci.mgmt.yml
+    - sdk/fleet/Azure.ResourceManager.ContainerServiceFleet/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: fleet
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.ContainerServiceFleet
+      safeName: AzureResourceManagerContainerServiceFleet

@@ -14,7 +14,39 @@ namespace Azure.ResourceManager.Media.Models
     /// <summary> The live event input. </summary>
     public partial class LiveEventInput
     {
-        /// <summary> Initializes a new instance of LiveEventInput. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="LiveEventInput"/>. </summary>
         /// <param name="streamingProtocol"> The input protocol for the live event. This is specified at creation time and cannot be updated. </param>
         public LiveEventInput(LiveEventInputProtocol streamingProtocol)
         {
@@ -22,19 +54,21 @@ namespace Azure.ResourceManager.Media.Models
             Endpoints = new ChangeTrackingList<LiveEventEndpoint>();
         }
 
-        /// <summary> Initializes a new instance of LiveEventInput. </summary>
+        /// <summary> Initializes a new instance of <see cref="LiveEventInput"/>. </summary>
         /// <param name="streamingProtocol"> The input protocol for the live event. This is specified at creation time and cannot be updated. </param>
         /// <param name="accessControl"> Access control for live event input. </param>
         /// <param name="keyFrameIntervalDuration"> ISO 8601 time duration of the key frame interval duration of the input. This value sets the EXT-X-TARGETDURATION property in the HLS output. For example, use PT2S to indicate 2 seconds. Leave the value empty for encoding live events. </param>
         /// <param name="accessToken"> A UUID in string form to uniquely identify the stream. This can be specified at creation time but cannot be updated. If omitted, the service will generate a unique value. </param>
         /// <param name="endpoints"> The input endpoints for the live event. </param>
-        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, TimeSpan? keyFrameIntervalDuration, string accessToken, IList<LiveEventEndpoint> endpoints)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LiveEventInput(LiveEventInputProtocol streamingProtocol, LiveEventInputAccessControl accessControl, TimeSpan? keyFrameIntervalDuration, string accessToken, IList<LiveEventEndpoint> endpoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreamingProtocol = streamingProtocol;
             AccessControl = accessControl;
             KeyFrameIntervalDuration = keyFrameIntervalDuration;
             AccessToken = accessToken;
             Endpoints = endpoints;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The input protocol for the live event. This is specified at creation time and cannot be updated. </summary>

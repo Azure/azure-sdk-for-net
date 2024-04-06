@@ -5,25 +5,122 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
-    public partial class HDInsightBillingSpecsListResult
+    public partial class HDInsightBillingSpecsListResult : IUtf8JsonSerializable, IJsonModel<HDInsightBillingSpecsListResult>
     {
-        internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HDInsightBillingSpecsListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<HDInsightBillingSpecsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingSpecsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightBillingSpecsListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(VmSizes))
+            {
+                writer.WritePropertyName("vmSizes"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizes)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmSizesWithEncryptionAtHost))
+            {
+                writer.WritePropertyName("vmSizesWithEncryptionAtHost"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizesWithEncryptionAtHost)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(VmSizeFilters))
+            {
+                writer.WritePropertyName("vmSizeFilters"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizeFilters)
+                {
+                    writer.WriteObjectValue<HDInsightVmSizeCompatibilityFilterV2>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(VmSizeProperties))
+            {
+                writer.WritePropertyName("vmSizeProperties"u8);
+                writer.WriteStartArray();
+                foreach (var item in VmSizeProperties)
+                {
+                    writer.WriteObjectValue<HDInsightVmSizeProperty>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsCollectionDefined(BillingResources))
+            {
+                writer.WritePropertyName("billingResources"u8);
+                writer.WriteStartArray();
+                foreach (var item in BillingResources)
+                {
+                    writer.WriteObjectValue<HDInsightBillingResources>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        HDInsightBillingSpecsListResult IJsonModel<HDInsightBillingSpecsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingSpecsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(HDInsightBillingSpecsListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeHDInsightBillingSpecsListResult(document.RootElement, options);
+        }
+
+        internal static HDInsightBillingSpecsListResult DeserializeHDInsightBillingSpecsListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<string>> vmSizes = default;
-            Optional<IReadOnlyList<string>> vmSizesWithEncryptionAtHost = default;
-            Optional<IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2>> vmSizeFilters = default;
-            Optional<IReadOnlyList<HDInsightVmSizeProperty>> vmSizeProperties = default;
-            Optional<IReadOnlyList<HDInsightBillingResources>> billingResources = default;
+            IReadOnlyList<string> vmSizes = default;
+            IReadOnlyList<string> vmSizesWithEncryptionAtHost = default;
+            IReadOnlyList<HDInsightVmSizeCompatibilityFilterV2> vmSizeFilters = default;
+            IReadOnlyList<HDInsightVmSizeProperty> vmSizeProperties = default;
+            IReadOnlyList<HDInsightBillingResources> billingResources = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("vmSizes"u8))
@@ -63,7 +160,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVmSizeCompatibilityFilterV2> array = new List<HDInsightVmSizeCompatibilityFilterV2>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVmSizeCompatibilityFilterV2.DeserializeHDInsightVmSizeCompatibilityFilterV2(item));
+                        array.Add(HDInsightVmSizeCompatibilityFilterV2.DeserializeHDInsightVmSizeCompatibilityFilterV2(item, options));
                     }
                     vmSizeFilters = array;
                     continue;
@@ -77,7 +174,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightVmSizeProperty> array = new List<HDInsightVmSizeProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightVmSizeProperty.DeserializeHDInsightVmSizeProperty(item));
+                        array.Add(HDInsightVmSizeProperty.DeserializeHDInsightVmSizeProperty(item, options));
                     }
                     vmSizeProperties = array;
                     continue;
@@ -91,13 +188,55 @@ namespace Azure.ResourceManager.HDInsight.Models
                     List<HDInsightBillingResources> array = new List<HDInsightBillingResources>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(HDInsightBillingResources.DeserializeHDInsightBillingResources(item));
+                        array.Add(HDInsightBillingResources.DeserializeHDInsightBillingResources(item, options));
                     }
                     billingResources = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new HDInsightBillingSpecsListResult(Optional.ToList(vmSizes), Optional.ToList(vmSizesWithEncryptionAtHost), Optional.ToList(vmSizeFilters), Optional.ToList(vmSizeProperties), Optional.ToList(billingResources));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new HDInsightBillingSpecsListResult(
+                vmSizes ?? new ChangeTrackingList<string>(),
+                vmSizesWithEncryptionAtHost ?? new ChangeTrackingList<string>(),
+                vmSizeFilters ?? new ChangeTrackingList<HDInsightVmSizeCompatibilityFilterV2>(),
+                vmSizeProperties ?? new ChangeTrackingList<HDInsightVmSizeProperty>(),
+                billingResources ?? new ChangeTrackingList<HDInsightBillingResources>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<HDInsightBillingSpecsListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingSpecsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightBillingSpecsListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        HDInsightBillingSpecsListResult IPersistableModel<HDInsightBillingSpecsListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<HDInsightBillingSpecsListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeHDInsightBillingSpecsListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HDInsightBillingSpecsListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<HDInsightBillingSpecsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

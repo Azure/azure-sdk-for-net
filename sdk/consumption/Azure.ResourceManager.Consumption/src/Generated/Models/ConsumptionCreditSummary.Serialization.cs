@@ -5,47 +5,143 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable
+    public partial class ConsumptionCreditSummary : IUtf8JsonSerializable, IJsonModel<ConsumptionCreditSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionCreditSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionCreditSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(BalanceSummary))
+            {
+                writer.WritePropertyName("balanceSummary"u8);
+                writer.WriteObjectValue<CreditBalanceSummary>(BalanceSummary, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingCreditAdjustments))
+            {
+                writer.WritePropertyName("pendingCreditAdjustments"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(PendingCreditAdjustments, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExpiredCredit))
+            {
+                writer.WritePropertyName("expiredCredit"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(ExpiredCredit, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PendingEligibleCharges))
+            {
+                writer.WritePropertyName("pendingEligibleCharges"u8);
+                writer.WriteObjectValue<ConsumptionAmount>(PendingEligibleCharges, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CreditCurrency))
+            {
+                writer.WritePropertyName("creditCurrency"u8);
+                writer.WriteStringValue(CreditCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(BillingCurrency))
+            {
+                writer.WritePropertyName("billingCurrency"u8);
+                writer.WriteStringValue(BillingCurrency);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Reseller))
+            {
+                writer.WritePropertyName("reseller"u8);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
+            }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element)
+        ConsumptionCreditSummary IJsonModel<ConsumptionCreditSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionCreditSummary(document.RootElement, options);
+        }
+
+        internal static ConsumptionCreditSummary DeserializeConsumptionCreditSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<CreditBalanceSummary> balanceSummary = default;
-            Optional<ConsumptionAmount> pendingCreditAdjustments = default;
-            Optional<ConsumptionAmount> expiredCredit = default;
-            Optional<ConsumptionAmount> pendingEligibleCharges = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            SystemData systemData = default;
+            CreditBalanceSummary balanceSummary = default;
+            ConsumptionAmount pendingCreditAdjustments = default;
+            ConsumptionAmount expiredCredit = default;
+            ConsumptionAmount pendingEligibleCharges = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionReseller reseller = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eTag"u8))
@@ -96,7 +192,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            balanceSummary = CreditBalanceSummary.DeserializeCreditBalanceSummary(property0.Value);
+                            balanceSummary = CreditBalanceSummary.DeserializeCreditBalanceSummary(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("pendingCreditAdjustments"u8))
@@ -105,7 +201,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            pendingCreditAdjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            pendingCreditAdjustments = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("expiredCredit"u8))
@@ -114,7 +210,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            expiredCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            expiredCredit = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("pendingEligibleCharges"u8))
@@ -123,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            pendingEligibleCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            pendingEligibleCharges = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("creditCurrency"u8))
@@ -142,14 +238,63 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
+                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionCreditSummary(id, name, type, systemData.Value, balanceSummary.Value, pendingCreditAdjustments.Value, expiredCredit.Value, pendingEligibleCharges.Value, creditCurrency.Value, billingCurrency.Value, reseller.Value, Optional.ToNullable(eTag));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionCreditSummary(
+                id,
+                name,
+                type,
+                systemData,
+                balanceSummary,
+                pendingCreditAdjustments,
+                expiredCredit,
+                pendingEligibleCharges,
+                creditCurrency,
+                billingCurrency,
+                reseller,
+                eTag,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionCreditSummary>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionCreditSummary IPersistableModel<ConsumptionCreditSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionCreditSummary>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionCreditSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionCreditSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionCreditSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

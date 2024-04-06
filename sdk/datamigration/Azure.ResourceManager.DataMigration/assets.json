@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/datamigration/Azure.ResourceManager.DataMigration",
-  "Tag": ""
+  "Tag": "net/datamigration/Azure.ResourceManager.DataMigration_4ae2b1a210"
 }

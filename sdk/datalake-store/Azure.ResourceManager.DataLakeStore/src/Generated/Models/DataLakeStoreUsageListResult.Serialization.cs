@@ -5,21 +5,78 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataLakeStore.Models
 {
-    internal partial class DataLakeStoreUsageListResult
+    internal partial class DataLakeStoreUsageListResult : IUtf8JsonSerializable, IJsonModel<DataLakeStoreUsageListResult>
     {
-        internal static DataLakeStoreUsageListResult DeserializeDataLakeStoreUsageListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataLakeStoreUsageListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataLakeStoreUsageListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<DataLakeStoreUsage>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        DataLakeStoreUsageListResult IJsonModel<DataLakeStoreUsageListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataLakeStoreUsageListResult(document.RootElement, options);
+        }
+
+        internal static DataLakeStoreUsageListResult DeserializeDataLakeStoreUsageListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataLakeStoreUsage>> value = default;
+            IReadOnlyList<DataLakeStoreUsage> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,13 +88,49 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                     List<DataLakeStoreUsage> array = new List<DataLakeStoreUsage>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item));
+                        array.Add(DataLakeStoreUsage.DeserializeDataLakeStoreUsage(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DataLakeStoreUsageListResult(Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DataLakeStoreUsageListResult(value ?? new ChangeTrackingList<DataLakeStoreUsage>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DataLakeStoreUsageListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataLakeStoreUsageListResult IPersistableModel<DataLakeStoreUsageListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreUsageListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataLakeStoreUsageListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataLakeStoreUsageListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataLakeStoreUsageListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

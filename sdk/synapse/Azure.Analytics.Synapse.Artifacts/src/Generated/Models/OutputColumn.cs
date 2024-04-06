@@ -10,9 +10,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The columns to be read out from the Office 365 table. </summary>
     internal partial class OutputColumn
     {
-        /// <summary> Initializes a new instance of OutputColumn. </summary>
+        /// <summary> Initializes a new instance of <see cref="OutputColumn"/>. </summary>
         internal OutputColumn()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OutputColumn"/>. </summary>
+        /// <param name="name"> Name of the table column. Type: string. </param>
+        internal OutputColumn(string name)
+        {
+            Name = name;
         }
 
         /// <summary> Name of the table column. Type: string. </summary>

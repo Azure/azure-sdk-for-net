@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.AI.Translation.Document.Models;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -24,7 +23,7 @@ namespace Azure.AI.Translation.Document
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
-            Optional<JsonElement> error = default;
+            JsonElement error = default;
             StatusSummary summary = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -59,7 +58,21 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new TranslationStatusResult(id, createdDateTimeUtc, lastActionDateTimeUtc, status, error, summary);
+            return new TranslationStatusResult(
+                id,
+                createdDateTimeUtc,
+                lastActionDateTimeUtc,
+                status,
+                error,
+                summary);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TranslationStatusResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTranslationStatusResult(document.RootElement);
         }
     }
 }

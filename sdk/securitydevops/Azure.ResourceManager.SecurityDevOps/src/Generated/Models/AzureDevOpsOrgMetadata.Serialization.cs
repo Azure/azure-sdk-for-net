@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.SecurityDevOps.Models
 {
-    public partial class AzureDevOpsOrgMetadata : IUtf8JsonSerializable
+    public partial class AzureDevOpsOrgMetadata : IUtf8JsonSerializable, IJsonModel<AzureDevOpsOrgMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureDevOpsOrgMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AzureDevOpsOrgMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -32,22 +42,53 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Projects)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureDevOpsProjectMetadata>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AzureDevOpsOrgMetadata DeserializeAzureDevOpsOrgMetadata(JsonElement element)
+        AzureDevOpsOrgMetadata IJsonModel<AzureDevOpsOrgMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAzureDevOpsOrgMetadata(document.RootElement, options);
+        }
+
+        internal static AzureDevOpsOrgMetadata DeserializeAzureDevOpsOrgMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AutoDiscovery> autoDiscovery = default;
-            Optional<IList<AzureDevOpsProjectMetadata>> projects = default;
+            string name = default;
+            AutoDiscovery? autoDiscovery = default;
+            IList<AzureDevOpsProjectMetadata> projects = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -73,13 +114,49 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                     List<AzureDevOpsProjectMetadata> array = new List<AzureDevOpsProjectMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AzureDevOpsProjectMetadata.DeserializeAzureDevOpsProjectMetadata(item));
+                        array.Add(AzureDevOpsProjectMetadata.DeserializeAzureDevOpsProjectMetadata(item, options));
                     }
                     projects = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AzureDevOpsOrgMetadata(name.Value, Optional.ToNullable(autoDiscovery), Optional.ToList(projects));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AzureDevOpsOrgMetadata(name, autoDiscovery, projects ?? new ChangeTrackingList<AzureDevOpsProjectMetadata>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AzureDevOpsOrgMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AzureDevOpsOrgMetadata IPersistableModel<AzureDevOpsOrgMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsOrgMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAzureDevOpsOrgMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AzureDevOpsOrgMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AzureDevOpsOrgMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

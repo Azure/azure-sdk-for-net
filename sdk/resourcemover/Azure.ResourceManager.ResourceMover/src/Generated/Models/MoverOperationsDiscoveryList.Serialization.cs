@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    internal partial class MoverOperationsDiscoveryList
+    internal partial class MoverOperationsDiscoveryList : IUtf8JsonSerializable, IJsonModel<MoverOperationsDiscoveryList>
     {
-        internal static MoverOperationsDiscoveryList DeserializeMoverOperationsDiscoveryList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MoverOperationsDiscoveryList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MoverOperationsDiscoveryList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscoveryList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverOperationsDiscoveryList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<MoverOperationsDiscovery>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MoverOperationsDiscoveryList IJsonModel<MoverOperationsDiscoveryList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscoveryList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MoverOperationsDiscoveryList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMoverOperationsDiscoveryList(document.RootElement, options);
+        }
+
+        internal static MoverOperationsDiscoveryList DeserializeMoverOperationsDiscoveryList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<MoverOperationsDiscovery>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<MoverOperationsDiscovery> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     List<MoverOperationsDiscovery> array = new List<MoverOperationsDiscovery>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(item));
+                        array.Add(MoverOperationsDiscovery.DeserializeMoverOperationsDiscovery(item, options));
                     }
                     value = array;
                     continue;
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.ResourceMover.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MoverOperationsDiscoveryList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MoverOperationsDiscoveryList(value ?? new ChangeTrackingList<MoverOperationsDiscovery>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MoverOperationsDiscoveryList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscoveryList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscoveryList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MoverOperationsDiscoveryList IPersistableModel<MoverOperationsDiscoveryList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscoveryList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMoverOperationsDiscoveryList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscoveryList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MoverOperationsDiscoveryList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

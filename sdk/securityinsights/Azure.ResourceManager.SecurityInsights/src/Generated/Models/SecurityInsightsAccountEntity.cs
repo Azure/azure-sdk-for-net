@@ -15,19 +15,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     /// <summary> Represents an account entity. </summary>
     public partial class SecurityInsightsAccountEntity : SecurityInsightsEntity
     {
-        /// <summary> Initializes a new instance of SecurityInsightsAccountEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
         public SecurityInsightsAccountEntity()
         {
             AdditionalData = new ChangeTrackingDictionary<string, BinaryData>();
             Kind = SecurityInsightsEntityKind.Account;
         }
 
-        /// <summary> Initializes a new instance of SecurityInsightsAccountEntity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityInsightsAccountEntity"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="additionalData"> A bag of custom fields that should be part of the entity and will be presented to the user. </param>
         /// <param name="friendlyName"> The graph item display name which is a short humanly readable description of the graph item instance. This property is optional and might be system generated. </param>
         /// <param name="aadTenantId"> The Azure Active Directory tenant id. </param>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="sid"> The account security identifier, e.g. S-1-5-18. </param>
         /// <param name="upnSuffix"> The user principal name suffix for the account, in some cases it is also the domain name. Examples: contoso.com. </param>
         /// <param name="dnsDomain"> The fully qualified domain DNS name. </param>
-        internal SecurityInsightsAccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind)
+        internal SecurityInsightsAccountEntity(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SecurityInsightsEntityKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, string aadTenantId, string aadUserId, string accountName, string displayName, string hostEntityId, bool? isDomainJoined, string ntDomain, Guid? objectGuid, string puid, string sid, string upnSuffix, string dnsDomain) : base(id, name, resourceType, systemData, kind, serializedAdditionalRawData)
         {
             AdditionalData = additionalData;
             FriendlyName = friendlyName;
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

@@ -25,7 +25,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Layout))
             {
                 writer.WritePropertyName("layout"u8);
-                writer.WriteObjectValue(Layout);
+                writer.WriteObjectValue<MediaCompositionLayout>(Layout);
             }
             if (Optional.IsCollectionDefined(Inputs))
             {
@@ -34,7 +34,7 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Inputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MediaInput>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -45,14 +45,14 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Outputs)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MediaOutput>(item.Value);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(StreamState))
             {
                 writer.WritePropertyName("streamState"u8);
-                writer.WriteObjectValue(StreamState);
+                writer.WriteObjectValue<CompositionStreamState>(StreamState);
             }
             writer.WriteEndObject();
         }
@@ -63,11 +63,11 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<MediaCompositionLayout> layout = default;
-            Optional<IDictionary<string, MediaInput>> inputs = default;
-            Optional<IDictionary<string, MediaOutput>> outputs = default;
-            Optional<CompositionStreamState> streamState = default;
+            string id = default;
+            MediaCompositionLayout layout = default;
+            IDictionary<string, MediaInput> inputs = default;
+            IDictionary<string, MediaOutput> outputs = default;
+            CompositionStreamState streamState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -122,7 +122,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new MediaComposition(id.Value, layout.Value, Optional.ToDictionary(inputs), Optional.ToDictionary(outputs), streamState.Value);
+            return new MediaComposition(id, layout, inputs ?? new ChangeTrackingDictionary<string, MediaInput>(), outputs ?? new ChangeTrackingDictionary<string, MediaOutput>(), streamState);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaComposition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaComposition(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MediaComposition>(this);
+            return content;
         }
     }
 }

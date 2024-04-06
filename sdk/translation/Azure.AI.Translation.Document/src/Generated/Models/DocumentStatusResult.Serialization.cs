@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
@@ -19,16 +18,16 @@ namespace Azure.AI.Translation.Document
             {
                 return null;
             }
-            Optional<Uri> path = default;
+            Uri path = default;
             Uri sourcePath = default;
             DateTimeOffset createdDateTimeUtc = default;
             DateTimeOffset lastActionDateTimeUtc = default;
             DocumentTranslationStatus status = default;
             string to = default;
-            Optional<JsonElement> error = default;
+            JsonElement error = default;
             float progress = default;
             string id = default;
-            Optional<long> characterCharged = default;
+            long characterCharged = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("path"u8))
@@ -90,7 +89,25 @@ namespace Azure.AI.Translation.Document
                     continue;
                 }
             }
-            return new DocumentStatusResult(path.Value, sourcePath, createdDateTimeUtc, lastActionDateTimeUtc, status, to, error, progress, id, characterCharged);
+            return new DocumentStatusResult(
+                path,
+                sourcePath,
+                createdDateTimeUtc,
+                lastActionDateTimeUtc,
+                status,
+                to,
+                error,
+                progress,
+                id,
+                characterCharged);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentStatusResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentStatusResult(document.RootElement);
         }
     }
 }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.DataBoxEdge.Models;
@@ -18,7 +19,39 @@ namespace Azure.ResourceManager.DataBoxEdge
     /// </summary>
     public partial class DataBoxEdgeOrderData : ResourceData
     {
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         public DataBoxEdgeOrderData()
         {
             OrderHistory = new ChangeTrackingList<DataBoxEdgeOrderStatus>();
@@ -26,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             ReturnTrackingInfo = new ChangeTrackingList<DataBoxEdgeTrackingInfo>();
         }
 
-        /// <summary> Initializes a new instance of DataBoxEdgeOrderData. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataBoxEdgeOrderData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -41,7 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="deliveryTrackingInfo"> Tracking information for the package delivered to the customer whether it has an original or a replacement device. </param>
         /// <param name="returnTrackingInfo"> Tracking information for the package returned from the customer whether it has an original or a replacement device. </param>
         /// <param name="shipmentType"> ShipmentType of the order. </param>
-        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataBoxEdgeOrderData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string orderId, DataBoxEdgeContactDetails contactInformation, DataBoxEdgeShippingAddress shippingAddress, DataBoxEdgeOrderStatus currentStatus, IReadOnlyList<DataBoxEdgeOrderStatus> orderHistory, string serialNumber, IReadOnlyList<DataBoxEdgeTrackingInfo> deliveryTrackingInfo, IReadOnlyList<DataBoxEdgeTrackingInfo> returnTrackingInfo, DataBoxEdgeShipmentType? shipmentType, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             OrderId = orderId;
@@ -53,6 +87,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             DeliveryTrackingInfo = deliveryTrackingInfo;
             ReturnTrackingInfo = returnTrackingInfo;
             ShipmentType = shipmentType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> It specify the order api version. </summary>

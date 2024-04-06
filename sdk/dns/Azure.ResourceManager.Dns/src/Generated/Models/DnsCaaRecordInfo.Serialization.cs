@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable
+    public partial class DnsCaaRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsCaaRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsCaaRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DnsCaaRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Flags))
             {
@@ -30,18 +41,49 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsCaaRecordInfo DeserializeDnsCaaRecordInfo(JsonElement element)
+        DnsCaaRecordInfo IJsonModel<DnsCaaRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsCaaRecordInfo(document.RootElement, options);
+        }
+
+        internal static DnsCaaRecordInfo DeserializeDnsCaaRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> flags = default;
-            Optional<string> tag = default;
-            Optional<string> value = default;
+            int? flags = default;
+            string tag = default;
+            string value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("flags"u8))
@@ -63,8 +105,44 @@ namespace Azure.ResourceManager.Dns.Models
                     value = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsCaaRecordInfo(Optional.ToNullable(flags), tag.Value, value.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DnsCaaRecordInfo(flags, tag, value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DnsCaaRecordInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DnsCaaRecordInfo IPersistableModel<DnsCaaRecordInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsCaaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsCaaRecordInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsCaaRecordInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsCaaRecordInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

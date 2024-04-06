@@ -11,14 +11,21 @@ namespace Azure.ResourceManager.EnergyServices
         public virtual Azure.Pageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.EnergyServices.EnergyServiceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.EnergyServices.EnergyServiceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.EnergyServiceResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class EnergyServiceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class EnergyServiceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>
     {
-        public EnergyServiceData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public EnergyServiceData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.EnergyServices.EnergyServiceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.EnergyServiceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.EnergyServiceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EnergyServiceResource : Azure.ResourceManager.ArmResource
     {
@@ -58,6 +65,29 @@ namespace Azure.ResourceManager.EnergyServices
         public static Azure.AsyncPageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyServicesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.EnergyServices.Mocking
+{
+    public partial class MockableEnergyServicesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEnergyServicesArmClient() { }
+        public virtual Azure.ResourceManager.EnergyServices.EnergyServiceResource GetEnergyServiceResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableEnergyServicesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEnergyServicesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyService(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.EnergyServiceResource>> GetEnergyServiceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.EnergyServices.EnergyServiceCollection GetEnergyServices() { throw null; }
+    }
+    public partial class MockableEnergyServicesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableEnergyServicesSubscriptionResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyServices(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.EnergyServices.EnergyServiceResource> GetEnergyServicesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.EnergyServices.Models
 {
     public static partial class ArmEnergyServicesModelFactory
@@ -68,39 +98,69 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult EnergyServiceNameAvailabilityResult(bool? nameAvailable = default(bool?), Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason? reason = default(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason?), string message = null) { throw null; }
         public static Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties EnergyServiceProperties(string dnsName = null, Azure.ResourceManager.EnergyServices.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.EnergyServices.Models.ProvisioningState?), string authAppId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.EnergyServices.Models.DataPartitionName> dataPartitionNames = null) { throw null; }
     }
-    public partial class DataPartition
+    public partial class DataPartition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>
     {
         internal DataPartition() { }
         public string Name { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EnergyServices.Models.DataPartition System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.DataPartition System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataPartitionAddOrRemoveContent
+    public partial class DataPartitionAddOrRemoveContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>
     {
         public DataPartitionAddOrRemoveContent() { }
         public string DataPartitionName { get { throw null; } set { } }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionAddOrRemoveContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataPartitionName
+    public partial class DataPartitionName : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>
     {
         public DataPartitionName() { }
         public string Name { get { throw null; } set { } }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionName System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionName System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionName>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DataPartitionsListResult
+    public partial class DataPartitionsListResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>
     {
         internal DataPartitionsListResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.EnergyServices.Models.DataPartition> DataPartitionInfo { get { throw null; } }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.DataPartitionsListResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnergyServiceNameAvailabilityContent
+    public partial class EnergyServiceNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>
     {
         public EnergyServiceNameAvailabilityContent() { }
         public string Name { get { throw null; } set { } }
         public string ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnergyServiceNameAvailabilityResult
+    public partial class EnergyServiceNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>
     {
         internal EnergyServiceNameAvailabilityResult() { }
         public string Message { get { throw null; } }
         public bool? NameAvailable { get { throw null; } }
         public Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason? Reason { get { throw null; } }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EnergyServiceNameUnavailableReason : System.IEquatable<Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason>
@@ -120,18 +180,28 @@ namespace Azure.ResourceManager.EnergyServices.Models
         public static bool operator !=(Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason left, Azure.ResourceManager.EnergyServices.Models.EnergyServiceNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class EnergyServicePatch
+    public partial class EnergyServicePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>
     {
         public EnergyServicePatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServicePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EnergyServiceProperties
+    public partial class EnergyServiceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>
     {
         public EnergyServiceProperties() { }
         public string AuthAppId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.EnergyServices.Models.DataPartitionName> DataPartitionNames { get { throw null; } }
         public string DnsName { get { throw null; } }
         public Azure.ResourceManager.EnergyServices.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.EnergyServices.Models.EnergyServiceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.EnergyServices.Models.ProvisioningState>

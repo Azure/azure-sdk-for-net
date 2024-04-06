@@ -7,7 +7,7 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Search.Models
 {
@@ -19,8 +19,8 @@ namespace Azure.Maps.Search.Models
             {
                 return null;
             }
-            Optional<SearchSummary> summary = default;
-            Optional<IReadOnlyList<ReverseSearchAddressItem>> addresses = default;
+            SearchSummary summary = default;
+            IReadOnlyList<ReverseSearchAddressItem> addresses = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("summary"u8))
@@ -47,7 +47,15 @@ namespace Azure.Maps.Search.Models
                     continue;
                 }
             }
-            return new ReverseSearchAddressResult(summary.Value, Optional.ToList(addresses));
+            return new ReverseSearchAddressResult(summary, addresses ?? new ChangeTrackingList<ReverseSearchAddressItem>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReverseSearchAddressResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReverseSearchAddressResult(document.RootElement);
         }
     }
 }

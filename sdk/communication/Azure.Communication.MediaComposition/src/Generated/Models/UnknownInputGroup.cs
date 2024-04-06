@@ -9,10 +9,10 @@ using Azure.Communication.MediaComposition.Models;
 
 namespace Azure.Communication.MediaComposition
 {
-    /// <summary> The UnknownInputGroup. </summary>
+    /// <summary> Unknown version of InputGroup. </summary>
     internal partial class UnknownInputGroup : InputGroup
     {
-        /// <summary> Initializes a new instance of UnknownInputGroup. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownInputGroup"/>. </summary>
         /// <param name="kind"> Kind of input group. </param>
         /// <param name="position"> The (x,y) position on scene or input group. </param>
         /// <param name="width"> The width of the input group container. Can be defined as pixels or percentage. </param>

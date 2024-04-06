@@ -10,12 +10,12 @@ namespace Azure.AI.MetricsAdvisor.Models
     /// <summary> The AzureSQLConnectionStringParam. </summary>
     internal partial class AzureSQLConnectionStringParam
     {
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParam"/>. </summary>
         public AzureSQLConnectionStringParam()
         {
         }
 
-        /// <summary> Initializes a new instance of AzureSQLConnectionStringParam. </summary>
+        /// <summary> Initializes a new instance of <see cref="AzureSQLConnectionStringParam"/>. </summary>
         /// <param name="connectionString"> The connection string to access the Azure SQL. </param>
         internal AzureSQLConnectionStringParam(string connectionString)
         {

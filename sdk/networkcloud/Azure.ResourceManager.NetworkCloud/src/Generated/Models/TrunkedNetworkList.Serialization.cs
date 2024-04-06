@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    internal partial class TrunkedNetworkList
+    internal partial class TrunkedNetworkList : IUtf8JsonSerializable, IJsonModel<TrunkedNetworkList>
     {
-        internal static TrunkedNetworkList DeserializeTrunkedNetworkList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrunkedNetworkList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TrunkedNetworkList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TrunkedNetworkList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrunkedNetworkList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<NetworkCloudTrunkedNetworkData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        TrunkedNetworkList IJsonModel<TrunkedNetworkList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrunkedNetworkList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TrunkedNetworkList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTrunkedNetworkList(document.RootElement, options);
+        }
+
+        internal static TrunkedNetworkList DeserializeTrunkedNetworkList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<NetworkCloudTrunkedNetworkData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<NetworkCloudTrunkedNetworkData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -38,13 +99,49 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     List<NetworkCloudTrunkedNetworkData> array = new List<NetworkCloudTrunkedNetworkData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(item));
+                        array.Add(NetworkCloudTrunkedNetworkData.DeserializeNetworkCloudTrunkedNetworkData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new TrunkedNetworkList(nextLink.Value, Optional.ToList(value));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new TrunkedNetworkList(nextLink, value ?? new ChangeTrackingList<NetworkCloudTrunkedNetworkData>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<TrunkedNetworkList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrunkedNetworkList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TrunkedNetworkList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TrunkedNetworkList IPersistableModel<TrunkedNetworkList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TrunkedNetworkList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTrunkedNetworkList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TrunkedNetworkList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TrunkedNetworkList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

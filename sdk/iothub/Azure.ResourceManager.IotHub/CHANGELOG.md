@@ -1,14 +1,48 @@
 # Release History
 
-## 1.1.0-beta.2 (Unreleased)
+## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.1.1 (2023-11-29)
+
+### Features Added
+
+- Enable mocking for extension methods, refer this [document](https://aka.ms/azsdk/net/mocking) for more details.
+
+### Other Changes
+
+- Upgraded dependent `Azure.ResourceManager` to 1.9.0.
+
+## 1.1.0 (2023-09-18)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-07-02' to 'package-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/624dbc769880e5676ae8bb20d3c82ebd1783c64a/specification/iothub/resource-manager/readme.md
+
+### Other Changes
+
+- Obsoleted property 'BinaryData Thumbprint' in type Azure.ResourceManager.IotHub.Models.IotHubCertificateProperties
+- Obsoleted property 'BinaryData Thumbprint' in type Azure.ResourceManager.IotHub.Models.IotHubCertificatePropertiesWithNonce
+
+## 1.1.0-beta.2 (2023-09-04)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2021-07-02' to 'package-preview-2023-06'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1df6d6f671dc5059016fbc2c0a624e01f0b2972c/specification/iothub/resource-manager/readme.md
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.32.0 to 1.34.0
+- Upgraded Azure.ResourceManager from 1.6.0 to 1.7.0
 
 ## 1.1.0-beta.1 (2023-05-30)
 

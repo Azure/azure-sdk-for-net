@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using Azure.Core;
 using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Sas
@@ -280,6 +281,7 @@ namespace Azure.Storage.Sas
         /// <returns>
         /// The <see cref="SasQueryParameters"/> used for authenticating requests.
         /// </returns>
+        [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-files-shares")]
         public SasQueryParameters ToSasQueryParameters(StorageSharedKeyCredential sharedKeyCredential)
         {
             sharedKeyCredential = sharedKeyCredential ?? throw Errors.ArgumentNull(nameof(sharedKeyCredential));

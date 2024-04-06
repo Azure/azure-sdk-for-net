@@ -11,17 +11,24 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetAll(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetAllAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>> GetAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetIfExists(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>> GetIfExistsAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedNetworkData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ManagedNetworkData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>
     {
-        public ManagedNetworkData(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
+        public ManagedNetworkData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection Connectivity { get { throw null; } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.ManagedNetwork.Models.Scope Scope { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ManagedNetworkExtensions
     {
@@ -49,11 +56,13 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource> GetAll(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource> GetAllAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource>> GetAsync(string managedNetworkGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource> GetIfExists(string managedNetworkGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource>> GetIfExistsAsync(string managedNetworkGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedNetworkGroupData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedNetworkGroupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>
     {
         public ManagedNetworkGroupData() { }
         public Azure.ETag? ETag { get { throw null; } }
@@ -64,6 +73,11 @@ namespace Azure.ResourceManager.ManagedNetwork
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subnets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworks { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedNetworkGroupResource : Azure.ResourceManager.ArmResource
     {
@@ -90,15 +104,22 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource> GetAll(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource> GetAllAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource>> GetAsync(string managedNetworkPeeringPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource> GetIfExists(string managedNetworkPeeringPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource>> GetIfExistsAsync(string managedNetworkPeeringPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ManagedNetworkPeeringPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class ManagedNetworkPeeringPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>
     {
         public ManagedNetworkPeeringPolicyData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedNetworkPeeringPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -151,17 +172,24 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> GetAsync(string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> GetIfExists(string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> GetIfExistsAsync(string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ScopeAssignmentData : Azure.ResourceManager.Models.ResourceData
+    public partial class ScopeAssignmentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>
     {
         public ScopeAssignmentData() { }
         public string AssignedManagedNetwork { get { throw null; } set { } }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScopeAssignmentResource : Azure.ResourceManager.ArmResource
     {
@@ -178,6 +206,33 @@ namespace Azure.ResourceManager.ManagedNetwork
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.ManagedNetwork.Mocking
+{
+    public partial class MockableManagedNetworkArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkArmClient() { }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupResource GetManagedNetworkGroupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyResource GetManagedNetworkPeeringPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource GetManagedNetworkResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource> GetScopeAssignment(Azure.Core.ResourceIdentifier scope, string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource>> GetScopeAssignmentAsync(Azure.Core.ResourceIdentifier scope, string scopeAssignmentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ScopeAssignmentResource GetScopeAssignmentResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ScopeAssignmentCollection GetScopeAssignments(Azure.Core.ResourceIdentifier scope) { throw null; }
+    }
+    public partial class MockableManagedNetworkResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetwork(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource>> GetManagedNetworkAsync(string managedNetworkName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ManagedNetwork.ManagedNetworkCollection GetManagedNetworks() { throw null; }
+    }
+    public partial class MockableManagedNetworkSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableManagedNetworkSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworks(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ManagedNetwork.ManagedNetworkResource> GetManagedNetworksAsync(int? top = default(int?), string skiptoken = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.ManagedNetwork.Models
 {
     public static partial class ArmManagedNetworkModelFactory
@@ -190,11 +245,16 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public static Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties ResourceProperties(Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ManagedNetwork.ScopeAssignmentData ScopeAssignmentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState?), Azure.ETag? etag = default(Azure.ETag?), string assignedManagedNetwork = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
     }
-    public partial class ConnectivityCollection
+    public partial class ConnectivityCollection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>
     {
         internal ConnectivityCollection() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagedNetwork.ManagedNetworkGroupData> Groups { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.ManagedNetwork.ManagedNetworkPeeringPolicyData> Peerings { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityCollection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ConnectivityType : System.IEquatable<Azure.ResourceManager.ManagedNetwork.Models.ConnectivityType>
@@ -231,18 +291,28 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkKind left, Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ManagedNetworkPatch
+    public partial class ManagedNetworkPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>
     {
         public ManagedNetworkPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ManagedNetworkPeeringPolicyProperties : Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties
+    public partial class ManagedNetworkPeeringPolicyProperties : Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>
     {
         public ManagedNetworkPeeringPolicyProperties(Azure.ResourceManager.ManagedNetwork.Models.ConnectivityType connectivityType) { }
         public Azure.ResourceManager.ManagedNetwork.Models.ConnectivityType ConnectivityType { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier HubId { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Mesh { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Spokes { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ManagedNetworkPeeringPolicyProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState>
@@ -264,18 +334,28 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
         public static bool operator !=(Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState left, Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ResourceProperties
+    public partial class ResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>
     {
         public ResourceProperties() { }
         public Azure.ETag? ETag { get { throw null; } }
         public Azure.ResourceManager.ManagedNetwork.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.ResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class Scope
+    public partial class Scope : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>
     {
         public Scope() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> ManagementGroups { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subnets { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> Subscriptions { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> VirtualNetworks { get { throw null; } }
+        Azure.ResourceManager.ManagedNetwork.Models.Scope System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ManagedNetwork.Models.Scope System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ManagedNetwork.Models.Scope>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

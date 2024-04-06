@@ -5,23 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    internal partial class CommunityGalleryImageVersionList
+    internal partial class CommunityGalleryImageVersionList : IUtf8JsonSerializable, IJsonModel<CommunityGalleryImageVersionList>
     {
-        internal static CommunityGalleryImageVersionList DeserializeCommunityGalleryImageVersionList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CommunityGalleryImageVersionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CommunityGalleryImageVersionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunityGalleryImageVersionList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<CommunityGalleryImageVersionData>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CommunityGalleryImageVersionList IJsonModel<CommunityGalleryImageVersionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunityGalleryImageVersionList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunityGalleryImageVersionList(document.RootElement, options);
+        }
+
+        internal static CommunityGalleryImageVersionList DeserializeCommunityGalleryImageVersionList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<CommunityGalleryImageVersionData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<CommunityGalleryImageVersionData> array = new List<CommunityGalleryImageVersionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(item));
+                        array.Add(CommunityGalleryImageVersionData.DeserializeCommunityGalleryImageVersionData(item, options));
                     }
                     value = array;
                     continue;
@@ -39,8 +97,44 @@ namespace Azure.ResourceManager.Compute.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CommunityGalleryImageVersionList(value, nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CommunityGalleryImageVersionList(value, nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CommunityGalleryImageVersionList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageVersionList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CommunityGalleryImageVersionList IPersistableModel<CommunityGalleryImageVersionList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CommunityGalleryImageVersionList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCommunityGalleryImageVersionList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommunityGalleryImageVersionList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CommunityGalleryImageVersionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

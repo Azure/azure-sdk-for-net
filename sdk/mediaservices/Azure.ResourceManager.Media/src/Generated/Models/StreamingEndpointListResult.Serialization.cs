@@ -5,24 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    internal partial class StreamingEndpointListResult
+    internal partial class StreamingEndpointListResult : IUtf8JsonSerializable, IJsonModel<StreamingEndpointListResult>
     {
-        internal static StreamingEndpointListResult DeserializeStreamingEndpointListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingEndpointListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<StreamingEndpointData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OdataCount))
+            {
+                writer.WritePropertyName("@odata.count"u8);
+                writer.WriteNumberValue(OdataCount.Value);
+            }
+            if (Optional.IsDefined(OdataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(OdataNextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        StreamingEndpointListResult IJsonModel<StreamingEndpointListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingEndpointListResult(document.RootElement, options);
+        }
+
+        internal static StreamingEndpointListResult DeserializeStreamingEndpointListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<StreamingEndpointData>> value = default;
-            Optional<int> odataCount = default;
-            Optional<string> odataNextLink = default;
+            IReadOnlyList<StreamingEndpointData> value = default;
+            int? odataCount = default;
+            string odataNextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -34,7 +100,7 @@ namespace Azure.ResourceManager.Media.Models
                     List<StreamingEndpointData> array = new List<StreamingEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item));
+                        array.Add(StreamingEndpointData.DeserializeStreamingEndpointData(item, options));
                     }
                     value = array;
                     continue;
@@ -53,8 +119,44 @@ namespace Azure.ResourceManager.Media.Models
                     odataNextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingEndpointListResult(Optional.ToList(value), Optional.ToNullable(odataCount), odataNextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StreamingEndpointListResult(value ?? new ChangeTrackingList<StreamingEndpointData>(), odataCount, odataNextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingEndpointListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingEndpointListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingEndpointListResult IPersistableModel<StreamingEndpointListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingEndpointListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingEndpointListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingEndpointListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -6,20 +6,22 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
     public partial class HanaDBProviderInstanceProperties : ProviderSpecificProperties
     {
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HanaDBProviderInstanceProperties"/>. </summary>
         public HanaDBProviderInstanceProperties()
         {
             ProviderType = "SapHana";
         }
 
-        /// <summary> Initializes a new instance of HanaDBProviderInstanceProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="HanaDBProviderInstanceProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
         /// <param name="dbName"> Gets or sets the hana database name. </param>
         /// <param name="sqlPort"> Gets or sets the database sql port. </param>
@@ -31,7 +33,7 @@ namespace Azure.ResourceManager.Workloads.Models
         /// <param name="sslHostNameInCertificate"> Gets or sets the hostname(s) in the SSL certificate. </param>
         /// <param name="sslPreference"> Gets or sets certificate preference if secure communication is enabled. </param>
         /// <param name="sapSid"> Gets or sets the SAP System Identifier. </param>
-        internal HanaDBProviderInstanceProperties(string providerType, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri sslCertificateUri, string sslHostNameInCertificate, SapSslPreference? sslPreference, string sapSid) : base(providerType)
+        internal HanaDBProviderInstanceProperties(string providerType, IDictionary<string, BinaryData> serializedAdditionalRawData, string hostname, string dbName, string sqlPort, string instanceNumber, string dbUsername, string dbPassword, Uri dbPasswordUri, Uri sslCertificateUri, string sslHostNameInCertificate, SapSslPreference? sslPreference, string sapSid) : base(providerType, serializedAdditionalRawData)
         {
             Hostname = hostname;
             DBName = dbName;

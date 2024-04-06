@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ManagedNetworkFabric;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 using Azure.ResourceManager.Resources;
 
@@ -74,6 +71,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
             // invoke the operation
             NetworkFabricRoutePolicyPatch patch = new NetworkFabricRoutePolicyPatch()
             {
+                DefaultAction = CommunityActionType.Deny,
                 Statements =
 {
 new RoutePolicyStatementProperties(7,new StatementConditionProperties()

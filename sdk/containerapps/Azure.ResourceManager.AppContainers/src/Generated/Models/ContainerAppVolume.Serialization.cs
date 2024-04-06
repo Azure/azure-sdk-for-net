@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class ContainerAppVolume : IUtf8JsonSerializable
+    public partial class ContainerAppVolume : IUtf8JsonSerializable, IJsonModel<ContainerAppVolume>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppVolume>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ContainerAppVolume>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Name))
             {
@@ -37,7 +47,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Secrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecretVolumeItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -46,20 +56,51 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("mountOptions"u8);
                 writer.WriteStringValue(MountOptions);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element)
+        ContainerAppVolume IJsonModel<ContainerAppVolume>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeContainerAppVolume(document.RootElement, options);
+        }
+
+        internal static ContainerAppVolume DeserializeContainerAppVolume(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ContainerAppStorageType> storageType = default;
-            Optional<string> storageName = default;
-            Optional<IList<SecretVolumeItem>> secrets = default;
-            Optional<string> mountOptions = default;
+            string name = default;
+            ContainerAppStorageType? storageType = default;
+            string storageName = default;
+            IList<SecretVolumeItem> secrets = default;
+            string mountOptions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -90,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<SecretVolumeItem> array = new List<SecretVolumeItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item));
+                        array.Add(SecretVolumeItem.DeserializeSecretVolumeItem(item, options));
                     }
                     secrets = array;
                     continue;
@@ -100,8 +141,50 @@ namespace Azure.ResourceManager.AppContainers.Models
                     mountOptions = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ContainerAppVolume(name.Value, Optional.ToNullable(storageType), storageName.Value, Optional.ToList(secrets), mountOptions.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ContainerAppVolume(
+                name,
+                storageType,
+                storageName,
+                secrets ?? new ChangeTrackingList<SecretVolumeItem>(),
+                mountOptions,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ContainerAppVolume>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ContainerAppVolume IPersistableModel<ContainerAppVolume>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppVolume>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeContainerAppVolume(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ContainerAppVolume)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ContainerAppVolume>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

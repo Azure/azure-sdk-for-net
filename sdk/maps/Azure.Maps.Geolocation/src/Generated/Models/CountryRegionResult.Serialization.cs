@@ -7,7 +7,6 @@
 
 using System.Net;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Maps.Geolocation
 {
@@ -19,8 +18,8 @@ namespace Azure.Maps.Geolocation
             {
                 return null;
             }
-            Optional<CountryRegion> countryRegion = default;
-            Optional<IPAddress> ipAddress = default;
+            CountryRegion countryRegion = default;
+            IPAddress ipAddress = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("countryRegion"u8))
@@ -42,7 +41,15 @@ namespace Azure.Maps.Geolocation
                     continue;
                 }
             }
-            return new CountryRegionResult(countryRegion.Value, ipAddress.Value);
+            return new CountryRegionResult(countryRegion, ipAddress);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CountryRegionResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCountryRegionResult(document.RootElement);
         }
     }
 }

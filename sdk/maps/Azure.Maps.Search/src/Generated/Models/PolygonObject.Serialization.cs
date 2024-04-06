@@ -6,12 +6,17 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
-using Azure.Core.GeoJson;
 
 namespace Azure.Maps.Search.Models
 {
     public partial class PolygonObject
     {
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolygonObject FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolygonObject(document.RootElement);
+        }
     }
 }

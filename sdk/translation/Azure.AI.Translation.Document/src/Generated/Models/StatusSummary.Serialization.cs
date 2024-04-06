@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -63,7 +62,22 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new StatusSummary(total, failed, success, inProgress, notYetStarted, cancelled, totalCharacterCharged);
+            return new StatusSummary(
+                total,
+                failed,
+                success,
+                inProgress,
+                notYetStarted,
+                cancelled,
+                totalCharacterCharged);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StatusSummary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStatusSummary(document.RootElement);
         }
     }
 }

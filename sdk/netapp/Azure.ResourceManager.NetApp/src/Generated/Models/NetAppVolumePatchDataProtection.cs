@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
@@ -12,13 +14,52 @@ namespace Azure.ResourceManager.NetApp.Models
     /// <summary> DataProtection type volumes include an object containing details of the replication. </summary>
     public partial class NetAppVolumePatchDataProtection
     {
-        /// <summary> Initializes a new instance of NetAppVolumePatchDataProtection. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
         public NetAppVolumePatchDataProtection()
         {
         }
 
-        /// <summary> Backup Properties. </summary>
-        public NetAppVolumeBackupConfiguration Backup { get; set; }
+        /// <summary> Initializes a new instance of <see cref="NetAppVolumePatchDataProtection"/>. </summary>
+        /// <param name="snapshot"> Snapshot properties. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetAppVolumePatchDataProtection(VolumeSnapshotProperties snapshot, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Snapshot = snapshot;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Snapshot properties. </summary>
         internal VolumeSnapshotProperties Snapshot { get; set; }
         /// <summary> Snapshot Policy ResourceId. </summary>

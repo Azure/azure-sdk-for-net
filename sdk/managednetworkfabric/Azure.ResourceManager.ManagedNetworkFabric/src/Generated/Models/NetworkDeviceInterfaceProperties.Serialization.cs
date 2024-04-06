@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
-    public partial class NetworkDeviceInterfaceProperties : IUtf8JsonSerializable
+    public partial class NetworkDeviceInterfaceProperties : IUtf8JsonSerializable, IJsonModel<NetworkDeviceInterfaceProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NetworkDeviceInterfaceProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NetworkDeviceInterfaceProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Identifier))
             {
@@ -32,22 +42,53 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedConnectorTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SupportedConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static NetworkDeviceInterfaceProperties DeserializeNetworkDeviceInterfaceProperties(JsonElement element)
+        NetworkDeviceInterfaceProperties IJsonModel<NetworkDeviceInterfaceProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNetworkDeviceInterfaceProperties(document.RootElement, options);
+        }
+
+        internal static NetworkDeviceInterfaceProperties DeserializeNetworkDeviceInterfaceProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> identifier = default;
-            Optional<string> interfaceType = default;
-            Optional<IList<SupportedConnectorProperties>> supportedConnectorTypes = default;
+            string identifier = default;
+            string interfaceType = default;
+            IList<SupportedConnectorProperties> supportedConnectorTypes = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -69,13 +110,49 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     List<SupportedConnectorProperties> array = new List<SupportedConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item));
+                        array.Add(SupportedConnectorProperties.DeserializeSupportedConnectorProperties(item, options));
                     }
                     supportedConnectorTypes = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NetworkDeviceInterfaceProperties(identifier.Value, interfaceType.Value, Optional.ToList(supportedConnectorTypes));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NetworkDeviceInterfaceProperties(identifier, interfaceType, supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NetworkDeviceInterfaceProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NetworkDeviceInterfaceProperties IPersistableModel<NetworkDeviceInterfaceProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NetworkDeviceInterfaceProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNetworkDeviceInterfaceProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NetworkDeviceInterfaceProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NetworkDeviceInterfaceProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

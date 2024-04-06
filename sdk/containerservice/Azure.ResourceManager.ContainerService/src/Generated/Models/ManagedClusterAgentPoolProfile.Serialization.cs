@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class ManagedClusterAgentPoolProfile : IUtf8JsonSerializable
+    public partial class ManagedClusterAgentPoolProfile : IUtf8JsonSerializable, IJsonModel<ManagedClusterAgentPoolProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedClusterAgentPoolProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedClusterAgentPoolProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -47,11 +57,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("workloadRuntime"u8);
                 writer.WriteStringValue(WorkloadRuntime.Value.ToString());
-            }
-            if (Optional.IsDefined(MessageOfTheDay))
-            {
-                writer.WritePropertyName("messageOfTheDay"u8);
-                writer.WriteStringValue(MessageOfTheDay);
             }
             if (Optional.IsDefined(VnetSubnetId))
             {
@@ -113,15 +118,30 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("orchestratorVersion"u8);
                 writer.WriteStringValue(OrchestratorVersion);
             }
+            if (options.Format != "W" && Optional.IsDefined(CurrentOrchestratorVersion))
+            {
+                writer.WritePropertyName("currentOrchestratorVersion"u8);
+                writer.WriteStringValue(CurrentOrchestratorVersion);
+            }
+            if (options.Format != "W" && Optional.IsDefined(NodeImageVersion))
+            {
+                writer.WritePropertyName("nodeImageVersion"u8);
+                writer.WriteStringValue(NodeImageVersion);
+            }
             if (Optional.IsDefined(UpgradeSettings))
             {
                 writer.WritePropertyName("upgradeSettings"u8);
-                writer.WriteObjectValue(UpgradeSettings);
+                writer.WriteObjectValue<AgentPoolUpgradeSettings>(UpgradeSettings, options);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsDefined(PowerState))
             {
                 writer.WritePropertyName("powerState"u8);
-                writer.WriteObjectValue(PowerState);
+                writer.WriteObjectValue<ContainerServicePowerState>(PowerState, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -137,11 +157,6 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 writer.WritePropertyName("enableNodePublicIP"u8);
                 writer.WriteBooleanValue(EnableNodePublicIP.Value);
-            }
-            if (Optional.IsDefined(EnableCustomCATrust))
-            {
-                writer.WritePropertyName("enableCustomCATrust"u8);
-                writer.WriteBooleanValue(EnableCustomCATrust.Value);
             }
             if (Optional.IsDefined(NodePublicIPPrefixId))
             {
@@ -203,12 +218,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(KubeletConfig))
             {
                 writer.WritePropertyName("kubeletConfig"u8);
-                writer.WriteObjectValue(KubeletConfig);
+                writer.WriteObjectValue<KubeletConfig>(KubeletConfig, options);
             }
             if (Optional.IsDefined(LinuxOSConfig))
             {
                 writer.WritePropertyName("linuxOSConfig"u8);
-                writer.WriteObjectValue(LinuxOSConfig);
+                writer.WriteObjectValue<LinuxOSConfig>(LinuxOSConfig, options);
             }
             if (Optional.IsDefined(EnableEncryptionAtHost))
             {
@@ -233,7 +248,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue<ContainerServiceCreationData>(CreationData, options);
             }
             if (Optional.IsDefined(CapacityReservationGroupId))
             {
@@ -245,72 +260,95 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("hostGroupID"u8);
                 writer.WriteStringValue(HostGroupId);
             }
-            if (Optional.IsDefined(WindowsProfile))
-            {
-                writer.WritePropertyName("windowsProfile"u8);
-                writer.WriteObjectValue(WindowsProfile);
-            }
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<AgentPoolNetworkProfile>(NetworkProfile, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ManagedClusterAgentPoolProfile DeserializeManagedClusterAgentPoolProfile(JsonElement element)
+        ManagedClusterAgentPoolProfile IJsonModel<ManagedClusterAgentPoolProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedClusterAgentPoolProfile(document.RootElement, options);
+        }
+
+        internal static ManagedClusterAgentPoolProfile DeserializeManagedClusterAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
-            Optional<int> count = default;
-            Optional<string> vmSize = default;
-            Optional<int> osDiskSizeGB = default;
-            Optional<ContainerServiceOSDiskType> osDiskType = default;
-            Optional<KubeletDiskType> kubeletDiskType = default;
-            Optional<WorkloadRuntime> workloadRuntime = default;
-            Optional<string> messageOfTheDay = default;
-            Optional<ResourceIdentifier> vnetSubnetId = default;
-            Optional<ResourceIdentifier> podSubnetId = default;
-            Optional<int> maxPods = default;
-            Optional<ContainerServiceOSType> osType = default;
-            Optional<ContainerServiceOSSku> osSku = default;
-            Optional<int> maxCount = default;
-            Optional<int> minCount = default;
-            Optional<bool> enableAutoScaling = default;
-            Optional<ScaleDownMode> scaleDownMode = default;
-            Optional<AgentPoolType> type = default;
-            Optional<AgentPoolMode> mode = default;
-            Optional<string> orchestratorVersion = default;
-            Optional<string> currentOrchestratorVersion = default;
-            Optional<string> nodeImageVersion = default;
-            Optional<AgentPoolUpgradeSettings> upgradeSettings = default;
-            Optional<string> provisioningState = default;
-            Optional<ContainerServicePowerState> powerState = default;
-            Optional<IList<string>> availabilityZones = default;
-            Optional<bool> enableNodePublicIP = default;
-            Optional<bool> enableCustomCATrust = default;
-            Optional<ResourceIdentifier> nodePublicIPPrefixId = default;
-            Optional<ScaleSetPriority> scaleSetPriority = default;
-            Optional<ScaleSetEvictionPolicy> scaleSetEvictionPolicy = default;
-            Optional<float> spotMaxPrice = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<IDictionary<string, string>> nodeLabels = default;
-            Optional<IList<string>> nodeTaints = default;
-            Optional<ResourceIdentifier> proximityPlacementGroupId = default;
-            Optional<KubeletConfig> kubeletConfig = default;
-            Optional<LinuxOSConfig> linuxOSConfig = default;
-            Optional<bool> enableEncryptionAtHost = default;
-            Optional<bool> enableUltraSsd = default;
-            Optional<bool> enableFIPS = default;
-            Optional<GpuInstanceProfile> gpuInstanceProfile = default;
-            Optional<ContainerServiceCreationData> creationData = default;
-            Optional<ResourceIdentifier> capacityReservationGroupId = default;
-            Optional<ResourceIdentifier> hostGroupId = default;
-            Optional<AgentPoolWindowsProfile> windowsProfile = default;
-            Optional<AgentPoolNetworkProfile> networkProfile = default;
+            int? count = default;
+            string vmSize = default;
+            int? osDiskSizeGB = default;
+            ContainerServiceOSDiskType? osDiskType = default;
+            KubeletDiskType? kubeletDiskType = default;
+            WorkloadRuntime? workloadRuntime = default;
+            ResourceIdentifier vnetSubnetId = default;
+            ResourceIdentifier podSubnetId = default;
+            int? maxPods = default;
+            ContainerServiceOSType? osType = default;
+            ContainerServiceOSSku? osSku = default;
+            int? maxCount = default;
+            int? minCount = default;
+            bool? enableAutoScaling = default;
+            ScaleDownMode? scaleDownMode = default;
+            AgentPoolType? type = default;
+            AgentPoolMode? mode = default;
+            string orchestratorVersion = default;
+            string currentOrchestratorVersion = default;
+            string nodeImageVersion = default;
+            AgentPoolUpgradeSettings upgradeSettings = default;
+            string provisioningState = default;
+            ContainerServicePowerState powerState = default;
+            IList<string> availabilityZones = default;
+            bool? enableNodePublicIP = default;
+            ResourceIdentifier nodePublicIPPrefixId = default;
+            ScaleSetPriority? scaleSetPriority = default;
+            ScaleSetEvictionPolicy? scaleSetEvictionPolicy = default;
+            float? spotMaxPrice = default;
+            IDictionary<string, string> tags = default;
+            IDictionary<string, string> nodeLabels = default;
+            IList<string> nodeTaints = default;
+            ResourceIdentifier proximityPlacementGroupId = default;
+            KubeletConfig kubeletConfig = default;
+            LinuxOSConfig linuxOSConfig = default;
+            bool? enableEncryptionAtHost = default;
+            bool? enableUltraSsd = default;
+            bool? enableFIPS = default;
+            GpuInstanceProfile? gpuInstanceProfile = default;
+            ContainerServiceCreationData creationData = default;
+            ResourceIdentifier capacityReservationGroupId = default;
+            ResourceIdentifier hostGroupId = default;
+            AgentPoolNetworkProfile networkProfile = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -366,11 +404,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     workloadRuntime = new WorkloadRuntime(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("messageOfTheDay"u8))
-                {
-                    messageOfTheDay = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("vnetSubnetID"u8))
@@ -493,7 +526,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value);
+                    upgradeSettings = AgentPoolUpgradeSettings.DeserializeAgentPoolUpgradeSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -507,7 +540,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value);
+                    powerState = ContainerServicePowerState.DeserializeContainerServicePowerState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("availabilityZones"u8))
@@ -531,15 +564,6 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     enableNodePublicIP = property.Value.GetBoolean();
-                    continue;
-                }
-                if (property.NameEquals("enableCustomCATrust"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    enableCustomCATrust = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("nodePublicIPPrefixID"u8))
@@ -635,7 +659,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value);
+                    kubeletConfig = KubeletConfig.DeserializeKubeletConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("linuxOSConfig"u8))
@@ -644,7 +668,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value);
+                    linuxOSConfig = LinuxOSConfig.DeserializeLinuxOSConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("enableEncryptionAtHost"u8))
@@ -689,7 +713,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value);
+                    creationData = ContainerServiceCreationData.DeserializeContainerServiceCreationData(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("capacityReservationGroupID"u8))
@@ -710,26 +734,98 @@ namespace Azure.ResourceManager.ContainerService.Models
                     hostGroupId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("windowsProfile"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    windowsProfile = AgentPoolWindowsProfile.DeserializeAgentPoolWindowsProfile(property.Value);
-                    continue;
-                }
                 if (property.NameEquals("networkProfile"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value);
+                    networkProfile = AgentPoolNetworkProfile.DeserializeAgentPoolNetworkProfile(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedClusterAgentPoolProfile(Optional.ToNullable(count), vmSize.Value, Optional.ToNullable(osDiskSizeGB), Optional.ToNullable(osDiskType), Optional.ToNullable(kubeletDiskType), Optional.ToNullable(workloadRuntime), messageOfTheDay.Value, vnetSubnetId.Value, podSubnetId.Value, Optional.ToNullable(maxPods), Optional.ToNullable(osType), Optional.ToNullable(osSku), Optional.ToNullable(maxCount), Optional.ToNullable(minCount), Optional.ToNullable(enableAutoScaling), Optional.ToNullable(scaleDownMode), Optional.ToNullable(type), Optional.ToNullable(mode), orchestratorVersion.Value, currentOrchestratorVersion.Value, nodeImageVersion.Value, upgradeSettings.Value, provisioningState.Value, powerState.Value, Optional.ToList(availabilityZones), Optional.ToNullable(enableNodePublicIP), Optional.ToNullable(enableCustomCATrust), nodePublicIPPrefixId.Value, Optional.ToNullable(scaleSetPriority), Optional.ToNullable(scaleSetEvictionPolicy), Optional.ToNullable(spotMaxPrice), Optional.ToDictionary(tags), Optional.ToDictionary(nodeLabels), Optional.ToList(nodeTaints), proximityPlacementGroupId.Value, kubeletConfig.Value, linuxOSConfig.Value, Optional.ToNullable(enableEncryptionAtHost), Optional.ToNullable(enableUltraSsd), Optional.ToNullable(enableFIPS), Optional.ToNullable(gpuInstanceProfile), creationData.Value, capacityReservationGroupId.Value, hostGroupId.Value, windowsProfile.Value, networkProfile.Value, name);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedClusterAgentPoolProfile(
+                count,
+                vmSize,
+                osDiskSizeGB,
+                osDiskType,
+                kubeletDiskType,
+                workloadRuntime,
+                vnetSubnetId,
+                podSubnetId,
+                maxPods,
+                osType,
+                osSku,
+                maxCount,
+                minCount,
+                enableAutoScaling,
+                scaleDownMode,
+                type,
+                mode,
+                orchestratorVersion,
+                currentOrchestratorVersion,
+                nodeImageVersion,
+                upgradeSettings,
+                provisioningState,
+                powerState,
+                availabilityZones ?? new ChangeTrackingList<string>(),
+                enableNodePublicIP,
+                nodePublicIPPrefixId,
+                scaleSetPriority,
+                scaleSetEvictionPolicy,
+                spotMaxPrice,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
+                nodeTaints ?? new ChangeTrackingList<string>(),
+                proximityPlacementGroupId,
+                kubeletConfig,
+                linuxOSConfig,
+                enableEncryptionAtHost,
+                enableUltraSsd,
+                enableFIPS,
+                gpuInstanceProfile,
+                creationData,
+                capacityReservationGroupId,
+                hostGroupId,
+                networkProfile,
+                serializedAdditionalRawData,
+                name);
         }
+
+        BinaryData IPersistableModel<ManagedClusterAgentPoolProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedClusterAgentPoolProfile IPersistableModel<ManagedClusterAgentPoolProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedClusterAgentPoolProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedClusterAgentPoolProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedClusterAgentPoolProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

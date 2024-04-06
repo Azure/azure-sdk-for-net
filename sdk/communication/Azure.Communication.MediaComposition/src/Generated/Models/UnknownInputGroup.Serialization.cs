@@ -21,7 +21,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
-                writer.WriteObjectValue(Position);
+                writer.WriteObjectValue<InputPosition>(Position);
             }
             if (Optional.IsDefined(Width))
             {
@@ -53,11 +53,11 @@ namespace Azure.Communication.MediaComposition
                 return null;
             }
             InputGroupType kind = "Unknown";
-            Optional<InputPosition> position = default;
-            Optional<string> width = default;
-            Optional<string> height = default;
-            Optional<string> layer = default;
-            Optional<ScalingMode> scalingMode = default;
+            InputPosition position = default;
+            string width = default;
+            string height = default;
+            string layer = default;
+            ScalingMode? scalingMode = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("kind"u8))
@@ -99,7 +99,29 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new UnknownInputGroup(kind, position.Value, width.Value, height.Value, layer.Value, Optional.ToNullable(scalingMode));
+            return new UnknownInputGroup(
+                kind,
+                position,
+                width,
+                height,
+                layer,
+                scalingMode);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownInputGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownInputGroup(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UnknownInputGroup>(this);
+            return content;
         }
     }
 }

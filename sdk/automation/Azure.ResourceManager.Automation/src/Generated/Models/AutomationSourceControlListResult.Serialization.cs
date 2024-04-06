@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    internal partial class AutomationSourceControlListResult
+    internal partial class AutomationSourceControlListResult : IUtf8JsonSerializable, IJsonModel<AutomationSourceControlListResult>
     {
-        internal static AutomationSourceControlListResult DeserializeAutomationSourceControlListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutomationSourceControlListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutomationSourceControlListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationSourceControlListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<AutomationSourceControlData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        AutomationSourceControlListResult IJsonModel<AutomationSourceControlListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutomationSourceControlListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutomationSourceControlListResult(document.RootElement, options);
+        }
+
+        internal static AutomationSourceControlListResult DeserializeAutomationSourceControlListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomationSourceControlData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AutomationSourceControlData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.Automation.Models
                     List<AutomationSourceControlData> array = new List<AutomationSourceControlData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomationSourceControlData.DeserializeAutomationSourceControlData(item));
+                        array.Add(AutomationSourceControlData.DeserializeAutomationSourceControlData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.Automation.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutomationSourceControlListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutomationSourceControlListResult(value ?? new ChangeTrackingList<AutomationSourceControlData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutomationSourceControlListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutomationSourceControlListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutomationSourceControlListResult IPersistableModel<AutomationSourceControlListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutomationSourceControlListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutomationSourceControlListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutomationSourceControlListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutomationSourceControlListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

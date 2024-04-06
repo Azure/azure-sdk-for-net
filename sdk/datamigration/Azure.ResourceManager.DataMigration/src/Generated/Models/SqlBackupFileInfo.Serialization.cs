@@ -5,27 +5,115 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class SqlBackupFileInfo
+    public partial class SqlBackupFileInfo : IUtf8JsonSerializable, IJsonModel<SqlBackupFileInfo>
     {
-        internal static SqlBackupFileInfo DeserializeSqlBackupFileInfo(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlBackupFileInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SqlBackupFileInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(FileName))
+            {
+                writer.WritePropertyName("fileName"u8);
+                writer.WriteStringValue(FileName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalSize))
+            {
+                writer.WritePropertyName("totalSize"u8);
+                writer.WriteNumberValue(TotalSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataRead))
+            {
+                writer.WritePropertyName("dataRead"u8);
+                writer.WriteNumberValue(DataRead.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataWritten))
+            {
+                writer.WritePropertyName("dataWritten"u8);
+                writer.WriteNumberValue(DataWritten.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyThroughput))
+            {
+                writer.WritePropertyName("copyThroughput"u8);
+                writer.WriteNumberValue(CopyThroughput.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CopyDuration))
+            {
+                writer.WritePropertyName("copyDuration"u8);
+                writer.WriteNumberValue(CopyDuration.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(FamilySequenceNumber))
+            {
+                writer.WritePropertyName("familySequenceNumber"u8);
+                writer.WriteNumberValue(FamilySequenceNumber.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SqlBackupFileInfo IJsonModel<SqlBackupFileInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSqlBackupFileInfo(document.RootElement, options);
+        }
+
+        internal static SqlBackupFileInfo DeserializeSqlBackupFileInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> fileName = default;
-            Optional<string> status = default;
-            Optional<long> totalSize = default;
-            Optional<long> dataRead = default;
-            Optional<long> dataWritten = default;
-            Optional<double> copyThroughput = default;
-            Optional<int> copyDuration = default;
-            Optional<int> familySequenceNumber = default;
+            string fileName = default;
+            string status = default;
+            long? totalSize = default;
+            long? dataRead = default;
+            long? dataWritten = default;
+            double? copyThroughput = default;
+            int? copyDuration = default;
+            int? familySequenceNumber = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fileName"u8))
@@ -92,8 +180,53 @@ namespace Azure.ResourceManager.DataMigration.Models
                     familySequenceNumber = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SqlBackupFileInfo(fileName.Value, status.Value, Optional.ToNullable(totalSize), Optional.ToNullable(dataRead), Optional.ToNullable(dataWritten), Optional.ToNullable(copyThroughput), Optional.ToNullable(copyDuration), Optional.ToNullable(familySequenceNumber));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SqlBackupFileInfo(
+                fileName,
+                status,
+                totalSize,
+                dataRead,
+                dataWritten,
+                copyThroughput,
+                copyDuration,
+                familySequenceNumber,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SqlBackupFileInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SqlBackupFileInfo IPersistableModel<SqlBackupFileInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SqlBackupFileInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSqlBackupFileInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlBackupFileInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SqlBackupFileInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

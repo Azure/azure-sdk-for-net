@@ -11,9 +11,13 @@ namespace: Azure.ResourceManager.Relay
 require: https://github.com/Azure/azure-rest-api-specs/blob/df77748f7dff3fe12c13b7262e9b307c719e6918/specification/relay/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 request-path-to-resource-name:
     /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Relay/namespaces/{namespaceName}/authorizationRules/{authorizationRuleName}: RelayNamespaceAuthorizationRule
@@ -29,9 +33,9 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uri': 'Uri'
   '*Uris': 'Uri'
- 
 
-rename-rules:
+
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

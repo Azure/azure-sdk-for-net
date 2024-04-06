@@ -6,17 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class BotProperties : IUtf8JsonSerializable
+    public partial class BotProperties : IUtf8JsonSerializable, IJsonModel<BotProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BotProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<BotProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
@@ -38,6 +46,11 @@ namespace Azure.ResourceManager.BotService.Models
             else
             {
                 writer.WriteNull("endpoint");
+            }
+            if (options.Format != "W" && Optional.IsDefined(EndpointVersion))
+            {
+                writer.WritePropertyName("endpointVersion"u8);
+                writer.WriteStringValue(EndpointVersion);
             }
             if (Optional.IsCollectionDefined(AllSettings))
             {
@@ -83,6 +96,26 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("msaAppMSIResourceId"u8);
                 writer.WriteStringValue(MsaAppMSIResourceId);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfiguredChannels))
+            {
+                writer.WritePropertyName("configuredChannels"u8);
+                writer.WriteStartArray();
+                foreach (var item in ConfiguredChannels)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(EnabledChannels))
+            {
+                writer.WritePropertyName("enabledChannels"u8);
+                writer.WriteStartArray();
+                foreach (var item in EnabledChannels)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(DeveloperAppInsightKey))
             {
                 writer.WritePropertyName("developerAppInsightKey"u8);
@@ -123,6 +156,11 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("cmekKeyVaultUrl"u8);
                 writer.WriteStringValue(CmekKeyVaultUri.AbsoluteUri);
             }
+            if (options.Format != "W" && Optional.IsDefined(CmekEncryptionStatus))
+            {
+                writer.WritePropertyName("cmekEncryptionStatus"u8);
+                writer.WriteStringValue(CmekEncryptionStatus);
+            }
             if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
@@ -137,6 +175,16 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 writer.WritePropertyName("isStreamingSupported"u8);
                 writer.WriteBooleanValue(IsStreamingSupported.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsDeveloperAppInsightsApiKeySet))
+            {
+                writer.WritePropertyName("isDeveloperAppInsightsApiKeySet"u8);
+                writer.WriteBooleanValue(IsDeveloperAppInsightsApiKeySet.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MigrationToken))
+            {
+                writer.WritePropertyName("migrationToken"u8);
+                writer.WriteStringValue(MigrationToken);
             }
             if (Optional.IsDefined(IsLocalAuthDisabled))
             {
@@ -160,6 +208,16 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (var item in PrivateEndpointConnections)
+                {
+                    writer.WriteObjectValue<BotServicePrivateEndpointConnectionData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(OpenWithHint))
             {
                 writer.WritePropertyName("openWithHint"u8);
@@ -170,55 +228,91 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WritePropertyName("appPasswordHint"u8);
                 writer.WriteStringValue(AppPasswordHint);
             }
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            {
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
+            }
             if (Optional.IsDefined(PublishingCredentials))
             {
                 writer.WritePropertyName("publishingCredentials"u8);
                 writer.WriteStringValue(PublishingCredentials);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static BotProperties DeserializeBotProperties(JsonElement element)
+        BotProperties IJsonModel<BotProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(BotProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeBotProperties(document.RootElement, options);
+        }
+
+        internal static BotProperties DeserializeBotProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string displayName = default;
-            Optional<string> description = default;
-            Optional<Uri> iconUrl = default;
+            string description = default;
+            Uri iconUrl = default;
             Uri endpoint = default;
-            Optional<string> endpointVersion = default;
-            Optional<IDictionary<string, string>> allSettings = default;
-            Optional<IDictionary<string, string>> parameters = default;
-            Optional<Uri> manifestUrl = default;
-            Optional<BotMsaAppType> msaAppType = default;
+            string endpointVersion = default;
+            IDictionary<string, string> allSettings = default;
+            IDictionary<string, string> parameters = default;
+            Uri manifestUrl = default;
+            BotMsaAppType? msaAppType = default;
             string msaAppId = default;
-            Optional<string> msaAppTenantId = default;
-            Optional<ResourceIdentifier> msaAppMSIResourceId = default;
-            Optional<IReadOnlyList<string>> configuredChannels = default;
-            Optional<IReadOnlyList<string>> enabledChannels = default;
-            Optional<string> developerAppInsightKey = default;
-            Optional<string> developerAppInsightsApiKey = default;
-            Optional<string> developerAppInsightsApplicationId = default;
-            Optional<IList<string>> luisAppIds = default;
-            Optional<string> luisKey = default;
-            Optional<bool> isCmekEnabled = default;
-            Optional<Uri> cmekKeyVaultUrl = default;
-            Optional<string> cmekEncryptionStatus = default;
-            Optional<Guid> tenantId = default;
-            Optional<BotServicePublicNetworkAccess> publicNetworkAccess = default;
-            Optional<bool> isStreamingSupported = default;
-            Optional<bool> isDeveloperAppInsightsApiKeySet = default;
-            Optional<string> migrationToken = default;
-            Optional<bool> disableLocalAuth = default;
-            Optional<string> schemaTransformationVersion = default;
-            Optional<ResourceIdentifier> storageResourceId = default;
-            Optional<IReadOnlyList<BotServicePrivateEndpointConnectionData>> privateEndpointConnections = default;
-            Optional<string> openWithHint = default;
-            Optional<string> appPasswordHint = default;
-            Optional<string> provisioningState = default;
-            Optional<string> publishingCredentials = default;
+            string msaAppTenantId = default;
+            ResourceIdentifier msaAppMSIResourceId = default;
+            IReadOnlyList<string> configuredChannels = default;
+            IReadOnlyList<string> enabledChannels = default;
+            string developerAppInsightKey = default;
+            string developerAppInsightsApiKey = default;
+            string developerAppInsightsApplicationId = default;
+            IList<string> luisAppIds = default;
+            string luisKey = default;
+            bool? isCmekEnabled = default;
+            Uri cmekKeyVaultUrl = default;
+            string cmekEncryptionStatus = default;
+            Guid? tenantId = default;
+            BotServicePublicNetworkAccess? publicNetworkAccess = default;
+            bool? isStreamingSupported = default;
+            bool? isDeveloperAppInsightsApiKeySet = default;
+            string migrationToken = default;
+            bool? disableLocalAuth = default;
+            string schemaTransformationVersion = default;
+            ResourceIdentifier storageResourceId = default;
+            IReadOnlyList<BotServicePrivateEndpointConnectionData> privateEndpointConnections = default;
+            string openWithHint = default;
+            string appPasswordHint = default;
+            string provisioningState = default;
+            string publishingCredentials = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("displayName"u8))
@@ -483,7 +577,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<BotServicePrivateEndpointConnectionData> array = new List<BotServicePrivateEndpointConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item));
+                        array.Add(BotServicePrivateEndpointConnectionData.DeserializeBotServicePrivateEndpointConnectionData(item, options));
                     }
                     privateEndpointConnections = array;
                     continue;
@@ -508,8 +602,80 @@ namespace Azure.ResourceManager.BotService.Models
                     publishingCredentials = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new BotProperties(displayName, description.Value, iconUrl.Value, endpoint, endpointVersion.Value, Optional.ToDictionary(allSettings), Optional.ToDictionary(parameters), manifestUrl.Value, Optional.ToNullable(msaAppType), msaAppId, msaAppTenantId.Value, msaAppMSIResourceId.Value, Optional.ToList(configuredChannels), Optional.ToList(enabledChannels), developerAppInsightKey.Value, developerAppInsightsApiKey.Value, developerAppInsightsApplicationId.Value, Optional.ToList(luisAppIds), luisKey.Value, Optional.ToNullable(isCmekEnabled), cmekKeyVaultUrl.Value, cmekEncryptionStatus.Value, Optional.ToNullable(tenantId), Optional.ToNullable(publicNetworkAccess), Optional.ToNullable(isStreamingSupported), Optional.ToNullable(isDeveloperAppInsightsApiKeySet), migrationToken.Value, Optional.ToNullable(disableLocalAuth), schemaTransformationVersion.Value, storageResourceId.Value, Optional.ToList(privateEndpointConnections), openWithHint.Value, appPasswordHint.Value, provisioningState.Value, publishingCredentials.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new BotProperties(
+                displayName,
+                description,
+                iconUrl,
+                endpoint,
+                endpointVersion,
+                allSettings ?? new ChangeTrackingDictionary<string, string>(),
+                parameters ?? new ChangeTrackingDictionary<string, string>(),
+                manifestUrl,
+                msaAppType,
+                msaAppId,
+                msaAppTenantId,
+                msaAppMSIResourceId,
+                configuredChannels ?? new ChangeTrackingList<string>(),
+                enabledChannels ?? new ChangeTrackingList<string>(),
+                developerAppInsightKey,
+                developerAppInsightsApiKey,
+                developerAppInsightsApplicationId,
+                luisAppIds ?? new ChangeTrackingList<string>(),
+                luisKey,
+                isCmekEnabled,
+                cmekKeyVaultUrl,
+                cmekEncryptionStatus,
+                tenantId,
+                publicNetworkAccess,
+                isStreamingSupported,
+                isDeveloperAppInsightsApiKeySet,
+                migrationToken,
+                disableLocalAuth,
+                schemaTransformationVersion,
+                storageResourceId,
+                privateEndpointConnections ?? new ChangeTrackingList<BotServicePrivateEndpointConnectionData>(),
+                openWithHint,
+                appPasswordHint,
+                provisioningState,
+                publishingCredentials,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<BotProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(BotProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        BotProperties IPersistableModel<BotProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<BotProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeBotProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BotProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<BotProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
-    internal partial class GatewayCertificateAuthorityListResult
+    internal partial class GatewayCertificateAuthorityListResult : IUtf8JsonSerializable, IJsonModel<GatewayCertificateAuthorityListResult>
     {
-        internal static GatewayCertificateAuthorityListResult DeserializeGatewayCertificateAuthorityListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GatewayCertificateAuthorityListResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GatewayCertificateAuthorityListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayCertificateAuthorityListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayCertificateAuthorityListResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<ApiManagementGatewayCertificateAuthorityData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GatewayCertificateAuthorityListResult IJsonModel<GatewayCertificateAuthorityListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayCertificateAuthorityListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GatewayCertificateAuthorityListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGatewayCertificateAuthorityListResult(document.RootElement, options);
+        }
+
+        internal static GatewayCertificateAuthorityListResult DeserializeGatewayCertificateAuthorityListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApiManagementGatewayCertificateAuthorityData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApiManagementGatewayCertificateAuthorityData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ApiManagementGatewayCertificateAuthorityData> array = new List<ApiManagementGatewayCertificateAuthorityData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(item));
+                        array.Add(ApiManagementGatewayCertificateAuthorityData.DeserializeApiManagementGatewayCertificateAuthorityData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GatewayCertificateAuthorityListResult(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GatewayCertificateAuthorityListResult(value ?? new ChangeTrackingList<ApiManagementGatewayCertificateAuthorityData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GatewayCertificateAuthorityListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayCertificateAuthorityListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GatewayCertificateAuthorityListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GatewayCertificateAuthorityListResult IPersistableModel<GatewayCertificateAuthorityListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GatewayCertificateAuthorityListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGatewayCertificateAuthorityListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GatewayCertificateAuthorityListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GatewayCertificateAuthorityListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

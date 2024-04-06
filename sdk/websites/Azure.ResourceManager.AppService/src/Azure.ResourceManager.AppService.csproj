@@ -1,11 +1,12 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.1.0-beta.2</Version>
+    <Version>1.1.0-beta.5</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <ApiCompatVersion>1.0.2</ApiCompatVersion>
     <PackageId>Azure.ResourceManager.AppService</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.Web.</Description>
     <PackageTags>azure;management;AppService</PackageTags>
+    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
     <NoWarn>$(NoWarn);CS1591;</NoWarn>
   </PropertyGroup>
 </Project>

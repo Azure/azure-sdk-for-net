@@ -5,17 +5,48 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
 {
-    public partial class DesktopVirtualizationStartMenuItem : IUtf8JsonSerializable
+    public partial class DesktopVirtualizationStartMenuItem : IUtf8JsonSerializable, IJsonModel<DesktopVirtualizationStartMenuItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DesktopVirtualizationStartMenuItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DesktopVirtualizationStartMenuItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("type"u8);
+                writer.WriteStringValue(ResourceType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
+            {
+                writer.WritePropertyName("systemData"u8);
+                JsonSerializer.Serialize(writer, SystemData);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(AppAlias))
@@ -44,11 +75,40 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteNumberValue(IconIndex.Value);
             }
             writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DesktopVirtualizationStartMenuItem DeserializeDesktopVirtualizationStartMenuItem(JsonElement element)
+        DesktopVirtualizationStartMenuItem IJsonModel<DesktopVirtualizationStartMenuItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDesktopVirtualizationStartMenuItem(document.RootElement, options);
+        }
+
+        internal static DesktopVirtualizationStartMenuItem DeserializeDesktopVirtualizationStartMenuItem(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -56,12 +116,14 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> appAlias = default;
-            Optional<string> filePath = default;
-            Optional<string> commandLineArguments = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
+            SystemData systemData = default;
+            string appAlias = default;
+            string filePath = default;
+            string commandLineArguments = default;
+            string iconPath = default;
+            int? iconIndex = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -129,8 +191,54 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DesktopVirtualizationStartMenuItem(id, name, type, systemData.Value, appAlias.Value, filePath.Value, commandLineArguments.Value, iconPath.Value, Optional.ToNullable(iconIndex));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DesktopVirtualizationStartMenuItem(
+                id,
+                name,
+                type,
+                systemData,
+                appAlias,
+                filePath,
+                commandLineArguments,
+                iconPath,
+                iconIndex,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DesktopVirtualizationStartMenuItem>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DesktopVirtualizationStartMenuItem IPersistableModel<DesktopVirtualizationStartMenuItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DesktopVirtualizationStartMenuItem>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDesktopVirtualizationStartMenuItem(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DesktopVirtualizationStartMenuItem)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DesktopVirtualizationStartMenuItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

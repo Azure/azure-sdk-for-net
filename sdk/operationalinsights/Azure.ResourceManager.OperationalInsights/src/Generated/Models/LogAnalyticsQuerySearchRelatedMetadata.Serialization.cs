@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
-    public partial class LogAnalyticsQuerySearchRelatedMetadata : IUtf8JsonSerializable
+    public partial class LogAnalyticsQuerySearchRelatedMetadata : IUtf8JsonSerializable, IJsonModel<LogAnalyticsQuerySearchRelatedMetadata>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LogAnalyticsQuerySearchRelatedMetadata>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LogAnalyticsQuerySearchRelatedMetadata>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Categories))
             {
@@ -45,7 +56,131 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
+
+        LogAnalyticsQuerySearchRelatedMetadata IJsonModel<LogAnalyticsQuerySearchRelatedMetadata>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLogAnalyticsQuerySearchRelatedMetadata(document.RootElement, options);
+        }
+
+        internal static LogAnalyticsQuerySearchRelatedMetadata DeserializeLogAnalyticsQuerySearchRelatedMetadata(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<string> categories = default;
+            IList<string> resourceTypes = default;
+            IList<string> solutions = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            foreach (var property in element.EnumerateObject())
+            {
+                if (property.NameEquals("categories"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    categories = array;
+                    continue;
+                }
+                if (property.NameEquals("resourceTypes"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    resourceTypes = array;
+                    continue;
+                }
+                if (property.NameEquals("solutions"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString());
+                    }
+                    solutions = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
+            }
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LogAnalyticsQuerySearchRelatedMetadata(categories ?? new ChangeTrackingList<string>(), resourceTypes ?? new ChangeTrackingList<string>(), solutions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+        }
+
+        BinaryData IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LogAnalyticsQuerySearchRelatedMetadata IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLogAnalyticsQuerySearchRelatedMetadata(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LogAnalyticsQuerySearchRelatedMetadata)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LogAnalyticsQuerySearchRelatedMetadata>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

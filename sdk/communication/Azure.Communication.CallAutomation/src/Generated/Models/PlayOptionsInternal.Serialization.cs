@@ -17,7 +17,20 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("loop"u8);
             writer.WriteBooleanValue(Loop);
+            if (Optional.IsDefined(InterruptCallMediaOperation))
+            {
+                writer.WritePropertyName("interruptCallMediaOperation"u8);
+                writer.WriteBooleanValue(InterruptCallMediaOperation.Value);
+            }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PlayOptionsInternal>(this);
+            return content;
         }
     }
 }

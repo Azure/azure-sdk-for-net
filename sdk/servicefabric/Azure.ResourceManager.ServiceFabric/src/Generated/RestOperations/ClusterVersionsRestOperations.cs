@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ServiceFabric.Models;
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2021-06-01";
+            _apiVersion = apiVersion ?? "2023-11-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets information about an available Service Fabric cluster code version. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets information about an available Service Fabric cluster code version. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="clusterVersion"/> is null. </exception>
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets information about an available Service Fabric cluster code version by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -166,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets information about an available Service Fabric cluster code version by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="clusterVersion"> The cluster code version. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,7 +213,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets all available code versions for Service Fabric cluster resources by location. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -240,7 +239,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets all available code versions for Service Fabric cluster resources by location. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets all available code versions for Service Fabric cluster resources by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.ServiceFabric
 
         /// <summary> Gets all available code versions for Service Fabric cluster resources by environment. </summary>
         /// <param name="subscriptionId"> The customer subscription identifier. </param>
-        /// <param name="location"> The location for the cluster code versions. This is different from cluster location. </param>
+        /// <param name="location"> The location parameter. </param>
         /// <param name="environment"> The operating system of the cluster. The default means all. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>

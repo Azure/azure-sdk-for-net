@@ -10,9 +10,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
     /// <summary> Data struct to contain only C section with custom fields. </summary>
     internal partial class MonitorBase
     {
-        /// <summary> Initializes a new instance of MonitorBase. </summary>
+        /// <summary> Initializes a new instance of <see cref="MonitorBase"/>. </summary>
         public MonitorBase()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="MonitorBase"/>. </summary>
+        /// <param name="baseType"> Name of item (B section) if any. If telemetry data is derived straight from this, this should be null. </param>
+        /// <param name="baseData"> The data payload for the telemetry request. </param>
+        internal MonitorBase(string baseType, MonitorDomain baseData)
+        {
+            BaseType = baseType;
+            BaseData = baseData;
         }
 
         /// <summary> Name of item (B section) if any. If telemetry data is derived straight from this, this should be null. </summary>

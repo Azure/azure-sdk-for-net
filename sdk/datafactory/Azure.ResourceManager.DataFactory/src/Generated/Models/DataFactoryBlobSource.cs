@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity Azure Blob source. </summary>
     public partial class DataFactoryBlobSource : CopyActivitySource
     {
-        /// <summary> Initializes a new instance of DataFactoryBlobSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobSource"/>. </summary>
         public DataFactoryBlobSource()
         {
             CopySourceType = "BlobSource";
         }
 
-        /// <summary> Initializes a new instance of DataFactoryBlobSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataFactoryBlobSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

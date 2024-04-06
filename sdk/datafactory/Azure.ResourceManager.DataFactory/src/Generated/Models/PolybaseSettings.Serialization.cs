@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class PolybaseSettings : IUtf8JsonSerializable
+    public partial class PolybaseSettings : IUtf8JsonSerializable, IJsonModel<PolybaseSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolybaseSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PolybaseSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(RejectType))
             {
@@ -26,11 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(RejectValue);
-#else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(RejectValue.ToString()).RootElement);
-#endif
+                JsonSerializer.Serialize(writer, RejectValue);
             }
             if (Optional.IsDefined(RejectSampleValue))
             {
@@ -48,22 +53,39 @@ namespace Azure.ResourceManager.DataFactory.Models
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(item.Value);
 #else
-                JsonSerializer.Serialize(writer, JsonDocument.Parse(item.Value.ToString()).RootElement);
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
 #endif
             }
             writer.WriteEndObject();
         }
 
-        internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element)
+        PolybaseSettings IJsonModel<PolybaseSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePolybaseSettings(document.RootElement, options);
+        }
+
+        internal static PolybaseSettings DeserializePolybaseSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<PolybaseSettingsRejectType> rejectType = default;
-            Optional<BinaryData> rejectValue = default;
-            Optional<DataFactoryElement<int>> rejectSampleValue = default;
-            Optional<DataFactoryElement<bool>> useTypeDefault = default;
+            PolybaseSettingsRejectType? rejectType = default;
+            DataFactoryElement<int> rejectValue = default;
+            DataFactoryElement<int> rejectSampleValue = default;
+            DataFactoryElement<bool> useTypeDefault = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -83,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    rejectValue = BinaryData.FromString(property.Value.GetRawText());
+                    rejectValue = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("rejectSampleValue"u8))
@@ -107,7 +129,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new PolybaseSettings(Optional.ToNullable(rejectType), rejectValue.Value, rejectSampleValue.Value, useTypeDefault.Value, additionalProperties);
+            return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties);
         }
+
+        BinaryData IPersistableModel<PolybaseSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PolybaseSettings IPersistableModel<PolybaseSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePolybaseSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PolybaseSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

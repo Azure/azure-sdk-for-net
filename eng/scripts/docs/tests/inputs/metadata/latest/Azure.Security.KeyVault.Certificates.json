@@ -1,0 +1,18 @@
+{
+  "Name": "Azure.Security.KeyVault.Certificates",
+  "Version": "4.2.0",
+  "DevVersion": null,
+  "DirectoryPath": "sdk/keyvault/Azure.Security.KeyVault.Certificates",
+  "ServiceDirectory": "keyvault",
+  "ReadMePath": "sdk/keyvault/Azure.Security.KeyVault.Certificates/README.md",
+  "ChangeLogPath": "sdk/keyvault/Azure.Security.KeyVault.Certificates/CHANGELOG.md",
+  "Group": null,
+  "SdkType": "client",
+  "IsNewSdk": true,
+  "ArtifactName": "Azure.Security.KeyVault.Certificates",
+  "ReleaseStatus": "2022-09-20",
+  "Namespaces": [
+    "Azure.Security.KeyVault.Certificates",
+    "Microsoft.Extensions.Azure"
+  ]
+}

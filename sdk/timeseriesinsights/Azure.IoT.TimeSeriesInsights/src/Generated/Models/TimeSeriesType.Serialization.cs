@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             foreach (var item in Variables)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<TimeSeriesVariable>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -45,9 +45,9 @@ namespace Azure.IoT.TimeSeriesInsights
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, TimeSeriesVariable> variables = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -77,7 +77,23 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new TimeSeriesType(id.Value, name, description.Value, variables);
+            return new TimeSeriesType(id, name, description, variables);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TimeSeriesType FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTimeSeriesType(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TimeSeriesType>(this);
+            return content;
         }
     }
 }

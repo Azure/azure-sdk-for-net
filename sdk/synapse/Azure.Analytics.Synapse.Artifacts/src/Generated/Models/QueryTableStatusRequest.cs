@@ -10,9 +10,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
     /// <summary> The QueryTableStatusRequest. </summary>
     public partial class QueryTableStatusRequest
     {
-        /// <summary> Initializes a new instance of QueryTableStatusRequest. </summary>
+        /// <summary> Initializes a new instance of <see cref="QueryTableStatusRequest"/>. </summary>
         public QueryTableStatusRequest()
         {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="QueryTableStatusRequest"/>. </summary>
+        /// <param name="maxSegmentCount"> Max segment count to query table status. </param>
+        /// <param name="continuationToken"> Continuation token to query table status. </param>
+        internal QueryTableStatusRequest(int? maxSegmentCount, object continuationToken)
+        {
+            MaxSegmentCount = maxSegmentCount;
+            ContinuationToken = continuationToken;
         }
 
         /// <summary> Max segment count to query table status. </summary>

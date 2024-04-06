@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.ApplicationInsights;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
@@ -131,7 +128,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            TagsResource componentTags = new TagsResource()
+            ComponentTag componentTags = new ComponentTag()
             {
                 Tags =
 {
@@ -179,7 +176,7 @@ new ComponentPurgeBodyFilters()
 {
 Column = "TimeGenerated",
 Operator = ">",
-Value = BinaryData.FromString("2017-09-01T00:00:00"),
+Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 }
             });
             ComponentPurgeResponse result = await applicationInsightsComponent.PurgeAsync(body);

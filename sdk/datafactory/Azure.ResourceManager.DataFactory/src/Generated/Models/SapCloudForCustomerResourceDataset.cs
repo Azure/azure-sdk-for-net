@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> The path of the SAP Cloud for Customer OData entity. </summary>
     public partial class SapCloudForCustomerResourceDataset : DataFactoryDatasetProperties
     {
-        /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="path"> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </param>
         /// <exception cref="ArgumentNullException"> <paramref name="linkedServiceName"/> or <paramref name="path"/> is null. </exception>
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DatasetType = "SapCloudForCustomerResource";
         }
 
-        /// <summary> Initializes a new instance of SapCloudForCustomerResourceDataset. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/>. </summary>
         /// <param name="datasetType"> Type of dataset. </param>
         /// <param name="description"> Dataset description. </param>
         /// <param name="structure"> Columns that define the structure of the dataset. Type: array (or Expression with resultType array), itemType: DatasetDataElement. </param>
@@ -43,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         {
             Path = path;
             DatasetType = datasetType ?? "SapCloudForCustomerResource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SapCloudForCustomerResourceDataset"/> for deserialization. </summary>
+        internal SapCloudForCustomerResourceDataset()
+        {
         }
 
         /// <summary> The path of the SAP Cloud for Customer OData entity. Type: string (or Expression with resultType string). </summary>

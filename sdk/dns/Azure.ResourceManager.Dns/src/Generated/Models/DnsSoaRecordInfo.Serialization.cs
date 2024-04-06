@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    public partial class DnsSoaRecordInfo : IUtf8JsonSerializable
+    public partial class DnsSoaRecordInfo : IUtf8JsonSerializable, IJsonModel<DnsSoaRecordInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DnsSoaRecordInfo>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DnsSoaRecordInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Host))
             {
@@ -50,22 +61,53 @@ namespace Azure.ResourceManager.Dns.Models
                 writer.WritePropertyName("minimumTTL"u8);
                 writer.WriteNumberValue(MinimumTtlInSeconds.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static DnsSoaRecordInfo DeserializeDnsSoaRecordInfo(JsonElement element)
+        DnsSoaRecordInfo IJsonModel<DnsSoaRecordInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDnsSoaRecordInfo(document.RootElement, options);
+        }
+
+        internal static DnsSoaRecordInfo DeserializeDnsSoaRecordInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<string> email = default;
-            Optional<long> serialNumber = default;
-            Optional<long> refreshTime = default;
-            Optional<long> retryTime = default;
-            Optional<long> expireTime = default;
-            Optional<long> minimumTTL = default;
+            string host = default;
+            string email = default;
+            long? serialNumber = default;
+            long? refreshTime = default;
+            long? retryTime = default;
+            long? expireTime = default;
+            long? minimumTTL = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("host"u8))
@@ -123,8 +165,52 @@ namespace Azure.ResourceManager.Dns.Models
                     minimumTTL = property.Value.GetInt64();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new DnsSoaRecordInfo(host.Value, email.Value, Optional.ToNullable(serialNumber), Optional.ToNullable(refreshTime), Optional.ToNullable(retryTime), Optional.ToNullable(expireTime), Optional.ToNullable(minimumTTL));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new DnsSoaRecordInfo(
+                host,
+                email,
+                serialNumber,
+                refreshTime,
+                retryTime,
+                expireTime,
+                minimumTTL,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<DnsSoaRecordInfo>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DnsSoaRecordInfo IPersistableModel<DnsSoaRecordInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DnsSoaRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDnsSoaRecordInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DnsSoaRecordInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DnsSoaRecordInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

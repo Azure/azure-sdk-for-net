@@ -10,12 +10,12 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary> Role Assignments. </summary>
     public partial class KeyVaultRoleAssignment
     {
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         internal KeyVaultRoleAssignment()
         {
         }
 
-        /// <summary> Initializes a new instance of KeyVaultRoleAssignment. </summary>
+        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
         /// <param name="id"> The role assignment ID. </param>
         /// <param name="name"> The role assignment name. </param>
         /// <param name="type"> The role assignment type. </param>

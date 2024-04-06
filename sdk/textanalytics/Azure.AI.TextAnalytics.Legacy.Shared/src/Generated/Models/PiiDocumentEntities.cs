@@ -8,14 +8,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
     /// <summary> The PiiDocumentEntities. </summary>
     internal partial class PiiDocumentEntities
     {
-        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiDocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>
@@ -34,7 +33,7 @@ namespace Azure.AI.TextAnalytics.Legacy
             Warnings = warnings.ToList();
         }
 
-        /// <summary> Initializes a new instance of PiiDocumentEntities. </summary>
+        /// <summary> Initializes a new instance of <see cref="PiiDocumentEntities"/>. </summary>
         /// <param name="id"> Unique, non-empty document identifier. </param>
         /// <param name="redactedText"> Returns redacted text. </param>
         /// <param name="entities"> Recognized entities in the document. </param>

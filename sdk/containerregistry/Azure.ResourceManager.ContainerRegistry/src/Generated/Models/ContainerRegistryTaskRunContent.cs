@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -13,7 +14,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
     /// <summary> The parameters for a task run request. </summary>
     public partial class ContainerRegistryTaskRunContent : ContainerRegistryRunContent
     {
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunContent"/>. </summary>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="taskId"/> is null. </exception>
         public ContainerRegistryTaskRunContent(ResourceIdentifier taskId)
@@ -24,18 +25,24 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             RunRequestType = "TaskRunRequest";
         }
 
-        /// <summary> Initializes a new instance of ContainerRegistryTaskRunContent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunContent"/>. </summary>
         /// <param name="runRequestType"> The type of the run request. </param>
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled for the run or not. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="logTemplate"> The template that describes the repository and tag information for run log artifact. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="taskId"> The resource ID of task against which run has to be queued. </param>
         /// <param name="overrideTaskStepProperties"> Set of overridable parameters that can be passed when running a Task. </param>
-        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, ResourceIdentifier taskId, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate)
+        internal ContainerRegistryTaskRunContent(string runRequestType, bool? isArchiveEnabled, string agentPoolName, string logTemplate, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier taskId, ContainerRegistryOverrideTaskStepProperties overrideTaskStepProperties) : base(runRequestType, isArchiveEnabled, agentPoolName, logTemplate, serializedAdditionalRawData)
         {
             TaskId = taskId;
             OverrideTaskStepProperties = overrideTaskStepProperties;
             RunRequestType = runRequestType ?? "TaskRunRequest";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTaskRunContent"/> for deserialization. </summary>
+        internal ContainerRegistryTaskRunContent()
+        {
         }
 
         /// <summary> The resource ID of task against which run has to be queued. </summary>

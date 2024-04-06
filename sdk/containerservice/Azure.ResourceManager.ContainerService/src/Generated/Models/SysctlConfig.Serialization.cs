@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    public partial class SysctlConfig : IUtf8JsonSerializable
+    public partial class SysctlConfig : IUtf8JsonSerializable, IJsonModel<SysctlConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SysctlConfig>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SysctlConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SysctlConfig)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(NetCoreSomaxconn))
             {
@@ -155,43 +166,74 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("vmVfsCachePressure"u8);
                 writer.WriteNumberValue(VmVfsCachePressure.Value);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static SysctlConfig DeserializeSysctlConfig(JsonElement element)
+        SysctlConfig IJsonModel<SysctlConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SysctlConfig)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSysctlConfig(document.RootElement, options);
+        }
+
+        internal static SysctlConfig DeserializeSysctlConfig(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<int> netCoreSomaxconn = default;
-            Optional<int> netCoreNetdevMaxBacklog = default;
-            Optional<int> netCoreRmemDefault = default;
-            Optional<int> netCoreRmemMax = default;
-            Optional<int> netCoreWmemDefault = default;
-            Optional<int> netCoreWmemMax = default;
-            Optional<int> netCoreOptmemMax = default;
-            Optional<int> netIPv4TcpMaxSynBacklog = default;
-            Optional<int> netIPv4TcpMaxTwBuckets = default;
-            Optional<int> netIPv4TcpFinTimeout = default;
-            Optional<int> netIPv4TcpKeepaliveTime = default;
-            Optional<int> netIPv4TcpKeepaliveProbes = default;
-            Optional<int> netIPv4TcpKeepaliveIntvl = default;
-            Optional<bool> netIPv4TcpTwReuse = default;
-            Optional<string> netIPv4IPLocalPortRange = default;
-            Optional<int> netIPv4NeighDefaultGcThresh1 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh2 = default;
-            Optional<int> netIPv4NeighDefaultGcThresh3 = default;
-            Optional<int> netNetfilterNfConntrackMax = default;
-            Optional<int> netNetfilterNfConntrackBuckets = default;
-            Optional<int> fsInotifyMaxUserWatches = default;
-            Optional<int> fsFileMax = default;
-            Optional<int> fsAioMaxNr = default;
-            Optional<int> fsNrOpen = default;
-            Optional<int> kernelThreadsMax = default;
-            Optional<int> vmMaxMapCount = default;
-            Optional<int> vmSwappiness = default;
-            Optional<int> vmVfsCachePressure = default;
+            int? netCoreSomaxconn = default;
+            int? netCoreNetdevMaxBacklog = default;
+            int? netCoreRmemDefault = default;
+            int? netCoreRmemMax = default;
+            int? netCoreWmemDefault = default;
+            int? netCoreWmemMax = default;
+            int? netCoreOptmemMax = default;
+            int? netIPv4TcpMaxSynBacklog = default;
+            int? netIPv4TcpMaxTwBuckets = default;
+            int? netIPv4TcpFinTimeout = default;
+            int? netIPv4TcpKeepaliveTime = default;
+            int? netIPv4TcpKeepaliveProbes = default;
+            int? netIPv4TcpKeepaliveIntvl = default;
+            bool? netIPv4TcpTwReuse = default;
+            string netIPv4IPLocalPortRange = default;
+            int? netIPv4NeighDefaultGcThresh1 = default;
+            int? netIPv4NeighDefaultGcThresh2 = default;
+            int? netIPv4NeighDefaultGcThresh3 = default;
+            int? netNetfilterNfConntrackMax = default;
+            int? netNetfilterNfConntrackBuckets = default;
+            int? fsInotifyMaxUserWatches = default;
+            int? fsFileMax = default;
+            int? fsAioMaxNr = default;
+            int? fsNrOpen = default;
+            int? kernelThreadsMax = default;
+            int? vmMaxMapCount = default;
+            int? vmSwappiness = default;
+            int? vmVfsCachePressure = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("netCoreSomaxconn"u8))
@@ -442,8 +484,73 @@ namespace Azure.ResourceManager.ContainerService.Models
                     vmVfsCachePressure = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SysctlConfig(Optional.ToNullable(netCoreSomaxconn), Optional.ToNullable(netCoreNetdevMaxBacklog), Optional.ToNullable(netCoreRmemDefault), Optional.ToNullable(netCoreRmemMax), Optional.ToNullable(netCoreWmemDefault), Optional.ToNullable(netCoreWmemMax), Optional.ToNullable(netCoreOptmemMax), Optional.ToNullable(netIPv4TcpMaxSynBacklog), Optional.ToNullable(netIPv4TcpMaxTwBuckets), Optional.ToNullable(netIPv4TcpFinTimeout), Optional.ToNullable(netIPv4TcpKeepaliveTime), Optional.ToNullable(netIPv4TcpKeepaliveProbes), Optional.ToNullable(netIPv4TcpKeepaliveIntvl), Optional.ToNullable(netIPv4TcpTwReuse), netIPv4IPLocalPortRange.Value, Optional.ToNullable(netIPv4NeighDefaultGcThresh1), Optional.ToNullable(netIPv4NeighDefaultGcThresh2), Optional.ToNullable(netIPv4NeighDefaultGcThresh3), Optional.ToNullable(netNetfilterNfConntrackMax), Optional.ToNullable(netNetfilterNfConntrackBuckets), Optional.ToNullable(fsInotifyMaxUserWatches), Optional.ToNullable(fsFileMax), Optional.ToNullable(fsAioMaxNr), Optional.ToNullable(fsNrOpen), Optional.ToNullable(kernelThreadsMax), Optional.ToNullable(vmMaxMapCount), Optional.ToNullable(vmSwappiness), Optional.ToNullable(vmVfsCachePressure));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SysctlConfig(
+                netCoreSomaxconn,
+                netCoreNetdevMaxBacklog,
+                netCoreRmemDefault,
+                netCoreRmemMax,
+                netCoreWmemDefault,
+                netCoreWmemMax,
+                netCoreOptmemMax,
+                netIPv4TcpMaxSynBacklog,
+                netIPv4TcpMaxTwBuckets,
+                netIPv4TcpFinTimeout,
+                netIPv4TcpKeepaliveTime,
+                netIPv4TcpKeepaliveProbes,
+                netIPv4TcpKeepaliveIntvl,
+                netIPv4TcpTwReuse,
+                netIPv4IPLocalPortRange,
+                netIPv4NeighDefaultGcThresh1,
+                netIPv4NeighDefaultGcThresh2,
+                netIPv4NeighDefaultGcThresh3,
+                netNetfilterNfConntrackMax,
+                netNetfilterNfConntrackBuckets,
+                fsInotifyMaxUserWatches,
+                fsFileMax,
+                fsAioMaxNr,
+                fsNrOpen,
+                kernelThreadsMax,
+                vmMaxMapCount,
+                vmSwappiness,
+                vmVfsCachePressure,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SysctlConfig>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SysctlConfig)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SysctlConfig IPersistableModel<SysctlConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SysctlConfig>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSysctlConfig(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SysctlConfig)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SysctlConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

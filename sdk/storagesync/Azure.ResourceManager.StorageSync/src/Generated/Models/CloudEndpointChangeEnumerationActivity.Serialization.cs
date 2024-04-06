@@ -6,32 +6,144 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class CloudEndpointChangeEnumerationActivity
+    public partial class CloudEndpointChangeEnumerationActivity : IUtf8JsonSerializable, IJsonModel<CloudEndpointChangeEnumerationActivity>
     {
-        internal static CloudEndpointChangeEnumerationActivity DeserializeCloudEndpointChangeEnumerationActivity(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CloudEndpointChangeEnumerationActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<CloudEndpointChangeEnumerationActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(OperationState))
+            {
+                writer.WritePropertyName("operationState"u8);
+                writer.WriteStringValue(OperationState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(StatusCode))
+            {
+                writer.WritePropertyName("statusCode"u8);
+                writer.WriteNumberValue(StatusCode.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(StartedOn))
+            {
+                writer.WritePropertyName("startedTimestamp"u8);
+                writer.WriteStringValue(StartedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessedFilesCount))
+            {
+                writer.WritePropertyName("processedFilesCount"u8);
+                writer.WriteNumberValue(ProcessedFilesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProcessedDirectoriesCount))
+            {
+                writer.WritePropertyName("processedDirectoriesCount"u8);
+                writer.WriteNumberValue(ProcessedDirectoriesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalFilesCount))
+            {
+                writer.WritePropertyName("totalFilesCount"u8);
+                writer.WriteNumberValue(TotalFilesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalDirectoriesCount))
+            {
+                writer.WritePropertyName("totalDirectoriesCount"u8);
+                writer.WriteNumberValue(TotalDirectoriesCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalSizeInBytes))
+            {
+                writer.WritePropertyName("totalSizeBytes"u8);
+                writer.WriteNumberValue(TotalSizeInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProgressPercent))
+            {
+                writer.WritePropertyName("progressPercent"u8);
+                writer.WriteNumberValue(ProgressPercent.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinutesRemaining))
+            {
+                writer.WritePropertyName("minutesRemaining"u8);
+                writer.WriteNumberValue(MinutesRemaining.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalCountsState))
+            {
+                writer.WritePropertyName("totalCountsState"u8);
+                writer.WriteStringValue(TotalCountsState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DeletesProgressPercent))
+            {
+                writer.WritePropertyName("deletesProgressPercent"u8);
+                writer.WriteNumberValue(DeletesProgressPercent.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        CloudEndpointChangeEnumerationActivity IJsonModel<CloudEndpointChangeEnumerationActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCloudEndpointChangeEnumerationActivity(document.RootElement, options);
+        }
+
+        internal static CloudEndpointChangeEnumerationActivity DeserializeCloudEndpointChangeEnumerationActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<CloudEndpointChangeEnumerationActivityState> operationState = default;
-            Optional<int> statusCode = default;
-            Optional<DateTimeOffset> startedTimestamp = default;
-            Optional<long> processedFilesCount = default;
-            Optional<long> processedDirectoriesCount = default;
-            Optional<long> totalFilesCount = default;
-            Optional<long> totalDirectoriesCount = default;
-            Optional<long> totalSizeBytes = default;
-            Optional<int> progressPercent = default;
-            Optional<int> minutesRemaining = default;
-            Optional<CloudEndpointChangeEnumerationTotalCountsState> totalCountsState = default;
-            Optional<int> deletesProgressPercent = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            CloudEndpointChangeEnumerationActivityState? operationState = default;
+            int? statusCode = default;
+            DateTimeOffset? startedTimestamp = default;
+            long? processedFilesCount = default;
+            long? processedDirectoriesCount = default;
+            long? totalFilesCount = default;
+            long? totalDirectoriesCount = default;
+            long? totalSizeBytes = default;
+            int? progressPercent = default;
+            int? minutesRemaining = default;
+            CloudEndpointChangeEnumerationTotalCountsState? totalCountsState = default;
+            int? deletesProgressPercent = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -151,8 +263,58 @@ namespace Azure.ResourceManager.StorageSync.Models
                     deletesProgressPercent = property.Value.GetInt32();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new CloudEndpointChangeEnumerationActivity(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(operationState), Optional.ToNullable(statusCode), Optional.ToNullable(startedTimestamp), Optional.ToNullable(processedFilesCount), Optional.ToNullable(processedDirectoriesCount), Optional.ToNullable(totalFilesCount), Optional.ToNullable(totalDirectoriesCount), Optional.ToNullable(totalSizeBytes), Optional.ToNullable(progressPercent), Optional.ToNullable(minutesRemaining), Optional.ToNullable(totalCountsState), Optional.ToNullable(deletesProgressPercent));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new CloudEndpointChangeEnumerationActivity(
+                lastUpdatedTimestamp,
+                operationState,
+                statusCode,
+                startedTimestamp,
+                processedFilesCount,
+                processedDirectoriesCount,
+                totalFilesCount,
+                totalDirectoriesCount,
+                totalSizeBytes,
+                progressPercent,
+                minutesRemaining,
+                totalCountsState,
+                deletesProgressPercent,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<CloudEndpointChangeEnumerationActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        CloudEndpointChangeEnumerationActivity IPersistableModel<CloudEndpointChangeEnumerationActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<CloudEndpointChangeEnumerationActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeCloudEndpointChangeEnumerationActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CloudEndpointChangeEnumerationActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<CloudEndpointChangeEnumerationActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

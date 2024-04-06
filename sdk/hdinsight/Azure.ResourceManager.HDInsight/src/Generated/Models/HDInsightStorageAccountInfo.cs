@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HDInsight.Models
@@ -12,12 +14,44 @@ namespace Azure.ResourceManager.HDInsight.Models
     /// <summary> The storage Account. </summary>
     public partial class HDInsightStorageAccountInfo
     {
-        /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="HDInsightStorageAccountInfo"/>. </summary>
         public HDInsightStorageAccountInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of HDInsightStorageAccountInfo. </summary>
+        /// <summary> Initializes a new instance of <see cref="HDInsightStorageAccountInfo"/>. </summary>
         /// <param name="name"> The name of the storage account. </param>
         /// <param name="isDefault"> Whether or not the storage account is the default storage account. </param>
         /// <param name="container"> The container in the storage account, only to be specified for WASB storage accounts. </param>
@@ -28,7 +62,8 @@ namespace Azure.ResourceManager.HDInsight.Models
         /// <param name="sasKey"> The shared access signature key. </param>
         /// <param name="fileshare"> The file share name. </param>
         /// <param name="enableSecureChannel"> Enable secure channel or not, it's an optional field. Default value is false when cluster version &lt; 5.1 and true when cluster version &gt;= 5.1 ,. </param>
-        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare, bool? enableSecureChannel)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal HDInsightStorageAccountInfo(string name, bool? isDefault, string container, string fileSystem, string key, ResourceIdentifier resourceId, ResourceIdentifier msiResourceId, string sasKey, string fileshare, bool? enableSecureChannel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             IsDefault = isDefault;
@@ -40,6 +75,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             SasKey = sasKey;
             Fileshare = fileshare;
             EnableSecureChannel = enableSecureChannel;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The name of the storage account. </summary>

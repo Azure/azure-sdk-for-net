@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.Storage.Tests
                 {
                     new ObjectReplicationPolicyRule(containerName1, containerName2)
                     {
-                        Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime),
+                        Filters = new ObjectReplicationPolicyFilter(prefix, minCreationTime, null),
                     },
                     new ObjectReplicationPolicyRule(containerName3, containerName4),
                 }

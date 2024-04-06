@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
-    public partial class ResourceTypeSkuZoneDetail : IUtf8JsonSerializable
+    public partial class ResourceTypeSkuZoneDetail : IUtf8JsonSerializable, IJsonModel<ResourceTypeSkuZoneDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ResourceTypeSkuZoneDetail>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ResourceTypeSkuZoneDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Name))
             {
@@ -32,21 +42,52 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static ResourceTypeSkuZoneDetail DeserializeResourceTypeSkuZoneDetail(JsonElement element)
+        ResourceTypeSkuZoneDetail IJsonModel<ResourceTypeSkuZoneDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeResourceTypeSkuZoneDetail(document.RootElement, options);
+        }
+
+        internal static ResourceTypeSkuZoneDetail DeserializeResourceTypeSkuZoneDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<string>> name = default;
-            Optional<IList<ResourceSkuCapability>> capabilities = default;
+            IList<string> name = default;
+            IList<ResourceSkuCapability> capabilities = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -72,13 +113,49 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     List<ResourceSkuCapability> array = new List<ResourceSkuCapability>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item));
+                        array.Add(ResourceSkuCapability.DeserializeResourceSkuCapability(item, options));
                     }
                     capabilities = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ResourceTypeSkuZoneDetail(Optional.ToList(name), Optional.ToList(capabilities));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ResourceTypeSkuZoneDetail(name ?? new ChangeTrackingList<string>(), capabilities ?? new ChangeTrackingList<ResourceSkuCapability>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ResourceTypeSkuZoneDetail>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ResourceTypeSkuZoneDetail IPersistableModel<ResourceTypeSkuZoneDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeResourceTypeSkuZoneDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ResourceTypeSkuZoneDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -17,7 +17,7 @@ namespace Azure.Communication.MediaComposition
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resolution"u8);
-            writer.WriteObjectValue(Resolution);
+            writer.WriteObjectValue<LayoutResolution>(Resolution);
             writer.WritePropertyName("streamUrl"u8);
             writer.WriteStringValue(StreamUrl);
             writer.WritePropertyName("kind"u8);
@@ -39,7 +39,7 @@ namespace Azure.Communication.MediaComposition
             LayoutResolution resolution = default;
             string streamUrl = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resolution"u8))
@@ -63,7 +63,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new SrtInput(kind, placeholderImageUri.Value, resolution, streamUrl);
+            return new SrtInput(kind, placeholderImageUri, resolution, streamUrl);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SrtInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSrtInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SrtInput>(this);
+            return content;
         }
     }
 }

@@ -6,24 +6,23 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary>
     /// Format write settings.
     /// Please note <see cref="FormatWriteSettings"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AvroWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/>, <see cref="ParquetWriteSettings"/> and <see cref="DelimitedTextWriteSettings"/>.
+    /// The available derived classes include <see cref="AvroWriteSettings"/>, <see cref="DelimitedTextWriteSettings"/>, <see cref="JsonWriteSettings"/>, <see cref="OrcWriteSettings"/> and <see cref="ParquetWriteSettings"/>.
     /// </summary>
-    public partial class FormatWriteSettings
+    public abstract partial class FormatWriteSettings
     {
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
-        public FormatWriteSettings()
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
+        protected FormatWriteSettings()
         {
             AdditionalProperties = new ChangeTrackingDictionary<string, object>();
         }
 
-        /// <summary> Initializes a new instance of FormatWriteSettings. </summary>
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
         /// <param name="type"> The write setting type. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         internal FormatWriteSettings(string type, IDictionary<string, object> additionalProperties)

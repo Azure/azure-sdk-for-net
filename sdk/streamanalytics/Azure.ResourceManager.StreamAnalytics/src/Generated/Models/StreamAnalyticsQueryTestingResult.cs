@@ -13,19 +13,20 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
     /// <summary> The result of the query testing request. </summary>
     public partial class StreamAnalyticsQueryTestingResult : StreamAnalyticsError
     {
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryTestingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryTestingResult"/>. </summary>
         internal StreamAnalyticsQueryTestingResult()
         {
         }
 
-        /// <summary> Initializes a new instance of StreamAnalyticsQueryTestingResult. </summary>
+        /// <summary> Initializes a new instance of <see cref="StreamAnalyticsQueryTestingResult"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="target"> Error target. </param>
         /// <param name="details"> Error details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="status"> The status of the query testing request. </param>
         /// <param name="outputUri"> The SAS URL to the outputs payload. </param>
-        internal StreamAnalyticsQueryTestingResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, StreamAnalyticsQueryTestingResultStatus? status, Uri outputUri) : base(code, message, target, details)
+        internal StreamAnalyticsQueryTestingResult(string code, string message, string target, IReadOnlyList<StreamAnalyticsErrorDetails> details, IDictionary<string, BinaryData> serializedAdditionalRawData, StreamAnalyticsQueryTestingResultStatus? status, Uri outputUri) : base(code, message, target, details, serializedAdditionalRawData)
         {
             Status = status;
             OutputUri = outputUri;

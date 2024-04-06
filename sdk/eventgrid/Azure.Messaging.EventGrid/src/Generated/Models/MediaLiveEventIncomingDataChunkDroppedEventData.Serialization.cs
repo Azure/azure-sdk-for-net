@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,12 +20,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> timestamp = default;
-            Optional<string> trackType = default;
-            Optional<long> bitrate = default;
-            Optional<string> timescale = default;
-            Optional<string> resultCode = default;
-            Optional<string> trackName = default;
+            string timestamp = default;
+            string trackType = default;
+            long? bitrate = default;
+            string timescale = default;
+            string resultCode = default;
+            string trackName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -64,7 +63,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MediaLiveEventIncomingDataChunkDroppedEventData(timestamp.Value, trackType.Value, Optional.ToNullable(bitrate), timescale.Value, resultCode.Value, trackName.Value);
+            return new MediaLiveEventIncomingDataChunkDroppedEventData(
+                timestamp,
+                trackType,
+                bitrate,
+                timescale,
+                resultCode,
+                trackName);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIncomingDataChunkDroppedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIncomingDataChunkDroppedEventData(document.RootElement);
         }
 
         internal partial class MediaLiveEventIncomingDataChunkDroppedEventDataConverter : JsonConverter<MediaLiveEventIncomingDataChunkDroppedEventData>
@@ -73,6 +86,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 throw new NotImplementedException();
             }
+
             public override MediaLiveEventIncomingDataChunkDroppedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

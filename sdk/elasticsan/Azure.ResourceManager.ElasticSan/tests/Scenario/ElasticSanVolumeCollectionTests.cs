@@ -35,47 +35,28 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
 
         [Test]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task CreateUpdateGetExistsGet()
         {
             _collection = await GetVolumeCollection();
 
             string volumeName = Recording.GenerateAssetName("testvolume-");
             ElasticSanVolumeData volumeData = new ElasticSanVolumeData(100)
             {
-                CreationData = new Models.ElasticSanVolumeDataSourceInfo()
+                CreationData = new ElasticSanVolumeDataSourceInfo()
             };
             ElasticSanVolumeResource volume = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
             Assert.AreEqual(volume.Id.Name, volumeName);
             Assert.AreEqual(100, volume.Data.SizeGiB);
             Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume.Data.CreationData.CreateSource);
-        }
+            Assert.IsNull(volume.Data.CreationData.SourceId);
 
-        [Test]
-        [RecordedTest]
-        public async Task Get()
-        {
-            _collection = await GetVolumeCollection();
-
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeData volumeData = new ElasticSanVolumeData(100);
-            ElasticSanVolumeResource volume1 = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
             ElasticSanVolumeResource volume2 = (await _collection.GetAsync(volumeName)).Value;
-            Assert.AreEqual(volume2.Id.Name, volume1.Id.Name);
-            Assert.AreEqual(100, volume1.Data.SizeGiB);
-            Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume1.Data.CreationData.CreateSource);
-            Assert.IsNull(volume1.Data.CreationData.SourceUri);
-        }
+            Assert.AreEqual(volume2.Id.Name, volume.Id.Name);
+            Assert.AreEqual(100, volume.Data.SizeGiB);
+            Assert.AreEqual(ElasticSanVolumeCreateOption.None, volume.Data.CreationData.CreateSource);
+            Assert.IsNull(volume.Data.CreationData.SourceId);
 
-        [Test]
-        [RecordedTest]
-        public async Task GetAll()
-        {
-            _collection = await GetVolumeCollection();
-
-            string volumeName1 = Recording.GenerateAssetName("testvolume-");
             string volumeName2 = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeData volumeData = new ElasticSanVolumeData(100);
-            _ = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName1, volumeData)).Value;
             _ = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName2, volumeData)).Value;
 
             int count = 0;
@@ -84,17 +65,7 @@ namespace Azure.ResourceManager.ElasticSan.Tests.Scenario
                 count++;
             }
             Assert.GreaterOrEqual(count, 2);
-        }
 
-        [Test]
-        [RecordedTest]
-        public async Task Exists()
-        {
-            _collection = await GetVolumeCollection();
-
-            string volumeName = Recording.GenerateAssetName("testvolume-");
-            ElasticSanVolumeData volumeData = new ElasticSanVolumeData(100);
-            _ = (await _collection.CreateOrUpdateAsync(WaitUntil.Completed, volumeName, volumeData)).Value;
             Assert.IsTrue(await _collection.ExistsAsync(volumeName));
             Assert.IsFalse(await _collection.ExistsAsync(volumeName + "111"));
         }

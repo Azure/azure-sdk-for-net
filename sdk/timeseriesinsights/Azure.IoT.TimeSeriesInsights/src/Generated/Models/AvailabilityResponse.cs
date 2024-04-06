@@ -10,12 +10,12 @@ namespace Azure.IoT.TimeSeriesInsights
     /// <summary> Response of Get Availability operation. When environment has no data, availability property is null. </summary>
     internal partial class AvailabilityResponse
     {
-        /// <summary> Initializes a new instance of AvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityResponse"/>. </summary>
         internal AvailabilityResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of AvailabilityResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="AvailabilityResponse"/>. </summary>
         /// <param name="availability"> Event availability information when environment contains events. When environment has no data yet, this property is null or not present. </param>
         internal AvailabilityResponse(Availability availability)
         {

@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string id = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +54,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new RoomInput(kind, placeholderImageUri.Value, id);
+            return new RoomInput(kind, placeholderImageUri, id);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new RoomInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRoomInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RoomInput>(this);
+            return content;
         }
     }
 }

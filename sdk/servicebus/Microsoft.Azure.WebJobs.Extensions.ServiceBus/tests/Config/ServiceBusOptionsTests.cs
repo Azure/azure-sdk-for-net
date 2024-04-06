@@ -107,6 +107,25 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
         }
 
         [Test]
+        public void ToProcessorOptions_InfiniteTimeSpans_ReturnsExpectedValue()
+        {
+            ServiceBusOptions sbOptions = new ServiceBusOptions
+            {
+                AutoCompleteMessages = false,
+                PrefetchCount = 123,
+                MaxAutoLockRenewalDuration = Timeout.InfiniteTimeSpan,
+                SessionIdleTimeout = Timeout.InfiniteTimeSpan,
+                MaxConcurrentCalls = 123
+            };
+
+            ServiceBusProcessorOptions processorOptions = sbOptions.ToProcessorOptions(true, false);
+            Assert.AreEqual(true, processorOptions.AutoCompleteMessages);
+            Assert.AreEqual(sbOptions.PrefetchCount, processorOptions.PrefetchCount);
+            Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
+            Assert.AreEqual(sbOptions.MaxConcurrentCalls, processorOptions.MaxConcurrentCalls);
+        }
+
+        [Test]
         [Category("DynamicConcurrency")]
         public void ToProcessorOptions_DynamicConcurrencyEnabled_ReturnsExpectedValue()
         {
@@ -134,7 +153,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 PrefetchCount = 123,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(123),
                 SessionIdleTimeout = TimeSpan.FromSeconds(123),
-                MaxConcurrentSessions = 123
+                MaxConcurrentSessions = 123,
+                MaxConcurrentCallsPerSession = 5
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, false);
@@ -143,6 +163,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
             Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
             Assert.AreEqual(sbOptions.MaxConcurrentSessions, processorOptions.MaxConcurrentSessions);
+            Assert.AreEqual(sbOptions.MaxConcurrentCallsPerSession, processorOptions.MaxConcurrentCallsPerSession);
         }
 
         [Test]
@@ -155,7 +176,8 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
                 PrefetchCount = 123,
                 MaxAutoLockRenewalDuration = TimeSpan.FromSeconds(123),
                 SessionIdleTimeout = TimeSpan.FromSeconds(123),
-                MaxConcurrentSessions = 123
+                MaxConcurrentSessions = 123,
+                MaxConcurrentCallsPerSession = 5
             };
 
             ServiceBusSessionProcessorOptions processorOptions = sbOptions.ToSessionProcessorOptions(true, true);
@@ -164,6 +186,7 @@ namespace Microsoft.Azure.WebJobs.ServiceBus.UnitTests.Config
             Assert.AreEqual(sbOptions.MaxAutoLockRenewalDuration, processorOptions.MaxAutoLockRenewalDuration);
             Assert.AreEqual(sbOptions.SessionIdleTimeout, processorOptions.SessionIdleTimeout);
             Assert.AreEqual(1, processorOptions.MaxConcurrentSessions);
+            Assert.AreEqual(1, processorOptions.MaxConcurrentCallsPerSession);
         }
     }
 }

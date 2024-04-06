@@ -6,9 +6,9 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Synapse.Models;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Synapse
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(synapseRecommendedSensitivityLabelUpdateOperationListResult);
+            content.JsonWriter.WriteObjectValue<SynapseRecommendedSensitivityLabelUpdateOperationListResult>(synapseRecommendedSensitivityLabelUpdateOperationListResult, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The SynapseRecommendedSensitivityLabelUpdateOperationListResult to use. </param>
+        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Synapse
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="workspaceName"> The name of the workspace. </param>
         /// <param name="sqlPoolName"> SQL pool name. </param>
-        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The SynapseRecommendedSensitivityLabelUpdateOperationListResult to use. </param>
+        /// <param name="synapseRecommendedSensitivityLabelUpdateOperationListResult"> The <see cref="SynapseRecommendedSensitivityLabelUpdateOperationListResult"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/>, <paramref name="sqlPoolName"/> or <paramref name="synapseRecommendedSensitivityLabelUpdateOperationListResult"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="workspaceName"/> or <paramref name="sqlPoolName"/> is an empty string, and was expected to be non-empty. </exception>

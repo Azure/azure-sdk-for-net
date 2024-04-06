@@ -66,6 +66,13 @@ namespace Azure.Storage.Test.Shared
         public BlobClientOptions GetOptions(bool parallelRange = false)
             => BlobsClientBuilder.GetOptions(parallelRange);
 
+        public BlobClientOptions GetOptionsWithAudience(BlobAudience audience)
+        {
+            BlobClientOptions options = BlobsClientBuilder.GetOptions(false);
+            options.Audience = audience;
+            return options;
+        }
+
         internal async Task<BlobBaseClient> GetNewBlobClient(BlobContainerClient container, string blobName = default)
         {
             blobName ??= BlobsClientBuilder.GetNewBlobName();

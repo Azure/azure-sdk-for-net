@@ -5,16 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
-    public partial class PropertyDefinition : IUtf8JsonSerializable
+    public partial class PropertyDefinition : IUtf8JsonSerializable, IJsonModel<PropertyDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PropertyDefinition>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PropertyDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PropertyDefinition)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(ArrayValueSeparator))
             {
@@ -27,7 +37,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in EnumValidValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProfileEnumValidValuesFormat>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,31 +100,72 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WritePropertyName("isAvailableInGraph"u8);
                 writer.WriteBooleanValue(IsAvailableInGraph.Value);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(DataSourcePrecedenceRules))
+            {
+                writer.WritePropertyName("dataSourcePrecedenceRules"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataSourcePrecedenceRules)
+                {
+                    writer.WriteObjectValue<DataSourcePrecedence>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PropertyDefinition DeserializePropertyDefinition(JsonElement element)
+        PropertyDefinition IJsonModel<PropertyDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PropertyDefinition)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePropertyDefinition(document.RootElement, options);
+        }
+
+        internal static PropertyDefinition DeserializePropertyDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> arrayValueSeparator = default;
-            Optional<IList<ProfileEnumValidValuesFormat>> enumValidValues = default;
+            string arrayValueSeparator = default;
+            IList<ProfileEnumValidValuesFormat> enumValidValues = default;
             string fieldName = default;
             string fieldType = default;
-            Optional<bool> isArray = default;
-            Optional<bool> isEnum = default;
-            Optional<bool> isFlagEnum = default;
-            Optional<bool> isImage = default;
-            Optional<bool> isLocalizedString = default;
-            Optional<bool> isName = default;
-            Optional<bool> isRequired = default;
-            Optional<string> propertyId = default;
-            Optional<string> schemaItemPropLink = default;
-            Optional<int> maxLength = default;
-            Optional<bool> isAvailableInGraph = default;
-            Optional<IReadOnlyList<DataSourcePrecedence>> dataSourcePrecedenceRules = default;
+            bool? isArray = default;
+            bool? isEnum = default;
+            bool? isFlagEnum = default;
+            bool? isImage = default;
+            bool? isLocalizedString = default;
+            bool? isName = default;
+            bool? isRequired = default;
+            string propertyId = default;
+            string schemaItemPropLink = default;
+            int? maxLength = default;
+            bool? isAvailableInGraph = default;
+            IReadOnlyList<DataSourcePrecedence> dataSourcePrecedenceRules = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("arrayValueSeparator"u8))
@@ -131,7 +182,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<ProfileEnumValidValuesFormat> array = new List<ProfileEnumValidValuesFormat>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item));
+                        array.Add(ProfileEnumValidValuesFormat.DeserializeProfileEnumValidValuesFormat(item, options));
                     }
                     enumValidValues = array;
                     continue;
@@ -246,13 +297,66 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<DataSourcePrecedence> array = new List<DataSourcePrecedence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item));
+                        array.Add(DataSourcePrecedence.DeserializeDataSourcePrecedence(item, options));
                     }
                     dataSourcePrecedenceRules = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PropertyDefinition(arrayValueSeparator.Value, Optional.ToList(enumValidValues), fieldName, fieldType, Optional.ToNullable(isArray), Optional.ToNullable(isEnum), Optional.ToNullable(isFlagEnum), Optional.ToNullable(isImage), Optional.ToNullable(isLocalizedString), Optional.ToNullable(isName), Optional.ToNullable(isRequired), propertyId.Value, schemaItemPropLink.Value, Optional.ToNullable(maxLength), Optional.ToNullable(isAvailableInGraph), Optional.ToList(dataSourcePrecedenceRules));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PropertyDefinition(
+                arrayValueSeparator,
+                enumValidValues ?? new ChangeTrackingList<ProfileEnumValidValuesFormat>(),
+                fieldName,
+                fieldType,
+                isArray,
+                isEnum,
+                isFlagEnum,
+                isImage,
+                isLocalizedString,
+                isName,
+                isRequired,
+                propertyId,
+                schemaItemPropLink,
+                maxLength,
+                isAvailableInGraph,
+                dataSourcePrecedenceRules ?? new ChangeTrackingList<DataSourcePrecedence>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PropertyDefinition>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PropertyDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PropertyDefinition IPersistableModel<PropertyDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PropertyDefinition>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePropertyDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PropertyDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PropertyDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -21,9 +20,9 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 return null;
             }
             string classifierId = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset createdDateTime = default;
-            Optional<DateTimeOffset> expirationDateTime = default;
+            DateTimeOffset? expirationDateTime = default;
             string apiVersion = default;
             IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes = default;
             foreach (var property in element.EnumerateObject())
@@ -68,7 +67,21 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentClassifierDetails(classifierId, description.Value, createdDateTime, Optional.ToNullable(expirationDateTime), apiVersion, docTypes);
+            return new DocumentClassifierDetails(
+                classifierId,
+                description,
+                createdDateTime,
+                expirationDateTime,
+                apiVersion,
+                docTypes);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentClassifierDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentClassifierDetails(document.RootElement);
         }
     }
 }

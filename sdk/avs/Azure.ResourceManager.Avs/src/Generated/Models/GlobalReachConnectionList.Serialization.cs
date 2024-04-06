@@ -5,23 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Avs;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    internal partial class GlobalReachConnectionList
+    internal partial class GlobalReachConnectionList : IUtf8JsonSerializable, IJsonModel<GlobalReachConnectionList>
     {
-        internal static GlobalReachConnectionList DeserializeGlobalReachConnectionList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GlobalReachConnectionList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<GlobalReachConnectionList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalReachConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GlobalReachConnectionList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<GlobalReachConnectionData>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        GlobalReachConnectionList IJsonModel<GlobalReachConnectionList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalReachConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(GlobalReachConnectionList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeGlobalReachConnectionList(document.RootElement, options);
+        }
+
+        internal static GlobalReachConnectionList DeserializeGlobalReachConnectionList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<GlobalReachConnectionData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<GlobalReachConnectionData> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -33,7 +94,7 @@ namespace Azure.ResourceManager.Avs.Models
                     List<GlobalReachConnectionData> array = new List<GlobalReachConnectionData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item));
+                        array.Add(GlobalReachConnectionData.DeserializeGlobalReachConnectionData(item, options));
                     }
                     value = array;
                     continue;
@@ -43,8 +104,44 @@ namespace Azure.ResourceManager.Avs.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new GlobalReachConnectionList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new GlobalReachConnectionList(value ?? new ChangeTrackingList<GlobalReachConnectionData>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<GlobalReachConnectionList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalReachConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(GlobalReachConnectionList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        GlobalReachConnectionList IPersistableModel<GlobalReachConnectionList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<GlobalReachConnectionList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeGlobalReachConnectionList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GlobalReachConnectionList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<GlobalReachConnectionList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

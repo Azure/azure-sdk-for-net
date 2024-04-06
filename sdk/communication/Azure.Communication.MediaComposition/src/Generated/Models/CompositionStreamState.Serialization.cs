@@ -29,7 +29,7 @@ namespace Azure.Communication.MediaComposition
             {
                 return null;
             }
-            Optional<StreamStatus> status = default;
+            StreamStatus? status = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -42,7 +42,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new CompositionStreamState(Optional.ToNullable(status));
+            return new CompositionStreamState(status);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompositionStreamState FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompositionStreamState(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CompositionStreamState>(this);
+            return content;
         }
     }
 }

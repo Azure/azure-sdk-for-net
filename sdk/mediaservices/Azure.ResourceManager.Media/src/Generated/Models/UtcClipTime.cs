@@ -6,13 +6,14 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Media.Models
 {
     /// <summary> Specifies the clip time as a Utc time position in the media file.  The Utc time can point to a different position depending on whether the media file starts from a timestamp of zero or not. </summary>
     public partial class UtcClipTime : ClipTime
     {
-        /// <summary> Initializes a new instance of UtcClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="UtcClipTime"/>. </summary>
         /// <param name="time"> The time position on the timeline of the input media based on Utc time. </param>
         public UtcClipTime(DateTimeOffset time)
         {
@@ -20,13 +21,19 @@ namespace Azure.ResourceManager.Media.Models
             OdataType = "#Microsoft.Media.UtcClipTime";
         }
 
-        /// <summary> Initializes a new instance of UtcClipTime. </summary>
+        /// <summary> Initializes a new instance of <see cref="UtcClipTime"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="time"> The time position on the timeline of the input media based on Utc time. </param>
-        internal UtcClipTime(string odataType, DateTimeOffset time) : base(odataType)
+        internal UtcClipTime(string odataType, IDictionary<string, BinaryData> serializedAdditionalRawData, DateTimeOffset time) : base(odataType, serializedAdditionalRawData)
         {
             Time = time;
             OdataType = odataType ?? "#Microsoft.Media.UtcClipTime";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UtcClipTime"/> for deserialization. </summary>
+        internal UtcClipTime()
+        {
         }
 
         /// <summary> The time position on the timeline of the input media based on Utc time. </summary>

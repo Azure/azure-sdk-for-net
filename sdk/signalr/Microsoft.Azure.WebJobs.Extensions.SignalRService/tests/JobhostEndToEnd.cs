@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -203,7 +204,7 @@ namespace SignalRServiceExtension.Tests
                         Arguments = new[] { "message" }
                     });
             }
-            catch (AzureSignalRInaccessibleEndpointException)
+            catch (AzureSignalRException ex) when (ex.InnerException is HttpRequestException)
             {
                 // ignore, since we don't really connect to Azure SignalR Service
             }

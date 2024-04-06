@@ -5,37 +5,79 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
-    public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable
+    public partial class StreamingEndpointAccessControl : IUtf8JsonSerializable, IJsonModel<StreamingEndpointAccessControl>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StreamingEndpointAccessControl>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StreamingEndpointAccessControl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Akamai))
             {
                 writer.WritePropertyName("akamai"u8);
-                writer.WriteObjectValue(Akamai);
+                writer.WriteObjectValue<AkamaiAccessControl>(Akamai, options);
             }
             if (Optional.IsDefined(IPs))
             {
                 writer.WritePropertyName("ip"u8);
-                writer.WriteObjectValue(IPs);
+                writer.WriteObjectValue<IPAccessControl>(IPs, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element)
+        StreamingEndpointAccessControl IJsonModel<StreamingEndpointAccessControl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStreamingEndpointAccessControl(document.RootElement, options);
+        }
+
+        internal static StreamingEndpointAccessControl DeserializeStreamingEndpointAccessControl(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<AkamaiAccessControl> akamai = default;
-            Optional<IPAccessControl> ip = default;
+            AkamaiAccessControl akamai = default;
+            IPAccessControl ip = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("akamai"u8))
@@ -44,7 +86,7 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value);
+                    akamai = AkamaiAccessControl.DeserializeAkamaiAccessControl(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ip"u8))
@@ -53,11 +95,47 @@ namespace Azure.ResourceManager.Media.Models
                     {
                         continue;
                     }
-                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value);
+                    ip = IPAccessControl.DeserializeIPAccessControl(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new StreamingEndpointAccessControl(akamai.Value, ip.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new StreamingEndpointAccessControl(akamai, ip, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<StreamingEndpointAccessControl>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StreamingEndpointAccessControl IPersistableModel<StreamingEndpointAccessControl>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StreamingEndpointAccessControl>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStreamingEndpointAccessControl(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StreamingEndpointAccessControl)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StreamingEndpointAccessControl>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

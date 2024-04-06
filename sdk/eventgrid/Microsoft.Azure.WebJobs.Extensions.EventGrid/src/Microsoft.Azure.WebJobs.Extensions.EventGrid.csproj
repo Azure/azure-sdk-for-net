@@ -4,22 +4,22 @@
     <Description>This extension adds bindings for EventGrid</Description>
     <Version>3.4.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>3.3.0</ApiCompatVersion>
+    <ApiCompatVersion>3.3.1</ApiCompatVersion>
     <NoWarn>$(NoWarn);AZC0001;CS1591</NoWarn>
     <AssemblyOriginatorKeyFile>sign.snk</AssemblyOriginatorKeyFile>
     <IsExtensionClientLibrary>true</IsExtensionClientLibrary>
   </PropertyGroup>
 
   <ItemGroup>
-		<PackageReference Include="Microsoft.Azure.WebJobs" />
-		<PackageReference Include="Microsoft.Extensions.Azure" />
+    <PackageReference Include="Microsoft.Azure.WebJobs" />
+    <PackageReference Include="Microsoft.Extensions.Azure" />
     <PackageReference Include="Azure.Messaging.EventGrid" />
-		<PackageReference Include="Azure.Core" />
   </ItemGroup>
 
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)AppContextSwitchHelper.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScope.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)TrimmingAttribute.cs" LinkBase="Shared" />
     <Compile Include="$(AzureCoreSharedSources)DiagnosticScopeFactory.cs" LinkBase="Shared" />
   </ItemGroup>
 </Project>

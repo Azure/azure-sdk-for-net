@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class RuleManagementEventDataSource : IUtf8JsonSerializable
+    public partial class RuleManagementEventDataSource : IUtf8JsonSerializable, IJsonModel<RuleManagementEventDataSource>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RuleManagementEventDataSource>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RuleManagementEventDataSource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventName))
             {
@@ -58,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Claims))
             {
                 writer.WritePropertyName("claims"u8);
-                writer.WriteObjectValue(Claims);
+                writer.WriteObjectValue<RuleManagementEventClaimsDataSource>(Claims, options);
             }
             writer.WritePropertyName("odata.type"u8);
             writer.WriteStringValue(OdataType);
@@ -82,29 +93,60 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WritePropertyName("metricNamespace"u8);
                 writer.WriteStringValue(MetricNamespace);
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element)
+        RuleManagementEventDataSource IJsonModel<RuleManagementEventDataSource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRuleManagementEventDataSource(document.RootElement, options);
+        }
+
+        internal static RuleManagementEventDataSource DeserializeRuleManagementEventDataSource(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> eventName = default;
-            Optional<string> eventSource = default;
-            Optional<string> level = default;
-            Optional<string> operationName = default;
-            Optional<string> resourceGroupName = default;
-            Optional<string> resourceProviderName = default;
-            Optional<string> status = default;
-            Optional<string> subStatus = default;
-            Optional<RuleManagementEventClaimsDataSource> claims = default;
+            string eventName = default;
+            string eventSource = default;
+            string level = default;
+            string operationName = default;
+            string resourceGroupName = default;
+            string resourceProviderName = default;
+            string status = default;
+            string subStatus = default;
+            RuleManagementEventClaimsDataSource claims = default;
             string odataType = default;
-            Optional<ResourceIdentifier> resourceUri = default;
-            Optional<ResourceIdentifier> legacyResourceId = default;
-            Optional<string> resourceLocation = default;
-            Optional<string> metricNamespace = default;
+            ResourceIdentifier resourceUri = default;
+            ResourceIdentifier legacyResourceId = default;
+            string resourceLocation = default;
+            string metricNamespace = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("eventName"u8))
@@ -153,7 +195,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value);
+                    claims = RuleManagementEventClaimsDataSource.DeserializeRuleManagementEventClaimsDataSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("odata.type"u8))
@@ -189,8 +231,59 @@ namespace Azure.ResourceManager.Monitor.Models
                     metricNamespace = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RuleManagementEventDataSource(odataType, resourceUri.Value, legacyResourceId.Value, resourceLocation.Value, metricNamespace.Value, eventName.Value, eventSource.Value, level.Value, operationName.Value, resourceGroupName.Value, resourceProviderName.Value, status.Value, subStatus.Value, claims.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RuleManagementEventDataSource(
+                odataType,
+                resourceUri,
+                legacyResourceId,
+                resourceLocation,
+                metricNamespace,
+                serializedAdditionalRawData,
+                eventName,
+                eventSource,
+                level,
+                operationName,
+                resourceGroupName,
+                resourceProviderName,
+                status,
+                subStatus,
+                claims);
         }
+
+        BinaryData IPersistableModel<RuleManagementEventDataSource>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RuleManagementEventDataSource IPersistableModel<RuleManagementEventDataSource>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RuleManagementEventDataSource>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRuleManagementEventDataSource(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RuleManagementEventDataSource)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RuleManagementEventDataSource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

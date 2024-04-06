@@ -6,36 +6,102 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageCache.Models
 {
-    public partial class PrimingJob : IUtf8JsonSerializable
+    public partial class PrimingJob : IUtf8JsonSerializable, IJsonModel<PrimingJob>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrimingJob>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PrimingJob>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrimingJob)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("primingJobName"u8);
             writer.WriteStringValue(PrimingJobName);
             writer.WritePropertyName("primingManifestUrl"u8);
             writer.WriteStringValue(PrimingManifestUri.AbsoluteUri);
+            if (options.Format != "W" && Optional.IsDefined(PrimingJobId))
+            {
+                writer.WritePropertyName("primingJobId"u8);
+                writer.WriteStringValue(PrimingJobId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimingJobState))
+            {
+                writer.WritePropertyName("primingJobState"u8);
+                writer.WriteStringValue(PrimingJobState.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimingJobStatus))
+            {
+                writer.WritePropertyName("primingJobStatus"u8);
+                writer.WriteStringValue(PrimingJobStatus);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimingJobDetails))
+            {
+                writer.WritePropertyName("primingJobDetails"u8);
+                writer.WriteStringValue(PrimingJobDetails);
+            }
+            if (options.Format != "W" && Optional.IsDefined(PrimingJobPercentComplete))
+            {
+                writer.WritePropertyName("primingJobPercentComplete"u8);
+                writer.WriteNumberValue(PrimingJobPercentComplete.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static PrimingJob DeserializePrimingJob(JsonElement element)
+        PrimingJob IJsonModel<PrimingJob>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PrimingJob)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePrimingJob(document.RootElement, options);
+        }
+
+        internal static PrimingJob DeserializePrimingJob(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string primingJobName = default;
             Uri primingManifestUrl = default;
-            Optional<string> primingJobId = default;
-            Optional<PrimingJobState> primingJobState = default;
-            Optional<string> primingJobStatus = default;
-            Optional<string> primingJobDetails = default;
-            Optional<double> primingJobPercentComplete = default;
+            string primingJobId = default;
+            PrimingJobState? primingJobState = default;
+            string primingJobStatus = default;
+            string primingJobDetails = default;
+            double? primingJobPercentComplete = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("primingJobName"u8))
@@ -81,8 +147,52 @@ namespace Azure.ResourceManager.StorageCache.Models
                     primingJobPercentComplete = property.Value.GetDouble();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PrimingJob(primingJobName, primingManifestUrl, primingJobId.Value, Optional.ToNullable(primingJobState), primingJobStatus.Value, primingJobDetails.Value, Optional.ToNullable(primingJobPercentComplete));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PrimingJob(
+                primingJobName,
+                primingManifestUrl,
+                primingJobId,
+                primingJobState,
+                primingJobStatus,
+                primingJobDetails,
+                primingJobPercentComplete,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PrimingJob>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PrimingJob)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PrimingJob IPersistableModel<PrimingJob>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PrimingJob>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePrimingJob(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PrimingJob)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PrimingJob>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,12 +7,13 @@ azure-arm: true
 csharp: true
 library-name: StorageMover
 namespace: Azure.ResourceManager.StorageMover
-require: https://github.com/Azure/azure-rest-api-specs/blob/ed9bde6a3db71b84fdba076ba0546213bcce56ee/specification/storagemover/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/9c7b8d71061df7e308f1776d558fc56f4a6247a2/specification/storagemover/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 rename-mapping:
   Agent: StorageMoverAgent
@@ -39,7 +40,7 @@ format-by-name-rules:
   'location': 'azure-location'
   '*Uris': 'Uri'
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

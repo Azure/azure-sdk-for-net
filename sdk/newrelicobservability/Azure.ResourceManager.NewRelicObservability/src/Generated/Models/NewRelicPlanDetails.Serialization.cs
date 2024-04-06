@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
-    public partial class NewRelicPlanDetails : IUtf8JsonSerializable
+    public partial class NewRelicPlanDetails : IUtf8JsonSerializable, IJsonModel<NewRelicPlanDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewRelicPlanDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<NewRelicPlanDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicPlanDetails)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(UsageType))
             {
@@ -36,19 +46,50 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static NewRelicPlanDetails DeserializeNewRelicPlanDetails(JsonElement element)
+        NewRelicPlanDetails IJsonModel<NewRelicPlanDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(NewRelicPlanDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeNewRelicPlanDetails(document.RootElement, options);
+        }
+
+        internal static NewRelicPlanDetails DeserializeNewRelicPlanDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<NewRelicObservabilityUsageType> usageType = default;
-            Optional<NewRelicObservabilityBillingCycle> billingCycle = default;
-            Optional<string> planDetails = default;
-            Optional<DateTimeOffset> effectiveDate = default;
+            NewRelicObservabilityUsageType? usageType = default;
+            NewRelicObservabilityBillingCycle? billingCycle = default;
+            string planDetails = default;
+            DateTimeOffset? effectiveDate = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("usageType"u8))
@@ -83,8 +124,44 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                     effectiveDate = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new NewRelicPlanDetails(Optional.ToNullable(usageType), Optional.ToNullable(billingCycle), planDetails.Value, Optional.ToNullable(effectiveDate));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new NewRelicPlanDetails(usageType, billingCycle, planDetails, effectiveDate, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<NewRelicPlanDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicPlanDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        NewRelicPlanDetails IPersistableModel<NewRelicPlanDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<NewRelicPlanDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeNewRelicPlanDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewRelicPlanDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<NewRelicPlanDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

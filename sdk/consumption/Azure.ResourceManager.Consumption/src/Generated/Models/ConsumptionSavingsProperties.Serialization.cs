@@ -5,26 +5,108 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
-    public partial class ConsumptionSavingsProperties
+    public partial class ConsumptionSavingsProperties : IUtf8JsonSerializable, IJsonModel<ConsumptionSavingsProperties>
     {
-        internal static ConsumptionSavingsProperties DeserializeConsumptionSavingsProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumptionSavingsProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumptionSavingsProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(CalculatedSavings))
+            {
+                writer.WritePropertyName("calculatedSavings"u8);
+                writer.WriteStartArray();
+                foreach (var item in CalculatedSavings)
+                {
+                    writer.WriteObjectValue<ConsumptionCalculatedSavingsProperties>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsDefined(LookBackPeriod))
+            {
+                writer.WritePropertyName("lookBackPeriod"u8);
+                writer.WriteNumberValue(LookBackPeriod.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RecommendedQuantity))
+            {
+                writer.WritePropertyName("recommendedQuantity"u8);
+                writer.WriteNumberValue(RecommendedQuantity.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderTerm))
+            {
+                writer.WritePropertyName("reservationOrderTerm"u8);
+                writer.WriteStringValue(ReservationOrderTerm);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SavingsType))
+            {
+                writer.WritePropertyName("savingsType"u8);
+                writer.WriteStringValue(SavingsType);
+            }
+            if (options.Format != "W" && Optional.IsDefined(UnitOfMeasure))
+            {
+                writer.WritePropertyName("unitOfMeasure"u8);
+                writer.WriteStringValue(UnitOfMeasure);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumptionSavingsProperties IJsonModel<ConsumptionSavingsProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumptionSavingsProperties(document.RootElement, options);
+        }
+
+        internal static ConsumptionSavingsProperties DeserializeConsumptionSavingsProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionCalculatedSavingsProperties>> calculatedSavings = default;
-            Optional<int> lookBackPeriod = default;
-            Optional<float> recommendedQuantity = default;
-            Optional<string> reservationOrderTerm = default;
-            Optional<string> savingsType = default;
-            Optional<string> unitOfMeasure = default;
+            IReadOnlyList<ConsumptionCalculatedSavingsProperties> calculatedSavings = default;
+            int? lookBackPeriod = default;
+            float? recommendedQuantity = default;
+            string reservationOrderTerm = default;
+            string savingsType = default;
+            string unitOfMeasure = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("calculatedSavings"u8))
@@ -36,7 +118,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionCalculatedSavingsProperties> array = new List<ConsumptionCalculatedSavingsProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item));
+                        array.Add(ConsumptionCalculatedSavingsProperties.DeserializeConsumptionCalculatedSavingsProperties(item, options));
                     }
                     calculatedSavings = array;
                     continue;
@@ -74,8 +156,51 @@ namespace Azure.ResourceManager.Consumption.Models
                     unitOfMeasure = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumptionSavingsProperties(Optional.ToList(calculatedSavings), Optional.ToNullable(lookBackPeriod), Optional.ToNullable(recommendedQuantity), reservationOrderTerm.Value, savingsType.Value, unitOfMeasure.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumptionSavingsProperties(
+                calculatedSavings ?? new ChangeTrackingList<ConsumptionCalculatedSavingsProperties>(),
+                lookBackPeriod,
+                recommendedQuantity,
+                reservationOrderTerm,
+                savingsType,
+                unitOfMeasure,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumptionSavingsProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumptionSavingsProperties IPersistableModel<ConsumptionSavingsProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumptionSavingsProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumptionSavingsProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumptionSavingsProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumptionSavingsProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

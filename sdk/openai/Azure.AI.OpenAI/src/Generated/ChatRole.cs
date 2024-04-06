@@ -26,6 +26,7 @@ namespace Azure.AI.OpenAI
         private const string AssistantValue = "assistant";
         private const string UserValue = "user";
         private const string FunctionValue = "function";
+        private const string ToolValue = "tool";
 
         /// <summary> The role that instructs or sets the behavior of the assistant. </summary>
         public static ChatRole System { get; } = new ChatRole(SystemValue);
@@ -33,8 +34,10 @@ namespace Azure.AI.OpenAI
         public static ChatRole Assistant { get; } = new ChatRole(AssistantValue);
         /// <summary> The role that provides input for chat completions. </summary>
         public static ChatRole User { get; } = new ChatRole(UserValue);
-        /// <summary> The role that provides function results for char completions. </summary>
+        /// <summary> The role that provides function results for chat completions. </summary>
         public static ChatRole Function { get; } = new ChatRole(FunctionValue);
+        /// <summary> The role that represents extension tool activity within a chat completions operation. </summary>
+        public static ChatRole Tool { get; } = new ChatRole(ToolValue);
         /// <summary> Determines if two <see cref="ChatRole"/> values are the same. </summary>
         public static bool operator ==(ChatRole left, ChatRole right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ChatRole"/> values are not the same. </summary>

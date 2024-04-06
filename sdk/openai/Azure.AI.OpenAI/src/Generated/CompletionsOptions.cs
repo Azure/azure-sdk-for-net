@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
@@ -19,7 +18,39 @@ namespace Azure.AI.OpenAI
     /// </summary>
     public partial class CompletionsOptions
     {
-        /// <summary> Initializes a new instance of CompletionsOptions. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="CompletionsOptions"/>. </summary>
         /// <param name="prompts"> The prompts to generate completions from. </param>
         /// <param name="maxTokens"> The maximum number of tokens to generate. </param>
         /// <param name="temperature">
@@ -37,7 +68,7 @@ namespace Azure.AI.OpenAI
         /// It is not recommended to modify temperature and top_p for the same completions request as the
         /// interaction of these two settings is difficult to predict.
         /// </param>
-        /// <param name="internalStringKeyedTokenSelectionBiases">
+        /// <param name="tokenSelectionBiases">
         /// A map between GPT token IDs and bias scores that influences the probability of specific tokens
         /// appearing in a completions response. Token IDs are computed via external tokenizer tools, while
         /// bias scores reside in the range of -100 to 100 with minimum and maximum values corresponding to
@@ -58,6 +89,7 @@ namespace Azure.AI.OpenAI
         /// A value that controls the emission of log probabilities for the provided number of most likely
         /// tokens within a completions response.
         /// </param>
+        /// <param name="suffix"> The suffix that comes after a completion of inserted text. </param>
         /// <param name="echo">
         /// A value specifying whether completions responses should include input prompts as prefixes to
         /// their generated output.
@@ -84,33 +116,43 @@ namespace Azure.AI.OpenAI
         /// Use carefully and ensure reasonable settings for max_tokens and stop.
         /// </param>
         /// <param name="internalShouldStreamResponse"> A value indicating whether chat completions should be streamed for this request. </param>
-        /// <param name="internalNonAzureModelName">
+        /// <param name="deploymentName">
         /// The model name to provide as part of this completions request.
         /// Not applicable to Azure OpenAI, where deployment information should be included in the Azure
         /// resource URI that's connected to.
         /// </param>
-        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<string, int> internalStringKeyedTokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string internalNonAzureModelName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal CompletionsOptions(IList<string> prompts, int? maxTokens, float? temperature, float? nucleusSamplingFactor, IDictionary<int, int> tokenSelectionBiases, string user, int? choicesPerPrompt, int? logProbabilityCount, string suffix, bool? echo, IList<string> stopSequences, float? presencePenalty, float? frequencyPenalty, int? generationSampleCount, bool? internalShouldStreamResponse, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Prompts = prompts;
             MaxTokens = maxTokens;
             Temperature = temperature;
             NucleusSamplingFactor = nucleusSamplingFactor;
-            InternalStringKeyedTokenSelectionBiases = internalStringKeyedTokenSelectionBiases;
+            TokenSelectionBiases = tokenSelectionBiases;
             User = user;
             ChoicesPerPrompt = choicesPerPrompt;
             LogProbabilityCount = logProbabilityCount;
+            Suffix = suffix;
             Echo = echo;
             StopSequences = stopSequences;
             PresencePenalty = presencePenalty;
             FrequencyPenalty = frequencyPenalty;
             GenerationSampleCount = generationSampleCount;
             InternalShouldStreamResponse = internalShouldStreamResponse;
-            InternalNonAzureModelName = internalNonAzureModelName;
+            DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary>
         /// An identifier for the caller or end user of the operation. This may be used for tracking
         /// or rate-limiting purposes.
         /// </summary>
         public string User { get; set; }
+        /// <summary> The suffix that comes after a completion of inserted text. </summary>
+        public string Suffix { get; set; }
+        /// <summary>
+        /// A value specifying whether completions responses should include input prompts as prefixes to
+        /// their generated output.
+        /// </summary>
+        public bool? Echo { get; set; }
     }
 }

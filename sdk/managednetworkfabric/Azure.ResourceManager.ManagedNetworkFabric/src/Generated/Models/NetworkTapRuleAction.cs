@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
@@ -12,24 +14,58 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Action that need to performed. </summary>
     public partial class NetworkTapRuleAction
     {
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         public NetworkTapRuleAction()
         {
         }
 
-        /// <summary> Initializes a new instance of NetworkTapRuleAction. </summary>
+        /// <summary> Initializes a new instance of <see cref="NetworkTapRuleAction"/>. </summary>
         /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
         /// <param name="destinationId"> Destination Id. The ARM resource Id may be either Network To Network Interconnect or NeighborGroup. </param>
         /// <param name="matchConfigurationName"> The name of the match configuration. This is used when Goto type is provided. If Goto type is selected and no match configuration name is provided. It goes to next configuration. </param>
-        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkTapRuleAction(TapRuleActionType? tapRuleActionType, string truncate, NetworkFabricBooleanValue? isTimestampEnabled, ResourceIdentifier destinationId, string matchConfigurationName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TapRuleActionType = tapRuleActionType;
             Truncate = truncate;
             IsTimestampEnabled = isTimestampEnabled;
             DestinationId = destinationId;
             MatchConfigurationName = matchConfigurationName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Type of actions that can be performed. </summary>

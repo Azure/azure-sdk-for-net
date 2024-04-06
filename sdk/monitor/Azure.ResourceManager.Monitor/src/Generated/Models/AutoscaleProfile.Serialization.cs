@@ -5,43 +5,82 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
-    public partial class AutoscaleProfile : IUtf8JsonSerializable
+    public partial class AutoscaleProfile : IUtf8JsonSerializable, IJsonModel<AutoscaleProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AutoscaleProfile>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AutoscaleProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            writer.WriteObjectValue<MonitorScaleCapacity>(Capacity, options);
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AutoscaleRule>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
-                writer.WriteObjectValue(FixedDate);
+                writer.WriteObjectValue<MonitorTimeWindow>(FixedDate, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<MonitorRecurrence>(Recurrence, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element)
+        AutoscaleProfile IJsonModel<AutoscaleProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAutoscaleProfile(document.RootElement, options);
+        }
+
+        internal static AutoscaleProfile DeserializeAutoscaleProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -49,8 +88,10 @@ namespace Azure.ResourceManager.Monitor.Models
             string name = default;
             MonitorScaleCapacity capacity = default;
             IList<AutoscaleRule> rules = default;
-            Optional<MonitorTimeWindow> fixedDate = default;
-            Optional<MonitorRecurrence> recurrence = default;
+            MonitorTimeWindow fixedDate = default;
+            MonitorRecurrence recurrence = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -60,7 +101,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("capacity"u8))
                 {
-                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value);
+                    capacity = MonitorScaleCapacity.DeserializeMonitorScaleCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("rules"u8))
@@ -68,7 +109,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     List<AutoscaleRule> array = new List<AutoscaleRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item));
+                        array.Add(AutoscaleRule.DeserializeAutoscaleRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -79,7 +120,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value);
+                    fixedDate = MonitorTimeWindow.DeserializeMonitorTimeWindow(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("recurrence"u8))
@@ -88,11 +129,53 @@ namespace Azure.ResourceManager.Monitor.Models
                     {
                         continue;
                     }
-                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value);
+                    recurrence = MonitorRecurrence.DeserializeMonitorRecurrence(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AutoscaleProfile(name, capacity, rules, fixedDate.Value, recurrence.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AutoscaleProfile(
+                name,
+                capacity,
+                rules,
+                fixedDate,
+                recurrence,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<AutoscaleProfile>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AutoscaleProfile IPersistableModel<AutoscaleProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAutoscaleProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AutoscaleProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

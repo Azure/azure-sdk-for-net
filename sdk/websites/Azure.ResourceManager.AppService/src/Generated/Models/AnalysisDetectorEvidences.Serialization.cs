@@ -5,16 +5,28 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable
+    public partial class AnalysisDetectorEvidences : IUtf8JsonSerializable, IJsonModel<AnalysisDetectorEvidences>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AnalysisDetectorEvidences>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AnalysisDetectorEvidences>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Source))
             {
@@ -24,7 +36,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorDefinition))
             {
                 writer.WritePropertyName("detectorDefinition"u8);
-                writer.WriteObjectValue(DetectorDefinition);
+                writer.WriteObjectValue<DetectorDefinition>(DetectorDefinition, options);
             }
             if (Optional.IsCollectionDefined(Metrics))
             {
@@ -32,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticMetricSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -50,7 +62,7 @@ namespace Azure.ResourceManager.AppService.Models
                     writer.WriteStartArray();
                     foreach (var item0 in item)
                     {
-                        writer.WriteObjectValue(item0);
+                        writer.WriteObjectValue<AppServiceNameValuePair>(item0, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -59,22 +71,53 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(DetectorMetaData))
             {
                 writer.WritePropertyName("detectorMetaData"u8);
-                writer.WriteObjectValue(DetectorMetaData);
+                writer.WriteObjectValue<DetectorMetadata>(DetectorMetaData, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element)
+        AnalysisDetectorEvidences IJsonModel<AnalysisDetectorEvidences>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAnalysisDetectorEvidences(document.RootElement, options);
+        }
+
+        internal static AnalysisDetectorEvidences DeserializeAnalysisDetectorEvidences(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> source = default;
-            Optional<DetectorDefinition> detectorDefinition = default;
-            Optional<IList<DiagnosticMetricSet>> metrics = default;
-            Optional<IList<IList<AppServiceNameValuePair>>> data = default;
-            Optional<DetectorMetadata> detectorMetaData = default;
+            string source = default;
+            DetectorDefinition detectorDefinition = default;
+            IList<DiagnosticMetricSet> metrics = default;
+            IList<IList<AppServiceNameValuePair>> data = default;
+            DetectorMetadata detectorMetaData = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
@@ -88,7 +131,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value);
+                    detectorDefinition = DetectorDefinition.DeserializeDetectorDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("metrics"u8))
@@ -100,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                     List<DiagnosticMetricSet> array = new List<DiagnosticMetricSet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item));
+                        array.Add(DiagnosticMetricSet.DeserializeDiagnosticMetricSet(item, options));
                     }
                     metrics = array;
                     continue;
@@ -123,7 +166,7 @@ namespace Azure.ResourceManager.AppService.Models
                             List<AppServiceNameValuePair> array0 = new List<AppServiceNameValuePair>();
                             foreach (var item0 in item.EnumerateArray())
                             {
-                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0));
+                                array0.Add(AppServiceNameValuePair.DeserializeAppServiceNameValuePair(item0, options));
                             }
                             array.Add(array0);
                         }
@@ -137,11 +180,196 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value);
+                    detectorMetaData = DetectorMetadata.DeserializeDetectorMetadata(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new AnalysisDetectorEvidences(source.Value, detectorDefinition.Value, Optional.ToList(metrics), Optional.ToList(data), detectorMetaData.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new AnalysisDetectorEvidences(
+                source,
+                detectorDefinition,
+                metrics ?? new ChangeTrackingList<DiagnosticMetricSet>(),
+                data ?? new ChangeTrackingList<IList<AppServiceNameValuePair>>(),
+                detectorMetaData,
+                serializedAdditionalRawData);
         }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
+            if (Optional.IsDefined(Source) || hasPropertyOverride)
+            {
+                builder.Append("  source: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Source.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Source}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Source}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorDefinition), out propertyOverride);
+            if (Optional.IsDefined(DetectorDefinition) || hasPropertyOverride)
+            {
+                builder.Append("  detectorDefinition: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DetectorDefinition, options, 2, false, "  detectorDefinition: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            if (Optional.IsCollectionDefined(Metrics) || hasPropertyOverride)
+            {
+                if (Metrics.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  metrics: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Metrics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metrics: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Data), out propertyOverride);
+            if (Optional.IsCollectionDefined(Data) || hasPropertyOverride)
+            {
+                if (Data.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  data: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Data)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            builder.AppendLine("[");
+                            foreach (var item0 in item)
+                            {
+                                BicepSerializationHelpers.AppendChildObject(builder, item0, options, 4, true, "  data: ");
+                            }
+                            builder.AppendLine("  ]");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DetectorMetaData), out propertyOverride);
+            if (Optional.IsDefined(DetectorMetaData) || hasPropertyOverride)
+            {
+                builder.Append("  detectorMetaData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DetectorMetaData, options, 2, false, "  detectorMetaData: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "DataSource":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("DataSource", item.Value);
+                        bicepOptions.PropertyOverrides.Add(DetectorMetaData, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
+        BinaryData IPersistableModel<AnalysisDetectorEvidences>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AnalysisDetectorEvidences IPersistableModel<AnalysisDetectorEvidences>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalysisDetectorEvidences>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAnalysisDetectorEvidences(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AnalysisDetectorEvidences)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AnalysisDetectorEvidences>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

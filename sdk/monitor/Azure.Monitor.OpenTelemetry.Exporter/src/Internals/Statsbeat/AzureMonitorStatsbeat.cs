@@ -126,13 +126,22 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
         {
             try
             {
-                using (var httpClient = new HttpClient())
+                // Prevent internal HTTP operations from being instrumented.
+                using (var scope = SuppressInstrumentationScope.Begin())
                 {
-                    httpClient.DefaultRequestHeaders.Add("Metadata", "True");
-                    var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
-                    var vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+                    using (var httpClient = new HttpClient() { Timeout = TimeSpan.FromSeconds(2) })
+                    {
+                        httpClient.DefaultRequestHeaders.Add("Metadata", "True");
+                        var responseString = httpClient.GetStringAsync(StatsbeatConstants.AMS_Url);
+                        VmMetadataResponse? vmMetadata;
+#if NET6_0_OR_GREATER
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result, SourceGenerationContext.Default.VmMetadataResponse);
+#else
+                        vmMetadata = JsonSerializer.Deserialize<VmMetadataResponse>(responseString.Result);
+#endif
 
-                    return vmMetadata;
+                        return vmMetadata;
+                    }
                 }
             }
             catch (Exception ex)
@@ -176,6 +185,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
                 // osType takes precedence.
                 s_operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture);
+
+                return;
+            }
+
+            var aksArmNamespaceId = platform.GetEnvironmentVariable(EnvironmentVariableConstants.AKS_ARM_NAMESPACE_ID);
+            if (aksArmNamespaceId != null)
+            {
+                _resourceProvider = "aks";
+                _resourceProviderId = aksArmNamespaceId;
 
                 return;
             }

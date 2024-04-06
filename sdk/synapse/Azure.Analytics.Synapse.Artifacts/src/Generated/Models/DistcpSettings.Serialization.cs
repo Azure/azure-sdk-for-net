@@ -19,13 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            writer.WriteObjectValue(ResourceManagerEndpoint);
+            writer.WriteObjectValue<object>(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
-            writer.WriteObjectValue(TempScriptPath);
+            writer.WriteObjectValue<object>(TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                writer.WriteObjectValue(DistcpOptions);
+                writer.WriteObjectValue<object>(DistcpOptions);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            object distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
@@ -61,15 +61,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DistcpSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDistcpSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DistcpSettings>(this);
+            return content;
         }
 
         internal partial class DistcpSettingsConverter : JsonConverter<DistcpSettings>
         {
             public override void Write(Utf8JsonWriter writer, DistcpSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DistcpSettings>(model);
             }
+
             public override DistcpSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

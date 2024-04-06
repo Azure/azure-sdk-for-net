@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Logic;
 using Azure.ResourceManager.Logic.Models;
 
 namespace Azure.ResourceManager.Logic.Samples
@@ -80,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Samples
                     KeyVersion = "87d9764197604449b9b8eb7bd8710868",
                     ResourceId = new ResourceIdentifier("/subscriptions/34adfa4f-cedf-4dc0-ba29-b6d1a69ab345/resourcegroups/testResourceGroup/providers/microsoft.keyvault/vaults/<keyVaultName>"),
                 },
-                PublicCertificate = BinaryData.FromString("<publicCertificateValue>"),
+                PublicCertificate = BinaryData.FromString("\"<publicCertificateValue>\""),
             };
             ArmOperation<IntegrationAccountCertificateResource> lro = await integrationAccountCertificate.UpdateAsync(WaitUntil.Completed, data);
             IntegrationAccountCertificateResource result = lro.Value;

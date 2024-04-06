@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Security.Attestation
 {
@@ -18,7 +17,7 @@ namespace Azure.Security.Attestation
             {
                 return null;
             }
-            Optional<string> token = default;
+            string token = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("token"u8))
@@ -27,7 +26,15 @@ namespace Azure.Security.Attestation
                     continue;
                 }
             }
-            return new PolicyCertificatesModifyResponse(token.Value);
+            return new PolicyCertificatesModifyResponse(token);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyCertificatesModifyResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyCertificatesModifyResponse(document.RootElement);
         }
     }
 }

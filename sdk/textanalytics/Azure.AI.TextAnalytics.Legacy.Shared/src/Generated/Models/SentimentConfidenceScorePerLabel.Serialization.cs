@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Legacy
 {
@@ -40,6 +39,14 @@ namespace Azure.AI.TextAnalytics.Legacy
                 }
             }
             return new SentimentConfidenceScorePerLabel(positive, neutral, negative);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SentimentConfidenceScorePerLabel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSentimentConfidenceScorePerLabel(document.RootElement);
         }
     }
 }

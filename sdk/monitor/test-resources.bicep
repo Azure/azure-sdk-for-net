@@ -172,6 +172,24 @@ resource dataCollectionRuleRoleAssignment 'Microsoft.Authorization/roleAssignmen
   }
 }
 
+@description('The base resource name.')
+param storageAccountName string = uniqueString(baseName, 'storage')
+@description('The base resource name.')
+param storageAccountsku string = 'Standard_LRS'
+
+resource storageAccount 'Microsoft.Storage/storageAccounts@2021-08-01' = {
+  name: storageAccountName
+  location: location
+  sku: {
+    name: storageAccountsku
+  }
+  kind: 'StorageV2'
+  tags: {
+    ObjectName: storageAccountName
+  }
+  properties: {}
+}
+
 output CONNECTION_STRING string = baseName_resource.properties.ConnectionString
 output APPLICATION_ID string = baseName_resource.properties.AppId
 output WORKSPACE_ID string = primaryWorkspace.properties.customerId
@@ -189,3 +207,7 @@ output INGESTION_DATA_COLLECTION_RULE_IMMUTABLE_ID string = dataCollectionRule.p
 output RESOURCE_ID string = resourceGroup().id
 output WORKSPACE_PRIMARY_RESOURCE_ID string = primaryWorkspace.id
 output WORKSPACE_SECONDARY_RESOURCE_ID string = secondaryWorkspace.id
+output DATAPLANE_ENDPOINT string = 'https://${location}.metrics.monitor.azure.com'
+output STORAGE_NAME string = storageAccount.name
+output STORAGE_ID string = storageAccount.id
+output STORAGE_CONNECTION_STRING string = 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};AccountKey=${listKeys(storageAccount.id, storageAccount.apiVersion).keys[0].value};EndpointSuffix=${environment().suffixes.storage}'

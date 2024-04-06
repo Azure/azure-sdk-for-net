@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
@@ -12,21 +14,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
     /// <summary> IaaS VM specific backup protection intent item. </summary>
     public partial class ResourceProtectionIntent : BackupGenericProtectionIntent
     {
-        /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
         public ResourceProtectionIntent()
         {
             ProtectionIntentItemType = ProtectionIntentItemType.AzureResourceItem;
         }
 
-        /// <summary> Initializes a new instance of ResourceProtectionIntent. </summary>
+        /// <summary> Initializes a new instance of <see cref="ResourceProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
         /// <param name="backupManagementType"> Type of backup management for the backed up item. </param>
         /// <param name="sourceResourceId"> ARM ID of the resource to be backed up. </param>
         /// <param name="itemId"> ID of the item which is getting protected, In case of Azure Vm , it is ProtectedItemId. </param>
         /// <param name="policyId"> ID of the backup policy with which this item is backed up. </param>
         /// <param name="protectionState"> Backup state of this backup item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="friendlyName"> Friendly name of the VM represented by this backup item. </param>
-        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState)
+        internal ResourceProtectionIntent(ProtectionIntentItemType protectionIntentItemType, BackupManagementType? backupManagementType, ResourceIdentifier sourceResourceId, ResourceIdentifier itemId, ResourceIdentifier policyId, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string friendlyName) : base(protectionIntentItemType, backupManagementType, sourceResourceId, itemId, policyId, protectionState, serializedAdditionalRawData)
         {
             FriendlyName = friendlyName;
             ProtectionIntentItemType = protectionIntentItemType;

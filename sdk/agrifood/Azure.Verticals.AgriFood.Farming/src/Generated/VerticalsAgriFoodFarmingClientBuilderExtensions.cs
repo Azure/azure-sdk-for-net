@@ -20,7 +20,7 @@ namespace Microsoft.Extensions.Azure
         public static IAzureClientBuilder<FarmBeatsClient, FarmBeatsClientOptions> AddFarmBeatsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<FarmBeatsClient, FarmBeatsClientOptions>((options, cred) => new FarmBeatsClient(cred, endpoint, options));
+            return builder.RegisterClientFactory<FarmBeatsClient, FarmBeatsClientOptions>((options, cred) => new FarmBeatsClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="FarmBeatsClient"/> instance. </summary>

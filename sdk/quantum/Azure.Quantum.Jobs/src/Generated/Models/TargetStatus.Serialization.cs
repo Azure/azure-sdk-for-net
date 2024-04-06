@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -18,10 +17,10 @@ namespace Azure.Quantum.Jobs.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<TargetAvailability> currentAvailability = default;
-            Optional<long> averageQueueTime = default;
-            Optional<string> statusPage = default;
+            string id = default;
+            TargetAvailability? currentAvailability = default;
+            long? averageQueueTime = default;
+            string statusPage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -53,7 +52,15 @@ namespace Azure.Quantum.Jobs.Models
                     continue;
                 }
             }
-            return new TargetStatus(id.Value, Optional.ToNullable(currentAvailability), Optional.ToNullable(averageQueueTime), statusPage.Value);
+            return new TargetStatus(id, currentAvailability, averageQueueTime, statusPage);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TargetStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTargetStatus(document.RootElement);
         }
     }
 }

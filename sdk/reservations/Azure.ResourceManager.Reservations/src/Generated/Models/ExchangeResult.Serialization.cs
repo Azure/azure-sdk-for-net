@@ -5,24 +5,97 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
-    public partial class ExchangeResult
+    public partial class ExchangeResult : IUtf8JsonSerializable, IJsonModel<ExchangeResult>
     {
-        internal static ExchangeResult DeserializeExchangeResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExchangeResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ExchangeResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExchangeResult)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (Optional.IsDefined(Status))
+            {
+                writer.WritePropertyName("status"u8);
+                writer.WriteStringValue(Status.Value.ToString());
+            }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<ExchangeResultProperties>(Properties, options);
+            }
+            if (Optional.IsDefined(Error))
+            {
+                writer.WritePropertyName("error"u8);
+                writer.WriteObjectValue<OperationResultError>(Error, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ExchangeResult IJsonModel<ExchangeResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ExchangeResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeExchangeResult(document.RootElement, options);
+        }
+
+        internal static ExchangeResult DeserializeExchangeResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ExchangeOperationResultStatus> status = default;
-            Optional<ExchangeResultProperties> properties = default;
-            Optional<OperationResultError> error = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ExchangeOperationResultStatus? status = default;
+            ExchangeResultProperties properties = default;
+            OperationResultError error = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -54,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value);
+                    properties = ExchangeResultProperties.DeserializeExchangeResultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -63,11 +136,53 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    error = OperationResultError.DeserializeOperationResultError(property.Value);
+                    error = OperationResultError.DeserializeOperationResultError(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ExchangeResult(id.Value, name.Value, Optional.ToNullable(status), properties.Value, error.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ExchangeResult(
+                id,
+                name,
+                status,
+                properties,
+                error,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ExchangeResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ExchangeResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ExchangeResult IPersistableModel<ExchangeResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ExchangeResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeExchangeResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ExchangeResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ExchangeResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

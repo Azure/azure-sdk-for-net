@@ -5,22 +5,84 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
-    internal partial class PreconfiguredEndpointList
+    internal partial class PreconfiguredEndpointList : IUtf8JsonSerializable, IJsonModel<PreconfiguredEndpointList>
     {
-        internal static PreconfiguredEndpointList DeserializePreconfiguredEndpointList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreconfiguredEndpointList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<PreconfiguredEndpointList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue<PreconfiguredEndpoint>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        PreconfiguredEndpointList IJsonModel<PreconfiguredEndpointList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializePreconfiguredEndpointList(document.RootElement, options);
+        }
+
+        internal static PreconfiguredEndpointList DeserializePreconfiguredEndpointList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IReadOnlyList<PreconfiguredEndpoint>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<PreconfiguredEndpoint> value = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -32,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     List<PreconfiguredEndpoint> array = new List<PreconfiguredEndpoint>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item));
+                        array.Add(PreconfiguredEndpoint.DeserializePreconfiguredEndpoint(item, options));
                     }
                     value = array;
                     continue;
@@ -42,8 +104,44 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new PreconfiguredEndpointList(Optional.ToList(value), nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new PreconfiguredEndpointList(value ?? new ChangeTrackingList<PreconfiguredEndpoint>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<PreconfiguredEndpointList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        PreconfiguredEndpointList IPersistableModel<PreconfiguredEndpointList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<PreconfiguredEndpointList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializePreconfiguredEndpointList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PreconfiguredEndpointList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<PreconfiguredEndpointList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

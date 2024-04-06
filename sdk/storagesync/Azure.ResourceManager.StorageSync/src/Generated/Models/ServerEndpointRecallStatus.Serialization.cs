@@ -6,23 +6,89 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.StorageSync.Models
 {
-    public partial class ServerEndpointRecallStatus
+    public partial class ServerEndpointRecallStatus : IUtf8JsonSerializable, IJsonModel<ServerEndpointRecallStatus>
     {
-        internal static ServerEndpointRecallStatus DeserializeServerEndpointRecallStatus(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ServerEndpointRecallStatus>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ServerEndpointRecallStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
+            {
+                writer.WritePropertyName("lastUpdatedTimestamp"u8);
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
+            }
+            if (options.Format != "W" && Optional.IsDefined(TotalRecallErrorsCount))
+            {
+                writer.WritePropertyName("totalRecallErrorsCount"u8);
+                writer.WriteNumberValue(TotalRecallErrorsCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecallErrors))
+            {
+                writer.WritePropertyName("recallErrors"u8);
+                writer.WriteStartArray();
+                foreach (var item in RecallErrors)
+                {
+                    writer.WriteObjectValue<ServerEndpointRecallError>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ServerEndpointRecallStatus IJsonModel<ServerEndpointRecallStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeServerEndpointRecallStatus(document.RootElement, options);
+        }
+
+        internal static ServerEndpointRecallStatus DeserializeServerEndpointRecallStatus(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DateTimeOffset> lastUpdatedTimestamp = default;
-            Optional<long> totalRecallErrorsCount = default;
-            Optional<IReadOnlyList<ServerEndpointRecallError>> recallErrors = default;
+            DateTimeOffset? lastUpdatedTimestamp = default;
+            long? totalRecallErrorsCount = default;
+            IReadOnlyList<ServerEndpointRecallError> recallErrors = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lastUpdatedTimestamp"u8))
@@ -52,13 +118,49 @@ namespace Azure.ResourceManager.StorageSync.Models
                     List<ServerEndpointRecallError> array = new List<ServerEndpointRecallError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item));
+                        array.Add(ServerEndpointRecallError.DeserializeServerEndpointRecallError(item, options));
                     }
                     recallErrors = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ServerEndpointRecallStatus(Optional.ToNullable(lastUpdatedTimestamp), Optional.ToNullable(totalRecallErrorsCount), Optional.ToList(recallErrors));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ServerEndpointRecallStatus(lastUpdatedTimestamp, totalRecallErrorsCount, recallErrors ?? new ChangeTrackingList<ServerEndpointRecallError>(), serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ServerEndpointRecallStatus>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ServerEndpointRecallStatus IPersistableModel<ServerEndpointRecallStatus>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointRecallStatus>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeServerEndpointRecallStatus(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ServerEndpointRecallStatus)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ServerEndpointRecallStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

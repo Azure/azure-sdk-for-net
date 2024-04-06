@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.Rooms
 {
@@ -20,7 +19,7 @@ namespace Azure.Communication.Rooms
                 return null;
             }
             IReadOnlyList<RoomParticipant> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,7 +38,15 @@ namespace Azure.Communication.Rooms
                     continue;
                 }
             }
-            return new ParticipantsCollection(value, nextLink.Value);
+            return new ParticipantsCollection(value, nextLink);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ParticipantsCollection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeParticipantsCollection(document.RootElement);
         }
     }
 }

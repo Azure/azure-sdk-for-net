@@ -6,14 +6,14 @@
 #nullable disable
 
 using System.Collections.Generic;
-using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
     /// <summary> A set of attributes describing a maneuver, e.g. 'Turn right', 'Keep left', 'Take the ferry', 'Take the motorway', 'Arrive'. </summary>
     public partial class RouteInstruction
     {
-        /// <summary> Initializes a new instance of RouteInstruction. </summary>
+        /// <summary> Initializes a new instance of <see cref="RouteInstruction"/>. </summary>
         internal RouteInstruction()
         {
             RoadNumbers = new ChangeTrackingList<string>();

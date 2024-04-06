@@ -6,24 +6,96 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryJobErrorDetails
+    public partial class SiteRecoveryJobErrorDetails : IUtf8JsonSerializable, IJsonModel<SiteRecoveryJobErrorDetails>
     {
-        internal static SiteRecoveryJobErrorDetails DeserializeSiteRecoveryJobErrorDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryJobErrorDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryJobErrorDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(ServiceErrorDetails))
+            {
+                writer.WritePropertyName("serviceErrorDetails"u8);
+                writer.WriteObjectValue<SiteRecoveryServiceError>(ServiceErrorDetails, options);
+            }
+            if (Optional.IsDefined(ProviderErrorDetails))
+            {
+                writer.WritePropertyName("providerErrorDetails"u8);
+                writer.WriteObjectValue<SiteRecoveryJobProviderError>(ProviderErrorDetails, options);
+            }
+            if (Optional.IsDefined(ErrorLevel))
+            {
+                writer.WritePropertyName("errorLevel"u8);
+                writer.WriteStringValue(ErrorLevel);
+            }
+            if (Optional.IsDefined(CreatedOn))
+            {
+                writer.WritePropertyName("creationTime"u8);
+                writer.WriteStringValue(CreatedOn.Value, "O");
+            }
+            if (Optional.IsDefined(TaskId))
+            {
+                writer.WritePropertyName("taskId"u8);
+                writer.WriteStringValue(TaskId);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryJobErrorDetails IJsonModel<SiteRecoveryJobErrorDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryJobErrorDetails(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryJobErrorDetails DeserializeSiteRecoveryJobErrorDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<SiteRecoveryServiceError> serviceErrorDetails = default;
-            Optional<SiteRecoveryJobProviderError> providerErrorDetails = default;
-            Optional<string> errorLevel = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<string> taskId = default;
+            SiteRecoveryServiceError serviceErrorDetails = default;
+            SiteRecoveryJobProviderError providerErrorDetails = default;
+            string errorLevel = default;
+            DateTimeOffset? creationTime = default;
+            string taskId = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("serviceErrorDetails"u8))
@@ -32,7 +104,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value);
+                    serviceErrorDetails = SiteRecoveryServiceError.DeserializeSiteRecoveryServiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("providerErrorDetails"u8))
@@ -41,7 +113,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value);
+                    providerErrorDetails = SiteRecoveryJobProviderError.DeserializeSiteRecoveryJobProviderError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("errorLevel"u8))
@@ -63,8 +135,50 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     taskId = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryJobErrorDetails(serviceErrorDetails.Value, providerErrorDetails.Value, errorLevel.Value, Optional.ToNullable(creationTime), taskId.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteRecoveryJobErrorDetails(
+                serviceErrorDetails,
+                providerErrorDetails,
+                errorLevel,
+                creationTime,
+                taskId,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryJobErrorDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryJobErrorDetails IPersistableModel<SiteRecoveryJobErrorDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryJobErrorDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryJobErrorDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

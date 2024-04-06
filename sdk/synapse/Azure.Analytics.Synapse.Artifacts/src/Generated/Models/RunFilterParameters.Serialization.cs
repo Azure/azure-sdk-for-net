@@ -33,7 +33,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Filters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,19 +43,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in OrderBy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunQueryOrderBy>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RunFilterParameters>(this);
+            return content;
+        }
+
         internal partial class RunFilterParametersConverter : JsonConverter<RunFilterParameters>
         {
             public override void Write(Utf8JsonWriter writer, RunFilterParameters model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunFilterParameters>(model);
             }
+
             public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();

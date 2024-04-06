@@ -1,0 +1,23 @@
+# NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
+
+trigger: none
+pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/springappdiscovery/ci.mgmt.yml
+    - sdk/springappdiscovery/Azure.ResourceManager.SpringAppDiscovery/
+
+extends:
+  template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
+  parameters:
+    ServiceDirectory: springappdiscovery
+    LimitForPullRequest: true
+    Artifacts:
+    - name: Azure.ResourceManager.SpringAppDiscovery
+      safeName: AzureResourceManagerSpringAppDiscovery

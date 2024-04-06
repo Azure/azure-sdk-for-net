@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -15,7 +14,7 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> Set value for a Variable. </summary>
     public partial class SetVariableActivity : ControlActivity
     {
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public SetVariableActivity(string name) : base(name)
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = "SetVariable";
         }
 
-        /// <summary> Initializes a new instance of SetVariableActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -45,6 +44,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Value = value;
             SetSystemVariable = setSystemVariable;
             ActivityType = activityType ?? "SetVariable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SetVariableActivity"/> for deserialization. </summary>
+        internal SetVariableActivity()
+        {
         }
 
         /// <summary> Activity policy. </summary>

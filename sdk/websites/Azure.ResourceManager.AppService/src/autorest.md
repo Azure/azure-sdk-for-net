@@ -13,10 +13,15 @@ namespace: Azure.ResourceManager.AppService
 require: https://github.com/Azure/azure-rest-api-specs/blob/35f8a4df47aedc1ce185c854595cba6b83fa6c71/specification/web/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 deserialize-null-collection-as-null-value: true
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 # mgmt-debug:
 #  show-serialized-names: true
@@ -138,7 +143,7 @@ format-by-name-rules:
 keep-plural-enums:
 - StackPreferredOS
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -364,6 +369,7 @@ rename-mapping:
   AddressResponse.properties.vipMappings: VirtualIPMappings
   CloningInfo.sourceWebAppLocation: -|azure-location
   AzureTableStorageApplicationLogsConfig.sasUrl: SasUriString
+  WebSiteInstanceStatus.properties.healthCheckUrl: healthCheckUrlString
 
 # rename resource
   AppServiceCertificate: AppServiceCertificateProperties
@@ -375,7 +381,7 @@ rename-mapping:
   StaticSiteUserProvidedFunctionApp: StaticSiteUserProvidedFunctionAppProperties # just rename this to avoid collision, this class will be automatically removed
   StaticSiteCustomDomainRequestPropertiesARMResource: StaticSiteCustomDomainContent
   User: PublishingUser
-  WorkerPoolResource: WorkerPool
+  WorkerPoolResource: AppServiceWorkerPool
   CsmPublishingProfileOptions: CsmPublishingProfile
   StaticSiteTemplateOptions: StaticSiteTemplate
   PrivateLinkResource: AppServicePrivateLinkResourceData
@@ -594,10 +600,9 @@ prepend-rp-prefix:
   - UsageState
   - CorsSettings
   - SourceControl
-  - WorkerPool
   - ForwardProxy
-  - IPSecurityRestriction
-  - IPFilterTag
+  - IpSecurityRestriction
+  - IpFilterTag
   - VirtualNetworkProfile
 
 models-to-treat-empty-string-as-null:
@@ -816,4 +821,21 @@ directive:
     transform: >
         $["format"] = "duration";
         $["x-ms-format"] = "duration-constant";
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/syncfunctiontriggers'].post
+    transform: >
+        $['responses'] = {
+            "200":{
+                "description": "No Content"
+            },
+            "204": {
+                "description": "No Content"
+            },
+            "default": {
+                "description": "App Service error response.",
+                "schema": {
+                    "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+                }
+            }
+        };
 ```

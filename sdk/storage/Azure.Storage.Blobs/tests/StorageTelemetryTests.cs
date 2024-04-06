@@ -73,10 +73,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
 
-            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
-            {
-                CheckRequest = true
-            };
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion));
+            using IDisposable _ = assertionPolicy.CheckRequestScope();
             Specialized.SpecializedBlobClientOptions clientOptions = new()
             {
                 ClientSideEncryption = new(cseVersion)
@@ -119,10 +117,8 @@ namespace Azure.Storage.Blobs.Tests
         {
             await using DisposingContainer disposingContainer = await ClientBuilder.GetTestContainerAsync();
 
-            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
-            {
-                CheckRequest = true
-            };
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion));
+            using IDisposable _ = assertionPolicy.CheckRequestScope();
             Specialized.SpecializedBlobClientOptions clientOptions = new()
             {
                 ClientSideEncryption = new(cseVersion)
@@ -160,10 +156,8 @@ namespace Azure.Storage.Blobs.Tests
             BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
             await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
 
-            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
-            {
-                CheckRequest = true
-            };
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion));
+            using IDisposable _ = assertionPolicy.CheckRequestScope();
             Specialized.SpecializedBlobClientOptions clientOptions = new()
             {
                 ClientSideEncryption = new(cseVersion)
@@ -195,10 +189,8 @@ namespace Azure.Storage.Blobs.Tests
             BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
             await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
 
-            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
-            {
-                CheckRequest = true
-            };
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion));
+            using IDisposable _ = assertionPolicy.CheckRequestScope();
             Specialized.SpecializedBlobClientOptions clientOptions = new()
             {
                 ClientSideEncryption = new(cseVersion)
@@ -232,10 +224,8 @@ namespace Azure.Storage.Blobs.Tests
             BlobClient blobClient = disposingContainer.Container.GetBlobClient(GetNewBlobName());
             await blobClient.UploadAsync(BinaryData.FromBytes(GetRandomBuffer(dataSize)));
 
-            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion))
-            {
-                CheckRequest = true
-            };
+            AssertMessageContentsPolicy assertionPolicy = new(checkRequest: GetCheckAzFeatureUserAgent(cseVersion));
+            using IDisposable _ = assertionPolicy.CheckRequestScope();
             Specialized.SpecializedBlobClientOptions clientOptions = new()
             {
                 ClientSideEncryption = new(cseVersion)

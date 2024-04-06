@@ -5,24 +5,109 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
-    public partial class MySqlFlexibleServerStorageEditionCapability
+    public partial class MySqlFlexibleServerStorageEditionCapability : IUtf8JsonSerializable, IJsonModel<MySqlFlexibleServerStorageEditionCapability>
     {
-        internal static MySqlFlexibleServerStorageEditionCapability DeserializeMySqlFlexibleServerStorageEditionCapability(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MySqlFlexibleServerStorageEditionCapability>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MySqlFlexibleServerStorageEditionCapability>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorageEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorageEditionCapability)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(Name))
+            {
+                writer.WritePropertyName("name"u8);
+                writer.WriteStringValue(Name);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinStorageSize))
+            {
+                writer.WritePropertyName("minStorageSize"u8);
+                writer.WriteNumberValue(MinStorageSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxStorageSize))
+            {
+                writer.WritePropertyName("maxStorageSize"u8);
+                writer.WriteNumberValue(MaxStorageSize.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinBackupRetentionDays))
+            {
+                writer.WritePropertyName("minBackupRetentionDays"u8);
+                writer.WriteNumberValue(MinBackupRetentionDays.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBackupRetentionDays))
+            {
+                writer.WritePropertyName("maxBackupRetentionDays"u8);
+                writer.WriteNumberValue(MaxBackupRetentionDays.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MinBackupIntervalHours))
+            {
+                writer.WritePropertyName("minBackupIntervalHours"u8);
+                writer.WriteNumberValue(MinBackupIntervalHours.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(MaxBackupIntervalHours))
+            {
+                writer.WritePropertyName("maxBackupIntervalHours"u8);
+                writer.WriteNumberValue(MaxBackupIntervalHours.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        MySqlFlexibleServerStorageEditionCapability IJsonModel<MySqlFlexibleServerStorageEditionCapability>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorageEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerStorageEditionCapability)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMySqlFlexibleServerStorageEditionCapability(document.RootElement, options);
+        }
+
+        internal static MySqlFlexibleServerStorageEditionCapability DeserializeMySqlFlexibleServerStorageEditionCapability(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<long> minStorageSize = default;
-            Optional<long> maxStorageSize = default;
-            Optional<long> minBackupRetentionDays = default;
-            Optional<long> maxBackupRetentionDays = default;
+            string name = default;
+            long? minStorageSize = default;
+            long? maxStorageSize = default;
+            long? minBackupRetentionDays = default;
+            long? maxBackupRetentionDays = default;
+            long? minBackupIntervalHours = default;
+            long? maxBackupIntervalHours = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("name"u8))
@@ -66,8 +151,70 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     maxBackupRetentionDays = property.Value.GetInt64();
                     continue;
                 }
+                if (property.NameEquals("minBackupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minBackupIntervalHours = property.Value.GetInt64();
+                    continue;
+                }
+                if (property.NameEquals("maxBackupIntervalHours"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxBackupIntervalHours = property.Value.GetInt64();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MySqlFlexibleServerStorageEditionCapability(name.Value, Optional.ToNullable(minStorageSize), Optional.ToNullable(maxStorageSize), Optional.ToNullable(minBackupRetentionDays), Optional.ToNullable(maxBackupRetentionDays));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MySqlFlexibleServerStorageEditionCapability(
+                name,
+                minStorageSize,
+                maxStorageSize,
+                minBackupRetentionDays,
+                maxBackupRetentionDays,
+                minBackupIntervalHours,
+                maxBackupIntervalHours,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MySqlFlexibleServerStorageEditionCapability>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorageEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorageEditionCapability)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MySqlFlexibleServerStorageEditionCapability IPersistableModel<MySqlFlexibleServerStorageEditionCapability>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerStorageEditionCapability>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMySqlFlexibleServerStorageEditionCapability(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerStorageEditionCapability)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MySqlFlexibleServerStorageEditionCapability>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

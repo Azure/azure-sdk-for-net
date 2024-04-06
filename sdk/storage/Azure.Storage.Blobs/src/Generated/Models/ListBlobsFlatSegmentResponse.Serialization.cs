@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Blobs.Models
 {
@@ -49,7 +48,14 @@ namespace Azure.Storage.Blobs.Models
             {
                 nextMarker = (string)nextMarkerElement;
             }
-            return new ListBlobsFlatSegmentResponse(serviceEndpoint, containerName, prefix, marker, maxResults, segment, nextMarker);
+            return new ListBlobsFlatSegmentResponse(
+                serviceEndpoint,
+                containerName,
+                prefix,
+                marker,
+                maxResults,
+                segment,
+                nextMarker);
         }
     }
 }

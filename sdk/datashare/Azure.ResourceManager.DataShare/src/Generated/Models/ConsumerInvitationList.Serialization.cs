@@ -5,23 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataShare;
 
 namespace Azure.ResourceManager.DataShare.Models
 {
-    internal partial class ConsumerInvitationList
+    internal partial class ConsumerInvitationList : IUtf8JsonSerializable, IJsonModel<ConsumerInvitationList>
     {
-        internal static ConsumerInvitationList DeserializeConsumerInvitationList(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConsumerInvitationList>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ConsumerInvitationList>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumerInvitationList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumerInvitationList)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<DataShareConsumerInvitationData>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ConsumerInvitationList IJsonModel<ConsumerInvitationList>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumerInvitationList>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ConsumerInvitationList)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeConsumerInvitationList(document.RootElement, options);
+        }
+
+        internal static ConsumerInvitationList DeserializeConsumerInvitationList(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IReadOnlyList<DataShareConsumerInvitationData> value = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("nextLink"u8))
@@ -34,13 +92,49 @@ namespace Azure.ResourceManager.DataShare.Models
                     List<DataShareConsumerInvitationData> array = new List<DataShareConsumerInvitationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(item));
+                        array.Add(DataShareConsumerInvitationData.DeserializeDataShareConsumerInvitationData(item, options));
                     }
                     value = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ConsumerInvitationList(nextLink.Value, value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ConsumerInvitationList(nextLink, value, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ConsumerInvitationList>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumerInvitationList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ConsumerInvitationList)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ConsumerInvitationList IPersistableModel<ConsumerInvitationList>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ConsumerInvitationList>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeConsumerInvitationList(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConsumerInvitationList)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ConsumerInvitationList>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

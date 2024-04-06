@@ -14,13 +14,13 @@ namespace Azure.ResourceManager.DataFactory.Models
     /// <summary> A copy activity source for Amazon Redshift Source. </summary>
     public partial class AmazonRedshiftSource : TabularSource
     {
-        /// <summary> Initializes a new instance of AmazonRedshiftSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
         public AmazonRedshiftSource()
         {
             CopySourceType = "AmazonRedshiftSource";
         }
 
-        /// <summary> Initializes a new instance of AmazonRedshiftSource. </summary>
+        /// <summary> Initializes a new instance of <see cref="AmazonRedshiftSource"/>. </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>

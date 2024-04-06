@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.PowerBIDedicated;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
 
@@ -304,7 +301,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Samples
             DedicatedCapacityResource dedicatedCapacity = client.GetDedicatedCapacityResource(dedicatedCapacityResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (SkuDetailsForExistingResource item in dedicatedCapacity.GetSkusForCapacityAsync())
+            await foreach (SkuDetails item in dedicatedCapacity.GetSkusForCapacityAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

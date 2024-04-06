@@ -10,9 +10,13 @@ namespace: Azure.ResourceManager.NewRelicObservability
 require: https://github.com/Azure/azure-rest-api-specs/blob/fd0b301360d7f83dee9dec5afe3fff77b90b79f6/specification/newrelic/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
 # mgmt-debug:
 #   show-serialized-names: true
@@ -42,7 +46,6 @@ prepend-rp-prefix:
 - MetricsContent
 - MetricsStatusContent
 - MetricsStatusResult
-- MonitoredResourceListResult
 - MonitoringStatus
 - OrganizationInfo
 - OrgCreationSource
@@ -59,11 +62,11 @@ prepend-rp-prefix:
 - TagRule
 - UsageType
 - UserInfo
-- VmExtensionPayload
-- VmHostsListResponse
-- VmInfo
+- VMExtensionPayload
+- VMHostsListResponse
+- VMInfo
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -115,7 +118,7 @@ rename-mapping:
   MetricsStatusResponse: NewRelicMetricsStatusResult
   MonitoredResource: NewRelicResourceMonitorResult
   MonitoredResource.id: -|arm-id
-  MonitoredResourceListResponse: MonitoredResourceListResult
+  MonitoredResourceListResponse: NewRelicObservabilityMonitoredResourceListResult
   MonitoringStatus.Disabled: IsDisabled
   MonitoringStatus.Enabled: IsEnabled
   NewrelicAgentData.LocalIPAddress: -|ip-address

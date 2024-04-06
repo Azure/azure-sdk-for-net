@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -21,7 +20,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             if (Optional.IsDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
-                writer.WriteObjectValue(DimensionFilter);
+                writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             }
             if (Optional.IsDefined(FeedbackType))
             {
@@ -44,6 +43,14 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStringValue(TimeMode.Value.ToSerialString());
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MetricFeedbackFilter>(this);
+            return content;
         }
     }
 }

@@ -5,25 +5,62 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.ManagementPartner.Models
 {
     /// <summary> this is the management partner operations response. </summary>
     public partial class OperationResponse
     {
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         internal OperationResponse()
         {
         }
 
-        /// <summary> Initializes a new instance of OperationResponse. </summary>
+        /// <summary> Initializes a new instance of <see cref="OperationResponse"/>. </summary>
         /// <param name="name"> this is the operation response name. </param>
         /// <param name="display"> this is the operation display. </param>
         /// <param name="origin"> the is operation response origin information. </param>
-        internal OperationResponse(string name, OperationDisplay display, string origin)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationResponse(string name, OperationDisplay display, string origin, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Display = display;
             Origin = origin;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> this is the operation response name. </summary>

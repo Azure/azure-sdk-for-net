@@ -6,36 +6,86 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
 {
-    public partial class LineChannelProperties : IUtf8JsonSerializable
+    public partial class LineChannelProperties : IUtf8JsonSerializable, IJsonModel<LineChannelProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LineChannelProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<LineChannelProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("lineRegistrations"u8);
             writer.WriteStartArray();
             foreach (var item in LineRegistrations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LineRegistration>(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(CallbackUri))
+            {
+                writer.WritePropertyName("callbackUrl"u8);
+                writer.WriteStringValue(CallbackUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsValidated))
+            {
+                writer.WritePropertyName("isValidated"u8);
+                writer.WriteBooleanValue(IsValidated.Value);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static LineChannelProperties DeserializeLineChannelProperties(JsonElement element)
+        LineChannelProperties IJsonModel<LineChannelProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(LineChannelProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeLineChannelProperties(document.RootElement, options);
+        }
+
+        internal static LineChannelProperties DeserializeLineChannelProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IList<LineRegistration> lineRegistrations = default;
-            Optional<Uri> callbackUrl = default;
-            Optional<bool> isValidated = default;
+            Uri callbackUrl = default;
+            bool? isValidated = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("lineRegistrations"u8))
@@ -43,7 +93,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<LineRegistration> array = new List<LineRegistration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LineRegistration.DeserializeLineRegistration(item));
+                        array.Add(LineRegistration.DeserializeLineRegistration(item, options));
                     }
                     lineRegistrations = array;
                     continue;
@@ -66,8 +116,44 @@ namespace Azure.ResourceManager.BotService.Models
                     isValidated = property.Value.GetBoolean();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new LineChannelProperties(lineRegistrations, callbackUrl.Value, Optional.ToNullable(isValidated));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new LineChannelProperties(lineRegistrations, callbackUrl, isValidated, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<LineChannelProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        LineChannelProperties IPersistableModel<LineChannelProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<LineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeLineChannelProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LineChannelProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<LineChannelProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

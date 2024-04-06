@@ -6,44 +6,59 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> The content or blob url of image, could be base64 encoding bytes or blob url. If both are given, the request will be refused. The maximum size of image is 2048 pixels * 2048 pixels, no larger than 4MB at the same time. The minimum size of image is 50 pixels * 50 pixels. </summary>
+    /// <summary> The image can be either base64 encoded bytes or a blob URL. You can choose only one of these options. If both are provided, the request will be refused. The maximum image size is 2048 x 2048 pixels and should not exceed 4 MB, while the minimum image size is 50 x 50 pixels. </summary>
     public partial class ContentSafetyImageData
     {
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
-        public ContentSafetyImageData()
-        {
-        }
-
-        /// <summary> Initializes a new instance of ContentSafetyImageData. </summary>
-        /// <param name="content"> Base64 encoding of image. </param>
-        /// <param name="blobUrl"> The blob url of image. </param>
-        internal ContentSafetyImageData(BinaryData content, Uri blobUrl)
-        {
-            Content = content;
-            BlobUrl = blobUrl;
-        }
-
         /// <summary>
-        /// Base64 encoding of image.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
-        /// The byte[] will be serialized to a Base64 encoded string.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>
-        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
-        /// <description>Creates a payload of "AQID".</description>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
         /// </item>
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData Content { get; set; }
-        /// <summary> The blob url of image. </summary>
-        public Uri BlobUrl { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
+        public ContentSafetyImageData()
+        {
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContentSafetyImageData"/>. </summary>
+        /// <param name="content"> The Base64 encoding of the image. </param>
+        /// <param name="blobUri"> The blob url of the image. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContentSafetyImageData(BinaryData content, Uri blobUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Content = content;
+            BlobUri = blobUri;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
     }
 }

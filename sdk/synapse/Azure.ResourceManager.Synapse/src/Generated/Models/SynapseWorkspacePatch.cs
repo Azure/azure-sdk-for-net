@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -14,10 +15,67 @@ namespace Azure.ResourceManager.Synapse.Models
     /// <summary> Workspace patch details. </summary>
     public partial class SynapseWorkspacePatch
     {
-        /// <summary> Initializes a new instance of SynapseWorkspacePatch. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspacePatch"/>. </summary>
         public SynapseWorkspacePatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseWorkspacePatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The identity of the workspace. Current supported identity types: None, SystemAssigned, SystemAssigned,UserAssigned. </param>
+        /// <param name="sqlAdministratorLoginPassword"> SQL administrator login password. </param>
+        /// <param name="managedVirtualNetworkSettings"> Managed Virtual Network Settings. </param>
+        /// <param name="workspaceRepositoryConfiguration"> Git integration settings. </param>
+        /// <param name="purviewConfiguration"> Purview Configuration. </param>
+        /// <param name="provisioningState"> Resource provisioning state. </param>
+        /// <param name="encryption"> The encryption details of the workspace. </param>
+        /// <param name="publicNetworkAccess"> Enable or Disable public network access to workspace. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseWorkspacePatch(IDictionary<string, string> tags, ManagedServiceIdentity identity, string sqlAdministratorLoginPassword, SynapseManagedVirtualNetworkSettings managedVirtualNetworkSettings, SynapseWorkspaceRepositoryConfiguration workspaceRepositoryConfiguration, PurviewConfiguration purviewConfiguration, string provisioningState, SynapseEncryptionDetails encryption, WorkspacePublicNetworkAccess? publicNetworkAccess, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            Tags = tags;
+            Identity = identity;
+            SqlAdministratorLoginPassword = sqlAdministratorLoginPassword;
+            ManagedVirtualNetworkSettings = managedVirtualNetworkSettings;
+            WorkspaceRepositoryConfiguration = workspaceRepositoryConfiguration;
+            PurviewConfiguration = purviewConfiguration;
+            ProvisioningState = provisioningState;
+            Encryption = encryption;
+            PublicNetworkAccess = publicNetworkAccess;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>

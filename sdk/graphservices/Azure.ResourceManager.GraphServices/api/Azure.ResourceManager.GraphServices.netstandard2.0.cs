@@ -31,14 +31,21 @@ namespace Azure.ResourceManager.GraphServices
         public virtual Azure.Pageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetIfExists(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetIfExistsAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class GraphServicesAccountResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class GraphServicesAccountResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>
     {
-        public GraphServicesAccountResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties) : base (default(Azure.Core.AzureLocation)) { }
+        public GraphServicesAccountResourceData(Azure.Core.AzureLocation location, Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties) { }
         public Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties Properties { get { throw null; } set { } }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class GraphServicesExtensions
     {
@@ -50,6 +57,27 @@ namespace Azure.ResourceManager.GraphServices
         public static Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }
+namespace Azure.ResourceManager.GraphServices.Mocking
+{
+    public partial class MockableGraphServicesArmClient : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGraphServicesArmClient() { }
+        public virtual Azure.ResourceManager.GraphServices.GraphServicesAccountResource GetGraphServicesAccountResource(Azure.Core.ResourceIdentifier id) { throw null; }
+    }
+    public partial class MockableGraphServicesResourceGroupResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGraphServicesResourceGroupResource() { }
+        public virtual Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResource(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.GraphServices.GraphServicesAccountResource>> GetGraphServicesAccountResourceAsync(string resourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.GraphServices.GraphServicesAccountResourceCollection GetGraphServicesAccountResources() { throw null; }
+    }
+    public partial class MockableGraphServicesSubscriptionResource : Azure.ResourceManager.ArmResource
+    {
+        protected MockableGraphServicesSubscriptionResource() { }
+        public virtual Azure.Pageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResources(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.GraphServices.GraphServicesAccountResource> GetGraphServicesAccountResourcesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+}
 namespace Azure.ResourceManager.GraphServices.Models
 {
     public static partial class ArmGraphServicesModelFactory
@@ -57,16 +85,26 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static Azure.ResourceManager.GraphServices.GraphServicesAccountResourceData GraphServicesAccountResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties GraphServicesAccountResourceProperties(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState? provisioningState = default(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState?), string appId = null, string billingPlanId = null) { throw null; }
     }
-    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate
+    public partial class GraphServicesAccountResourcePatch : Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>
     {
         public GraphServicesAccountResourcePatch() { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourcePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class GraphServicesAccountResourceProperties
+    public partial class GraphServicesAccountResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>
     {
         public GraphServicesAccountResourceProperties(string appId) { }
         public string AppId { get { throw null; } set { } }
         public string BillingPlanId { get { throw null; } }
         public Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesAccountResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct GraphServicesProvisioningState : System.IEquatable<Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState>
@@ -87,9 +125,14 @@ namespace Azure.ResourceManager.GraphServices.Models
         public static bool operator !=(Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState left, Azure.ResourceManager.GraphServices.Models.GraphServicesProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class GraphServicesTagUpdate
+    public partial class GraphServicesTagUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>
     {
         public GraphServicesTagUpdate() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.GraphServices.Models.GraphServicesTagUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

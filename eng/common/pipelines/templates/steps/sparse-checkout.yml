@@ -17,19 +17,27 @@ steps:
       - checkout: none
 
   - task: PowerShell@2
-    displayName: 'Sparse checkout repositories'
+    ${{ if eq(length(parameters.Repositories), 1) }}:
+      displayName: 'Sparse checkout ${{ parameters.Repositories[0].Name }}'
+    ${{ else }}:
+      displayName: 'Sparse checkout repositories'
     inputs:
       targetType: inline
       # Define this inline, because of the chicken/egg problem with loading a script when nothing
       # has been checked out yet.
       script: |
+        # Setting $PSNativeCommandArgumentPassing to 'Legacy' to use PowerShell
+        # 7.2 behavior for command argument passing. Newer behaviors will result
+        # in errors from git.exe.
+        $PSNativeCommandArgumentPassing = 'Legacy'
+        
         function SparseCheckout([Array]$paths, [Hashtable]$repository)
         {
             $dir = $repository.WorkingDirectory
             if (!$dir) {
               $dir = "./$($repository.Name)"
             }
-            New-Item $dir -ItemType Directory -Force
+            New-Item $dir -ItemType Directory -Force | Out-Null
             Push-Location $dir
 
             if (Test-Path .git/info/sparse-checkout) {
@@ -70,9 +78,14 @@ steps:
 
             # sparse-checkout commands after initial checkout will auto-checkout again
             if (!$hasInitialized) {
-              Write-Host "git -c advice.detachedHead=false checkout $($repository.Commitish)"
+              # Remove refs/heads/ prefix from branch names
+              $commitish = $repository.Commitish -replace '^refs/heads/', ''
+
+              # use -- to prevent git from interpreting the commitish as a path
+              Write-Host "git -c advice.detachedHead=false checkout $commitish --"
+
               # This will use the default branch if repo.Commitish is empty
-              git -c advice.detachedHead=false checkout $($repository.Commitish)
+              git -c advice.detachedHead=false checkout $commitish --
             } else {
               Write-Host "Skipping checkout as repo has already been initialized"
             }

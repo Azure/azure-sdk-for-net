@@ -6,15 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
-    public partial class RoutingStorageContainerProperties : IUtf8JsonSerializable
+    public partial class RoutingStorageContainerProperties : IUtf8JsonSerializable, IJsonModel<RoutingStorageContainerProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoutingStorageContainerProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<RoutingStorageContainerProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(Id))
             {
@@ -39,7 +49,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -75,28 +85,59 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static RoutingStorageContainerProperties DeserializeRoutingStorageContainerProperties(JsonElement element)
+        RoutingStorageContainerProperties IJsonModel<RoutingStorageContainerProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoutingStorageContainerProperties(document.RootElement, options);
+        }
+
+        internal static RoutingStorageContainerProperties DeserializeRoutingStorageContainerProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<string> connectionString = default;
-            Optional<string> endpointUri = default;
-            Optional<IotHubAuthenticationType> authenticationType = default;
-            Optional<ManagedIdentity> identity = default;
+            Guid? id = default;
+            string connectionString = default;
+            string endpointUri = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ManagedIdentity identity = default;
             string name = default;
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
             string containerName = default;
-            Optional<string> fileNameFormat = default;
-            Optional<int> batchFrequencyInSeconds = default;
-            Optional<int> maxChunkSizeInBytes = default;
-            Optional<RoutingStorageContainerPropertiesEncoding> encoding = default;
+            string fileNameFormat = default;
+            int? batchFrequencyInSeconds = default;
+            int? maxChunkSizeInBytes = default;
+            RoutingStorageContainerPropertiesEncoding? encoding = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -133,7 +174,7 @@ namespace Azure.ResourceManager.IotHub.Models
                     {
                         continue;
                     }
-                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value);
+                    identity = ManagedIdentity.DeserializeManagedIdentity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -188,8 +229,58 @@ namespace Azure.ResourceManager.IotHub.Models
                     encoding = new RoutingStorageContainerPropertiesEncoding(property.Value.GetString());
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoutingStorageContainerProperties(Optional.ToNullable(id), connectionString.Value, endpointUri.Value, Optional.ToNullable(authenticationType), identity.Value, name, subscriptionId.Value, resourceGroup.Value, containerName, fileNameFormat.Value, Optional.ToNullable(batchFrequencyInSeconds), Optional.ToNullable(maxChunkSizeInBytes), Optional.ToNullable(encoding));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoutingStorageContainerProperties(
+                id,
+                connectionString,
+                endpointUri,
+                authenticationType,
+                identity,
+                name,
+                subscriptionId,
+                resourceGroup,
+                containerName,
+                fileNameFormat,
+                batchFrequencyInSeconds,
+                maxChunkSizeInBytes,
+                encoding,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoutingStorageContainerProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoutingStorageContainerProperties IPersistableModel<RoutingStorageContainerProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoutingStorageContainerProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoutingStorageContainerProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoutingStorageContainerProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoutingStorageContainerProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

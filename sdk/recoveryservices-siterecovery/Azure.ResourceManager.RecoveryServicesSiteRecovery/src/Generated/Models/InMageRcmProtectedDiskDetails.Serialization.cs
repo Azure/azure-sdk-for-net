@@ -6,34 +6,156 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class InMageRcmProtectedDiskDetails
+    public partial class InMageRcmProtectedDiskDetails : IUtf8JsonSerializable, IJsonModel<InMageRcmProtectedDiskDetails>
     {
-        internal static InMageRcmProtectedDiskDetails DeserializeInMageRcmProtectedDiskDetails(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<InMageRcmProtectedDiskDetails>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<InMageRcmProtectedDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (options.Format != "W" && Optional.IsDefined(DiskId))
+            {
+                writer.WritePropertyName("diskId"u8);
+                writer.WriteStringValue(DiskId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiskName))
+            {
+                writer.WritePropertyName("diskName"u8);
+                writer.WriteStringValue(DiskName);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsOSDisk))
+            {
+                writer.WritePropertyName("isOSDisk"u8);
+                writer.WriteStringValue(IsOSDisk);
+            }
+            if (options.Format != "W" && Optional.IsDefined(CapacityInBytes))
+            {
+                writer.WritePropertyName("capacityInBytes"u8);
+                writer.WriteNumberValue(CapacityInBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(LogStorageAccountId))
+            {
+                writer.WritePropertyName("logStorageAccountId"u8);
+                writer.WriteStringValue(LogStorageAccountId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DiskEncryptionSetId))
+            {
+                writer.WritePropertyName("diskEncryptionSetId"u8);
+                writer.WriteStringValue(DiskEncryptionSetId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SeedManagedDiskId))
+            {
+                writer.WritePropertyName("seedManagedDiskId"u8);
+                writer.WriteStringValue(SeedManagedDiskId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(SeedBlobUri))
+            {
+                writer.WritePropertyName("seedBlobUri"u8);
+                writer.WriteStringValue(SeedBlobUri.AbsoluteUri);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TargetManagedDiskId))
+            {
+                writer.WritePropertyName("targetManagedDiskId"u8);
+                writer.WriteStringValue(TargetManagedDiskId);
+            }
+            if (Optional.IsDefined(DiskType))
+            {
+                writer.WritePropertyName("diskType"u8);
+                writer.WriteStringValue(DiskType.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataPendingInLogDataStoreInMB))
+            {
+                writer.WritePropertyName("dataPendingInLogDataStoreInMB"u8);
+                writer.WriteNumberValue(DataPendingInLogDataStoreInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(DataPendingAtSourceAgentInMB))
+            {
+                writer.WritePropertyName("dataPendingAtSourceAgentInMB"u8);
+                writer.WriteNumberValue(DataPendingAtSourceAgentInMB.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsInitialReplicationComplete))
+            {
+                writer.WritePropertyName("isInitialReplicationComplete"u8);
+                writer.WriteStringValue(IsInitialReplicationComplete);
+            }
+            if (Optional.IsDefined(IrDetails))
+            {
+                writer.WritePropertyName("irDetails"u8);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(IrDetails, options);
+            }
+            if (Optional.IsDefined(ResyncDetails))
+            {
+                writer.WritePropertyName("resyncDetails"u8);
+                writer.WriteObjectValue<InMageRcmSyncDetails>(ResyncDetails, options);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        InMageRcmProtectedDiskDetails IJsonModel<InMageRcmProtectedDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeInMageRcmProtectedDiskDetails(document.RootElement, options);
+        }
+
+        internal static InMageRcmProtectedDiskDetails DeserializeInMageRcmProtectedDiskDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> diskId = default;
-            Optional<string> diskName = default;
-            Optional<string> isOSDisk = default;
-            Optional<long> capacityInBytes = default;
-            Optional<ResourceIdentifier> logStorageAccountId = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
-            Optional<string> seedManagedDiskId = default;
-            Optional<Uri> seedBlobUri = default;
-            Optional<string> targetManagedDiskId = default;
-            Optional<SiteRecoveryDiskAccountType> diskType = default;
-            Optional<double> dataPendingInLogDataStoreInMB = default;
-            Optional<double> dataPendingAtSourceAgentInMB = default;
-            Optional<string> isInitialReplicationComplete = default;
-            Optional<InMageRcmSyncDetails> irDetails = default;
-            Optional<InMageRcmSyncDetails> resyncDetails = default;
+            string diskId = default;
+            string diskName = default;
+            string isOSDisk = default;
+            long? capacityInBytes = default;
+            ResourceIdentifier logStorageAccountId = default;
+            ResourceIdentifier diskEncryptionSetId = default;
+            string seedManagedDiskId = default;
+            Uri seedBlobUri = default;
+            string targetManagedDiskId = default;
+            SiteRecoveryDiskAccountType? diskType = default;
+            double? dataPendingInLogDataStoreInMB = default;
+            double? dataPendingAtSourceAgentInMB = default;
+            string isInitialReplicationComplete = default;
+            InMageRcmSyncDetails irDetails = default;
+            InMageRcmSyncDetails resyncDetails = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("diskId"u8))
@@ -135,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
+                    irDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("resyncDetails"u8))
@@ -144,11 +266,63 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value);
+                    resyncDetails = InMageRcmSyncDetails.DeserializeInMageRcmSyncDetails(property.Value, options);
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new InMageRcmProtectedDiskDetails(diskId.Value, diskName.Value, isOSDisk.Value, Optional.ToNullable(capacityInBytes), logStorageAccountId.Value, diskEncryptionSetId.Value, seedManagedDiskId.Value, seedBlobUri.Value, targetManagedDiskId.Value, Optional.ToNullable(diskType), Optional.ToNullable(dataPendingInLogDataStoreInMB), Optional.ToNullable(dataPendingAtSourceAgentInMB), isInitialReplicationComplete.Value, irDetails.Value, resyncDetails.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new InMageRcmProtectedDiskDetails(
+                diskId,
+                diskName,
+                isOSDisk,
+                capacityInBytes,
+                logStorageAccountId,
+                diskEncryptionSetId,
+                seedManagedDiskId,
+                seedBlobUri,
+                targetManagedDiskId,
+                diskType,
+                dataPendingInLogDataStoreInMB,
+                dataPendingAtSourceAgentInMB,
+                isInitialReplicationComplete,
+                irDetails,
+                resyncDetails,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<InMageRcmProtectedDiskDetails>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        InMageRcmProtectedDiskDetails IPersistableModel<InMageRcmProtectedDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<InMageRcmProtectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeInMageRcmProtectedDiskDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(InMageRcmProtectedDiskDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<InMageRcmProtectedDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

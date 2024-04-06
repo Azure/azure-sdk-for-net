@@ -5,23 +5,81 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    internal partial class ManagedCertificateCollection
+    internal partial class ManagedCertificateCollection : IUtf8JsonSerializable, IJsonModel<ManagedCertificateCollection>
     {
-        internal static ManagedCertificateCollection DeserializeManagedCertificateCollection(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedCertificateCollection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedCertificateCollection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateCollection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedCertificateCollection)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("value"u8);
+            writer.WriteStartArray();
+            foreach (var item in Value)
+            {
+                writer.WriteObjectValue<ContainerAppManagedCertificateData>(item, options);
+            }
+            writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedCertificateCollection IJsonModel<ManagedCertificateCollection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateCollection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedCertificateCollection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedCertificateCollection(document.RootElement, options);
+        }
+
+        internal static ManagedCertificateCollection DeserializeManagedCertificateCollection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<ContainerAppManagedCertificateData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -29,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppManagedCertificateData> array = new List<ContainerAppManagedCertificateData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item));
+                        array.Add(ContainerAppManagedCertificateData.DeserializeContainerAppManagedCertificateData(item, options));
                     }
                     value = array;
                     continue;
@@ -39,8 +97,44 @@ namespace Azure.ResourceManager.AppContainers.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedCertificateCollection(value, nextLink.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedCertificateCollection(value, nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedCertificateCollection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateCollection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedCertificateCollection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedCertificateCollection IPersistableModel<ManagedCertificateCollection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedCertificateCollection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedCertificateCollection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedCertificateCollection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedCertificateCollection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

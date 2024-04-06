@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -12,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MapperConnection : IUtf8JsonSerializable
+    public partial class MapperConnection : IUtf8JsonSerializable, IJsonModel<MapperConnection>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MapperConnection>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MapperConnection>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperConnection)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(LinkedService))
             {
@@ -40,24 +50,55 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonDslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperDslConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
             }
             writer.WriteEndObject();
         }
 
-        internal static MapperConnection DeserializeMapperConnection(JsonElement element)
+        MapperConnection IJsonModel<MapperConnection>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperConnection>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MapperConnection)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMapperConnection(document.RootElement, options);
+        }
+
+        internal static MapperConnection DeserializeMapperConnection(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryLinkedServiceReference> linkedService = default;
-            Optional<string> linkedServiceType = default;
+            DataFactoryLinkedServiceReference linkedService = default;
+            string linkedServiceType = default;
             MapperConnectionType type = default;
-            Optional<bool> isInlineDataset = default;
-            Optional<IList<MapperDslConnectorProperties>> commonDslConnectorProperties = default;
+            bool? isInlineDataset = default;
+            IList<MapperDslConnectorProperties> commonDslConnectorProperties = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedService"u8))
@@ -97,13 +138,55 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<MapperDslConnectorProperties> array = new List<MapperDslConnectorProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item));
+                        array.Add(MapperDslConnectorProperties.DeserializeMapperDslConnectorProperties(item, options));
                     }
                     commonDslConnectorProperties = array;
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new MapperConnection(linkedService, linkedServiceType.Value, type, Optional.ToNullable(isInlineDataset), Optional.ToList(commonDslConnectorProperties));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new MapperConnection(
+                linkedService,
+                linkedServiceType,
+                type,
+                isInlineDataset,
+                commonDslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<MapperConnection>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MapperConnection)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MapperConnection IPersistableModel<MapperConnection>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MapperConnection>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMapperConnection(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MapperConnection)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MapperConnection>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

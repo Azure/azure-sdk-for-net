@@ -8,12 +8,20 @@ azure-arm: true
 csharp: true
 library-name: Marketplace
 namespace: Azure.ResourceManager.Marketplace
-require: https://github.com/Azure/azure-rest-api-specs/blob/aa8a23b8f92477d0fdce7af6ccffee1c604b3c56/specification/marketplace/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/a54263176acce91199a19333d6c4717367a3317e/specification/marketplace/resource-manager/readme.md
+#tag: package-2023-01-01
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 rename-mapping:
   AcknowledgeOfferNotificationProperties: AcknowledgeOfferNotificationContent
@@ -52,11 +60,15 @@ rename-mapping:
   PlanDetails: PrivateStorePlanDetails
   PrivateStore.properties.collectionIds: -|uuid
   PrivateStore.properties.privateStoreId: -|uuid
+  Rule: MarketplaceRule
+  RuleListResponse: MarketplaceRuleListResult
+  RuleType: MarketplaceRuleType
   QueryApprovedPlansPayload: QueryApprovedPlansContent
   QueryApprovedPlansResponse: QueryApprovedPlansResult
   QueryRequestApproval: QueryApprovalRequestResult
   QueryRequestApprovalProperties: QueryApprovalRequestContent
   QueryUserOffersProperties:  QueryUserOffersContent
+  QueryUserRulesProperties: QueryUserRulesContent
   Recipient: NotificationRecipient
   Recipient.principalId: -|uuid
   RequestApprovalsDetails.icon: iconUri|uri
@@ -90,7 +102,7 @@ override-operation-name:
   PrivateStore_BulkCollectionsAction: PerformActionOnBulkCollections
   PrivateStore_CollectionsToSubscriptionsMapping: FetchCollectionsToSubscriptionsMapping
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS

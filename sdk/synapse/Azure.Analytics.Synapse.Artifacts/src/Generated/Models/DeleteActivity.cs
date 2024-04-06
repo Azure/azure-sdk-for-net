@@ -7,14 +7,13 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
     /// <summary> Delete activity. </summary>
     public partial class DeleteActivity : ExecutionActivity
     {
-        /// <summary> Initializes a new instance of DeleteActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="dataset"> Delete activity dataset reference. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="dataset"/> is null. </exception>
@@ -27,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             Type = "Delete";
         }
 
-        /// <summary> Initializes a new instance of DeleteActivity. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeleteActivity"/>. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="type"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>

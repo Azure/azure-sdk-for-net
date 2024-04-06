@@ -21,6 +21,9 @@ namespace Azure.Search.Documents
     /// </summary>
     public class SearchClient
     {
+        private readonly HttpPipeline _pipeline;
+        private string _serviceName;
+
         /// <summary>
         /// Gets the URI endpoint of the Search Service.  This is likely
         /// to be similar to "https://{search_service}.search.windows.net".
@@ -30,12 +33,6 @@ namespace Azure.Search.Documents
         /// URI with "{Endpoint}/indexes/{IndexName}" if needed.
         /// </remarks>
         public virtual Uri Endpoint { get; }
-
-        /// <summary>
-        /// The name of the Search Service, lazily obtained from the
-        /// <see cref="Endpoint"/>.
-        /// </summary>
-        private string _serviceName;
 
         /// <summary>
         /// Gets the name of the Search Service.
@@ -55,10 +52,9 @@ namespace Azure.Search.Documents
         internal ObjectSerializer Serializer { get; }
 
         /// <summary>
-        /// Gets the authenticated <see cref="HttpPipeline"/> used for sending
-        /// requests to the Search Service.
+        /// The HTTP pipeline for sending and receiving REST requests and responses.
         /// </summary>
-        private HttpPipeline Pipeline { get; }
+        public virtual HttpPipeline Pipeline => _pipeline;
 
         /// <summary>
         /// Gets the <see cref="Azure.Core.Pipeline.ClientDiagnostics"/> used
@@ -202,12 +198,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(credential);
+            _pipeline = options.Build(credential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
                 null,
@@ -261,12 +257,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = options.Serializer;
             ClientDiagnostics = new ClientDiagnostics(options);
-            Pipeline = options.Build(tokenCredential);
+            _pipeline = options.Build(tokenCredential);
             Version = options.Version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 indexName,
                 null,
@@ -321,12 +317,12 @@ namespace Azure.Search.Documents
             IndexName = indexName;
             Serializer = serializer;
             ClientDiagnostics = diagnostics;
-            Pipeline = pipeline;
+            _pipeline = pipeline;
             Version = version;
 
             Protocol = new DocumentsRestClient(
                 ClientDiagnostics,
-                Pipeline,
+                _pipeline,
                 endpoint.AbsoluteUri,
                 IndexName,
                 null,
@@ -341,7 +337,7 @@ namespace Azure.Search.Documents
             new SearchIndexClient(
                 Endpoint,
                 Serializer,
-                Pipeline,
+                _pipeline,
                 ClientDiagnostics,
                 Version);
         #endregion ctors
@@ -679,7 +675,8 @@ namespace Azure.Search.Documents
             bool async,
             CancellationToken cancellationToken)
         {
-            if (key == null) { throw new ArgumentNullException(nameof(key)); }
+            if (key == null)
+            { throw new ArgumentNullException(nameof(key)); }
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(SearchClient)}.{nameof(GetDocument)}");
             scope.Start();
             try
@@ -687,23 +684,23 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateGetRequest(key, options?.SelectedFieldsOrNull);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        T value = await message.Response.ContentStream.DeserializeAsync<T>(
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        return Response.FromValue(value, message.Response);
-                    }
+                        {
+                            T value = await message.Response.ContentStream.DeserializeAsync<T>(
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                            return Response.FromValue(value, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -831,6 +828,114 @@ namespace Azure.Search.Documents
                 cancellationToken)
                 .ConfigureAwait(false);
 
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case <see cref="SearchResults{T}.GetResults"/>
+        /// will automatically continue making additional requests as you
+        /// enumerate through the results.  You can also process the results a
+        /// page at a time with the <see cref="Pageable{T}.AsPages(string, int?)"/>
+        /// method.
+        /// </para>
+        /// </remarks>
+        public virtual Response<SearchResults<T>> Search<T>(
+            SearchOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return SearchInternal<T>(
+                null,
+                options,
+                async: false,
+                cancellationToken)
+                .EnsureCompleted();
+        }
+
+        /// <summary>
+        /// Searches for documents in the search index.
+        /// <see href="https://docs.microsoft.com/rest/api/searchservice/search-documents">Search Documents</see>
+        /// </summary>
+        /// <typeparam name="T">
+        /// The .NET type that maps to the index schema. Instances of this type
+        /// can be retrieved as documents from the index.
+        /// </typeparam>
+        /// <param name="options">
+        /// Options that allow specifying filtering, sorting, faceting, paging,
+        /// and other search query behaviors.
+        /// </param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate notifications
+        /// that the operation should be canceled.
+        /// </param>
+        /// <returns>
+        /// Response containing the documents matching the query.
+        /// </returns>
+        /// <exception cref="RequestFailedException">
+        /// Thrown when a failure is returned by the Search Service.
+        /// </exception>
+        /// <remarks>
+        /// <para>
+        /// Search and SearchAsync methods support mapping of search field
+        /// types to .NET types via the type parameter T.  You can provide your
+        /// own type <typeparamref name="T"/> or use the dynamic
+        /// <see cref="SearchDocument"/>. See
+        /// <see cref="GetDocumentAsync{T}(string, GetDocumentOptions, CancellationToken)"/>
+        /// for more details on the type mapping.
+        /// </para>
+        /// <para>
+        /// Azure Cognitive Search might not be able to include all results in
+        /// a single response in which case
+        /// <see cref="SearchResults{T}.GetResultsAsync"/> will automatically
+        /// continue making additional requests as you enumerate through the
+        /// results.  You can also process the results a page at a time with
+        /// the <see cref="AsyncPageable{T}.AsPages(string, int?)"/> method.
+        /// </para>
+        /// </remarks>
+        public async virtual Task<Response<SearchResults<T>>> SearchAsync<T>(
+            SearchOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            return await SearchInternal<T>(
+                null,
+                options,
+                async: true,
+                cancellationToken)
+                .ConfigureAwait(false);
+        }
+
         private async Task<Response<SearchResults<T>>> SearchInternal<T>(
             string searchText,
             SearchOptions options,
@@ -868,30 +973,30 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateSearchPostRequest(options);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        // Deserialize the results
-                        SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
-                            message.Response.ContentStream,
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
+                        {
+                            // Deserialize the results
+                            SearchResults<T> results = await SearchResults<T>.DeserializeAsync(
+                                message.Response.ContentStream,
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
 
-                        // Cache the client and raw response so we can abstract
-                        // away server-side paging
-                        results.ConfigurePaging(this, message.Response);
+                            // Cache the client and raw response so we can abstract
+                            // away server-side paging
+                            results.ConfigurePaging(this, message.Response);
 
-                        return Response.FromValue(results, message.Response);
-                    }
+                            return Response.FromValue(results, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -1037,24 +1142,24 @@ namespace Azure.Search.Documents
                 using HttpMessage message = Protocol.CreateSuggestPostRequest(options);
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
                 switch (message.Response.Status)
                 {
                     case 200:
-                    {
-                        SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
-                            message.Response.ContentStream,
-                            Serializer,
-                            async,
-                            cancellationToken)
-                            .ConfigureAwait(false);
-                        return Response.FromValue(suggestions, message.Response);
-                    }
+                        {
+                            SuggestResults<T> suggestions = await SuggestResults<T>.DeserializeAsync(
+                                message.Response.ContentStream,
+                                Serializer,
+                                async,
+                                cancellationToken)
+                                .ConfigureAwait(false);
+                            return Response.FromValue(suggestions, message.Response);
+                        }
                     default:
                         throw new RequestFailedException(message.Response);
                 }
@@ -1305,7 +1410,7 @@ namespace Azure.Search.Documents
             try
             {
                 // Create the message
-                using HttpMessage message = Pipeline.CreateMessage();
+                using HttpMessage message = _pipeline.CreateMessage();
                 {
                     Request request = message.Request;
                     request.Method = RequestMethod.Post;
@@ -1333,11 +1438,11 @@ namespace Azure.Search.Documents
                 // Send the request
                 if (async)
                 {
-                    await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+                    await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
                 }
                 else
                 {
-                    Pipeline.Send(message, cancellationToken);
+                    _pipeline.Send(message, cancellationToken);
                 }
 
                 // Parse the response
@@ -1345,45 +1450,45 @@ namespace Azure.Search.Documents
                 {
                     case 200:
                     case 207: // Process partial failures the same as successes
-                    {
-                        // Parse the results
-                        using JsonDocument document = async ?
-                            await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false) :
-                            JsonDocument.Parse(message.Response.ContentStream, default);
-                        IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
-
-                        // Optionally throw an exception if any individual
-                        // write failed
-                        if (options?.ThrowOnAnyError == true)
                         {
-                            List<RequestFailedException> failures = new List<RequestFailedException>();
-                            List<string> failedKeys = new List<string>();
-                            foreach (IndexingResult result in value.Results)
+                            // Parse the results
+                            using JsonDocument document = async ?
+                                await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false) :
+                                JsonDocument.Parse(message.Response.ContentStream, default);
+                            IndexDocumentsResult value = IndexDocumentsResult.DeserializeIndexDocumentsResult(document.RootElement);
+
+                            // Optionally throw an exception if any individual
+                            // write failed
+                            if (options?.ThrowOnAnyError == true)
                             {
-                                if (!result.Succeeded)
+                                List<RequestFailedException> failures = new List<RequestFailedException>();
+                                List<string> failedKeys = new List<string>();
+                                foreach (IndexingResult result in value.Results)
                                 {
-                                    failedKeys.Add(result.Key);
-                                    var ex = new RequestFailedException(result.Status, result.ErrorMessage);
-                                    ex.Data["Key"] = result.Key;
-                                    failures.Add(ex);
+                                    if (!result.Succeeded)
+                                    {
+                                        failedKeys.Add(result.Key);
+                                        var ex = new RequestFailedException(result.Status, result.ErrorMessage);
+                                        ex.Data["Key"] = result.Key;
+                                        failures.Add(ex);
+                                    }
+                                }
+                                if (failures.Count > 0)
+                                {
+                                    throw new AggregateException(
+                                        $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
+                                        failures);
                                 }
                             }
-                            if (failures.Count > 0)
-                            {
-                                throw new AggregateException(
-                                    $"Failed to index document(s): " + string.Join(", ", failedKeys) + ".",
-                                    failures);
-                            }
+
+                            // TODO: #10593 - Ensure input and output document
+                            // order is in sync while batching (this is waiting on
+                            // both our broader batching story and adding something
+                            // on the client that can potentially indicate the Key
+                            // column since we have no way to tell that at present.)
+
+                            return Response.FromValue(value, message.Response);
                         }
-
-                        // TODO: #10593 - Ensure input and output document
-                        // order is in sync while batching (this is waiting on
-                        // both our broader batching story and adding something
-                        // on the client that can potentially indicate the Key
-                        // column since we have no way to tell that at present.)
-
-                        return Response.FromValue(value, message.Response);
-                    }
                     default:
                         throw new RequestFailedException(message.Response);
                 }

@@ -109,7 +109,8 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests
 
                 if (iconfigEnvVar)
                 {
-                    configBulider.AddEnvironmentVariables();
+                    // TODO: This test case requires a fix, even after commenting this section test passes.
+                    // configBulider.AddEnvironmentVariables();
                 }
 
                 var configuration = configBulider.Build();

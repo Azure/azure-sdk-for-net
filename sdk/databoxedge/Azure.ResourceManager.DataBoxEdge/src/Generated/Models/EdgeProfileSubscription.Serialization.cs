@@ -6,30 +6,134 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
-    public partial class EdgeProfileSubscription
+    public partial class EdgeProfileSubscription : IUtf8JsonSerializable, IJsonModel<EdgeProfileSubscription>
     {
-        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EdgeProfileSubscription>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<EdgeProfileSubscription>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(RegistrationId))
+            {
+                writer.WritePropertyName("registrationId"u8);
+                writer.WriteStringValue(RegistrationId.Value);
+            }
+            if (Optional.IsDefined(Id))
+            {
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
+            }
+            if (Optional.IsDefined(State))
+            {
+                writer.WritePropertyName("state"u8);
+                writer.WriteStringValue(State.Value.ToString());
+            }
+            if (Optional.IsDefined(RegistrationDate))
+            {
+                writer.WritePropertyName("registrationDate"u8);
+                writer.WriteStringValue(RegistrationDate);
+            }
+            if (Optional.IsDefined(SubscriptionId))
+            {
+                writer.WritePropertyName("subscriptionId"u8);
+                writer.WriteStringValue(SubscriptionId);
+            }
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId.Value);
+            }
+            if (Optional.IsDefined(LocationPlacementId))
+            {
+                writer.WritePropertyName("locationPlacementId"u8);
+                writer.WriteStringValue(LocationPlacementId);
+            }
+            if (Optional.IsDefined(QuotaId))
+            {
+                writer.WritePropertyName("quotaId"u8);
+                writer.WriteStringValue(QuotaId);
+            }
+            if (Optional.IsDefined(SerializedDetails))
+            {
+                writer.WritePropertyName("serializedDetails"u8);
+                writer.WriteStringValue(SerializedDetails);
+            }
+            if (Optional.IsCollectionDefined(RegisteredFeatures))
+            {
+                writer.WritePropertyName("registeredFeatures"u8);
+                writer.WriteStartArray();
+                foreach (var item in RegisteredFeatures)
+                {
+                    writer.WriteObjectValue<SubscriptionRegisteredFeatures>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            writer.WriteEndObject();
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        EdgeProfileSubscription IJsonModel<EdgeProfileSubscription>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeEdgeProfileSubscription(document.RootElement, options);
+        }
+
+        internal static EdgeProfileSubscription DeserializeEdgeProfileSubscription(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<Guid> registrationId = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<DataBoxEdgeSubscriptionState> state = default;
-            Optional<string> registrationDate = default;
-            Optional<string> subscriptionId = default;
-            Optional<Guid> tenantId = default;
-            Optional<string> locationPlacementId = default;
-            Optional<string> quotaId = default;
-            Optional<string> serializedDetails = default;
-            Optional<IReadOnlyList<SubscriptionRegisteredFeatures>> registeredFeatures = default;
+            Guid? registrationId = default;
+            ResourceIdentifier id = default;
+            DataBoxEdgeSubscriptionState? state = default;
+            string registrationDate = default;
+            string subscriptionId = default;
+            Guid? tenantId = default;
+            string locationPlacementId = default;
+            string quotaId = default;
+            string serializedDetails = default;
+            IReadOnlyList<SubscriptionRegisteredFeatures> registeredFeatures = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("registrationId"u8))
@@ -111,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             List<SubscriptionRegisteredFeatures> array = new List<SubscriptionRegisteredFeatures>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item));
+                                array.Add(SubscriptionRegisteredFeatures.DeserializeSubscriptionRegisteredFeatures(item, options));
                             }
                             registeredFeatures = array;
                             continue;
@@ -119,8 +223,55 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     }
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new EdgeProfileSubscription(Optional.ToNullable(registrationId), id.Value, Optional.ToNullable(state), registrationDate.Value, subscriptionId.Value, Optional.ToNullable(tenantId), locationPlacementId.Value, quotaId.Value, serializedDetails.Value, Optional.ToList(registeredFeatures));
+            serializedAdditionalRawData = rawDataDictionary;
+            return new EdgeProfileSubscription(
+                registrationId,
+                id,
+                state,
+                registrationDate,
+                subscriptionId,
+                tenantId,
+                locationPlacementId,
+                quotaId,
+                serializedDetails,
+                registeredFeatures ?? new ChangeTrackingList<SubscriptionRegisteredFeatures>(),
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<EdgeProfileSubscription>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        EdgeProfileSubscription IPersistableModel<EdgeProfileSubscription>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<EdgeProfileSubscription>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeEdgeProfileSubscription(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(EdgeProfileSubscription)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<EdgeProfileSubscription>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

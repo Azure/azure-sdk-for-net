@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Logic.Models
@@ -13,19 +14,20 @@ namespace Azure.ResourceManager.Logic.Models
     /// <summary> The artifact content properties definition. </summary>
     public partial class ArtifactContentProperties : ArtifactProperties
     {
-        /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactContentProperties"/>. </summary>
         public ArtifactContentProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of ArtifactContentProperties. </summary>
+        /// <summary> Initializes a new instance of <see cref="ArtifactContentProperties"/>. </summary>
         /// <param name="createdOn"> The artifact creation time. </param>
         /// <param name="changedOn"> The artifact changed time. </param>
         /// <param name="metadata"> Anything. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="content"> Anything. </param>
         /// <param name="contentType"> The content type. </param>
         /// <param name="contentLink"> The content link. </param>
-        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata)
+        internal ArtifactContentProperties(DateTimeOffset? createdOn, DateTimeOffset? changedOn, BinaryData metadata, IDictionary<string, BinaryData> serializedAdditionalRawData, BinaryData content, ContentType? contentType, LogicContentLink contentLink) : base(createdOn, changedOn, metadata, serializedAdditionalRawData)
         {
             Content = content;
             ContentType = contentType;
@@ -38,7 +40,7 @@ namespace Azure.ResourceManager.Logic.Models
         /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
-        /// To assign an already formated json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
         /// </para>
         /// <para>
         /// Examples:

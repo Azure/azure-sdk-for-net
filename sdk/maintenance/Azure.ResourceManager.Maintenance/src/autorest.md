@@ -8,15 +8,19 @@ azure-arm: true
 csharp: true
 library-name: Maintenance
 namespace: Azure.ResourceManager.Maintenance
-require: https://github.com/Azure/azure-rest-api-specs/blob/e680f9bf4f154ec427ba7feac432ed8efd9665d0/specification/maintenance/resource-manager/readme.md
-#tag: package-2023-04
+require: https://github.com/Azure/azure-rest-api-specs/blob/13aec7f115c01ba6986ebf32488537392c0df6f5/specification/maintenance/resource-manager/readme.md
+#tag: package-2023-09
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 format-by-name-rules:
@@ -56,7 +60,7 @@ prepend-rp-prefix:
   - RebootOptions
   - Update
   - UpdateStatus
-  
+
 override-operation-name:
   ApplyUpdates_GetParent: GetApplyUpdatesByParent
   ApplyUpdates_CreateOrUpdateParent: CreateOrUpdateApplyUpdateByParent
@@ -90,7 +94,7 @@ request-path-to-resource-name:
 list-exception:
   - /subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/{providerName}/{resourceType}/{resourceName}/providers/Microsoft.Maintenance/applyUpdates/{applyUpdateName}
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -121,7 +125,7 @@ directive:
     transform: >
       $.MaintenanceWindow.properties.duration['x-ms-format'] = 'duration-constant';
 
-  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed. 
+  # Sevice doesn't return the the `MaintenanceConfiguration` for the delete operation, use `directive` to fix the swagger and custom code to keep backward compatibility as this lib has already GAed.
   - from: Maintenance.json
     where: $.paths['/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Maintenance/maintenanceConfigurations/{resourceName}']
     transform: >

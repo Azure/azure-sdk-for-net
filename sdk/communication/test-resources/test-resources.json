@@ -13,6 +13,10 @@
           "defaultValue": "communication",
           "type": "string"
       },
+      "communicationServicesEndpointSuffix": {
+        "defaultValue": ".communication.azure.com",
+        "type": "string"
+      },
       "testApplicationOid": {
           "type": "string",
           "metadata": {
@@ -29,12 +33,6 @@
           "type": "string",
           "metadata": {
               "description": "The application client id used to run tests."
-          }
-      },
-      "testApplicationSecret": {
-          "type": "string",
-          "metadata": {
-              "description": "The application client secret used to run tests."
           }
       }
   },
@@ -72,13 +70,17 @@
           "type": "string",
           "value": "[parameters('testApplicationId')]"
       },
-      "AZURE_CLIENT_SECRET": {
-          "type": "string",
-          "value": "[parameters('testApplicationSecret')]"
-      },
       "COMMUNICATION_LIVETEST_DYNAMIC_CONNECTION_STRING": {
           "type": "string",
           "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2023-03-31').primaryConnectionString]"
+      },
+      "COMMUNICATION_SERVICE_ENDPOINT": {
+        "type": "string",
+        "value": "[concat('https://', parameters('baseName'), '-', parameters('endpointPrefix'), parameters('communicationServicesEndpointSuffix'))]"
+      },
+      "COMMUNICATION_SERVICE_ACCESS_KEY": {
+        "type": "string",
+        "value": "[listKeys(resourceId('Microsoft.Communication/CommunicationServices',variables('uniqueSubDomainName')), '2023-03-31').primaryKey]"
       },
       "RESOURCE_GROUP_NAME": {
           "type": "string",

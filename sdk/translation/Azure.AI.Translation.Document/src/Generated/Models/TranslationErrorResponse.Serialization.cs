@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -18,7 +17,7 @@ namespace Azure.AI.Translation.Document.Models
             {
                 return null;
             }
-            Optional<TranslationError> error = default;
+            TranslationError error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("error"u8))
@@ -31,7 +30,15 @@ namespace Azure.AI.Translation.Document.Models
                     continue;
                 }
             }
-            return new TranslationErrorResponse(error.Value);
+            return new TranslationErrorResponse(error);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TranslationErrorResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTranslationErrorResponse(document.RootElement);
         }
     }
 }

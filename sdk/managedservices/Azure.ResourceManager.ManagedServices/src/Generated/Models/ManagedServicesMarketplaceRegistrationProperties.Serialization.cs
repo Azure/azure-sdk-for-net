@@ -6,26 +6,106 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedServices.Models
 {
-    public partial class ManagedServicesMarketplaceRegistrationProperties
+    public partial class ManagedServicesMarketplaceRegistrationProperties : IUtf8JsonSerializable, IJsonModel<ManagedServicesMarketplaceRegistrationProperties>
     {
-        internal static ManagedServicesMarketplaceRegistrationProperties DeserializeManagedServicesMarketplaceRegistrationProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServicesMarketplaceRegistrationProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ManagedServicesMarketplaceRegistrationProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("managedByTenantId"u8);
+            writer.WriteStringValue(ManagedByTenantId);
+            writer.WritePropertyName("authorizations"u8);
+            writer.WriteStartArray();
+            foreach (var item in Authorizations)
+            {
+                writer.WriteObjectValue<ManagedServicesAuthorization>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(EligibleAuthorizations))
+            {
+                writer.WritePropertyName("eligibleAuthorizations"u8);
+                writer.WriteStartArray();
+                foreach (var item in EligibleAuthorizations)
+                {
+                    writer.WriteObjectValue<ManagedServicesEligibleAuthorization>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OfferDisplayName))
+            {
+                writer.WritePropertyName("offerDisplayName"u8);
+                writer.WriteStringValue(OfferDisplayName);
+            }
+            if (Optional.IsDefined(PublisherDisplayName))
+            {
+                writer.WritePropertyName("publisherDisplayName"u8);
+                writer.WriteStringValue(PublisherDisplayName);
+            }
+            if (Optional.IsDefined(PlanDisplayName))
+            {
+                writer.WritePropertyName("planDisplayName"u8);
+                writer.WriteStringValue(PlanDisplayName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        ManagedServicesMarketplaceRegistrationProperties IJsonModel<ManagedServicesMarketplaceRegistrationProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeManagedServicesMarketplaceRegistrationProperties(document.RootElement, options);
+        }
+
+        internal static ManagedServicesMarketplaceRegistrationProperties DeserializeManagedServicesMarketplaceRegistrationProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             Guid managedByTenantId = default;
             IReadOnlyList<ManagedServicesAuthorization> authorizations = default;
-            Optional<IReadOnlyList<ManagedServicesEligibleAuthorization>> eligibleAuthorizations = default;
-            Optional<string> offerDisplayName = default;
-            Optional<string> publisherDisplayName = default;
-            Optional<string> planDisplayName = default;
+            IReadOnlyList<ManagedServicesEligibleAuthorization> eligibleAuthorizations = default;
+            string offerDisplayName = default;
+            string publisherDisplayName = default;
+            string planDisplayName = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("managedByTenantId"u8))
@@ -38,7 +118,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesAuthorization> array = new List<ManagedServicesAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item));
+                        array.Add(ManagedServicesAuthorization.DeserializeManagedServicesAuthorization(item, options));
                     }
                     authorizations = array;
                     continue;
@@ -52,7 +132,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     List<ManagedServicesEligibleAuthorization> array = new List<ManagedServicesEligibleAuthorization>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item));
+                        array.Add(ManagedServicesEligibleAuthorization.DeserializeManagedServicesEligibleAuthorization(item, options));
                     }
                     eligibleAuthorizations = array;
                     continue;
@@ -72,8 +152,51 @@ namespace Azure.ResourceManager.ManagedServices.Models
                     planDisplayName = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new ManagedServicesMarketplaceRegistrationProperties(managedByTenantId, authorizations, Optional.ToList(eligibleAuthorizations), offerDisplayName.Value, publisherDisplayName.Value, planDisplayName.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new ManagedServicesMarketplaceRegistrationProperties(
+                managedByTenantId,
+                authorizations,
+                eligibleAuthorizations ?? new ChangeTrackingList<ManagedServicesEligibleAuthorization>(),
+                offerDisplayName,
+                publisherDisplayName,
+                planDisplayName,
+                serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ManagedServicesMarketplaceRegistrationProperties IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeManagedServicesMarketplaceRegistrationProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ManagedServicesMarketplaceRegistrationProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ManagedServicesMarketplaceRegistrationProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Xml.Linq;
-using Azure.Core;
 
 namespace Azure.Storage.Queues.Models
 {
@@ -50,7 +49,13 @@ namespace Azure.Storage.Queues.Models
                 }
                 queueItems = array;
             }
-            return new ListQueuesSegmentResponse(serviceEndpoint, prefix, marker, maxResults, queueItems, nextMarker);
+            return new ListQueuesSegmentResponse(
+                serviceEndpoint,
+                prefix,
+                marker,
+                maxResults,
+                queueItems,
+                nextMarker);
         }
     }
 }

@@ -35,7 +35,7 @@ namespace Azure.Communication.MediaComposition
             }
             string teamsJoinUrl = default;
             MediaInputType kind = default;
-            Optional<string> placeholderImageUri = default;
+            string placeholderImageUri = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("teamsJoinUrl"u8))
@@ -54,7 +54,23 @@ namespace Azure.Communication.MediaComposition
                     continue;
                 }
             }
-            return new TeamsMeetingInput(kind, placeholderImageUri.Value, teamsJoinUrl);
+            return new TeamsMeetingInput(kind, placeholderImageUri, teamsJoinUrl);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TeamsMeetingInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTeamsMeetingInput(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TeamsMeetingInput>(this);
+            return content;
         }
     }
 }

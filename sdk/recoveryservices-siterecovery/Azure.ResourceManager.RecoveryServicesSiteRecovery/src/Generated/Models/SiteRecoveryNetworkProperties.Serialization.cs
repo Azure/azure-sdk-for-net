@@ -5,24 +5,96 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class SiteRecoveryNetworkProperties
+    public partial class SiteRecoveryNetworkProperties : IUtf8JsonSerializable, IJsonModel<SiteRecoveryNetworkProperties>
     {
-        internal static SiteRecoveryNetworkProperties DeserializeSiteRecoveryNetworkProperties(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SiteRecoveryNetworkProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<SiteRecoveryNetworkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryNetworkProperties)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            if (Optional.IsDefined(FabricType))
+            {
+                writer.WritePropertyName("fabricType"u8);
+                writer.WriteStringValue(FabricType);
+            }
+            if (Optional.IsCollectionDefined(Subnets))
+            {
+                writer.WritePropertyName("subnets"u8);
+                writer.WriteStartArray();
+                foreach (var item in Subnets)
+                {
+                    writer.WriteObjectValue<SiteRecoverySubnet>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FriendlyName))
+            {
+                writer.WritePropertyName("friendlyName"u8);
+                writer.WriteStringValue(FriendlyName);
+            }
+            if (Optional.IsDefined(NetworkType))
+            {
+                writer.WritePropertyName("networkType"u8);
+                writer.WriteStringValue(NetworkType);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        SiteRecoveryNetworkProperties IJsonModel<SiteRecoveryNetworkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SiteRecoveryNetworkProperties)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeSiteRecoveryNetworkProperties(document.RootElement, options);
+        }
+
+        internal static SiteRecoveryNetworkProperties DeserializeSiteRecoveryNetworkProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<string> fabricType = default;
-            Optional<IReadOnlyList<SiteRecoverySubnet>> subnets = default;
-            Optional<string> friendlyName = default;
-            Optional<string> networkType = default;
+            string fabricType = default;
+            IReadOnlyList<SiteRecoverySubnet> subnets = default;
+            string friendlyName = default;
+            string networkType = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("fabricType"u8))
@@ -39,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     List<SiteRecoverySubnet> array = new List<SiteRecoverySubnet>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item));
+                        array.Add(SiteRecoverySubnet.DeserializeSiteRecoverySubnet(item, options));
                     }
                     subnets = array;
                     continue;
@@ -54,8 +126,44 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     networkType = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new SiteRecoveryNetworkProperties(fabricType.Value, Optional.ToList(subnets), friendlyName.Value, networkType.Value);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new SiteRecoveryNetworkProperties(fabricType, subnets ?? new ChangeTrackingList<SiteRecoverySubnet>(), friendlyName, networkType, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<SiteRecoveryNetworkProperties>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        SiteRecoveryNetworkProperties IPersistableModel<SiteRecoveryNetworkProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeSiteRecoveryNetworkProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SiteRecoveryNetworkProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<SiteRecoveryNetworkProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -5,10 +5,18 @@ Run `dotnet build /t:GenerateCode` to generate code.
 ``` yaml
 azure-arm: true
 tag: package-composite-v5
-require: https://github.com/Azure/azure-rest-api-specs/blob/eba34b9c764e877193788a87a81cebfa915eb858/specification/sql/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/e7e476ba9cd5dcaacb4b344a0ca9677ba731686b/specification/sql/resource-manager/readme.md
 namespace: Azure.ResourceManager.Sql
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
+sample-gen:
+  output-folder: $(this-folder)/../samples/Generated
+  clear-output-folder: true
+  skipped-operations:
+  - ManagedDatabaseSensitivityLabels_CreateOrUpdate
+  - ManagedDatabaseSensitivityLabels_Delete
+  - SensitivityLabels_CreateOrUpdate
+  - SensitivityLabels_Delete
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
@@ -16,6 +24,12 @@ modelerfour:
 model-namespace: false
 public-clients: false
 head-as-boolean: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
+
+# this is temporary, to be removed when we find the owner of this feature
+operation-groups-to-omit:
+- JobPrivateEndpoints
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -53,7 +67,7 @@ keep-plural-enums:
 keep-plural-resource-data:
 - MaintenanceWindows
 
-rename-rules:
+acronym-mapping:
   CPU: Cpu
   CPUs: Cpus
   Os: OS
@@ -332,8 +346,13 @@ rename-mapping:
   FailoverGroup.properties.databases: FailoverDatabases
   ManagedInstance.properties.dnsZonePartner: ManagedDnsZonePartner
   ManagedInstanceUpdate.properties.dnsZonePartner: ManagedDnsZonePartner
+  FailoverGroupUpdate.properties.databases: FailoverDatabases
+  Server.properties.minimalTlsVersion: minTlsVersion
+  ServerUpdate.properties.minimalTlsVersion: minTlsVersion
+  MinimalTlsVersion: SqlMinimalTlsVersion
+  BackupStorageAccessTier: SqlBackupStorageAccessTier
 
-# mgmt-debug: 
+# mgmt-debug:
 #  show-serialized-names: true
 
 prompted-enum-values:

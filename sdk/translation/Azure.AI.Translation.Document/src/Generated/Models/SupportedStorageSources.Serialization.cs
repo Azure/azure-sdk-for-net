@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Document.Models
 {
@@ -34,6 +33,14 @@ namespace Azure.AI.Translation.Document.Models
                 }
             }
             return new SupportedStorageSources(value);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SupportedStorageSources FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSupportedStorageSources(document.RootElement);
         }
     }
 }

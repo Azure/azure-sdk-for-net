@@ -5,18 +5,69 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.AI.OpenAI
 {
     /// <summary> Measurement of the amount of tokens used in this request and response. </summary>
     public partial class EmbeddingsUsage
     {
-        /// <summary> Initializes a new instance of EmbeddingsUsage. </summary>
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/>. </summary>
         /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
         /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
         internal EmbeddingsUsage(int promptTokens, int totalTokens)
         {
             PromptTokens = promptTokens;
             TotalTokens = totalTokens;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/>. </summary>
+        /// <param name="promptTokens"> Number of tokens sent in the original request. </param>
+        /// <param name="totalTokens"> Total number of tokens transacted in this request/response. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EmbeddingsUsage(int promptTokens, int totalTokens, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            PromptTokens = promptTokens;
+            TotalTokens = totalTokens;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingsUsage"/> for deserialization. </summary>
+        internal EmbeddingsUsage()
+        {
         }
 
         /// <summary> Number of tokens sent in the original request. </summary>
