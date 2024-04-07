@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.ScVmm
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -106,6 +117,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string resourceUri, ScVmmVirtualMachineInstanceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, ScVmmVirtualMachineInstanceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -171,6 +193,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string resourceUri, ScVmmVirtualMachineInstancePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string resourceUri, ScVmmVirtualMachineInstancePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -234,6 +267,25 @@ namespace Azure.ResourceManager.ScVmm
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string resourceUri, ScVmmForceDeletion? force, DeleteFromHost? deleteFromHost)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (force != null)
+            {
+                uri.AppendQuery("force", force.Value.ToString(), true);
+            }
+            if (deleteFromHost != null)
+            {
+                uri.AppendQuery("deleteFromHost", deleteFromHost.Value.ToString(), true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string resourceUri, ScVmmForceDeletion? force, DeleteFromHost? deleteFromHost)
@@ -305,6 +357,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -368,6 +431,17 @@ namespace Azure.ResourceManager.ScVmm
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStopRequestUri(string resourceUri, StopVirtualMachineContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/stop", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStopRequest(string resourceUri, StopVirtualMachineContent content)
@@ -434,6 +508,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateStartRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/start", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateStartRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -489,6 +574,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateRestartRequestUri(string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/restart", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestartRequest(string resourceUri)
         {
             var message = _pipeline.CreateMessage();
@@ -542,6 +638,17 @@ namespace Azure.ResourceManager.ScVmm
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateCheckpointRequestUri(string resourceUri, VirtualMachineCreateCheckpointContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/createCheckpoint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateCheckpointRequest(string resourceUri, VirtualMachineCreateCheckpointContent content)
@@ -608,6 +715,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateDeleteCheckpointRequestUri(string resourceUri, VirtualMachineDeleteCheckpointContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/deleteCheckpoint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteCheckpointRequest(string resourceUri, VirtualMachineDeleteCheckpointContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -672,6 +790,17 @@ namespace Azure.ResourceManager.ScVmm
             }
         }
 
+        internal RequestUriBuilder CreateRestoreCheckpointRequestUri(string resourceUri, VirtualMachineRestoreCheckpointContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/Microsoft.ScVmm/virtualMachineInstances/default/restoreCheckpoint", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestoreCheckpointRequest(string resourceUri, VirtualMachineRestoreCheckpointContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -734,6 +863,14 @@ namespace Azure.ResourceManager.ScVmm
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string resourceUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string resourceUri)
