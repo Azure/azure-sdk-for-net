@@ -27,7 +27,7 @@ namespace Azure.Core
 
         public override bool HasValue => _operation.HasValue;
 
-        public override string Id => _nextLinkOperation.OperationId ?? string.Empty;
+        public override string Id => _nextLinkOperation.OperationId;
 
         public override RehydrationToken? GetRehydrationToken() => _nextLinkOperation.GetRehydrationToken();
 
