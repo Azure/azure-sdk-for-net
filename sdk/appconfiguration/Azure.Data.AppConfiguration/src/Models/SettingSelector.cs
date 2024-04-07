@@ -49,12 +49,6 @@ namespace Azure.Data.AppConfiguration
         public DateTimeOffset? AcceptDateTime { get; set; }
 
         /// <summary>
-        /// The match conditions of <see cref="ConfigurationClient.GetConfigurationSettings(SettingSelector, CancellationToken)"/>
-        /// requests. Conditions are applied to pages one by one in the order specified.
-        /// </summary>
-        public IList<MatchConditions> MatchConditions { get; } = new ChangeTrackingList<MatchConditions>();
-
-        /// <summary>
         /// Creates a default <see cref="SettingSelector"/> that will retrieve all <see cref="ConfigurationSetting"/> entities in the configuration store.
         /// </summary>
         public SettingSelector() { }

@@ -67,5 +67,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return new ParameterDeclaration(name, type, description, @default);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ParameterDeclaration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeParameterDeclaration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ParameterDeclaration>(this);
+            return content;
+        }
     }
 }

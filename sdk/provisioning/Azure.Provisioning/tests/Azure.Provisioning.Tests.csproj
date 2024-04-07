@@ -1,15 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <Nullable>enable</Nullable>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
-    <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-  </PropertyGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Storage\src\Azure.Provisioning.Storage.csproj" />
     <ProjectReference Include="..\src\Azure.Provisioning.csproj" />
+    <ProjectReference Include="..\..\Azure.Provisioning.Resources\src\Azure.Provisioning.Resources.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -17,9 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Infrastructure\ContainerApps\main.bicep" />
-    <None Remove="Infrastructure\CanAssignParameterToMultipleResources\main.json" />
-    <None Remove="Infrastructure\AppConfiguration\main.json" />
+    <Compile Remove="ProvisioningTestBase.cs" />
+    <Compile Remove="ProvisioningTestEnvironment.cs" />
+    <Compile Remove="TestInfrastructure.cs" />
   </ItemGroup>
 
 </Project>

@@ -65,12 +65,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownDataFlow.DeserializeUnknownDataFlow(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlow FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlow(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlow>(this);
+            return content;
+        }
+
         internal partial class DataFlowConverter : JsonConverter<DataFlow>
         {
             public override void Write(Utf8JsonWriter writer, DataFlow model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<DataFlow>(model);
             }
+
             public override DataFlow Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

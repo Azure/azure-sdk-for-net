@@ -41,5 +41,13 @@ namespace Azure.Communication.Chat
             }
             return new ChatMessageReadReceiptInternal(senderCommunicationIdentifier, chatMessageId, readOn);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageReadReceiptInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatMessageReadReceiptInternal(document.RootElement);
+        }
     }
 }
