@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.PolicyInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListDeploymentsAtResourceRequestUri(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendPath("/listDeployments", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListDeploymentsAtResourceRequest(string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +133,19 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateCancelAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelAtResourceRequest(string resourceId, string remediationName)
         {
             var message = _pipeline.CreateMessage();
@@ -187,6 +217,25 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForResourceRequestUri(string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations", false);
+            if (policyQuerySettings?.Top != null)
+            {
+                uri.AppendQuery("$top", policyQuerySettings.Top.Value, true);
+            }
+            if (policyQuerySettings?.Filter != null)
+            {
+                uri.AppendQuery("$filter", policyQuerySettings.Filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceRequest(string resourceId, PolicyQuerySettings policyQuerySettings)
@@ -262,6 +311,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateAtResourceRequestUri(string resourceId, string remediationName, PolicyRemediationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateAtResourceRequest(string resourceId, string remediationName, PolicyRemediationData data)
@@ -346,6 +407,18 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateGetAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetAtResourceRequest(string resourceId, string remediationName)
         {
             var message = _pipeline.CreateMessage();
@@ -420,6 +493,18 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteAtResourceRequestUri(string resourceId, string remediationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceId, false);
+            uri.AppendPath("/providers/Microsoft.PolicyInsights/remediations/", false);
+            uri.AppendPath(remediationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteAtResourceRequest(string resourceId, string remediationName)
@@ -498,6 +583,14 @@ namespace Azure.ResourceManager.PolicyInsights
             }
         }
 
+        internal RequestUriBuilder CreateListDeploymentsAtResourceNextPageRequestUri(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListDeploymentsAtResourceNextPageRequest(string nextLink, string resourceId, string remediationName, PolicyQuerySettings policyQuerySettings)
         {
             var message = _pipeline.CreateMessage();
@@ -570,6 +663,14 @@ namespace Azure.ResourceManager.PolicyInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListForResourceNextPageRequestUri(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListForResourceNextPageRequest(string nextLink, string resourceId, PolicyQuerySettings policyQuerySettings)
