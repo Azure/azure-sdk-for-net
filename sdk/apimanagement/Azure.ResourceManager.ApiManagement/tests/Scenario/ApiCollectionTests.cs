@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
         }
 
         [Test]
-        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete ()
+        public async Task CreateOrUpdate_GetAll_Get_Exists_Delete()
         {
             await CreateApiService();
             var collection = ApiServiceResource.GetApis();
@@ -101,6 +101,18 @@ namespace Azure.ResourceManager.ApiManagement.Tests
 
             var apiRevisionContracts = await api.GetApiRevisionsByServiceAsync().ToEnumerableAsync();
             Assert.IsNotEmpty(apiRevisionContracts.FirstOrDefault().PrivateUriString);
+        }
+
+        [Test]
+        public async Task ListApiByApiMgmtService()
+        {
+            await CreateApiService();
+            var sum = 0;
+            await foreach (var api in ApiServiceResource.GetApis())
+            {
+                sum++;
+            }
+            Assert.IsTrue(sum > 0);
         }
     }
 }
