@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -515,7 +516,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListFunctionKeysSlot</description>
+        /// <description>WebApps_ListFunctionKeysSlotAsDictionary</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -528,13 +529,13 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionKeysSlotAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, string>>> GetFunctionKeysSlotAsDictionaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlotAsDictionary");
             scope.Start();
             try
             {
-                var response = await _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlotAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlotAsDictionaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -553,7 +554,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListFunctionKeysSlot</description>
+        /// <description>WebApps_ListFunctionKeysSlotAsDictionary</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -566,13 +567,13 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppServiceConfigurationDictionary> GetFunctionKeysSlot(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, string>> GetFunctionKeysSlotAsDictionary(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlot");
+            using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionResource.GetFunctionKeysSlotAsDictionary");
             scope.Start();
             try
             {
-                var response = _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlot(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteSlotFunctionWebAppsRestClient.ListFunctionKeysSlotAsDictionary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)

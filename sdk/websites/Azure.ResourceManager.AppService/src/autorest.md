@@ -866,4 +866,22 @@ directive:
             }
           }
         };
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/functions/{functionName}/listkeys'].post
+    transform: >
+        $['operationId'] = "WebApps_ListFunctionKeysSlotAsDictionary";
+        $['responses'] = {
+          "200": {
+            "description": "Function Slot keys returned.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/StringDictionaryType2"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        };
 ```

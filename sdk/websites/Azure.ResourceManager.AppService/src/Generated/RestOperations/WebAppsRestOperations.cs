@@ -20750,7 +20750,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListFunctionKeysSlotRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
+        internal HttpMessage CreateListFunctionKeysSlotAsDictionaryRequest(string subscriptionId, string resourceGroupName, string name, string slot, string functionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -20784,7 +20784,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServiceConfigurationDictionary>> ListFunctionKeysSlotAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, string>>> ListFunctionKeysSlotAsDictionaryAsync(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20792,15 +20792,20 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var message = CreateListFunctionKeysSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName);
+            using var message = CreateListFunctionKeysSlotAsDictionaryRequest(subscriptionId, resourceGroupName, name, slot, functionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppServiceConfigurationDictionary value = default;
+                        IReadOnlyDictionary<string, string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
+                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetString());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -20817,7 +20822,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="slot"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServiceConfigurationDictionary> ListFunctionKeysSlot(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, string>> ListFunctionKeysSlotAsDictionary(string subscriptionId, string resourceGroupName, string name, string slot, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -20825,15 +20830,20 @@ namespace Azure.ResourceManager.AppService
             Argument.AssertNotNullOrEmpty(slot, nameof(slot));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var message = CreateListFunctionKeysSlotRequest(subscriptionId, resourceGroupName, name, slot, functionName);
+            using var message = CreateListFunctionKeysSlotAsDictionaryRequest(subscriptionId, resourceGroupName, name, slot, functionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppServiceConfigurationDictionary value = default;
+                        IReadOnlyDictionary<string, string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
+                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetString());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
