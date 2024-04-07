@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Batch
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetQuotasRequestUri(string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/quotas", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetQuotasRequest(string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();
@@ -106,6 +119,27 @@ namespace Azure.ResourceManager.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSupportedVirtualMachineSkusRequestUri(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/virtualMachineSkus", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSupportedVirtualMachineSkusRequest(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
@@ -191,6 +225,27 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
+        internal RequestUriBuilder CreateListSupportedCloudServiceSkusRequestUri(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/cloudServiceSkus", false);
+            if (maxresults != null)
+            {
+                uri.AppendQuery("maxresults", maxresults.Value, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSupportedCloudServiceSkusRequest(string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -274,6 +329,19 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Batch/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, AzureLocation locationName, BatchNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -353,6 +421,14 @@ namespace Azure.ResourceManager.Batch
             }
         }
 
+        internal RequestUriBuilder CreateListSupportedVirtualMachineSkusNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListSupportedVirtualMachineSkusNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -425,6 +501,14 @@ namespace Azure.ResourceManager.Batch
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSupportedCloudServiceSkusNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListSupportedCloudServiceSkusNextPageRequest(string nextLink, string subscriptionId, AzureLocation locationName, int? maxresults, string filter)

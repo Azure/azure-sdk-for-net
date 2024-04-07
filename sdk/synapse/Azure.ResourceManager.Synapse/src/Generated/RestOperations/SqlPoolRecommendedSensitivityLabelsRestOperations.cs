@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.Synapse
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Synapse/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/sqlPools/", false);
+            uri.AppendPath(sqlPoolName, true);
+            uri.AppendPath("/recommendedSensitivityLabels", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sqlPoolName, SynapseRecommendedSensitivityLabelUpdateOperationListResult synapseRecommendedSensitivityLabelUpdateOperationListResult)
         {
             var message = _pipeline.CreateMessage();

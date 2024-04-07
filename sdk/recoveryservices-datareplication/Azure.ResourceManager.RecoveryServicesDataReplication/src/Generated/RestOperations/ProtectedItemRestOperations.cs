@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,22 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, DataReplicationProtectedItemData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, DataReplicationProtectedItemData data)
         {
             var message = _pipeline.CreateMessage();
@@ -209,6 +241,26 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, bool? forceDelete)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            if (forceDelete != null)
+            {
+                uri.AppendQuery("forceDelete", forceDelete.Value, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, bool? forceDelete)
         {
             var message = _pipeline.CreateMessage();
@@ -291,6 +343,21 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/protectedItems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string vaultName)
         {
             var message = _pipeline.CreateMessage();
@@ -368,6 +435,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePlannedFailoverRequestUri(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, PlannedFailoverModel body)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataReplication/replicationVaults/", false);
+            uri.AppendPath(vaultName, true);
+            uri.AppendPath("/protectedItems/", false);
+            uri.AppendPath(protectedItemName, true);
+            uri.AppendPath("/plannedFailover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePlannedFailoverRequest(string subscriptionId, string resourceGroupName, string vaultName, string protectedItemName, PlannedFailoverModel body)
@@ -454,6 +538,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string vaultName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string vaultName)

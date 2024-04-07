@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByReplicationNetworksRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/replicationNetworks/", false);
+            uri.AppendPath(networkName, true);
+            uri.AppendPath("/replicationNetworkMappings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByReplicationNetworksRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName)
         {
             var message = _pipeline.CreateMessage();
@@ -126,6 +145,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/replicationNetworks/", false);
+            uri.AppendPath(networkName, true);
+            uri.AppendPath("/replicationNetworkMappings/", false);
+            uri.AppendPath(networkMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName)
@@ -228,6 +267,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName, SiteRecoveryNetworkMappingCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/replicationNetworks/", false);
+            uri.AppendPath(networkName, true);
+            uri.AppendPath("/replicationNetworkMappings/", false);
+            uri.AppendPath(networkMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName, SiteRecoveryNetworkMappingCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -324,6 +383,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/replicationNetworks/", false);
+            uri.AppendPath(networkName, true);
+            uri.AppendPath("/replicationNetworkMappings/", false);
+            uri.AppendPath(networkMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName)
         {
             var message = _pipeline.CreateMessage();
@@ -409,6 +488,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName, SiteRecoveryNetworkMappingPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationFabrics/", false);
+            uri.AppendPath(fabricName, true);
+            uri.AppendPath("/replicationNetworks/", false);
+            uri.AppendPath(networkName, true);
+            uri.AppendPath("/replicationNetworkMappings/", false);
+            uri.AppendPath(networkMappingName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName, string networkMappingName, SiteRecoveryNetworkMappingPatch patch)
@@ -507,6 +606,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.RecoveryServices/vaults/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/replicationNetworkMappings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -584,6 +698,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByReplicationNetworksNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByReplicationNetworksNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName, string fabricName, string networkName)
@@ -668,6 +790,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceName)

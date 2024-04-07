@@ -36,6 +36,29 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string billingScope, string filter, string orderby, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(billingScope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/benefitRecommendations", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (orderby != null)
+            {
+                uri.AppendQuery("$orderby", orderby, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string billingScope, string filter, string orderby, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -117,6 +140,14 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string billingScope, string filter, string orderby, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string billingScope, string filter, string orderby, string expand)

@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.SecurityCenter
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest()
         {
             var message = _pipeline.CreateMessage();
@@ -90,6 +99,16 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string assessmentMetadataName)
@@ -162,6 +181,17 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -227,6 +257,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetInSubscriptionRequest(string subscriptionId, string assessmentMetadataName)
@@ -303,6 +345,18 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateInSubscriptionRequest(string subscriptionId, string assessmentMetadataName, SecurityAssessmentMetadataData data)
@@ -385,6 +439,18 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateDeleteInSubscriptionRequestUri(string subscriptionId, string assessmentMetadataName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Security/assessmentMetadata/", false);
+            uri.AppendPath(assessmentMetadataName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteInSubscriptionRequest(string subscriptionId, string assessmentMetadataName)
         {
             var message = _pipeline.CreateMessage();
@@ -447,6 +513,14 @@ namespace Azure.ResourceManager.SecurityCenter
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink)
         {
             var message = _pipeline.CreateMessage();
@@ -507,6 +581,14 @@ namespace Azure.ResourceManager.SecurityCenter
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)

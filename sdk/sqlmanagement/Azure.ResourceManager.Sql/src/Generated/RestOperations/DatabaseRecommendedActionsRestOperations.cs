@@ -37,6 +37,25 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByDatabaseAdvisorRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/recommendedActions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByDatabaseAdvisorRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName)
         {
             var message = _pipeline.CreateMessage();
@@ -138,6 +157,26 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/recommendedActions/", false);
+            uri.AppendPath(recommendedActionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName)
         {
             var message = _pipeline.CreateMessage();
@@ -236,6 +275,26 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/advisors/", false);
+            uri.AppendPath(advisorName, true);
+            uri.AppendPath("/recommendedActions/", false);
+            uri.AppendPath(recommendedActionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string advisorName, string recommendedActionName, RecommendedActionData data)

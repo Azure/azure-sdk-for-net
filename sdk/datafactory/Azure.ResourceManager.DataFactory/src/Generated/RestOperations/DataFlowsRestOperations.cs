@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.DataFactory
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName, DataFactoryDataFlowData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName, DataFactoryDataFlowData data, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -135,6 +151,22 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -229,6 +261,22 @@ namespace Azure.ResourceManager.DataFactory
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/dataflows/", false);
+            uri.AppendPath(dataFlowName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string factoryName, string dataFlowName)
         {
             var message = _pipeline.CreateMessage();
@@ -303,6 +351,21 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFactoryRequestUri(string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DataFactory/factories/", false);
+            uri.AppendPath(factoryName, true);
+            uri.AppendPath("/dataflows", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryRequest(string subscriptionId, string resourceGroupName, string factoryName)
@@ -382,6 +445,14 @@ namespace Azure.ResourceManager.DataFactory
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFactoryNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFactoryNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string factoryName)

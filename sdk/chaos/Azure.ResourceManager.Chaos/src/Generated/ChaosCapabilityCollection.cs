@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = await _chaosCapabilityCapabilitiesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()));
+                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +140,9 @@ namespace Azure.ResourceManager.Chaos
             try
             {
                 var response = _chaosCapabilityCapabilitiesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data, cancellationToken);
-                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()));
+                var uri = _chaosCapabilityCapabilitiesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, capabilityName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ChaosArmOperation<ChaosCapabilityResource>(Response.FromValue(new ChaosCapabilityResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

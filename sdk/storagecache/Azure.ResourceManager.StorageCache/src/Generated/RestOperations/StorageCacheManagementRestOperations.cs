@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.StorageCache
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckAmlFSSubnetsRequestUri(string subscriptionId, AmlFileSystemSubnetContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/checkAmlFSSubnets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckAmlFSSubnetsRequest(string subscriptionId, AmlFileSystemSubnetContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -101,6 +112,17 @@ namespace Azure.ResourceManager.StorageCache
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequiredAmlFSSubnetsSizeRequestUri(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.StorageCache/getRequiredAmlFSSubnetsSize", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequiredAmlFSSubnetsSizeRequest(string subscriptionId, RequiredAmlFileSystemSubnetsSizeContent content)

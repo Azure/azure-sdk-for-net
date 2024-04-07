@@ -478,7 +478,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _providerRegistrationRestClient.DeleteAsync(Id.SubscriptionId, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _providerRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -520,7 +522,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _providerRegistrationRestClient.Delete(Id.SubscriptionId, Id.Name, cancellationToken);
-                var operation = new ProviderHubArmOperation(response);
+                var uri = _providerRegistrationRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

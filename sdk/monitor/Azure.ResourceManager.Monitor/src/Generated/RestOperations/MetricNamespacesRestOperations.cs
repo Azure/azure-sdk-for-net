@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string resourceUri, string startTime)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceUri, false);
+            uri.AppendPath("/providers/microsoft.insights/metricNamespaces", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (startTime != null)
+            {
+                uri.AppendQuery("startTime", startTime, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string resourceUri, string startTime)
         {
             var message = _pipeline.CreateMessage();

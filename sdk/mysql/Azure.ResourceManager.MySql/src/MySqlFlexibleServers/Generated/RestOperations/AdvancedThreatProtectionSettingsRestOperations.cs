@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advancedThreatProtectionSettings/", false);
+            uri.AppendPath(advancedThreatProtectionName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +139,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName, AdvancedThreatProtectionPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advancedThreatProtectionSettings/", false);
+            uri.AppendPath(advancedThreatProtectionName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName, AdvancedThreatProtectionPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -203,6 +235,22 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdatePutRequestUri(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName, AdvancedThreatProtectionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advancedThreatProtectionSettings/", false);
+            uri.AppendPath(advancedThreatProtectionName.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdatePutRequest(string subscriptionId, string resourceGroupName, string serverName, AdvancedThreatProtectionName advancedThreatProtectionName, AdvancedThreatProtectionData data)
@@ -289,6 +337,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/advancedThreatProtectionSettings", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string serverName)
         {
             var message = _pipeline.CreateMessage();
@@ -366,6 +429,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName)

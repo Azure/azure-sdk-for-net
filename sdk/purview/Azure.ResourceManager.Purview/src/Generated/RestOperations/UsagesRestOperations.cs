@@ -36,6 +36,23 @@ namespace Azure.ResourceManager.Purview
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, AzureLocation location, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Purview/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/usages", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, AzureLocation location, string filter)
         {
             var message = _pipeline.CreateMessage();

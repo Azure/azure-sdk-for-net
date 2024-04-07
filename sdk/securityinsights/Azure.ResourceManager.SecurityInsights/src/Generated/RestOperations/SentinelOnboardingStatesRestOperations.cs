@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.SecurityInsights
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/onboardingStates/", false);
+            uri.AppendPath(sentinelOnboardingStateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
         {
             var message = _pipeline.CreateMessage();
@@ -123,6 +139,22 @@ namespace Azure.ResourceManager.SecurityInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, SecurityInsightsSentinelOnboardingStateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/onboardingStates/", false);
+            uri.AppendPath(sentinelOnboardingStateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName, SecurityInsightsSentinelOnboardingStateData data)
@@ -219,6 +251,22 @@ namespace Azure.ResourceManager.SecurityInsights
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/onboardingStates/", false);
+            uri.AppendPath(sentinelOnboardingStateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string workspaceName, string sentinelOnboardingStateName)
         {
             var message = _pipeline.CreateMessage();
@@ -293,6 +341,21 @@ namespace Azure.ResourceManager.SecurityInsights
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.OperationalInsights/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/providers/Microsoft.SecurityInsights/onboardingStates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string workspaceName)

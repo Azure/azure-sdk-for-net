@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = await _sqlServerJobCredentialJobCredentialsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobCredentialJobCredentialsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Sql
             try
             {
                 var response = _sqlServerJobCredentialJobCredentialsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data, cancellationToken);
-                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()));
+                var uri = _sqlServerJobCredentialJobCredentialsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, credentialName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SqlArmOperation<SqlServerJobCredentialResource>(Response.FromValue(new SqlServerJobCredentialResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

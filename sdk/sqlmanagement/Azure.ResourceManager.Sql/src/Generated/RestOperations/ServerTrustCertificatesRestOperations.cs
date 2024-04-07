@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByInstanceRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/serverTrustCertificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByInstanceRequest(string subscriptionId, string resourceGroupName, string managedInstanceName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/serverTrustCertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName)
@@ -204,6 +235,22 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName, ServerTrustCertificateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/serverTrustCertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName, ServerTrustCertificateData data)
         {
             var message = _pipeline.CreateMessage();
@@ -290,6 +337,22 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/managedInstances/", false);
+            uri.AppendPath(managedInstanceName, true);
+            uri.AppendPath("/serverTrustCertificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string managedInstanceName, string certificateName)
         {
             var message = _pipeline.CreateMessage();
@@ -365,6 +428,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByInstanceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByInstanceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName)

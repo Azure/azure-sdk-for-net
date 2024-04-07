@@ -36,6 +36,41 @@ namespace Azure.ResourceManager.Peering
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByPeeringRequestUri(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Peering/peerings/", false);
+            uri.AppendPath(peeringName, true);
+            uri.AppendPath("/receivedRoutes", false);
+            if (prefix != null)
+            {
+                uri.AppendQuery("prefix", prefix, true);
+            }
+            if (asPath != null)
+            {
+                uri.AppendQuery("asPath", asPath, true);
+            }
+            if (originAsValidationState != null)
+            {
+                uri.AppendQuery("originAsValidationState", originAsValidationState, true);
+            }
+            if (rpkiValidationState != null)
+            {
+                uri.AppendQuery("rpkiValidationState", rpkiValidationState, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByPeeringRequest(string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
         {
             var message = _pipeline.CreateMessage();
@@ -143,6 +178,14 @@ namespace Azure.ResourceManager.Peering
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPeeringNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPeeringNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string peeringName, string prefix, string asPath, string originAsValidationState, string rpkiValidationState, string skipToken)

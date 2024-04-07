@@ -36,6 +36,21 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByPrivateLinkScopeRequestUri(string subscriptionId, string resourceGroupName, string scopeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/privateLinkResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByPrivateLinkScopeRequest(string subscriptionId, string resourceGroupName, string scopeName)
         {
             var message = _pipeline.CreateMessage();
@@ -113,6 +128,22 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scopeName, string groupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/privateLinkResources/", false);
+            uri.AppendPath(groupName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scopeName, string groupName)

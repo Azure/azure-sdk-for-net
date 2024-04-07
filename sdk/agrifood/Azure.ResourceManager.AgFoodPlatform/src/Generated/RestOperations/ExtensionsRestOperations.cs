@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
         {
             var message = _pipeline.CreateMessage();
@@ -119,6 +135,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
@@ -209,6 +241,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
         {
             var message = _pipeline.CreateMessage();
@@ -293,6 +341,22 @@ namespace Azure.ResourceManager.AgFoodPlatform
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions/", false);
+            uri.AppendPath(extensionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, string extensionId)
         {
             var message = _pipeline.CreateMessage();
@@ -367,6 +431,43 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFarmBeatsRequestUri(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AgFoodPlatform/farmBeats/", false);
+            uri.AppendPath(farmBeatsResourceName, true);
+            uri.AppendPath("/extensions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (extensionIds != null && !(extensionIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var param in extensionIds)
+                {
+                    uri.AppendQuery("extensionIds", param, true);
+                }
+            }
+            if (extensionCategories != null && !(extensionCategories is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
+            {
+                foreach (var param in extensionCategories)
+                {
+                    uri.AppendQuery("extensionCategories", param, true);
+                }
+            }
+            if (maxPageSize != null)
+            {
+                uri.AppendQuery("$maxPageSize", maxPageSize.Value, true);
+            }
+            if (skipToken != null)
+            {
+                uri.AppendQuery("$skipToken", skipToken, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByFarmBeatsRequest(string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
@@ -482,6 +583,14 @@ namespace Azure.ResourceManager.AgFoodPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByFarmBeatsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByFarmBeatsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string farmBeatsResourceName, IEnumerable<string> extensionIds, IEnumerable<string> extensionCategories, int? maxPageSize, string skipToken)

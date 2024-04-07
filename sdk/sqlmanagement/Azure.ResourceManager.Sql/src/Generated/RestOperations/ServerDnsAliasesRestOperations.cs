@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/dnsAliases/", false);
+            uri.AppendPath(dnsAliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,22 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/dnsAliases/", false);
+            uri.AppendPath(dnsAliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
         {
             var message = _pipeline.CreateMessage();
@@ -201,6 +233,22 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/dnsAliases/", false);
+            uri.AppendPath(dnsAliasName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName)
@@ -280,6 +328,21 @@ namespace Azure.ResourceManager.Sql
             }
         }
 
+        internal RequestUriBuilder CreateListByServerRequestUri(string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/dnsAliases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string serverName)
         {
             var message = _pipeline.CreateMessage();
@@ -357,6 +420,23 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateAcquireRequestUri(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition serverDnsAliasAcquisition)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/dnsAliases/", false);
+            uri.AppendPath(dnsAliasName, true);
+            uri.AppendPath("/acquire", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateAcquireRequest(string subscriptionId, string resourceGroupName, string serverName, string dnsAliasName, ServerDnsAliasAcquisition serverDnsAliasAcquisition)
@@ -442,6 +522,14 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serverName)

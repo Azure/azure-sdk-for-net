@@ -89,7 +89,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = await _machineLearningComponentVersionComponentVersionsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MachineLearningArmOperation<MachineLearningComponentVersionResource>(Response.FromValue(new MachineLearningComponentVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningComponentVersionComponentVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningComponentVersionResource>(Response.FromValue(new MachineLearningComponentVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -138,7 +140,9 @@ namespace Azure.ResourceManager.MachineLearning
             try
             {
                 var response = _machineLearningComponentVersionComponentVersionsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data, cancellationToken);
-                var operation = new MachineLearningArmOperation<MachineLearningComponentVersionResource>(Response.FromValue(new MachineLearningComponentVersionResource(Client, response), response.GetRawResponse()));
+                var uri = _machineLearningComponentVersionComponentVersionsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, version, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MachineLearningArmOperation<MachineLearningComponentVersionResource>(Response.FromValue(new MachineLearningComponentVersionResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.DesktopVirtualization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateExpandRequestUri(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DesktopVirtualization/hostPools/", false);
+            uri.AppendPath(hostPoolName, true);
+            uri.AppendPath("/expandMsixImage", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExpandRequest(string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +137,14 @@ namespace Azure.ResourceManager.DesktopVirtualization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateExpandNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateExpandNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string hostPoolName, MsixImageUri msixImageUri)

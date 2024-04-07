@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.IotHub
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByIotHubRequestUri(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByIotHubRequest(string subscriptionId, string resourceGroupName, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string certificateName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName)
@@ -202,6 +233,22 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, IotHubCertificateDescriptionData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, IotHubCertificateDescriptionData data, string ifMatch)
@@ -304,6 +351,22 @@ namespace Azure.ResourceManager.IotHub
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -383,6 +446,23 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateVerificationCodeRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/generateVerificationCode", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateVerificationCodeRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch)
@@ -473,6 +553,23 @@ namespace Azure.ResourceManager.IotHub
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateVerifyRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, IotHubCertificateVerificationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/IotHubs/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/verify", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateVerifyRequest(string subscriptionId, string resourceGroupName, string resourceName, string certificateName, string ifMatch, IotHubCertificateVerificationContent content)

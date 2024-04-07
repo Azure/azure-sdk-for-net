@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Consumption
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceScope, false);
+            uri.AppendPath("/providers/Microsoft.Consumption/reservationRecommendationDetails", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("scope", reservationScope.ToString(), true);
+            uri.AppendQuery("region", region, true);
+            uri.AppendQuery("term", term.ToString(), true);
+            uri.AppendQuery("lookBackPeriod", lookBackPeriod.ToString(), true);
+            uri.AppendQuery("product", product, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string resourceScope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product)
         {
             var message = _pipeline.CreateMessage();

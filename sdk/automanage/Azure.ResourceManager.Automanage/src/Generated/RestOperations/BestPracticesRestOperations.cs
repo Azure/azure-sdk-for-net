@@ -36,6 +36,16 @@ namespace Azure.ResourceManager.Automanage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string bestPracticeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Automanage/bestPractices/", false);
+            uri.AppendPath(bestPracticeName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string bestPracticeName)
         {
             var message = _pipeline.CreateMessage();
@@ -104,6 +114,15 @@ namespace Azure.ResourceManager.Automanage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByTenantRequestUri()
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Automanage/bestPractices", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByTenantRequest()

@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Quantum
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckNameAvailabilityRequestUri(string subscriptionId, string locationName, WorkspaceNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckNameAvailabilityRequest(string subscriptionId, string locationName, WorkspaceNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -118,6 +131,21 @@ namespace Azure.ResourceManager.Quantum
             }
         }
 
+        internal RequestUriBuilder CreateListKeysRequestUri(string subscriptionId, string resourceGroupName, string workspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/listKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -195,6 +223,21 @@ namespace Azure.ResourceManager.Quantum
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRegenerateKeysRequestUri(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceApiKeys keySpecification)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Quantum/workspaces/", false);
+            uri.AppendPath(workspaceName, true);
+            uri.AppendPath("/regenerateKey", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRegenerateKeysRequest(string subscriptionId, string resourceGroupName, string workspaceName, WorkspaceApiKeys keySpecification)

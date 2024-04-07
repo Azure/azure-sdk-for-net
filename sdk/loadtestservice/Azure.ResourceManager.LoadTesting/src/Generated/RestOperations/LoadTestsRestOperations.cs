@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.LoadTesting
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +113,19 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +199,20 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string loadTestName)
@@ -259,6 +297,20 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string loadTestName, LoadTestingResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string loadTestName, LoadTestingResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -335,6 +387,20 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string loadTestName, LoadTestingResourcePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string loadTestName, LoadTestingResourcePatch patch)
@@ -415,6 +481,20 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string loadTestName)
         {
             var message = _pipeline.CreateMessage();
@@ -485,6 +565,21 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOutboundNetworkDependenciesEndpointsRequestUri(string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.LoadTestService/loadTests/", false);
+            uri.AppendPath(loadTestName, true);
+            uri.AppendPath("/outboundNetworkDependenciesEndpoints", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsRequest(string subscriptionId, string resourceGroupName, string loadTestName)
@@ -566,6 +661,14 @@ namespace Azure.ResourceManager.LoadTesting
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -632,6 +735,14 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
@@ -704,6 +815,14 @@ namespace Azure.ResourceManager.LoadTesting
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOutboundNetworkDependenciesEndpointsNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string loadTestName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOutboundNetworkDependenciesEndpointsNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string loadTestName)

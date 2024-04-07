@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string logProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string logProfileName)
         {
             var message = _pipeline.CreateMessage();
@@ -96,6 +108,18 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string logProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string logProfileName)
@@ -172,6 +196,18 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string logProfileName, LogProfileData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string logProfileName, LogProfileData data)
@@ -254,6 +290,18 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string logProfileName, LogProfilePatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles/", false);
+            uri.AppendPath(logProfileName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string logProfileName, LogProfilePatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -332,6 +380,17 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/logprofiles", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId)

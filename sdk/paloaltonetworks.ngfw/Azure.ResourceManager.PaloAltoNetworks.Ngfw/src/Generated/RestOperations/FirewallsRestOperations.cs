@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +113,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
@@ -175,6 +199,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string firewallName)
@@ -259,6 +297,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string firewallName, PaloAltoNetworksFirewallData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string firewallName, PaloAltoNetworksFirewallData data)
         {
             var message = _pipeline.CreateMessage();
@@ -335,6 +387,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string firewallName, PaloAltoNetworksFirewallPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string firewallName, PaloAltoNetworksFirewallPatch patch)
@@ -423,6 +489,20 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string firewallName)
         {
             var message = _pipeline.CreateMessage();
@@ -493,6 +573,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetGlobalRulestackRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/getGlobalRulestack", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetGlobalRulestackRequest(string subscriptionId, string resourceGroupName, string firewallName)
@@ -574,6 +669,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateGetLogProfileRequestUri(string subscriptionId, string resourceGroupName, string firewallName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/getLogProfile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetLogProfileRequest(string subscriptionId, string resourceGroupName, string firewallName)
         {
             var message = _pipeline.CreateMessage();
@@ -651,6 +761,25 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSupportInfoRequestUri(string subscriptionId, string resourceGroupName, string firewallName, string email)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/getSupportInfo", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (email != null)
+            {
+                uri.AppendQuery("email", email, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetSupportInfoRequest(string subscriptionId, string resourceGroupName, string firewallName, string email)
@@ -738,6 +867,21 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateSaveLogProfileRequestUri(string subscriptionId, string resourceGroupName, string firewallName, FirewallLogSettings logSettings)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/PaloAltoNetworks.Cloudngfw/firewalls/", false);
+            uri.AppendPath(firewallName, true);
+            uri.AppendPath("/saveLogProfile", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSaveLogProfileRequest(string subscriptionId, string resourceGroupName, string firewallName, FirewallLogSettings logSettings)
         {
             var message = _pipeline.CreateMessage();
@@ -816,6 +960,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             }
         }
 
+        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
@@ -882,6 +1034,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)

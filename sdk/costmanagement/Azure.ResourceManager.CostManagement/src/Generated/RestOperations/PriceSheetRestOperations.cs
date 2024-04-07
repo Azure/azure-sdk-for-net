@@ -34,6 +34,21 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDownloadRequestUri(string billingAccountName, string billingProfileName, string invoiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/invoices/", false);
+            uri.AppendPath(invoiceName, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/pricesheets/default/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDownloadRequest(string billingAccountName, string billingProfileName, string invoiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +118,19 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDownloadByBillingProfileRequestUri(string billingAccountName, string billingProfileName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Billing/billingAccounts/", false);
+            uri.AppendPath(billingAccountName, true);
+            uri.AppendPath("/billingProfiles/", false);
+            uri.AppendPath(billingProfileName, true);
+            uri.AppendPath("/providers/Microsoft.CostManagement/pricesheets/default/download", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDownloadByBillingProfileRequest(string billingAccountName, string billingProfileName)

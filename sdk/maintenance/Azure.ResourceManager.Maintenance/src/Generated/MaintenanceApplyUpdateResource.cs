@@ -206,7 +206,9 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = await _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancelAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()));
+                var uri = _maintenanceApplyUpdateApplyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -252,7 +254,9 @@ namespace Azure.ResourceManager.Maintenance
             try
             {
                 var response = _maintenanceApplyUpdateApplyUpdatesRestClient.CreateOrUpdateOrCancel(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()));
+                var uri = _maintenanceApplyUpdateApplyUpdatesRestClient.CreateCreateOrUpdateOrCancelRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.ResourceType.Namespace, Id.Parent.ResourceType.GetLastType(), Id.Parent.Name, Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MaintenanceArmOperation<MaintenanceApplyUpdateResource>(Response.FromValue(new MaintenanceApplyUpdateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

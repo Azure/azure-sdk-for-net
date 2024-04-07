@@ -37,6 +37,26 @@ namespace Azure.ResourceManager.AppPlatform
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, string syncStatus)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (syncStatus != null)
+            {
+                uri.AppendQuery("syncStatus", syncStatus, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, string syncStatus)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +151,22 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformAppData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformAppData data)
         {
             var message = _pipeline.CreateMessage();
@@ -217,6 +253,22 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName)
         {
             var message = _pipeline.CreateMessage();
@@ -293,6 +345,22 @@ namespace Azure.ResourceManager.AppPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformAppData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformAppData data)
@@ -379,6 +447,21 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string serviceName)
         {
             var message = _pipeline.CreateMessage();
@@ -456,6 +539,23 @@ namespace Azure.ResourceManager.AppPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetResourceUploadUriRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendPath("/getResourceUploadUrl", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetResourceUploadUriRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName)
@@ -543,6 +643,23 @@ namespace Azure.ResourceManager.AppPlatform
             }
         }
 
+        internal RequestUriBuilder CreateSetActiveDeploymentsRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveAppPlatformDeploymentsContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendPath("/setActiveDeployments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSetActiveDeploymentsRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, ActiveAppPlatformDeploymentsContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -626,6 +743,23 @@ namespace Azure.ResourceManager.AppPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateValidateDomainRequestUri(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformCustomDomainValidateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AppPlatform/Spring/", false);
+            uri.AppendPath(serviceName, true);
+            uri.AppendPath("/apps/", false);
+            uri.AppendPath(appName, true);
+            uri.AppendPath("/validateDomain", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateValidateDomainRequest(string subscriptionId, string resourceGroupName, string serviceName, string appName, AppPlatformCustomDomainValidateContent content)
@@ -719,6 +853,14 @@ namespace Azure.ResourceManager.AppPlatform
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string serviceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string serviceName)

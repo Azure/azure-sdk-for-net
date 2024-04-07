@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = await _batchApplicationPackageApplicationPackageRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new BatchArmOperation<BatchApplicationPackageResource>(Response.FromValue(new BatchApplicationPackageResource(Client, response), response.GetRawResponse()));
+                var uri = _batchApplicationPackageApplicationPackageRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchApplicationPackageResource>(Response.FromValue(new BatchApplicationPackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Batch
             try
             {
                 var response = _batchApplicationPackageApplicationPackageRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, data, cancellationToken);
-                var operation = new BatchArmOperation<BatchApplicationPackageResource>(Response.FromValue(new BatchApplicationPackageResource(Client, response), response.GetRawResponse()));
+                var uri = _batchApplicationPackageApplicationPackageRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, versionName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BatchArmOperation<BatchApplicationPackageResource>(Response.FromValue(new BatchApplicationPackageResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

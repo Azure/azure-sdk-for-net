@@ -37,6 +37,20 @@ namespace Azure.ResourceManager.DnsResolver
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetData data, string ifMatch, string ifNoneMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetData data, string ifMatch, string ifNoneMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +143,20 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetPatch patch, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string rulesetName, DnsForwardingRulesetPatch patch, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -213,6 +241,20 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string rulesetName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string rulesetName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -289,6 +331,20 @@ namespace Azure.ResourceManager.DnsResolver
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string rulesetName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets/", false);
+            uri.AppendPath(rulesetName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string rulesetName)
@@ -373,6 +429,23 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -452,6 +525,21 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/dnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -523,6 +611,25 @@ namespace Azure.ResourceManager.DnsResolver
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVirtualNetworkRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworks/", false);
+            uri.AppendPath(virtualNetworkName, true);
+            uri.AppendPath("/listDnsForwardingRulesets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateListByVirtualNetworkRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
@@ -610,6 +717,14 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -684,6 +799,14 @@ namespace Azure.ResourceManager.DnsResolver
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -752,6 +875,14 @@ namespace Azure.ResourceManager.DnsResolver
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByVirtualNetworkNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByVirtualNetworkNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string virtualNetworkName, int? top)

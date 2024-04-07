@@ -36,6 +36,15 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(ExchangeContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/exchange", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(ExchangeContent content)
         {
             var message = _pipeline.CreateMessage();

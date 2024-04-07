@@ -37,6 +37,18 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string scope, ResourceIdentifier roleDefinitionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string scope, ResourceIdentifier roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
@@ -111,6 +123,18 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string scope, ResourceIdentifier roleDefinitionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string scope, ResourceIdentifier roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
@@ -183,6 +207,18 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string scope, ResourceIdentifier roleDefinitionId, AuthorizationRoleDefinitionData data)
@@ -263,6 +299,21 @@ namespace Azure.ResourceManager.Authorization
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope, string filter)
         {
             var message = _pipeline.CreateMessage();
@@ -332,6 +383,14 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string scope, string filter)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string scope, string filter)

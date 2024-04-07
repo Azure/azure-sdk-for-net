@@ -196,7 +196,9 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = await _billingPaymentMethodPaymentMethodsRestClient.DeleteByUserAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new BillingArmOperation(response);
+                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -238,7 +240,9 @@ namespace Azure.ResourceManager.Billing
             try
             {
                 var response = _billingPaymentMethodPaymentMethodsRestClient.DeleteByUser(Id.Name, cancellationToken);
-                var operation = new BillingArmOperation(response);
+                var uri = _billingPaymentMethodPaymentMethodsRestClient.CreateDeleteByUserRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new BillingArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

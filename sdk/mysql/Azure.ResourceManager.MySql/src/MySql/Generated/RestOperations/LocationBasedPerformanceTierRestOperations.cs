@@ -36,6 +36,19 @@ namespace Azure.ResourceManager.MySql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, AzureLocation locationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DBforMySQL/locations/", false);
+            uri.AppendPath(locationName, true);
+            uri.AppendPath("/performanceTiers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, AzureLocation locationName)
         {
             var message = _pipeline.CreateMessage();

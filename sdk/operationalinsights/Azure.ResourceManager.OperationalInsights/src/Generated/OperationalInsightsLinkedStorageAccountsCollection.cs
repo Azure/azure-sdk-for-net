@@ -87,7 +87,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = await _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data, cancellationToken).ConfigureAwait(false);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var uri = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.OperationalInsights
             try
             {
                 var response = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data, cancellationToken);
-                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()));
+                var uri = _operationalInsightsLinkedStorageAccountsLinkedStorageAccountsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, dataSourceType, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new OperationalInsightsArmOperation<OperationalInsightsLinkedStorageAccountsResource>(Response.FromValue(new OperationalInsightsLinkedStorageAccountsResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

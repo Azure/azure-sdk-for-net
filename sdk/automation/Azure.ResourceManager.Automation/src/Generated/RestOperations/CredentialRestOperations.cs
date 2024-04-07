@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Automation
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName)
         {
             var message = _pipeline.CreateMessage();
@@ -109,6 +125,22 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName)
@@ -197,6 +229,22 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName, AutomationCredentialCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName, AutomationCredentialCreateOrUpdateContent content)
@@ -293,6 +341,22 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName, AutomationCredentialPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/credentials/", false);
+            uri.AppendPath(credentialName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string automationAccountName, string credentialName, AutomationCredentialPatch patch)
         {
             var message = _pipeline.CreateMessage();
@@ -385,6 +449,21 @@ namespace Azure.ResourceManager.Automation
             }
         }
 
+        internal RequestUriBuilder CreateListByAutomationAccountRequestUri(string subscriptionId, string resourceGroupName, string automationAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Automation/automationAccounts/", false);
+            uri.AppendPath(automationAccountName, true);
+            uri.AppendPath("/credentials", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByAutomationAccountRequest(string subscriptionId, string resourceGroupName, string automationAccountName)
         {
             var message = _pipeline.CreateMessage();
@@ -462,6 +541,14 @@ namespace Azure.ResourceManager.Automation
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByAutomationAccountNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByAutomationAccountNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string automationAccountName)

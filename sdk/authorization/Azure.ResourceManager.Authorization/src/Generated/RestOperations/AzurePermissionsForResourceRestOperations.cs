@@ -36,6 +36,27 @@ namespace Azure.ResourceManager.Authorization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourcegroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/", false);
+            uri.AppendPath(resourceProviderNamespace, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(parentResourcePath, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceType, false);
+            uri.AppendPath("/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/providers/Microsoft.Authorization/permissions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
         {
             var message = _pipeline.CreateMessage();
@@ -131,6 +152,14 @@ namespace Azure.ResourceManager.Authorization
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName)

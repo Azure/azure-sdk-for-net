@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = await _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()));
+                var uri = _senderUsernameResourceSenderUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.Communication
             try
             {
                 var response = _senderUsernameResourceSenderUsernamesRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data, cancellationToken);
-                var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()));
+                var uri = _senderUsernameResourceSenderUsernamesRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, senderUsername, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new CommunicationArmOperation<SenderUsernameResource>(Response.FromValue(new SenderUsernameResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

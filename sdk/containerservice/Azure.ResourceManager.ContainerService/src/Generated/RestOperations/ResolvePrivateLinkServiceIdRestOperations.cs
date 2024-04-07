@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.ContainerService
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/resolvePrivateLinkServiceId", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(string subscriptionId, string resourceGroupName, string resourceName, ContainerServicePrivateLinkResourceData data)
         {
             var message = _pipeline.CreateMessage();

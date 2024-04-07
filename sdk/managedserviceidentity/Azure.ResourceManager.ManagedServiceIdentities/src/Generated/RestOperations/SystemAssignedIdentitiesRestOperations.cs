@@ -35,6 +35,17 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetByScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.ManagedIdentity/identities/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetByScopeRequest(string scope)
         {
             var message = _pipeline.CreateMessage();

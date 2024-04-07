@@ -201,7 +201,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = await _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequestAsync(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -247,7 +249,9 @@ namespace Azure.ResourceManager.Marketplace
             try
             {
                 var response = _marketplaceApprovalRequestPrivateStoreRestClient.CreateApprovalRequest(Guid.Parse(Id.Parent.Name), Id.Name, data, cancellationToken);
-                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()));
+                var uri = _marketplaceApprovalRequestPrivateStoreRestClient.CreateCreateApprovalRequestRequestUri(Guid.Parse(Id.Parent.Name), Id.Name, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new MarketplaceArmOperation<MarketplaceApprovalRequestResource>(Response.FromValue(new MarketplaceApprovalRequestResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

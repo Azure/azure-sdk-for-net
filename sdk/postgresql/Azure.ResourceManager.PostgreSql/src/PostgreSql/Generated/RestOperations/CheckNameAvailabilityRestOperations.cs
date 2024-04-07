@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.PostgreSql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateExecuteRequestUri(string subscriptionId, PostgreSqlNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/checkNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateExecuteRequest(string subscriptionId, PostgreSqlNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();

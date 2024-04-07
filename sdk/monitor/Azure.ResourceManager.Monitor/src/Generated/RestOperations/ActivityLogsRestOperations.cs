@@ -36,6 +36,22 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string filter, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Insights/eventtypes/management/values", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            uri.AppendQuery("$filter", filter, true);
+            if (select != null)
+            {
+                uri.AppendQuery("$select", select, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string filter, string select)
         {
             var message = _pipeline.CreateMessage();
@@ -112,6 +128,14 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string filter, string select)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string filter, string select)

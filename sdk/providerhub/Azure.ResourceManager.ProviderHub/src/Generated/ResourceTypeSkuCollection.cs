@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = await _resourceTypeSkuSkusRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var uri = _resourceTypeSkuSkusRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.ProviderHub
             try
             {
                 var response = _resourceTypeSkuSkusRestClient.CreateOrUpdate(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data, cancellationToken);
-                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()));
+                var uri = _resourceTypeSkuSkusRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.Parent.Name, Id.Name, sku, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ProviderHubArmOperation<ResourceTypeSkuResource>(Response.FromValue(new ResourceTypeSkuResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

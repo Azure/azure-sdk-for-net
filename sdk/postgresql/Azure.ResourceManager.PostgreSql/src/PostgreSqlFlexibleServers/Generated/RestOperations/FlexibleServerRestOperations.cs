@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateTriggerLtrPreBackupRequestUri(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrPreBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/ltrPreBackup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateTriggerLtrPreBackupRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrPreBackupContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +137,21 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateStartLtrBackupRequestUri(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrBackupContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/flexibleServers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/startLtrBackup", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateStartLtrBackupRequest(string subscriptionId, string resourceGroupName, string serverName, PostgreSqlFlexibleServerLtrBackupContent content)

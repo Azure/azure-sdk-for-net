@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.Monitor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string scopeName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/scopedResources/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string scopeName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -125,6 +141,22 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string scopeName, string name, MonitorPrivateLinkScopedResourceData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/scopedResources/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string scopeName, string name, MonitorPrivateLinkScopedResourceData data)
         {
             var message = _pipeline.CreateMessage();
@@ -211,6 +243,22 @@ namespace Azure.ResourceManager.Monitor
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string scopeName, string name)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/scopedResources/", false);
+            uri.AppendPath(name, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string scopeName, string name)
         {
             var message = _pipeline.CreateMessage();
@@ -287,6 +335,21 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPrivateLinkScopeRequestUri(string subscriptionId, string resourceGroupName, string scopeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Insights/privateLinkScopes/", false);
+            uri.AppendPath(scopeName, true);
+            uri.AppendPath("/scopedResources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByPrivateLinkScopeRequest(string subscriptionId, string resourceGroupName, string scopeName)
@@ -366,6 +429,14 @@ namespace Azure.ResourceManager.Monitor
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByPrivateLinkScopeNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string scopeName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByPrivateLinkScopeNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string scopeName)

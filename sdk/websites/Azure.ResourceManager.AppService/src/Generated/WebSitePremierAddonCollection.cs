@@ -85,7 +85,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = await _webSitePremierAddonWebAppsRestClient.AddPremierAddOnAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()));
+                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -134,7 +136,9 @@ namespace Azure.ResourceManager.AppService
             try
             {
                 var response = _webSitePremierAddonWebAppsRestClient.AddPremierAddOn(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data, cancellationToken);
-                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()));
+                var uri = _webSitePremierAddonWebAppsRestClient.CreateAddPremierAddOnRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, premierAddOnName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AppServiceArmOperation<WebSitePremierAddonResource>(Response.FromValue(new WebSitePremierAddonResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

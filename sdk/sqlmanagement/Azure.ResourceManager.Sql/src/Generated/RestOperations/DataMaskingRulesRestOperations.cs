@@ -37,6 +37,26 @@ namespace Azure.ResourceManager.Sql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingRuleName, DataMaskingRule dataMaskingRule)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/dataMaskingPolicies/", false);
+            uri.AppendPath("Default", true);
+            uri.AppendPath("/rules/", false);
+            uri.AppendPath(dataMaskingRuleName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName, string dataMaskingRuleName, DataMaskingRule dataMaskingRule)
         {
             var message = _pipeline.CreateMessage();
@@ -137,6 +157,25 @@ namespace Azure.ResourceManager.Sql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string serverName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Sql/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/databases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/dataMaskingPolicies/", false);
+            uri.AppendPath("Default", true);
+            uri.AppendPath("/rules", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string serverName, string databaseName)

@@ -37,6 +37,33 @@ namespace Azure.ResourceManager.Storage
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (maxpagesize != null)
+            {
+                uri.AppendQuery("$maxpagesize", maxpagesize, true);
+            }
+            if (filter != null)
+            {
+                uri.AppendQuery("$filter", filter, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -132,6 +159,26 @@ namespace Azure.ResourceManager.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, FileShareData data, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, FileShareData data, string expand)
@@ -234,6 +281,22 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, FileShareData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, FileShareData data)
         {
             var message = _pipeline.CreateMessage();
@@ -324,6 +387,26 @@ namespace Azure.ResourceManager.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string expand, string xMsSnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string expand, string xMsSnapshot)
@@ -426,6 +509,26 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, string xMsSnapshot, string include)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (include != null)
+            {
+                uri.AppendQuery("$include", include, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, string xMsSnapshot, string include)
         {
             var message = _pipeline.CreateMessage();
@@ -514,6 +617,23 @@ namespace Azure.ResourceManager.Storage
             }
         }
 
+        internal RequestUriBuilder CreateRestoreRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, DeletedShare deletedShare)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/restore", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateRestoreRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, DeletedShare deletedShare)
         {
             var message = _pipeline.CreateMessage();
@@ -595,6 +715,23 @@ namespace Azure.ResourceManager.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateLeaseRequestUri(string subscriptionId, string resourceGroupName, string accountName, string shareName, LeaseShareContent content, string xMsSnapshot)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Storage/storageAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/fileServices/default/shares/", false);
+            uri.AppendPath(shareName, true);
+            uri.AppendPath("/lease", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateLeaseRequest(string subscriptionId, string resourceGroupName, string accountName, string shareName, LeaseShareContent content, string xMsSnapshot)
@@ -695,6 +832,14 @@ namespace Azure.ResourceManager.Storage
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string maxpagesize, string filter, string expand)

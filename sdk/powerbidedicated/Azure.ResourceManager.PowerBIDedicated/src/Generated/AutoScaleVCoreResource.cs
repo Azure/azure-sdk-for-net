@@ -200,7 +200,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = await _autoScaleVCoreRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new PowerBIDedicatedArmOperation(response);
+                var uri = _autoScaleVCoreRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PowerBIDedicatedArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -242,7 +244,9 @@ namespace Azure.ResourceManager.PowerBIDedicated
             try
             {
                 var response = _autoScaleVCoreRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var operation = new PowerBIDedicatedArmOperation(response);
+                var uri = _autoScaleVCoreRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new PowerBIDedicatedArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

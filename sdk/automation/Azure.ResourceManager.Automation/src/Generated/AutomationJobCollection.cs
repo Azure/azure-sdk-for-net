@@ -90,7 +90,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = await _automationJobJobRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId, cancellationToken).ConfigureAwait(false);
-                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()));
+                var uri = _automationJobJobRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -140,7 +142,9 @@ namespace Azure.ResourceManager.Automation
             try
             {
                 var response = _automationJobJobRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId, cancellationToken);
-                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()));
+                var uri = _automationJobJobRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, jobName, content, clientRequestId);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new AutomationArmOperation<AutomationJobResource>(Response.FromValue(new AutomationJobResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

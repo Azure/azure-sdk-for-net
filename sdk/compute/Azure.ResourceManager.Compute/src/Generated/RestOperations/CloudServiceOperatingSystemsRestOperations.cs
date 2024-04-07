@@ -36,6 +36,20 @@ namespace Azure.ResourceManager.Compute
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetOSVersionRequestUri(string subscriptionId, AzureLocation location, string osVersionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/cloudServiceOsVersions/", false);
+            uri.AppendPath(osVersionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetOSVersionRequest(string subscriptionId, AzureLocation location, string osVersionName)
         {
             var message = _pipeline.CreateMessage();
@@ -116,6 +130,19 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListOSVersionsRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/cloudServiceOsVersions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListOSVersionsRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -185,6 +212,20 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetOSFamilyRequestUri(string subscriptionId, AzureLocation location, string osFamilyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/cloudServiceOsFamilies/", false);
+            uri.AppendPath(osFamilyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetOSFamilyRequest(string subscriptionId, AzureLocation location, string osFamilyName)
@@ -267,6 +308,19 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListOSFamiliesRequestUri(string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Compute/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/cloudServiceOsFamilies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListOSFamiliesRequest(string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -338,6 +392,14 @@ namespace Azure.ResourceManager.Compute
             }
         }
 
+        internal RequestUriBuilder CreateListOSVersionsNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListOSVersionsNextPageRequest(string nextLink, string subscriptionId, AzureLocation location)
         {
             var message = _pipeline.CreateMessage();
@@ -406,6 +468,14 @@ namespace Azure.ResourceManager.Compute
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListOSFamiliesNextPageRequestUri(string nextLink, string subscriptionId, AzureLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListOSFamiliesNextPageRequest(string nextLink, string subscriptionId, AzureLocation location)

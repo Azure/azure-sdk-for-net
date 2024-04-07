@@ -201,7 +201,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = await _userSessionRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken).ConfigureAwait(false);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _userSessionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -244,7 +246,9 @@ namespace Azure.ResourceManager.DesktopVirtualization
             try
             {
                 var response = _userSessionRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force, cancellationToken);
-                var operation = new DesktopVirtualizationArmOperation(response);
+                var uri = _userSessionRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, force);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new DesktopVirtualizationArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;

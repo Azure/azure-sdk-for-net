@@ -88,7 +88,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = await _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -137,7 +139,9 @@ namespace Azure.ResourceManager.SecurityInsights
             try
             {
                 var response = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data, cancellationToken);
-                var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()));
+                var uri = _securityInsightsSentinelOnboardingStateSentinelOnboardingStatesRestClient.CreateCreateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, sentinelOnboardingStateName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SecurityInsightsArmOperation<SecurityInsightsSentinelOnboardingStateResource>(Response.FromValue(new SecurityInsightsSentinelOnboardingStateResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

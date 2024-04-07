@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.AppContainers
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/daprComponents", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string environmentName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/daprComponents/", false);
+            uri.AppendPath(componentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
@@ -202,6 +233,22 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string componentName, ContainerAppDaprComponentData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/daprComponents/", false);
+            uri.AppendPath(componentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName, ContainerAppDaprComponentData data)
@@ -296,6 +343,22 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/daprComponents/", false);
+            uri.AppendPath(componentName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
         {
             var message = _pipeline.CreateMessage();
@@ -370,6 +433,23 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSecretsRequestUri(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.App/managedEnvironments/", false);
+            uri.AppendPath(environmentName, true);
+            uri.AppendPath("/daprComponents/", false);
+            uri.AppendPath(componentName, true);
+            uri.AppendPath("/listSecrets", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSecretsRequest(string subscriptionId, string resourceGroupName, string environmentName, string componentName)
@@ -455,6 +535,14 @@ namespace Azure.ResourceManager.AppContainers
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string environmentName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string environmentName)

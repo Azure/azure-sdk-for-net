@@ -37,6 +37,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch)
         {
             var message = _pipeline.CreateMessage();
@@ -129,6 +145,22 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, DeviceProvisioningServicesCertificateData data, string ifMatch)
@@ -227,6 +259,54 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            if (certificateCommonName != null)
+            {
+                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+            }
+            if (certificateRawBytes != null)
+            {
+                uri.AppendQuery("certificate.rawBytes", certificateRawBytes, "D", true);
+            }
+            if (certificateIsVerified != null)
+            {
+                uri.AppendQuery("certificate.isVerified", certificateIsVerified.Value, true);
+            }
+            if (certificatePurpose != null)
+            {
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+            }
+            if (certificateCreatedOn != null)
+            {
+                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+            }
+            if (certificateLastUpdatedOn != null)
+            {
+                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+            }
+            if (certificateHasPrivateKey != null)
+            {
+                uri.AppendQuery("certificate.hasPrivateKey", certificateHasPrivateKey.Value, true);
+            }
+            if (certificateNonce != null)
+            {
+                uri.AppendQuery("certificate.nonce", certificateNonce, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)
@@ -358,6 +438,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
             }
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName)
         {
             var message = _pipeline.CreateMessage();
@@ -435,6 +530,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGenerateVerificationCodeRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/generateVerificationCode", false);
+            if (certificateCommonName != null)
+            {
+                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+            }
+            if (certificateRawBytes != null)
+            {
+                uri.AppendQuery("certificate.rawBytes", certificateRawBytes, "D", true);
+            }
+            if (certificateIsVerified != null)
+            {
+                uri.AppendQuery("certificate.isVerified", certificateIsVerified.Value, true);
+            }
+            if (certificatePurpose != null)
+            {
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+            }
+            if (certificateCreatedOn != null)
+            {
+                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+            }
+            if (certificateLastUpdatedOn != null)
+            {
+                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+            }
+            if (certificateHasPrivateKey != null)
+            {
+                uri.AppendQuery("certificate.hasPrivateKey", certificateHasPrivateKey.Value, true);
+            }
+            if (certificateNonce != null)
+            {
+                uri.AppendQuery("certificate.nonce", certificateNonce, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGenerateVerificationCodeRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)
@@ -573,6 +717,55 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateVerifyCertificateRequestUri(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Devices/provisioningServices/", false);
+            uri.AppendPath(provisioningServiceName, true);
+            uri.AppendPath("/certificates/", false);
+            uri.AppendPath(certificateName, true);
+            uri.AppendPath("/verify", false);
+            if (certificateCommonName != null)
+            {
+                uri.AppendQuery("certificateCommonName", certificateCommonName, true);
+            }
+            if (certificateRawBytes != null)
+            {
+                uri.AppendQuery("certificate.rawBytes", certificateRawBytes, "D", true);
+            }
+            if (certificateIsVerified != null)
+            {
+                uri.AppendQuery("certificate.isVerified", certificateIsVerified.Value, true);
+            }
+            if (certificatePurpose != null)
+            {
+                uri.AppendQuery("certificate.purpose", certificatePurpose.Value.ToString(), true);
+            }
+            if (certificateCreatedOn != null)
+            {
+                uri.AppendQuery("certificateCreatedOn", certificateCreatedOn.Value, "O", true);
+            }
+            if (certificateLastUpdatedOn != null)
+            {
+                uri.AppendQuery("certificateLastUpdatedOn", certificateLastUpdatedOn.Value, "O", true);
+            }
+            if (certificateHasPrivateKey != null)
+            {
+                uri.AppendQuery("certificate.hasPrivateKey", certificateHasPrivateKey.Value, true);
+            }
+            if (certificateNonce != null)
+            {
+                uri.AppendQuery("certificate.nonce", certificateNonce, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateVerifyCertificateRequest(string subscriptionId, string resourceGroupName, string provisioningServiceName, string certificateName, string ifMatch, CertificateVerificationCodeContent content, string certificateCommonName, byte[] certificateRawBytes, bool? certificateIsVerified, DeviceProvisioningServicesCertificatePurpose? certificatePurpose, DateTimeOffset? certificateCreatedOn, DateTimeOffset? certificateLastUpdatedOn, bool? certificateHasPrivateKey, string certificateNonce)

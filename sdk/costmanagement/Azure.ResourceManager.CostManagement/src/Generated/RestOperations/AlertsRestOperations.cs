@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -100,6 +111,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string scope, string alertId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts/", false);
+            uri.AppendPath(alertId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string scope, string alertId)
@@ -174,6 +197,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateDismissRequestUri(string scope, string alertId, CostManagementAlertPatch patch)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/alerts/", false);
+            uri.AppendPath(alertId, false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateDismissRequest(string scope, string alertId, CostManagementAlertPatch patch)
@@ -252,6 +287,19 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListExternalRequestUri(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/", false);
+            uri.AppendPath(externalCloudProviderType.ToString(), true);
+            uri.AppendPath("/", false);
+            uri.AppendPath(externalCloudProviderId, true);
+            uri.AppendPath("/alerts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListExternalRequest(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId)

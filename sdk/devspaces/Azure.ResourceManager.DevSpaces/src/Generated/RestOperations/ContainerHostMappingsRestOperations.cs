@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.DevSpaces
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetContainerHostMappingRequestUri(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevSpaces/locations/", false);
+            uri.AppendPath(location, true);
+            uri.AppendPath("/checkContainerHostMapping", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetContainerHostMappingRequest(string subscriptionId, string resourceGroupName, AzureLocation location, ContainerHostMapping containerHostMapping)
         {
             var message = _pipeline.CreateMessage();

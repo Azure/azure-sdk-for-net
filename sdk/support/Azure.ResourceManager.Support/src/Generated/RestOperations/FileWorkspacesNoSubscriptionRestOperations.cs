@@ -35,6 +35,16 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string fileWorkspaceName)
         {
             var message = _pipeline.CreateMessage();
@@ -103,6 +113,16 @@ namespace Azure.ResourceManager.Support
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateRequestUri(string fileWorkspaceName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/fileWorkspaces/", false);
+            uri.AppendPath(fileWorkspaceName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateRequest(string fileWorkspaceName)

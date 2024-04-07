@@ -37,6 +37,29 @@ namespace Azure.ResourceManager.ServiceBus
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByNamespaceRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/topics", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            if (skip != null)
+            {
+                uri.AppendQuery("$skip", skip.Value, true);
+            }
+            if (top != null)
+            {
+                uri.AppendQuery("$top", top.Value, true);
+            }
+            return uri;
+        }
+
         internal HttpMessage CreateListByNamespaceRequest(string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
         {
             var message = _pipeline.CreateMessage();
@@ -126,6 +149,22 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, ServiceBusTopicData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string namespaceName, string topicName, ServiceBusTopicData data)
@@ -220,6 +259,22 @@ namespace Azure.ResourceManager.ServiceBus
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string topicName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string namespaceName, string topicName)
         {
             var message = _pipeline.CreateMessage();
@@ -294,6 +349,22 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string namespaceName, string topicName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ServiceBus/namespaces/", false);
+            uri.AppendPath(namespaceName, true);
+            uri.AppendPath("/topics/", false);
+            uri.AppendPath(topicName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string namespaceName, string topicName)
@@ -382,6 +453,14 @@ namespace Azure.ResourceManager.ServiceBus
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByNamespaceNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByNamespaceNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string namespaceName, int? skip, int? top)

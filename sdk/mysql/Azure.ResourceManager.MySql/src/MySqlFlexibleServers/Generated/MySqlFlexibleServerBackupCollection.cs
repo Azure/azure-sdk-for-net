@@ -86,7 +86,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = await _mySqlFlexibleServerBackupBackupsRestClient.PutAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken).ConfigureAwait(false);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupResource>(Response.FromValue(new MySqlFlexibleServerBackupResource(Client, response), response.GetRawResponse()));
+                var uri = _mySqlFlexibleServerBackupBackupsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupResource>(Response.FromValue(new MySqlFlexibleServerBackupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -133,7 +135,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
             try
             {
                 var response = _mySqlFlexibleServerBackupBackupsRestClient.Put(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName, cancellationToken);
-                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupResource>(Response.FromValue(new MySqlFlexibleServerBackupResource(Client, response), response.GetRawResponse()));
+                var uri = _mySqlFlexibleServerBackupBackupsRestClient.CreatePutRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, backupName);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new FlexibleServersArmOperation<MySqlFlexibleServerBackupResource>(Response.FromValue(new MySqlFlexibleServerBackupResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
