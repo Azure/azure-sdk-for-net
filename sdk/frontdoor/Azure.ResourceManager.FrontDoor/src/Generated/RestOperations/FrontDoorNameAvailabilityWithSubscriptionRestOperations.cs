@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.FrontDoor
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateCheckRequestUri(string subscriptionId, FrontDoorNameAvailabilityContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/providers/Microsoft.Network/checkFrontDoorNameAvailability", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCheckRequest(string subscriptionId, FrontDoorNameAvailabilityContent content)
         {
             var message = _pipeline.CreateMessage();
