@@ -14,7 +14,7 @@ namespace Azure.ResourceManager
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly OperationInternal _operation;
 
-        public RehydrationOperation(ArmClient client, RehydrationToken? rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(ArmClient client, RehydrationToken rehydrationToken, ClientOptions options = null)
         {
             AssertNotNull(client, nameof(client));
             AssertNotNull(rehydrationToken, nameof(rehydrationToken));

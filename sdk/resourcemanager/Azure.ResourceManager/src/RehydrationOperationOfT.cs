@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable disable
+#nullable enable
 
 using System;
 using System.ClientModel.Primitives;
@@ -20,16 +20,11 @@ namespace Azure.ResourceManager
         private readonly OperationInternal<T> _operation;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
 
-        public RehydrationOperation(ArmClient client, RehydrationToken? rehydrationToken, ClientOptions options = null)
+        public RehydrationOperation(ArmClient client, RehydrationToken rehydrationToken, ClientOptions? options = null)
         {
             if (client is null)
             {
                 throw new ArgumentNullException(nameof(client));
-            }
-
-            if (rehydrationToken is null)
-            {
-                throw new ArgumentNullException(nameof(rehydrationToken));
             }
 
             var isResource = typeof(T).GetConstructor(
@@ -57,7 +52,7 @@ namespace Azure.ResourceManager
 
         public override bool HasValue => _operation.HasValue;
 
-        public override string Id => _nextLinkOperation.OperationId ?? null;
+        public override string Id => _nextLinkOperation.OperationId;
 
         public override bool HasCompleted => _operation.HasCompleted;
 

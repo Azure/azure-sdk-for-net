@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagementGroups
             }
             else
             {
-                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
+                _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
             _operation = new OperationInternal<T>(NextLinkOperationImplementation.Create(source, nextLinkOperation), clientDiagnostics, response, "ManagementGroupsArmOperation", fallbackStrategy: new SequentialDelayStrategy());
