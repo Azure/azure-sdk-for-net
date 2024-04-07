@@ -707,7 +707,7 @@ To register a client with the dependency injection container, invoke the corresp
 | Client               | Extension method        |
 |----------------------|-------------------------|
 | `LogsQueryClient`    | [AddLogsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.logsqueryclientbuilderextensions?view=azure-dotnet)    |
-| `MetricsClient`      | `AddMetricsClient`      |
+| `MetricsClient`      | [AddMetricsClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsclientbuilderextensions.addmetricsclient?view=azure-dotnet)      |
 | `MetricsQueryClient` | [AddMetricsQueryClient](https://learn.microsoft.com/dotnet/api/microsoft.extensions.azure.metricsqueryclientbuilderextensions?view=azure-dotnet) |
 
 For more information, see [Register client](https://learn.microsoft.com/dotnet/azure/sdk/dependency-injection#register-client).

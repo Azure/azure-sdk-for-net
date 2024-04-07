@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<DataFactoryLinkedServiceReference> linkedServices = default;
             IList<DatasetReference> datasets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("linkedServices"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CustomActivityReferenceObject(linkedServices ?? new ChangeTrackingList<DataFactoryLinkedServiceReference>(), datasets ?? new ChangeTrackingList<DatasetReference>(), serializedAdditionalRawData);
         }
 

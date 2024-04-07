@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TeradataTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTeradataTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TeradataTableDataset>(this);
+            return content;
+        }
+
         internal partial class TeradataTableDatasetConverter : JsonConverter<TeradataTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, TeradataTableDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<TeradataTableDataset>(model);
             }
+
             public override TeradataTableDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

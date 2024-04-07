@@ -52,12 +52,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new DataBoxCopyStartedEventData(serialNumber, stageName, stageTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataBoxCopyStartedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataBoxCopyStartedEventData(document.RootElement);
+        }
+
         internal partial class DataBoxCopyStartedEventDataConverter : JsonConverter<DataBoxCopyStartedEventData>
         {
             public override void Write(Utf8JsonWriter writer, DataBoxCopyStartedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override DataBoxCopyStartedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

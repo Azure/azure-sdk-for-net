@@ -250,12 +250,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 schema0);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SparkObjectDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkObjectDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SparkObjectDataset>(this);
+            return content;
+        }
+
         internal partial class SparkObjectDatasetConverter : JsonConverter<SparkObjectDataset>
         {
             public override void Write(Utf8JsonWriter writer, SparkObjectDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SparkObjectDataset>(model);
             }
+
             public override SparkObjectDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

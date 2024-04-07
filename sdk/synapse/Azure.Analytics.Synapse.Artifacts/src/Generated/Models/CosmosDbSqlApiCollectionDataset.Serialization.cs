@@ -211,12 +211,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 collectionName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CosmosDbSqlApiCollectionDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCosmosDbSqlApiCollectionDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CosmosDbSqlApiCollectionDataset>(this);
+            return content;
+        }
+
         internal partial class CosmosDbSqlApiCollectionDatasetConverter : JsonConverter<CosmosDbSqlApiCollectionDataset>
         {
             public override void Write(Utf8JsonWriter writer, CosmosDbSqlApiCollectionDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<CosmosDbSqlApiCollectionDataset>(model);
             }
+
             public override CosmosDbSqlApiCollectionDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

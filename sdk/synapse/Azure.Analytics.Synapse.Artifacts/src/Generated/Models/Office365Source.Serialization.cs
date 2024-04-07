@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 outputColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Office365Source FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOffice365Source(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Office365Source>(this);
+            return content;
+        }
+
         internal partial class Office365SourceConverter : JsonConverter<Office365Source>
         {
             public override void Write(Utf8JsonWriter writer, Office365Source model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<Office365Source>(model);
             }
+
             public override Office365Source Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

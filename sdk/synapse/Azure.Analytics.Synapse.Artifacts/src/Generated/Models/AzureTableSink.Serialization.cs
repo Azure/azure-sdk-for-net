@@ -197,12 +197,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 azureTableInsertType);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureTableSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureTableSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureTableSink>(this);
+            return content;
+        }
+
         internal partial class AzureTableSinkConverter : JsonConverter<AzureTableSink>
         {
             public override void Write(Utf8JsonWriter writer, AzureTableSink model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureTableSink>(model);
             }
+
             public override AzureTableSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

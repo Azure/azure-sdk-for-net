@@ -50,12 +50,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RunFilterParameters>(this);
+            return content;
+        }
+
         internal partial class RunFilterParametersConverter : JsonConverter<RunFilterParameters>
         {
             public override void Write(Utf8JsonWriter writer, RunFilterParameters model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<RunFilterParameters>(model);
             }
+
             public override RunFilterParameters Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
