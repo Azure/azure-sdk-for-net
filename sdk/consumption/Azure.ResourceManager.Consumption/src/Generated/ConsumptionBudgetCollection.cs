@@ -78,7 +78,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = await _consumptionBudgetBudgetsRestClient.CreateOrUpdateAsync(Id, budgetName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id, budgetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -127,7 +129,9 @@ namespace Azure.ResourceManager.Consumption
             try
             {
                 var response = _consumptionBudgetBudgetsRestClient.CreateOrUpdate(Id, budgetName, data, cancellationToken);
-                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()));
+                var uri = _consumptionBudgetBudgetsRestClient.CreateCreateOrUpdateRequestUri(Id, budgetName, data);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new ConsumptionArmOperation<ConsumptionBudgetResource>(Response.FromValue(new ConsumptionBudgetResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

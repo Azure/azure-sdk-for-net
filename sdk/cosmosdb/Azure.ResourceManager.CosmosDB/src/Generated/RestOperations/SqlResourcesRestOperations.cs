@@ -37,6 +37,21 @@ namespace Azure.ResourceManager.CosmosDB
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListSqlDatabasesRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSqlDatabasesRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
@@ -114,6 +129,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlDatabaseRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
@@ -204,6 +235,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlDatabaseRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CosmosDBSqlDatabaseCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, CosmosDBSqlDatabaseCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -288,6 +335,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlDatabaseRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlDatabaseRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -361,6 +424,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlDatabaseThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
@@ -452,6 +532,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateUpdateSqlDatabaseThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateSqlDatabaseThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, ThroughputSettingsUpdateData data)
         {
             var message = _pipeline.CreateMessage();
@@ -537,6 +634,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateMigrateSqlDatabaseToAutoscaleRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMigrateSqlDatabaseToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -614,6 +728,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateMigrateSqlDatabaseToManualThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMigrateSqlDatabaseToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -689,6 +820,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListClientEncryptionKeysRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/clientEncryptionKeys", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListClientEncryptionKeysRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
@@ -774,6 +922,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetClientEncryptionKeyRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/clientEncryptionKeys/", false);
+            uri.AppendPath(clientEncryptionKeyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetClientEncryptionKeyRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName)
@@ -870,6 +1036,24 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateClientEncryptionKeyRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/clientEncryptionKeys/", false);
+            uri.AppendPath(clientEncryptionKeyName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateClientEncryptionKeyRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string clientEncryptionKeyName, CosmosDBSqlClientEncryptionKeyCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -960,6 +1144,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateListSqlContainersRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSqlContainersRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName)
         {
             var message = _pipeline.CreateMessage();
@@ -1043,6 +1244,24 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlContainerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
@@ -1139,6 +1358,24 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlContainerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, CosmosDBSqlContainerCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -1229,6 +1466,24 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlContainerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlContainerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
@@ -1308,6 +1563,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSqlDatabasePartitionMergeRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MergeParameters mergeParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/partitionMerge", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSqlDatabasePartitionMergeRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, MergeParameters mergeParameters)
@@ -1393,6 +1665,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSqlContainerPartitionMergeRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/partitionMerge", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSqlContainerPartitionMergeRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, MergeParameters mergeParameters)
@@ -1484,6 +1775,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlContainerThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
@@ -1581,6 +1891,25 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateUpdateSqlContainerThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateSqlContainerThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ThroughputSettingsUpdateData data)
         {
             var message = _pipeline.CreateMessage();
@@ -1672,6 +2001,25 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateMigrateSqlContainerToAutoscaleRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToAutoscale", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMigrateSqlContainerToAutoscaleRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
@@ -1755,6 +2103,25 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateMigrateSqlContainerToManualThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default/migrateToManualThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateMigrateSqlContainerToManualThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
@@ -1836,6 +2203,23 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSqlDatabaseRetrieveThroughputDistributionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default/retrieveThroughputDistribution", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSqlDatabaseRetrieveThroughputDistributionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, RetrieveThroughputParameters retrieveThroughputParameters)
@@ -1923,6 +2307,23 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateSqlDatabaseRedistributeThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/throughputSettings/default/redistributeThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSqlDatabaseRedistributeThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, RedistributeThroughputParameters redistributeThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
@@ -2006,6 +2407,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateSqlContainerRetrieveThroughputDistributionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default/retrieveThroughputDistribution", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateSqlContainerRetrieveThroughputDistributionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RetrieveThroughputParameters retrieveThroughputParameters)
@@ -2099,6 +2519,25 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateSqlContainerRedistributeThroughputRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/throughputSettings/default/redistributeThroughput", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateSqlContainerRedistributeThroughputRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, RedistributeThroughputParameters redistributeThroughputParameters)
         {
             var message = _pipeline.CreateMessage();
@@ -2190,6 +2629,25 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateListSqlStoredProceduresRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/storedProcedures", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListSqlStoredProceduresRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
         {
             var message = _pipeline.CreateMessage();
@@ -2279,6 +2737,26 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlStoredProcedureRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/storedProcedures/", false);
+            uri.AppendPath(storedProcedureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
@@ -2381,6 +2859,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlStoredProcedureRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/storedProcedures/", false);
+            uri.AppendPath(storedProcedureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName, CosmosDBSqlStoredProcedureCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -2477,6 +2975,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlStoredProcedureRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/storedProcedures/", false);
+            uri.AppendPath(storedProcedureName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlStoredProcedureRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string storedProcedureName)
         {
             var message = _pipeline.CreateMessage();
@@ -2562,6 +3080,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSqlUserDefinedFunctionsRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/userDefinedFunctions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSqlUserDefinedFunctionsRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
@@ -2653,6 +3190,26 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlUserDefinedFunctionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/userDefinedFunctions/", false);
+            uri.AppendPath(userDefinedFunctionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
@@ -2755,6 +3312,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlUserDefinedFunctionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/userDefinedFunctions/", false);
+            uri.AppendPath(userDefinedFunctionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName, CosmosDBSqlUserDefinedFunctionCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -2851,6 +3428,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlUserDefinedFunctionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/userDefinedFunctions/", false);
+            uri.AppendPath(userDefinedFunctionName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlUserDefinedFunctionRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string userDefinedFunctionName)
         {
             var message = _pipeline.CreateMessage();
@@ -2936,6 +3533,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSqlTriggersRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/triggers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSqlTriggersRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName)
@@ -3027,6 +3643,26 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlTriggerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
@@ -3129,6 +3765,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlTriggerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName, CosmosDBSqlTriggerCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -3225,6 +3881,26 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlTriggerRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/triggers/", false);
+            uri.AppendPath(triggerName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlTriggerRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, string triggerName)
         {
             var message = _pipeline.CreateMessage();
@@ -3310,6 +3986,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlRoleDefinitionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
@@ -3400,6 +4092,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlRoleDefinitionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId, CosmosDBSqlRoleDefinitionCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -3484,6 +4192,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlRoleDefinitionRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions/", false);
+            uri.AppendPath(roleDefinitionId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlRoleDefinitionRequest(string subscriptionId, string resourceGroupName, string accountName, string roleDefinitionId)
         {
             var message = _pipeline.CreateMessage();
@@ -3560,6 +4284,21 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSqlRoleDefinitionsRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSqlRoleDefinitionsRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -3639,6 +4378,22 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetSqlRoleAssignmentRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
@@ -3729,6 +4484,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateCreateUpdateSqlRoleAssignmentRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateUpdateSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId, CosmosDBSqlRoleAssignmentCreateOrUpdateContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -3813,6 +4584,22 @@ namespace Azure.ResourceManager.CosmosDB
             }
         }
 
+        internal RequestUriBuilder CreateDeleteSqlRoleAssignmentRequestUri(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments/", false);
+            uri.AppendPath(roleAssignmentId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteSqlRoleAssignmentRequest(string subscriptionId, string resourceGroupName, string accountName, string roleAssignmentId)
         {
             var message = _pipeline.CreateMessage();
@@ -3889,6 +4676,21 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListSqlRoleAssignmentsRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlRoleAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListSqlRoleAssignmentsRequest(string subscriptionId, string resourceGroupName, string accountName)
@@ -3968,6 +4770,25 @@ namespace Azure.ResourceManager.CosmosDB
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateRetrieveContinuousBackupInformationRequestUri(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DocumentDB/databaseAccounts/", false);
+            uri.AppendPath(accountName, true);
+            uri.AppendPath("/sqlDatabases/", false);
+            uri.AppendPath(databaseName, true);
+            uri.AppendPath("/containers/", false);
+            uri.AppendPath(containerName, true);
+            uri.AppendPath("/retrieveContinuousBackupInformation", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateRetrieveContinuousBackupInformationRequest(string subscriptionId, string resourceGroupName, string accountName, string databaseName, string containerName, ContinuousBackupRestoreLocation location)

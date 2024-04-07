@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByServerRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/servers/", false);
+            uri.AppendPath(serverName, true);
+            uri.AppendPath("/configurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByServerRequest(string subscriptionId, string resourceGroupName, string clusterName, string serverName)
         {
             var message = _pipeline.CreateMessage();
@@ -122,6 +139,21 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        internal RequestUriBuilder CreateListByClusterRequestUri(string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/configurations", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByClusterRequest(string subscriptionId, string resourceGroupName, string clusterName)
         {
             var message = _pipeline.CreateMessage();
@@ -199,6 +231,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/configurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
@@ -289,6 +337,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        internal RequestUriBuilder CreateGetCoordinatorRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/coordinatorConfigurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetCoordinatorRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
         {
             var message = _pipeline.CreateMessage();
@@ -377,6 +441,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        internal RequestUriBuilder CreateUpdateOnCoordinatorRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, CosmosDBForPostgreSqlServerConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/coordinatorConfigurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateOnCoordinatorRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, CosmosDBForPostgreSqlServerConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -459,6 +539,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetNodeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/nodeConfigurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetNodeRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName)
@@ -549,6 +645,22 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        internal RequestUriBuilder CreateUpdateOnNodeRequestUri(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, CosmosDBForPostgreSqlServerConfigurationData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DBforPostgreSQL/serverGroupsv2/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/nodeConfigurations/", false);
+            uri.AppendPath(configurationName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateUpdateOnNodeRequest(string subscriptionId, string resourceGroupName, string clusterName, string configurationName, CosmosDBForPostgreSqlServerConfigurationData data)
         {
             var message = _pipeline.CreateMessage();
@@ -633,6 +745,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
             }
         }
 
+        internal RequestUriBuilder CreateListByServerNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string serverName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListByServerNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName, string serverName)
         {
             var message = _pipeline.CreateMessage();
@@ -711,6 +831,14 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByClusterNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByClusterNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string clusterName)

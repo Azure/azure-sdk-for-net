@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.CostManagement
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListByScopeRequestUri(string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListByScopeRequest(string scope)
         {
             var message = _pipeline.CreateMessage();
@@ -100,6 +111,16 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(string viewName)
@@ -170,6 +191,16 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string viewName, CostManagementViewData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(string viewName, CostManagementViewData data)
@@ -248,6 +279,16 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(string viewName)
         {
             var message = _pipeline.CreateMessage();
@@ -304,6 +345,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetByScopeRequestUri(string scope, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetByScopeRequest(string scope, string viewName)
@@ -380,6 +433,18 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateByScopeRequestUri(string scope, string viewName, CostManagementViewData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateByScopeRequest(string scope, string viewName, CostManagementViewData data)
@@ -464,6 +529,18 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
+        internal RequestUriBuilder CreateDeleteByScopeRequestUri(string scope, string viewName)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/", false);
+            uri.AppendPath(scope, false);
+            uri.AppendPath("/providers/Microsoft.CostManagement/views/", false);
+            uri.AppendPath(viewName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteByScopeRequest(string scope, string viewName)
         {
             var message = _pipeline.CreateMessage();
@@ -526,6 +603,14 @@ namespace Azure.ResourceManager.CostManagement
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByScopeNextPageRequestUri(string nextLink, string scope)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByScopeNextPageRequest(string nextLink, string scope)
