@@ -139,6 +139,14 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task EmptyConstructDoesNotThrow()
+        {
+            TestInfrastructure infra = new TestInfrastructure();
+            infra.Build(GetOutputPath());
+            await ValidateBicepAsync();
+        }
+
+        [RecordedTest]
         public async Task ExistingUserAssignedIdentityResource()
         {
             var infra = new TestInfrastructure();
