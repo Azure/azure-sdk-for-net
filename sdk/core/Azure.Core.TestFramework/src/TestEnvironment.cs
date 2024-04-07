@@ -206,7 +206,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    var clientSecret = ClientSecret;
+                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
                     if (string.IsNullOrWhiteSpace(clientSecret))
                     {
                         _credential = new DefaultAzureCredential(
@@ -303,12 +303,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping)
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping || string.IsNullOrEmpty(resourceGroup))
             {
                 return;
             }
-
-            string resourceGroup = GetVariable("RESOURCE_GROUP");
 
             string subscription = GetVariable("SUBSCRIPTION_ID");
 
@@ -541,7 +541,7 @@ namespace Azure.Core.TestFramework
             return _recording.GetVariable(name, null);
         }
 
-        internal static string GetSourcePath(Assembly assembly)
+        public static string GetSourcePath(Assembly assembly)
         {
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));

@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Properties of KeyVault. </summary>
+        [WirePath("keyVaultProperties")]
         public CognitiveServicesKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> Enumerates the possible value of keySource for Encryption. </summary>
+        [WirePath("keySource")]
         public ServiceAccountEncryptionKeySource? KeySource { get; set; }
     }
 }

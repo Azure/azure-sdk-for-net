@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -76,6 +75,7 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> A filesystem safe relative path of the artifact. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary>
         /// The Azure Resource Manager template.
@@ -107,6 +107,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("template")]
         public BinaryData Template { get; set; }
     }
 }

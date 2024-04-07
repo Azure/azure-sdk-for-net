@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyX509CertificateTokenKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Media.Models
             byte[] rawBody = default;
             string odataType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("rawBody"u8))
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ContentKeyPolicyX509CertificateTokenKey(odataType, serializedAdditionalRawData, rawBody);
         }
 
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyX509CertificateTokenKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyX509CertificateTokenKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ManagementPartner;
 
 namespace Azure.ResourceManager.ManagementPartner.Models
 {

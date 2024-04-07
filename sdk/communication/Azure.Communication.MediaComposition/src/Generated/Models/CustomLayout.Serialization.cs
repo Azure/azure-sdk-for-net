@@ -24,7 +24,7 @@ namespace Azure.Communication.MediaComposition
                 foreach (var item in Layers)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<LayoutLayer>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -33,7 +33,7 @@ namespace Azure.Communication.MediaComposition
             foreach (var item in InputGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<InputGroup>(item.Value);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("kind"u8);
@@ -41,7 +41,7 @@ namespace Azure.Communication.MediaComposition
             if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
             if (Optional.IsDefined(PlaceholderImageUri))
             {
@@ -130,6 +130,22 @@ namespace Azure.Communication.MediaComposition
                 scalingMode,
                 layers ?? new ChangeTrackingDictionary<string, LayoutLayer>(),
                 inputGroups);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomLayout FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomLayout(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomLayout>(this);
+            return content;
         }
     }
 }

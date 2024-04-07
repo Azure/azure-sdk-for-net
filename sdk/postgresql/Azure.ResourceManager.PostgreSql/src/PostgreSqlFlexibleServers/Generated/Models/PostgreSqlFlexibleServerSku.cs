@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -75,8 +74,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The name of the sku, typically, tier + family + cores, e.g. Standard_D4s_v3. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The tier of the particular SKU, e.g. Burstable. </summary>
+        [WirePath("tier")]
         public PostgreSqlFlexibleServerSkuTier Tier { get; set; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Workloads
             if (Optional.IsDefined(Grouping))
             {
                 writer.WritePropertyName("grouping"u8);
-                writer.WriteObjectValue(Grouping);
+                writer.WriteObjectValue<SapLandscapeMonitorPropertiesGrouping>(Grouping, options);
             }
             if (Optional.IsCollectionDefined(TopMetricsThresholds))
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads
                 writer.WriteStartArray();
                 foreach (var item in TopMetricsThresholds)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapLandscapeMonitorMetricThresholds>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapLandscapeMonitorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Workloads
             SapLandscapeMonitorPropertiesGrouping grouping = default;
             IList<SapLandscapeMonitorMetricThresholds> topMetricsThresholds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -190,10 +190,10 @@ namespace Azure.ResourceManager.Workloads
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new SapLandscapeMonitorData(
                 id,
                 name,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapLandscapeMonitorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapLandscapeMonitorData)} does not support reading '{options.Format}' format.");
             }
         }
 

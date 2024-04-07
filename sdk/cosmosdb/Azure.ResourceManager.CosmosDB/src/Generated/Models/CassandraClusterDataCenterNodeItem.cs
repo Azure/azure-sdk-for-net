@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -96,40 +95,58 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The node's IP address. </summary>
+        [WirePath("address")]
         public string Address { get; }
         /// <summary> The state of the node in Cassandra ring. </summary>
+        [WirePath("state")]
         public CassandraNodeState? State { get; }
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public string Status { get; }
         /// <summary> Cassandra service status on this node. </summary>
+        [WirePath("cassandraProcessStatus")]
         public string CassandraProcessStatus { get; }
         /// <summary> The amount of file system data in the data directory (e.g., 47.66 kB), excluding all content in the snapshots subdirectories. Because all SSTable data files are included, any data that is not cleaned up (such as TTL-expired cells or tombstones) is counted. </summary>
+        [WirePath("load")]
         public string Load { get; }
         /// <summary> List of tokens this node covers. </summary>
+        [WirePath("tokens")]
         public IReadOnlyList<string> Tokens { get; }
         /// <summary> Gets the size. </summary>
+        [WirePath("size")]
         public int? Size { get; }
         /// <summary> The network ID of the node. </summary>
+        [WirePath("hostID")]
         public Guid? HostId { get; }
         /// <summary> The rack this node is part of. </summary>
+        [WirePath("rack")]
         public string Rack { get; }
         /// <summary> The timestamp when these statistics were captured. </summary>
+        [WirePath("timestamp")]
         public string Timestamp { get; }
         /// <summary> The amount of disk used, in kB, of the directory /var/lib/cassandra. </summary>
+        [WirePath("diskUsedKB")]
         public long? DiskUsedKB { get; }
         /// <summary> The amount of disk free, in kB, of the directory /var/lib/cassandra. </summary>
+        [WirePath("diskFreeKB")]
         public long? DiskFreeKB { get; }
         /// <summary> Used memory (calculated as total - free - buffers - cache), in kB. </summary>
+        [WirePath("memoryUsedKB")]
         public long? MemoryUsedKB { get; }
         /// <summary> Memory used by kernel buffers (Buffers in /proc/meminfo) and page cache and slabs (Cached and SReclaimable in /proc/meminfo), in kB. </summary>
+        [WirePath("memoryBuffersAndCachedKB")]
         public long? MemoryBuffersAndCachedKB { get; }
         /// <summary> Unused memory (MemFree and SwapFree in /proc/meminfo), in kB. </summary>
+        [WirePath("memoryFreeKB")]
         public long? MemoryFreeKB { get; }
         /// <summary> Total installed memory (MemTotal and SwapTotal in /proc/meminfo), in kB. </summary>
+        [WirePath("memoryTotalKB")]
         public long? MemoryTotalKB { get; }
         /// <summary> A float representing the current system-wide CPU utilization as a percentage. </summary>
+        [WirePath("cpuUsage")]
         public double? CpuUsage { get; }
         /// <summary> If node has been updated to latest model. </summary>
+        [WirePath("isLatestModel")]
         public bool? IsLatestModel { get; }
     }
 }

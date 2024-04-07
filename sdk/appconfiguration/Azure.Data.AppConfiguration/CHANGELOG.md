@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2024-04-09)
 
 ### Features Added
 
+- Added `ConfigurationSettingPageableExtensions` class to support new `Pageable<ConfigurationSetting>.AsPages` and `AsyncPageable<ConfigurationSetting>.AsPages` extension methods. This replaces `SettingSelector.MatchConditions`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Removed property `MatchConditions` from `SettingSelector`.
 
 ## 1.4.0-beta.1 (2024-03-07)
 

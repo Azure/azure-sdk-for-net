@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Search.Models;
 
@@ -133,7 +131,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the Azure Cognitive Search service with the specified resource group. </param>
+        /// <param name="privateEndpointConnectionName"> The name of the private endpoint connection to the search service with the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
@@ -204,7 +202,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
@@ -236,7 +234,7 @@ namespace Azure.ResourceManager.Search
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the Azure Cognitive Search service within the specified resource group. </param>
+        /// <param name="sharedPrivateLinkResourceName"> The name of the shared private link resource managed by the search service within the specified resource group. </param>
         /// <param name="searchManagementRequestOptions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sharedPrivateLinkResourceName"/> is null. </exception>
@@ -502,7 +500,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets the primary and secondary admin API keys for the specified Azure Cognitive Search service.
+        /// Gets the primary and secondary admin API keys for the specified search service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -537,7 +535,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Gets the primary and secondary admin API keys for the specified Azure Cognitive Search service.
+        /// Gets the primary and secondary admin API keys for the specified search service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -724,7 +722,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Returns the list of query API keys for the given Azure Cognitive Search service.
+        /// Returns the list of query API keys for the given search service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
@@ -751,7 +749,7 @@ namespace Azure.ResourceManager.Search
         }
 
         /// <summary>
-        /// Returns the list of query API keys for the given Azure Cognitive Search service.
+        /// Returns the list of query API keys for the given search service.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>

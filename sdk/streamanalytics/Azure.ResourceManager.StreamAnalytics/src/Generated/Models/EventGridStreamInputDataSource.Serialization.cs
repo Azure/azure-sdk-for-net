@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +33,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             if (Optional.IsDefined(Subscriber))
             {
                 writer.WritePropertyName("subscriber"u8);
-                writer.WriteObjectValue(Subscriber);
+                writer.WriteObjectValue<EventHubV2StreamInputDataSource>(Subscriber, options);
             }
             if (Optional.IsDefined(Schema))
             {
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamAnalyticsStorageAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridStreamInputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             IList<StreamAnalyticsStorageAccount> storageAccounts = default;
             IList<string> eventTypes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("type"u8))
@@ -174,10 +173,10 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new EventGridStreamInputDataSource(
                 type,
                 serializedAdditionalRawData,
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +211,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeEventGridStreamInputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridStreamInputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,8 +11,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.Communication;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -139,7 +137,7 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Content-Type", "application/json");
             var model = new SendReadReceiptRequest(chatMessageId);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<SendReadReceiptRequest>(model);
             request.Content = content;
             return message;
         }
@@ -226,7 +224,7 @@ namespace Azure.Communication.Chat
             }
             var model = sendChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(model);
+            content0.JsonWriter.WriteObjectValue<SendChatMessageRequest>(model);
             request.Content = content0;
             return message;
         }
@@ -492,7 +490,7 @@ namespace Azure.Communication.Chat
             }
             var model = updateChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(model);
+            content0.JsonWriter.WriteObjectValue<UpdateChatMessageRequest>(model);
             request.Content = content0;
             return message;
         }
@@ -731,7 +729,7 @@ namespace Azure.Communication.Chat
                 MicrosoftTeamsUser = microsoftTeamsUser
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<CommunicationIdentifierModel>(model);
             request.Content = content;
             return message;
         }
@@ -806,7 +804,7 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Content-Type", "application/json");
             var model = new AddChatParticipantsRequest(participants.ToList());
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<AddChatParticipantsRequest>(model);
             request.Content = content;
             return message;
         }
@@ -893,7 +891,7 @@ namespace Azure.Communication.Chat
                 Topic = topic
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<UpdateChatThreadRequest>(model);
             request.Content = content;
             return message;
         }
@@ -1032,7 +1030,7 @@ namespace Azure.Communication.Chat
                 SenderDisplayName = senderDisplayName
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<SendTypingNotificationRequest>(model);
             request.Content = content;
             return message;
         }

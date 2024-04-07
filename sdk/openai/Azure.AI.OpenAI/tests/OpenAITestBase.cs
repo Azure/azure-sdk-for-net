@@ -298,6 +298,7 @@ namespace Azure.AI.OpenAI.Tests
             OpenAIClientOptions uninstrumentedClientOptions = azureServiceVersionOverride.HasValue
                 ? new OpenAIClientOptions(azureServiceVersionOverride.Value)
                 : new OpenAIClientOptions();
+            uninstrumentedClientOptions.Diagnostics.IsLoggingContentEnabled = true;
             return InstrumentClientOptions(uninstrumentedClientOptions);
         }
 
@@ -349,8 +350,8 @@ namespace Azure.AI.OpenAI.Tests
                 {
                     AzureResourceName = "openai-sdk-test-automation-account-eastus",
                     AzureResourceLocation = AzureLocation.EastUS,
-                    AzureDeploymentName = "gpt-35-turbo",
-                    AzureModelName = "gpt-35-turbo",
+                    AzureDeploymentName = "gpt-35-turbo-instruct",
+                    AzureModelName = "gpt-35-turbo-instruct",
                     NonAzureModelName = "gpt-3.5-turbo-instruct",
                 },
 
@@ -368,9 +369,9 @@ namespace Azure.AI.OpenAI.Tests
                 {
                     AzureResourceName = "openai-sdk-test-automation-account-eastus",
                     AzureResourceLocation = AzureLocation.EastUS,
-                    AzureDeploymentName = "text-embedding-ada-002",
-                    AzureModelName = "text-embedding-ada-002",
-                    NonAzureModelName = "text-embedding-ada-002",
+                    AzureDeploymentName = "text-embedding-3-small",
+                    AzureModelName = "text-embedding-3-small",
+                    NonAzureModelName = "text-embedding-3-small",
                     EnvironmentVariableName = "EMBEDDINGS_DEPLOYMENT_NAME",
                 },
 

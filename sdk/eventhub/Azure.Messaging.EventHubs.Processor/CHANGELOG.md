@@ -8,6 +8,10 @@
 
 ### Bugs Fixed
 
+- The `EventProcessorClient` will now create a unique span for each event emitted to the handler for processing.  Previously a single span was created for all events in a batch.  ([#31922](https://github.com/Azure/azure-sdk-for-net/issues/31922))
+
+- Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message. 
+
 ### Other Changes
 
 ## 5.11.1 (2024-03-05)

@@ -27,7 +27,7 @@ namespace Azure.Monitor.Query
         /// Creates an instance of <see cref="MetricsQueryClient"/> for Azure Public Cloud usage. Uses the default 'https://management.azure.com' endpoint.
         /// To access an Azure sovereign cloud, use the following constructor overload:
         /// <see cref="MetricsQueryClient.MetricsQueryClient(TokenCredential, MetricsQueryClientOptions)"/>
-        /// <code snippet="Snippet:CreateMetricsClient" language="csharp">
+        /// <code snippet="Snippet:CreateMetricsQueryClient" language="csharp">
         /// var client = new MetricsQueryClient(new DefaultAzureCredential());
         /// </code>
         /// </summary>
@@ -41,7 +41,12 @@ namespace Azure.Monitor.Query
         /// </summary>
         /// <param name="credential">The <see cref="TokenCredential"/> instance to use for authentication.</param>
         /// <param name="options">The <see cref="MetricsQueryClientOptions"/> instance to use as client configuration.</param>
-        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(string.IsNullOrEmpty(options.Audience?.ToString()) ? _defaultEndpoint : new Uri(options.Audience.ToString()), credential, options)
+        public MetricsQueryClient(TokenCredential credential, MetricsQueryClientOptions options) : this(
+                  string.IsNullOrEmpty(options?.Audience?.ToString())
+                    ? _defaultEndpoint
+                    : new Uri(options.Audience.ToString()),
+                  credential,
+                  options)
         {
         }
 

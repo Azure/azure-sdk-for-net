@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotFirmwareDefense;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -137,7 +136,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 if (PairedKey != null)
                 {
                     writer.WritePropertyName("pairedKey"u8);
-                    writer.WriteObjectValue(PairedKey);
+                    writer.WriteObjectValue<CryptoPairedKey>(PairedKey, options);
                 }
                 else
                 {
@@ -180,7 +179,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             var format = options.Format == "W" ? ((IPersistableModel<CryptoKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +207,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             CryptoPairedKey pairedKey = default;
             bool? isShortKeySize = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -337,10 +336,10 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new CryptoKeyResult(
                 id,
                 name,
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -382,7 +381,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                         return DeserializeCryptoKeyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CryptoKeyResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -4,11 +4,8 @@
 #nullable enable
 
 using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
+using System.IO;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +15,6 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
-        internal const string RehydartionTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
         private static readonly string[] SuccessStates = { "succeeded" };
@@ -26,14 +22,12 @@ namespace Azure.Core
         private readonly HeaderSource _headerSource;
         private readonly Uri _startRequestUri;
         private readonly OperationFinalStateVia _finalStateVia;
+        private readonly RequestMethod _requestMethod;
         private readonly HttpPipeline _pipeline;
         private readonly string? _apiVersion;
 
         private string? _lastKnownLocation;
         private string _nextRequestUri;
-
-        public string? OperationId { get; }
-        public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
             HttpPipeline pipeline,
@@ -44,7 +38,7 @@ namespace Azure.Core
             bool skipApiVersionOverride = false,
             string? apiVersionOverrideValue = null)
         {
-            string? apiVersionStr;
+            string? apiVersionStr = null;
             if (apiVersionOverrideValue is not null)
             {
                 apiVersionStr = apiVersionOverrideValue;
@@ -76,57 +70,6 @@ namespace Azure.Core
             return new OperationToOperationOfT<T>(operationSource, operation);
         }
 
-        public static IOperation<T> Create<T>(
-            IOperationSource<T> operationSource,
-            IOperation operation)
-            => new OperationToOperationOfT<T>(operationSource, operation);
-
-        public static IOperation Create(
-            HttpPipeline pipeline,
-            RehydrationToken? rehydrationToken,
-            string? apiVersionOverride = null)
-        {
-            AssertNotNull(rehydrationToken, nameof(rehydrationToken));
-
-            var lroDetails = ModelReaderWriter.Write(rehydrationToken!, ModelReaderWriterOptions.Json).ToObjectFromJson<Dictionary<string, string>>();
-            if (!Uri.TryCreate(lroDetails["initialUri"], UriKind.Absolute, out var startRequestUri))
-            {
-                throw new ArgumentException("Invalid initial URI from rehydration token");
-            }
-
-            if (!lroDetails.TryGetValue("nextRequestUri", out var nextRequestUri))
-            {
-                throw new ArgumentException("Invalid next request URI from rehydration token");
-            }
-
-            RequestMethod requestMethod = new RequestMethod(lroDetails["requestMethod"]);
-            string lastKnownLocation = lroDetails["lastKnownLocation"];
-
-            OperationFinalStateVia finalStateVia;
-            if (Enum.IsDefined(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]))
-            {
-                finalStateVia = (OperationFinalStateVia)Enum.Parse(typeof(OperationFinalStateVia), lroDetails["finalStateVia"]);
-            }
-            else
-            {
-                finalStateVia = OperationFinalStateVia.Location;
-            }
-
-            HeaderSource headerSource;
-            if (Enum.IsDefined(typeof(HeaderSource), lroDetails["headerSource"]))
-            {
-                headerSource = (HeaderSource)Enum.Parse(typeof(HeaderSource), lroDetails["headerSource"]);
-            }
-            else
-            {
-                headerSource = HeaderSource.None;
-            }
-
-            string? apiVersionStr = apiVersionOverride ?? (TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null);
-
-            return new NextLinkOperationImplementation(pipeline, requestMethod, startRequestUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia, apiVersionStr);
-        }
-
         private NextLinkOperationImplementation(
             HttpPipeline pipeline,
             RequestMethod requestMethod,
@@ -137,14 +80,7 @@ namespace Azure.Core
             OperationFinalStateVia finalStateVia,
             string? apiVersion)
         {
-            AssertNotNull(pipeline, nameof(pipeline));
-            AssertNotNull(requestMethod, nameof(requestMethod));
-            AssertNotNull(startRequestUri, nameof(startRequestUri));
-            AssertNotNull(nextRequestUri, nameof(nextRequestUri));
-            AssertNotNull(headerSource, nameof(headerSource));
-            AssertNotNull(finalStateVia, nameof(finalStateVia));
-
-            RequestMethod = requestMethod;
+            _requestMethod = requestMethod;
             _headerSource = headerSource;
             _startRequestUri = startRequestUri;
             _nextRequestUri = nextRequestUri;
@@ -152,60 +88,13 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            OperationId = ParseOperationId(nextRequestUri);
-        }
-
-        private static string? ParseOperationId(string nextRequestUri)
-        {
-            if (Uri.TryCreate(nextRequestUri, UriKind.Absolute, out var uri))
-            {
-                return uri.Segments.LastOrDefault();
-            }
-            return null;
-        }
-
-        public RehydrationToken GetRehydrationToken()
-            => GetRehydrationToken(RequestMethod, _startRequestUri, _nextRequestUri, _headerSource.ToString(), _lastKnownLocation, _finalStateVia.ToString(), OperationId);
-
-        public static RehydrationToken GetRehydrationToken(
-            RequestMethod requestMethod,
-            Uri startRequestUri,
-            Response response,
-            OperationFinalStateVia finalStateVia,
-            bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
-        {
-            string? apiVersionStr;
-            if (apiVersionOverrideValue is not null)
-            {
-                apiVersionStr = apiVersionOverrideValue;
-            }
-            else
-            {
-                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
-            }
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
-            response.Headers.TryGetValue("Location", out var lastKnownLocation);
-            var operationId = ParseOperationId(nextRequestUri);
-            return GetRehydrationToken(requestMethod, startRequestUri, nextRequestUri, headerSource.ToString(), lastKnownLocation, finalStateVia.ToString(), operationId);
-        }
-
-        public static RehydrationToken GetRehydrationToken(
-            RequestMethod requestMethod,
-            Uri startRequestUri,
-            string nextRequestUri,
-            string headerSource,
-            string? lastKnownLocation,
-            string finalStateVia,
-            string? operationId = null)
-        {
-            var data = new BinaryData(new { version = RehydartionTokenVersion, id = operationId, requestMethod = requestMethod.ToString(), initialUri = startRequestUri.AbsoluteUri, nextRequestUri, headerSource, lastKnownLocation, finalStateVia });
-            return ModelReaderWriter.Read<RehydrationToken>(data);
         }
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response response = await GetResponseAsync(async, _nextRequestUri, cancellationToken).ConfigureAwait(false);
+            Response response = async
+                ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
+                : GetResponse(_nextRequestUri, cancellationToken);
 
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
@@ -216,11 +105,18 @@ namespace Azure.Core
             if (hasCompleted)
             {
                 string? finalUri = GetFinalUri(resourceLocation);
-                var finalResponse = finalUri != null
-                    ? await GetResponseAsync(async, finalUri, cancellationToken).ConfigureAwait(false)
-                    : response;
-
-                return GetOperationStateFromFinalResponse(RequestMethod, finalResponse);
+                Response finalResponse;
+                if (finalUri != null)
+                {
+                    finalResponse = async
+                        ? await GetResponseAsync(finalUri, cancellationToken).ConfigureAwait(false)
+                        : GetResponse(finalUri, cancellationToken);
+                }
+                else
+                {
+                    finalResponse = response;
+                }
+                return GetOperationStateFromFinalResponse(_requestMethod, finalResponse);
             }
 
             UpdateNextRequestUri(response.Headers);
@@ -339,7 +235,7 @@ namespace Azure.Core
             }
 
             // Set final uri as null if initial request is a delete method.
-            if (RequestMethod == RequestMethod.Delete)
+            if (_requestMethod == RequestMethod.Delete)
             {
                 return null;
             }
@@ -349,7 +245,7 @@ namespace Azure.Core
             {
                 case OperationFinalStateVia.LocationOverride when !string.IsNullOrEmpty(_lastKnownLocation):
                     return _lastKnownLocation;
-                case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when RequestMethod == RequestMethod.Post:
+                case OperationFinalStateVia.OperationLocation or OperationFinalStateVia.AzureAsyncOperation when _requestMethod == RequestMethod.Post:
                     return null;
                 case OperationFinalStateVia.OriginalUri:
                     return _startRequestUri.AbsoluteUri;
@@ -362,7 +258,7 @@ namespace Azure.Core
             }
 
             // If initial request is PUT or PATCH, return initial request Uri
-            if (RequestMethod == RequestMethod.Put || RequestMethod == RequestMethod.Patch)
+            if (_requestMethod == RequestMethod.Put || _requestMethod == RequestMethod.Patch)
             {
                 return _startRequestUri.AbsoluteUri;
             }
@@ -376,79 +272,18 @@ namespace Azure.Core
             return null;
         }
 
-        private async ValueTask<Response> GetResponseAsync(bool async, string uri, CancellationToken cancellationToken)
+        private Response GetResponse(string uri, CancellationToken cancellationToken)
         {
             using HttpMessage message = CreateRequest(uri);
-            if (async)
-            {
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                _pipeline.Send(message, cancellationToken);
-            }
-
-            // If we get 404 from final get for a delete LRO, just return empty response with 204
-            if (message.Response.Status == 404 && RequestMethod == RequestMethod.Delete)
-            {
-                return new EmptyResponse(HttpStatusCode.NoContent);
-            }
+            _pipeline.Send(message, cancellationToken);
             return message.Response;
         }
 
-        /// <summary>
-        /// This is only used for final get of the delete LRO, we just want to return an empty response with 204 to the user for this case.
-        /// </summary>
-        private sealed class EmptyResponse : Response
+        private async ValueTask<Response> GetResponseAsync(string uri, CancellationToken cancellationToken)
         {
-            public EmptyResponse(HttpStatusCode status)
-            {
-                Status = (int)status;
-                ReasonPhrase = status.ToString();
-            }
-
-            public override int Status { get; }
-
-            public override string ReasonPhrase { get; }
-
-            public override Stream? ContentStream { get => null; set => throw new System.NotImplementedException(); }
-            public override string ClientRequestId { get => string.Empty; set => throw new System.NotImplementedException(); }
-
-            public override void Dispose()
-            {
-            }
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool ContainsHeader(string name) => false;
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override IEnumerable<HttpHeader> EnumerateHeaders() => Array.Empty<HttpHeader>();
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool TryGetHeader(string name, out string value)
-            {
-                value = string.Empty;
-                return false;
-            }
-
-            /// <inheritdoc />
-#if HAS_INTERNALS_VISIBLE_CORE
-            internal
-#endif
-            protected override bool TryGetHeaderValues(string name, out IEnumerable<string> values)
-            {
-                values = Array.Empty<string>();
-                return false;
-            }
+            using HttpMessage message = CreateRequest(uri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            return message.Response;
         }
 
         private HttpMessage CreateRequest(string uri)
@@ -481,7 +316,7 @@ namespace Azure.Core
 
             if (response.Status is >= 200 and <= 204)
             {
-                if (response.ContentStream is { Length: > 0 })
+                if (response.ContentStream is {Length: > 0})
                 {
                     try
                     {
@@ -571,14 +406,6 @@ namespace Azure.Core
 
             nextRequestUri = requestUri.AbsoluteUri;
             return HeaderSource.None;
-        }
-
-        private static void AssertNotNull<T>(T value, string name)
-        {
-            if (value is null)
-            {
-                throw new ArgumentNullException(name);
-            }
         }
 
         private enum HeaderSource

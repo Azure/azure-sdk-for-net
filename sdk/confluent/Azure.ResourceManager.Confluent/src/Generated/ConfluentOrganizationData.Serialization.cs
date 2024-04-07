@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Confluent
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail);
+            writer.WriteObjectValue<ConfluentOfferDetail>(OfferDetail, options);
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail);
+            writer.WriteObjectValue<ConfluentUserDetail>(UserDetail, options);
             if (Optional.IsDefined(LinkOrganization))
             {
                 writer.WritePropertyName("linkOrganization"u8);
-                writer.WriteObjectValue(LinkOrganization);
+                writer.WriteObjectValue<LinkOrganization>(LinkOrganization, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Confluent
             var format = options.Format == "W" ? ((IPersistableModel<ConfluentOrganizationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Confluent
             ConfluentUserDetail userDetail = default;
             LinkOrganization linkOrganization = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.Confluent
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ConfluentOrganizationData(
                 id,
                 name,
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Confluent
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Confluent
                         return DeserializeConfluentOrganizationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentOrganizationData)} does not support reading '{options.Format}' format.");
             }
         }
 

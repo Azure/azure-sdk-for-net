@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Optional. Filters the results to replicate only blobs whose names begin with the specified prefix. </summary>
+        [WirePath("prefixMatch")]
         public IList<string> PrefixMatch { get; }
         /// <summary> Blobs created after the time will be replicated to the destination. It must be in datetime format 'yyyy-MM-ddTHH:mm:ssZ'. Example: 2020-02-19T16:05:00Z. </summary>
+        [WirePath("minCreationTime")]
         public string MinCreationTime { get; set; }
     }
 }

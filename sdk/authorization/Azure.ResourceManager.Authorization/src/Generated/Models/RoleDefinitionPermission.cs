@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Authorization;
 
 namespace Azure.ResourceManager.Authorization.Models
 {
@@ -71,12 +70,16 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Allowed actions. </summary>
+        [WirePath("actions")]
         public IList<string> Actions { get; }
         /// <summary> Denied actions. </summary>
+        [WirePath("notActions")]
         public IList<string> NotActions { get; }
         /// <summary> Allowed Data actions. </summary>
+        [WirePath("dataActions")]
         public IList<string> DataActions { get; }
         /// <summary> Denied Data actions. </summary>
+        [WirePath("notDataActions")]
         public IList<string> NotDataActions { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Redis;
 
 namespace Azure.ResourceManager.Redis.Models
 {
@@ -82,14 +81,19 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> File format. </summary>
+        [WirePath("format")]
         public string Format { get; set; }
         /// <summary> Prefix to use for exported files. </summary>
+        [WirePath("prefix")]
         public string Prefix { get; }
         /// <summary> Container name to export to. </summary>
+        [WirePath("container")]
         public string Container { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        [WirePath("preferred-data-archive-auth-method")]
         public string PreferredDataArchiveAuthMethod { get; set; }
         /// <summary> Subscription id of the storage container for data to be exported using ManagedIdentity. </summary>
+        [WirePath("storage-subscription-id")]
         public string StorageSubscriptionId { get; set; }
     }
 }

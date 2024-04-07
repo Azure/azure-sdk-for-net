@@ -30,14 +30,22 @@ namespace Azure.IoT.TimeSeriesInsights
             if (Optional.IsDefined(Instances))
             {
                 writer.WritePropertyName("instances"u8);
-                writer.WriteObjectValue(Instances);
+                writer.WriteObjectValue<SearchInstancesParameters>(Instances);
             }
             if (Optional.IsDefined(Hierarchies))
             {
                 writer.WritePropertyName("hierarchies"u8);
-                writer.WriteObjectValue(Hierarchies);
+                writer.WriteObjectValue<SearchInstancesHierarchiesParameters>(Hierarchies);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchInstancesRequest>(this);
+            return content;
         }
     }
 }

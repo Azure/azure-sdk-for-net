@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -68,12 +67,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The type of restrictions. </summary>
+        [WirePath("type")]
         public CognitiveServicesSkuRestrictionsType? RestrictionsType { get; }
         /// <summary> The value of restrictions. If the restriction type is set to location. This would be different locations where the SKU is restricted. </summary>
+        [WirePath("values")]
         public IReadOnlyList<string> Values { get; }
         /// <summary> The information about the restriction where the SKU cannot be used. </summary>
+        [WirePath("restrictionInfo")]
         public CognitiveServicesSkuRestrictionInfo RestrictionInfo { get; }
         /// <summary> The reason for restriction. </summary>
+        [WirePath("reasonCode")]
         public CognitiveServicesSkuRestrictionReasonCode? ReasonCode { get; }
     }
 }

@@ -10,7 +10,7 @@
    "$id": "2",
    "Kind": "Enum",
    "Name": "CommunicationMessageKind",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "3",
@@ -41,7 +41,7 @@
    "$id": "6",
    "Kind": "Enum",
    "Name": "MessageTemplateStatus",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "7",
@@ -78,7 +78,7 @@
    "$id": "11",
    "Kind": "Enum",
    "Name": "CommunicationMessagesChannel",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "12",
@@ -97,7 +97,7 @@
    "$id": "13",
    "Kind": "Enum",
    "Name": "MessageTemplateValueKind",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "14",
@@ -140,13 +140,13 @@
    "Description": "The type of the template parameter.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "None"
+   "Usage": "Input"
   },
   {
    "$id": "20",
    "Kind": "Enum",
    "Name": "MessageTemplateBindingsKind",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "21",
@@ -159,13 +159,13 @@
    "Description": "The type of the message template.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "None"
+   "Usage": "Input"
   },
   {
    "$id": "22",
    "Kind": "Enum",
    "Name": "WhatsAppMessageButtonSubType",
-   "EnumValueType": "String",
+   "EnumValueType": "string",
    "AllowedValues": [
     {
      "$id": "23",
@@ -184,7 +184,7 @@
    "Description": "The WhatsApp button sub type.",
    "IsExtensible": true,
    "IsNullable": false,
-   "Usage": "None"
+   "Usage": "Input"
   },
   {
    "$id": "25",
@@ -201,7 +201,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets or sets the provider name. </summary>
+        [WirePath("providerName")]
         public string ProviderName { get; set; }
         /// <summary> Settings for the data provider. </summary>
+        [WirePath("propertyBag")]
         public IReadOnlyList<DataProviderKeyValuePair> PropertyBag { get; }
     }
 }
