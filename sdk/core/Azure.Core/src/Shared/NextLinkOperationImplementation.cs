@@ -18,6 +18,7 @@ namespace Azure.Core
 {
     internal class NextLinkOperationImplementation : IOperation
     {
+        internal const string NotSet = "NOT_SET";
         internal const string RehydrationTokenVersion = "1.0.0";
         private const string ApiVersionParam = "api-version";
         private static readonly string[] FailureStates = { "failed", "canceled" };
@@ -35,7 +36,7 @@ namespace Azure.Core
         // We can only get OperationId when
         // - The operation is still in progress and nextRequestUri contains it
         // - During rehydration, rehydrationToken.Id is the operation id
-        public string? OperationId { get; private set; }
+        public string OperationId { get; private set; } = NotSet;
         public RequestMethod RequestMethod { get; }
 
         public static IOperation Create(
@@ -171,7 +172,10 @@ namespace Azure.Core
             _finalStateVia = finalStateVia;
             _pipeline = pipeline;
             _apiVersion = apiVersion;
-            OperationId = operationId;
+            if (operationId is not null)
+            {
+                OperationId = operationId;
+            }
         }
 
         private string ParseOperationId(Uri startRequestUri, string nextRequestUri)

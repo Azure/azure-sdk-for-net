@@ -216,7 +216,7 @@ namespace Azure.Core.Tests
         public async Task GetRehydrationTokenAsync()
         {
             var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out _);
-            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(NextLinkOperationImplementation.NotSet, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync(pipeline, rehydrationToken);
             var token = operation.GetRehydrationToken();
             Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());
@@ -226,7 +226,7 @@ namespace Azure.Core.Tests
         public async Task GetRehydrationTokenOfTAsync()
         {
             var pipeline = CreateMockHttpPipeline(HttpStatusCode.OK, out _);
-            var rehydrationToken = new RehydrationToken(null, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
+            var rehydrationToken = new RehydrationToken(NextLinkOperationImplementation.NotSet, null, "None", "test", "https://test/", RequestMethod.Delete, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = await Operation.RehydrateAsync<MockJsonModel>(pipeline, rehydrationToken);
             var token = operation.GetRehydrationToken();
             Assert.AreEqual(ModelReaderWriter.Write(rehydrationToken).ToString(), ModelReaderWriter.Write(token).ToString());

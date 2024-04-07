@@ -41,7 +41,7 @@ namespace Azure.Core.Tests
             var rehydrationToken = new RehydrationToken(null, null, "None", $"/resource/{resourceId}?api-version=xxx", "https://test", requestMethod, lastKnowLocation, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             Assert.NotNull(operation);
-            Assert.Null(operation.OperationId);
+            Assert.AreEqual(NextLinkOperationImplementation.NotSet, operation.OperationId);
             Assert.AreEqual(requestMethod, operation.RequestMethod);
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Core.Tests
             var rehydrationToken = new RehydrationToken(null, null, "None", $"https://test.com/operations/{operationId}?api-version=2019-12-01", "https://test", requestMethod, null, OperationFinalStateVia.AzureAsyncOperation.ToString());
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(HttpPipelineBuilder.Build(new MockClientOptions()), rehydrationToken);
             Assert.NotNull(operation);
-            Assert.Null(operation.OperationId);
+            Assert.AreEqual(NextLinkOperationImplementation.NotSet, operation.OperationId);
             Assert.AreEqual(requestMethod, operation.RequestMethod);
         }
 
