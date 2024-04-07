@@ -265,7 +265,9 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = await _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateAsync(Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -307,7 +309,9 @@ namespace Azure.ResourceManager.Support
             try
             {
                 var response = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.Create(Id.Name, cancellationToken);
-                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()));
+                var uri = _tenantFileWorkspaceFileWorkspacesNoSubscriptionRestClient.CreateCreateRequestUri(Id.Name);
+                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                var operation = new SupportArmOperation<TenantFileWorkspaceResource>(Response.FromValue(new TenantFileWorkspaceResource(Client, response), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

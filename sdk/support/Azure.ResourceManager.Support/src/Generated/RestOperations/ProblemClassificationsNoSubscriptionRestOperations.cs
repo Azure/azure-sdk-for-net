@@ -37,6 +37,17 @@ namespace Azure.ResourceManager.Support
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateClassifyProblemsRequestUri(string problemServiceName, ServiceProblemClassificationContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Support/services/", false);
+            uri.AppendPath(problemServiceName, true);
+            uri.AppendPath("/classifyProblems", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateClassifyProblemsRequest(string problemServiceName, ServiceProblemClassificationContent content)
         {
             var message = _pipeline.CreateMessage();
