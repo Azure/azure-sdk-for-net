@@ -37,6 +37,19 @@ namespace Azure.ResourceManager.Marketplace
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateListRequestUri(Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateListRequest(Guid privateStoreId, Guid collectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -98,6 +111,19 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByContextsRequestUri(Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/mapOffersToContexts", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateListByContextsRequest(Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload)
@@ -170,6 +196,20 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateGetRequestUri(Guid privateStoreId, Guid collectionId, string offerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateGetRequest(Guid privateStoreId, Guid collectionId, string offerId)
@@ -248,6 +288,20 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(Guid privateStoreId, Guid collectionId, string offerId, PrivateStoreOfferData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCreateOrUpdateRequest(Guid privateStoreId, Guid collectionId, string offerId, PrivateStoreOfferData data)
@@ -332,6 +386,20 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        internal RequestUriBuilder CreateDeleteRequestUri(Guid privateStoreId, Guid collectionId, string offerId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateDeleteRequest(Guid privateStoreId, Guid collectionId, string offerId)
         {
             var message = _pipeline.CreateMessage();
@@ -396,6 +464,20 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreatePostRequestUri(Guid privateStoreId, Guid collectionId, string offerId, PrivateStoreOperation? payload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreatePostRequest(Guid privateStoreId, Guid collectionId, string offerId, PrivateStoreOperation? payload)
@@ -469,6 +551,21 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateUpsertOfferWithMultiContextRequestUri(Guid privateStoreId, Guid collectionId, string offerId, MultiContextAndPlansContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Marketplace/privateStores/", false);
+            uri.AppendPath(privateStoreId, true);
+            uri.AppendPath("/collections/", false);
+            uri.AppendPath(collectionId, true);
+            uri.AppendPath("/offers/", false);
+            uri.AppendPath(offerId, true);
+            uri.AppendPath("/upsertOfferWithMultiContext", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateUpsertOfferWithMultiContextRequest(Guid privateStoreId, Guid collectionId, string offerId, MultiContextAndPlansContent content)
@@ -555,6 +652,14 @@ namespace Azure.ResourceManager.Marketplace
             }
         }
 
+        internal RequestUriBuilder CreateListNextPageRequestUri(string nextLink, Guid privateStoreId, Guid collectionId)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
+        }
+
         internal HttpMessage CreateListNextPageRequest(string nextLink, Guid privateStoreId, Guid collectionId)
         {
             var message = _pipeline.CreateMessage();
@@ -619,6 +724,14 @@ namespace Azure.ResourceManager.Marketplace
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateListByContextsNextPageRequestUri(string nextLink, Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRawNextLink(nextLink, false);
+            return uri;
         }
 
         internal HttpMessage CreateListByContextsNextPageRequest(string nextLink, Guid privateStoreId, Guid collectionId, CollectionOffersByAllContextsPayload payload)
