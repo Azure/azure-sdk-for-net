@@ -37,6 +37,15 @@ namespace Azure.ResourceManager.ResourceGraph
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateResourcesRequestUri(ResourceQueryContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceGraph/resources", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateResourcesRequest(ResourceQueryContent content)
         {
             var message = _pipeline.CreateMessage();
@@ -102,6 +111,15 @@ namespace Azure.ResourceManager.ResourceGraph
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateResourcesHistoryRequestUri(ResourcesHistoryContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.ResourceGraph/resourcesHistory", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateResourcesHistoryRequest(ResourcesHistoryContent content)

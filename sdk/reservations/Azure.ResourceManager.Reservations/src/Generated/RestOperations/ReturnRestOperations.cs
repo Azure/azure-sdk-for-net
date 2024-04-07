@@ -36,6 +36,17 @@ namespace Azure.ResourceManager.Reservations
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreatePostRequestUri(Guid reservationOrderId, ReservationRefundContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Capacity/reservationOrders/", false);
+            uri.AppendPath(reservationOrderId, true);
+            uri.AppendPath("/return", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreatePostRequest(Guid reservationOrderId, ReservationRefundContent content)
         {
             var message = _pipeline.CreateMessage();
