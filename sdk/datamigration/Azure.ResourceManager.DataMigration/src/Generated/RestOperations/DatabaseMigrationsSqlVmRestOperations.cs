@@ -37,6 +37,30 @@ namespace Azure.ResourceManager.DataMigration
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId, string expand)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
+            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
+            uri.AppendPath(targetDBName, true);
+            if (migrationOperationId != null)
+            {
+                uri.AppendQuery("migrationOperationId", migrationOperationId.Value, true);
+            }
+            if (expand != null)
+            {
+                uri.AppendQuery("$expand", expand, true);
+            }
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, Guid? migrationOperationId, string expand)
         {
             var message = _pipeline.CreateMessage();
@@ -137,6 +161,22 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, DatabaseMigrationSqlVmData data)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
+            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
+            uri.AppendPath(targetDBName, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, DatabaseMigrationSqlVmData data)
         {
             var message = _pipeline.CreateMessage();
@@ -221,6 +261,23 @@ namespace Azure.ResourceManager.DataMigration
             }
         }
 
+        internal RequestUriBuilder CreateCancelRequestUri(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, MigrationOperationInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
+            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
+            uri.AppendPath(targetDBName, true);
+            uri.AppendPath("/cancel", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateCancelRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, MigrationOperationInput input)
         {
             var message = _pipeline.CreateMessage();
@@ -303,6 +360,23 @@ namespace Azure.ResourceManager.DataMigration
                 default:
                     throw new RequestFailedException(message.Response);
             }
+        }
+
+        internal RequestUriBuilder CreateCutoverRequestUri(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, MigrationOperationInput input)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.SqlVirtualMachine/sqlVirtualMachines/", false);
+            uri.AppendPath(sqlVirtualMachineName, true);
+            uri.AppendPath("/providers/Microsoft.DataMigration/databaseMigrations/", false);
+            uri.AppendPath(targetDBName, true);
+            uri.AppendPath("/cutover", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
         }
 
         internal HttpMessage CreateCutoverRequest(string subscriptionId, string resourceGroupName, string sqlVirtualMachineName, string targetDBName, MigrationOperationInput input)

@@ -37,6 +37,23 @@ namespace Azure.ResourceManager.DevTestLabs
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
+        internal RequestUriBuilder CreateEvaluatePoliciesRequestUri(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content)
+        {
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.DevTestLab/labs/", false);
+            uri.AppendPath(labName, true);
+            uri.AppendPath("/policysets/", false);
+            uri.AppendPath(name, true);
+            uri.AppendPath("/evaluatePolicies", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            return uri;
+        }
+
         internal HttpMessage CreateEvaluatePoliciesRequest(string subscriptionId, string resourceGroupName, string labName, string name, DevTestLabEvaluatePoliciesContent content)
         {
             var message = _pipeline.CreateMessage();
