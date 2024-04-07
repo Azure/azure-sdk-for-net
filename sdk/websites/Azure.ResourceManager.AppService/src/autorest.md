@@ -841,7 +841,7 @@ directive:
   - from: CommonDefinitions.json
     where: $.definitions
     transform: >
-        $["StringDictionaryType2"] = {
+        $["FunctionKeysDictionary"] = {
           "description": "String dictionary resource.",
           "type": "object",
           "additionalProperties": {
@@ -856,7 +856,7 @@ directive:
           "200": {
             "description": "Function keys returned.",
             "schema": {
-              "$ref": "./CommonDefinitions.json#/definitions/StringDictionaryType2"
+              "$ref": "./CommonDefinitions.json#/definitions/FunctionKeysDictionary"
             }
           },
           "default": {
@@ -874,7 +874,7 @@ directive:
           "200": {
             "description": "Function Slot keys returned.",
             "schema": {
-              "$ref": "./CommonDefinitions.json#/definitions/StringDictionaryType2"
+              "$ref": "./CommonDefinitions.json#/definitions/FunctionKeysDictionary"
             }
           },
           "default": {
