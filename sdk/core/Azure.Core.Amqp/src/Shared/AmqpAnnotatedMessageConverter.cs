@@ -522,8 +522,12 @@ namespace Azure.Core.Amqp.Shared
                     amqpPropertyValue = new DescribedType((AmqpSymbol)AmqpMessageConstants.TimeSpan, ((TimeSpan)propertyValue).Ticks);
                     break;
 
-                case AmqpType.Unknown when allowBodyTypes && propertyValue is byte[] byteArray:
+                case AmqpType.Unknown when propertyValue is byte[] byteArray:
                     amqpPropertyValue = new ArraySegment<byte>(byteArray);
+                    break;
+
+                case AmqpType.Unknown when propertyValue is ArraySegment<byte> byteSegment:
+                    amqpPropertyValue = byteSegment;
                     break;
 
                 case AmqpType.Unknown when allowBodyTypes && propertyValue is IDictionary dict:
@@ -811,8 +815,7 @@ namespace Azure.Core.Amqp.Shared
         ///
         /// <returns>The typed value of the symbol, if it belongs to the well-known set; otherwise, <c>null</c>.</returns>
         ///
-        private static object? TranslateSymbol(AmqpSymbol symbol,
-                                              object value)
+        private static object? TranslateSymbol(AmqpSymbol symbol, object value)
         {
             if (symbol.Equals(AmqpMessageConstants.Uri))
             {

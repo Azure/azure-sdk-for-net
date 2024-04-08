@@ -286,6 +286,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         typeof(TTelemetry),
                         (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
 
+                if (fieldName == "Duration")
+                {
+                    propertyType = typeof(TimeSpan);
+                }
+
                 if (propertyType == null)
                 {
                     string propertyNotFoundMessage = string.Format(
@@ -555,6 +560,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (fieldType == typeof(TimeSpan))
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandTimeSpan.HasValue);
+                        if (fieldExpression.Type == typeof(string))
+                        {
+                            MethodInfo parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                            fieldExpression = Expression.Call(parseMethod, fieldExpression);
+                        }
 
                         switch (this.predicate)
                         {

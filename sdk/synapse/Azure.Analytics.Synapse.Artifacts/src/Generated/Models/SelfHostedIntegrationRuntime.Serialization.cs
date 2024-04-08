@@ -92,12 +92,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SelfHostedIntegrationRuntime(type, description, additionalProperties, linkedInfo);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SelfHostedIntegrationRuntime FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSelfHostedIntegrationRuntime(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SelfHostedIntegrationRuntime>(this);
+            return content;
+        }
+
         internal partial class SelfHostedIntegrationRuntimeConverter : JsonConverter<SelfHostedIntegrationRuntime>
         {
             public override void Write(Utf8JsonWriter writer, SelfHostedIntegrationRuntime model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SelfHostedIntegrationRuntime>(model);
             }
+
             public override SelfHostedIntegrationRuntime Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

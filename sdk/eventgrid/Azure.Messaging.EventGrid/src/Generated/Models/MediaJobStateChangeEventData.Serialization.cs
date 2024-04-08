@@ -62,12 +62,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaJobStateChangeEventData(previousState, state, correlationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaJobStateChangeEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobStateChangeEventData(document.RootElement);
+        }
+
         internal partial class MediaJobStateChangeEventDataConverter : JsonConverter<MediaJobStateChangeEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobStateChangeEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override MediaJobStateChangeEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

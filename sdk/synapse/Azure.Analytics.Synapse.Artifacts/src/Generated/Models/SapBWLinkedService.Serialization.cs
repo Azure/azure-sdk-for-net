@@ -236,12 +236,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SapBWLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSapBWLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SapBWLinkedService>(this);
+            return content;
+        }
+
         internal partial class SapBWLinkedServiceConverter : JsonConverter<SapBWLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SapBWLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<SapBWLinkedService>(model);
             }
+
             public override SapBWLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
