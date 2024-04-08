@@ -167,7 +167,7 @@ namespace Azure.Messaging.ServiceBus
         /// Creates a new <see cref="Administration.QueueProperties" /> instance for mocking.
         /// </summary>
         /// <param name="name">The name to assign as the value of <see cref="QueueProperties.Name"/>.</param>
-        /// <param name="lockDuration">Duration to assign as the value of <see cref="QueueProperties.LockDuration"/>.</param>
+        /// <param name="lockDuration">The duration to assign as the value of <see cref="QueueProperties.LockDuration"/>.</param>
         /// <param name="maxSizeInMegabytes">The size to assign as the value of <see cref="QueueProperties.MaxSizeInMegabytes"/>.</param>
         /// <param name="requiresDuplicateDetection">The boolean flag to assign as the value of <see cref="QueueProperties.RequiresDuplicateDetection"/>.</param>
         /// <param name="requiresSession">The boolean flag to assign as the value of <see cref="QueueProperties.RequiresSession"/>.</param>
