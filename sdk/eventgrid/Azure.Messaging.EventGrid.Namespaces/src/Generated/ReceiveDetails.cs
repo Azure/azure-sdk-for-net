@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary> Details of the Receive operation response. </summary>
-    internal partial class ReceiveResultInternal
+    /// <summary> Receive operation details per Cloud Event. </summary>
+    public partial class ReceiveDetails
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,36 @@ namespace Azure.Messaging.EventGrid.Namespaces
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResultInternal"/>. </summary>
-        /// <param name="value"> Array of receive responses, one per cloud event. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ReceiveResultInternal(IEnumerable<ReceiveDetailsInternal> value)
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/>. </summary>
+        /// <param name="brokerProperties"> The Event Broker details. </param>
+        /// <param name="event"> Cloud Event details. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="brokerProperties"/> or <paramref name="event"/> is null. </exception>
+        internal ReceiveDetails(BrokerProperties brokerProperties, Messaging.CloudEvent @event)
         {
-            Argument.AssertNotNull(value, nameof(value));
+            Argument.AssertNotNull(brokerProperties, nameof(brokerProperties));
+            Argument.AssertNotNull(@event, nameof(@event));
 
-            Value = value.ToList();
+            BrokerProperties = brokerProperties;
+            Event = @event;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResultInternal"/>. </summary>
-        /// <param name="value"> Array of receive responses, one per cloud event. </param>
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/>. </summary>
+        /// <param name="brokerProperties"> The Event Broker details. </param>
+        /// <param name="event"> Cloud Event details. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ReceiveResultInternal(IReadOnlyList<ReceiveDetailsInternal> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ReceiveDetails(BrokerProperties brokerProperties, Messaging.CloudEvent @event, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Value = value;
+            BrokerProperties = brokerProperties;
+            Event = @event;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ReceiveResultInternal"/> for deserialization. </summary>
-        internal ReceiveResultInternal()
+        /// <summary> Initializes a new instance of <see cref="ReceiveDetails"/> for deserialization. </summary>
+        internal ReceiveDetails()
         {
         }
 
-        /// <summary> Array of receive responses, one per cloud event. </summary>
-        public IReadOnlyList<ReceiveDetailsInternal> Value { get; }
+        /// <summary> The Event Broker details. </summary>
+        public BrokerProperties BrokerProperties { get; }
     }
 }

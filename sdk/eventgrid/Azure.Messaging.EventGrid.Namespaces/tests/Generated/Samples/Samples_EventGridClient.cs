@@ -402,7 +402,7 @@ Subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<ReceiveResultInternal> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>");
+            Response<ReceiveResult> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>");
         }
 
         [Test]
@@ -413,7 +413,7 @@ Subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<ReceiveResultInternal> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>");
+            Response<ReceiveResult> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>");
         }
 
         [Test]
@@ -474,7 +474,7 @@ Subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<ReceiveResultInternal> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+            Response<ReceiveResult> response = client.ReceiveCloudEvents("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
 
         [Test]
@@ -485,7 +485,7 @@ Subject = "<subject>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             EventGridClient client = new EventGridClient(endpoint, credential);
 
-            Response<ReceiveResultInternal> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
+            Response<ReceiveResult> response = await client.ReceiveCloudEventsAsync("<topicName>", "<eventSubscriptionName>", maxEvents: 1234, maxWaitTime: TimeSpan.FromSeconds(10));
         }
 
         [Test]
