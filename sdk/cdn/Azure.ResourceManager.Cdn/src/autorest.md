@@ -102,6 +102,10 @@ rename-mapping:
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
   CdnEndpoint.properties.customDomains: DeepCreatedCustomDomains
+  WafMetricsSeriesUnit: WafMetricsResponseSeriesItemUnit
+  WafMetricsGranularity: WafMetricsResponseGranularity
+  MetricsSeriesUnit: MetricsResponseSeriesItemUnit
+  MetricsGranularity: MetricsResponseGranularity
 
 directive:
   - from: swagger-document
@@ -379,42 +383,5 @@ directive:
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
-  - from: afdx.json
-    where: $.definitions.MetricsResponse.properties
-    transform: > 
-      $.granularity={
-          "type": "string",
-          "enum": [
-            "PT5M",
-            "PT1H",
-            "P1D"
-          ]
-        }
-      $.series.items.properties.unit={
-        "type": "string",
-                "enum": [
-                  "count",
-                  "bytes",
-                  "bitsPerSecond",
-                  "milliSeconds"
-                ]  
-      }
-  - from: afdx.json
-    where: $.definitions.WafMetricsResponse.properties
-    transform: > 
-      $.granularity={
-          "type": "string",
-          "enum": [
-            "PT5M",
-            "PT1H",
-            "P1D"
-          ]
-        }
-      $.series.items.properties.unit={
-                "type": "string",
-                "enum": [
-                  "count"
-                ]
-              }
   - remove-operation: Validate_Secret
 ```
