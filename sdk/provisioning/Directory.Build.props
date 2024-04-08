@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup Condition="'$(AssemblyName)' != 'Azure.Provisioning'">
-    <PackageReference Include="Azure.Provisioning" />
+    <ProjectReference Include="../../Azure.Provisioning/src/Azure.Provisioning.csproj" />
   </ItemGroup>
 
   <ItemGroup>
