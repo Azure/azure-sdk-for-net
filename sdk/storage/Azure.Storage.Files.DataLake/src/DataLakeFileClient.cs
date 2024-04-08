@@ -16,6 +16,7 @@ using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Files.DataLake.Models;
 using Azure.Storage.Sas;
+using Azure.Storage.Shared;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake
@@ -2331,13 +2332,36 @@ namespace Azure.Storage.Files.DataLake
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(DataLakeFileClient)))
             {
                 // compute hash BEFORE attaching progress handler
-                ContentHasher.GetHashResult hashResult = await ContentHasher.GetHashOrDefaultInternal(
-                    content,
-                    validationOptions,
-                    async,
-                    cancellationToken).ConfigureAwait(false);
+                ContentHasher.GetHashResult hashResult = null;
+                long contentLength = (content?.Length - content?.Position) ?? 0;
+                long? structuredContentLength = default;
+                string structuredBodyType = null;
+                if (validationOptions != null &&
+                    validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
+                    validationOptions.PrecalculatedChecksum.IsEmpty)
+                {
+                    // report progress in terms of caller bytes, not encoded bytes
+                    structuredContentLength = contentLength;
+                    contentLength = (content?.Length - content?.Position) ?? 0;
+                    structuredBodyType = Constants.StructuredMessage.CrcStructuredMessage;
+                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    content = new StructuredMessageEncodingStream(
+                        content,
+                        Constants.StructuredMessage.DefaultSegmentContentLength,
+                        StructuredMessage.Flags.StorageCrc64);
+                    contentLength = (content?.Length - content?.Position) ?? 0;
+                }
+                else
+                {
+                    // compute hash BEFORE attaching progress handler
+                    hashResult = await ContentHasher.GetHashOrDefaultInternal(
+                        content,
+                        validationOptions,
+                        async,
+                        cancellationToken).ConfigureAwait(false);
+                    content = content.WithNoDispose().WithProgress(progressHandler);
+                }
 
-                content = content?.WithNoDispose().WithProgress(progressHandler);
                 ClientConfiguration.Pipeline.LogMethodEnter(
                     nameof(DataLakeFileClient),
                     message:
@@ -2372,6 +2396,8 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
                             leaseAction: leaseAction,
                             leaseDuration: leaseDurationLong,
@@ -2391,6 +2417,8 @@ namespace Azure.Storage.Files.DataLake
                             encryptionKey: ClientConfiguration.CustomerProvidedKey?.EncryptionKey,
                             encryptionKeySha256: ClientConfiguration.CustomerProvidedKey?.EncryptionKeyHash,
                             encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
+                            structuredBodyType: structuredBodyType,
+                            structuredContentLength: structuredContentLength,
                             leaseId: leaseId,
                             leaseAction: leaseAction,
                             leaseDuration: leaseDurationLong,
