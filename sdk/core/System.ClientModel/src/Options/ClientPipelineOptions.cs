@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.ClientModel.Options;
 
 namespace System.ClientModel.Primitives;
 
@@ -21,9 +20,9 @@ public class ClientPipelineOptions
     private bool _frozen;
 
     private PipelinePolicy? _retryPolicy;
+    private PipelinePolicy? _loggingPolicy;
     private PipelineTransport? _transport;
     private TimeSpan? _timeout;
-    private ClientDiagnosticsOptions? _diagnostics;
 
     #region Pipeline creation: Overrides of default pipeline policies
 
@@ -43,6 +42,25 @@ public class ClientPipelineOptions
             AssertNotFrozen();
 
             _retryPolicy = value;
+        }
+    }
+
+    /// <summary>
+    /// Gets or sets the <see cref="PipelinePolicy"/> to be used by the
+    /// <see cref="ClientPipeline"/> for logging.
+    /// </summary>
+    /// <remarks>
+    /// In most cases, this property will be set to an instance of
+    /// <see cref="ClientLoggingPolicy"/>.
+    /// </remarks>
+    public PipelinePolicy? LoggingPolicy
+    {
+        get => _loggingPolicy;
+        set
+        {
+            AssertNotFrozen();
+
+            _loggingPolicy = value;
         }
     }
 
@@ -68,20 +86,6 @@ public class ClientPipelineOptions
     #endregion
 
     #region Pipeline creation: Policy settings
-
-    /// <summary>
-    /// Gets the client diagnostic options.
-    /// </summary>
-    public ClientDiagnosticsOptions? Diagnostics
-    {
-        get => _diagnostics;
-        set
-        {
-            AssertNotFrozen();
-
-            _diagnostics = value;
-        }
-    }
 
     /// <summary>
     /// The timeout applied to an individual network operation.

@@ -16,11 +16,7 @@ public class PipelineMessageSanitizer
     private const string LogAllValue = "*";
     private readonly bool _logAllHeaders;
     private readonly bool _logFullQueries;
-    private readonly string[] _allowedQueryParameters;
     private readonly string _redactedPlaceholder;
-    private readonly HashSet<string> _allowedHeaders;
-
-    internal static PipelineMessageSanitizer Default = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
 
     /// <summary>
     /// TODO.
@@ -33,10 +29,20 @@ public class PipelineMessageSanitizer
         _logAllHeaders = allowedHeaders.Contains(LogAllValue);
         _logFullQueries = allowedQueryParameters.Contains(LogAllValue);
 
-        _allowedQueryParameters = allowedQueryParameters;
+        LoggedQueryParameters = allowedQueryParameters.ToList();
         _redactedPlaceholder = redactedPlaceholder;
-        _allowedHeaders = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
+        LoggedHeaderNames = new HashSet<string>(allowedHeaders, StringComparer.InvariantCultureIgnoreCase);
     }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public HashSet<string> LoggedHeaderNames { get; internal set; }
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public List<string> LoggedQueryParameters { get; internal set; }
 
     /// <summary>
     /// TODO.
@@ -46,7 +52,7 @@ public class PipelineMessageSanitizer
     /// <returns></returns>
     public string SanitizeHeader(string name, string value)
     {
-        if (_logAllHeaders || _allowedHeaders.Contains(name))
+        if (_logAllHeaders || LoggedHeaderNames.Contains(name))
         {
             return value;
         }
@@ -69,7 +75,7 @@ public class PipelineMessageSanitizer
 #if NET5_0_OR_GREATER
         int indexOfQuerySeparator = url.IndexOf('?', StringComparison.Ordinal);
 #else
-            int indexOfQuerySeparator = url.IndexOf('?');
+        int indexOfQuerySeparator = url.IndexOf('?');
 #endif
 
         if (indexOfQuerySeparator == -1)
@@ -92,8 +98,8 @@ public class PipelineMessageSanitizer
             bool noValue = false;
 
             // Check if we have parameter without value
-            if ((endOfParameterValue == -1 && endOfParameterName == -1) ||
-                (endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue)))
+            if (endOfParameterValue == -1 && endOfParameterName == -1 ||
+                endOfParameterValue != -1 && (endOfParameterName == -1 || endOfParameterName > endOfParameterValue))
             {
                 endOfParameterName = endOfParameterValue;
                 noValue = true;
@@ -117,7 +123,7 @@ public class PipelineMessageSanitizer
             ReadOnlySpan<char> parameterName = query.AsSpan(queryIndex, endOfParameterName - queryIndex);
 
             bool isAllowed = false;
-            foreach (string name in _allowedQueryParameters)
+            foreach (string name in LoggedQueryParameters)
             {
                 if (parameterName.Equals(name.AsSpan(), StringComparison.OrdinalIgnoreCase))
                 {

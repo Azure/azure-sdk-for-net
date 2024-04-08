@@ -75,11 +75,6 @@ namespace System.ClientModel.Tests.Internal.Diagnostics
             ClientPipelineOptions options = new()
             {
                 Transport = new MockPipelineTransport("Transport", i => 200),
-                Diagnostics = new ClientModel.Options.ClientDiagnosticsOptions()
-                {
-                    IsLoggingEnabled = true,
-                    ClientRequestIdHeaderName = "x-client-id",
-                }
             };
 
             ClientPipeline pipeline = ClientPipeline.Create(options);

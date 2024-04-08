@@ -3,7 +3,7 @@
 
 using System.ClientModel.Diagnostics;
 using System.ClientModel.Internal;
-using System.ClientModel.Primitives;
+using System.ClientModel.Pipeline;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.Tracing;
@@ -12,32 +12,14 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace System.ClientModel.Pipeline;
+namespace System.ClientModel.Primitives;
 
 /// <summary>
 /// TODO.
 /// </summary>
 public class ClientLoggingPolicy : PipelinePolicy
 {
-    /// <summary>
-    /// TBD.
-    /// </summary>
-    /// <param name="logContent"></param>
-    /// <param name="maxLength"></param>
-    /// <param name="sanitizer"></param>
-    /// <param name="assemblyName"></param>
-    /// <param name="clientRequestIdHeaderName"></param>
-    internal ClientLoggingPolicy(bool logContent, int maxLength, PipelineMessageSanitizer sanitizer, string? assemblyName, string? clientRequestIdHeaderName)
-    {
-        _sanitizer = sanitizer;
-        _logContent = logContent;
-        _maxLength = maxLength;
-        _assemblyName = assemblyName;
-        _clientRequestIdHeaderName = clientRequestIdHeaderName;
-    }
-
     private const double RequestTooLongTime = 3.0; // sec
-
     private static readonly ClientModelEventSource s_eventSource = ClientModelEventSource.Singleton;
 
     private readonly bool _logContent;
@@ -45,6 +27,29 @@ public class ClientLoggingPolicy : PipelinePolicy
     private readonly PipelineMessageSanitizer _sanitizer;
     private readonly string? _assemblyName;
     private readonly string? _clientRequestIdHeaderName;
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    public static ClientLoggingPolicy Default { get; } = new ClientLoggingPolicy();
+
+    /// <summary>
+    /// TODO.
+    /// </summary>
+    /// <param name="logContent"></param>
+    /// <param name="maxLength"></param>
+    /// <param name="isLoggingEnabled"></param>
+    /// <param name="sanitizer"></param>
+    /// <param name="assemblyName"></param>
+    /// <param name="requestIdHeaderName"></param>
+    public ClientLoggingPolicy(bool isLoggingEnabled = true, PipelineMessageSanitizer? sanitizer = default, string? requestIdHeaderName = default, bool logContent = false, int maxLength = 4 * 1024, string? assemblyName = default)
+    {
+        _sanitizer = sanitizer ?? new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
+        _logContent = logContent;
+        _maxLength = maxLength;
+        _assemblyName = assemblyName;
+        _clientRequestIdHeaderName = requestIdHeaderName;
+    }
 
     /// <inheritdoc/>
     public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
