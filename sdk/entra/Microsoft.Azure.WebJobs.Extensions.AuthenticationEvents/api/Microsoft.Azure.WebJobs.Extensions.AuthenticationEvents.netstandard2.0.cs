@@ -50,8 +50,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         [System.ComponentModel.DataAnnotations.RequiredAttribute]
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("type")]
         public string Type { get { throw null; } set { } }
-        public abstract System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse> Completed();
-        public System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse> Failed(System.Exception exception) { throw null; }
+        public abstract Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse Completed();
+        public abstract Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse Failed(System.Exception exception);
         public override string ToString() { throw null; }
     }
     public abstract partial class AuthenticationEventRequest<TResponse, TData> : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventRequestBase where TResponse : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse, new() where TData : Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventData
@@ -62,7 +62,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public TData Data { get { throw null; } set { } }
         [System.Text.Json.Serialization.JsonPropertyNameAttribute("response")]
         public TResponse Response { get { throw null; } set { } }
-        public override System.Threading.Tasks.Task<Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.AuthenticationEventResponse> Completed() { throw null; }
+        public override Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse Completed() { throw null; }
+        public override Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.AuthenticationEventResponse Failed(System.Exception exception) { throw null; }
     }
     public abstract partial class AuthenticationEventResponse : System.Net.Http.HttpResponseMessage
     {

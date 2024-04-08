@@ -7,9 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 using System.Web;
-using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Framework.Validators;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
