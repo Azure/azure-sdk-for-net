@@ -60,7 +60,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="sessionId">The session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.SessionId"/>.</param>
         /// <param name="replyToSessionId">The "reply to" session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.ReplyToSessionId"/>.</param>
         /// <param name="timeToLive">The time interval to assign as the value of <see cref="ServiceBusReceivedMessage.TimeToLive"/>.</param>
-        /// <param name="correlationId">The correlation identifier to assign as the value of <see cref="ServiceBusReceivedMessage.Correlationid"/>.</param>
+        /// <param name="correlationId">The correlation identifier to assign as the value of <see cref="ServiceBusReceivedMessage.CorrelationId"/>.</param>
         /// <param name="subject">The subject to assign as the value of <see cref="ServiceBusReceivedMessage.Subject"/>.</param>
         /// <param name="to">The "to" value to assign as the value of <see cref="ServiceBusReceivedMessage.To"/>.</param>
         /// <param name="contentType">The content type to assign as the value of <see cref="ServiceBusReceivedMessage.ContentType"/>.</param>
