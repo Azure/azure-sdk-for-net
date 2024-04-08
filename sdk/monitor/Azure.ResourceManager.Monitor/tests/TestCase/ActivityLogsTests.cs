@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.Monitor.Tests
 
         [TestCase]
         [RecordedTest]
-        public async Task CreateOrUpdate()
+        public async Task GetActivityLogsBySubscription()
         {
             var subscription = DefaultSubscription;
             var filter = "eventTimestamp ge '2024-04-08T01:00:00Z' and eventTimestamp le '2024-04-08T18:00:00Z' and resourceGroupName eq 'rgMonitor624'";
