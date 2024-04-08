@@ -167,6 +167,64 @@ namespace Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc
             throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
         }
 
+        public override Task<Empty> Release(ReleaseSession request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
+                {
+                    actions.ReleaseSession();
+                    return Task.FromResult(new Empty());
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
+        }
+
+        public override async Task<Empty> Renew(RenewSessionLock request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
+                {
+                    await actions.RenewSessionLockAsync().ConfigureAwait(false);
+                    return new Empty();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
+        }
+
+        public override Task<SessionLockedUntilResponse> SessionLocked(SessionLockedUntil request, ServerCallContext context)
+        {
+            try
+            {
+                if (_provider.SessionActionsCache.TryGetValue(request.SessionId, out var actions))
+                {
+                    return Task.FromResult(
+                        new SessionLockedUntilResponse
+                        {
+                            LockedUntil = actions.SessionLockedUntil.ToTimestamp()
+                        }
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new RpcException(new Status(StatusCode.Unknown, ex.ToString()));
+            }
+
+            throw new RpcException(new Status(StatusCode.FailedPrecondition, $"SessionId {request.SessionId} not found."));
+        }
+
         private static Dictionary<string, object> DeserializeAmqpMap(ByteString mapBytes)
         {
             if (mapBytes == null || mapBytes == ByteString.Empty)

@@ -2,6 +2,7 @@ syntax = "proto3";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
+import "google/protobuf/timestamp.proto";
 
 // this namespace will be shared between isolated worker and WebJobs extension so make it somewhat generic
 option csharp_namespace = "Microsoft.Azure.ServiceBus.Grpc";
@@ -32,7 +33,8 @@ service Settlement {
   // Renew
   rpc Renew (RenewSessionLock) returns (google.protobuf.Empty) {}
 
-
+  // SessionLockedUntil property
+  rpc SessionLocked (SessionLockedUntil) returns (SessionLockedUntilResponse) {}
 }
 
 // The complete message request containing the locktoken.
@@ -71,14 +73,27 @@ message SetRequest {
   bytes sessionState = 2;
 }
 
+// Get response containing the session state.
 message GetResponse {
-	bytes sessionState = 1;
+  bytes sessionState = 1;
 }
 
 // Release session.
 message ReleaseSession {
+  string sessionId = 1;
 }
 
 // Renew session lock.
 message RenewSessionLock {
+  string sessionId = 1;
+}
+
+// Session locked until property response.
+message SessionLockedUntil {
+  string sessionId = 1;
+}
+
+// Session locked until property response.
+message SessionLockedUntilResponse {
+  google.protobuf.Timestamp lockedUntil = 1;
 }

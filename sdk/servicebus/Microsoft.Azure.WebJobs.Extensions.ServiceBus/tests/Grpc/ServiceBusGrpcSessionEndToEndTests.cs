@@ -3,7 +3,9 @@
 #if NET6_0_OR_GREATER
 using System;
 using System.Collections.Generic;
+using System.IO.Hashing;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Messaging.ServiceBus;
@@ -12,11 +14,14 @@ using Google.Protobuf;
 using Grpc.Core;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.Extensions.ServiceBus.Grpc;
 using Microsoft.Azure.WebJobs.ServiceBus;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using NUnit.Framework;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
 {
@@ -141,12 +146,53 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
         }
 
         [Test]
-        public async Task BindToSessionMessageAndGet()
+        public async Task BindToSessionMessageAndSetAndGet()
         {
-            var host = BuildHost<ServiceBusBindToSessionMessageAndGet>();
+            var host = BuildHost<ServiceBusBindToSessionMessageAndSetAndGet>();
             var settlementImpl = host.Services.GetRequiredService<SettlementService>();
             var provider = host.Services.GetRequiredService<MessagingProvider>();
-            ServiceBusBindToSessionMessageAndGet.SettlementService = settlementImpl;
+            ServiceBusBindToSessionMessageAndSetAndGet.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar") { SessionId = "sessionId" };
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+        }
+
+        [Test]
+        public async Task BindToSessionMessageAndReleaseSession()
+        {
+            var host = BuildHost<ServiceBusBindToSessionMessageAndReleaseSession>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToSessionMessageAndReleaseSession.SettlementService = settlementImpl;
+            await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
+
+            using (host)
+            {
+                var message = new ServiceBusMessage("foobar") { SessionId = "sessionId" };
+                var sender = client.CreateSender(FirstQueueScope.QueueName);
+                await sender.SendMessageAsync(message);
+
+                bool result = _waitHandle1.WaitOne(SBTimeoutMills);
+                Assert.True(result);
+            }
+            Assert.IsEmpty(provider.SessionActionsCache);
+        }
+
+        [Test]
+        public async Task BindToSessionMessageAndRenewSession()
+        {
+            var host = BuildHost<ServiceBusBindToSessionMessageAndRenewSessionLock>();
+            var settlementImpl = host.Services.GetRequiredService<SettlementService>();
+            var provider = host.Services.GetRequiredService<MessagingProvider>();
+            ServiceBusBindToSessionMessageAndRenewSessionLock.SettlementService = settlementImpl;
             await using ServiceBusClient client = new ServiceBusClient(ServiceBusTestEnvironment.Instance.ServiceBusConnectionString);
 
             using (host)
@@ -234,21 +280,92 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             }
         }
 
-        public class ServiceBusBindToSessionMessageAndGet
+        public class ServiceBusBindToSessionMessageAndSetAndGet
         {
             internal static SettlementService SettlementService { get; set; }
             public static async Task BindToMessage(
                 [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
             {
                 Assert.AreEqual("foobar", message.Body.ToString());
-                await SettlementService.Get(
+                await SettlementService.Set(
+                    new SetRequest
+                    {
+                        SessionId = message.SessionId,
+                        SessionState = ByteString.CopyFromUtf8(message.Body.ToString())
+                    },
+                    new MockServerCallContext()
+                 );
+                var test = await SettlementService.Get(
                     new GetRequest
                     {
                         SessionId = message.SessionId,
                     },
                     new MockServerCallContext());
+                Assert.IsNotEmpty(test.SessionState);
                 Assert.AreEqual("foobar", message.Body.ToString());
                 _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToSessionMessageAndReleaseSession
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                await SettlementService.Release(
+                    new ReleaseSession
+                    {
+                        SessionId = message.SessionId
+                    },
+                    new MockServerCallContext()
+                );
+                Assert.AreEqual("foobar", message.Body.ToString());
+                _waitHandle1.Set();
+            }
+        }
+
+        public class ServiceBusBindToSessionMessageAndRenewSessionLock
+        {
+            internal static SettlementService SettlementService { get; set; }
+            public static async Task BindToMessage(
+                [ServiceBusTrigger(FirstQueueNameKey, IsSessionsEnabled = true)] ServiceBusReceivedMessage message, ServiceBusReceiveActions receiveActions)
+            {
+                Assert.AreEqual("foobar", message.Body.ToString());
+                // Check when the session lock is set to expire
+                var sessionLocked = await SettlementService.SessionLocked(
+                    new SessionLockedUntil
+                    {
+                        SessionId = message.SessionId,
+                    },
+                    new MockServerCallContext()
+                );
+                _waitHandle1.Set();
+                var lockedUntil = sessionLocked.LockedUntil.ToDateTime();
+
+                // Renew the session lock
+                await SettlementService.Renew(
+                    new RenewSessionLock
+                    {
+                        SessionId = message.SessionId
+                    },
+                    new MockServerCallContext()
+                );
+                _waitHandle1.Set();
+
+                // Check when the session lock is set to expire
+                var sessionLockedAfter = await SettlementService.SessionLocked(
+                    new SessionLockedUntil
+                    {
+                        SessionId = message.SessionId,
+                    },
+                    new MockServerCallContext()
+                );
+                _waitHandle1.Set();
+                var lockedUntilAfter = sessionLockedAfter.LockedUntil.ToDateTime();
+
+                Assert.True(lockedUntil < lockedUntilAfter);
             }
         }
 
