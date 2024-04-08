@@ -1,12 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel.Options;
 using System.ClientModel.Pipeline;
 using System.Linq;
 using NUnit.Framework;
 
-namespace System.ClientModel.Tests.Pipeline
+namespace System.ClientModel.Tests
 {
     public class PipelineMessageSanitizerTests
     {
@@ -62,8 +61,7 @@ namespace System.ClientModel.Tests.Pipeline
         [Test]
         public void ApiVersionIsNotSanitizedByDefault()
         {
-            var options = new ClientDiagnosticsOptions();
-            var sanitizer = new PipelineMessageSanitizer(options.LoggedQueryParameters.ToArray(), options.LoggedHeaderNames.ToArray());
+            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
             var uri = new Uri("http://localhost/?api-version=2021-11-01");
 
             Assert.AreEqual("http://localhost/?api-version=2021-11-01", sanitizer.SanitizeUrl(uri.ToString()));
@@ -72,9 +70,7 @@ namespace System.ClientModel.Tests.Pipeline
         [Test]
         public void CanRemoveApiVersionFromLoggedQueryParams()
         {
-            var options = new ClientDiagnosticsOptions();
-            options.LoggedQueryParameters.Remove("api-version");
-            var sanitizer = new PipelineMessageSanitizer(options.LoggedQueryParameters.ToArray(), options.LoggedHeaderNames.ToArray());
+            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
 
             var uri = new Uri("http://localhost/?api-version=2021-11-01");
 
@@ -84,9 +80,7 @@ namespace System.ClientModel.Tests.Pipeline
         [Test]
         public void AddingAdditionalQueryWorks()
         {
-            var options = new ClientDiagnosticsOptions();
-            options.LoggedQueryParameters.Add("mode");
-            var sanitizer = new PipelineMessageSanitizer(options.LoggedQueryParameters.ToArray(), options.LoggedHeaderNames.ToArray());
+            var sanitizer = new PipelineMessageSanitizer(Array.Empty<string>(), Array.Empty<string>());
 
             var uri = new Uri("http://localhost/?mode=test");
 

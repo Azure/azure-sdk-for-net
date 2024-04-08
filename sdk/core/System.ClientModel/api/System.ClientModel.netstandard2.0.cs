@@ -55,34 +55,6 @@ namespace System.ClientModel.Diagnostics
         protected sealed override void OnEventWritten(System.Diagnostics.Tracing.EventWrittenEventArgs eventData) { }
     }
 }
-namespace System.ClientModel.Options
-{
-    public partial class ClientDiagnosticsOptions
-    {
-        public ClientDiagnosticsOptions() { }
-        public string ClientRequestIdHeaderName { get { throw null; } set { } }
-        public bool IsLoggingContentEnabled { get { throw null; } set { } }
-        public bool IsLoggingEnabled { get { throw null; } set { } }
-        public int LoggedContentSizeLimit { get { throw null; } set { } }
-        public System.Collections.Generic.IList<string> LoggedHeaderNames { get { throw null; } }
-        public System.Collections.Generic.IList<string> LoggedQueryParameters { get { throw null; } }
-    }
-}
-namespace System.ClientModel.Pipeline
-{
-    public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
-    {
-        internal ClientLoggingPolicy() { }
-        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
-        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
-    }
-    public partial class PipelineMessageSanitizer
-    {
-        public PipelineMessageSanitizer(string[] allowedQueryParameters, string[] allowedHeaders, string redactedPlaceholder = "REDACTED") { }
-        public string SanitizeHeader(string name, string value) { throw null; }
-        public string SanitizeUrl(string url) { throw null; }
-    }
-}
 namespace System.ClientModel.Primitives
 {
     public partial class ApiKeyAuthenticationPolicy : System.ClientModel.Primitives.PipelinePolicy
@@ -100,6 +72,13 @@ namespace System.ClientModel.Primitives
         Default = 0,
         NoThrow = 1,
     }
+    public partial class ClientLoggingPolicy : System.ClientModel.Primitives.PipelinePolicy
+    {
+        public ClientLoggingPolicy(string[] allowedQueryParameters, string[] allowedHeaders, bool isLoggingEnabled = true, string? clientRequestIdHeaderName = null, bool logContent = false, int maxLength = 100, string assemblyName = "System.ClientModel") { }
+        public static System.ClientModel.Primitives.ClientLoggingPolicy Default { get { throw null; } }
+        public override void Process(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { }
+        public override System.Threading.Tasks.ValueTask ProcessAsync(System.ClientModel.Primitives.PipelineMessage message, System.Collections.Generic.IReadOnlyList<System.ClientModel.Primitives.PipelinePolicy> pipeline, int currentIndex) { throw null; }
+    }
     public sealed partial class ClientPipeline
     {
         internal ClientPipeline() { }
@@ -112,7 +91,7 @@ namespace System.ClientModel.Primitives
     public partial class ClientPipelineOptions
     {
         public ClientPipelineOptions() { }
-        public System.ClientModel.Options.ClientDiagnosticsOptions? Diagnostics { get { throw null; } set { } }
+        public System.ClientModel.Primitives.PipelinePolicy? LoggingPolicy { get { throw null; } set { } }
         public System.TimeSpan? NetworkTimeout { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelinePolicy? RetryPolicy { get { throw null; } set { } }
         public System.ClientModel.Primitives.PipelineTransport? Transport { get { throw null; } set { } }

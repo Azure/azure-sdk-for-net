@@ -30,16 +30,16 @@ internal abstract class ClientEventSource : EventSource
         NamesInUse = namesInUse;
     }
 
-    private static readonly string[] MainEventSourceTraits =
-    {
-            ClientEventSourceListener.TraitName,
-            ClientEventSourceListener.TraitValue
-        };
+    //private static readonly string[] MainEventSourceTraits =
+    //{
+    //        ClientEventSourceListener.TraitName,
+    //        ClientEventSourceListener.TraitValue
+    //    };
 
     protected ClientEventSource(string eventSourceName) : base(
         DeduplicateName(eventSourceName),
         EventSourceSettings.Default,
-        MainEventSourceTraits
+        Array.Empty<string>()
     )
     {
     }
