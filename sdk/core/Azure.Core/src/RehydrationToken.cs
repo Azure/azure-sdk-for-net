@@ -11,7 +11,7 @@ namespace Azure.Core
         /// <summary>
         /// Gets an ID representing the operation that can be used to poll for
         /// the status of the long-running operation.
-        /// There are cases that operation id is not available, we return "NOT_SET" to not break the existing user experience.
+        /// There are cases that operation id is not available, we return "NOT_SET" for unavailable operation id.
         /// </summary>
         public string Id { get; } = NextLinkOperationImplementation.NotSet;
 
