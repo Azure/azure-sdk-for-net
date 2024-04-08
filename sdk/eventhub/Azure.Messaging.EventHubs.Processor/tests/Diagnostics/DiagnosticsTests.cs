@@ -235,14 +235,14 @@ namespace Azure.Messaging.EventHubs.Tests
         }
 
         /// <summary>
-        ///   Verifies <see cref="EventProcessorClient" /> disables base batch tracing
+        ///   Verifies <see cref="EventProcessorClient" /> disables base batch tracing.
         /// </summary>
         ///
         [Test]
         public void EventProcessorClientDisablesBaseBatchTracing()
         {
             var processorClient = new TestEventProcessorClient(Mock.Of<CheckpointStore>(), "consumerGroup", "namespace", "eventHub", Mock.Of<TokenCredential>(), Mock.Of<EventHubConnection>(), default);
-            Assert.False(processorClient.IsBaseBatchTracingEnabled);
+            Assert.That(processorClient.IsBaseBatchTracingEnabled, Is.False);
         }
 
         /// <summary>

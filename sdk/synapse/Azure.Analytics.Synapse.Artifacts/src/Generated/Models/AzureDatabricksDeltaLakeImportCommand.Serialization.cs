@@ -81,12 +81,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureDatabricksDeltaLakeImportCommand(type, additionalProperties, dateFormat, timestampFormat);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDatabricksDeltaLakeImportCommand FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDatabricksDeltaLakeImportCommand(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDatabricksDeltaLakeImportCommand>(this);
+            return content;
+        }
+
         internal partial class AzureDatabricksDeltaLakeImportCommandConverter : JsonConverter<AzureDatabricksDeltaLakeImportCommand>
         {
             public override void Write(Utf8JsonWriter writer, AzureDatabricksDeltaLakeImportCommand model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureDatabricksDeltaLakeImportCommand>(model);
             }
+
             public override AzureDatabricksDeltaLakeImportCommand Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

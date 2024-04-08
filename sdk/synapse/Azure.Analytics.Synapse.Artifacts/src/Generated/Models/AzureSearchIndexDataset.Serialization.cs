@@ -211,12 +211,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 indexName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureSearchIndexDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureSearchIndexDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureSearchIndexDataset>(this);
+            return content;
+        }
+
         internal partial class AzureSearchIndexDatasetConverter : JsonConverter<AzureSearchIndexDataset>
         {
             public override void Write(Utf8JsonWriter writer, AzureSearchIndexDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AzureSearchIndexDataset>(model);
             }
+
             public override AzureSearchIndexDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -218,12 +218,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 tableName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ShopifyObjectDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeShopifyObjectDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ShopifyObjectDataset>(this);
+            return content;
+        }
+
         internal partial class ShopifyObjectDatasetConverter : JsonConverter<ShopifyObjectDataset>
         {
             public override void Write(Utf8JsonWriter writer, ShopifyObjectDataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<ShopifyObjectDataset>(model);
             }
+
             public override ShopifyObjectDataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
