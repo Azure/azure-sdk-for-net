@@ -1,10 +1,6 @@
 # Release History
 
-## 5.12.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.11.2 (2024-04-09)
 
 ### Bugs Fixed
 
@@ -13,6 +9,8 @@
 - Fixed a parameter ordering error in ETW 22 (EventBatchProcessingError) that caused structured data arguments to be ordered differently than the associated replacement token in the log message. 
 
 ### Other Changes
+
+- Added option `EnableCheckpointing` to allow automatic checkpointing to be disabled for applications that only wish to read current data rather than tracking the state of processing.
 
 ## 5.11.1 (2024-03-05)
 
