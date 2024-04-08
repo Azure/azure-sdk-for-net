@@ -2336,7 +2336,8 @@ namespace Azure.Storage.Files.DataLake
                 long contentLength = (content?.Length - content?.Position) ?? 0;
                 long? structuredContentLength = default;
                 string structuredBodyType = null;
-                if (validationOptions != null &&
+                if (content != null &&
+                    validationOptions != null &&
                     validationOptions.ChecksumAlgorithm.ResolveAuto() == StorageChecksumAlgorithm.StorageCrc64 &&
                     validationOptions.PrecalculatedChecksum.IsEmpty)
                 {
@@ -2359,7 +2360,7 @@ namespace Azure.Storage.Files.DataLake
                         validationOptions,
                         async,
                         cancellationToken).ConfigureAwait(false);
-                    content = content.WithNoDispose().WithProgress(progressHandler);
+                    content = content?.WithNoDispose().WithProgress(progressHandler);
                 }
 
                 ClientConfiguration.Pipeline.LogMethodEnter(
