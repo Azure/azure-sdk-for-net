@@ -67,7 +67,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -110,7 +110,7 @@ namespace Azure.Communication.Messages.Models.Channels
             IList<WhatsAppMessageTemplateBindingsComponent> body = default;
             IList<WhatsAppMessageTemplateBindingsComponent> footer = default;
             IList<WhatsAppMessageTemplateBindingsButton> buttons = default;
-            string kind = default;
+            MessageTemplateBindingsKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.Communication.Messages.Models.Channels
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new MessageTemplateBindingsKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
