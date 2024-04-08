@@ -59,7 +59,7 @@ namespace Azure.Messaging.ServiceBus
         /// <param name="viaPartitionKey">The "via partition key" to assign as the value of <see cref="ServiceBusReceivedMessage.TransactionPartitionKey"/>.</param>
         /// <param name="sessionId">The session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.SessionId"/>.</param>
         /// <param name="replyToSessionId">The "reply to" session identifier to assign as the value of <see cref="ServiceBusReceivedMessage.ReplyToSessionId"/>.</param>
-        /// <param name="timeToLive">The time interval assign as the value of <see cref="ServiceBusReceivedMessage.TimeToLive"/>.</param>
+        /// <param name="timeToLive">The time interval to assign as the value of <see cref="ServiceBusReceivedMessage.TimeToLive"/>.</param>
         /// <param name="correlationId">The correlation identifier.</param>
         /// <param name="subject">The subject to assign as the value of <see cref="ServiceBusReceivedMessage.Subject"/>.</param>
         /// <param name="to">The "to" value to assign as the value of <see cref="ServiceBusReceivedMessage.To"/>.</param>
