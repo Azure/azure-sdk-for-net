@@ -54,7 +54,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 contentLanguage: new(DefaultContentLanguage),
                 contentDisposition: new(DefaultContentDisposition),
                 cacheControl: new(DefaultCacheControl),
-                accessTier: new(DefaultAccessTier),
+                accessTier: DefaultAccessTier,
                 metadata: DefaultMetadata,
                 tags: DefaultTags);
         }
@@ -92,8 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsEmpty(data.ContentDispositionBytes);
             Assert.AreEqual(true, data.PreserveCacheControl);
             Assert.IsEmpty(data.CacheControlBytes);
-            Assert.AreEqual(true, data.PreserveAccessTier);
-            Assert.IsNull(data.AccessTier);
+            Assert.IsNull(data.AccessTierValue);
             Assert.AreEqual(true, data.PreserveMetadata);
             Assert.IsNull(data.Metadata);
             Assert.AreEqual(false, data.PreserveTags);
@@ -156,12 +155,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Serialize_PreserveAccessTier()
+        public void Serialize_SetAccessTier()
         {
             // Arrange
             BlobDestinationCheckpointData data = CreateSetSampleValues();
-            data.PreserveAccessTier = true;
-            data.AccessTier = default;
+            data.AccessTierValue = default;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
@@ -224,8 +222,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
             Assert.AreEqual(false, data.PreserveCacheControl);
             Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
-            Assert.AreEqual(false, data.PreserveAccessTier);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTier.Value);
+            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue.Value);
             Assert.AreEqual(false, data.PreserveMetadata);
             CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
             Assert.AreEqual(false, data.PreserveTags);

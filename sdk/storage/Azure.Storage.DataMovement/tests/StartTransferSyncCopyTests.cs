@@ -1006,7 +1006,6 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 new()
                 {
-                    AccessTier = new(preserve: true),
                     ContentType = new(preserve: true),
                     ContentEncoding = new(preserve: true),
                     ContentDisposition = new(preserve: true),
@@ -1065,7 +1064,6 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 new()
                 {
-                    AccessTier = new(preserve: false),
                     ContentType = new(true), // For test recording content type has to be the same
                     ContentEncoding = new(false),
                     ContentDisposition = new(false),
@@ -1134,7 +1132,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 new()
                 {
-                    AccessTier = new(DefaultAccessTier),
+                    AccessTier = DefaultAccessTier,
                     ContentType = new(DefaultContentType),
                     ContentEncoding = new(false),
                     ContentDisposition = new(DefaultContentDisposition),
