@@ -411,11 +411,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (property.NameEquals("tenantId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tenantId = property.Value.GetGuid();
+                    DeserializeTenantIdValue(property, ref tenantId);
                     continue;
                 }
                 if (options.Format != "W")
