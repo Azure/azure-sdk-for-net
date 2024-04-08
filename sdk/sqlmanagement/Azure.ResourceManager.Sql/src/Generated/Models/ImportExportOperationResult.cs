@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -86,24 +85,34 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Request Id. </summary>
+        [WirePath("properties.requestId")]
         public Guid? RequestId { get; }
         /// <summary> Request type. </summary>
+        [WirePath("properties.requestType")]
         public string RequestType { get; }
         /// <summary> Queued time. </summary>
+        [WirePath("properties.queuedTime")]
         public string QueuedTime { get; }
         /// <summary> Last modified time. </summary>
+        [WirePath("properties.lastModifiedTime")]
         public string LastModifiedTime { get; }
         /// <summary> Blob Uri. </summary>
+        [WirePath("properties.blobUri")]
         public Uri BlobUri { get; }
         /// <summary> Server name. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> Database name. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> Operation status. </summary>
+        [WirePath("properties.status")]
         public string Status { get; }
         /// <summary> Error message. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> Gets the status of private endpoints associated with this request. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<PrivateEndpointConnectionRequestStatus> PrivateEndpointConnections { get; }
     }
 }

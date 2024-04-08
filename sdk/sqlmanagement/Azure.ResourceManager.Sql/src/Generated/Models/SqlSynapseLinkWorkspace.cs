@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -68,6 +67,7 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> List of all synapselink workspaces. </summary>
+        [WirePath("properties.workspaces")]
         public IList<SqlSynapseLinkWorkspaceInfo> Workspaces { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -42,16 +41,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Sku name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Supported vCores. </summary>
+        [WirePath("vCores")]
         public int? VCores { get; }
         /// <summary> Supported IOPS. </summary>
+        [WirePath("supportedIops")]
         public int? SupportedIops { get; }
         /// <summary> Supported memory per vCore in MB. </summary>
+        [WirePath("supportedMemoryPerVcoreMb")]
         public long? SupportedMemoryPerVcoreMb { get; }
         /// <summary> List of supported Availability Zones. E.g. "1", "2", "3". </summary>
+        [WirePath("supportedZones")]
         public IReadOnlyList<string> SupportedZones { get; }
         /// <summary> Supported high availability mode. </summary>
+        [WirePath("supportedHaMode")]
         public IReadOnlyList<PostgreSqlFlexibleServerHAMode> SupportedHaMode { get; }
     }
 }

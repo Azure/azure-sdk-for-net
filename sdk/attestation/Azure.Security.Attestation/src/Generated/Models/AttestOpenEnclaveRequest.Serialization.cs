@@ -23,12 +23,12 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue(RuntimeData);
+                writer.WriteObjectValue<RuntimeData>(RuntimeData);
             }
             if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue(InitTimeData);
+                writer.WriteObjectValue<InitTimeData>(InitTimeData);
             }
             if (Optional.IsDefined(DraftPolicyForAttestation))
             {
@@ -36,6 +36,14 @@ namespace Azure.Security.Attestation
                 writer.WriteStringValue(DraftPolicyForAttestation);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AttestOpenEnclaveRequest>(this);
+            return content;
         }
     }
 }

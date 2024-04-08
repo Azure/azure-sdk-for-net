@@ -16,7 +16,7 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
+            writer.WriteObjectValue<CallLocatorInternal>(CallLocator);
             if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
@@ -43,11 +43,19 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChannelAffinityInternal>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<StartCallRecordingRequestInternal>(this);
+            return content;
         }
     }
 }

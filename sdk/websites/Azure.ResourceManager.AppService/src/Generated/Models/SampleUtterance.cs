@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -66,10 +65,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Text attribute of sample utterance. </summary>
+        [WirePath("text")]
         public string Text { get; set; }
         /// <summary> Links attribute of sample utterance. </summary>
+        [WirePath("links")]
         public IList<string> Links { get; }
         /// <summary> Question id of sample utterance (for stackoverflow questions titles). </summary>
+        [WirePath("qid")]
         public string Qid { get; set; }
     }
 }

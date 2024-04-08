@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -65,8 +64,10 @@ namespace Azure.ResourceManager.SignalR.Models
         }
 
         /// <summary> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>
+        [WirePath("allow")]
         public IList<SignalRRequestType> Allow { get; }
         /// <summary> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </summary>
+        [WirePath("deny")]
         public IList<SignalRRequestType> Deny { get; }
     }
 }

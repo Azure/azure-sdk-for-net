@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -22,12 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
-                writer.WriteObjectValue(VideoCreationProperties);
+                writer.WriteObjectValue<VideoCreationProperties>(VideoCreationProperties);
             }
             if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
-                writer.WriteObjectValue(VideoPublishingOptions);
+                writer.WriteObjectValue<VideoPublishingOptions>(VideoPublishingOptions);
             }
             writer.WritePropertyName("localMediaCachePath"u8);
             writer.WriteStringValue(LocalMediaCachePath);
@@ -41,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -126,6 +125,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 videoPublishingOptions,
                 localMediaCachePath,
                 localMediaCacheMaximumSizeMiB);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new VideoSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeVideoSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<VideoSink>(this);
+            return content;
         }
     }
 }

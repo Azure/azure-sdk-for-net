@@ -46,5 +46,13 @@ namespace Azure.Communication.CallAutomation
             }
             return new RecognizeCanceled(operationContext, callConnectionId, serverCallId, correlationId);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RecognizeCanceled FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRecognizeCanceled(document.RootElement);
+        }
     }
 }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -84,14 +83,19 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Provisioning state of NetworkSecurityPerimeter configuration propagation. </summary>
+        [WirePath("properties.provisioningState")]
         public EventHubsNetworkSecurityPerimeterConfigurationProvisioningState? ProvisioningState { get; set; }
         /// <summary> List of Provisioning Issues if any. </summary>
+        [WirePath("properties.provisioningIssues")]
         public IList<EventHubsProvisioningIssue> ProvisioningIssues { get; }
         /// <summary> NetworkSecurityPerimeter related information. </summary>
+        [WirePath("properties.networkSecurityPerimeter")]
         public EventHubsNetworkSecurityPerimeter NetworkSecurityPerimeter { get; }
         /// <summary> Information about resource association. </summary>
+        [WirePath("properties.resourceAssociation")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesResourceAssociation ResourceAssociation { get; }
         /// <summary> Information about current network profile. </summary>
+        [WirePath("properties.profile")]
         public EventHubsNetworkSecurityPerimeterConfigurationPropertiesProfile Profile { get; }
     }
 }

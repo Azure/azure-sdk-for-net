@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -45,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -55,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,30 +63,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout);
+                writer.WriteObjectValue<object>(Timeout);
             }
             if (Optional.IsDefined(Sleep))
             {
                 writer.WritePropertyName("sleep"u8);
-                writer.WriteObjectValue(Sleep);
+                writer.WriteObjectValue<object>(Sleep);
             }
             if (Optional.IsDefined(MinimumSize))
             {
                 writer.WritePropertyName("minimumSize"u8);
-                writer.WriteObjectValue(MinimumSize);
+                writer.WriteObjectValue<object>(MinimumSize);
             }
             if (Optional.IsDefined(ChildItems))
             {
                 writer.WritePropertyName("childItems"u8);
-                writer.WriteObjectValue(ChildItems);
+                writer.WriteObjectValue<object>(ChildItems);
             }
             writer.WritePropertyName("dataset"u8);
-            writer.WriteObjectValue(Dataset);
+            writer.WriteObjectValue<DatasetReference>(Dataset);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -247,12 +246,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 dataset);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ValidationActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeValidationActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ValidationActivity>(this);
+            return content;
+        }
+
         internal partial class ValidationActivityConverter : JsonConverter<ValidationActivity>
         {
             public override void Write(Utf8JsonWriter writer, ValidationActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ValidationActivity>(model);
             }
+
             public override ValidationActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

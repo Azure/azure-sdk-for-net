@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -78,20 +76,28 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The kind of workbook. Only valid value is shared. </summary>
+        [WirePath("kind")]
         public WorkbookUpdateSharedTypeKind? Kind { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The user-defined name (display name) of the workbook. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
+        [WirePath("properties.serializedData")]
         public string SerializedData { get; set; }
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> A list of 0 or more tags that are associated with this workbook definition. </summary>
+        [WirePath("properties.tags")]
         public IList<string> TagsPropertiesTags { get; }
         /// <summary> The description of the workbook. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The unique revision id for this workbook definition. </summary>
+        [WirePath("properties.revision")]
         public string Revision { get; set; }
     }
 }

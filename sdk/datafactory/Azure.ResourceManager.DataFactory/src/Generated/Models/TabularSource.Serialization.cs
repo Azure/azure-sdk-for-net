@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TabularSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TabularSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TabularSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TabularSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TabularSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TabularSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,6 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "EloquaSource": return EloquaSource.DeserializeEloquaSource(element, options);
                     case "GoogleAdWordsSource": return GoogleAdWordsSource.DeserializeGoogleAdWordsSource(element, options);
                     case "GoogleBigQuerySource": return GoogleBigQuerySource.DeserializeGoogleBigQuerySource(element, options);
+                    case "GoogleBigQueryV2Source": return GoogleBigQueryV2Source.DeserializeGoogleBigQueryV2Source(element, options);
                     case "GreenplumSource": return GreenplumSource.DeserializeGreenplumSource(element, options);
                     case "HBaseSource": return HBaseSource.DeserializeHBaseSource(element, options);
                     case "HiveSource": return HiveSource.DeserializeHiveSource(element, options);
@@ -140,6 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "PaypalSource": return PaypalSource.DeserializePaypalSource(element, options);
                     case "PhoenixSource": return PhoenixSource.DeserializePhoenixSource(element, options);
                     case "PostgreSqlSource": return PostgreSqlSource.DeserializePostgreSqlSource(element, options);
+                    case "PostgreSqlV2Source": return PostgreSqlV2Source.DeserializePostgreSqlV2Source(element, options);
                     case "PrestoSource": return PrestoSource.DeserializePrestoSource(element, options);
                     case "QuickBooksSource": return QuickBooksSource.DeserializeQuickBooksSource(element, options);
                     case "ResponsysSource": return ResponsysSource.DeserializeResponsysSource(element, options);
@@ -154,6 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHubSource": return SapOpenHubSource.DeserializeSapOpenHubSource(element, options);
                     case "SapTableSource": return SapTableSource.DeserializeSapTableSource(element, options);
                     case "ServiceNowSource": return ServiceNowSource.DeserializeServiceNowSource(element, options);
+                    case "ServiceNowV2Source": return ServiceNowV2Source.DeserializeServiceNowV2Source(element, options);
                     case "ShopifySource": return ShopifySource.DeserializeShopifySource(element, options);
                     case "SparkSource": return SparkSource.DeserializeSparkSource(element, options);
                     case "SqlDWSource": return SqlDWSource.DeserializeSqlDWSource(element, options);
@@ -262,7 +264,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TabularSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TabularSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +280,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeTabularSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TabularSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TabularSource)} does not support reading '{options.Format}' format.");
             }
         }
 

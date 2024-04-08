@@ -1,10 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.Azure.WebJobs.Description;
-using Microsoft.Azure.WebJobs.Host.Config;
-using Microsoft.Azure.WebJobs.Host.Executors;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -14,6 +10,11 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+
+using Microsoft.Azure.WebJobs.Description;
+using Microsoft.Azure.WebJobs.Host.Config;
+using Microsoft.Azure.WebJobs.Host.Executors;
+using Microsoft.Extensions.Logging;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
@@ -46,13 +47,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     .BindToTrigger(new AuthenticationEventBindingProvider(this));
 
             _base_uri = context.GetWebhookHandler();
-            //LogInformation(string.Format(AuthenticationEventResource.Log_EventHandler_Url, Uri));
         }
 
-        internal void LogInformation(string message)
+        internal void Log(string message, LogLevel logLevel = LogLevel.Information, params object[] args)
         {
             Console.WriteLine(message);
-            _logger.LogInformation(message);
+            _logger.Log(logLevel, message, args);
         }
 
         internal void DisplayAzureFunctionInfoToConsole(string functionName)

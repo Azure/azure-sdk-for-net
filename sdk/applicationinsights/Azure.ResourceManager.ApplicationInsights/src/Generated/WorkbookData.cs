@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
@@ -103,30 +102,43 @@ namespace Azure.ResourceManager.ApplicationInsights
         }
 
         /// <summary> The user-defined name (display name) of the workbook. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
+        [WirePath("properties.serializedData")]
         public string SerializedData { get; set; }
         /// <summary> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </summary>
+        [WirePath("properties.version")]
         public string Version { get; set; }
         /// <summary> Date and time in UTC of the last modification that was made to this workbook definition. </summary>
+        [WirePath("properties.timeModified")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
+        [WirePath("properties.category")]
         public string Category { get; set; }
         /// <summary> Unique user id of the specific user that owns this workbook. </summary>
+        [WirePath("properties.userId")]
         public string UserId { get; }
         /// <summary> ResourceId for a source resource. </summary>
+        [WirePath("properties.sourceId")]
         public string SourceId { get; set; }
         /// <summary> The resourceId to the storage account when bring your own storage is used. </summary>
+        [WirePath("properties.storageUri")]
         public Uri StorageUri { get; set; }
         /// <summary> The description of the workbook. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The unique revision id for this workbook definition. </summary>
+        [WirePath("properties.revision")]
         public string Revision { get; }
         /// <summary> Identity used for BYOS. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The kind of workbook. Only valid value is shared. </summary>
+        [WirePath("kind")]
         public WorkbookSharedTypeKind? Kind { get; set; }
         /// <summary> Resource etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; set; }
     }
 }

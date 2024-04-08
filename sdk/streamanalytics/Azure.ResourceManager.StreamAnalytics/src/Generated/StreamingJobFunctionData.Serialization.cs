@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<StreamingJobFunctionProperties>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             string name = default;
             ResourceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.StreamAnalytics
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new StreamingJobFunctionData(id, name, type, serializedAdditionalRawData, properties);
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamingJobFunctionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionData)} does not support reading '{options.Format}' format.");
             }
         }
 

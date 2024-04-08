@@ -2112,14 +2112,22 @@ namespace Azure.Messaging.EventGrid
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationIdentifierModel"/>. </summary>
+        /// <param name="kind"> The identifier kind. Only required in responses. </param>
         /// <param name="rawId"> Raw Id of the identifier. Optional in requests, required in responses. </param>
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null)
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(CommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
         {
-            return new CommunicationIdentifierModel(rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            return new CommunicationIdentifierModel(
+                kind,
+                rawId,
+                communicationUser,
+                phoneNumber,
+                microsoftTeamsUser,
+                microsoftTeamsApp);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.CommunicationUserIdentifierModel"/>. </summary>
@@ -2158,6 +2166,15 @@ namespace Azure.Messaging.EventGrid
         public static MicrosoftTeamsUserIdentifierModel MicrosoftTeamsUserIdentifierModel(string userId = null, bool? isAnonymous = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
             return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <param name="appId"> The Id of the Microsoft Teams application. </param>
+        /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
+        /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
+        public static MicrosoftTeamsAppIdentifier MicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
+        {
+            return new MicrosoftTeamsAppIdentifier(appId, cloud);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallCustomContext"/>. </summary>
@@ -2763,6 +2780,33 @@ namespace Azure.Messaging.EventGrid
         public static AcsRouterChannelConfiguration AcsRouterChannelConfiguration(string channelId = null, int? capacityCostPerJob = null, int? maxNumberOfJobs = null)
         {
             return new AcsRouterChannelConfiguration(channelId, capacityCostPerJob, maxNumberOfJobs);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/>. </summary>
+        /// <param name="workerId"> Router Worker Updated Worker Id. </param>
+        /// <param name="queueAssignments"> Router Worker Updated Queue Info. </param>
+        /// <param name="channelConfigurations"> Router Worker Updated Channel Configuration. </param>
+        /// <param name="totalCapacity"> Router Worker Updated Total Capacity. </param>
+        /// <param name="labels"> Router Worker Updated Labels. </param>
+        /// <param name="tags"> Router Worker Updated Tags. </param>
+        /// <param name="updatedWorkerProperties"> Router Worker Properties Updated. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsRouterWorkerUpdatedEventData"/> instance for mocking. </returns>
+        public static AcsRouterWorkerUpdatedEventData AcsRouterWorkerUpdatedEventData(string workerId = null, IEnumerable<AcsRouterQueueDetails> queueAssignments = null, IEnumerable<AcsRouterChannelConfiguration> channelConfigurations = null, int? totalCapacity = null, IReadOnlyDictionary<string, string> labels = null, IReadOnlyDictionary<string, string> tags = null, IEnumerable<AcsRouterUpdatedWorkerProperty> updatedWorkerProperties = null)
+        {
+            queueAssignments ??= new List<AcsRouterQueueDetails>();
+            channelConfigurations ??= new List<AcsRouterChannelConfiguration>();
+            labels ??= new Dictionary<string, string>();
+            tags ??= new Dictionary<string, string>();
+            updatedWorkerProperties ??= new List<AcsRouterUpdatedWorkerProperty>();
+
+            return new AcsRouterWorkerUpdatedEventData(
+                workerId,
+                queueAssignments?.ToList(),
+                channelConfigurations?.ToList(),
+                totalCapacity,
+                labels,
+                tags,
+                updatedWorkerProperties?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsChatMessageReceivedEventData"/>. </summary>
@@ -3430,6 +3474,64 @@ namespace Azure.Messaging.EventGrid
                 engagementContext,
                 userAgent,
                 engagement);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/>. </summary>
+        /// <param name="mimeType"> The MIME type of the file this media represents. </param>
+        /// <param name="mediaId"> The media identifier. </param>
+        /// <param name="fileName"> The filename of the underlying media file as specified when uploaded. </param>
+        /// <param name="caption"> The caption for the media object, if supported and provided. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageMediaContent"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageMediaContent AcsAdvancedMessageMediaContent(string mimeType = null, string mediaId = null, string fileName = null, string caption = null)
+        {
+            return new AcsAdvancedMessageMediaContent(mimeType, mediaId, fileName, caption);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageContext"/>. </summary>
+        /// <param name="from"> The WhatsApp ID for the customer who replied to an inbound message. </param>
+        /// <param name="messageId"> The message ID for the sent message for an inbound reply. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageContext"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageContext AcsAdvancedMessageContext(string @from = null, string messageId = null)
+        {
+            return new AcsAdvancedMessageContext(@from, messageId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/>. </summary>
+        /// <param name="text"> The Text of the button. </param>
+        /// <param name="payload"> The Payload of the button which was clicked by the user, setup by the business. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageButtonContent"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageButtonContent AcsAdvancedMessageButtonContent(string text = null, string payload = null)
+        {
+            return new AcsAdvancedMessageButtonContent(text, payload);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/>. </summary>
+        /// <param name="replyKind"> The Message interactive reply type. </param>
+        /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
+        /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveContent"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageInteractiveContent AcsAdvancedMessageInteractiveContent(AcsInteractiveReplyKind? replyKind = null, AcsAdvancedMessageInteractiveButtonReplyContent buttonReply = null, AcsAdvancedMessageInteractiveListReplyContent listReply = null)
+        {
+            return new AcsAdvancedMessageInteractiveContent(replyKind, buttonReply, listReply);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/>. </summary>
+        /// <param name="buttonId"> The ID of the button. </param>
+        /// <param name="title"> The title of the button. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveButtonReplyContent"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageInteractiveButtonReplyContent AcsAdvancedMessageInteractiveButtonReplyContent(string buttonId = null, string title = null)
+        {
+            return new AcsAdvancedMessageInteractiveButtonReplyContent(buttonId, title);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/>. </summary>
+        /// <param name="listItemId"> The ID of the selected list item. </param>
+        /// <param name="title"> The title of the selected list item. </param>
+        /// <param name="description"> The sescription of the selected row. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsAdvancedMessageInteractiveListReplyContent"/> instance for mocking. </returns>
+        public static AcsAdvancedMessageInteractiveListReplyContent AcsAdvancedMessageInteractiveListReplyContent(string listItemId = null, string title = null, string description = null)
+        {
+            return new AcsAdvancedMessageInteractiveListReplyContent(listItemId, title, description);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.PolicyInsightsPolicyStateCreatedEventData"/>. </summary>
@@ -4133,6 +4235,35 @@ namespace Azure.Messaging.EventGrid
             output ??= new List<string>();
 
             return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output?.ToList(), failureMessage);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/>. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionAddedEventData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionAddedEventData ApiCenterApiDefinitionAddedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
+        {
+            return new ApiCenterApiDefinitionAddedEventData(title, description, specification);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiSpecification"/>. </summary>
+        /// <param name="name"> Specification name. </param>
+        /// <param name="version"> Specification version. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiSpecification"/> instance for mocking. </returns>
+        public static ApiCenterApiSpecification ApiCenterApiSpecification(string name = null, string version = null)
+        {
+            return new ApiCenterApiSpecification(name, version);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/>. </summary>
+        /// <param name="title"> API definition title. </param>
+        /// <param name="description"> API definition description. </param>
+        /// <param name="specification"> API specification details. </param>
+        /// <returns> A new <see cref="SystemEvents.ApiCenterApiDefinitionUpdatedEventData"/> instance for mocking. </returns>
+        public static ApiCenterApiDefinitionUpdatedEventData ApiCenterApiDefinitionUpdatedEventData(string title = null, string description = null, ApiCenterApiSpecification specification = null)
+        {
+            return new ApiCenterApiDefinitionUpdatedEventData(title, description, specification);
         }
     }
 }

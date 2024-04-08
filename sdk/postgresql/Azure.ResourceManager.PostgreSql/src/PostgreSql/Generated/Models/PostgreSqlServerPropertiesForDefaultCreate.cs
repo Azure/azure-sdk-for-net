@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.Models
 {
@@ -52,8 +51,10 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The administrator's login name of a server. Can only be specified when the server is being created (and is required for creation). </summary>
+        [WirePath("administratorLogin")]
         public string AdministratorLogin { get; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("administratorLoginPassword")]
         public string AdministratorLoginPassword { get; }
     }
 }

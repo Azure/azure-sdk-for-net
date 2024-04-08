@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -26,15 +25,15 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(CredentialsInternal);
+            writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue(Container);
+            writer.WriteObjectValue<SearchIndexerDataContainer>(Container);
             if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
@@ -46,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataChangeDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                    writer.WriteObjectValue(DataChangeDetectionPolicy);
+                    writer.WriteObjectValue<DataChangeDetectionPolicy>(DataChangeDetectionPolicy);
                 }
                 else
                 {
@@ -58,7 +57,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (DataDeletionDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                    writer.WriteObjectValue(DataDeletionDetectionPolicy);
+                    writer.WriteObjectValue<DataDeletionDetectionPolicy>(DataDeletionDetectionPolicy);
                 }
                 else
                 {
@@ -75,7 +74,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -185,6 +184,22 @@ namespace Azure.Search.Documents.Indexes.Models
                 dataDeletionDetectionPolicy,
                 odataEtag,
                 encryptionKey);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerDataSourceConnection FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerDataSourceConnection(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchIndexerDataSourceConnection>(this);
+            return content;
         }
     }
 }

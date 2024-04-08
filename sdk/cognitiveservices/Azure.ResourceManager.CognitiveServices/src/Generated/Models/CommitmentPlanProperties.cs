@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -78,22 +77,31 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public CommitmentPlanProvisioningState? ProvisioningState { get; }
         /// <summary> Commitment plan guid. </summary>
+        [WirePath("commitmentPlanGuid")]
         public Guid? CommitmentPlanGuid { get; set; }
         /// <summary> Account hosting model. </summary>
+        [WirePath("hostingModel")]
         public ServiceAccountHostingModel? HostingModel { get; set; }
         /// <summary> Commitment plan type. </summary>
+        [WirePath("planType")]
         public string PlanType { get; set; }
         /// <summary> Cognitive Services account commitment period. </summary>
+        [WirePath("current")]
         public CommitmentPeriod Current { get; set; }
         /// <summary> AutoRenew commitment plan. </summary>
+        [WirePath("autoRenew")]
         public bool? AutoRenew { get; set; }
         /// <summary> Cognitive Services account commitment period. </summary>
+        [WirePath("next")]
         public CommitmentPeriod Next { get; set; }
         /// <summary> Cognitive Services account commitment period. </summary>
+        [WirePath("last")]
         public CommitmentPeriod Last { get; }
         /// <summary> The list of ProvisioningIssue. </summary>
+        [WirePath("provisioningIssues")]
         public IReadOnlyList<string> ProvisioningIssues { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.Query;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -30,7 +29,7 @@ namespace Azure.Monitor.Query.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body);
+            writer.WriteObjectValue<QueryBody>(Body);
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("method"u8);
@@ -38,6 +37,14 @@ namespace Azure.Monitor.Query.Models
             writer.WritePropertyName("workspace"u8);
             writer.WriteStringValue(Workspace);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BatchQueryRequest>(this);
+            return content;
         }
     }
 }

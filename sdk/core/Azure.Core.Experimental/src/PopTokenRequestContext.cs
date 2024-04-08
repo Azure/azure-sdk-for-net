@@ -19,9 +19,10 @@ namespace Azure.Core
         /// <param name="claims">Additional claims to be included in the token.</param>
         /// <param name="tenantId">The tenant ID to be included in the token request.</param>
         /// <param name="isCaeEnabled">Indicates whether to enable Continuous Access Evaluation (CAE) for the requested token.</param>
+        /// <param name="isProofOfPossessionEnabled">Indicates whether to enable Proof of Possession (PoP) for the requested token.</param>
         /// <param name="proofOfPossessionNonce">The nonce value required for PoP token requests.</param>
         /// <param name="request">The request to be authorized with a PoP token.</param>
-        public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
+        public PopTokenRequestContext(string[] scopes, string? parentRequestId = default, string? claims = default, string? tenantId = default, bool isCaeEnabled = false, bool isProofOfPossessionEnabled = false, string? proofOfPossessionNonce = default, Request? request = default)
         {
             Scopes = scopes;
             ParentRequestId = parentRequestId;
@@ -35,21 +36,19 @@ namespace Azure.Core
         /// <summary>
         /// Creates a new TokenRequestContext from this instance.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A <see cref="TokenRequestContext"/>.</returns>
         public TokenRequestContext ToTokenRequestContext()
         {
             return new TokenRequestContext(Scopes, ParentRequestId, Claims, TenantId, IsCaeEnabled);
         }
 
-        /// <summary>
-        /// Creates a new PopTokenRequestContext from a TokenRequestContext.
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="request"></param>
-        /// <returns></returns>
-        public static PopTokenRequestContext FromTokenRequestContext(TokenRequestContext context, Request? request = default)
+        /// <param name="context">The <see cref="TokenRequestContext"/> to use for creation of this instance.</param>
+        /// <param name="request">The <see cref="Request"/> to be authenticated.</param>
+        /// <param name="isProofOfPossessionEnabled">If <c>true</c> enables Proof of Possession (PoP) for the requested token.</param>
+        /// <returns>A <see cref="PopTokenRequestContext"/>.</returns>
+        public static PopTokenRequestContext FromTokenRequestContext(TokenRequestContext context, Request? request = default, bool? isProofOfPossessionEnabled = false)
         {
-            return new PopTokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims, context.TenantId, context.IsCaeEnabled, default, request);
+            return new PopTokenRequestContext(context.Scopes, context.ParentRequestId, context.Claims, context.TenantId, context.IsCaeEnabled, isProofOfPossessionEnabled ?? false, default, request);
         }
 
         /// <summary>
@@ -87,6 +86,11 @@ namespace Azure.Core
         /// If you don't handle CAE responses in these API calls, your app could end up in a loop retrying an API call with a token that is still in the returned lifespan of the token but has been revoked due to CAE.
         /// </remarks>
         public bool IsCaeEnabled { get; }
+
+        /// <summary>
+        /// Indicates whether to enable Proof of Possession (PoP) for the requested token.
+        /// </summary>
+        public bool IsProofOfPossessionEnabled { get; }
 
         /// <summary>
         /// The nonce value required for PoP token requests. This is typically retrieved from teh WWW-Authenticate header of a 401 challenge response.

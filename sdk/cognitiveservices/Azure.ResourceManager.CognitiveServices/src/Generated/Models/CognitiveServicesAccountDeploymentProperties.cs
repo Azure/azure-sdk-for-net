@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -78,20 +76,28 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Gets the status of the resource at the time the operation was called. </summary>
+        [WirePath("provisioningState")]
         public CognitiveServicesAccountDeploymentProvisioningState? ProvisioningState { get; }
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        [WirePath("model")]
         public CognitiveServicesAccountDeploymentModel Model { get; set; }
         /// <summary> Properties of Cognitive Services account deployment model. </summary>
+        [WirePath("scaleSettings")]
         public CognitiveServicesAccountDeploymentScaleSettings ScaleSettings { get; set; }
         /// <summary> The capabilities. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyDictionary<string, string> Capabilities { get; }
         /// <summary> The name of RAI policy. </summary>
+        [WirePath("raiPolicyName")]
         public string RaiPolicyName { get; set; }
         /// <summary> The call rate limit Cognitive Services account. </summary>
+        [WirePath("callRateLimit")]
         public ServiceAccountCallRateLimit CallRateLimit { get; }
         /// <summary> Gets the rate limits. </summary>
+        [WirePath("rateLimits")]
         public IReadOnlyList<ServiceAccountThrottlingRule> RateLimits { get; }
         /// <summary> Deployment model version upgrade option. </summary>
+        [WirePath("versionUpgradeOption")]
         public DeploymentModelVersionUpgradeOption? VersionUpgradeOption { get; set; }
     }
 }

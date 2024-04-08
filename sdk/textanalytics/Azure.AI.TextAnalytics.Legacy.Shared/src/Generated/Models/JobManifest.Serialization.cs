@@ -16,8 +16,16 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Tasks);
+            writer.WriteObjectValue<JobManifestTasks>(Tasks);
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<JobManifest>(this);
+            return content;
         }
     }
 }

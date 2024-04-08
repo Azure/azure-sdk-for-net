@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Folder))
             {
                 writer.WritePropertyName("folder"u8);
-                writer.WriteObjectValue(Folder);
+                writer.WriteObjectValue<DatasetFolder>(Folder, options);
             }
             foreach (var item in AdditionalProperties)
             {
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDatasetProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,9 +130,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "Avro": return AvroDataset.DeserializeAvroDataset(element, options);
                     case "AzureBlob": return AzureBlobDataset.DeserializeAzureBlobDataset(element, options);
                     case "AzureBlobFSFile": return AzureBlobFSDataset.DeserializeAzureBlobFSDataset(element, options);
+                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
                     case "AzureDataExplorerTable": return AzureDataExplorerTableDataset.DeserializeAzureDataExplorerTableDataset(element, options);
                     case "AzureDataLakeStoreFile": return AzureDataLakeStoreDataset.DeserializeAzureDataLakeStoreDataset(element, options);
-                    case "AzureDatabricksDeltaLakeDataset": return AzureDatabricksDeltaLakeDataset.DeserializeAzureDatabricksDeltaLakeDataset(element, options);
                     case "AzureMariaDBTable": return AzureMariaDBTableDataset.DeserializeAzureMariaDBTableDataset(element, options);
                     case "AzureMySqlTable": return AzureMySqlTableDataset.DeserializeAzureMySqlTableDataset(element, options);
                     case "AzurePostgreSqlTable": return AzurePostgreSqlTableDataset.DeserializeAzurePostgreSqlTableDataset(element, options);
@@ -162,6 +161,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "FileShare": return FileShareDataset.DeserializeFileShareDataset(element, options);
                     case "GoogleAdWordsObject": return GoogleAdWordsObjectDataset.DeserializeGoogleAdWordsObjectDataset(element, options);
                     case "GoogleBigQueryObject": return GoogleBigQueryObjectDataset.DeserializeGoogleBigQueryObjectDataset(element, options);
+                    case "GoogleBigQueryV2Object": return GoogleBigQueryV2ObjectDataset.DeserializeGoogleBigQueryV2ObjectDataset(element, options);
                     case "GreenplumTable": return GreenplumTableDataset.DeserializeGreenplumTableDataset(element, options);
                     case "HBaseObject": return HBaseObjectDataset.DeserializeHBaseObjectDataset(element, options);
                     case "HiveObject": return HiveObjectDataset.DeserializeHiveObjectDataset(element, options);
@@ -191,6 +191,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "PaypalObject": return PaypalObjectDataset.DeserializePaypalObjectDataset(element, options);
                     case "PhoenixObject": return PhoenixObjectDataset.DeserializePhoenixObjectDataset(element, options);
                     case "PostgreSqlTable": return PostgreSqlTableDataset.DeserializePostgreSqlTableDataset(element, options);
+                    case "PostgreSqlV2Table": return PostgreSqlV2TableDataset.DeserializePostgreSqlV2TableDataset(element, options);
                     case "PrestoObject": return PrestoObjectDataset.DeserializePrestoObjectDataset(element, options);
                     case "QuickBooksObject": return QuickBooksObjectDataset.DeserializeQuickBooksObjectDataset(element, options);
                     case "RelationalTable": return RelationalTableDataset.DeserializeRelationalTableDataset(element, options);
@@ -209,6 +210,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "SapOpenHubTable": return SapOpenHubTableDataset.DeserializeSapOpenHubTableDataset(element, options);
                     case "SapTableResource": return SapTableResourceDataset.DeserializeSapTableResourceDataset(element, options);
                     case "ServiceNowObject": return ServiceNowObjectDataset.DeserializeServiceNowObjectDataset(element, options);
+                    case "ServiceNowV2Object": return ServiceNowV2ObjectDataset.DeserializeServiceNowV2ObjectDataset(element, options);
                     case "SharePointOnlineListResource": return SharePointOnlineListResourceDataset.DeserializeSharePointOnlineListResourceDataset(element, options);
                     case "ShopifyObject": return ShopifyObjectDataset.DeserializeShopifyObjectDataset(element, options);
                     case "SnowflakeTable": return SnowflakeDataset.DeserializeSnowflakeDataset(element, options);
@@ -238,7 +240,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryDatasetProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDatasetProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

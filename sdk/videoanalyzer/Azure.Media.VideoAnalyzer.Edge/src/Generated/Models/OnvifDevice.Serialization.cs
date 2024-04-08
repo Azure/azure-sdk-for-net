@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -20,17 +19,17 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(Hostname))
             {
                 writer.WritePropertyName("hostname"u8);
-                writer.WriteObjectValue(Hostname);
+                writer.WriteObjectValue<OnvifHostName>(Hostname);
             }
             if (Optional.IsDefined(SystemDateTime))
             {
                 writer.WritePropertyName("systemDateTime"u8);
-                writer.WriteObjectValue(SystemDateTime);
+                writer.WriteObjectValue<OnvifSystemDateTime>(SystemDateTime);
             }
             if (Optional.IsDefined(Dns))
             {
                 writer.WritePropertyName("dns"u8);
-                writer.WriteObjectValue(Dns);
+                writer.WriteObjectValue<OnvifDns>(Dns);
             }
             if (Optional.IsCollectionDefined(MediaProfiles))
             {
@@ -38,7 +37,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in MediaProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaProfile>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -100,6 +99,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 }
             }
             return new OnvifDevice(hostname, systemDateTime, dns, mediaProfiles ?? new ChangeTrackingList<MediaProfile>());
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OnvifDevice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDevice(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OnvifDevice>(this);
+            return content;
         }
     }
 }

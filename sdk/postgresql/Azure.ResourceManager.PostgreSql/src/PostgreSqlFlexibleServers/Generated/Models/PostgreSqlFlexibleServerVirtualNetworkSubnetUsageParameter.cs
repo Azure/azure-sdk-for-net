@@ -61,6 +61,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Virtual network resource id. </summary>
+        [WirePath("virtualNetworkArmResourceId")]
         public ResourceIdentifier VirtualNetworkArmResourceId { get; set; }
     }
 }

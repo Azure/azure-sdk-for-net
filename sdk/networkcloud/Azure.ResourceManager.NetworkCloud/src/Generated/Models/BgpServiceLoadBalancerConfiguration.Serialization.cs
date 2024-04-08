@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpAdvertisements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BgpAdvertisement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in BgpPeers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceLoadBalancerBgpPeer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStartArray();
                 foreach (var item in IPAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPAddressPool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             FabricPeeringEnabled? fabricPeeringEnabled = default;
             IList<IPAddressPool> ipAddressPools = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("bgpAdvertisements"u8))
@@ -161,10 +160,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new BgpServiceLoadBalancerConfiguration(bgpAdvertisements ?? new ChangeTrackingList<BgpAdvertisement>(), bgpPeers ?? new ChangeTrackingList<ServiceLoadBalancerBgpPeer>(), fabricPeeringEnabled, ipAddressPools ?? new ChangeTrackingList<IPAddressPool>(), serializedAdditionalRawData);
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBgpServiceLoadBalancerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

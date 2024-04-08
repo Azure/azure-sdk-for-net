@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Monitor.Query.Models;
 using Moq;
 using NUnit.Framework;
@@ -119,6 +120,36 @@ namespace Azure.Monitor.Query.Tests
             Assert.AreEqual("namespace", metricsQueryResult.Namespace);
             Assert.AreEqual("eastus", metricsQueryResult.ResourceRegion);
             Assert.IsNotNull(metricsQueryResult);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNull_UsesDefaultEndpoint()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+
+            // Act
+            var client = new MetricsQueryClient(credential);
+
+            // Assert
+            Assert.AreEqual(MetricsQueryAudience.AzurePublicCloud.ToString(), client.Endpoint.OriginalString);
+        }
+
+        [Test]
+        public void Constructor_WhenOptionsIsNotNull_UsesOptionsAudience()
+        {
+            // Arrange
+            var credential = new DefaultAzureCredential();
+            var options = new MetricsQueryClientOptions
+            {
+                Audience = "https://custom.audience"
+            };
+
+            // Act
+            var client = new MetricsQueryClient(credential, options);
+
+            // Assert
+            Assert.AreEqual("https://custom.audience", client.Endpoint.OriginalString);
         }
     }
 }

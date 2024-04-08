@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
@@ -23,14 +22,14 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4DomainResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<FhirR4Narrative>(Text, options);
             }
             if (Optional.IsCollectionDefined(Contained))
             {
@@ -38,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Contained)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Resource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Extension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ModifierExtension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Extension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +71,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                writer.WriteObjectValue<FhirR4Meta>(Meta, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -104,7 +103,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4DomainResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +236,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +252,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeFhirR4DomainResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4DomainResource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -271,7 +270,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnknownFhirR4DomainResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

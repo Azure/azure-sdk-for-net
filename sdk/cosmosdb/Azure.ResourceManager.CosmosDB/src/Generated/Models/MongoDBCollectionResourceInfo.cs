@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,16 +82,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB MongoDB collection. </summary>
+        [WirePath("id")]
         public string CollectionName { get; set; }
         /// <summary> A key-value pair of shard keys to be applied for the request. </summary>
+        [WirePath("shardKey")]
         public IDictionary<string, string> ShardKey { get; }
         /// <summary> List of index keys. </summary>
+        [WirePath("indexes")]
         public IList<MongoDBIndex> Indexes { get; }
         /// <summary> Analytical TTL. </summary>
+        [WirePath("analyticalStorageTtl")]
         public int? AnalyticalStorageTtl { get; set; }
         /// <summary> Parameters to indicate the information about the restore. </summary>
+        [WirePath("restoreParameters")]
         public ResourceRestoreParameters RestoreParameters { get; set; }
         /// <summary> Enum to indicate the mode of resource creation. </summary>
+        [WirePath("createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
     }
 }

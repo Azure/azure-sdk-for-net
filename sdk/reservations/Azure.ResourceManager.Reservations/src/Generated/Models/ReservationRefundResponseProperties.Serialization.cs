@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Reservations;
 
 namespace Azure.ResourceManager.Reservations.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,22 +39,22 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(BillingRefundAmount))
             {
                 writer.WritePropertyName("billingRefundAmount"u8);
-                writer.WriteObjectValue(BillingRefundAmount);
+                writer.WriteObjectValue<PurchasePrice>(BillingRefundAmount, options);
             }
             if (Optional.IsDefined(PricingRefundAmount))
             {
                 writer.WritePropertyName("pricingRefundAmount"u8);
-                writer.WriteObjectValue(PricingRefundAmount);
+                writer.WriteObjectValue<PurchasePrice>(PricingRefundAmount, options);
             }
             if (Optional.IsDefined(PolicyResult))
             {
                 writer.WritePropertyName("policyResult"u8);
-                writer.WriteObjectValue(PolicyResult);
+                writer.WriteObjectValue<RefundPolicyResult>(PolicyResult, options);
             }
             if (Optional.IsDefined(BillingInformation))
             {
                 writer.WritePropertyName("billingInformation"u8);
-                writer.WriteObjectValue(BillingInformation);
+                writer.WriteObjectValue<ReservationRefundBillingInformation>(BillingInformation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationRefundResponseProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Reservations.Models
             RefundPolicyResult policyResult = default;
             ReservationRefundBillingInformation billingInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sessionId"u8))
@@ -161,10 +160,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ReservationRefundResponseProperties(
                 sessionId,
                 quantity,
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationRefundResponseProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationRefundResponseProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -55,7 +54,7 @@ namespace Azure.DigitalTwins.Core
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(querySpecification);
+            content.JsonWriter.WriteObjectValue<QuerySpecification>(querySpecification);
             request.Content = content;
             return message;
         }

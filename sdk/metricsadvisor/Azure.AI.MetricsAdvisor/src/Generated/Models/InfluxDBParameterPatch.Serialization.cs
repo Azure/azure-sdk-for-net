@@ -6,12 +6,18 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
     internal partial class InfluxDBParameterPatch : IUtf8JsonSerializable
     {
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<InfluxDBParameterPatch>(this);
+            return content;
+        }
     }
 }

@@ -912,6 +912,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.Throws<ArgumentOutOfRangeException>(() => new Filter<DocumentMock>(equalsValue));
         }
 
+        [Fact]
+        public void FilterDurationAsString()
+        {
+            // ARRANGE
+            var equalsValue = new FilterInfo("Duration", FilterInfoPredicate.Equal, "123");
+
+            // ACT
+            bool result1 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("123", CultureInfo.InvariantCulture).ToString()));
+            bool result2 = new Filter<DocumentMockWithStringDuration>(equalsValue).Check(new DocumentMockWithStringDuration(TimeSpan.Parse("124", CultureInfo.InvariantCulture).ToString()));
+
+            // ASSERT
+            Assert.True(result1);
+            Assert.False(result2);
+        }
         #endregion
 
         #region String
@@ -1508,10 +1522,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
 
         #endregion
 
-        //TODO: Removed TelemetryContext related tests. Confirm they are not needed.
-
         #region Custom dimensions
-        [Fact(Skip = "CustomDimensions not working yet.")]
+        [Fact]
         public void FilterCustomDimensions()
         {
             // ARRANGE
@@ -1642,7 +1654,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.True(result9);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionContains()
         {
             // ARRANGE
@@ -1680,7 +1692,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.False(result3);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionDoesNotContain()
         {
             // ARRANGE

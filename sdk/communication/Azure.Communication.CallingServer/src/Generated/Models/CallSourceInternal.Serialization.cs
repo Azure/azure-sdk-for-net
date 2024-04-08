@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
 using Azure.Core;
 
 namespace Azure.Communication.CallingServer
@@ -19,7 +18,7 @@ namespace Azure.Communication.CallingServer
             if (Optional.IsDefined(CallerId))
             {
                 writer.WritePropertyName("callerId"u8);
-                writer.WriteObjectValue(CallerId);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(CallerId);
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -27,7 +26,7 @@ namespace Azure.Communication.CallingServer
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("identifier"u8);
-            writer.WriteObjectValue(Identifier);
+            writer.WriteObjectValue<CommunicationIdentifierModel>(Identifier);
             writer.WriteEndObject();
         }
 
@@ -63,6 +62,22 @@ namespace Azure.Communication.CallingServer
                 }
             }
             return new CallSourceInternal(callerId, displayName, identifier);
+        }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CallSourceInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCallSourceInternal(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CallSourceInternal>(this);
+            return content;
         }
     }
 }

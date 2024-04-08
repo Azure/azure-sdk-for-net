@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceConnector;
 
 namespace Azure.ResourceManager.ResourceConnector.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceSupportedVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplianceUpgradeGraphProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,7 +82,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             string applianceVersion = default;
             IReadOnlyList<ApplianceSupportedVersion> supportedVersions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("applianceVersion"u8))
@@ -107,10 +106,10 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new ApplianceUpgradeGraphProperties(applianceVersion, supportedVersions ?? new ChangeTrackingList<ApplianceSupportedVersion>(), serializedAdditionalRawData);
         }
 
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeApplianceUpgradeGraphProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplianceUpgradeGraphProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

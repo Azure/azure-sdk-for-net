@@ -25,19 +25,27 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(File))
             {
                 writer.WritePropertyName("file"u8);
-                writer.WriteObjectValue(File);
+                writer.WriteObjectValue<FileSourceInternal>(File);
             }
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<TextSourceInternal>(Text);
             }
             if (Optional.IsDefined(Ssml))
             {
                 writer.WritePropertyName("ssml"u8);
-                writer.WriteObjectValue(Ssml);
+                writer.WriteObjectValue<SsmlSourceInternal>(Ssml);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PlaySourceInternal>(this);
+            return content;
         }
     }
 }

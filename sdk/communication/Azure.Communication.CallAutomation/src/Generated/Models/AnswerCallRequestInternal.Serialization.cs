@@ -27,29 +27,32 @@ namespace Azure.Communication.CallAutomation
             if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
             }
             if (Optional.IsDefined(TranscriptionConfiguration))
             {
                 writer.WritePropertyName("transcriptionConfiguration"u8);
-                writer.WriteObjectValue(TranscriptionConfiguration);
+                writer.WriteObjectValue<TranscriptionOptionsInternal>(TranscriptionConfiguration);
             }
             if (Optional.IsDefined(CallIntelligenceOptions))
             {
                 writer.WritePropertyName("callIntelligenceOptions"u8);
-                writer.WriteObjectValue(CallIntelligenceOptions);
+                writer.WriteObjectValue<CallIntelligenceOptionsInternal>(CallIntelligenceOptions);
             }
             if (Optional.IsDefined(AnsweredBy))
             {
                 writer.WritePropertyName("answeredBy"u8);
-                writer.WriteObjectValue(AnsweredBy);
-            }
-            if (Optional.IsDefined(SourceCallerIdNumber))
-            {
-                writer.WritePropertyName("sourceCallerIdNumber"u8);
-                writer.WriteObjectValue(SourceCallerIdNumber);
+                writer.WriteObjectValue<CommunicationUserIdentifierModel>(AnsweredBy);
             }
             writer.WriteEndObject();
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AnswerCallRequestInternal>(this);
+            return content;
         }
     }
 }

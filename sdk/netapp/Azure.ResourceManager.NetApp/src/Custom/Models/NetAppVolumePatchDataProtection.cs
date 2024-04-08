@@ -4,6 +4,7 @@
 #nullable disable
 
 using System.ComponentModel;
+using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {

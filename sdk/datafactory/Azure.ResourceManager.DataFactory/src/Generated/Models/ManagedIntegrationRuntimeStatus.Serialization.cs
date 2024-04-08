@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedIntegrationRuntimeNode>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,14 +61,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in OtherErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedIntegrationRuntimeError>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(LastOperation))
             {
                 writer.WritePropertyName("lastOperation"u8);
-                writer.WriteObjectValue(LastOperation);
+                writer.WriteObjectValue<ManagedIntegrationRuntimeOperationResult>(LastOperation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedIntegrationRuntimeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -234,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeManagedIntegrationRuntimeStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedIntegrationRuntimeStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

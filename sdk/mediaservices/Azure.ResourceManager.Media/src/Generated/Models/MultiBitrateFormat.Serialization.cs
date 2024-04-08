@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiBitrateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaOutputFile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +63,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiBitrateFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Media.Models
             string odataType = "#Microsoft.Media.MultiBitrateFormat";
             string filenamePattern = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("outputFiles"u8))
@@ -120,10 +119,10 @@ namespace Azure.ResourceManager.Media.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new MultiBitrateFormat(odataType, filenamePattern, serializedAdditionalRawData, outputFiles ?? new ChangeTrackingList<MediaOutputFile>());
         }
 
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMultiBitrateFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiBitrateFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

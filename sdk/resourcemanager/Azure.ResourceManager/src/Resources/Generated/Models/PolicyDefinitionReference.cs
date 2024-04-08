@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -80,12 +78,16 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The ID of the policy definition or policy set definition. </summary>
+        [WirePath("policyDefinitionId")]
         public string PolicyDefinitionId { get; set; }
         /// <summary> The parameter values for the referenced policy rule. The keys are the parameter names. </summary>
+        [WirePath("parameters")]
         public IDictionary<string, ArmPolicyParameterValue> Parameters { get; }
         /// <summary> A unique id (within the policy set definition) for this policy definition reference. </summary>
+        [WirePath("policyDefinitionReferenceId")]
         public string PolicyDefinitionReferenceId { get; set; }
         /// <summary> The name of the groups that this policy definition reference belongs to. </summary>
+        [WirePath("groupNames")]
         public IList<string> GroupNames { get; }
     }
 }

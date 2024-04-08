@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -84,26 +82,37 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Application-specific metadata in the form of key-value pairs. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The mode to create a mongo cluster. </summary>
+        [WirePath("properties.createMode")]
         public CosmosDBAccountCreateMode? CreateMode { get; set; }
         /// <summary> Parameters used for restore operations. </summary>
+        [WirePath("properties.restoreParameters")]
         public MongoClusterRestoreParameters RestoreParameters { get; set; }
         /// <summary> The administrator's login for the mongo cluster. </summary>
+        [WirePath("properties.administratorLogin")]
         public string AdministratorLogin { get; set; }
         /// <summary> The password of the administrator login. </summary>
+        [WirePath("properties.administratorLoginPassword")]
         public string AdministratorLoginPassword { get; set; }
         /// <summary> The Mongo DB server version. Defaults to the latest available version if not specified. </summary>
+        [WirePath("properties.serverVersion")]
         public string ServerVersion { get; set; }
         /// <summary> The default mongo connection string for the cluster. </summary>
+        [WirePath("properties.connectionString")]
         public string ConnectionString { get; }
         /// <summary> Earliest restore timestamp in UTC ISO8601 format. </summary>
+        [WirePath("properties.earliestRestoreTime")]
         public string EarliestRestoreTime { get; }
         /// <summary> A provisioning state of the mongo cluster. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBProvisioningState? ProvisioningState { get; }
         /// <summary> A status of the mongo cluster. </summary>
+        [WirePath("properties.clusterStatus")]
         public MongoClusterStatus? ClusterStatus { get; }
         /// <summary> The list of node group specs in the cluster. </summary>
+        [WirePath("properties.nodeGroupSpecs")]
         public IList<NodeGroupSpec> NodeGroupSpecs { get; }
     }
 }

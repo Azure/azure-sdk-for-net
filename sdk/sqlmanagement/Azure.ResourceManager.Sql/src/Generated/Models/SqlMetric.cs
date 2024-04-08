@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -72,16 +71,22 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
+        [WirePath("endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The time step to be used to summarize the metric values. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> The unit of the metric. </summary>
+        [WirePath("unit")]
         public SqlMetricUnitType? Unit { get; }
         /// <summary> The name information for the metric. </summary>
+        [WirePath("name")]
         public SqlMetricName Name { get; }
         /// <summary> The metric values for the specified time window and timestep. </summary>
+        [WirePath("metricValues")]
         public IReadOnlyList<SqlMetricValue> MetricValues { get; }
     }
 }

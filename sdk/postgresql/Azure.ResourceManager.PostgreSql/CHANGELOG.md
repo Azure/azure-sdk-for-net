@@ -1,16 +1,42 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.6 (Unreleased)
 
 ### Features Added
-
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.5 (2024-03-28)
+
+### Features Added
+
+- Added backwards compatibility model factory methods to support features added in version 1.1.3.
+
+## 1.2.0-beta.4 (2024-03-26)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+## 1.1.3 (2024-03-25)
+
+### Features Added
+
+- Added model factory.
+
+## 1.1.2 (2024-03-25)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this document for more details.
+- Added experimental Bicep serialization.
+- Added GetIfExists methods.
+- Added mocking types.
 
 ## 1.2.0-beta.3 (2023-11-29)
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,14 +72,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
+            writer.WriteObjectValue<SsisPackageLocation>(PackageLocation, options);
             if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
@@ -99,10 +98,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                writer.WriteObjectValue<SsisExecutionCredential>(ExecutionCredential, options);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
+            writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -176,14 +175,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisPropertyOverride>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                writer.WriteObjectValue<SsisLogLocation>(LogLocation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -523,7 +522,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -539,7 +538,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

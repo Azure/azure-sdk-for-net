@@ -84,16 +84,22 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Gets the windows outbound ip addresses. </summary>
+        [WirePath("properties.windowsOutboundIpAddresses")]
         public IReadOnlyList<IPAddress> WindowsOutboundIPAddresses { get; }
         /// <summary> Gets the linux outbound ip addresses. </summary>
+        [WirePath("properties.linuxOutboundIpAddresses")]
         public IReadOnlyList<IPAddress> LinuxOutboundIPAddresses { get; }
         /// <summary> Gets the external inbound ip addresses. </summary>
+        [WirePath("properties.externalInboundIpAddresses")]
         public IReadOnlyList<IPAddress> ExternalInboundIPAddresses { get; }
         /// <summary> Gets the internal inbound ip addresses. </summary>
+        [WirePath("properties.internalInboundIpAddresses")]
         public IReadOnlyList<IPAddress> InternalInboundIPAddresses { get; }
         /// <summary> Property to enable and disable new private endpoint connection creation on ASE. </summary>
+        [WirePath("properties.allowNewPrivateEndpointConnections")]
         public bool? AllowNewPrivateEndpointConnections { get; set; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }
