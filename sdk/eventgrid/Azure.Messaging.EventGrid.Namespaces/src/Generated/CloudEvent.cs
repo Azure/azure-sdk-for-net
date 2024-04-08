@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Messaging.EventGrid.Namespaces
 {
     /// <summary> Properties of an event published to an Azure Messaging EventGrid Namespace topic using the CloudEvent 1.0 Schema. </summary>
-    public partial class CloudEvent
+    internal partial class CloudEvent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

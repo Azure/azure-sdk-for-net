@@ -13,6 +13,25 @@ namespace Azure.Messaging.EventGrid.Namespaces
     /// <summary> Model factory for models. </summary>
     public static partial class MessagingEventGridNamespacesModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveResult"/>. </summary>
+        /// <param name="value"> Array of receive responses, one per cloud event. </param>
+        /// <returns> A new <see cref="Namespaces.ReceiveResult"/> instance for mocking. </returns>
+        public static ReceiveResult ReceiveResult(IEnumerable<ReceiveDetails> value = null)
+        {
+            value ??= new List<ReceiveDetails>();
+
+            return new ReceiveResult(value?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Namespaces.ReceiveDetails"/>. </summary>
+        /// <param name="brokerProperties"> The Event Broker details. </param>
+        /// <param name="event"> Cloud Event details. </param>
+        /// <returns> A new <see cref="Namespaces.ReceiveDetails"/> instance for mocking. </returns>
+        public static ReceiveDetails ReceiveDetails(BrokerProperties brokerProperties = null, Messaging.CloudEvent @event = null)
+        {
+            return new ReceiveDetails(brokerProperties, @event, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Namespaces.BrokerProperties"/>. </summary>
         /// <param name="lockToken"> The token of the lock on the event. </param>
         /// <param name="deliveryCount"> The attempt count for delivering the event. </param>

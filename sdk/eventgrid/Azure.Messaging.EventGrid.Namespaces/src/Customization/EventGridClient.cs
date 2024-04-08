@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,13 +10,164 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    /// <summary>
-    ///
-    /// </summary>
+    [CodeGenSuppress("PublishCloudEvent", typeof(string), typeof(Azure.Messaging.EventGrid.Namespaces.CloudEvent), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEventAsync", typeof(string), typeof(Azure.Messaging.EventGrid.Namespaces.CloudEvent), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEvents", typeof(string), typeof(IEnumerable<Azure.Messaging.EventGrid.Namespaces.CloudEvent>), typeof(CancellationToken))]
+    [CodeGenSuppress("PublishCloudEventsAsync", typeof(string), typeof(IEnumerable<Azure.Messaging.EventGrid.Namespaces.CloudEvent>), typeof(CancellationToken))]
 #pragma warning disable AZC0007
     public partial class EventGridClient
 #pragma warning restore AZC0007
     {
+        // we have to duplicate the protocol method here because it has incorrect reference in its xml doc
+        /// <summary>
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> PublishCloudEventAsync(string topicName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.PublishCloudEvent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePublishCloudEventRequest(topicName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvent(string,RequestContent,RequestContext)']/*" />
+        public virtual Response PublishCloudEvent(string topicName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.PublishCloudEvent");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePublishCloudEventRequest(topicName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        // we have to duplicate the protocol method here because it has incorrect reference in its xml doc
+        /// <summary>
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEventsAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> PublishCloudEventsAsync(string topicName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.PublishCloudEvents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePublishCloudEventsRequest(topicName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Publish Batch Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="topicName"> Topic Name. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="topicName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="topicName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="../Generated/Docs/EventGridClient.xml" path="doc/members/member[@name='PublishCloudEvents(string,RequestContent,RequestContext)']/*" />
+        public virtual Response PublishCloudEvents(string topicName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(topicName, nameof(topicName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("EventGridClient.PublishCloudEvents");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreatePublishCloudEventsRequest(topicName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
         /// <summary> Publish Single Cloud Event to namespace topic. In case of success, the server responds with an HTTP 200 status code with an empty JSON object in response. Otherwise, the server can return various error codes. For example, 401: which indicates authorization failure, 403: which indicates quota exceeded or message is too large, 410: which indicates that specific topic is not found, 400: for bad request, and 500: for internal server error. </summary>
         /// <param name="topicName"> Topic Name. </param>
         /// <param name="event"> Single Cloud Event being published. </param>

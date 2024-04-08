@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.Namespaces
 {
-    internal partial class ReceiveResultInternal : IUtf8JsonSerializable, IJsonModel<ReceiveResultInternal>
+    public partial class ReceiveResult : IUtf8JsonSerializable, IJsonModel<ReceiveResult>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReceiveResultInternal>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReceiveResult>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ReceiveResultInternal>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ReceiveResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReceiveResultInternal)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue<ReceiveDetailsInternal>(item, options);
+                writer.WriteObjectValue<ReceiveDetails>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -51,19 +51,19 @@ namespace Azure.Messaging.EventGrid.Namespaces
             writer.WriteEndObject();
         }
 
-        ReceiveResultInternal IJsonModel<ReceiveResultInternal>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ReceiveResult IJsonModel<ReceiveResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReceiveResultInternal)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ReceiveResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeReceiveResultInternal(document.RootElement, options);
+            return DeserializeReceiveResult(document.RootElement, options);
         }
 
-        internal static ReceiveResultInternal DeserializeReceiveResultInternal(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ReceiveResult DeserializeReceiveResult(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -71,17 +71,17 @@ namespace Azure.Messaging.EventGrid.Namespaces
             {
                 return null;
             }
-            IReadOnlyList<ReceiveDetailsInternal> value = default;
+            IReadOnlyList<ReceiveDetails> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<ReceiveDetailsInternal> array = new List<ReceiveDetailsInternal>();
+                    List<ReceiveDetails> array = new List<ReceiveDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReceiveDetailsInternal.DeserializeReceiveDetailsInternal(item, options));
+                        array.Add(ReceiveDetails.DeserializeReceiveDetails(item, options));
                     }
                     value = array;
                     continue;
@@ -92,53 +92,53 @@ namespace Azure.Messaging.EventGrid.Namespaces
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ReceiveResultInternal(value, serializedAdditionalRawData);
+            return new ReceiveResult(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ReceiveResultInternal>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ReceiveResult>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReceiveResultInternal)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReceiveResult)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ReceiveResultInternal IPersistableModel<ReceiveResultInternal>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ReceiveResult IPersistableModel<ReceiveResult>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResultInternal>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ReceiveResult>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeReceiveResultInternal(document.RootElement, options);
+                        return DeserializeReceiveResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReceiveResultInternal)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReceiveResult)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ReceiveResultInternal>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ReceiveResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ReceiveResultInternal FromResponse(Response response)
+        internal static ReceiveResult FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeReceiveResultInternal(document.RootElement);
+            return DeserializeReceiveResult(document.RootElement);
         }
 
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue<ReceiveResultInternal>(this, new ModelReaderWriterOptions("W"));
+            content.JsonWriter.WriteObjectValue<ReceiveResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }
