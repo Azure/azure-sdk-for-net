@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
 {
-    public partial class RunStepError : IUtf8JsonSerializable, IJsonModel<RunStepError>
+    internal partial class RunStepError : IUtf8JsonSerializable, IJsonModel<RunStepError>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RunStepError>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

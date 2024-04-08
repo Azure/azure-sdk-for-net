@@ -126,15 +126,6 @@ namespace Azure.AI.OpenAI.Assistants
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Assistants.RunStepError"/>. </summary>
-        /// <param name="code"> The error code for this error. </param>
-        /// <param name="message"> The human-readable text associated with this error. </param>
-        /// <returns> A new <see cref="Assistants.RunStepError"/> instance for mocking. </returns>
-        public static RunStepError RunStepError(RunStepErrorCode code = default, string message = null)
-        {
-            return new RunStepError(code, message, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Assistants.RequiredToolCall"/>. </summary>
         /// <param name="type"> The object type for the required tool call. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>

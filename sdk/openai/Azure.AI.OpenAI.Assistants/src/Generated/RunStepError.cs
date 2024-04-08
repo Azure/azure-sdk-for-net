@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> The error information associated with a failed run step. </summary>
-    public partial class RunStepError
+    internal partial class RunStepError
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
