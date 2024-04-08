@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.Cdn
                     writer.WriteNull("originResponseTimeoutSeconds");
                 }
             }
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                writer.WritePropertyName("logScrubbing"u8);
+                writer.WriteObjectValue<ProfileLogScrubbing>(LogScrubbing, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.Cdn
             IReadOnlyDictionary<string, string> extendedProperties = default;
             Guid? frontDoorId = default;
             int? originResponseTimeoutSeconds = default;
+            ProfileLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -292,6 +298,15 @@ namespace Azure.ResourceManager.Cdn
                             originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("logScrubbing"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logScrubbing = ProfileLogScrubbing.DeserializeProfileLogScrubbing(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -316,6 +331,7 @@ namespace Azure.ResourceManager.Cdn
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),
                 frontDoorId,
                 originResponseTimeoutSeconds,
+                logScrubbing,
                 serializedAdditionalRawData);
         }
 

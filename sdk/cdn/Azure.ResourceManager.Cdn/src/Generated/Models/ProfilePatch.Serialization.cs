@@ -50,6 +50,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WritePropertyName("originResponseTimeoutSeconds"u8);
                 writer.WriteNumberValue(OriginResponseTimeoutSeconds.Value);
             }
+            if (Optional.IsDefined(LogScrubbing))
+            {
+                writer.WritePropertyName("logScrubbing"u8);
+                writer.WriteObjectValue<ProfileLogScrubbing>(LogScrubbing, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,8 +97,9 @@ namespace Azure.ResourceManager.Cdn.Models
             IDictionary<string, string> tags = default;
             ManagedServiceIdentity identity = default;
             int? originResponseTimeoutSeconds = default;
+            ProfileLogScrubbing logScrubbing = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("tags"u8))
@@ -137,16 +143,25 @@ namespace Azure.ResourceManager.Cdn.Models
                             originResponseTimeoutSeconds = property0.Value.GetInt32();
                             continue;
                         }
+                        if (property0.NameEquals("logScrubbing"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            logScrubbing = ProfileLogScrubbing.DeserializeProfileLogScrubbing(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, originResponseTimeoutSeconds, serializedAdditionalRawData);
+            serializedAdditionalRawData = additionalPropertiesDictionary;
+            return new ProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, originResponseTimeoutSeconds, logScrubbing, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ProfilePatch>.Write(ModelReaderWriterOptions options)

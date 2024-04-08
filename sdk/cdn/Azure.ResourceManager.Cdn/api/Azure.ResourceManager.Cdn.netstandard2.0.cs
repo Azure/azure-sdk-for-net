@@ -819,6 +819,7 @@ namespace Azure.ResourceManager.Cdn
         public System.Guid? FrontDoorId { get { throw null; } }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public string Kind { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing LogScrubbing { get { throw null; } set { } }
         public int? OriginResponseTimeoutSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.Cdn.Models.ProfileResourceState? ResourceState { get { throw null; } }
@@ -1029,7 +1030,7 @@ namespace Azure.ResourceManager.Cdn.Models
         public static Azure.ResourceManager.Cdn.Models.MigrateResult MigrateResult(string id = null, string migrateResultType = null, Azure.Core.ResourceIdentifier migratedProfileResourceIdId = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrationContent MigrationContent(Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), Azure.Core.ResourceIdentifier classicResourceReferenceId = null, string profileName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.MigrationWebApplicationFirewallMapping> migrationWebApplicationFirewallMappings = null) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.MigrationErrorType MigrationErrorType(string code = null, string resourceName = null, string errorMessage = null, string nextSteps = null) { throw null; }
-        public static Azure.ResourceManager.Cdn.ProfileData ProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), string kind = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Cdn.Models.ProfileResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.ProfileResourceState?), Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.ProfileProvisioningState?), System.Collections.Generic.IReadOnlyDictionary<string, string> extendedProperties = null, System.Guid? frontDoorId = default(System.Guid?), int? originResponseTimeoutSeconds = default(int?)) { throw null; }
+        public static Azure.ResourceManager.Cdn.ProfileData ProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName = default(Azure.ResourceManager.Cdn.Models.CdnSkuName?), string kind = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.Cdn.Models.ProfileResourceState? resourceState = default(Azure.ResourceManager.Cdn.Models.ProfileResourceState?), Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? provisioningState = default(Azure.ResourceManager.Cdn.Models.ProfileProvisioningState?), System.Collections.Generic.IReadOnlyDictionary<string, string> extendedProperties = null, System.Guid? frontDoorId = default(System.Guid?), int? originResponseTimeoutSeconds = default(int?), Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing logScrubbing = null) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public static Azure.ResourceManager.Cdn.ProfileData ProfileData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, Azure.ResourceManager.Cdn.Models.CdnSkuName? skuName, string kind, Azure.ResourceManager.Cdn.Models.ProfileResourceState? resourceState, Azure.ResourceManager.Cdn.Models.ProfileProvisioningState? provisioningState, System.Guid? frontDoorId, int? originResponseTimeoutSeconds) { throw null; }
         public static Azure.ResourceManager.Cdn.Models.RankingsResponse RankingsResponse(System.DateTimeOffset? dateTimeBegin = default(System.DateTimeOffset?), System.DateTimeOffset? dateTimeEnd = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Cdn.Models.RankingsResponseTablesItem> tables = null) { throw null; }
@@ -3854,10 +3855,22 @@ namespace Azure.ResourceManager.Cdn.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileChangeSkuWafMapping>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileChangeSkuWafMapping>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ProfileLogScrubbing : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>
+    {
+        public ProfileLogScrubbing() { }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules> ScrubbingRules { get { throw null; } }
+        public Azure.ResourceManager.Cdn.Models.ProfileScrubbingState? State { get { throw null; } set { } }
+        Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ProfilePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfilePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfilePatch>
     {
         public ProfilePatch() { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ProfileLogScrubbing LogScrubbing { get { throw null; } set { } }
         public int? OriginResponseTimeoutSeconds { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         Azure.ResourceManager.Cdn.Models.ProfilePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfilePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3955,6 +3968,37 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(Azure.ResourceManager.Cdn.Models.ProfileResourceState left, Azure.ResourceManager.Cdn.Models.ProfileResourceState right) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.ProfileResourceState (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.ProfileResourceState left, Azure.ResourceManager.Cdn.Models.ProfileResourceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ProfileScrubbingRules : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>
+    {
+        public ProfileScrubbingRules(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable matchVariable, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator selectorMatchOperator) { }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable MatchVariable { get { throw null; } set { } }
+        public string Selector { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator SelectorMatchOperator { get { throw null; } set { } }
+        public Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState? State { get { throw null; } set { } }
+        Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileScrubbingRules>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ProfileScrubbingState : System.IEquatable<Azure.ResourceManager.Cdn.Models.ProfileScrubbingState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ProfileScrubbingState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ProfileScrubbingState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.ProfileScrubbingState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.ProfileScrubbingState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ProfileScrubbingState left, Azure.ResourceManager.Cdn.Models.ProfileScrubbingState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.ProfileScrubbingState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ProfileScrubbingState left, Azure.ResourceManager.Cdn.Models.ProfileScrubbingState right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class ProfileUpgradeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Cdn.Models.ProfileUpgradeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Cdn.Models.ProfileUpgradeContent>
@@ -4660,6 +4704,60 @@ namespace Azure.ResourceManager.Cdn.Models
         public static bool operator ==(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
         public static implicit operator Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior left, Azure.ResourceManager.Cdn.Models.RuleQueryStringCachingBehavior right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScrubbingRuleEntryMatchOperator : System.IEquatable<Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScrubbingRuleEntryMatchOperator(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator EqualsAny { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchOperator right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScrubbingRuleEntryMatchVariable : System.IEquatable<Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScrubbingRuleEntryMatchVariable(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable QueryStringArgNames { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable RequestIPAddress { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable RequestUri { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryMatchVariable right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ScrubbingRuleEntryState : System.IEquatable<Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ScrubbingRuleEntryState(string value) { throw null; }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState left, Azure.ResourceManager.Cdn.Models.ScrubbingRuleEntryState right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
