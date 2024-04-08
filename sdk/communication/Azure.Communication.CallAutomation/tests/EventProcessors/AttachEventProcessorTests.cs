@@ -25,7 +25,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
             // Create and send event to event processor first
-            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);
@@ -66,7 +66,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             // Then replace with correct one
             handler.AttachOngoingEventProcessor<CallConnected>(CallConnectionId, passedEvent => callConnectionIdPassedFromOngoingEventProcessor = passedEvent.CallConnectionId);
 
-            SendAndProcessEvent(handler, new CallConnected(null, CallConnectionId, ServerCallId, CorelationId));
+            SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null));
 
             // Assert if the delegate was also called
             Assert.AreEqual(CallConnectionId, callConnectionIdPassedFromOngoingEventProcessor);

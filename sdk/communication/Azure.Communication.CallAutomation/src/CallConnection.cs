@@ -533,12 +533,11 @@ namespace Azure.Communication.CallAutomation
                 // validate RequestInitiator is not null or empty
                 Argument.AssertNotNull(options.ParticipantToRemove, nameof(options.ParticipantToRemove));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
-                {
-                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
-                };
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 
+                request.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+
+                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
                 var response = await RestClient.RemoveParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
 
                 var result = new RemoveParticipantResult(response);
@@ -583,12 +582,11 @@ namespace Azure.Communication.CallAutomation
                 if (options == null)
                     throw new ArgumentNullException(nameof(options));
 
-                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove))
-                {
-                    OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
-                };
+                RemoveParticipantRequestInternal request = new(CommunicationIdentifierSerializer.Serialize(options.ParticipantToRemove));
 
+                options.OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext;
+
+                request.OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri;
                 var response = RestClient.RemoveParticipant(CallConnectionId, request, cancellationToken);
 
                 var result = new RemoveParticipantResult(response);
@@ -627,7 +625,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetParticipant"/> is null. </exception>
-        /// <returns>A Response containing MuteParticipantsResponse.</returns>
+        /// <returns>A Response containing MuteParticipantResult.</returns>
         public virtual Response<MuteParticipantResult> MuteParticipant(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
@@ -641,7 +639,7 @@ namespace Azure.Communication.CallAutomation
                     request,
                     cancellationToken);
 
-                return Response.FromValue(new MuteParticipantResult(response.Value.ToString()), response.GetRawResponse());
+                return Response.FromValue(new MuteParticipantResult(), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -651,30 +649,28 @@ namespace Azure.Communication.CallAutomation
         }
 
         /// <summary>
-        /// Mute participant from the call with MuteParticipantOptions.
+        /// Mute participants from the call.
         /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="options">An optional object containing MuteParticipantOptions options and configurations.</param>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
-        /// <returns>A Response containing MuteParticipantsResponse.</returns>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <returns>A Response containing MuteParticipantResult. </returns>
         public virtual Response<MuteParticipantResult> MuteParticipant(MuteParticipantOptions options, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) })
-                {
-                    OperationContext = options.OperationContext
-                };
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
 
                 var response = RestClient.Mute(
                     CallConnectionId,
                     request,
                     cancellationToken);
 
-                return Response.FromValue(new MuteParticipantResult(response.Value.ToString()), response.GetRawResponse());
+                return Response.FromValue(new MuteParticipantResult(response.Value.OperationContext), response.GetRawResponse());
             }
             catch (Exception ex)
             {
@@ -694,31 +690,18 @@ namespace Azure.Communication.CallAutomation
         /// <returns></returns>
         public async virtual Task<Response<MuteParticipantResult>> MuteParticipantAsync(CommunicationIdentifier targetParticipant, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallConnection)}.{nameof(MuteParticipant)}");
-            scope.Start();
-            try
-            {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(targetParticipant) });
+            var options = new MuteParticipantOptions(targetParticipant);
 
-                var response = await RestClient.MuteAsync(
-                    CallConnectionId,
-                    request,
-                    cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MuteParticipantResult(response.Value.ToString()), response.GetRawResponse());
-            }
-            catch (Exception ex)
-            {
-                scope.Failed(ex);
-                throw;
-            }
+            return await MuteParticipantAsync(options, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Mute participants on the call.
-        /// Only Acs Users are currently supported.
         /// </summary>
-        /// <param name="options">An optional object containing MuteParticipantOptions options and configurations.</param>
+        /// <param name="options">Options for the MuteParticipant operation.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="options"/> OperationContext is too long. </exception>
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         /// <returns></returns>
         public async virtual Task<Response<MuteParticipantResult>> MuteParticipantAsync(MuteParticipantOptions options, CancellationToken cancellationToken = default)
@@ -727,16 +710,14 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) })
-                {
-                    OperationContext = options.OperationContext
-                };
+                if (options == null)
+                    throw new ArgumentNullException(nameof(options));
 
-                var response = await RestClient.MuteAsync(
-                    CallConnectionId,
-                    request,
-                    cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new MuteParticipantResult(response.Value.ToString()), response.GetRawResponse());
+                MuteParticipantsRequestInternal request = new(new List<CommunicationIdentifierModel>() { CommunicationIdentifierSerializer.Serialize(options.TargetParticipant) });
+
+                request.OperationContext = options.OperationContext;
+
+                return await RestClient.MuteAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -777,7 +758,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext == default ? Guid.NewGuid().ToString() : options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
                 var response = await RestClient.CancelAddParticipantAsync(CallConnectionId, request, cancellationToken).ConfigureAwait(false);
                 var result = new CancelAddParticipantOperationResult(response);
@@ -824,7 +805,7 @@ namespace Azure.Communication.CallAutomation
                 var request = new CancelAddParticipantRequestInternal(options.InvitationId)
                 {
                     OperationContext = options.OperationContext,
-                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri
+                    OperationCallbackUri = options.OperationCallbackUri?.AbsoluteUri,
                 };
                 var response = RestClient.CancelAddParticipant(CallConnectionId, request, cancellationToken);
                 var result = new CancelAddParticipantOperationResult(response);
