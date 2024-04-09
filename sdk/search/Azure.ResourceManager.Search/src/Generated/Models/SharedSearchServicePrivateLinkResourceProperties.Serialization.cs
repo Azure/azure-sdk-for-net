@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteStringValue(Status.Value.ToSerialString());
+                writer.WriteStringValue(Status.Value.ToString());
             }
             if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
+                writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    status = property.Value.GetString().ToSharedSearchServicePrivateLinkResourceStatus();
+                    status = new SharedSearchServicePrivateLinkResourceStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("provisioningState"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    provisioningState = property.Value.GetString().ToSharedSearchServicePrivateLinkResourceProvisioningState();
+                    provisioningState = new SharedSearchServicePrivateLinkResourceProvisioningState(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
                 }
             }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{ProvisioningState.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
                 }
             }
 

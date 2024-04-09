@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Search.Models
 {
-    /// <summary> Network-specific rules that determine how the search service can be reached. </summary>
-    internal partial class NetworkRuleSet
+    /// <summary> Network specific rules that determine how the Azure AI Search service may be reached. </summary>
+    public partial class NetworkRuleSet
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,16 +52,21 @@ namespace Azure.ResourceManager.Search.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkRuleSet"/>. </summary>
-        /// <param name="ipRules"> A list of IP restriction rules used for an IP firewall. Any IPs that do not match the rules are blocked by the firewall. These rules are only applied when the 'publicNetworkAccess' of the search service is 'enabled'. </param>
+        /// <param name="ipRules"> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </param>
+        /// <param name="bypass"> Possible origins of inbound traffic that can bypass the rules defined in the 'ipRules' section. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkRuleSet(IList<SearchServiceIPRule> ipRules, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NetworkRuleSet(IList<SearchServiceIPRule> ipRules, SearchBypass? bypass, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPRules = ipRules;
+            Bypass = bypass;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> A list of IP restriction rules used for an IP firewall. Any IPs that do not match the rules are blocked by the firewall. These rules are only applied when the 'publicNetworkAccess' of the search service is 'enabled'. </summary>
+        /// <summary> A list of IP restriction rules that defines the inbound network(s) with allowing access to the search service endpoint. At the meantime, all other public IP networks are blocked by the firewall. These restriction rules are applied only when the 'publicNetworkAccess' of the search service is 'enabled'; otherwise, traffic over public interface is not allowed even with any public IP rules, and private endpoint connections would be the exclusive access method. </summary>
         [WirePath("ipRules")]
         public IList<SearchServiceIPRule> IPRules { get; }
+        /// <summary> Possible origins of inbound traffic that can bypass the rules defined in the 'ipRules' section. </summary>
+        [WirePath("bypass")]
+        public SearchBypass? Bypass { get; set; }
     }
 }

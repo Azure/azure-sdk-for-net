@@ -5,18 +5,53 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> Status of the shared private link resource. Valid values are Pending, Approved, Rejected or Disconnected. </summary>
-    public enum SharedSearchServicePrivateLinkResourceStatus
+    public readonly partial struct SharedSearchServicePrivateLinkResourceStatus : IEquatable<SharedSearchServicePrivateLinkResourceStatus>
     {
-        /// <summary> Pending. </summary>
-        Pending,
-        /// <summary> Approved. </summary>
-        Approved,
-        /// <summary> Rejected. </summary>
-        Rejected,
-        /// <summary> Disconnected. </summary>
-        Disconnected
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceStatus"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SharedSearchServicePrivateLinkResourceStatus(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string PendingValue = "Pending";
+        private const string ApprovedValue = "Approved";
+        private const string RejectedValue = "Rejected";
+        private const string DisconnectedValue = "Disconnected";
+
+        /// <summary> The shared private link resource has been created and is pending approval. </summary>
+        public static SharedSearchServicePrivateLinkResourceStatus Pending { get; } = new SharedSearchServicePrivateLinkResourceStatus(PendingValue);
+        /// <summary> The shared private link resource is approved and is ready for use. </summary>
+        public static SharedSearchServicePrivateLinkResourceStatus Approved { get; } = new SharedSearchServicePrivateLinkResourceStatus(ApprovedValue);
+        /// <summary> The shared private link resource has been rejected and cannot be used. </summary>
+        public static SharedSearchServicePrivateLinkResourceStatus Rejected { get; } = new SharedSearchServicePrivateLinkResourceStatus(RejectedValue);
+        /// <summary> The shared private link resource has been removed from the service. </summary>
+        public static SharedSearchServicePrivateLinkResourceStatus Disconnected { get; } = new SharedSearchServicePrivateLinkResourceStatus(DisconnectedValue);
+        /// <summary> Determines if two <see cref="SharedSearchServicePrivateLinkResourceStatus"/> values are the same. </summary>
+        public static bool operator ==(SharedSearchServicePrivateLinkResourceStatus left, SharedSearchServicePrivateLinkResourceStatus right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SharedSearchServicePrivateLinkResourceStatus"/> values are not the same. </summary>
+        public static bool operator !=(SharedSearchServicePrivateLinkResourceStatus left, SharedSearchServicePrivateLinkResourceStatus right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SharedSearchServicePrivateLinkResourceStatus"/>. </summary>
+        public static implicit operator SharedSearchServicePrivateLinkResourceStatus(string value) => new SharedSearchServicePrivateLinkResourceStatus(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SharedSearchServicePrivateLinkResourceStatus other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(SharedSearchServicePrivateLinkResourceStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

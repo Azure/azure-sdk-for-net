@@ -5,20 +5,56 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.ResourceManager.Search.Models
 {
     /// <summary> The provisioning state of the shared private link resource. Valid values are Updating, Deleting, Failed, Succeeded or Incomplete. </summary>
-    public enum SharedSearchServicePrivateLinkResourceProvisioningState
+    public readonly partial struct SharedSearchServicePrivateLinkResourceProvisioningState : IEquatable<SharedSearchServicePrivateLinkResourceProvisioningState>
     {
-        /// <summary> Updating. </summary>
-        Updating,
-        /// <summary> Deleting. </summary>
-        Deleting,
-        /// <summary> Failed. </summary>
-        Failed,
-        /// <summary> Succeeded. </summary>
-        Succeeded,
-        /// <summary> Incomplete. </summary>
-        Incomplete
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="SharedSearchServicePrivateLinkResourceProvisioningState"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public SharedSearchServicePrivateLinkResourceProvisioningState(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string UpdatingValue = "Updating";
+        private const string DeletingValue = "Deleting";
+        private const string FailedValue = "Failed";
+        private const string SucceededValue = "Succeeded";
+        private const string IncompleteValue = "Incomplete";
+
+        /// <summary> The shared private link resource is in the process of being created along with other resources for it to be fully functional. </summary>
+        public static SharedSearchServicePrivateLinkResourceProvisioningState Updating { get; } = new SharedSearchServicePrivateLinkResourceProvisioningState(UpdatingValue);
+        /// <summary> The shared private link resource is in the process of being deleted. </summary>
+        public static SharedSearchServicePrivateLinkResourceProvisioningState Deleting { get; } = new SharedSearchServicePrivateLinkResourceProvisioningState(DeletingValue);
+        /// <summary> The shared private link resource has failed to be provisioned or deleted. </summary>
+        public static SharedSearchServicePrivateLinkResourceProvisioningState Failed { get; } = new SharedSearchServicePrivateLinkResourceProvisioningState(FailedValue);
+        /// <summary> The shared private link resource has finished provisioning and is ready for approval. </summary>
+        public static SharedSearchServicePrivateLinkResourceProvisioningState Succeeded { get; } = new SharedSearchServicePrivateLinkResourceProvisioningState(SucceededValue);
+        /// <summary> Provisioning request for the shared private link resource has been accepted but the process of creation has not commenced yet. </summary>
+        public static SharedSearchServicePrivateLinkResourceProvisioningState Incomplete { get; } = new SharedSearchServicePrivateLinkResourceProvisioningState(IncompleteValue);
+        /// <summary> Determines if two <see cref="SharedSearchServicePrivateLinkResourceProvisioningState"/> values are the same. </summary>
+        public static bool operator ==(SharedSearchServicePrivateLinkResourceProvisioningState left, SharedSearchServicePrivateLinkResourceProvisioningState right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="SharedSearchServicePrivateLinkResourceProvisioningState"/> values are not the same. </summary>
+        public static bool operator !=(SharedSearchServicePrivateLinkResourceProvisioningState left, SharedSearchServicePrivateLinkResourceProvisioningState right) => !left.Equals(right);
+        /// <summary> Converts a string to a <see cref="SharedSearchServicePrivateLinkResourceProvisioningState"/>. </summary>
+        public static implicit operator SharedSearchServicePrivateLinkResourceProvisioningState(string value) => new SharedSearchServicePrivateLinkResourceProvisioningState(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is SharedSearchServicePrivateLinkResourceProvisioningState other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(SharedSearchServicePrivateLinkResourceProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

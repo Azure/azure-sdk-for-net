@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name.Value.ToSerialString());
+                writer.WriteStringValue(Name.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Search.Models
                     {
                         continue;
                     }
-                    name = property.Value.GetString().ToSearchSkuName();
+                    name = new SearchSkuName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Search.Models
                 }
                 else
                 {
-                    builder.AppendLine($"'{Name.Value.ToSerialString()}'");
+                    builder.AppendLine($"'{Name.Value.ToString()}'");
                 }
             }
 
