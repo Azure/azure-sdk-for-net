@@ -280,8 +280,7 @@ namespace Azure.Storage.DataMovement.Blobs
             int cacheControlOffset = reader.ReadInt32();
             int cacheControlLength = reader.ReadInt32();
 
-            // Preserve AccessTier and offset/length
-            bool preserveAccessTier = reader.ReadBoolean();
+            // AccessTier
             AccessTier? accessTier = default;
             JobPlanAccessTier jobPlanAccessTier = (JobPlanAccessTier)reader.ReadByte();
             if (!jobPlanAccessTier.Equals(JobPlanAccessTier.None))

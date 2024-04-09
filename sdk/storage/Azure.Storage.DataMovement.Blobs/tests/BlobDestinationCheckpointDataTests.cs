@@ -64,16 +64,24 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
-            using (FileStream fileStream = File.OpenRead(samplePath))
+                /*
+            using (FileStream fileStream = File.Create(samplePath))
             {
                 data.Serialize(dataStream);
+                dataStream.Position = 0;
+                dataStream.CopyTo(fileStream);
+                fileStream.Flush();
+            }*/
+        using (FileStream fileStream = File.OpenRead(samplePath))
+        {
+            data.Serialize(dataStream);
 
-                BinaryReader reader = new(fileStream);
-                byte[] expected = reader.ReadBytes((int)fileStream.Length);
-                byte[] actual = dataStream.ToArray();
+            BinaryReader reader = new(fileStream);
+            byte[] expected = reader.ReadBytes((int)fileStream.Length);
+            byte[] actual = dataStream.ToArray();
 
-                CollectionAssert.AreEqual(expected, actual);
-            }
+            CollectionAssert.AreEqual(expected, actual);
+        }
         }
 
         [Test]
@@ -160,7 +168,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             // Arrange
             BlobDestinationCheckpointData data = CreateSetSampleValues();
-            data.AccessTierValue = default;
+            data.AccessTierValue = AccessTier.Cold;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
@@ -171,9 +179,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
                 BinaryReader reader = new(fileStream);
                 List<byte> expected = reader.ReadBytes((int)fileStream.Length).ToList();
-                // Change to expected AccessTier value - true
-                expected[DataMovementBlobConstants.DestinationCheckpointData.PreserveAccessTierIndex] = 1;
-                expected[DataMovementBlobConstants.DestinationCheckpointData.AccessTierValueIndex] = 0;
+                // Change to expected AccessTier value
+                expected[DataMovementBlobConstants.DestinationCheckpointData.AccessTierValueIndex] = 3;
 
                 // Get serialized data
                 byte[] actual = dataStream.ToArray();
@@ -223,7 +230,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
             Assert.AreEqual(false, data.PreserveCacheControl);
             Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
-            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue.Value);
+            Assert.AreEqual(DefaultAccessTier, data.AccessTierValue);
             Assert.AreEqual(false, data.PreserveMetadata);
             CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
             Assert.AreEqual(false, data.PreserveTags);

@@ -754,6 +754,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceUri,
                 It.Is<BlobSyncUploadFromUriOptions>(
                     options =>
+                        options.AccessTier == DefaultAccessTier &&
                         options.CopySourceBlobProperties == default &&
                         options.HttpHeaders == default &&
                         options.Metadata == default),
@@ -877,9 +878,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             Uri sourceUri = new Uri("https://storageaccount.blob.core.windows.net/container/source");
             Metadata metadata = DataProvider.BuildMetadata();
+            AccessTier newTierValue = AccessTier.Archive;
             BlockBlobStorageResourceOptions resourceOptions = new()
             {
-                AccessTier = DefaultAccessTier
+                AccessTier = newTierValue
             };
             Mock<BlockBlobClient> mockDestination = await CopyFromUriInternalPreserveAsync(
                 resourceOptions,
@@ -889,14 +891,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 sourceUri,
                 It.Is<BlobSyncUploadFromUriOptions>(
                     options =>
-                        options.CopySourceBlobProperties == false &&
-                        options.AccessTier == DefaultAccessTier &&
-                        options.HttpHeaders.ContentType == DefaultContentType &&
-                        options.HttpHeaders.ContentEncoding == DefaultContentEncoding &&
-                        options.HttpHeaders.ContentLanguage == DefaultContentLanguage &&
-                        options.HttpHeaders.ContentDisposition == DefaultContentDisposition &&
-                        options.HttpHeaders.CacheControl == DefaultCacheControl &&
-                        options.Metadata.SequenceEqual(metadata)),
+                        options.CopySourceBlobProperties == default &&
+                        options.AccessTier == newTierValue &&
+                        options.HttpHeaders == default &&
+                        options.Metadata == default),
                 It.IsAny<CancellationToken>()),
                 Times.Once());
             mockDestination.VerifyNoOtherCalls();
@@ -925,7 +923,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.Is<BlobSyncUploadFromUriOptions>(
                     options =>
                         options.CopySourceBlobProperties == false &&
-                        options.AccessTier == default &&
+                        options.AccessTier == DefaultAccessTier &&
                         options.HttpHeaders.ContentType == default &&
                         options.HttpHeaders.ContentEncoding == default &&
                         options.HttpHeaders.ContentLanguage == default &&

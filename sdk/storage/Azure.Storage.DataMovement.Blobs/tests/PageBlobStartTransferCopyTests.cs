@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         BlobClientOptions,
         StorageTestEnvironment>
     {
-        private readonly AccessTier _defaultAccessTier = AccessTier.Cold;
+        private readonly AccessTier _defaultAccessTier = AccessTier.Cool;
         private const string _defaultContentType = "text/plain";
         private const string _defaultContentLanguage = "en-US";
         private const string _defaultContentDisposition = "inline";
@@ -163,7 +163,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(_defaultContentDisposition),
                     ContentLanguage = new(_defaultContentLanguage),
                     CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType)
+                    ContentType = new(_defaultContentType),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
@@ -173,7 +174,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(false),
                     ContentLanguage = new(false),
                     CacheControl = new(false),
-                    ContentType = new(false)
+                    ContentType = new(false),
+                    Metadata = new(false)
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
@@ -183,7 +185,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     ContentDisposition = new(true),
                     ContentLanguage = new(true),
                     CacheControl = new(true),
-                    ContentType = new(true)
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new PageBlobStorageResource(objectClient, options);
