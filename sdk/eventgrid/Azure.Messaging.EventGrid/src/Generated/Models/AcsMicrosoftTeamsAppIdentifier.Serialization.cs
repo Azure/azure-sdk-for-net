@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class MicrosoftTeamsAppIdentifier
+    public partial class AcsMicrosoftTeamsAppIdentifier
     {
-        internal static MicrosoftTeamsAppIdentifier DeserializeMicrosoftTeamsAppIdentifier(JsonElement element)
+        internal static AcsMicrosoftTeamsAppIdentifier DeserializeAcsMicrosoftTeamsAppIdentifier(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -36,15 +36,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new MicrosoftTeamsAppIdentifier(appId, cloud);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static MicrosoftTeamsAppIdentifier FromResponse(Response response)
+        internal static AcsMicrosoftTeamsAppIdentifier FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMicrosoftTeamsAppIdentifier(document.RootElement);
+            return DeserializeAcsMicrosoftTeamsAppIdentifier(document.RootElement);
         }
     }
 }
