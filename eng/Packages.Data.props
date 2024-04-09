@@ -122,7 +122,8 @@
     <PackageReference Update="Azure.Monitor.OpenTelemetry.Exporter" Version="1.3.0-beta.1" />
     <PackageReference Update="Azure.Monitor.OpenTelemetry.LiveMetrics" Version="1.0.0-beta.3" />
     <PackageReference Update="Azure.Monitor.Query" Version="1.1.0" />
-    <PackageReference Update="Azure.Identity" Version="1.10.4" />
+    <PackageReference Update="Azure.Identity" Version="1.11.0" />
+    <PackageReference Update="Azure.Provisioning" Version="0.2.0-beta.1" />
     <PackageReference Update="Azure.Security.KeyVault.Secrets" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Keys" Version="4.2.0" />
     <PackageReference Update="Azure.Security.KeyVault.Certificates" Version="4.2.0" />
