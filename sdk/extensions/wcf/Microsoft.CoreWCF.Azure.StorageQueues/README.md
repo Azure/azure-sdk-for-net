@@ -29,7 +29,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 In order to receive requests from the Azure Queue Storage service, you'll need to configure CoreWCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
 
-```C# Snippet:CoreWCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
+```C#
 app.UseServiceModel(services =>
 {
     // Configure CoreWCF to dispatch to service type Service
@@ -45,7 +45,7 @@ app.UseServiceModel(services =>
 Learn more about enabling Microsoft Entra ID for authentication with Azure Storage in [our documentation][storage_ad].  
 
 If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you can configure the appropriate `ClientCredentialType` and set the credential on an `AzureServiceCredential` instance via an extension method.
-```C# Snippet:CoreWCF_Azure_Storage_Queus_Sample_StorageSharedKey
+```C#
 StorageSharedKeyCredential storageSharedKey = GetStorageSharedKey();
 app.UseServiceModel(services =>
 {
@@ -68,7 +68,7 @@ app.UseServiceModel(services =>
 
 Queue send operations will throw an exception if the operation fails.
 
-```C# Snippet: CoreWCF_Azure_Storage_Queues_Sample_ReceiveMessage_TryCatch
+```C#
 
 // Receive a message from the queue.
 QueueMessage message = null;

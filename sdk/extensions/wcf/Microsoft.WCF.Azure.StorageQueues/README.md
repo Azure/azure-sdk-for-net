@@ -29,7 +29,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 In order to send requests to the Azure Queue Storage service, you'll need to configure WCF with the appropriate endpoint and credentials.  The [Azure Identity library][identity] makes it easy to add Microsoft Entra ID support for authenticating with Azure services.
 
-```C# Snippet:WCF_Azure_Storage_Queues_Sample_DefaultAzureCredential
+```C#
 string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
 // Create a binding instance to use Azure Queue Storage
 var aqsBinding = new AzureQueueStorageBinding("DEADLETTERQUEUENAME");
@@ -49,7 +49,7 @@ await using(var factory = new ChannelFactory<IServiceContract>(aqsBinding, new E
 Learn more about enabling Microsoft Entra ID for authentication with Azure Storage in [our documentation][storage_ad].  
 
 If you are using a different credential mechanism such as `StorageSharedKeyCredential`, you can configure the appropriate `ClientCredentialType` and set the credential on an `AzureServiceCredential` instance via an extension method.
-```C# Snippet:WCF_Azure_Storage_Queus_Sample_StorageSharedKey
+```C#
 StorageSharedKeyCredential storageSharedKey = GetStorageSharedKey();
 string queueEndpointString = "https://MYSTORAGEACCOUNT.queue.core.windows.net/QUEUENAME";
 // Create a binding instance to use Azure Queue Storage
@@ -77,7 +77,7 @@ await using(var factory = new ChannelFactory<IServiceContract>(aqsBinding, new E
 
 Queue send operations will throw an exception if the operation fails.
 
-```C# Snippet: WCF_Azure_Storage_Queues_Sample_SendMessage_TryCatch
+```C#
 
 // Try to send a message to the queue.
 try
