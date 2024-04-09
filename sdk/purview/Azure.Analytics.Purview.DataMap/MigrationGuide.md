@@ -42,9 +42,10 @@ var dataMapClient = new DataMapClient(endpoint, credential);
 ```
 
 ### Operation name
+
 The operation names have slightly changed but the main functionality remains the same. Please check the below examples.
 
-#### Getting Type By Name
+#### Get type by name
 
 Using `Azure.Analytics.Purview.Catalog`
 
@@ -54,6 +55,7 @@ Response response = client.GetTypeDefinitionByName("AtlasGlossary", null);
 ```
 
 Using `Azure.Analytics.Purview.DataMap`
+
 ```C# Snippet:GetTypeByName
 TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
 Response response = client.GetByName("AtlasGlossary", null);
