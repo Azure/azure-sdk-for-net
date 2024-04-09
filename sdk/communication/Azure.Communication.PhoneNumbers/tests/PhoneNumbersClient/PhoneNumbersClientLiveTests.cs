@@ -1383,7 +1383,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
+            var results = await client.SearchOperatorInformationAsync(phoneNumbers);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1396,7 +1396,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             var client = CreateClient();
 
-            var results = client.SearchOperatorInformation(phoneNumbers, null);
+            var results = client.SearchOperatorInformation(phoneNumbers);
             Assert.AreEqual(phoneNumber, results.Value.Values[0].PhoneNumber);
         }
 
@@ -1411,7 +1411,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = await client.SearchOperatorInformationAsync(phoneNumbers, null);
+                var results = await client.SearchOperatorInformationAsync(phoneNumbers);
             }
             catch (RequestFailedException ex)
             {
@@ -1433,7 +1433,7 @@ namespace Azure.Communication.PhoneNumbers.Tests
 
             try
             {
-                var results = client.SearchOperatorInformation(phoneNumbers, null);
+                var results = client.SearchOperatorInformation(phoneNumbers);
             }
             catch (RequestFailedException ex)
             {
