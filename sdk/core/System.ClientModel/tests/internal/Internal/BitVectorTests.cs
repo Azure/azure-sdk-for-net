@@ -56,4 +56,14 @@ public class BitVectorTests
             Assert.IsFalse(vector[i]);
         }
     }
+
+    [Test]
+    public void IndexerOutOfRange()
+    {
+        BitVector640 vector = new();
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = vector[-1]);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = vector[640]);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = vector[int.MinValue]);
+        Assert.Throws<ArgumentOutOfRangeException>(() => _ = vector[int.MaxValue]);
+    }
 }
