@@ -18,18 +18,6 @@ namespace System.ClientModel.Internal;
 /// </summary>
 internal struct BitVector640
 {
-    // Ten unsigned long field to keep 640 bits.
-    private ulong _bits0;
-    private ulong _bits1;
-    private ulong _bits2;
-    private ulong _bits3;
-    private ulong _bits4;
-    private ulong _bits5;
-    private ulong _bits6;
-    private ulong _bits7;
-    private ulong _bits8;
-    private ulong _bits9;
-
     // To get or set the correct bit, we need to find a field and an offset inside field
     // For that, we have GetField and GetOffset methods.
     // ===================================================
@@ -54,23 +42,29 @@ internal struct BitVector640
     //    then shift left a single bit by that value to get mask for the field,
     //    then apply mask to the field
 
+    // Ten unsigned long field to keep 640 bits.
+#pragma warning disable CS0169 // Fields are used via Unsafe.As / Unsafe.Add in GetField
+    private ulong _bits0;
+    private ulong _bits1;
+    private ulong _bits2;
+    private ulong _bits3;
+    private ulong _bits4;
+    private ulong _bits5;
+    private ulong _bits6;
+    private ulong _bits7;
+    private ulong _bits8;
+    private ulong _bits9;
+#pragma warning restore CS0169 // Fields are used via Unsafe.As / Unsafe.Add in GetField
+
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static ref ulong GetField(ref BitVector640 vector, int index)
     {
-        switch (index >> 6)
+        if (index is < 0 or > 640)
         {
-            case 0: return ref vector._bits0;
-            case 1: return ref vector._bits1;
-            case 2: return ref vector._bits2;
-            case 3: return ref vector._bits3;
-            case 4: return ref vector._bits4;
-            case 5: return ref vector._bits5;
-            case 6: return ref vector._bits6;
-            case 7: return ref vector._bits7;
-            case 8: return ref vector._bits8;
-            case 9: return ref vector._bits9;
-            default: throw new InvalidOperationException();
+            throw new ArgumentOutOfRangeException(nameof(index), "Index must be in the range [0, 639]");
         }
+
+        return ref Unsafe.Add(ref Unsafe.As<BitVector640, ulong>(ref vector), index >> 6);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
