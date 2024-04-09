@@ -13,7 +13,7 @@ For those new to the Purview DataMAP library for .NET, please refer to the [`Azu
 
 ## Migration benefits
 
-> Note: `Azure.Analytics.Purview.Catalog` has been [deprecated]. Please upgrade to `Azure.Analytics.Purview.DataMap` for continued support.
+> Note: `Azure.Analytics.Purview.Catalog` has been <b>deprecated</b>. Please upgrade to `Azure.Analytics.Purview.DataMap` for continued support.
 
 A natural question to ask when considering whether or not to adopt a new version or library is what the benefits of doing so would be. As Azure has matured and been embraced by a more diverse group of developers, we have been focused on learning the patterns and practices to best support developer productivity and to understand the gaps that the .NET client libraries have.
 
@@ -21,7 +21,7 @@ There were several areas of consistent feedback expressed across the Azure clien
 
 To try and improve the development experience across Azure services, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
-The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the service models together with the GA DataMap APIs [API Document](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01). The client name and the operation names have slightly changed but the main functionality remains the same.
+The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the service models together with the DataMap APIs [API Document](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01). The client name and the operation names have slightly changed but the main functionality remains the same.
 
 ## General changes
 
