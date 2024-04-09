@@ -10,14 +10,18 @@ using Azure.Core;
 
 namespace Azure.AI.Translation.Document
 {
-    /// <summary> Client options for DocumentTranslationClient. </summary>
+    /// <summary> Client options for Azure.AI.Translation.Document library clients. </summary>
     public partial class DocumentTranslationClientOptions : ClientOptions
     {
+        private const ServiceVersion LatestVersion = ServiceVersion.V2024_05_01;
+
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
-            /// <summary> Service version "v1.0". </summary>
-            V1_0 = 1,
+            /// <summary> Service version "2024-05-01". </summary>
+            V2024_05_01 = 1,
         }
+
+        internal string Version { get; }
     }
 }

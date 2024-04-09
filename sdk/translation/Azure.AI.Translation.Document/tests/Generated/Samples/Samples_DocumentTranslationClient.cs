@@ -18,289 +18,15 @@ using NUnit.Framework;
 
 namespace Azure.AI.Translation.Document.Samples
 {
-    public partial class Samples_DocumentTranslation
+    public partial class Samples_DocumentTranslationClient
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_StartTranslation_ShortVersion()
+        public void Example_DocumentTranslationClient_GetDocumentStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                inputs = new object[]
-            {
-new
-{
-source = new
-{
-sourceUrl = "<sourceUrl>",
-},
-targets = new object[]
-{
-new
-{
-targetUrl = "<targetUrl>",
-language = "<language>",
-}
-},
-}
-            },
-            });
-            Response response = client.StartTranslation(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                inputs = new object[]
-            {
-new
-{
-source = new
-{
-sourceUrl = "<sourceUrl>",
-},
-targets = new object[]
-{
-new
-{
-targetUrl = "<targetUrl>",
-language = "<language>",
-}
-},
-}
-            },
-            });
-            Response response = await client.StartTranslationAsync(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-            {
-new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
-{
-new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-})
-            });
-            Response response = client.StartTranslation(startTranslationDetails);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_StartTranslation_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-            {
-new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
-{
-new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-})
-            });
-            Response response = await client.StartTranslationAsync(startTranslationDetails);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_StartTranslation_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                inputs = new object[]
-            {
-new
-{
-source = new
-{
-sourceUrl = "<sourceUrl>",
-filter = new
-{
-prefix = "<prefix>",
-suffix = "<suffix>",
-},
-language = "<language>",
-storageSource = "AzureBlob",
-},
-targets = new object[]
-{
-new
-{
-targetUrl = "<targetUrl>",
-category = "<category>",
-language = "<language>",
-glossaries = new object[]
-{
-new
-{
-glossaryUrl = "<glossaryUrl>",
-format = "<format>",
-version = "<version>",
-storageSource = "AzureBlob",
-}
-},
-storageSource = "AzureBlob",
-}
-},
-storageType = "Folder",
-}
-            },
-            });
-            Response response = client.StartTranslation(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_StartTranslation_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                inputs = new object[]
-            {
-new
-{
-source = new
-{
-sourceUrl = "<sourceUrl>",
-filter = new
-{
-prefix = "<prefix>",
-suffix = "<suffix>",
-},
-language = "<language>",
-storageSource = "AzureBlob",
-},
-targets = new object[]
-{
-new
-{
-targetUrl = "<targetUrl>",
-category = "<category>",
-language = "<language>",
-glossaries = new object[]
-{
-new
-{
-glossaryUrl = "<glossaryUrl>",
-format = "<format>",
-version = "<version>",
-storageSource = "AzureBlob",
-}
-},
-storageSource = "AzureBlob",
-}
-},
-storageType = "Folder",
-}
-            },
-            });
-            Response response = await client.StartTranslationAsync(content);
-
-            Console.WriteLine(response.Status);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_StartTranslation_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-            {
-new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
-{
-LanguageCode = "<language>",
-}, new TranslationTarget[]
-{
-new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-{
-CategoryId = "<category>",
-Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
-{
-FormatVersion = "<version>",
-}},
-}
-})
-{
-StorageUriKind = StorageInputUriKind.Folder,
-}
-            });
-            Response response = client.StartTranslation(startTranslationDetails);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_StartTranslation_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-            {
-new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
-{
-LanguageCode = "<language>",
-}, new TranslationTarget[]
-{
-new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-{
-CategoryId = "<category>",
-Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
-{
-FormatVersion = "<version>",
-}},
-}
-})
-{
-StorageUriKind = StorageInputUriKind.Folder,
-}
-            });
-            Response response = await client.StartTranslationAsync(startTranslationDetails);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -316,11 +42,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -336,33 +62,33 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_GetDocumentStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<DocumentStatusResult> response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentStatus_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters()
+        public void Example_DocumentTranslationClient_GetDocumentStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -386,11 +112,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -414,33 +140,33 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Convenience()
+        public void Example_DocumentTranslationClient_GetDocumentStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<DocumentStatusResult> response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentStatus_AllParameters_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion()
+        public void Example_DocumentTranslationClient_GetTranslationStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -460,11 +186,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -484,33 +210,33 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_GetTranslationStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationStatus_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters()
+        public void Example_DocumentTranslationClient_GetTranslationStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -536,11 +262,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -566,33 +292,33 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Convenience()
+        public void Example_DocumentTranslationClient_GetTranslationStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationStatus_AllParameters_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_CancelTranslation_ShortVersion()
+        public void Example_DocumentTranslationClient_CancelTranslation_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -612,11 +338,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_CancelTranslation_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -636,33 +362,33 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_CancelTranslation_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_CancelTranslation_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_CancelTranslation_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_CancelTranslation_AllParameters()
+        public void Example_DocumentTranslationClient_CancelTranslation_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -688,11 +414,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Async()
+        public async Task Example_DocumentTranslationClient_CancelTranslation_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -718,35 +444,35 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Convenience()
+        public void Example_DocumentTranslationClient_CancelTranslation_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_CancelTranslation_AllParameters_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_CancelTranslation_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             Response<TranslationStatusResult> response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion()
+        public void Example_DocumentTranslationClient_GetSupportedFormats_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = client.GetSupportedDocumentFormats(null);
+            Response response = client.GetSupportedFormats("document");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -756,13 +482,13 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_GetSupportedFormats_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = await client.GetSupportedDocumentFormatsAsync(null);
+            Response response = await client.GetSupportedFormatsAsync("document");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -772,53 +498,35 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_GetSupportedFormats_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
+            Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetSupportedFormats_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
+            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters()
+        public void Example_DocumentTranslationClient_GetSupportedFormats_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = client.GetSupportedDocumentFormats(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = await client.GetSupportedDocumentFormatsAsync(null);
+            Response response = client.GetSupportedFormats("document");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -830,89 +538,13 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Convenience()
+        public async Task Example_DocumentTranslationClient_GetSupportedFormats_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedDocumentFormats_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = client.GetSupportedGlossaryFormats(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = await client.GetSupportedGlossaryFormatsAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = client.GetSupportedGlossaryFormats(null);
+            Response response = await client.GetSupportedFormatsAsync("document");
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -924,153 +556,35 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Async()
+        public void Example_DocumentTranslationClient_GetSupportedFormats_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response response = await client.GetSupportedGlossaryFormatsAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
+            Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Convenience()
+        public async Task Example_DocumentTranslationClient_GetSupportedFormats_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
+            Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedGlossaryFormats_AllParameters_Convenience_Async()
+        public void Example_DocumentTranslationClient_GetTranslationsStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = client.GetSupportedStorageSources(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = await client.GetSupportedStorageSourcesAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = client.GetSupportedStorageSources(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response response = await client.GetSupportedStorageSourcesAsync(null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetSupportedStorageSources_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-            foreach (BinaryData item in client.GetTranslationsStatus((int?)null, (int?)null, (int?)null, (IEnumerable<Guid>)null, (IEnumerable<string>)null, (DateTimeOffset?)null, (DateTimeOffset?)null, (IEnumerable<string>)null, (RequestContext)null))
+            foreach (BinaryData item in client.GetTranslationsStatus(null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1089,13 +603,13 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationsStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTranslationsStatusAsync((int?)null, (int?)null, (int?)null, (IEnumerable<Guid>)null, (IEnumerable<string>)null, (DateTimeOffset?)null, (DateTimeOffset?)null, (IEnumerable<string>)null, (RequestContext)null))
+            await foreach (BinaryData item in client.GetTranslationsStatusAsync(null, null, null, null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1114,11 +628,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_GetTranslationsStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (TranslationStatusResult item in client.GetTranslationsStatus())
             {
@@ -1127,11 +641,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationsStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync())
             {
@@ -1140,13 +654,13 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters()
+        public void Example_DocumentTranslationClient_GetTranslationsStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, (RequestContext)null))
+            foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1171,13 +685,13 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationsStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, (RequestContext)null))
+            await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("id").ToString());
@@ -1202,11 +716,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Convenience()
+        public void Example_DocumentTranslationClient_GetTranslationsStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (TranslationStatusResult item in client.GetTranslationsStatus(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1215,11 +729,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetTranslationsStatus_AllParameters_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetTranslationsStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1228,11 +742,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion()
+        public void Example_DocumentTranslationClient_GetDocumentsStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null, null, null, null, null, null))
             {
@@ -1249,11 +763,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentsStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null, null, null, null, null, null))
             {
@@ -1270,11 +784,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Convenience()
+        public void Example_DocumentTranslationClient_GetDocumentsStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (DocumentStatusResult item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
@@ -1283,11 +797,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_ShortVersion_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentsStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
             {
@@ -1296,11 +810,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters()
+        public void Example_DocumentTranslationClient_GetDocumentsStatus_AllParameters()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (BinaryData item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1325,11 +839,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentsStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (BinaryData item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
             {
@@ -1354,11 +868,11 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Convenience()
+        public void Example_DocumentTranslationClient_GetDocumentsStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             foreach (DocumentStatusResult item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
@@ -1367,15 +881,281 @@ StorageUriKind = StorageInputUriKind.Folder,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentTranslationOperations_GetDocumentsStatus_AllParameters_Convenience_Async()
+        public async Task Example_DocumentTranslationClient_GetDocumentsStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
             await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
             {
             }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentTranslationClient_StartTranslation_ShortVersion()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+source = new
+{
+sourceUrl = "<sourceUrl>",
+},
+targets = new object[]
+{
+new
+{
+targetUrl = "<targetUrl>",
+language = "<language>",
+}
+},
+}
+            },
+            });
+            Operation operation = client.StartTranslation(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentTranslationClient_StartTranslation_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+source = new
+{
+sourceUrl = "<sourceUrl>",
+},
+targets = new object[]
+{
+new
+{
+targetUrl = "<targetUrl>",
+language = "<language>",
+}
+},
+}
+            },
+            });
+            Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentTranslationClient_StartTranslation_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+            {
+new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
+{
+new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+})
+            });
+            Operation operation = client.StartTranslation(WaitUntil.Completed, startTranslationDetails);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentTranslationClient_StartTranslation_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+            {
+new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
+{
+new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+})
+            });
+            Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, startTranslationDetails);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentTranslationClient_StartTranslation_AllParameters()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+source = new
+{
+sourceUrl = "<sourceUrl>",
+filter = new
+{
+prefix = "<prefix>",
+suffix = "<suffix>",
+},
+language = "<language>",
+storageSource = "AzureBlob",
+},
+targets = new object[]
+{
+new
+{
+targetUrl = "<targetUrl>",
+category = "<category>",
+language = "<language>",
+glossaries = new object[]
+{
+new
+{
+glossaryUrl = "<glossaryUrl>",
+format = "<format>",
+version = "<version>",
+storageSource = "AzureBlob",
+}
+},
+storageSource = "AzureBlob",
+}
+},
+storageType = "Folder",
+}
+            },
+            });
+            Operation operation = client.StartTranslation(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentTranslationClient_StartTranslation_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                inputs = new object[]
+            {
+new
+{
+source = new
+{
+sourceUrl = "<sourceUrl>",
+filter = new
+{
+prefix = "<prefix>",
+suffix = "<suffix>",
+},
+language = "<language>",
+storageSource = "AzureBlob",
+},
+targets = new object[]
+{
+new
+{
+targetUrl = "<targetUrl>",
+category = "<category>",
+language = "<language>",
+glossaries = new object[]
+{
+new
+{
+glossaryUrl = "<glossaryUrl>",
+format = "<format>",
+version = "<version>",
+storageSource = "AzureBlob",
+}
+},
+storageSource = "AzureBlob",
+}
+},
+storageType = "Folder",
+}
+            },
+            });
+            Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_DocumentTranslationClient_StartTranslation_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+            {
+new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
+{
+LanguageCode = "<language>",
+}, new TranslationTarget[]
+{
+new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+{
+CategoryId = "<category>",
+Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
+{
+FormatVersion = "<version>",
+}},
+}
+})
+{
+StorageUriKind = StorageInputUriKind.Folder,
+}
+            });
+            Operation operation = client.StartTranslation(WaitUntil.Completed, startTranslationDetails);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_DocumentTranslationClient_StartTranslation_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<https://my-service.azure.com>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+            StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+            {
+new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
+{
+LanguageCode = "<language>",
+}, new TranslationTarget[]
+{
+new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+{
+CategoryId = "<category>",
+Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
+{
+FormatVersion = "<version>",
+}},
+}
+})
+{
+StorageUriKind = StorageInputUriKind.Folder,
+}
+            });
+            Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, startTranslationDetails);
         }
     }
 }

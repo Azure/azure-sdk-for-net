@@ -117,8 +117,8 @@ namespace Azure.AI.Translation.Document
         {
             var parsedTranslationId = ClientCommon.ValidateModelId(translationId, nameof(translationId));
             Id = parsedTranslationId.ToString();
-            _serviceClient = client;
-            _diagnostics = client.ClientDiagnostics;
+            _serviceClient = client._serviceClient;
+            _diagnostics = client._clientDiagnostics;
 
             _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
         }
@@ -135,7 +135,7 @@ namespace Azure.AI.Translation.Document
             _diagnostics = diagnostics;
             _operationInternal = new OperationInternal<AsyncPageable<DocumentStatusResult>>(this, _diagnostics, rawResponse: null);
 
-            Id = operationLocation.Split('/').Last();
+            Id = operationLocation.Split('/').Last().Split('?').First();
         }
 
         /// <summary>
@@ -208,8 +208,8 @@ namespace Azure.AI.Translation.Document
         async ValueTask<OperationState<AsyncPageable<DocumentStatusResult>>> IOperation<AsyncPageable<DocumentStatusResult>>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             var update = async
-                        ? await _serviceClient.GetDocumentTranslationClient().GetTranslationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
-                        : _serviceClient.GetDocumentTranslationClient().GetTranslationStatus(new Guid(Id), cancellationToken);
+                        ? await _serviceClient.GetTranslationStatusAsync(new Guid(Id), cancellationToken).ConfigureAwait(false)
+                        : _serviceClient.GetTranslationStatus(new Guid(Id), cancellationToken);
 
             _createdOn = update.Value.CreatedOn;
             _lastModified = update.Value.LastModified;
@@ -258,7 +258,7 @@ namespace Azure.AI.Translation.Document
             try
             {
                 var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
-                return _serviceClient.GetDocumentTranslationClient().GetDocumentStatus(new Guid(Id), parsedDocumentId, cancellationToken);
+                return _serviceClient.GetDocumentStatus(new Guid(Id), parsedDocumentId, cancellationToken);
             }
             catch (Exception e)
             {
@@ -280,7 +280,7 @@ namespace Azure.AI.Translation.Document
             try
             {
                 var parsedDocumentId = ClientCommon.ValidateModelId(documentId, nameof(documentId));
-                return await _serviceClient.GetDocumentTranslationClient().GetDocumentStatusAsync(new Guid(Id), parsedDocumentId, cancellationToken).ConfigureAwait(false);
+                return await _serviceClient.GetDocumentStatusAsync(new Guid(Id), parsedDocumentId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -300,7 +300,7 @@ namespace Azure.AI.Translation.Document
             var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
             var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-            return _serviceClient.GetDocumentTranslationClient().GetDocumentsStatus(
+            return _serviceClient.GetDocumentsStatus(
                 new Guid(Id),
                 ids: idList,
                 statuses: statusList,
@@ -321,7 +321,7 @@ namespace Azure.AI.Translation.Document
             var statusList = options?.Statuses.Count > 0 ? options.Statuses.Select(status => status.ToString()) : null;
             var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-            return _serviceClient.GetDocumentTranslationClient().GetDocumentsStatusAsync(
+            return _serviceClient.GetDocumentsStatusAsync(
                 new Guid(Id),
                 ids: idList,
                 statuses: statusList,
@@ -342,7 +342,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                _serviceClient.GetDocumentTranslationClient().CancelTranslation(new Guid(Id), cancellationToken);
+                _serviceClient.CancelTranslation(new Guid(Id), cancellationToken);
             }
             catch (Exception e)
             {
@@ -362,7 +362,7 @@ namespace Azure.AI.Translation.Document
 
             try
             {
-                await _serviceClient.GetDocumentTranslationClient().CancelTranslationAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
+                await _serviceClient.CancelTranslationAsync(new Guid(Id), cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
             {

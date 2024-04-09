@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -19,24 +18,14 @@ namespace Azure.AI.Translation.Document
     /// </summary>
     public partial class DocumentTranslationClient
     {
+        internal readonly DocumentTranslationClient _serviceClient;
+        internal readonly ClientDiagnostics _clientDiagnostics;
+
         /// <summary>
         /// Protected constructor to allow mocking.
         /// </summary>
         protected DocumentTranslationClient()
         { }
-
-        /// <summary>
-        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
-        /// </summary>
-        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
-        /// sends requests to.</param>
-        /// <param name="credential">The API key used to access
-        /// the service. This will allow you to update the API key
-        /// without creating a new client.</param>
-        public DocumentTranslationClient(Uri endpoint, AzureKeyCredential credential)
-            : this(endpoint, credential, new DocumentTranslationClientOptions())
-        {
-        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DocumentTranslationClient"/>
@@ -51,40 +40,44 @@ namespace Azure.AI.Translation.Document
         {
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, TokenCredential credential, DocumentTranslationClientOptions options)
+        /// <summary>
+        /// Initializes a new instance of <see cref="DocumentTranslationClient"/> class for the specified service instance.
+        /// </summary>
+        /// <param name="endpoint">A <see cref="Uri"/> to the service the client
+        /// sends requests to.</param>
+        /// <param name="credential">The API key used to access
+        /// the service. This will allow you to update the API key
+        /// without creating a new client.</param>
+        public DocumentTranslationClient(Uri endpoint, AzureKeyCredential credential)
+            : this(endpoint, credential, new DocumentTranslationClientOptions())
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
-            options ??= new DocumentTranslationClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of DocumentTranslationClient. </summary>
+        /// <summary> Initializes a new instance of DocumentTranslation. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="keyCredential"> The key credential to copy. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public DocumentTranslationClient(Uri endpoint, AzureKeyCredential credential, DocumentTranslationClientOptions options)
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        internal DocumentTranslationClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            Argument.AssertNotNull(options, nameof(options));
-            options ??= new DocumentTranslationClientOptions();
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-
-            _keyCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _keyCredential = keyCredential;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
+            _apiVersion = apiVersion;
+        }
+
+        /// <summary> Initializes a new instance of DocumentTranslation. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual DocumentTranslationClient GetDocumentTranslationClient(string apiVersion = "2024-05-01")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new DocumentTranslationClient(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
 
         /// <summary>
@@ -101,12 +94,13 @@ namespace Azure.AI.Translation.Document
         {
             var request = new StartTranslationDetails(inputs);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            var startTranslationDetails = new StartTranslationDetails(inputs);
             scope.Start();
 
             try
             {
-                Response response = this.GetDocumentTranslationClient().StartTranslation(request, cancellationToken);
-                var operationLocation = response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+                var operation = GetDocumentTranslationClient().StartTranslation(WaitUntil.Started, startTranslationDetails, cancellationToken);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
                 return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
             }
             catch (Exception e)
@@ -130,12 +124,13 @@ namespace Azure.AI.Translation.Document
         {
             var request = new StartTranslationDetails(inputs);
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
+            var startTranslationDetails = new StartTranslationDetails(inputs);
             scope.Start();
 
             try
             {
-                var response = await this.GetDocumentTranslationClient().StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
-                var operationLocation = response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started, startTranslationDetails, cancellationToken).ConfigureAwait(false);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
                 return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
             }
             catch (Exception e)
@@ -158,14 +153,14 @@ namespace Azure.AI.Translation.Document
         public virtual DocumentTranslationOperation StartTranslation(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
-            var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
+            var startTranslationDetails = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                var response = this.GetDocumentTranslationClient().StartTranslation(request, cancellationToken);
-                var operationLocation = response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+                var operation = GetDocumentTranslationClient().StartTranslation(WaitUntil.Started, startTranslationDetails, cancellationToken);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
                 return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
             }
             catch (Exception e)
@@ -188,14 +183,14 @@ namespace Azure.AI.Translation.Document
         public virtual async Task<DocumentTranslationOperation> StartTranslationAsync(DocumentTranslationInput input, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(input, nameof(input));
-            var request = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
+            var startTranslationDetails = new StartTranslationDetails(new List<DocumentTranslationInput> { input });
             using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(StartTranslation)}");
             scope.Start();
 
             try
             {
-                var response = await this.GetDocumentTranslationClient().StartTranslationAsync(request, cancellationToken).ConfigureAwait(false);
-                var operationLocation = response.Headers.TryGetValue("Operation-Location", out string value) ? value : null;
+                var operation = await GetDocumentTranslationClient().StartTranslationAsync(WaitUntil.Started,startTranslationDetails, cancellationToken).ConfigureAwait(false);
+                operation.GetRawResponse().Headers.TryGetValue("Operation-Location", out string operationLocation);
                 return new DocumentTranslationOperation(this, ClientDiagnostics, operationLocation);
             }
             catch (Exception e)
@@ -216,7 +211,7 @@ namespace Azure.AI.Translation.Document
             var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
             var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-            return this.GetDocumentTranslationClient().GetTranslationsStatus(
+            return GetDocumentTranslationClient().GetTranslationsStatus(
                         ids: idList,
                         statuses: statusList,
                         createdDateTimeUtcStart: options?.CreatedAfter,
@@ -236,7 +231,7 @@ namespace Azure.AI.Translation.Document
             var idList = options?.Ids.Count > 0 ? options.Ids.Select(id => ClientCommon.ValidateModelId(id, "Id Filter")) : null;
             var orderByList = options?.OrderBy.Count > 0 ? options.OrderBy.Select(order => order.ToGenerated()) : null;
 
-            return this.GetDocumentTranslationClient().GetTranslationsStatusAsync(
+            return GetDocumentTranslationClient().GetTranslationsStatusAsync(
                 ids: idList,
                 statuses: statusList,
                 createdDateTimeUtcStart: options?.CreatedAfter,
@@ -244,114 +239,5 @@ namespace Azure.AI.Translation.Document
                 orderBy: orderByList,
                 cancellationToken: cancellationToken);
         }
-
-        #region supported formats functions
-
-        /// <summary>
-        /// Get the list of the glossary formats supported by the Document Translation service.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedGlossaryFormats(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
-            scope.Start();
-
-            try
-            {
-                var response = this.GetDocumentTranslationClient().GetSupportedGlossaryFormats(cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the list of the glossary formats supported by the Document Translation service.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedGlossaryFormatsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedGlossaryFormats)}");
-            scope.Start();
-
-            try
-            {
-                var response = await this.GetDocumentTranslationClient().GetSupportedGlossaryFormatsAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the list of the document formats supported by the Document Translation service.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual Response<IReadOnlyList<DocumentTranslationFileFormat>> GetSupportedDocumentFormats(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
-            scope.Start();
-
-            try
-            {
-                var response = this.GetDocumentTranslationClient().GetSupportedDocumentFormats(cancellationToken);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the list of the document formats supported by the Document Translation service.
-        /// </summary>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        public virtual async Task<Response<IReadOnlyList<DocumentTranslationFileFormat>>> GetSupportedDocumentFormatsAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope($"{nameof(DocumentTranslationClient)}.{nameof(GetSupportedDocumentFormats)}");
-            scope.Start();
-
-            try
-            {
-                var response = await this.GetDocumentTranslationClient().GetSupportedDocumentFormatsAsync(cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(response.Value.Value, response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        #endregion
-
-        #region nobody wants to see these
-        /// <summary>
-        /// Check if two TextAnalyticsClient instances are equal.
-        /// </summary>
-        /// <param name="obj">The instance to compare to.</param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => base.Equals(obj);
-
-        /// <summary>
-        /// Get a hash code for the TextAnalyticsClient.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override int GetHashCode() => base.GetHashCode();
-
-        /// <summary>
-        /// TextAnalyticsClient ToString.
-        /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override string ToString() => base.ToString();
-        #endregion
     }
 }

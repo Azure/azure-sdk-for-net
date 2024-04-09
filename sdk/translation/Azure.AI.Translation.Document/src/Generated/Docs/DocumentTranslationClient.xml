@@ -1,275 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doc>
   <members>
-    <member name="StartTranslationAsync(StartTranslationDetails,CancellationToken)">
-      <example>
-This sample shows how to call StartTranslationAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-{
-    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
-    {
-        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-    })
-});
-Response response = await client.StartTranslationAsync(startTranslationDetails);
-]]></code>
-This sample shows how to call StartTranslationAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-{
-    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
-    {
-        LanguageCode = "<language>",
-    }, new TranslationTarget[]
-    {
-        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-        {
-            CategoryId = "<category>",
-            Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
-            {
-                FormatVersion = "<version>",
-            }},
-        }
-    })
-    {
-        StorageUriKind = StorageInputUriKind.Folder,
-    }
-});
-Response response = await client.StartTranslationAsync(startTranslationDetails);
-]]></code></example>
-    </member>
-    <member name="StartTranslation(StartTranslationDetails,CancellationToken)">
-      <example>
-This sample shows how to call StartTranslation.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-{
-    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
-    {
-        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-    })
-});
-Response response = client.StartTranslation(startTranslationDetails);
-]]></code>
-This sample shows how to call StartTranslation with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
-{
-    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
-    {
-        LanguageCode = "<language>",
-    }, new TranslationTarget[]
-    {
-        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
-        {
-            CategoryId = "<category>",
-            Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
-            {
-                FormatVersion = "<version>",
-            }},
-        }
-    })
-    {
-        StorageUriKind = StorageInputUriKind.Folder,
-    }
-});
-Response response = client.StartTranslation(startTranslationDetails);
-]]></code></example>
-    </member>
-    <member name="StartTranslationAsync(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call StartTranslationAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-using RequestContent content = RequestContent.Create(new
-{
-    inputs = new object[]
-    {
-        new
-        {
-            source = new
-            {
-                sourceUrl = "<sourceUrl>",
-            },
-            targets = new object[]
-            {
-                new
-                {
-                    targetUrl = "<targetUrl>",
-                    language = "<language>",
-                }
-            },
-        }
-    },
-});
-Response response = await client.StartTranslationAsync(content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call StartTranslationAsync with all request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-using RequestContent content = RequestContent.Create(new
-{
-    inputs = new object[]
-    {
-        new
-        {
-            source = new
-            {
-                sourceUrl = "<sourceUrl>",
-                filter = new
-                {
-                    prefix = "<prefix>",
-                    suffix = "<suffix>",
-                },
-                language = "<language>",
-                storageSource = "AzureBlob",
-            },
-            targets = new object[]
-            {
-                new
-                {
-                    targetUrl = "<targetUrl>",
-                    category = "<category>",
-                    language = "<language>",
-                    glossaries = new object[]
-                    {
-                        new
-                        {
-                            glossaryUrl = "<glossaryUrl>",
-                            format = "<format>",
-                            version = "<version>",
-                            storageSource = "AzureBlob",
-                        }
-                    },
-                    storageSource = "AzureBlob",
-                }
-            },
-            storageType = "Folder",
-        }
-    },
-});
-Response response = await client.StartTranslationAsync(content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
-    <member name="StartTranslation(RequestContent,RequestContext)">
-      <example>
-This sample shows how to call StartTranslation.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-using RequestContent content = RequestContent.Create(new
-{
-    inputs = new object[]
-    {
-        new
-        {
-            source = new
-            {
-                sourceUrl = "<sourceUrl>",
-            },
-            targets = new object[]
-            {
-                new
-                {
-                    targetUrl = "<targetUrl>",
-                    language = "<language>",
-                }
-            },
-        }
-    },
-});
-Response response = client.StartTranslation(content);
-
-Console.WriteLine(response.Status);
-]]></code>
-This sample shows how to call StartTranslation with all request content.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-using RequestContent content = RequestContent.Create(new
-{
-    inputs = new object[]
-    {
-        new
-        {
-            source = new
-            {
-                sourceUrl = "<sourceUrl>",
-                filter = new
-                {
-                    prefix = "<prefix>",
-                    suffix = "<suffix>",
-                },
-                language = "<language>",
-                storageSource = "AzureBlob",
-            },
-            targets = new object[]
-            {
-                new
-                {
-                    targetUrl = "<targetUrl>",
-                    category = "<category>",
-                    language = "<language>",
-                    glossaries = new object[]
-                    {
-                        new
-                        {
-                            glossaryUrl = "<glossaryUrl>",
-                            format = "<format>",
-                            version = "<version>",
-                            storageSource = "AzureBlob",
-                        }
-                    },
-                    storageSource = "AzureBlob",
-                }
-            },
-            storageType = "Folder",
-        }
-    },
-});
-Response response = client.StartTranslation(content);
-
-Console.WriteLine(response.Status);
-]]></code></example>
-    </member>
     <member name="GetDocumentStatusAsync(Guid,Guid,CancellationToken)">
       <example>
 This sample shows how to call GetDocumentStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -277,7 +15,7 @@ This sample shows how to call GetDocumentStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<DocumentStatusResult> response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -288,7 +26,7 @@ This sample shows how to call GetDocumentStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<DocumentStatusResult> response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -296,7 +34,7 @@ This sample shows how to call GetDocumentStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<DocumentStatusResult> response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -307,7 +45,7 @@ This sample shows how to call GetDocumentStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -324,7 +62,7 @@ This sample shows how to call GetDocumentStatusAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.GetDocumentStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -352,7 +90,7 @@ This sample shows how to call GetDocumentStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -369,7 +107,7 @@ This sample shows how to call GetDocumentStatus with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.GetDocumentStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -397,7 +135,7 @@ This sample shows how to call GetTranslationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -405,7 +143,7 @@ This sample shows how to call GetTranslationStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -416,7 +154,7 @@ This sample shows how to call GetTranslationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -424,7 +162,7 @@ This sample shows how to call GetTranslationStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -435,7 +173,7 @@ This sample shows how to call GetTranslationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -456,7 +194,7 @@ This sample shows how to call GetTranslationStatusAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.GetTranslationStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -486,7 +224,7 @@ This sample shows how to call GetTranslationStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -507,7 +245,7 @@ This sample shows how to call GetTranslationStatus with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.GetTranslationStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -537,7 +275,7 @@ This sample shows how to call CancelTranslationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -545,7 +283,7 @@ This sample shows how to call CancelTranslationAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -556,7 +294,7 @@ This sample shows how to call CancelTranslation.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code>
@@ -564,7 +302,7 @@ This sample shows how to call CancelTranslation with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response<TranslationStatusResult> response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"));
 ]]></code></example>
@@ -575,7 +313,7 @@ This sample shows how to call CancelTranslationAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -596,7 +334,7 @@ This sample shows how to call CancelTranslationAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = await client.CancelTranslationAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -626,7 +364,7 @@ This sample shows how to call CancelTranslation and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -647,7 +385,7 @@ This sample shows how to call CancelTranslation with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 Response response = client.CancelTranslation(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null);
 
@@ -671,97 +409,66 @@ Console.WriteLine(result.GetProperty("summary").GetProperty("cancelled").ToStrin
 Console.WriteLine(result.GetProperty("summary").GetProperty("totalCharacterCharged").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSupportedDocumentFormatsAsync(CancellationToken)">
+    <member name="GetSupportedFormatsAsync(FormatType,CancellationToken)">
       <example>
-This sample shows how to call GetSupportedDocumentFormatsAsync.
+This sample shows how to call GetSupportedFormatsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
+Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
 ]]></code>
-This sample shows how to call GetSupportedDocumentFormatsAsync with all parameters.
+This sample shows how to call GetSupportedFormatsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = await client.GetSupportedDocumentFormatsAsync();
+Response<SupportedFileFormats> response = await client.GetSupportedFormatsAsync(FormatType.Document);
 ]]></code></example>
     </member>
-    <member name="GetSupportedDocumentFormats(CancellationToken)">
+    <member name="GetSupportedFormats(FormatType,CancellationToken)">
       <example>
-This sample shows how to call GetSupportedDocumentFormats.
+This sample shows how to call GetSupportedFormats.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
+Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
 ]]></code>
-This sample shows how to call GetSupportedDocumentFormats with all parameters.
+This sample shows how to call GetSupportedFormats with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = client.GetSupportedDocumentFormats();
+Response<SupportedFileFormats> response = client.GetSupportedFormats(FormatType.Document);
 ]]></code></example>
     </member>
-    <member name="GetSupportedDocumentFormatsAsync(RequestContext)">
+    <member name="GetSupportedFormatsAsync(string,RequestContext)">
       <example>
-This sample shows how to call GetSupportedDocumentFormatsAsync and parse the result.
+This sample shows how to call GetSupportedFormatsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = await client.GetSupportedDocumentFormatsAsync(null);
+Response response = await client.GetSupportedFormatsAsync("document");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
 ]]></code>
-This sample shows how to call GetSupportedDocumentFormatsAsync with all parameters and parse the result.
+This sample shows how to call GetSupportedFormatsAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = await client.GetSupportedDocumentFormatsAsync(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
-]]></code></example>
-    </member>
-    <member name="GetSupportedDocumentFormats(RequestContext)">
-      <example>
-This sample shows how to call GetSupportedDocumentFormats and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedDocumentFormats(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-]]></code>
-This sample shows how to call GetSupportedDocumentFormats with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedDocumentFormats(null);
+Response response = await client.GetSupportedFormatsAsync("document");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -771,66 +478,28 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").T
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
 ]]></code></example>
     </member>
-    <member name="GetSupportedGlossaryFormatsAsync(CancellationToken)">
+    <member name="GetSupportedFormats(string,RequestContext)">
       <example>
-This sample shows how to call GetSupportedGlossaryFormatsAsync.
+This sample shows how to call GetSupportedFormats and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
-]]></code>
-This sample shows how to call GetSupportedGlossaryFormatsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedFileFormats> response = await client.GetSupportedGlossaryFormatsAsync();
-]]></code></example>
-    </member>
-    <member name="GetSupportedGlossaryFormats(CancellationToken)">
-      <example>
-This sample shows how to call GetSupportedGlossaryFormats.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
-]]></code>
-This sample shows how to call GetSupportedGlossaryFormats with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedFileFormats> response = client.GetSupportedGlossaryFormats();
-]]></code></example>
-    </member>
-    <member name="GetSupportedGlossaryFormatsAsync(RequestContext)">
-      <example>
-This sample shows how to call GetSupportedGlossaryFormatsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = await client.GetSupportedGlossaryFormatsAsync(null);
+Response response = client.GetSupportedFormats("document");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
 ]]></code>
-This sample shows how to call GetSupportedGlossaryFormatsAsync with all parameters and parse the result.
+This sample shows how to call GetSupportedFormats with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-Response response = await client.GetSupportedGlossaryFormatsAsync(null);
+Response response = client.GetSupportedFormats("document");
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
@@ -838,125 +507,6 @@ Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
 Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
-]]></code></example>
-    </member>
-    <member name="GetSupportedGlossaryFormats(RequestContext)">
-      <example>
-This sample shows how to call GetSupportedGlossaryFormats and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedGlossaryFormats(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-]]></code>
-This sample shows how to call GetSupportedGlossaryFormats with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedGlossaryFormats(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("format").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("fileExtensions")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("contentTypes")[0].ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("defaultVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("versions")[0].ToString());
-]]></code></example>
-    </member>
-    <member name="GetSupportedStorageSourcesAsync(CancellationToken)">
-      <example>
-This sample shows how to call GetSupportedStorageSourcesAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
-]]></code>
-This sample shows how to call GetSupportedStorageSourcesAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedStorageSources> response = await client.GetSupportedStorageSourcesAsync();
-]]></code></example>
-    </member>
-    <member name="GetSupportedStorageSources(CancellationToken)">
-      <example>
-This sample shows how to call GetSupportedStorageSources.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
-]]></code>
-This sample shows how to call GetSupportedStorageSources with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response<SupportedStorageSources> response = client.GetSupportedStorageSources();
-]]></code></example>
-    </member>
-    <member name="GetSupportedStorageSourcesAsync(RequestContext)">
-      <example>
-This sample shows how to call GetSupportedStorageSourcesAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = await client.GetSupportedStorageSourcesAsync(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
-]]></code>
-This sample shows how to call GetSupportedStorageSourcesAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = await client.GetSupportedStorageSourcesAsync(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
-]]></code></example>
-    </member>
-    <member name="GetSupportedStorageSources(RequestContext)">
-      <example>
-This sample shows how to call GetSupportedStorageSources and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedStorageSources(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
-]]></code>
-This sample shows how to call GetSupportedStorageSources with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<https://my-service.azure.com>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
-
-Response response = client.GetSupportedStorageSources(null);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].ToString());
 ]]></code></example>
     </member>
     <member name="GetTranslationsStatusAsync(int?,int?,int?,IEnumerable{Guid},IEnumerable{string},DateTimeOffset?,DateTimeOffset?,IEnumerable{string},CancellationToken)">
@@ -965,7 +515,7 @@ This sample shows how to call GetTranslationsStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync())
 {
@@ -975,7 +525,7 @@ This sample shows how to call GetTranslationsStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (TranslationStatusResult item in client.GetTranslationsStatusAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -988,7 +538,7 @@ This sample shows how to call GetTranslationsStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (TranslationStatusResult item in client.GetTranslationsStatus())
 {
@@ -998,7 +548,7 @@ This sample shows how to call GetTranslationsStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (TranslationStatusResult item in client.GetTranslationsStatus(maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -1011,9 +561,9 @@ This sample shows how to call GetTranslationsStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetTranslationsStatusAsync((int?)null, (int?)null, (int?)null, (IEnumerable<Guid>)null, (IEnumerable<string>)null, (DateTimeOffset?)null, (DateTimeOffset?)null, (IEnumerable<string>)null, (RequestContext)null))
+await foreach (BinaryData item in client.GetTranslationsStatusAsync(null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1033,9 +583,9 @@ This sample shows how to call GetTranslationsStatusAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, (RequestContext)null))
+await foreach (BinaryData item in client.GetTranslationsStatusAsync(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1064,9 +614,9 @@ This sample shows how to call GetTranslationsStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetTranslationsStatus((int?)null, (int?)null, (int?)null, (IEnumerable<Guid>)null, (IEnumerable<string>)null, (DateTimeOffset?)null, (DateTimeOffset?)null, (IEnumerable<string>)null, (RequestContext)null))
+foreach (BinaryData item in client.GetTranslationsStatus(null, null, null, null, null, null, null, null, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1086,9 +636,9 @@ This sample shows how to call GetTranslationsStatus with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
-foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, (RequestContext)null))
+foreach (BinaryData item in client.GetTranslationsStatus(1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
     JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
     Console.WriteLine(result.GetProperty("id").ToString());
@@ -1117,7 +667,7 @@ This sample shows how to call GetDocumentsStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
@@ -1127,7 +677,7 @@ This sample shows how to call GetDocumentsStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (DocumentStatusResult item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -1140,7 +690,7 @@ This sample shows how to call GetDocumentsStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (DocumentStatusResult item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a")))
 {
@@ -1150,7 +700,7 @@ This sample shows how to call GetDocumentsStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (DocumentStatusResult item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), maxCount: 1234, skip: 1234, maxpagesize: 1234, ids: new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, statuses: new string[] { "<statuses>" }, createdDateTimeUtcStart: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), createdDateTimeUtcEnd: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), orderBy: new string[] { "<orderBy>" }))
 {
@@ -1163,7 +713,7 @@ This sample shows how to call GetDocumentsStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null, null, null, null, null, null))
 {
@@ -1181,7 +731,7 @@ This sample shows how to call GetDocumentsStatusAsync with all parameters and pa
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 await foreach (BinaryData item in client.GetDocumentsStatusAsync(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
@@ -1210,7 +760,7 @@ This sample shows how to call GetDocumentsStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), null, null, null, null, null, null, null, null, null))
 {
@@ -1228,7 +778,7 @@ This sample shows how to call GetDocumentsStatus with all parameters and parse t
 <code><![CDATA[
 Uri endpoint = new Uri("<https://my-service.azure.com>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DocumentTranslation client = new DocumentTranslationClient(endpoint, credential).GetDocumentTranslationClient(apiVersion: "v1.0");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
 
 foreach (BinaryData item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a"), 1234, 1234, 1234, new Guid[] { Guid.Parse("73f411fe-4f43-4b4b-9cbd-6828d8f4cf9a") }, new string[] { "<statuses>" }, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), new string[] { "<orderBy>" }, null))
 {
@@ -1249,6 +799,260 @@ foreach (BinaryData item in client.GetDocumentsStatus(Guid.Parse("73f411fe-4f43-
     Console.WriteLine(result.GetProperty("id").ToString());
     Console.WriteLine(result.GetProperty("characterCharged").ToString());
 }
+]]></code></example>
+    </member>
+    <member name="StartTranslationAsync(WaitUntil,StartTranslationDetails,CancellationToken)">
+      <example>
+This sample shows how to call StartTranslationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+{
+    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
+    {
+        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+    })
+});
+Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, startTranslationDetails);
+]]></code>
+This sample shows how to call StartTranslationAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+{
+    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
+    {
+        LanguageCode = "<language>",
+    }, new TranslationTarget[]
+    {
+        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+        {
+            CategoryId = "<category>",
+            Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
+            {
+                FormatVersion = "<version>",
+            }},
+        }
+    })
+    {
+        StorageUriKind = StorageInputUriKind.Folder,
+    }
+});
+Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, startTranslationDetails);
+]]></code></example>
+    </member>
+    <member name="StartTranslation(WaitUntil,StartTranslationDetails,CancellationToken)">
+      <example>
+This sample shows how to call StartTranslation.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+{
+    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>")), new TranslationTarget[]
+    {
+        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+    })
+});
+Operation operation = client.StartTranslation(WaitUntil.Completed, startTranslationDetails);
+]]></code>
+This sample shows how to call StartTranslation with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+StartTranslationDetails startTranslationDetails = new StartTranslationDetails(new DocumentTranslationInput[]
+{
+    new DocumentTranslationInput(new TranslationSource(new Uri("<sourceUrl>"))
+    {
+        LanguageCode = "<language>",
+    }, new TranslationTarget[]
+    {
+        new TranslationTarget(new Uri("<targetUrl>"), "<language>")
+        {
+            CategoryId = "<category>",
+            Glossaries = {new TranslationGlossary(new Uri("<glossaryUrl>"), "<format>")
+            {
+                FormatVersion = "<version>",
+            }},
+        }
+    })
+    {
+        StorageUriKind = StorageInputUriKind.Folder,
+    }
+});
+Operation operation = client.StartTranslation(WaitUntil.Completed, startTranslationDetails);
+]]></code></example>
+    </member>
+    <member name="StartTranslationAsync(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartTranslationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            source = new
+            {
+                sourceUrl = "<sourceUrl>",
+            },
+            targets = new object[]
+            {
+                new
+                {
+                    targetUrl = "<targetUrl>",
+                    language = "<language>",
+                }
+            },
+        }
+    },
+});
+Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call StartTranslationAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            source = new
+            {
+                sourceUrl = "<sourceUrl>",
+                filter = new
+                {
+                    prefix = "<prefix>",
+                    suffix = "<suffix>",
+                },
+                language = "<language>",
+                storageSource = "AzureBlob",
+            },
+            targets = new object[]
+            {
+                new
+                {
+                    targetUrl = "<targetUrl>",
+                    category = "<category>",
+                    language = "<language>",
+                    glossaries = new object[]
+                    {
+                        new
+                        {
+                            glossaryUrl = "<glossaryUrl>",
+                            format = "<format>",
+                            version = "<version>",
+                            storageSource = "AzureBlob",
+                        }
+                    },
+                    storageSource = "AzureBlob",
+                }
+            },
+            storageType = "Folder",
+        }
+    },
+});
+Operation operation = await client.StartTranslationAsync(WaitUntil.Completed, content);
+]]></code></example>
+    </member>
+    <member name="StartTranslation(WaitUntil,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call StartTranslation.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            source = new
+            {
+                sourceUrl = "<sourceUrl>",
+            },
+            targets = new object[]
+            {
+                new
+                {
+                    targetUrl = "<targetUrl>",
+                    language = "<language>",
+                }
+            },
+        }
+    },
+});
+Operation operation = client.StartTranslation(WaitUntil.Completed, content);
+]]></code>
+This sample shows how to call StartTranslation with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<https://my-service.azure.com>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+DocumentTranslationClient client = new DocumentTranslationClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    inputs = new object[]
+    {
+        new
+        {
+            source = new
+            {
+                sourceUrl = "<sourceUrl>",
+                filter = new
+                {
+                    prefix = "<prefix>",
+                    suffix = "<suffix>",
+                },
+                language = "<language>",
+                storageSource = "AzureBlob",
+            },
+            targets = new object[]
+            {
+                new
+                {
+                    targetUrl = "<targetUrl>",
+                    category = "<category>",
+                    language = "<language>",
+                    glossaries = new object[]
+                    {
+                        new
+                        {
+                            glossaryUrl = "<glossaryUrl>",
+                            format = "<format>",
+                            version = "<version>",
+                            storageSource = "AzureBlob",
+                        }
+                    },
+                    storageSource = "AzureBlob",
+                }
+            },
+            storageType = "Folder",
+        }
+    },
+});
+Operation operation = client.StartTranslation(WaitUntil.Completed, content);
 ]]></code></example>
     </member>
   </members>

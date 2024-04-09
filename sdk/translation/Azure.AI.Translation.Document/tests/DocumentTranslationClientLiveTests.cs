@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Azure.AI.Translation.Document.Models;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -15,8 +16,8 @@ namespace Azure.AI.Translation.Document.Tests
         /// Initializes a new instance of the <see cref="DocumentTranslationClientLiveTests"/> class.
         /// </summary>
         /// <param name="isAsync">A flag used by the Azure Core Test Framework to differentiate between tests for asynchronous and synchronous methods.</param>
-        public DocumentTranslationClientLiveTests(bool isAsync)
-            : base(isAsync)
+        public DocumentTranslationClientLiveTests(bool isAsync) : base(isAsync, RecordedTestMode.Record)
+            //: base(isAsync)
         {
         }
 
@@ -25,7 +26,7 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(credential: new AzureKeyCredential("fakeKey"));
 
-            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSupportedDocumentFormatsAsync());
+            RequestFailedException ex = Assert.ThrowsAsync<RequestFailedException>(async () => await client.GetSupportedFormatsAsync("document"));
 
             Assert.AreEqual("401", ex.ErrorCode);
         }
@@ -37,10 +38,10 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var documentFormats = await client.GetSupportedDocumentFormatsAsync();
+            var documentFormats = await client.GetSupportedFormatsAsync(FormatType.Document);
 
-            Assert.GreaterOrEqual(documentFormats.Value.Count, 0);
-            foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value)
+            Assert.GreaterOrEqual(documentFormats.Value.Value.Count, 0);
+            foreach (DocumentTranslationFileFormat fileFormat in documentFormats.Value.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(fileFormat.Format));
                 Assert.IsNotNull(fileFormat.FileExtensions);
@@ -55,10 +56,10 @@ namespace Azure.AI.Translation.Document.Tests
         {
             DocumentTranslationClient client = GetClient(useTokenCredential: usetokenCredential);
 
-            var glossaryFormats = await client.GetSupportedGlossaryFormatsAsync();
+            var glossaryFormats = await client.GetSupportedFormatsAsync(FormatType.Glossary);
 
-            Assert.GreaterOrEqual(glossaryFormats.Value.Count, 0);
-            foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value)
+            Assert.GreaterOrEqual(glossaryFormats.Value.Value.Count, 0);
+            foreach (DocumentTranslationFileFormat glossaryFormat in glossaryFormats.Value.Value)
             {
                 Assert.IsFalse(string.IsNullOrEmpty(glossaryFormat.Format));
                 Assert.IsNotNull(glossaryFormat.FileExtensions);
