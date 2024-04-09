@@ -8,7 +8,7 @@ using System.Text.Json.Serialization;
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Or Data class that represents the inbound Json payload, also has helper functions for serialization.</summary>
-    public abstract class AuthenticationEventData
+    public abstract class WebJobsAuthenticationEventData
     {
         /// <summary>Gets the event identifier.</summary>
         /// <value>The event identifier.</value>
@@ -49,16 +49,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <summary>De-serializes the json the its associated typed object.</summary>
         /// <param name="json">The json containing the typed structure.</param>
         /// <returns>Returns the typed structure that inherits EventData.</returns>
-        internal virtual AuthenticationEventData FromJson(AuthenticationEventJsonElement json) => (AuthenticationEventData)JsonSerializer.Deserialize(json.ToString(), GetType(), JsonSettings);
+        internal virtual WebJobsAuthenticationEventData FromJson(AuthenticationEventJsonElement json) => (WebJobsAuthenticationEventData)JsonSerializer.Deserialize(json.ToString(), GetType(), JsonSettings);
 
         /// <summary>Creates an instance of a EventDaa sub class based on the type and json payload via reflection.</summary>
         /// <param name="type">The type to create.</param>
         /// <param name="json">The json payload.</param>
         /// <returns>A created instance of EventData based on the Type.</returns>
-        /// <seealso cref="AuthenticationEventData"/>
-        internal static AuthenticationEventData CreateInstance(Type type, AuthenticationEventJsonElement json)
+        /// <seealso cref="WebJobsAuthenticationEventData"/>
+        internal static WebJobsAuthenticationEventData CreateInstance(Type type, AuthenticationEventJsonElement json)
         {
-            AuthenticationEventData data = (AuthenticationEventData)Activator.CreateInstance(type, true);
+            WebJobsAuthenticationEventData data = (WebJobsAuthenticationEventData)Activator.CreateInstance(type, true);
             return data.FromJson(json);
         }
     }

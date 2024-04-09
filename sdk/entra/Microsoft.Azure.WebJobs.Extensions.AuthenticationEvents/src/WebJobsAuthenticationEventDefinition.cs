@@ -6,10 +6,10 @@ using Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Events available by event type.</summary>
-    public enum AuthenticationEventDefinition
+    public enum WebJobsAuthenticationEventDefinition
     {
         /// <summary>onTokenIssuanceStart event.</summary>
-        [AuthenticationEventMetadata(typeof(TokenIssuanceStartRequest),
+        [WebJobsAuthenticationEventMetadata(typeof(WebJobsTokenIssuanceStartRequest),
            "microsoft.graph.authenticationEvent.TokenIssuanceStart",
            "TokenIssuanceStart", responseTemplate: "CloudEventActionableTemplate.json")]
         TokenIssuanceStart

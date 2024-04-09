@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>Actions for the onTokenIssuanceStart must inherit this.</summary>
-    public abstract class TokenIssuanceAction : WebJobsAuthenticationEventsAction
+    public abstract class WebJobsTokenIssuanceAction : WebJobsAuthenticationEventsAction
     {
-        /// <summary>Initializes a new instance of the <see cref="TokenIssuanceAction" /> class.</summary>
-        public TokenIssuanceAction() : base() { }
+        /// <summary>Initializes a new instance of the <see cref="WebJobsTokenIssuanceAction" /> class.</summary>
+        public WebJobsTokenIssuanceAction() : base() { }
     }
 }

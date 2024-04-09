@@ -10,8 +10,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>Abstract class that wraps any request that relies on cloud events.</summary>
     /// <typeparam name="TResponse">The Cloud Event Response.</typeparam>
     /// <typeparam name="TData">The Cloud Event Data.</typeparam>
-    public abstract class WebJobsAuthenticationEventsCloudEventRequest<TResponse, TData> : AuthenticationEventRequest<TResponse, TData>
-        where TResponse : AuthenticationEventResponse, new()
+    public abstract class WebJobsAuthenticationEventsCloudEventRequest<TResponse, TData> : WebJobsAuthenticationEventRequest<TResponse, TData>
+        where TResponse : WebJobsAuthenticationEventResponse, new()
         where TData : WebJobsAuthenticationEventsTypedData
     {
         /// <summary>Gets or sets the source.</summary>

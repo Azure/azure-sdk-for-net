@@ -11,7 +11,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         public override bool CanConvert(Type typeToConvert)
         {
-            return typeof(AuthenticationEventResponse).IsAssignableFrom(typeToConvert);
+            return typeof(WebJobsAuthenticationEventResponse).IsAssignableFrom(typeToConvert);
         }
 
         public override JsonConverter CreateConverter(Type typeToConvert, JsonSerializerOptions options)
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return converter;
         }
 
-        internal class AuthEventResponseConverter<T> : JsonConverter<T> where T : AuthenticationEventResponse
+        internal class AuthEventResponseConverter<T> : JsonConverter<T> where T : WebJobsAuthenticationEventResponse
         {
             public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

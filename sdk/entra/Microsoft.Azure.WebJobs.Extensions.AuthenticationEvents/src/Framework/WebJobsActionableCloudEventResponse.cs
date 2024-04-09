@@ -9,7 +9,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>Abstract class for any responses that implement an cloud event payload and has actions on it.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
     /// <seealso cref="WebJobsAuthenticationEventsAction" />
-    public abstract class ActionableCloudEventResponse<T> : ActionableResponse<T>
+    public abstract class WebJobsActionableCloudEventResponse<T> : WebJobsActionableResponse<T>
         where T : WebJobsAuthenticationEventsAction
     {
         /// <summary>Gets the Cloud Event @odata.type.</summary>

@@ -18,10 +18,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     {
         internal static Dictionary<string, Type> _actionMapping = new Dictionary<string, Type>()
         {
-            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(ProvideClaimsForToken) }
+            {"microsoft.graph.tokenissuancestart.provideclaimsfortoken", typeof(WebJobsProvideClaimsForToken) }
         };
 
-        internal static AuthenticationEventDefinition GetEventDefintionFromPayload(string payload)
+        internal static WebJobsAuthenticationEventDefinition GetEventDefintionFromPayload(string payload)
         {
             try
             {
@@ -32,9 +32,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     comparable = jPayload.GetPropertyValue("type");
                 }
 
-                foreach (AuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(AuthenticationEventDefinition)))
+                foreach (WebJobsAuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition)))
                 {
-                    AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
+                    WebJobsAuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>();
                     if (eventMetadata.EventIdentifier.Equals(comparable, StringComparison.OrdinalIgnoreCase))
                     {
                         return eventDefinition;

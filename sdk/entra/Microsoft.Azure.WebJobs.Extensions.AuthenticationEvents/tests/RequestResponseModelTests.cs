@@ -36,7 +36,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [Test]
         public void QueryParameterTest()
         {
-            TokenIssuanceStartRequest tokenIssuanceStartRequest = new TokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
+            WebJobsTokenIssuanceStartRequest tokenIssuanceStartRequest = new WebJobsTokenIssuanceStartRequest(new HttpRequestMessage(HttpMethod.Get, "http://test?param1=test1&param2=test2"));
             Assert.True(DoesPayloadMatch(Payload.TokenIssuanceStart.TokenIssuanceStartQueryParameter, tokenIssuanceStartRequest.ToString()));
         }
 
@@ -46,10 +46,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                if (eventsResponseHandler.Request is WebJobsTokenIssuanceStartRequest request)
                 {
                     request.Response.Actions.Add(
-                        new ProvideClaimsForToken(
+                        new WebJobsProvideClaimsForToken(
                             new WebjobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
                             new WebjobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
                             ));
@@ -64,18 +64,18 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 
         /// <summary>Test the request object to verify the correct HttpStatusCode is respond</summary>
         [Test]
-        [TestCase(RequestStatusType.Successful, HttpStatusCode.OK, "OK")]
-        [TestCase(RequestStatusType.Failed, HttpStatusCode.BadRequest, "Bad Request")]
-        [TestCase(RequestStatusType.ValidationError, HttpStatusCode.BadRequest, "Bad Request")]
-        [TestCase(RequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized, "Unauthorized")]
-        public async Task TokenIssuanceStartRequestValidationTest(RequestStatusType requestStatusType, HttpStatusCode httpStatusCode, string reasonPhrase)
+        [TestCase(WebJobsAuthenticationEventsRequestStatusType.Successful, HttpStatusCode.OK, "OK")]
+        [TestCase(WebJobsAuthenticationEventsRequestStatusType.Failed, HttpStatusCode.BadRequest, "Bad Request")]
+        [TestCase(WebJobsAuthenticationEventsRequestStatusType.ValidationError, HttpStatusCode.BadRequest, "Bad Request")]
+        [TestCase(WebJobsAuthenticationEventsRequestStatusType.TokenInvalid, HttpStatusCode.Unauthorized, "Unauthorized")]
+        public async Task TokenIssuanceStartRequestValidationTest(WebJobsAuthenticationEventsRequestStatusType requestStatusType, HttpStatusCode httpStatusCode, string reasonPhrase)
         {
             HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                if (eventsResponseHandler.Request is WebJobsTokenIssuanceStartRequest request)
                 {
                     request.Response.Actions.Add(
-                        new ProvideClaimsForToken(
+                        new WebJobsProvideClaimsForToken(
                             new WebjobsAuthenticationEventsTokenClaim("DateOfBirth", "01/01/2000"),
                             new WebjobsAuthenticationEventsTokenClaim("CustomRoles", "Writer", "Editor")
                             ));
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                if (eventsResponseHandler.Request is WebJobsTokenIssuanceStartRequest request)
                 {
                     request.Response = null;
 
@@ -122,11 +122,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         [TestCase(ActionTestTypes.NullActionItems)]
         public async Task TokenIssuanceStartActionTest(ActionTestTypes actionTestTypes)
         {
-            (TokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
+            (WebJobsTokenIssuanceAction action, HttpStatusCode expectReturnCode, string expectedResponse) = GetActionTestExepected(actionTestTypes);
 
             HttpResponseMessage httpResponseMessage = await EventResponseBaseTest(async eventsResponseHandler =>
             {
-                if (eventsResponseHandler.Request is TokenIssuanceStartRequest request)
+                if (eventsResponseHandler.Request is WebJobsTokenIssuanceStartRequest request)
                 {
                     request.Response.Actions.Add(action);
 

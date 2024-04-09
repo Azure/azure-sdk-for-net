@@ -5,22 +5,21 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>The base class for all typed event requests and its related response and data model.</summary>
     /// <typeparam name="TResponse">The EventResponse related to the request.</typeparam>
     /// <typeparam name="TData">The EventData model related to the request.</typeparam>
-    /// <seealso cref="AuthenticationEventResponse" />
-    /// <seealso cref="AuthenticationEventData" />
-    public abstract class AuthenticationEventRequest<TResponse, TData> : AuthenticationEventRequestBase
-        where TResponse : AuthenticationEventResponse , new()
-        where TData : AuthenticationEventData
+    /// <seealso cref="WebJobsAuthenticationEventResponse" />
+    /// <seealso cref="WebJobsAuthenticationEventData" />
+    public abstract class WebJobsAuthenticationEventRequest<TResponse, TData> : WebJobsAuthenticationEventRequestBase
+        where TResponse : WebJobsAuthenticationEventResponse, new()
+        where TData : WebJobsAuthenticationEventData
     {
-        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventRequest{T, K}" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventRequest{T, K}" /> class.</summary>
         /// <param name="request">The request.</param>
-        internal AuthenticationEventRequest(HttpRequestMessage request) : base(request) { }
+        internal WebJobsAuthenticationEventRequest(HttpRequestMessage request) : base(request) { }
         /// <summary>Gets or sets the related EventResponse object.</summary>
         /// <value>The response.</value>
         ///
@@ -36,15 +35,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Validates the response and creates the IActionResult with the json payload based on the status of the request.</summary>
         /// <returns>IActionResult based on the EventStatus (UnauthorizedResult, BadRequestObjectResult or JsonResult).</returns>
-        public override AuthenticationEventResponse Completed()
+        public override WebJobsAuthenticationEventResponse Completed()
         {
             try
             {
-                if (RequestStatus == RequestStatusType.Failed || RequestStatus == RequestStatusType.ValidationError)
+                if (RequestStatus == WebJobsAuthenticationEventsRequestStatusType.Failed || RequestStatus == WebJobsAuthenticationEventsRequestStatusType.ValidationError)
                 {
                     return Failed(new AuthenticationEventTriggerRequestValidationException(string.IsNullOrEmpty(StatusMessage) ? AuthenticationEventResource.Ex_Gen_Failure : StatusMessage));
                 }
-                else if (RequestStatus == RequestStatusType.TokenInvalid)
+                else if (RequestStatus == WebJobsAuthenticationEventsRequestStatusType.TokenInvalid)
                 {
                     SetResponseUnauthorized();
                 }
@@ -62,7 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// </summary>
         /// <param name="exception">The exception that is thrown</param>
         /// <returns>An authenticationeventresponse task</returns>
-        public override AuthenticationEventResponse Failed(Exception exception)
+        public override WebJobsAuthenticationEventResponse Failed(Exception exception)
         {
             if (Response == null)
             {

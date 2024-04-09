@@ -6,7 +6,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     #region Global Enums
 
     /// <summary>The status of the incoming request.</summary>
-    public enum RequestStatusType
+    public enum WebJobsAuthenticationEventsRequestStatusType
     {
         /// <summary>If there is any failures on the incoming status, the StatusMessage property will contain the reason for the failure.</summary>
         Failed,

@@ -10,7 +10,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     /// <summary>And abstract class for responses that implements actions.</summary>
     /// <typeparam name="T">Of type EventAction.</typeparam>
     /// <seealso cref="WebJobsAuthenticationEventsAction" />
-    public abstract class ActionableResponse<T> : AuthenticationEventResponse where T : WebJobsAuthenticationEventsAction
+    public abstract class WebJobsActionableResponse<T> : WebJobsAuthenticationEventResponse where T : WebJobsAuthenticationEventsAction
     {
         /// <summary>Gets or sets the actions.</summary>
         /// <value>The actions.</value>
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public List<T> Actions { get; set; } = new List<T>();
 
         /// <summary>Build AuthenticationEventJsonElement and set body to it.</summary>
-        /// <seealso cref="AuthenticationEventResponse" />
+        /// <seealso cref="WebJobsAuthenticationEventResponse" />
         internal override void BuildJsonElement()
         {
             BuildAndSetActions();

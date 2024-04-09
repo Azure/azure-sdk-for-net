@@ -46,9 +46,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return GetEventMetadata(Helpers.GetEventDefintionFromPayload(payload));
         }
 
-        internal static AuthenticationEventMetadata GetEventMetadata(AuthenticationEventDefinition eventDef)
+        internal static AuthenticationEventMetadata GetEventMetadata(WebJobsAuthenticationEventDefinition eventDef)
         {
-            var eventMetadataAttr = eventDef.GetAttribute<AuthenticationEventMetadataAttribute>();
+            var eventMetadataAttr = eventDef.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>();
             if (eventMetadataAttr == null)
             {
                 throw new MissingFieldException(AuthenticationEventResource.Ex_No_Attr);
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="eventMetadataAttr">The event metadata attribute with reference the schema files and template payloads.</param>
         /// <returns>EventMetadata with the contents of the embedded resources.</returns>
         /// <seealso cref="AuthenticationEventMetadata" />
-        private static AuthenticationEventMetadata LoadFromResource(AuthenticationEventMetadataAttribute eventMetadataAttr)
+        private static AuthenticationEventMetadata LoadFromResource(WebJobsAuthenticationEventMetadataAttribute eventMetadataAttr)
         {
             //As we read from files we lock this thread to only one execution at a time.
             _semaphore.Wait();
@@ -85,10 +85,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
         }
 
-        internal static AuthenticationEventMetadata CreateEventMetadata(AuthenticationEventMetadataAttribute eventMetadataAttr)
+        internal static AuthenticationEventMetadata CreateEventMetadata(WebJobsAuthenticationEventMetadataAttribute eventMetadataAttr)
         {
             var assembly = Assembly.GetExecutingAssembly();
-            var defaultNS = typeof(AuthenticationEventsTriggerAttribute).Namespace;
+            var defaultNS = typeof(WebJobsAuthenticationEventsTriggerAttribute).Namespace;
             return new AuthenticationEventMetadata()
             {
                 RequestType = eventMetadataAttr.RequestType,
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             };
         }
 
-        private static string GetResponseTemplate(Assembly assembly, string defaultNS, AuthenticationEventMetadataAttribute verAttr)
+        private static string GetResponseTemplate(Assembly assembly, string defaultNS, WebJobsAuthenticationEventMetadataAttribute verAttr)
         {
             string resource = string.Join(".", defaultNS, "Templates", verAttr.ResponseTemplate);
 

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 
         /// <summary>Gets or sets the identifier.</summary>
         /// <value>The identifier.</value>
-        internal AuthenticationEventDefinition Id { get; set; }
+        internal WebJobsAuthenticationEventDefinition Id { get; set; }
 
         /// <summary>Gets or sets the response template content.</summary>
         /// <value>The response template content.</value>
@@ -29,9 +29,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="payload">The Json payload.</param>
         /// <param name="args">The arguments.</param>
         /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
-        /// <seealso cref="AuthenticationEventRequestBase" />
-        /// <seealso cref="AuthenticationEventData" />
-        internal AuthenticationEventRequestBase CreateEventRequestValidate(HttpRequestMessage request, string payload, params object[] args)
+        /// <seealso cref="WebJobsAuthenticationEventRequestBase" />
+        /// <seealso cref="WebJobsAuthenticationEventData" />
+        internal WebJobsAuthenticationEventRequestBase CreateEventRequestValidate(HttpRequestMessage request, string payload, params object[] args)
         {
             return CreateEventRequest(request, payload, true, args);
         }
@@ -42,15 +42,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="validate">Validate the generated object.</param>
         /// <param name="args">The arguments.</param>
         /// <returns>A newly create EventRequest with related EventResponse and EventData based on event type.</returns>
-        /// <seealso cref="AuthenticationEventRequestBase" />
-        /// <seealso cref="AuthenticationEventData" />
-        internal AuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, string payload, bool validate, params object[] args)
+        /// <seealso cref="WebJobsAuthenticationEventRequestBase" />
+        /// <seealso cref="WebJobsAuthenticationEventData" />
+        internal WebJobsAuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, string payload, bool validate, params object[] args)
         {
-            AuthenticationEventRequestBase eventRequest = (AuthenticationEventRequestBase)Activator.CreateInstance(RequestType, new object[] { request });
+            WebJobsAuthenticationEventRequestBase eventRequest = (WebJobsAuthenticationEventRequestBase)Activator.CreateInstance(RequestType, new object[] { request });
             PropertyInfo responseInfo = eventRequest.GetType().GetProperty("Response");
             PropertyInfo dataInfo = eventRequest.GetType().GetProperty("Data");
 
-            AuthenticationEventResponse eventResponse = AuthenticationEventResponse.CreateInstance(
+            WebJobsAuthenticationEventResponse eventResponse = WebJobsAuthenticationEventResponse.CreateInstance(
                 responseInfo.PropertyType,
                 // ResponseSchema ?? string.Empty,
                 ResponseTemplate ?? string.Empty);
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 AuthenticationEventJsonElement jsonPayload = new AuthenticationEventJsonElement(payload);
                 eventResponse.InstanceCreated(jsonPayload);
-                dataInfo.SetValue(eventRequest, AuthenticationEventData.CreateInstance(dataInfo.PropertyType, jsonPayload));
+                dataInfo.SetValue(eventRequest, WebJobsAuthenticationEventData.CreateInstance(dataInfo.PropertyType, jsonPayload));
                 eventRequest.ParseInbound(jsonPayload);
             }
 
@@ -89,11 +89,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return eventRequest;
         }
 
-        internal static AuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, Type type, params object[] args)
+        internal static WebJobsAuthenticationEventRequestBase CreateEventRequest(HttpRequestMessage request, Type type, params object[] args)
         {
-            foreach (AuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(AuthenticationEventDefinition)))
+            foreach (WebJobsAuthenticationEventDefinition eventDefinition in Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition)))
             {
-                AuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<AuthenticationEventMetadataAttribute>();
+                WebJobsAuthenticationEventMetadataAttribute eventMetadata = eventDefinition.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>();
                 if (eventMetadata.RequestType == type)
                 {
                     AuthenticationEventMetadata metadata = AuthenticationEventMetadataLoader.GetEventMetadata(eventDefinition);

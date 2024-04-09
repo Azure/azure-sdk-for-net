@@ -6,8 +6,8 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
-    /// <summary>Represents the TokenIssuanceStartData (Root Element) Data Model Object.</summary>
-    public class TokenIssuanceStartData : WebJobsAuthenticationEventsTypedData
+    /// <summary>Represents the WebJobsTokenIssuanceStartData (Root Element) Data Model Object.</summary>
+    public class WebJobsTokenIssuanceStartData : WebJobsAuthenticationEventsTypedData
     {
         /// <summary>Gets the context.</summary>
         /// <value>The context.</value>
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceS
         public WebJobsAuthenticationEventsContext AuthenticationContext { get; set; }
 
         /// <summary>Json constructor for desearilization</summary>
-        public TokenIssuanceStartData()
+        public WebJobsTokenIssuanceStartData()
         {
         }
     }

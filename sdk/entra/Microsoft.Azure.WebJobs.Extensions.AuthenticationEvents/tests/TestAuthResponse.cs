@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
 {
-    internal class TestAuthResponse : AuthenticationEventResponse
+    internal class TestAuthResponse : WebJobsAuthenticationEventResponse
     {
         internal TestAuthResponse(HttpStatusCode code, string content)
         : this(code)

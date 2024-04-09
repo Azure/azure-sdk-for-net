@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.TokenIssuanceStart
 {
     /// <summary>A representation an actionable onTokenIssuanceStart event response for preview_10_01_2021.</summary>
-    public class TokenIssuanceStartResponse : ActionableCloudEventResponse<TokenIssuanceAction>
+    public class WebJobsTokenIssuanceStartResponse : WebJobsActionableCloudEventResponse<WebJobsTokenIssuanceAction>
     {
         /// <summary>Gets the Cloud Event @odata.type.</summary>
         /// <value>Gets the Cloud Event @odata.type.</value>

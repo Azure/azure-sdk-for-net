@@ -12,10 +12,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
     [Binding(TriggerHandlesReturnValue = true)]
 #pragma warning restore CS0618 // Type or member is obsolete
 
-    public class AuthenticationEventsTriggerAttribute : Attribute
+    public class WebJobsAuthenticationEventsTriggerAttribute : Attribute
     {
-        /// <summary>Initializes a new instance of the <see cref="AuthenticationEventsTriggerAttribute" /> class.</summary>
-        public AuthenticationEventsTriggerAttribute()
+        /// <summary>Initializes a new instance of the <see cref="WebJobsAuthenticationEventsTriggerAttribute" /> class.</summary>
+        public WebJobsAuthenticationEventsTriggerAttribute()
         {
         }
 

@@ -22,9 +22,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             {
                 if (_eventIds == null)
                 {
-                    _eventIds = Enum.GetValues(typeof(AuthenticationEventDefinition))
-                        .Cast<AuthenticationEventDefinition>()
-                        .Select(x => x.GetAttribute<AuthenticationEventMetadataAttribute>().EventIdentifier.ToLower(CultureInfo.CurrentCulture))
+                    _eventIds = Enum.GetValues(typeof(WebJobsAuthenticationEventDefinition))
+                        .Cast<WebJobsAuthenticationEventDefinition>()
+                        .Select(x => x.GetAttribute<WebJobsAuthenticationEventMetadataAttribute>().EventIdentifier.ToLower(CultureInfo.CurrentCulture))
                         .ToArray();
                 }
 

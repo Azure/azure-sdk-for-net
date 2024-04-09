@@ -18,16 +18,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
 {
     /// <summary>Contains the IActionRequest response when the function is called.</summary>
     /// <seealso cref="IValueBinder" />
-    public class AuthenticationEventResponseHandler : IValueBinder
+    public class WebJobsAuthenticationEventResponseHandler : IValueBinder
     {
         /// <summary>The response property.</summary>
         internal const string EventResponseProperty = "$event$response";
 
-        private AuthenticationEventResponse _response;
+        private WebJobsAuthenticationEventResponse _response;
 
         /// <summary>Gets or sets the action result.</summary>
         /// <value>The action result.</value>
-        public AuthenticationEventResponse Response
+        public WebJobsAuthenticationEventResponse Response
         {
             get => _response;
             private set
@@ -42,15 +42,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             }
         }
 
-        internal AuthenticationEventResponseHandler() { }
+        internal WebJobsAuthenticationEventResponseHandler() { }
 
         /// <summary>Gets the type.</summary>
         /// <value>The type.</value>
-        public Type Type => typeof(AuthenticationEventResponse).MakeByRefType();
+        public Type Type => typeof(WebJobsAuthenticationEventResponse).MakeByRefType();
 
         /// <summary>Gets or sets the request.</summary>
         /// <value>The associated request.</value>
-        public AuthenticationEventRequestBase Request { get; internal set; }
+        public WebJobsAuthenticationEventRequestBase Request { get; internal set; }
 
         /// <summary>Gets the value asynchronous.</summary>
         /// <returns>
@@ -76,13 +76,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                     throw new AuthenticationEventTriggerResponseValidationException(AuthenticationEventResource.Ex_Invalid_Return);
                 }
 
-                if (result is AuthenticationEventResponse action)
+                if (result is WebJobsAuthenticationEventResponse action)
                 {
                     Response = action;
                 }
                 else
                 {
-                    AuthenticationEventResponse response = Request.GetResponseObject();
+                    WebJobsAuthenticationEventResponse response = Request.GetResponseObject();
                     if (response == null)
                     {
                         throw new AuthenticationEventTriggerRequestValidationException(AuthenticationEventResource.Ex_Missing_Request_Response);
@@ -104,12 +104,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return Task.CompletedTask;
         }
 
-        internal AuthenticationEventResponse GetActionResult(object result, AuthenticationEventResponse response)
+        internal WebJobsAuthenticationEventResponse GetActionResult(object result, WebJobsAuthenticationEventResponse response)
         {
             AuthenticationEventJsonElement jResult;
 
             //If the request was unsuccessful we return the IActionResult based on the error and do no further processing.
-            if (Request.RequestStatus != RequestStatusType.Successful)
+            if (Request.RequestStatus != WebJobsAuthenticationEventsRequestStatusType.Successful)
             {
                 return Request.Failed(null);
             }
@@ -139,7 +139,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
                 throw new InvalidCastException(AuthenticationEventResource.Ex_Invalid_Return);
             }
 
-            AuthenticationEventResponse convertedResponse = ConvertToEventResponse(jResult, response.GetType());
+            WebJobsAuthenticationEventResponse convertedResponse = ConvertToEventResponse(jResult, response.GetType());
 
             if (convertedResponse != null && !string.IsNullOrEmpty(response.Body))
             {
@@ -163,16 +163,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         /// <param name="response">The response payload.</param>
         /// <param name="responseType">Type of the response to generate.</param>
         /// <returns>If the EventResponse is generated then the Typed EventResponse else null.</returns>
-        internal static AuthenticationEventResponse ConvertToEventResponse(AuthenticationEventJsonElement response, Type responseType)
+        internal static WebJobsAuthenticationEventResponse ConvertToEventResponse(AuthenticationEventJsonElement response, Type responseType)
         {
             if (response.Properties.ContainsKey("data") && response.Properties["data"] is AuthenticationEventJsonElement jsonElement)
             {
                 response = jsonElement;
             }
 
-            return responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableResponse<>) ||
-                   responseType.BaseType.GetGenericTypeDefinition() == typeof(ActionableCloudEventResponse<>) ?
-                     (AuthenticationEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
+            return responseType.BaseType.GetGenericTypeDefinition() == typeof(WebJobsActionableResponse<>) ||
+                   responseType.BaseType.GetGenericTypeDefinition() == typeof(WebJobsActionableCloudEventResponse<>) ?
+                     (WebJobsAuthenticationEventResponse)JsonSerializer.Deserialize(response.ToString(), responseType, GetSerializerOptions()) :
                      null;
         }
 
@@ -236,7 +236,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
             return new AuthenticationEventJsonElement(result);
         }
 
-        internal static AuthenticationEventResponse GetAuthEventFromJObject(AuthenticationEventJsonElement result, AuthenticationEventResponse response)
+        internal static WebJobsAuthenticationEventResponse GetAuthEventFromJObject(AuthenticationEventJsonElement result, WebJobsAuthenticationEventResponse response)
         {
             //see if the jObject contains an error
             if (result.Properties.ContainsKey("error"))
