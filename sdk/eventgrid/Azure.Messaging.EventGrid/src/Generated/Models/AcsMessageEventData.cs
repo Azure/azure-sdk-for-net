@@ -10,19 +10,19 @@ using System;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> Schema of common properties of all chat thread events. </summary>
-    public partial class AcsAdvancedMessageEventData
+    public partial class AcsMessageEventData
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageEventData"/>. </summary>
-        internal AcsAdvancedMessageEventData()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
+        internal AcsMessageEventData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageEventData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageEventData"/>. </summary>
         /// <param name="from"> The message sender. </param>
         /// <param name="to"> The message recipient. </param>
         /// <param name="receivedTimestamp"> The time message was received. </param>
         /// <param name="errorInternal"> The channel event error. </param>
-        internal AcsAdvancedMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsAdvancedMessageChannelEventError errorInternal)
+        internal AcsMessageEventData(string @from, string to, DateTimeOffset? receivedTimestamp, AcsMessageChannelEventError errorInternal)
         {
             From = @from;
             To = to;

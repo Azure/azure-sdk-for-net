@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    public partial class AcsAdvancedMessageInteractiveListReplyContent
+    public partial class AcsMessageInteractiveListReplyContent
     {
-        internal static AcsAdvancedMessageInteractiveListReplyContent DeserializeAcsAdvancedMessageInteractiveListReplyContent(JsonElement element)
+        internal static AcsMessageInteractiveListReplyContent DeserializeAcsMessageInteractiveListReplyContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -38,15 +38,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsAdvancedMessageInteractiveListReplyContent(id, title, description);
+            return new AcsMessageInteractiveListReplyContent(id, title, description);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageInteractiveListReplyContent FromResponse(Response response)
+        internal static AcsMessageInteractiveListReplyContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageInteractiveListReplyContent(document.RootElement);
+            return DeserializeAcsMessageInteractiveListReplyContent(document.RootElement);
         }
     }
 }
