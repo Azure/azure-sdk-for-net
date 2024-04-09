@@ -91,15 +91,7 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
             }
-            return new PurchasedPhoneNumber(
-                id,
-                phoneNumber,
-                countryCode,
-                phoneNumberType,
-                capabilities,
-                assignmentType,
-                purchaseDate,
-                cost);
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId.Value, operatorName.Value, Optional.ToNullable(phoneNumberSource));
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

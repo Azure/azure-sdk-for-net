@@ -191,6 +191,24 @@ namespace Azure.Communication.PhoneNumbers
                 error);
         }
 
+        /// <summary> Initializes a new instance of <see cref="PhoneNumbers.PurchasedPhoneNumber"/>. </summary>
+        /// <param name="id"> The id of the phone number, e.g. 11234567890. </param>
+        /// <param name="phoneNumber"> String of the E.164 format of the phone number, e.g. +11234567890. </param>
+        /// <param name="countryCode"> The ISO 3166-2 code of the phone number's country, e.g. US. </param>
+        /// <param name="phoneNumberType"> The phone number's type, e.g. geographic, tollFree. </param>
+        /// <param name="capabilities"> Capabilities of a phone number. </param>
+        /// <param name="assignmentType"> The assignment type of the phone number. A phone number can be assigned to a person, or to an application. </param>
+        /// <param name="purchaseDate"> The date and time that the phone number was purchased. </param>
+        /// <param name="cost"> The incurred cost for a single phone number. </param>
+        /// <param name="operatorId"> Id of the operator that provided the number. </param>
+        /// <param name="operatorName"> Name of the operator that provided the number. </param>
+        /// <param name="phoneNumberSource"> Source of the number, e.g. Cloud or OperatorConnect. </param>
+        /// <returns> A new <see cref="PhoneNumbers.PurchasedPhoneNumber"/> instance for mocking. </returns>
+        public static PurchasedPhoneNumber PurchasedPhoneNumber(string id = null, string phoneNumber = null, string countryCode = null, PhoneNumberType phoneNumberType = default, PhoneNumberCapabilities capabilities = null, PhoneNumberAssignmentType assignmentType = default, DateTimeOffset purchaseDate = default, PhoneNumberCost cost = null, string operatorId = null, string operatorName = null, PhoneNumberSource? phoneNumberSource = null)
+        {
+            return new PurchasedPhoneNumber(id, phoneNumber, countryCode, phoneNumberType, capabilities, assignmentType, purchaseDate, cost, operatorId, operatorName, phoneNumberSource);
+        }
+
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformationResult"/>. </summary>
         /// <param name="values">
         /// Results of a search.
@@ -206,21 +224,13 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorInformation"/>. </summary>
         /// <param name="phoneNumber"> E.164 formatted string representation of the phone number. </param>
-        /// <param name="nationalFormat"> National format of the phone number. </param>
-        /// <param name="internationalFormat"> International format of the phone number. </param>
-        /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="numberType"> Type of service associated with the phone number. </param>
+        /// <param name="isoCountryCode"> ISO 3166-1 two character ('alpha-2') code associated with the phone number. </param>
         /// <param name="operatorDetails"> Represents metadata describing the operator of a phone number. </param>
         /// <returns> A new <see cref="PhoneNumbers.OperatorInformation"/> instance for mocking. </returns>
-        public static OperatorInformation OperatorInformation(string phoneNumber = null, string nationalFormat = null, string internationalFormat = null, string isoCountryCode = null, OperatorNumberType? numberType = null, OperatorDetails operatorDetails = null)
+        public static OperatorInformation OperatorInformation(string phoneNumber = null, OperatorNumberType? numberType = null, string isoCountryCode = null, OperatorDetails operatorDetails = null)
         {
-            return new OperatorInformation(
-                phoneNumber,
-                nationalFormat,
-                internationalFormat,
-                isoCountryCode,
-                numberType,
-                operatorDetails);
+            return new OperatorInformation(phoneNumber, numberType, isoCountryCode, operatorDetails);
         }
 
         /// <summary> Initializes a new instance of <see cref="PhoneNumbers.OperatorDetails"/>. </summary>
