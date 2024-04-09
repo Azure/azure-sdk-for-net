@@ -2,7 +2,7 @@
 
 This guide is intended to assist in the migration to Azure Purview DataMap client library [`Azure.Analytics.Purview.DataMap`](https://www.nuget.org/packages/Azure.Analytics.Purview.DataMap) from [`Azure.Analytics.Purview.Catalog`](https://www.nuget.org/packages/Azure.Analytics.Purview.Catalog). It will focus on side-by-side comparisons for similar operations between the two packages.
 
-For those new to the Purview DataMAP library for .NET, please refer to the [`Azure.Analytics.Purview.DataMap` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/README.md) and [`Azure.Analytics.Purview.DataMap` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.DataMap/samples) for the `Azure.Analytics.Purview.DataMap` library rather than this guide.
+For those new to the Purview DataMap library for .NET, please refer to the [`Azure.Analytics.Purview.DataMap` README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/purview/Azure.Analytics.Purview.DataMap/README.md) and [`Azure.Analytics.Purview.DataMap` samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/purview/Azure.Analytics.Purview.DataMap/samples) for the `Azure.Analytics.Purview.DataMap` library rather than this guide.
 
 ## Table of contents
 
@@ -21,7 +21,7 @@ There were several areas of consistent feedback expressed across the Azure clien
 
 To try and improve the development experience across Azure services, a set of uniform [design guidelines](https://azure.github.io/azure-sdk/general_introduction.html) was created for all languages to drive a consistent experience with established API patterns for all services. A set of [.NET-specific guidelines](https://azure.github.io/azure-sdk/dotnet_introduction.html) was also introduced to ensure that .NET clients have a natural and idiomatic feel that mirrors that of the .NET base class libraries. Further details are available in the guidelines for those interested.
 
-The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the service models together with the DataMap APIs [API Document](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups?view=rest-purview-datamapdataplane-2023-09-01). The client name and the operation names have slightly changed but the main functionality remains the same.
+The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the service models together with the DataMap APIs [API Document](https://learn.microsoft.com/rest/api/purview/datamapdataplane/operation-groups). The client name and the operation names have slightly changed but the main functionality remains the same.
 
 ## General changes
 
@@ -29,16 +29,47 @@ The new Purview DataMap library `Azure.Analytics.Purview.DataMap` includes the s
 
 Previously in `Azure.Analytics.Purview.Catalog`, the service client name is PurviewCatalogClient.
 
-```C#
+```C# Snippet:CreateCatalogClient
 var credential = new DefaultAzureCredential();
 var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview.azure.com"), credential);
 ```
 
 Now in `Azure.Analytics.Purview.DataMap`, the service client name is DataMapClient.
 
-```C#
+```C# Snippet:CreateDataMapClient
 var credential = new DefaultAzureCredential();
 var dataMapClient = new DataMapClient(endpoint, credential);
+```
+
+### Operation name
+The operation names have slightly changed but the main functionality remains the same. Please check the below examples.
+
+#### Getting all types
+
+Using `Azure.Analytics.Purview.Catalog`
+```C# Snippet:CatalogGetAllTypes
+PurviewTypes client = new PurviewCatalogClient(endpoint, credential).GetPurviewTypesClient();
+Response response response = client.Types.GetAllTypeDefinitions();
+```
+
+Using `Azure.Analytics.Purview.DataMap`
+```C# Snippet:DataMapGetAllTypes
+TypeDefinition client = dataMapClient.GetTypeDefinitionClient();
+Response<AtlasTypesDef> response = client.GetTypeDefinition();
+```
+
+#### Getting entity by Guid
+
+Using `Azure.Analytics.Purview.Catalog`
+```C# Snippet:CatalogGetEntityByGuid
+PurviewEntities client = new PurviewCatalogClient(endpoint, credential).GetPurviewEntitiesClient();
+Response response = client.GetByGuid("<guid>");
+```
+
+Using `Azure.Analytics.Purview.DataMap`
+```C# Snippet:DataMapGetEntityByGuid
+Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+Response<AtlasEntityWithExtInfo> response = client.GetEntity("<guid>");
 ```
 
 ## Additional samples
