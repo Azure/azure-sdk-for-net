@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.OpenAI.Assistants
 {
     /// <summary> Possible error code values attributable to a failed run step. </summary>
-    public readonly partial struct RunStepErrorCode : IEquatable<RunStepErrorCode>
+    internal readonly partial struct RunStepErrorCode : IEquatable<RunStepErrorCode>
     {
         private readonly string _value;
 
