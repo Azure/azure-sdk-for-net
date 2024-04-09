@@ -37,8 +37,9 @@ var client = new PurviewCatalogClient(new Uri("https://<my-account-name>.purview
 Now in `Azure.Analytics.Purview.DataMap`, the service client name is DataMapClient.
 
 ```C# Snippet:CreateDataMapClient
-var credential = new DefaultAzureCredential();
-var dataMapClient = new DataMapClient(endpoint, credential);
+Uri endpoint = TestEnvironment.Endpoint;
+TokenCredential credential = new DefaultAzureCredential();
+DataMapClient dataMapClient = new DataMapClient(endpoint, credential);
 ```
 
 ### Operation name
