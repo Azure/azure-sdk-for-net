@@ -7,19 +7,19 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Advanced Message Interactive Content. </summary>
-    public partial class AcsAdvancedMessageInteractiveContent
+    /// <summary> Message Interactive Content. </summary>
+    public partial class AcsMessageInteractiveContent
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveContent"/>. </summary>
-        internal AcsAdvancedMessageInteractiveContent()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveContent"/>. </summary>
+        internal AcsMessageInteractiveContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveContent"/>. </summary>
         /// <param name="replyKind"> The Message interactive reply type. </param>
         /// <param name="buttonReply"> The Message Sent when a customer clicks a button. </param>
         /// <param name="listReply"> The Message Sent when a customer selects an item from a list. </param>
-        internal AcsAdvancedMessageInteractiveContent(AcsInteractiveReplyKind? replyKind, AcsAdvancedMessageInteractiveButtonReplyContent buttonReply, AcsAdvancedMessageInteractiveListReplyContent listReply)
+        internal AcsMessageInteractiveContent(AcsInteractiveReplyKind? replyKind, AcsMessageInteractiveButtonReplyContent buttonReply, AcsMessageInteractiveListReplyContent listReply)
         {
             ReplyKind = replyKind;
             ButtonReply = buttonReply;
@@ -29,8 +29,8 @@ namespace Azure.Messaging.EventGrid.SystemEvents
         /// <summary> The Message interactive reply type. </summary>
         public AcsInteractiveReplyKind? ReplyKind { get; }
         /// <summary> The Message Sent when a customer clicks a button. </summary>
-        public AcsAdvancedMessageInteractiveButtonReplyContent ButtonReply { get; }
+        public AcsMessageInteractiveButtonReplyContent ButtonReply { get; }
         /// <summary> The Message Sent when a customer selects an item from a list. </summary>
-        public AcsAdvancedMessageInteractiveListReplyContent ListReply { get; }
+        public AcsMessageInteractiveListReplyContent ListReply { get; }
     }
 }

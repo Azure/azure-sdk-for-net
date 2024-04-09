@@ -3,7 +3,7 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    internal partial class AcsAdvancedMessageChannelEventError
+    internal partial class AcsMessageChannelEventError
     {
     }
 }

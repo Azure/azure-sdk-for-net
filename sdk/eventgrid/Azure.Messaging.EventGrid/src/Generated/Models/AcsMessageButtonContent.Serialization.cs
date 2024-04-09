@@ -9,38 +9,38 @@ using System.Text.Json;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    internal partial class AcsAdvancedMessageChannelEventError
+    public partial class AcsMessageButtonContent
     {
-        internal static AcsAdvancedMessageChannelEventError DeserializeAcsAdvancedMessageChannelEventError(JsonElement element)
+        internal static AcsMessageButtonContent DeserializeAcsMessageButtonContent(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string channelCode = default;
-            string channelMessage = default;
+            string text = default;
+            string payload = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("channelCode"u8))
+                if (property.NameEquals("text"u8))
                 {
-                    channelCode = property.Value.GetString();
+                    text = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("channelMessage"u8))
+                if (property.NameEquals("payload"u8))
                 {
-                    channelMessage = property.Value.GetString();
+                    payload = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsAdvancedMessageChannelEventError(channelCode, channelMessage);
+            return new AcsMessageButtonContent(text, payload);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static AcsAdvancedMessageChannelEventError FromResponse(Response response)
+        internal static AcsMessageButtonContent FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeAcsAdvancedMessageChannelEventError(document.RootElement);
+            return DeserializeAcsMessageButtonContent(document.RootElement);
         }
     }
 }
