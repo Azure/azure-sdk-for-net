@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.SameBoundary.Input
 {
@@ -55,7 +56,7 @@ namespace Azure.SameBoundary.Input
         /// <param name="requiredDictionaryDictionary"></param>
         /// <param name="requiredArrayDictionary"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="requiredStringDictionary"/>, <paramref name="requiredIntDictionary"/>, <paramref name="requiredModelDictionary"/>, <paramref name="requiredDictionaryDictionary"/> or <paramref name="requiredArrayDictionary"/> is null. </exception>
-        public InputDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, int> requiredIntDictionary, IDictionary<string, InputDummy> requiredModelDictionary, IDictionary<string, IDictionary<string, InputDummy>> requiredDictionaryDictionary, IDictionary<string, IList<InputDummy>> requiredArrayDictionary)
+        public InputDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, int?> requiredIntDictionary, IDictionary<string, InputDummy> requiredModelDictionary, IDictionary<string, IDictionary<string, InputDummy>> requiredDictionaryDictionary, IDictionary<string, IList<InputDummy>> requiredArrayDictionary)
         {
             Argument.AssertNotNull(requiredStringDictionary, nameof(requiredStringDictionary));
             Argument.AssertNotNull(requiredIntDictionary, nameof(requiredIntDictionary));
@@ -63,16 +64,22 @@ namespace Azure.SameBoundary.Input
             Argument.AssertNotNull(requiredDictionaryDictionary, nameof(requiredDictionaryDictionary));
             Argument.AssertNotNull(requiredArrayDictionary, nameof(requiredArrayDictionary));
 
-            RequiredStringDictionary = requiredStringDictionary;
-            OptionalStringDictionary = new ChangeTrackingDictionary<string, string>();
-            RequiredIntDictionary = requiredIntDictionary;
-            OptionalIntDictionary = new ChangeTrackingDictionary<string, int>();
-            RequiredModelDictionary = requiredModelDictionary;
-            OptionalModelDictionary = new ChangeTrackingDictionary<string, InputDummy>();
-            RequiredDictionaryDictionary = requiredDictionaryDictionary;
-            OptionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>();
-            RequiredArrayDictionary = requiredArrayDictionary;
-            OptionalArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>();
+            _requiredStringDictionary = new ChangeTrackingDictionary<string, string>(requiredStringDictionary, true);
+            _optionalStringDictionary = new ChangeTrackingDictionary<string, string>();
+            _requiredIntDictionary = new ChangeTrackingDictionary<string, int?>(requiredIntDictionary, true);
+            _optionalIntDictionary = new ChangeTrackingDictionary<string, int?>();
+            _requiredModelDictionary = new ChangeTrackingDictionary<string, InputDummy>(requiredModelDictionary, true);
+            _optionalModelDictionary = new ChangeTrackingDictionary<string, InputDummy>();
+            // [Patch] The dictionary item in the dictionary should be a ChangeTrackingDictionary.
+            _requiredDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>(
+                requiredDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, InputDummy>(item.Value, true) as IDictionary<string, InputDummy>) as IDictionary<string, IDictionary<string, InputDummy>>,
+                true);
+            _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>();
+            // [Patch] The array item in the dictionary should be a ChangeTrackingList.
+            _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>(
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value, true) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>,
+                true);
+            _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputDictionaryModel"/>. </summary>
@@ -87,18 +94,23 @@ namespace Azure.SameBoundary.Input
         /// <param name="requiredArrayDictionary"></param>
         /// <param name="optionalArrayDictionary"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InputDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, string> optionalStringDictionary, IDictionary<string, int> requiredIntDictionary, IDictionary<string, int> optionalIntDictionary, IDictionary<string, InputDummy> requiredModelDictionary, IDictionary<string, InputDummy> optionalModelDictionary, IDictionary<string, IDictionary<string, InputDummy>> requiredDictionaryDictionary, IDictionary<string, IDictionary<string, InputDummy>> optionalDictionaryDictionary, IDictionary<string, IList<InputDummy>> requiredArrayDictionary, IDictionary<string, IList<InputDummy>> optionalArrayDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InputDictionaryModel(IDictionary<string, string> requiredStringDictionary, IDictionary<string, string> optionalStringDictionary, IDictionary<string, int?> requiredIntDictionary, IDictionary<string, int?> optionalIntDictionary, IDictionary<string, InputDummy> requiredModelDictionary, IDictionary<string, InputDummy> optionalModelDictionary, IDictionary<string, IDictionary<string, InputDummy>> requiredDictionaryDictionary, IDictionary<string, IDictionary<string, InputDummy>> optionalDictionaryDictionary, IDictionary<string, IList<InputDummy>> requiredArrayDictionary, IDictionary<string, IList<InputDummy>> optionalArrayDictionary, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredStringDictionary = requiredStringDictionary;
-            OptionalStringDictionary = optionalStringDictionary;
-            RequiredIntDictionary = requiredIntDictionary;
-            OptionalIntDictionary = optionalIntDictionary;
-            RequiredModelDictionary = requiredModelDictionary;
-            OptionalModelDictionary = optionalModelDictionary;
-            RequiredDictionaryDictionary = requiredDictionaryDictionary;
-            OptionalDictionaryDictionary = optionalDictionaryDictionary;
-            RequiredArrayDictionary = requiredArrayDictionary;
-            OptionalArrayDictionary = optionalArrayDictionary;
+            _requiredStringDictionary = new ChangeTrackingDictionary<string, string>(requiredStringDictionary);
+            _optionalStringDictionary = new ChangeTrackingDictionary<string, string>(optionalStringDictionary);
+            _requiredIntDictionary = new ChangeTrackingDictionary<string, int?>(requiredIntDictionary);
+            _optionalIntDictionary = new ChangeTrackingDictionary<string, int?>(optionalIntDictionary);
+            _requiredModelDictionary = new ChangeTrackingDictionary<string, InputDummy>(requiredModelDictionary);
+            _optionalModelDictionary = new ChangeTrackingDictionary<string, InputDummy>(optionalModelDictionary);
+            // [Patch] Another solution is we put this into deserialization code
+            _requiredDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>(
+                requiredDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, InputDummy>(item.Value) as IDictionary<string, InputDummy>) as IDictionary<string, IDictionary<string, InputDummy>>);
+            _optionalDictionaryDictionary = new ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>(
+                optionalDictionaryDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingDictionary<string, InputDummy>(item.Value) as IDictionary<string, InputDummy>) as IDictionary<string, IDictionary<string, InputDummy>>);
+            _requiredArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>(
+                requiredArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value, true) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
+            _optionalArrayDictionary = new ChangeTrackingDictionary<string, IList<InputDummy>>(
+                optionalArrayDictionary.ToDictionary(item => item.Key, item => new ChangeTrackingList<InputDummy>(item.Value, true) as IList<InputDummy>) as IDictionary<string, IList<InputDummy>>);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -107,25 +119,47 @@ namespace Azure.SameBoundary.Input
         {
         }
 
+        // [Patch] I add backing field here for the scenario of `ModelReaderWriter.Read()`
+        private ChangeTrackingDictionary<string, string> _requiredStringDictionary;
         /// <summary> Gets the required string dictionary. </summary>
-        public IDictionary<string, string> RequiredStringDictionary { get; }
+        public IDictionary<string, string> RequiredStringDictionary => _requiredStringDictionary;
+
+        private ChangeTrackingDictionary<string, string> _optionalStringDictionary;
         /// <summary> Gets the optional string dictionary. </summary>
-        public IDictionary<string, string> OptionalStringDictionary { get; }
+        public IDictionary<string, string> OptionalStringDictionary => _optionalStringDictionary;
+
+        // [Patch] The spec of this property is `Record<int>`. For a normal model, we will generate type `IDictionary<string, int>`.
+        // However, here the type is `IDictionary<string, int?>`, because we should allow user to delete a key.
+        private ChangeTrackingDictionary<string, int?> _requiredIntDictionary;
         /// <summary> Gets the required int dictionary. </summary>
-        public IDictionary<string, int> RequiredIntDictionary { get; }
+        public IDictionary<string, int?> RequiredIntDictionary => _requiredIntDictionary;
+
+        private ChangeTrackingDictionary<string, int?> _optionalIntDictionary;
         /// <summary> Gets the optional int dictionary. </summary>
-        public IDictionary<string, int> OptionalIntDictionary { get; }
+        public IDictionary<string, int?> OptionalIntDictionary => _optionalIntDictionary;
+
+        private ChangeTrackingDictionary<string, InputDummy> _requiredModelDictionary;
         /// <summary> Gets the required model dictionary. </summary>
-        public IDictionary<string, InputDummy> RequiredModelDictionary { get; }
+        public IDictionary<string, InputDummy> RequiredModelDictionary => _requiredModelDictionary;
+
+        private ChangeTrackingDictionary<string, InputDummy> _optionalModelDictionary;
         /// <summary> Gets the optional model dictionary. </summary>
-        public IDictionary<string, InputDummy> OptionalModelDictionary { get; }
+        public IDictionary<string, InputDummy> OptionalModelDictionary => _optionalModelDictionary;
+
+        private ChangeTrackingDictionary<string, IDictionary<string, InputDummy>> _requiredDictionaryDictionary;
         /// <summary> Gets the required dictionary dictionary. </summary>
-        public IDictionary<string, IDictionary<string, InputDummy>> RequiredDictionaryDictionary { get; }
+        public IDictionary<string, IDictionary<string, InputDummy>> RequiredDictionaryDictionary => _requiredDictionaryDictionary;
+
+        private ChangeTrackingDictionary<string, IDictionary<string, InputDummy>> _optionalDictionaryDictionary;
         /// <summary> Gets the optional dictionary dictionary. </summary>
-        public IDictionary<string, IDictionary<string, InputDummy>> OptionalDictionaryDictionary { get; }
+        public IDictionary<string, IDictionary<string, InputDummy>> OptionalDictionaryDictionary => _optionalDictionaryDictionary;
+
+        private ChangeTrackingDictionary<string, IList<InputDummy>> _requiredArrayDictionary;
         /// <summary> Gets the required array dictionary. </summary>
-        public IDictionary<string, IList<InputDummy>> RequiredArrayDictionary { get; }
+        public IDictionary<string, IList<InputDummy>> RequiredArrayDictionary => _requiredArrayDictionary;
+
+        private ChangeTrackingDictionary<string, IList<InputDummy>> _optionalArrayDictionary;
         /// <summary> Gets the optional array dictionary. </summary>
-        public IDictionary<string, IList<InputDummy>> OptionalArrayDictionary { get; }
+        public IDictionary<string, IList<InputDummy>> OptionalArrayDictionary => _optionalArrayDictionary;
     }
 }

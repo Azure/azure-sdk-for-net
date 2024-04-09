@@ -65,10 +65,10 @@ namespace Azure.SameBoundary.Input
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InputPrimitiveModel(string requiredString, string optionalString, int requiredInt, int? optionalInt, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredString = requiredString;
-            OptionalString = optionalString;
-            RequiredInt = requiredInt;
-            OptionalInt = optionalInt;
+            _requiredString = requiredString;
+            _optionalString = optionalString;
+            _requiredInt = requiredInt;
+            _optionalInt = optionalInt;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 

@@ -1,0 +1,48 @@
+{
+    "requiredStringDictionary": {
+        "key1": null,
+        "key2": "changed"
+    },
+    "optionalStringDictionary": {
+        "key3": "value3"
+    },
+    "requiredIntDictionary": {
+        "key1": null,
+        "key2": 2
+    },
+    "optionalIntDictionary": {
+        "key4": 4
+    },
+    "requiredModelDictionary": {
+        "key1": {
+            "property": "p1"
+        },
+        "key2": {
+            "property": "p2"
+        }
+    },
+    "requiredDictionaryDictionary": {
+        "key1": {
+            "a": {
+                "property": "aa"
+            }
+        },
+        "key2": {
+            "b": {
+                "property": "bb"
+            }
+        }
+    },
+    "requiredArrayDictionary": {
+        "key1": [
+            {
+                "property": "a1"
+            }
+        ],
+        "key2": [
+            {
+                "property": "b2"
+            }
+        ]
+    }
+}

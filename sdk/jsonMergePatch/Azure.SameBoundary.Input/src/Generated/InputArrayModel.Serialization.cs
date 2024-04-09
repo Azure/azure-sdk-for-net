@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,12 +20,222 @@ namespace Azure.SameBoundary.Input
 
         void IJsonModel<InputArrayModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InputArrayModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<InputArrayModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InputArrayModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+
+            // [Patch] We should decide what is the correct statement for removing an array.
+            if (((ChangeTrackingList<string>)RequiredStringArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredStringArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<string>)RequiredStringArray).IsChanged())
+            {
+                writer.WritePropertyName("requiredStringArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredStringArray)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<string>)OptionalStringArray).WasCleared())
+            {
+                writer.WritePropertyName("optionalStringArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<string>)OptionalStringArray).IsChanged())
+            {
+                writer.WritePropertyName("optionalStringArray");
+                writer.WriteStartArray();
+                foreach (var item in OptionalStringArray)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<int>)RequiredIntArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredIntArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<int>)RequiredIntArray).IsChanged())
+            {
+                writer.WritePropertyName("requiredIntArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredIntArray)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<int>)OptionalIntArray).WasCleared())
+            {
+                writer.WritePropertyName("optionalIntArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<int>)OptionalIntArray).IsChanged())
+            {
+                writer.WritePropertyName("optionalIntArray");
+                writer.WriteStartArray();
+                foreach (var item in OptionalIntArray)
+                {
+                    writer.WriteNumberValue(item);
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<InputDummy>)RequiredModelArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredModelArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<InputDummy>)RequiredModelArray).IsChanged() || RequiredModelArray.Any(item => item?.IsChanged() == true))
+            {
+                writer.WritePropertyName("requiredModelArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredModelArray)
+                {
+                    // [Patch] Should we handle `BaseArray[0].Property = null;` or throw error here
+                    // [Patch] The format is "W"
+                    ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("W"));
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<InputDummy>)OptionalModelArray).WasCleared())
+            {
+                writer.WritePropertyName("optionalModelArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<InputDummy>)OptionalModelArray).IsChanged() || OptionalModelArray.Any(item => item?.IsChanged() == true))
+            {
+                writer.WritePropertyName("optionalModelArray");
+                writer.WriteStartArray();
+                foreach (var item in OptionalModelArray)
+                {
+                    // [Patch] Should we handle `BaseArray[0].Property = null;`? From spec, user is not allowed to do this.
+                    // [Patch] The format is "W"
+                    ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("W"));
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<IList<InputDummy>>)RequiredArrayArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredArrayArray"u8);
+                writer.WriteNullValue();
+            }
+            // [Patch] If item is not ChangeTrackingList, it must be assigned by user, so RequiredArrayArray.IsChanged() would be `true`.
+            // [Patch] However, there is a case that multiple users are operating on the same RequiredArrayArray. After user1 checkes RequiredArrayArray.IsChanged() and starts to check remaining condition, user2 might do RequiredArrayArray[0] = <array>
+            // Option 1: We think RequiredArrayArray as changed
+            // Option 2: we think RequiredArrayArray as not changed
+            else if (((ChangeTrackingList<IList<InputDummy>>)RequiredArrayArray).IsChanged() || RequiredArrayArray.Any(item => item is not ChangeTrackingList<InputDummy> || (item is ChangeTrackingList<InputDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.IsChanged())))))
+            {
+                writer.WritePropertyName("requiredArrayArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredArrayArray)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        ((IJsonModel<InputDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<IList<InputDummy>>)OptionalArrayArray).WasCleared())
+            {
+                writer.WritePropertyName("optionalArrayArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<IList<InputDummy>>)OptionalArrayArray).IsChanged() || OptionalArrayArray.Any(item => item is not ChangeTrackingList<InputDummy> || (item is ChangeTrackingList<InputDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.IsChanged())))))
+            {
+                writer.WritePropertyName("optionalArrayArray");
+                writer.WriteStartArray();
+                foreach (var item in OptionalArrayArray)
+                {
+                    writer.WriteStartArray();
+                    foreach (var item0 in item)
+                    {
+                        ((IJsonModel<InputDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                    }
+                    writer.WriteEndArray();
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<IDictionary<string, InputDummy>>)RequiredDictionaryArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredDictionaryArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<IDictionary<string, InputDummy>>)RequiredDictionaryArray).IsChanged() || RequiredDictionaryArray.Any(item => item is not ChangeTrackingDictionary<string, InputDummy> || (item is ChangeTrackingDictionary<string, InputDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true)))))
+            {
+                writer.WritePropertyName("requiredDictionaryArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredDictionaryArray)
+                {
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        ((IJsonModel<InputDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+            }
+
+            if (((ChangeTrackingList<IDictionary<string, InputDummy>>)OptionalDictionaryArray).WasCleared())
+            {
+                writer.WritePropertyName("requiredDictionaryArray"u8);
+                writer.WriteNullValue();
+            }
+            else if (((ChangeTrackingList<IDictionary<string, InputDummy>>)RequiredDictionaryArray).IsChanged() || RequiredDictionaryArray.Any(item => item is not ChangeTrackingDictionary<string, InputDummy> || (item is ChangeTrackingDictionary<string, InputDummy> trackingItem && (trackingItem.IsChanged() || item.Any(item => item.Value?.IsChanged() == true)))))
+            {
+                writer.WritePropertyName("requiredDictionaryArray");
+                writer.WriteStartArray();
+                foreach (var item in RequiredDictionaryArray)
+                {
+                    writer.WriteStartObject();
+                    foreach (var item0 in item)
+                    {
+                        writer.WritePropertyName(item0.Key);
+                        ((IJsonModel<InputDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("W"));
+                    }
+                    writer.WriteEndObject();
+                }
+                writer.WriteEndArray();
+            }
+
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredStringArray"u8);
             writer.WriteStartArray();

@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Azure.SameBoundary.Input.Tests
 {
@@ -23,34 +24,12 @@ namespace Azure.SameBoundary.Input.Tests
             return Encoding.UTF8.GetString(stream.ToArray());
         }
 
-        public static bool AreEqualJson(dynamic expected, dynamic actual)
+        public static bool AreEqualJson(string expected, string actual)
         {
-            if (expected == actual)
-            {
-                return true;
-            }
-            if (expected == null && actual != null || expected != null && actual == null)
-            {
-                return false;
-            }
+            var expectedObject = JToken.Parse(expected);
+            var actualObject = JToken.Parse(actual);
 
-            var expectedObject = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(expected);
-            var actualObject = JsonConvert.DeserializeObject<Dictionary<string, dynamic>>(actual);
-
-            if (expectedObject.Count != actualObject.Count)
-            {
-                return false;
-            }
-
-            foreach (var key in expectedObject.Keys)
-            {
-                if (!actualObject.ContainsKey(key) || !AreEqualJson(expectedObject[key], actualObject[key]))
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return JToken.DeepEquals(expectedObject, actualObject);
         }
 
         public static string ReadJsonFromFile(string file)

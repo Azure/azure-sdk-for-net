@@ -19,12 +19,47 @@ namespace Azure.SameBoundary.Input
 
         void IJsonModel<InputNestedModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InputNestedModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP"? ((IPersistableModel<InputNestedModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InputNestedModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer, options);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            writer.WriteStartObject();
+            if (_requiredModelChanged || RequiredModel.IsChanged())
+            {
+                writer.WritePropertyName("requiredModel"u8);
+                ((IJsonModel<InputDummy>)RequiredModel).Write(writer, options);
+            }
+            if (_optionalModelChanged || OptionalModel.IsChanged())
+            {
+                writer.WritePropertyName("optionalModel"u8);
+                if (OptionalModel == null)
+                {
+                    writer.WriteNullValue();
+                }
+                else
+                {
+                    ((IJsonModel<InputDummy>)OptionalModel).Write(writer, options);
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredModel"u8);
             writer.WriteObjectValue<InputDummy>(RequiredModel, options);

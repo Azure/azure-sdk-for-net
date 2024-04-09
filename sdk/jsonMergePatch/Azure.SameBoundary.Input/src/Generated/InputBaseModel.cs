@@ -50,7 +50,7 @@ namespace Azure.SameBoundary.Input
         public InputBaseModel(int baseProperty2)
         {
             BaseProperty2 = baseProperty2;
-            BaseProperty3 = new ChangeTrackingDictionary<string, string>();
+            _baseProperty3 = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputBaseModel"/>. </summary>
@@ -60,9 +60,9 @@ namespace Azure.SameBoundary.Input
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InputBaseModel(string baseProperty1, int baseProperty2, IDictionary<string, string> baseProperty3, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            BaseProperty1 = baseProperty1;
-            BaseProperty2 = baseProperty2;
-            BaseProperty3 = new ChangeTrackingDictionary<string, string>(baseProperty3);
+            _baseProperty1 = baseProperty1;
+            _baseProperty2 = baseProperty2;
+            _baseProperty3 = new ChangeTrackingDictionary<string, string>(baseProperty3);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -99,8 +99,9 @@ namespace Azure.SameBoundary.Input
             }
         }
 
+        private ChangeTrackingDictionary<string, string> _baseProperty3;
         /// <summary> Gets the base property 3. </summary>
-        public IDictionary<string, string> BaseProperty3 { get;}
+        public IDictionary<string, string> BaseProperty3 => _baseProperty3;
 
         // [Patch] This is to ensure "reading whether the model is changed" is an atomic operation.
         private bool _isChanged = false;

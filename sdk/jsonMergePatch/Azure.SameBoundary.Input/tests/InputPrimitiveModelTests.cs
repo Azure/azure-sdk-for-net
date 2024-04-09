@@ -30,7 +30,7 @@ namespace Azure.SameBoundary.Input.Tests
             //    "requiredInt":  5
             //}
             var expected = TestHelper.ReadJsonFromFile("InputPrimitive_Case1_RequiredPropertyShouldBeRegardedAsChanged.json");
-            TestHelper.AreEqualJson(expected, actual);
+            Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace Azure.SameBoundary.Input.Tests
             //    "optionalInt": 6
             //}
             var expected = TestHelper.ReadJsonFromFile("InputPrimitive_Case3_ExplicitSetPropertyShouldBeSerializedOtherwiseNot.json");
-            TestHelper.AreEqualJson(expected, actual);
+            Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
 
         [Test]
@@ -75,7 +75,7 @@ namespace Azure.SameBoundary.Input.Tests
             //    "optionalString":  null
             //}
             var expected = TestHelper.ReadJsonFromFile("InputPrimitive_Case4_ExplicitSetNullShouldBeSerialized.json");
-            TestHelper.AreEqualJson(expected, actual);
+            Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
     }
 }

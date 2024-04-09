@@ -61,8 +61,8 @@ namespace Azure.SameBoundary.Input
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InputNestedModel(InputDummy requiredModel, InputDummy optionalModel, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredModel = requiredModel;
-            OptionalModel = optionalModel;
+            _requiredModel = requiredModel;
+            _optionalModel = optionalModel;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,9 +71,31 @@ namespace Azure.SameBoundary.Input
         {
         }
 
+        private InputDummy _requiredModel;
+        private bool _requiredModelChanged = false;
+
         /// <summary> Gets the required model. </summary>
-        public InputDummy RequiredModel { get; }
+        public InputDummy RequiredModel
+        {
+            get => _requiredModel;
+            private set
+            {
+                _requiredModel = value;
+                _requiredModelChanged = true;
+            }
+        }
+
+        private InputDummy _optionalModel;
+        private bool _optionalModelChanged = false;
         /// <summary> Gets or sets the optional model. </summary>
-        public InputDummy OptionalModel { get; set; }
+        public InputDummy OptionalModel
+        {
+            get => _optionalModel;
+            set
+            {
+                _optionalModel = value;
+                _optionalModelChanged = true;
+            }
+        }
     }
 }

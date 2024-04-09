@@ -59,7 +59,35 @@ namespace Azure.SameBoundary.Input
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        private string _property;
+        private bool _propertyChanged = false;
         /// <summary> Gets or sets the property. </summary>
-        public string Property { get; set; }
+        public string Property
+        {
+            get => _property;
+            set
+            {
+                _property = value;
+                _propertyChanged = true;
+                _isChanged = true;
+            }
+        }
+
+        private bool _isChanged = false;
+        internal virtual bool IsChanged(string name = null)
+        {
+            if (name == null)
+            {
+                return _isChanged;
+            }
+
+            switch (name)
+            {
+                case "Property":
+                    return _propertyChanged;
+                default:
+                    return false;
+            }
+        }
     }
 }

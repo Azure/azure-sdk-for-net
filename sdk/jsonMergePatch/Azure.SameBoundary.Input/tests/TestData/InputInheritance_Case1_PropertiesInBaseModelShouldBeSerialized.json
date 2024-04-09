@@ -1,5 +1,6 @@
 {
     "baseProperty1": "stringProperty",
+    "baseProperty2": 2,
     "baseProperty3":
     {
         "a": "a",

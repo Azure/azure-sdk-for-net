@@ -61,16 +61,16 @@ namespace Azure.SameBoundary.Input
             Argument.AssertNotNull(requiredArrayArray, nameof(requiredArrayArray));
             Argument.AssertNotNull(requiredDictionaryArray, nameof(requiredDictionaryArray));
 
-            RequiredStringArray = requiredStringArray.ToList();
-            OptionalStringArray = new ChangeTrackingList<string>();
-            RequiredIntArray = requiredIntArray.ToList();
-            OptionalIntArray = new ChangeTrackingList<int>();
-            RequiredModelArray = requiredModelArray.ToList();
-            OptionalModelArray = new ChangeTrackingList<InputDummy>();
-            RequiredArrayArray = requiredArrayArray.ToList();
-            OptionalArrayArray = new ChangeTrackingList<IList<InputDummy>>();
-            RequiredDictionaryArray = requiredDictionaryArray.ToList();
-            OptionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>();
+            _requiredStringArray = new ChangeTrackingList<string>(requiredStringArray.ToList() as IList<string>, true);
+            _optionalStringArray = new ChangeTrackingList<string>();
+            _requiredIntArray = new ChangeTrackingList<int>(requiredIntArray.ToList() as IList<int>, true);
+            _optionalIntArray = new ChangeTrackingList<int>();
+            _requiredModelArray = new ChangeTrackingList<InputDummy>(requiredModelArray.ToList() as IList<InputDummy>, true);
+            _optionalModelArray = new ChangeTrackingList<InputDummy>();
+            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray.ToList() as IList<IList<InputDummy>>, true);
+            _optionalArrayArray = new ChangeTrackingList<IList<InputDummy>>();
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray.ToList() as IList<IDictionary<string, InputDummy>>, true);
+            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InputArrayModel"/>. </summary>
@@ -87,16 +87,16 @@ namespace Azure.SameBoundary.Input
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal InputArrayModel(IList<string> requiredStringArray, IList<string> optionalStringArray, IList<int> requiredIntArray, IList<int> optionalIntArray, IList<InputDummy> requiredModelArray, IList<InputDummy> optionalModelArray, IList<IList<InputDummy>> requiredArrayArray, IList<IList<InputDummy>> optionalArrayArray, IList<IDictionary<string, InputDummy>> requiredDictionaryArray, IList<IDictionary<string, InputDummy>> optionalDictionaryArray, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            RequiredStringArray = requiredStringArray;
-            OptionalStringArray = optionalStringArray;
-            RequiredIntArray = requiredIntArray;
-            OptionalIntArray = optionalIntArray;
-            RequiredModelArray = requiredModelArray;
-            OptionalModelArray = optionalModelArray;
-            RequiredArrayArray = requiredArrayArray;
-            OptionalArrayArray = optionalArrayArray;
-            RequiredDictionaryArray = requiredDictionaryArray;
-            OptionalDictionaryArray = optionalDictionaryArray;
+            _requiredStringArray = new ChangeTrackingList<string>(requiredStringArray);
+            _optionalStringArray = new ChangeTrackingList<string>(optionalStringArray);
+            _requiredIntArray = new ChangeTrackingList<int>(requiredIntArray);
+            _optionalIntArray = new ChangeTrackingList<int>(optionalIntArray);
+            _requiredModelArray = new ChangeTrackingList<InputDummy>(requiredModelArray);
+            _optionalModelArray = new ChangeTrackingList<InputDummy>(optionalModelArray);
+            _requiredArrayArray = new ChangeTrackingList<IList<InputDummy>>(requiredArrayArray);
+            _optionalArrayArray = new ChangeTrackingList<IList<InputDummy>>(optionalArrayArray);
+            _requiredDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(requiredDictionaryArray);
+            _optionalDictionaryArray = new ChangeTrackingList<IDictionary<string, InputDummy>>(optionalDictionaryArray);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -104,26 +104,45 @@ namespace Azure.SameBoundary.Input
         internal InputArrayModel()
         {
         }
-
+        // [Patch] I add backing field here for the scenario of `ModelReaderWriter.Read()`
+        private ChangeTrackingList<string> _requiredStringArray;
         /// <summary> Gets the required string array. </summary>
-        public IList<string> RequiredStringArray { get; }
+        public IList<string> RequiredStringArray => _requiredStringArray;
+
+        private ChangeTrackingList<string> _optionalStringArray;
         /// <summary> Gets the optional string array. </summary>
-        public IList<string> OptionalStringArray { get; }
+        public IList<string> OptionalStringArray => _optionalStringArray;
+
+        private ChangeTrackingList<int> _requiredIntArray;
         /// <summary> Gets the required int array. </summary>
-        public IList<int> RequiredIntArray { get; }
+        public IList<int> RequiredIntArray => _requiredIntArray;
+
+        private ChangeTrackingList<int> _optionalIntArray;
         /// <summary> Gets the optional int array. </summary>
-        public IList<int> OptionalIntArray { get; }
+        public IList<int> OptionalIntArray => _optionalIntArray;
+
+        private ChangeTrackingList<InputDummy> _requiredModelArray;
         /// <summary> Gets the required model array. </summary>
-        public IList<InputDummy> RequiredModelArray { get; }
+        public IList<InputDummy> RequiredModelArray => _requiredModelArray;
+
+        private ChangeTrackingList<InputDummy> _optionalModelArray;
         /// <summary> Gets the optional model array. </summary>
-        public IList<InputDummy> OptionalModelArray { get; }
+        public IList<InputDummy> OptionalModelArray => _optionalModelArray;
+
+        private ChangeTrackingList<IList<InputDummy>> _requiredArrayArray;
         /// <summary> Gets the required array array. </summary>
-        public IList<IList<InputDummy>> RequiredArrayArray { get; }
+        public IList<IList<InputDummy>> RequiredArrayArray => _requiredArrayArray;
+
+        private ChangeTrackingList<IList<InputDummy>> _optionalArrayArray;
         /// <summary> Gets the optional array array. </summary>
-        public IList<IList<InputDummy>> OptionalArrayArray { get; }
+        public IList<IList<InputDummy>> OptionalArrayArray => _optionalArrayArray;
+
+        private ChangeTrackingList<IDictionary<string, InputDummy>> _requiredDictionaryArray;
         /// <summary> Gets the required dictionary array. </summary>
-        public IList<IDictionary<string, InputDummy>> RequiredDictionaryArray { get; }
+        public IList<IDictionary<string, InputDummy>> RequiredDictionaryArray => _requiredDictionaryArray;
+
+        private ChangeTrackingList<IDictionary<string, InputDummy>> _optionalDictionaryArray;
         /// <summary> Gets the optional dictionary array. </summary>
-        public IList<IDictionary<string, InputDummy>> OptionalDictionaryArray { get; }
+        public IList<IDictionary<string, InputDummy>> OptionalDictionaryArray => _optionalDictionaryArray;
     }
 }

@@ -7,7 +7,10 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -19,12 +22,799 @@ namespace Azure.SameBoundary.Input
 
         void IJsonModel<InputDictionaryModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<InputDictionaryModel>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" || options.Format == "JMP" ? ((IPersistableModel<InputDictionaryModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(InputDictionaryModel)} does not support writing '{format}' format.");
             }
 
+            if (options.Format == "W")
+            {
+                WriteJson(writer, options);
+            }
+            else if (options.Format == "JMP")
+            {
+                WritePatch(writer);
+            }
+        }
+
+        private void WritePatch(Utf8JsonWriter writer)
+        {
+            writer.WriteStartObject();
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "requiredStringDictionary"u8, (ChangeTrackingDictionary<string, string>)RequiredStringDictionary, (item) => writer.WriteStringValue(item));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, string>)RequiredStringDictionary).WasCleared())
+            {
+                writer.WritePropertyName("requiredStringDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool requiredStringDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in RequiredStringDictionary)
+                {
+                    // [Patch] Case 1: _requiredStringDictionary["a"] = null;
+                    // [Patch] Case 2: _requiredStringDictionary["a"] = "a";
+                    if (((ChangeTrackingDictionary<string, string>)RequiredStringDictionary).IsChanged(item.Key))
+                    {
+                        if (!requiredStringDictionary)
+                        {
+                            writer.WritePropertyName("requiredStringDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredStringDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writer.WriteStringValue(item.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, string>)RequiredStringDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!RequiredStringDictionary.ContainsKey(key))
+                    {
+                        if (!requiredStringDictionary)
+                        {
+                            writer.WritePropertyName("requiredStringDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredStringDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (requiredStringDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "optionalStringDictionary"u8, (ChangeTrackingDictionary<string, string>)OptionalStringDictionary, (item) => writer.WriteStringValue(item));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, string>)OptionalStringDictionary).WasCleared())
+            {
+                writer.WritePropertyName("optionalStringDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool optionalStringDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in OptionalStringDictionary)
+                {
+                    // [Patch] Case 1: _optionalStringDictionary["a"] = null;
+                    // [Patch] Case 2: _optionalStringDictionary["a"] = "a";
+                    if (((ChangeTrackingDictionary<string, string>)OptionalStringDictionary).IsChanged(item.Key))
+                    {
+                        if (!optionalStringDictionary)
+                        {
+                            writer.WritePropertyName("optionalStringDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalStringDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writer.WriteStringValue(item.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, string>)OptionalStringDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!OptionalStringDictionary.ContainsKey(key))
+                    {
+                        if (!optionalStringDictionary)
+                        {
+                            writer.WritePropertyName("optionalStringDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalStringDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (optionalStringDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "requiredIntDictionary"u8, (ChangeTrackingDictionary<string, int?>)RequiredIntDictionary, (item) => writer.WriteNumberValue(item.Value));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, int?>)RequiredIntDictionary).WasCleared())
+            {
+                writer.WritePropertyName("requiredIntDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool requiredIntDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in RequiredIntDictionary)
+                {
+                    // [Patch] Case 1: _requiredIntDictionary["a"] = null;
+                    // [Patch] Case 2: _requiredIntDictionary["a"] = 5;
+                    if (((ChangeTrackingDictionary<string, int?>)RequiredIntDictionary).IsChanged(item.Key))
+                    {
+                        if (!requiredIntDictionary)
+                        {
+                            writer.WritePropertyName("requiredIntDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredIntDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writer.WriteNumberValue(item.Value.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, int?>)RequiredIntDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!RequiredIntDictionary.ContainsKey(key))
+                    {
+                        if (!requiredIntDictionary)
+                        {
+                            writer.WritePropertyName("requiredIntDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredIntDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (requiredIntDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "optionalIntDictionary"u8, (ChangeTrackingDictionary<string, int?>)OptionalIntDictionary, (item) => writer.WriteNumberValue(item.Value));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, int?>)OptionalIntDictionary).WasCleared())
+            {
+                writer.WritePropertyName("optionalIntDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool optionalIntDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in OptionalIntDictionary)
+                {
+                    // [Patch] Case 1: _optionalIntDictionary["a"] = null;
+                    // [Patch] Case 2: _optionalIntDictionary["a"] = 5;
+                    if (((ChangeTrackingDictionary<string, int?>)OptionalIntDictionary).IsChanged(item.Key))
+                    {
+                        if (!optionalIntDictionary)
+                        {
+                            writer.WritePropertyName("optionalIntDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalIntDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writer.WriteNumberValue(item.Value.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, int?>)OptionalIntDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!OptionalIntDictionary.ContainsKey(key))
+                    {
+                        if (!optionalIntDictionary)
+                        {
+                            writer.WritePropertyName("optionalIntDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalIntDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (optionalIntDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "requiredModelDictionary"u8, (ChangeTrackingDictionary<string, InputDummy>)RequiredModelDictionary, (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, InputDummy>)RequiredModelDictionary).WasCleared())
+            {
+                writer.WritePropertyName("requiredModelDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool requiredModelDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in RequiredModelDictionary)
+                {
+                    // [Patch] Case 1: _requiredModelDictionary["a"] = null;
+                    // [Patch] Case 2: _requiredModelDictionary["a"] = <InputModel>;
+                    // [Patch] Case 3: _requiredModelDictionary["a"].Property = "a"
+                    if (((ChangeTrackingDictionary<string, InputDummy>)RequiredModelDictionary).IsChanged(item.Key) || (item.Value != null && item.Value.IsChanged()))
+                    {
+                        if (!requiredModelDictionary)
+                        {
+                            writer.WritePropertyName("requiredModelDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredModelDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<InputDummy>)item.Value).Write(writer, new ModelReaderWriterOptions("JMP"));
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, InputDummy>)RequiredModelDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!RequiredModelDictionary.ContainsKey(key))
+                    {
+                        if (!requiredModelDictionary)
+                        {
+                            writer.WritePropertyName("requiredModelDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredModelDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (requiredModelDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by
+            // WriteDictionary(writer, "optionalModelDictionary"u8, (ChangeTrackingDictionary<string, InputDummy>)OptionalModelDictionary, (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()));
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, InputDummy>)OptionalModelDictionary).WasCleared())
+            {
+                writer.WritePropertyName("optionalModelDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool optionalModelDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in OptionalModelDictionary)
+                {
+                    // [Patch] Case 1: _optionalModelDictionary["a"] = null;
+                    // [Patch] Case 2: _optionalModelDictionary["a"] = <InputModel>;
+                    // [Patch] Case 3: _optionalModelDictionary["a"].Property = "a"
+                    if (((ChangeTrackingDictionary<string, InputDummy>)OptionalModelDictionary).IsChanged(item.Key) || (item.Value != null && item.Value.IsChanged()))
+                    {
+                        if (!optionalModelDictionary)
+                        {
+                            writer.WritePropertyName("optionalModelDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalModelDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            ((IJsonModel<InputDummy>)item.Value).Write(writer, new ModelReaderWriterOptions("JMP"));
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, InputDummy>)OptionalModelDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!OptionalModelDictionary.ContainsKey(key))
+                    {
+                        if (!optionalModelDictionary)
+                        {
+                            writer.WritePropertyName("optionalModelDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalModelDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (optionalModelDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by `WriteDictionary`
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)RequiredDictionaryDictionary).WasCleared())
+            {
+                writer.WritePropertyName("requiredDictionaryDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the property name.
+                bool requiredDictionaryDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in RequiredDictionaryDictionary)
+                {
+                    // [Patch] Case 1: _requiredDictionaryDictionary["a"] = null;
+                    // [Patch] Case 2: _requiredDictionaryDictionary["a"] = <dictionary>;
+                    if (((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)RequiredDictionaryDictionary).IsChanged(item.Key))
+                    {
+                        if (!requiredDictionaryDictionary)
+                        {
+                            writer.WritePropertyName("requiredDictionaryDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredDictionaryDictionary = true;
+                        }
+
+                        if (item.Value == null)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteNullValue();
+                        }
+                        // [Patch] If it is not ChangeTrackingDictionary, it must be assigned by user. Every item should be regarded as changed.
+                        else if (item.Value is not ChangeTrackingDictionary<string, InputDummy>)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteStartObject();
+                            foreach (var item0 in item.Value)
+                            {
+                                writer.WritePropertyName(item0.Key);
+                                if (item0.Value == null)
+                                {
+                                    writer.WriteNullValue();
+                                }
+                                else
+                                {
+                                    ((IJsonModel<InputDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("JMP"));
+                                }
+                            }
+                            writer.WriteEndObject();
+                        }
+                        else
+                        {
+                            WriteDictionary(writer, Encoding.ASCII.GetBytes(item.Key), ((ChangeTrackingDictionary<string, InputDummy>)item.Value), (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()));
+                        }
+                    }
+                    // [Patch] Case 3: _requiredDictionaryDictionary["a"]["b"] = <model>
+                    // [Patch] Case 4: _requiredDictionaryDictionary["a"]["b"].Property = "a"
+                    // [Patch] It must be ChangeTrackingDictionary because it is not assigned by user.
+                    else
+                    {
+                        WriteDictionary(writer, Encoding.ASCII.GetBytes(item.Key), ((ChangeTrackingDictionary<string, InputDummy>)item.Value), (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()), new string[] { "requiredDictionaryDictionary" }, new bool[] { requiredDictionaryDictionary });
+                    }                    
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)RequiredDictionaryDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!RequiredDictionaryDictionary.ContainsKey(key))
+                    {
+                        if (!requiredDictionaryDictionary)
+                        {
+                            writer.WritePropertyName("requiredDictionaryDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredDictionaryDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (requiredDictionaryDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by `WriteDictionary`
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)OptionalDictionaryDictionary).WasCleared())
+            {
+                writer.WritePropertyName("optionalDictionaryDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool optionalDictionaryDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in OptionalDictionaryDictionary)
+                {
+                    // [Patch] Case 1: _optionalDictionaryDictionary["a"] = null;
+                    // [Patch] Case 2: _optionalDictionaryDictionary["a"] = <dictionary>;
+                    if (((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)OptionalDictionaryDictionary).IsChanged(item.Key))
+                    {
+                        if (!optionalDictionaryDictionary)
+                        {
+                            writer.WritePropertyName("optionalDictionaryDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalDictionaryDictionary = true;
+                        }
+
+                        if (item.Value == null)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteNullValue();
+                        }
+                        // [Patch] If it is not ChangeTrackingDictionary, it must be assigned by user. Every item should be regarded as changed.
+                        else if (item.Value is not ChangeTrackingDictionary<string, InputDummy>)
+                        {
+                            writer.WritePropertyName(item.Key);
+                            writer.WriteStartObject();
+                            foreach (var item0 in item.Value)
+                            {
+                                writer.WritePropertyName(item0.Key);
+                                if (item0.Value == null)
+                                {
+                                    writer.WriteNullValue();
+                                }
+                                else
+                                {
+                                    ((IJsonModel<InputDummy>)item0.Value).Write(writer, new ModelReaderWriterOptions("JMP"));
+                                }
+                            }
+                            writer.WriteEndObject();
+                        }
+                        else
+                        {
+                            WriteDictionary(writer, Encoding.ASCII.GetBytes(item.Key), ((ChangeTrackingDictionary<string, InputDummy>)item.Value), (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()));
+                        }
+                    }
+                    // [Patch] Case 3: _optionalDictionaryDictionary["a"]["b"] = <model>
+                    // [Patch] Case 4: _optionalDictionaryDictionary["a"]["b"].Property = "a"
+                    // [Patch] It must be ChangeTrackingDictionary because it is not assigned by user.
+                    else
+                    {
+                        WriteDictionary(writer, Encoding.ASCII.GetBytes(item.Key), ((ChangeTrackingDictionary<string, InputDummy>)item.Value), (item) => ((IJsonModel<InputDummy>)item).Write(writer, new ModelReaderWriterOptions("JMP")), (item) => (item != null && item.IsChanged()), new string[] { "optionalDictionaryDictionary" }, new bool[] { optionalDictionaryDictionary });
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, IDictionary<string, InputDummy>>)OptionalDictionaryDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!OptionalDictionaryDictionary.ContainsKey(key))
+                    {
+                        if (!optionalDictionaryDictionary)
+                        {
+                            writer.WritePropertyName("optionalDictionaryDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalDictionaryDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (optionalDictionaryDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by `WriteDictionary`
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, IList<InputDummy>>)RequiredArrayDictionary).WasCleared())
+            {
+                writer.WritePropertyName("requiredArrayDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool requiredArrayDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in RequiredArrayDictionary)
+                {
+                    // [Patch] Case 1: _requiredArrayDictionary["a"] = null;
+                    // [Patch] Case 2: _requiredArrayDictionary["a"] = <array>;
+                    // [Patch] Case 3: _requiredArrayDictionary["a"][0] = <model>
+                    // [Patch] Case 4: _requiredArrayDictionary["a"][0].Property = "a"
+                    if (((ChangeTrackingDictionary<string, IList<InputDummy>>)RequiredArrayDictionary).IsChanged(item.Key) || RequiredArrayDictionary.Any(item => item.Value is ChangeTrackingList<InputDummy> trackingItem && (trackingItem.IsChanged() || trackingItem.Any(item => item?.IsChanged() == true))))
+                    {
+                        if (!requiredArrayDictionary)
+                        {
+                            writer.WritePropertyName("requiredArrayDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredArrayDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        // [Patch] It must be assigned by user, so it cannot be ChangeTrackingList. Every item should be regarded as changed.
+                        else
+                        {
+                            writer.WriteStartArray();
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    writer.WriteNullValue();
+                                    continue;
+                                }
+
+                                // [Patch] Pay attention to the format is "W"
+                                ((IJsonModel<InputDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                            }
+                            writer.WriteEndArray();
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, IList<InputDummy>>)RequiredArrayDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!RequiredArrayDictionary.ContainsKey(key))
+                    {
+                        if (!requiredArrayDictionary)
+                        {
+                            writer.WritePropertyName("requiredArrayDictionary"u8);
+                            writer.WriteStartObject();
+                            requiredArrayDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (requiredArrayDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+
+            // [Patch] We could extract all below logic into a helper method and then alternatively call by `WriteDictionary`
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (((ChangeTrackingDictionary<string, IList<InputDummy>>)OptionalArrayDictionary).WasCleared())
+            {
+                writer.WritePropertyName("optionalArrayDictionary"u8);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the peroperty name.
+                bool optionalArrayDictionary = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in OptionalArrayDictionary)
+                {
+                    // [Patch] Case 1: _optionalArrayDictionary["a"] = null;
+                    // [Patch] Case 2: _optionalArrayDictionary["a"] = <array>;
+                    // [Patch] Case 3: _optionalArrayDictionary["a"][0] = <model>
+                    // [Patch] Case 4: _optionalArrayDictionary["a"][0].Property = "a"
+                    if (((ChangeTrackingDictionary<string, IList<InputDummy>>)OptionalArrayDictionary).IsChanged(item.Key) || OptionalArrayDictionary.Any(item => item.Value is ChangeTrackingList<InputDummy> trackingItem && (trackingItem.IsChanged() || trackingItem.Any(item => item?.IsChanged() == true))))
+                    {
+                        if (!optionalArrayDictionary)
+                        {
+                            writer.WritePropertyName("optionalArrayDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalArrayDictionary = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                            continue;
+                        }
+                        // [Patch] It must be assigned by user, so it cannot be ChangeTrackingList. Every item should be regarded as changed.
+                        else
+                        {
+                            writer.WriteStartArray();
+                            foreach (var item0 in item.Value)
+                            {
+                                if (item0 == null)
+                                {
+                                    writer.WriteNullValue();
+                                }
+
+                                // [Patch] Pay attention to the format is "W"
+                                ((IJsonModel<InputDummy>)item0).Write(writer, new ModelReaderWriterOptions("W"));
+                            }
+                            writer.WriteEndArray();
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in ((ChangeTrackingDictionary<string, IList<InputDummy>>)OptionalArrayDictionary).ChangedKeys ?? new List<string>())
+                {
+                    if (!OptionalArrayDictionary.ContainsKey(key))
+                    {
+                        if (!optionalArrayDictionary)
+                        {
+                            writer.WritePropertyName("optionalArrayDictionary"u8);
+                            writer.WriteStartObject();
+                            optionalArrayDictionary = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+                if (optionalArrayDictionary)
+                {
+                    writer.WriteEndObject();
+                }
+            }
+            writer.WriteEndObject();
+        }
+
+        private void WriteDictionary<T>(Utf8JsonWriter writer, ReadOnlySpan<byte> propertyName, in ChangeTrackingDictionary<string, T> dictionary, Action<T> writeItem, Func<T, bool> additionalItemChangeCheck = null, string[] additionalPropertyName = null, bool[] additionalPropertyWritten = null)
+        {
+            void StartWriteAdditionalPropertyName()
+            {
+                if (additionalPropertyName != null && additionalPropertyWritten != null)
+                {
+                    for (int i = 0; i < additionalPropertyName.Length; ++i)
+                    {
+                        if (additionalPropertyWritten[i])
+                        {
+                            continue;
+                        }
+                        writer.WritePropertyName(additionalPropertyName[i]);
+                        writer.WriteStartObject();
+                    }
+                }
+            }
+
+            void EndWriteAdditionalPropertyName()
+            {
+                if (additionalPropertyName != null && additionalPropertyWritten != null)
+                {
+                    for (int i = 0; i < additionalPropertyName.Length; ++i)
+                    {
+                        if (additionalPropertyWritten[i])
+                        {
+                            continue;
+                        }
+                        writer.WriteEndObject();
+
+                        ref bool propertyWritten = ref additionalPropertyWritten[i];
+                        propertyWritten = true;
+                    }
+                }
+            }
+
+            // [Patch] We should decide what is the correct statement for removing a dictionary.
+            if (dictionary.WasCleared())
+            {
+                StartWriteAdditionalPropertyName();
+                writer.WritePropertyName(propertyName);
+                writer.WriteNullValue();
+            }
+            else
+            {
+                // [Patch] This flag is to track whether we write the property name.
+                bool propertyNameWritten = false;
+                // [Patch] Loop all the items in the dictionary to see if it changes.
+                foreach (var item in dictionary)
+                {
+                    // [Patch] Case 1: dictionary["a"] = null;
+                    // [Patch] Case 2: dictionary["a"] = <T>;
+                    // [Patch] Case 3: dictionary["a"] is <T> and <T> is changed.
+                    if (dictionary.IsChanged(item.Key) || (additionalItemChangeCheck != null && additionalItemChangeCheck(item.Value)))
+                    {
+                        if (!propertyNameWritten)
+                        {
+                            StartWriteAdditionalPropertyName();
+                            writer.WritePropertyName(propertyName);
+                            writer.WriteStartObject();
+                            propertyNameWritten = true;
+                        }
+
+                        writer.WritePropertyName(item.Key);
+                        if (item.Value == null)
+                        {
+                            writer.WriteNullValue();
+                        }
+                        else
+                        {
+                            writeItem(item.Value);
+                        }
+                    }
+                }
+                // [Patch] Loop all the item in ChangedKeys but not in the dictionary. That means this item is removed.
+                foreach (var key in dictionary.ChangedKeys ?? new List<string>())
+                {
+                    if (!dictionary.ContainsKey(key))
+                    {
+                        if (!propertyNameWritten)
+                        {
+                            StartWriteAdditionalPropertyName();
+                            writer.WritePropertyName(propertyName);
+                            writer.WriteStartObject();
+                            propertyNameWritten = true;
+                        }
+
+                        writer.WritePropertyName(key);
+                        writer.WriteNullValue();
+                    }
+                }
+
+                if (propertyNameWritten)
+                {
+                    EndWriteAdditionalPropertyName();
+                    writer.WriteEndObject();
+                }
+            }
+        }
+
+        private void WriteJson(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
             writer.WriteStartObject();
             writer.WritePropertyName("requiredStringDictionary"u8);
             writer.WriteStartObject();
@@ -50,7 +840,7 @@ namespace Azure.SameBoundary.Input
             foreach (var item in RequiredIntDictionary)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteNumberValue(item.Value);
+                writer.WriteNumberValue(item.Value.Value);
             }
             writer.WriteEndObject();
             if (Optional.IsCollectionDefined(OptionalIntDictionary))
@@ -60,7 +850,7 @@ namespace Azure.SameBoundary.Input
                 foreach (var item in OptionalIntDictionary)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteNumberValue(item.Value);
+                    writer.WriteNumberValue(item.Value.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -203,8 +993,8 @@ namespace Azure.SameBoundary.Input
             }
             IDictionary<string, string> requiredStringDictionary = default;
             IDictionary<string, string> optionalStringDictionary = default;
-            IDictionary<string, int> requiredIntDictionary = default;
-            IDictionary<string, int> optionalIntDictionary = default;
+            IDictionary<string, int?> requiredIntDictionary = default;
+            IDictionary<string, int?> optionalIntDictionary = default;
             IDictionary<string, InputDummy> requiredModelDictionary = default;
             IDictionary<string, InputDummy> optionalModelDictionary = default;
             IDictionary<string, IDictionary<string, InputDummy>> requiredDictionaryDictionary = default;
@@ -241,7 +1031,7 @@ namespace Azure.SameBoundary.Input
                 }
                 if (property.NameEquals("requiredIntDictionary"u8))
                 {
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    Dictionary<string, int?> dictionary = new Dictionary<string, int?>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetInt32());
@@ -255,7 +1045,7 @@ namespace Azure.SameBoundary.Input
                     {
                         continue;
                     }
-                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    Dictionary<string, int?> dictionary = new Dictionary<string, int?>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
                         dictionary.Add(property0.Name, property0.Value.GetInt32());
@@ -393,7 +1183,7 @@ namespace Azure.SameBoundary.Input
                 requiredStringDictionary,
                 optionalStringDictionary ?? new ChangeTrackingDictionary<string, string>(),
                 requiredIntDictionary,
-                optionalIntDictionary ?? new ChangeTrackingDictionary<string, int>(),
+                optionalIntDictionary ?? new ChangeTrackingDictionary<string, int?>(),
                 requiredModelDictionary,
                 optionalModelDictionary ?? new ChangeTrackingDictionary<string, InputDummy>(),
                 requiredDictionaryDictionary,

@@ -1,0 +1,42 @@
+{
+    "requiredStringDictionary": {
+        "key1": "value1",
+        "key2": "value2"
+    },
+    "requiredIntDictionary": {
+        "key1": 1,
+        "key2": 2
+    },
+    "requiredModelDictionary": {
+        "key1": {
+            "property": "p1"
+        },
+        "key2": {
+            "property": "p2"
+        }
+    },
+    "requiredDictionaryDictionary": {
+        "key1": null,
+        "key2": null
+    },
+    "optionalDictionaryDictionary": {
+        "key3": {
+            "c": {}
+        },
+        "key4": {
+            "d": {}
+        }
+    },
+    "requiredArrayDictionary": {
+        "key1": [
+            {
+                "property": "a1"
+            }
+        ],
+        "key2": [
+            {
+                "property": "b2"
+            }
+        ]
+    }
+}

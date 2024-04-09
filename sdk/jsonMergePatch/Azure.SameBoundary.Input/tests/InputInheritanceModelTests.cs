@@ -20,6 +20,7 @@ namespace Azure.SameBoundary.Input.Tests
             /* Expected
             {
                 "baseProperty1": "stringProperty",
+                "baseProperty2": 2,
                 "baseProperty3":
                 {
                     "a": "a",
@@ -28,7 +29,7 @@ namespace Azure.SameBoundary.Input.Tests
             }
             */
             string expected = TestHelper.ReadJsonFromFile("InputInheritance_Case1_PropertiesInBaseModelShouldBeSerialized.json");
-            TestHelper.AreEqualJson(expected, actual);
+            Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
 
         [Test]
@@ -43,12 +44,13 @@ namespace Azure.SameBoundary.Input.Tests
             /* Expected
              {
                 "baseProperty1": "stringProperty",
+                "baseProperty2": 2,
                 "extendedProperty": "extendedProperty",
                 "anotherLevelProperty": "anotherLevelProperty"
             }
              */
             string expected = TestHelper.ReadJsonFromFile("InputInheritance_Case2_MultipleLevelsAreSerializedCorrectly.json");
-            TestHelper.AreEqualJson(expected, actual);
+            Assert.IsTrue(TestHelper.AreEqualJson(expected, actual));
         }
     }
 }

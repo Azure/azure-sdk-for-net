@@ -19,10 +19,52 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="TestData\InputArray_Case2_RequiredPropertyShouldBeRegardedAsChanged.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputArray_Case3_OperateOnPrimitiveArray.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputArray_Case4_OperateOnModelArray.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case10_OperateOnArrayDictionary_ArrayItemLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case11_OperateOnArrayDictionary_ArrayItemPropertyLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case7_OperateOnDictionaryDictionary_InnerDictionaryLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case2_RequiredPropertyShouldBeRegardedAsChanged.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case3_OperateOnPrimitiveDictionary.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case4_OperateOnModelDictionary_ModelLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case5_OperateOnModelDictionary_ModelPropertyLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case6_OperateOnDictionaryDictionary_DictionaryLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case8_OperateOnDictionaryDictionary_InnerModelPropertyLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputDictionary_Case9_OperateOnArrayDictionary_ArrayLevel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="TestData\InputInheritance_Case1_PropertiesInBaseModelShouldBeSerialized.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\InputInheritance_Case2_MultipleLevelsAreSerializedCorrectly.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\InputNested_PropertiesInNestedModelShouldBeSerialized.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\InputPrimitive_Case1_RequiredPropertyShouldBeRegardedAsChanged.json">
