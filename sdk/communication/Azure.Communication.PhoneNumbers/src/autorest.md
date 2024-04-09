@@ -32,6 +32,16 @@ directive:
   transform: >
     $["x-ms-client-name"] = "twoLetterIsoCountryName";
 ```
+
+``` yaml
+directive:
+  from: swagger-document
+  where: $.parameters.CountryCodeParameter
+  transform: >
+    $["x-ms-client-name"] = "twoLetterIsoCountryName";
+```
+
+
 ### Change naming of Error to ErrorMessage
 ``` yaml
 directive:

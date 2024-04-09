@@ -39,7 +39,7 @@ namespace Azure.Communication.PhoneNumbers
             _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateListAreaCodesRequest(string countryCode, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesRequest(string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -47,7 +47,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(countryCode, true);
+            uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/areaCodes", false);
             uri.AppendQuery("phoneNumberType", phoneNumberType.ToString(), true);
             if (skip != null)
@@ -106,7 +106,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesRequest(string countryCode, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -114,7 +114,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(countryCode, true);
+            uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/localities", false);
             if (skip != null)
             {
@@ -138,7 +138,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListOfferingsRequest(string countryCode, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsRequest(string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,7 +146,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(countryCode, true);
+            uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/offerings", false);
             if (skip != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateSearchAvailablePhoneNumbersRequest(string countryCode, PhoneNumberSearchRequest body)
+        internal HttpMessage CreateSearchAvailablePhoneNumbersRequest(string twoLetterIsoCountryName, PhoneNumberSearchRequest body)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -182,7 +182,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(countryCode, true);
+            uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/:search", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -195,22 +195,22 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
-        public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
+        public async Task<ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders>> SearchAvailablePhoneNumbersAsync(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
-            if (countryCode == null)
+            if (twoLetterIsoCountryName == null)
             {
-                throw new ArgumentNullException(nameof(countryCode));
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
             }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSearchAvailablePhoneNumbersRequest(countryCode, body);
+            using var message = CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, body);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -223,22 +223,22 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Search for available phone numbers to purchase. </summary>
-        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="body"> The phone number search request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="body"/> is null. </exception>
-        public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string countryCode, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="body"/> is null. </exception>
+        public ResponseWithHeaders<PhoneNumbersSearchAvailablePhoneNumbersHeaders> SearchAvailablePhoneNumbers(string twoLetterIsoCountryName, PhoneNumberSearchRequest body, CancellationToken cancellationToken = default)
         {
-            if (countryCode == null)
+            if (twoLetterIsoCountryName == null)
             {
-                throw new ArgumentNullException(nameof(countryCode));
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
             }
             if (body == null)
             {
                 throw new ArgumentNullException(nameof(body));
             }
 
-            using var message = CreateSearchAvailablePhoneNumbersRequest(countryCode, body);
+            using var message = CreateSearchAvailablePhoneNumbersRequest(twoLetterIsoCountryName, body);
             _pipeline.Send(message, cancellationToken);
             var headers = new PhoneNumbersSearchAvailablePhoneNumbersHeaders(message.Response);
             switch (message.Response.Status)
@@ -250,7 +250,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateBrowseAvailableNumbersRequest(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest)
+        internal HttpMessage CreateBrowseAvailableNumbersRequest(string twoLetterIsoCountryName, PhoneNumbersBrowseContent phoneNumbersBrowseRequest)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -258,7 +258,7 @@ namespace Azure.Communication.PhoneNumbers
             var uri = new RawRequestUriBuilder();
             uri.AppendRaw(_endpoint, false);
             uri.AppendPath("/availablePhoneNumbers/countries/", false);
-            uri.AppendPath(countryCode, true);
+            uri.AppendPath(twoLetterIsoCountryName, true);
             uri.AppendPath("/:browse", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -271,22 +271,22 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
-        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
-        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        public async Task<Response<PhoneNumbersBrowseResult>> BrowseAvailableNumbersAsync(string twoLetterIsoCountryName, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
-            if (countryCode == null)
+            if (twoLetterIsoCountryName == null)
             {
-                throw new ArgumentNullException(nameof(countryCode));
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
             }
             if (phoneNumbersBrowseRequest == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
             }
 
-            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            using var message = CreateBrowseAvailableNumbersRequest(twoLetterIsoCountryName, phoneNumbersBrowseRequest);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -303,22 +303,22 @@ namespace Azure.Communication.PhoneNumbers
         }
 
         /// <summary> Searches for available phone numbers to purchase. Note that this does not reserves the numbers in the response. </summary>
-        /// <param name="countryCode"> The ISO 3166-2 country code, e.g. US. </param>
+        /// <param name="twoLetterIsoCountryName"> The ISO 3166-2 country code, e.g. US. </param>
         /// <param name="phoneNumbersBrowseRequest"> The <see cref="PhoneNumbersBrowseContent"/> to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="countryCode"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
-        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string countryCode, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="twoLetterIsoCountryName"/> or <paramref name="phoneNumbersBrowseRequest"/> is null. </exception>
+        public Response<PhoneNumbersBrowseResult> BrowseAvailableNumbers(string twoLetterIsoCountryName, PhoneNumbersBrowseContent phoneNumbersBrowseRequest, CancellationToken cancellationToken = default)
         {
-            if (countryCode == null)
+            if (twoLetterIsoCountryName == null)
             {
-                throw new ArgumentNullException(nameof(countryCode));
+                throw new ArgumentNullException(nameof(twoLetterIsoCountryName));
             }
             if (phoneNumbersBrowseRequest == null)
             {
                 throw new ArgumentNullException(nameof(phoneNumbersBrowseRequest));
             }
 
-            using var message = CreateBrowseAvailableNumbersRequest(countryCode, phoneNumbersBrowseRequest);
+            using var message = CreateBrowseAvailableNumbersRequest(twoLetterIsoCountryName, phoneNumbersBrowseRequest);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1122,7 +1122,7 @@ namespace Azure.Communication.PhoneNumbers
             }
         }
 
-        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string countryCode, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAreaCodesNextPageRequest(string nextLink, string twoLetterIsoCountryName, PhoneNumberType phoneNumberType, int? skip, int? maxPageSize, PhoneNumberAssignmentType? assignmentType, string locality, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1156,7 +1156,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string countryCode, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
+        internal HttpMessage CreateListAvailableLocalitiesNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, string administrativeDivision, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1173,7 +1173,7 @@ namespace Azure.Communication.PhoneNumbers
             return message;
         }
 
-        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string countryCode, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
+        internal HttpMessage CreateListOfferingsNextPageRequest(string nextLink, string twoLetterIsoCountryName, int? skip, int? maxPageSize, PhoneNumberType? phoneNumberType, PhoneNumberAssignmentType? assignmentType, string acceptLanguage)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
