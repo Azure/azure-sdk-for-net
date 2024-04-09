@@ -188,7 +188,7 @@ function Confirm-ChangeLogEntry {
   if ($ForRelease -eq $True)
   {
     LogDebug "Verifying as a release build because ForRelease parameter is set to true"
-    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $suppressErrors
   }
 
   # If the release status is a valid date then verify like its about to be released
@@ -196,7 +196,7 @@ function Confirm-ChangeLogEntry {
   if ($status -as [DateTime])
   {
     LogDebug "Verifying as a release build because the changelog entry has a valid date."
-    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus
+    return Confirm-ChangeLogForRelease -changeLogEntry $changeLogEntry -changeLogEntries $changeLogEntries -ChangeLogStatus $ChangeLogStatus -SuppressErrors $suppressErrors
   }
 
   $ChangeLogStatus.Message = "ChangeLog[${ChangeLogLocation}] has an entry for version ${VersionString}."
@@ -361,26 +361,24 @@ function Confirm-ChangeLogForRelease {
     $changeLogEntry,
     [Parameter(Mandatory = $true)]
     $changeLogEntries,
-    $ChangeLogStatus = $null
+    $ChangeLogStatus = $null,
+    $SuppressErrors = $false
   )
 
-  $suppressErrors = $false
   if (!$ChangeLogStatus) {
     $ChangeLogStatus = [PSCustomObject]@{
       IsValid = $false
       Message = ""
     }
   }
-  else {
-    $suppressErrors = $true
-  }
+
   $entries = Sort-ChangeLogEntries -changeLogEntries $changeLogEntries
 
   $ChangeLogStatus.IsValid = $true
   if ($changeLogEntry.ReleaseStatus -eq $CHANGELOG_UNRELEASED_STATUS) {
     $ChangeLogStatus.Message = "Entry has no release date set. Please ensure to set a release date with format '$CHANGELOG_DATE_FORMAT'. See https://aka.ms/azsdk/guideline/changelogs for more info."
     $ChangeLogStatus.IsValid = $false
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
   }
@@ -392,7 +390,7 @@ function Confirm-ChangeLogForRelease {
       {
         $ChangeLogStatus.Message = "Date must be in the format $($CHANGELOG_DATE_FORMAT). See https://aka.ms/azsdk/guideline/changelogs for more info."
         $ChangeLogStatus.IsValid = $false
-        if (!$suppressErrors) {
+        if (!$SuppressErrors) {
           LogError "$($ChangeLogStatus.Message)"
         }
       }
@@ -401,7 +399,7 @@ function Confirm-ChangeLogForRelease {
       {
         $ChangeLogStatus.Message = "Invalid date [ $status ]. The date for the changelog being released must be the latest in the file."
         $ChangeLogStatus.IsValid = $false
-        if (!$suppressErrors) {
+        if (!$SuppressErrors) {
           LogError "$($ChangeLogStatus.Message)"
         }
       }
@@ -409,7 +407,7 @@ function Confirm-ChangeLogForRelease {
     catch {
         $ChangeLogStatus.Message = "Invalid date [ $status ] passed as status for Version [$($changeLogEntry.ReleaseVersion)]. See https://aka.ms/azsdk/guideline/changelogs for more info."
         $ChangeLogStatus.IsValid = $false
-        if (!$suppressErrors) {
+        if (!$SuppressErrors) {
           LogError "$($ChangeLogStatus.Message)"
         }
     }
@@ -418,7 +416,7 @@ function Confirm-ChangeLogForRelease {
   if ([System.String]::IsNullOrWhiteSpace($changeLogEntry.ReleaseContent)) {
     $ChangeLogStatus.Message = "Entry has no content. Please ensure to provide some content of what changed in this version. See https://aka.ms/azsdk/guideline/changelogs for more info."
     $ChangeLogStatus.IsValid = $false
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
   }
@@ -441,14 +439,14 @@ function Confirm-ChangeLogForRelease {
   {
     $ChangeLogStatus.Message = "The changelog entry has the following sections with no content ($($emptySections -join ', ')). Please ensure to either remove the empty sections or add content to the section."
     $ChangeLogStatus.IsValid = $false
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
   }
   if (!$foundRecommendedSection)
   {
     $ChangeLogStatus.Message = "The changelog entry did not contain any of the recommended sections ($($RecommendedSectionHeaders -join ', ')), please add at least one. See https://aka.ms/azsdk/guideline/changelogs for more info."
-    if (!$suppressErrors) {
+    if (!$SuppressErrors) {
       LogError "$($ChangeLogStatus.Message)"
     }
   }
