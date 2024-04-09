@@ -21,6 +21,7 @@ namespace Azure
     public class RequestFailedException : Exception, ISerializable
     {
         private const string DefaultMessage = "Service request failed.";
+        internal const string NoContentOnSuccessMessage = "Service request succeeded. Response content will not be included to avoid logging sensitive data.";
 
         /// <summary>
         /// Gets the HTTP status code of the response. Returns. <code>0</code> if response was not received.
@@ -172,55 +173,64 @@ namespace Azure
                 .Append("Status: ")
                 .Append(response.Status.ToString(CultureInfo.InvariantCulture));
 
-            if (!string.IsNullOrEmpty(response.ReasonPhrase))
+            if (response.IsError)
             {
-                messageBuilder.Append(" (")
-                    .Append(response.ReasonPhrase)
-                    .AppendLine(")");
+                if (!string.IsNullOrEmpty(response.ReasonPhrase))
+                {
+                    messageBuilder.Append(" (")
+                        .Append(response.ReasonPhrase)
+                        .AppendLine(")");
+                }
+                else
+                {
+                    messageBuilder.AppendLine();
+                }
+
+                if (!string.IsNullOrWhiteSpace(error?.Code))
+                {
+                    messageBuilder.Append("ErrorCode: ")
+                        .Append(error?.Code)
+                        .AppendLine();
+                }
+
+                if (additionalInfo is { Count: > 0 })
+                {
+                    messageBuilder
+                        .AppendLine()
+                        .AppendLine("Additional Information:");
+                    foreach (KeyValuePair<string, string> info in additionalInfo)
+                    {
+                        messageBuilder
+                            .Append(info.Key)
+                            .Append(": ")
+                            .AppendLine(info.Value);
+                    }
+                }
+
+                if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+                {
+                    messageBuilder
+                        .AppendLine()
+                        .AppendLine("Content:")
+                        .AppendLine(response.Content.ToString());
+                }
+
+                messageBuilder
+                    .AppendLine()
+                    .AppendLine("Headers:");
+
+                foreach (HttpHeader responseHeader in response.Headers)
+                {
+                    string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
+                    string header = $"{responseHeader.Name}: {headerValue}";
+                    messageBuilder.AppendLine(header);
+                }
             }
             else
             {
-                messageBuilder.AppendLine();
-            }
-
-            if (!string.IsNullOrWhiteSpace(error?.Code))
-            {
-                messageBuilder.Append("ErrorCode: ")
-                    .Append(error?.Code)
-                    .AppendLine();
-            }
-
-            if (additionalInfo is { Count: > 0 })
-            {
                 messageBuilder
                     .AppendLine()
-                    .AppendLine("Additional Information:");
-                foreach (KeyValuePair<string, string> info in additionalInfo)
-                {
-                    messageBuilder
-                        .Append(info.Key)
-                        .Append(": ")
-                        .AppendLine(info.Value);
-                }
-            }
-
-            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
-            {
-                messageBuilder
-                    .AppendLine()
-                    .AppendLine("Content:")
-                    .AppendLine(response.Content.ToString());
-            }
-
-            messageBuilder
-                .AppendLine()
-                .AppendLine("Headers:");
-
-            foreach (HttpHeader responseHeader in response.Headers)
-            {
-                string headerValue = response.Sanitizer.SanitizeHeader(responseHeader.Name, responseHeader.Value);
-                string header = $"{responseHeader.Name}: {headerValue}";
-                messageBuilder.AppendLine(header);
+                    .AppendLine(NoContentOnSuccessMessage);
             }
 
             var formatMessage = messageBuilder.ToString();
