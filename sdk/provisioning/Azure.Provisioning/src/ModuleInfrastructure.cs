@@ -195,9 +195,9 @@ namespace Azure.Provisioning
             }
         }
 
-        private string GetFilePath(ModuleConstruct? construct, string outputPath)
+        private string GetFilePath(ModuleConstruct construct, string outputPath)
         {
-            string fileName = construct == null || construct.IsRoot ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
+            string fileName = construct.IsRoot ? Path.Combine(outputPath, "main.bicep") : Path.Combine(outputPath, "resources", construct.Name, $"{construct.Name}.bicep");
             Directory.CreateDirectory(Path.GetDirectoryName(fileName)!);
             return fileName;
         }
