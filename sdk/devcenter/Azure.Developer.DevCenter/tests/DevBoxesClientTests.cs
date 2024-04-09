@@ -31,15 +31,16 @@ namespace Azure.Developer.DevCenter.Tests
         }
 
         [SetUp]
-        public async Task SetUpAsync()
+        public void SetUp()
         {
             _devBoxesClient = GetDevBoxesClient();
-            await SetUpDevBoxAsync();
         }
 
         [Test]
-        public async Task StartAndStopDevBoxSucceeds()
+        public async Task CreateStopAndStartDevBoxSucceeds()
         {
+            await CreateDevBoxAsync();
+
             // At this point we should have a running dev box, let's stop it
             Operation devBoxStopOperation = await _devBoxesClient.StopDevBoxAsync(
                 WaitUntil.Completed,
@@ -62,6 +63,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task RestartDevBoxSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             Operation devBoxRestartOperation = await _devBoxesClient.RestartDevBoxAsync(
                 WaitUntil.Completed,
                 TestEnvironment.ProjectName,
@@ -74,6 +77,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetRemoteConnectionSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             RemoteConnection remoteConnection = await _devBoxesClient.GetRemoteConnectionAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
@@ -101,6 +106,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetDevBoxSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             DevBox devBox = await _devBoxesClient.GetDevBoxAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
@@ -118,6 +125,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetDevBoxesSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             List<DevBox> devBoxes = await _devBoxesClient.GetDevBoxesAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId).ToEnumerableAsync();
@@ -136,6 +145,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetAllDevBoxesSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesAsync().ToEnumerableAsync();
 
             Assert.AreEqual(1, devBoxes.Count);
@@ -152,6 +163,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetAllDevBoxesByUserSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             List<DevBox> devBoxes = await _devBoxesClient.GetAllDevBoxesByUserAsync(TestEnvironment.MeUserId).ToEnumerableAsync();
 
             Assert.AreEqual(1, devBoxes.Count);
@@ -235,6 +248,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetAndDelayActionSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             //only perform actions if it exists and it's in the 24hrs window
             if (!await HasDefaultActionIn24hrsAsync())
             {
@@ -278,6 +293,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task GetAndDelayAllActionsSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             List<DevBoxAction> devBoxActions = await _devBoxesClient.GetDevBoxActionsAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId,
@@ -314,6 +331,8 @@ namespace Azure.Developer.DevCenter.Tests
         [Test]
         public async Task SkipActionAndDeleteDevBoxSucceeds()
         {
+            await EnsureDevBoxExistsAsync();
+
             if (!await HasDefaultActionIn24hrsAsync())
             {
                 return;
@@ -336,42 +355,19 @@ namespace Azure.Developer.DevCenter.Tests
             CheckLROSucceeded(devBoxDeleteOperation);
         }
 
-        private async Task SetUpDevBoxAsync()
-        {
-            DevBox devBox = await GetDevBoxAsync();
-            if (devBox == default)
-            {
-                devBox = await CreateDevBoxAsync();
-            }
-
-            string devBoxName = devBox.Name;
-            if (string.IsNullOrWhiteSpace(devBoxName))
-            {
-                FailDueToMissingProperty("name");
-            }
-
-            Assert.AreEqual(devBoxName, DevBoxName);
-
-            DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
-
-            // Both states indicate successful provisioning
-            bool devBoxProvisionSucceeded =
-                devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) ||
-                devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
-
-            Assert.IsTrue(devBoxProvisionSucceeded);
-        }
-
-        private async Task<DevBox> GetDevBoxAsync()
+        private async Task EnsureDevBoxExistsAsync()
         {
             List<DevBox> devBoxes = await _devBoxesClient.GetDevBoxesAsync(
                 TestEnvironment.ProjectName,
                 TestEnvironment.MeUserId).ToEnumerableAsync();
 
-            return devBoxes.Where(d => d.Name.Equals(DevBoxName)).FirstOrDefault();
+            if (!devBoxes.Any(d => d.Name.Equals(DevBoxName)))
+            {
+                await CreateDevBoxAsync();
+            }
         }
 
-        private async Task<DevBox> CreateDevBoxAsync()
+        private async Task CreateDevBoxAsync()
         {
             DevBox devBox = new DevBox
             (
@@ -385,7 +381,19 @@ namespace Azure.Developer.DevCenter.Tests
                 TestEnvironment.MeUserId,
                 devBox);
 
-            return devBoxCreateOperation.Value;
+            devBox = devBoxCreateOperation.Value;
+
+            Assert.NotNull(devBox);
+            Assert.AreEqual(DevBoxName, devBox.Name);
+
+            DevBoxProvisioningState? devBoxProvisioningState = devBox.ProvisioningState;
+
+            // Both states indicate successful provisioning
+            bool devBoxProvisionSucceeded =
+                devBoxProvisioningState.Equals(DevBoxProvisioningState.Succeeded) ||
+                devBoxProvisioningState.Equals(DevBoxProvisioningState.ProvisionedWithWarning);
+
+            Assert.IsTrue(devBoxProvisionSucceeded);
         }
 
         private async Task<bool> HasDefaultActionIn24hrsAsync()
