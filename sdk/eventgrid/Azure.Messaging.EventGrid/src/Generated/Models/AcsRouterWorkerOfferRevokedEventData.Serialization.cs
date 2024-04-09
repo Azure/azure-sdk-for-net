@@ -68,12 +68,21 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 offerId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterWorkerOfferRevokedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerOfferRevokedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterWorkerOfferRevokedEventDataConverter : JsonConverter<AcsRouterWorkerOfferRevokedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterWorkerOfferRevokedEventData model, JsonSerializerOptions options)
             {
                 throw new NotImplementedException();
             }
+
             public override AcsRouterWorkerOfferRevokedEventData Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);
