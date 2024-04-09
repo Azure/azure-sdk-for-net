@@ -7,7 +7,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A Microsoft Teams application. </summary>
     [CodeGenModel("MicrosoftTeamsAppIdentifierModel")]
-    public partial class MicrosoftTeamsAppIdentifier
+    public partial class AcsMicrosoftTeamsAppIdentifier
     {
     }
 }

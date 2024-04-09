@@ -2119,7 +2119,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
         /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <returns> A new <see cref="SystemEvents.CommunicationIdentifierModel"/> instance for mocking. </returns>
-        public static CommunicationIdentifierModel CommunicationIdentifierModel(CommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
+        public static CommunicationIdentifierModel CommunicationIdentifierModel(AcsCommunicationIdentifierKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, AcsMicrosoftTeamsAppIdentifier microsoftTeamsApp = null)
         {
             return new CommunicationIdentifierModel(
                 kind,
@@ -2168,13 +2168,13 @@ namespace Azure.Messaging.EventGrid
             return new MicrosoftTeamsUserIdentifierModel(userId, isAnonymous, cloud);
         }
 
-        /// <summary> Initializes a new instance of <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        /// <returns> A new <see cref="SystemEvents.MicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
-        public static MicrosoftTeamsAppIdentifier MicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
+        /// <returns> A new <see cref="SystemEvents.AcsMicrosoftTeamsAppIdentifier"/> instance for mocking. </returns>
+        public static AcsMicrosoftTeamsAppIdentifier AcsMicrosoftTeamsAppIdentifier(string appId = null, CommunicationCloudEnvironmentModel? cloud = null)
         {
-            return new MicrosoftTeamsAppIdentifier(appId, cloud);
+            return new AcsMicrosoftTeamsAppIdentifier(appId, cloud);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsIncomingCallCustomContext"/>. </summary>

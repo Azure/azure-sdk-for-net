@@ -10,22 +10,22 @@ using System;
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
     /// <summary> A Microsoft Teams application. </summary>
-    public partial class MicrosoftTeamsAppIdentifier
+    public partial class AcsMicrosoftTeamsAppIdentifier
     {
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appId"/> is null. </exception>
-        internal MicrosoftTeamsAppIdentifier(string appId)
+        internal AcsMicrosoftTeamsAppIdentifier(string appId)
         {
             Argument.AssertNotNull(appId, nameof(appId));
 
             AppId = appId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MicrosoftTeamsAppIdentifier"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMicrosoftTeamsAppIdentifier"/>. </summary>
         /// <param name="appId"> The Id of the Microsoft Teams application. </param>
         /// <param name="cloud"> The cloud that the Microsoft Teams application belongs to. By default 'public' if missing. </param>
-        internal MicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud)
+        internal AcsMicrosoftTeamsAppIdentifier(string appId, CommunicationCloudEnvironmentModel? cloud)
         {
             AppId = appId;
             Cloud = cloud;
