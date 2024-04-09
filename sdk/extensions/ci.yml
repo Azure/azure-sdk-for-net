@@ -28,6 +28,7 @@ pr:
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
+    SdkType: aspnetcoreext
     ServiceDirectory: extensions
     ArtifactName: packages
     Artifacts:
