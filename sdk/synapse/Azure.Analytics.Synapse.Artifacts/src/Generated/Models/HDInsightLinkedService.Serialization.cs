@@ -282,12 +282,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 fileSystem);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HDInsightLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHDInsightLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HDInsightLinkedService>(this);
+            return content;
+        }
+
         internal partial class HDInsightLinkedServiceConverter : JsonConverter<HDInsightLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, HDInsightLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<HDInsightLinkedService>(model);
             }
+
             public override HDInsightLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

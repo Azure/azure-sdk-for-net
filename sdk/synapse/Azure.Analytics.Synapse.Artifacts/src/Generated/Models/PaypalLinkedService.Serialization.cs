@@ -259,12 +259,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new PaypalLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePaypalLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PaypalLinkedService>(this);
+            return content;
+        }
+
         internal partial class PaypalLinkedServiceConverter : JsonConverter<PaypalLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, PaypalLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<PaypalLinkedService>(model);
             }
+
             public override PaypalLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

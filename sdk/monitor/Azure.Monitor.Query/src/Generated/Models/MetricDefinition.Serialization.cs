@@ -161,5 +161,13 @@ namespace Azure.Monitor.Query.Models
                 id,
                 dimensions ?? new ChangeTrackingList<LocalizableString>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricDefinition FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricDefinition(document.RootElement);
+        }
     }
 }

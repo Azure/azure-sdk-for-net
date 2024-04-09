@@ -50,5 +50,13 @@ namespace Azure.Storage.Files.DataLake.Models
             }
             return new StorageErrorError(code, message);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageErrorError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageErrorError(document.RootElement);
+        }
     }
 }

@@ -53,5 +53,13 @@ namespace Azure.Communication.Rooms
             }
             return new CommunicationRoom(id, createdAt, validFrom, validUntil, pstnDialOutEnabled);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CommunicationRoom FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommunicationRoom(document.RootElement);
+        }
     }
 }

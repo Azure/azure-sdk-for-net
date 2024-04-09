@@ -259,12 +259,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MarketoLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMarketoLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MarketoLinkedService>(this);
+            return content;
+        }
+
         internal partial class MarketoLinkedServiceConverter : JsonConverter<MarketoLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, MarketoLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<MarketoLinkedService>(model);
             }
+
             public override MarketoLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

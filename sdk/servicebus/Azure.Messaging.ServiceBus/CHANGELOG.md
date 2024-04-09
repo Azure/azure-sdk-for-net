@@ -10,7 +10,11 @@
 
 - Fixed an edge case where a cancellation token signaled while waiting for a throttling delay would cause a failure to reset state and service operations would continue to apply the throttle delay going forward.  ([#42952](https://github.com/Azure/azure-sdk-for-net/issues/42952))
 
+- Fixed an issue where the `ServiceBusSessionProcessor` was not respecting `ServiceBusSessionProcessorOptions.MaxConcurrentCallsPerSession` when `ServiceBusSessionProcessorOptions.SessionIds` was set to a value. ([#43157](https://github.com/Azure/azure-sdk-for-net/pull/43157))
+
 ### Other Changes
+
+- Added missing documentation for `ServiceBusModelFactory` members with a focus on clarifying what model properties each parameter to the factory methods will populate.  In some cases, parameter names differ from the associated model properties, causing confusion.  ([#42772](https://github.com/Azure/azure-sdk-for-net/issues/42772))
 
 ## 7.17.4 (2024-03-05)
 
