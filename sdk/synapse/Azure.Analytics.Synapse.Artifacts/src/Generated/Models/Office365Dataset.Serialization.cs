@@ -227,12 +227,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 predicate);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Office365Dataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOffice365Dataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Office365Dataset>(this);
+            return content;
+        }
+
         internal partial class Office365DatasetConverter : JsonConverter<Office365Dataset>
         {
             public override void Write(Utf8JsonWriter writer, Office365Dataset model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<Office365Dataset>(model);
             }
+
             public override Office365Dataset Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

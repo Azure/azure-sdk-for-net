@@ -126,6 +126,26 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
+        public async Task DependentResources()
+        {
+            TestInfrastructure infra = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var sa1 = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            var sa2 = infra.AddStorageAccount(name: "photoAcct2", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            sa2.AddDependency(sa1);
+
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [Test]
+        public void EmptyConstructThrows()
+        {
+            TestInfrastructure infra = new TestInfrastructure();
+            Assert.Throws<InvalidOperationException>(() => infra.Build(GetOutputPath()));
+        }
+
+        [RecordedTest]
         public async Task ExistingUserAssignedIdentityResource()
         {
             var infra = new TestInfrastructure();

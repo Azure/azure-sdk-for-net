@@ -1,6 +1,12 @@
 # Release History
 
-## 0.1.0-beta.3 (Unreleased)
+## 0.2.0-beta.2 (2024-04-09)
+
+### Features Added
+
+- Added `AddDependency` method.
+
+## 0.2.0-beta.1 (2024-04-04)
 
 ### Features Added
 

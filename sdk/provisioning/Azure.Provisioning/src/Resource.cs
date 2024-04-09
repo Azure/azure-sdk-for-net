@@ -26,7 +26,11 @@ namespace Azure.Provisioning
 
         private IList<Resource> Dependencies { get; }
 
-        internal void AddDependency(Resource resource)
+        /// <summary>
+        /// Adds a dependency to the resource.
+        /// </summary>
+        /// <param name="resource">The dependency for this resource.</param>
+        public void AddDependency(Resource resource)
         {
             Dependencies.Add(resource);
         }

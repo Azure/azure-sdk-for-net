@@ -234,12 +234,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 alwaysEncryptedSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonRdsForSqlServerLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonRdsForSqlServerLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AmazonRdsForSqlServerLinkedService>(this);
+            return content;
+        }
+
         internal partial class AmazonRdsForSqlServerLinkedServiceConverter : JsonConverter<AmazonRdsForSqlServerLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, AmazonRdsForSqlServerLinkedService model, JsonSerializerOptions options)
             {
                 writer.WriteObjectValue<AmazonRdsForSqlServerLinkedService>(model);
             }
+
             public override AmazonRdsForSqlServerLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
                 using var document = JsonDocument.ParseValue(ref reader);

@@ -21,5 +21,13 @@ namespace Azure.Security.KeyVault.Administration.Models
             writer.WriteStringValue(FolderToRestore);
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RestoreOperationParameters>(this);
+            return content;
+        }
     }
 }

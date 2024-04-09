@@ -190,7 +190,7 @@ namespace System.ClientModel.Primitives
         public System.ClientModel.Primitives.PipelineRequest Request { get { throw null; } }
         public System.ClientModel.Primitives.PipelineResponse? Response { get { throw null; } protected internal set { } }
         public System.ClientModel.Primitives.PipelineMessageClassifier ResponseClassifier { get { throw null; } set { } }
-        public void Apply(System.ClientModel.Primitives.RequestOptions options) { }
+        public void Apply(System.ClientModel.Primitives.RequestOptions? options) { }
         public void Dispose() { }
         protected virtual void Dispose(bool disposing) { }
         public System.ClientModel.Primitives.PipelineResponse? ExtractResponse() { throw null; }
