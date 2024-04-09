@@ -56,10 +56,9 @@ internal struct BitVector640
     private ulong _bits9;
 #pragma warning restore CS0169 // Fields are used via Unsafe.As / Unsafe.Add in GetField
 
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static ref ulong GetField(ref BitVector640 vector, int index)
     {
-        if (index is < 0 or > 640)
+        if (index is < 0 or > 639)
         {
             throw new ArgumentOutOfRangeException(nameof(index), "Index must be in the range [0, 639]");
         }
