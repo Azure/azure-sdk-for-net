@@ -7,19 +7,19 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Advanced Message Interactive list reply content for a user to business message. </summary>
-    public partial class AcsAdvancedMessageInteractiveListReplyContent
+    /// <summary> Message Interactive list reply content for a user to business message. </summary>
+    public partial class AcsMessageInteractiveListReplyContent
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveListReplyContent"/>. </summary>
-        internal AcsAdvancedMessageInteractiveListReplyContent()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveListReplyContent"/>. </summary>
+        internal AcsMessageInteractiveListReplyContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageInteractiveListReplyContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageInteractiveListReplyContent"/>. </summary>
         /// <param name="listItemId"> The ID of the selected list item. </param>
         /// <param name="title"> The title of the selected list item. </param>
         /// <param name="description"> The sescription of the selected row. </param>
-        internal AcsAdvancedMessageInteractiveListReplyContent(string listItemId, string title, string description)
+        internal AcsMessageInteractiveListReplyContent(string listItemId, string title, string description)
         {
             ListItemId = listItemId;
             Title = title;

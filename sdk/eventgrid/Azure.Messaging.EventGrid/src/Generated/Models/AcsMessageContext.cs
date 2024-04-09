@@ -7,18 +7,18 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Advanced Message Context. </summary>
-    public partial class AcsAdvancedMessageContext
+    /// <summary> Message Context. </summary>
+    public partial class AcsMessageContext
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageContext"/>. </summary>
-        internal AcsAdvancedMessageContext()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageContext"/>. </summary>
+        internal AcsMessageContext()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageContext"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageContext"/>. </summary>
         /// <param name="from"> The WhatsApp ID for the customer who replied to an inbound message. </param>
         /// <param name="messageId"> The message ID for the sent message for an inbound reply. </param>
-        internal AcsAdvancedMessageContext(string @from, string messageId)
+        internal AcsMessageContext(string @from, string messageId)
         {
             From = @from;
             MessageId = messageId;

@@ -7,18 +7,18 @@
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
-    /// <summary> Advanced Message Channel Event Error. </summary>
-    internal partial class AcsAdvancedMessageChannelEventError
+    /// <summary> Message Channel Event Error. </summary>
+    internal partial class AcsMessageChannelEventError
     {
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageChannelEventError"/>. </summary>
-        internal AcsAdvancedMessageChannelEventError()
+        /// <summary> Initializes a new instance of <see cref="AcsMessageChannelEventError"/>. </summary>
+        internal AcsMessageChannelEventError()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AcsAdvancedMessageChannelEventError"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AcsMessageChannelEventError"/>. </summary>
         /// <param name="channelCode"> The channel error code. </param>
         /// <param name="channelMessage"> The channel error message. </param>
-        internal AcsAdvancedMessageChannelEventError(string channelCode, string channelMessage)
+        internal AcsMessageChannelEventError(string channelCode, string channelMessage)
         {
             ChannelCode = channelCode;
             ChannelMessage = channelMessage;
