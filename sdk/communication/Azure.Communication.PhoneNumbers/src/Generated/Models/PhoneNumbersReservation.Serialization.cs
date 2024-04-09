@@ -76,5 +76,21 @@ namespace Azure.Communication.PhoneNumbers
             }
             return new PhoneNumbersReservation(id, expiresAt, phoneNumbers, status);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumbersReservation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneNumbersReservation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PhoneNumbersReservation>(this);
+            return content;
+        }
     }
 }

@@ -31,10 +31,10 @@ namespace Azure.Communication.PhoneNumbers
                     continue;
                 }
                 if (property.NameEquals("nationalFormat"u8))
-                    {
+                {
                     nationalFormat = property.Value.GetString();
-                        continue;
-                    }
+                    continue;
+                }
                 if (property.NameEquals("internationalFormat"u8))
                 {
                     internationalFormat = property.Value.GetString();
@@ -71,7 +71,7 @@ namespace Azure.Communication.PhoneNumbers
                 isoCountryCode,
                 numberType,
                 operatorDetails);
-            }
+        }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>

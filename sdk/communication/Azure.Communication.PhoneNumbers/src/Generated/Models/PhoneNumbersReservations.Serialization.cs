@@ -40,5 +40,13 @@ namespace Azure.Communication.PhoneNumbers
             }
             return new PhoneNumbersReservations(reservations, nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumbersReservations FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneNumbersReservations(document.RootElement);
+        }
     }
 }

@@ -34,5 +34,13 @@ namespace Azure.Communication.PhoneNumbers
             }
             return new AvailablePhoneNumberError(code, message);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AvailablePhoneNumberError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvailablePhoneNumberError(document.RootElement);
+        }
     }
 }
